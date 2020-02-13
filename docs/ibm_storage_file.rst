@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,15 +26,43 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  snapshot_capacity (False, int, None)
+  allowed_subnets (False, list, None)
     None
 
 
-  allowed_ip_addresses (False, list, None)
+  notes (False, str, None)
     None
 
 
   snapshot_schedule (False, list, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  datacenter (False, str, None)
+    (Required for new resource)
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  iops (False, float, None)
+    (Required for new resource)
+
+
+  volumename (False, str, None)
+    None
+
+
+  allowed_ip_addresses (False, list, None)
     None
 
 
@@ -50,28 +78,16 @@ Parameters
     (Required for new resource)
 
 
-  iops (False, float, None)
-    (Required for new resource)
-
-
-  hostname (False, str, None)
+  allowed_hardware_ids (False, list, None)
     None
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    None
-
-
-  notes (False, str, None)
+  snapshot_capacity (False, int, None)
     None
 
 
   mountpoint (False, str, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_name (False, str, None)
@@ -82,23 +98,7 @@ Parameters
     (Required for new resource)
 
 
-  datacenter (False, str, None)
-    (Required for new resource)
-
-
-  allowed_subnets (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  volumename (False, str, None)
-    None
-
-
-  allowed_hardware_ids (False, list, None)
+  hostname (False, str, None)
     None
 
 

@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  roles (False, list, None)
-    (Required for new resource) Role names of the policy definition
-
-
-  resources (False, list, None)
-    None
-
 
   account_management (False, bool, False)
     Give access to all account management services
@@ -48,6 +40,14 @@ Parameters
 
   iam_service_id (False, str, None)
     (Required for new resource) UUID of ServiceID
+
+
+  roles (False, list, None)
+    (Required for new resource) Role names of the policy definition
+
+
+  resources (False, list, None)
+    None
 
 
   id (False, str, None)

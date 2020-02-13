@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  publish (False, bool, None)
-    Package Visibility.
-
-
-  version (False, str, None)
-    Semantic version of the package.
-
 
   annotations (False, str, None)
     All annotations set on package by user and those set by the IBM Cloud Function backend/API.
@@ -48,6 +40,14 @@ Parameters
 
   name (True, str, None)
     Name of the package.
+
+
+  publish (False, bool, None)
+    Package Visibility.
+
+
+  version (False, str, None)
+    Semantic version of the package.
 
 
   ibmcloud_api_key (True, any, None)

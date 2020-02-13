@@ -371,18 +371,28 @@ description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
+    s3_endpoint_private:
+        description:
+            - Private endpoint for the COS bucket
+        required: False
+        type: str
+    bucket_region:
+        description:
+            - None
+        required: True
+        type: str
     resource_instance_id:
         description:
             - None
         required: True
         type: str
-    key_protect:
+    crn:
         description:
-            - CRN of the key you want to use data at rest encryption
+            - CRN of resource instance
         required: False
         type: str
     region_location:
@@ -400,11 +410,6 @@ options:
             - None
         required: False
         type: str
-    s3_endpoint_public:
-        description:
-            - Public endpoint for the COS bucket
-        required: False
-        type: str
     bucket_name:
         description:
             - None
@@ -415,14 +420,9 @@ options:
             - None
         required: True
         type: str
-    bucket_region:
+    key_protect:
         description:
-            - None
-        required: True
-        type: str
-    crn:
-        description:
-            - CRN of resource instance
+            - CRN of the key you want to use data at rest encryption
         required: False
         type: str
     single_site_location:
@@ -430,9 +430,9 @@ options:
             - None
         required: False
         type: str
-    s3_endpoint_private:
+    s3_endpoint_public:
         description:
-            - Private endpoint for the COS bucket
+            - Public endpoint for the COS bucket
         required: False
         type: str
     ibmcloud_api_key:
@@ -452,35 +452,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('bucket_region', 'str'),
     ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
     ('bucket_type', 'str'),
-    ('bucket_region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    's3_endpoint_private',
+    'bucket_region',
     'resource_instance_id',
-    'key_protect',
+    'crn',
     'region_location',
     'cross_region_location',
     'storage_class',
-    's3_endpoint_public',
     'bucket_name',
     'bucket_type',
-    'bucket_region',
-    'crn',
+    'key_protect',
     'single_site_location',
-    's3_endpoint_private',
+    's3_endpoint_public',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    s3_endpoint_private=dict(
+        required=False,
+        type='str'),
+    bucket_region=dict(
+        required=True,
+        type='str'),
     resource_instance_id=dict(
         required=True,
         type='str'),
-    key_protect=dict(
+    crn=dict(
         required=False,
         type='str'),
     region_location=dict(
@@ -492,25 +498,19 @@ module_args = dict(
     storage_class=dict(
         required=False,
         type='str'),
-    s3_endpoint_public=dict(
-        required=False,
-        type='str'),
     bucket_name=dict(
         required=True,
         type='str'),
     bucket_type=dict(
         required=True,
         type='str'),
-    bucket_region=dict(
-        required=True,
-        type='str'),
-    crn=dict(
+    key_protect=dict(
         required=False,
         type='str'),
     single_site_location=dict(
         required=False,
         type='str'),
-    s3_endpoint_private=dict(
+    s3_endpoint_public=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -537,7 +537,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

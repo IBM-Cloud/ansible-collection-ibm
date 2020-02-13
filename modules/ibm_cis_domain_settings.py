@@ -371,7 +371,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -380,14 +380,19 @@ options:
             - opportunistic_encryption setting
         required: False
         type: str
-    cis_id:
+    automatic_https_rewrites:
         description:
-            - (Required for new resource) CIS instance crn
+            - automatic_https_rewrites setting
         required: False
         type: str
-    ssl:
+    domain_id:
         description:
-            - SSL/TLS setting
+            - (Required for new resource) Associated CIS domain
+        required: False
+        type: str
+    waf:
+        description:
+            - WAF setting
         required: False
         type: str
     certificate_status:
@@ -406,19 +411,14 @@ options:
             - cname_flattening setting
         required: False
         type: str
-    domain_id:
+    cis_id:
         description:
-            - (Required for new resource) Associated CIS domain
+            - (Required for new resource) CIS instance crn
         required: False
         type: str
-    waf:
+    ssl:
         description:
-            - WAF setting
-        required: False
-        type: str
-    automatic_https_rewrites:
-        description:
-            - automatic_https_rewrites setting
+            - SSL/TLS setting
         required: False
         type: str
     id:
@@ -451,21 +451,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'opportunistic_encryption',
-    'cis_id',
-    'ssl',
+    'automatic_https_rewrites',
+    'domain_id',
+    'waf',
     'certificate_status',
     'min_tls_version',
     'cname_flattening',
-    'domain_id',
-    'waf',
-    'automatic_https_rewrites',
+    'cis_id',
+    'ssl',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -474,10 +474,13 @@ module_args = dict(
     opportunistic_encryption=dict(
         required=False,
         type='str'),
-    cis_id=dict(
+    automatic_https_rewrites=dict(
         required=False,
         type='str'),
-    ssl=dict(
+    domain_id=dict(
+        required=False,
+        type='str'),
+    waf=dict(
         required=False,
         type='str'),
     certificate_status=dict(
@@ -489,13 +492,10 @@ module_args = dict(
     cname_flattening=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    cis_id=dict(
         required=False,
         type='str'),
-    waf=dict(
-        required=False,
-        type='str'),
-    automatic_https_rewrites=dict(
+    ssl=dict(
         required=False,
         type='str'),
     id=dict(
@@ -540,7 +540,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

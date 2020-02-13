@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_server_instance_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    uuid:
-        description:
-            - The UUID of a load balancer member
-        required: False
-        type: str
     private_ip_address:
         description:
             - (Required for new resource) The Private IP address of a load balancer member.
@@ -393,6 +388,11 @@ options:
     lbaas_id:
         description:
             - (Required for new resource) The UUID of a load balancer
+        required: False
+        type: str
+    uuid:
+        description:
+            - The UUID of a load balancer member
         required: False
         type: str
     id:
@@ -431,18 +431,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'uuid',
     'private_ip_address',
     'weight',
     'lbaas_id',
+    'uuid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    uuid=dict(
-        required=False,
-        type='str'),
     private_ip_address=dict(
         required=False,
         type='str'),
@@ -450,6 +447,9 @@ module_args = dict(
         required=False,
         type='int'),
     lbaas_id=dict(
+        required=False,
+        type='str'),
+    uuid=dict(
         required=False,
         type='str'),
     id=dict(
@@ -494,7 +494,7 @@ def run_module():
         resource_type='ibm_lbaas_server_instance_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,21 +371,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_global_load_balancer' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) name
         required: False
         type: str
-    ttl:
+    fallback_pool_id:
         description:
-            - None
+            - (Required for new resource) name
         required: False
-        type: int
-    created_on:
+        type: str
+    description:
         description:
             - None
         required: False
@@ -396,6 +401,11 @@ options:
         required: False
         type: str
         default: none
+    created_on:
+        description:
+            - None
+        required: False
+        type: str
     modified_on:
         description:
             - None
@@ -406,27 +416,17 @@ options:
             - (Required for new resource) CIS instance crn
         required: False
         type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: False
-        type: str
-    fallback_pool_id:
-        description:
-            - (Required for new resource) name
-        required: False
-        type: str
     default_pool_ids:
         description:
             - (Required for new resource) 
         required: False
         type: list
         elements: str
-    description:
+    ttl:
         description:
             - None
         required: False
-        type: str
+        type: int
     proxied:
         description:
             - None
@@ -463,42 +463,48 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('name', 'str'),
     ('fallback_pool_id', 'str'),
+    ('cis_id', 'str'),
     ('default_pool_ids', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_id',
     'name',
-    'ttl',
-    'created_on',
+    'fallback_pool_id',
+    'description',
     'session_affinity',
+    'created_on',
     'modified_on',
     'cis_id',
-    'domain_id',
-    'fallback_pool_id',
     'default_pool_ids',
-    'description',
+    'ttl',
     'proxied',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_id=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    ttl=dict(
+    fallback_pool_id=dict(
         required=False,
-        type='int'),
-    created_on=dict(
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     session_affinity=dict(
         default='none',
+        type='str'),
+    created_on=dict(
+        required=False,
         type='str'),
     modified_on=dict(
         required=False,
@@ -506,19 +512,13 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    fallback_pool_id=dict(
-        required=False,
-        type='str'),
     default_pool_ids=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    ttl=dict(
         required=False,
-        type='str'),
+        type='int'),
     proxied=dict(
         default=False,
         type='bool'),
@@ -564,7 +564,7 @@ def run_module():
         resource_type='ibm_cis_global_load_balancer',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

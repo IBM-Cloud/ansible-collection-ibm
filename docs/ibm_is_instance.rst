@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,23 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (False, str, None)
+  user_data (False, str, None)
+    None
+
+
+  image (False, str, None)
     (Required for new resource)
 
 
-  tags (False, list, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  vcpu (False, list, None)
+  resource_group (False, str, None)
     None
 
 
@@ -52,30 +44,6 @@ Parameters
 
   zone (False, str, None)
     (Required for new resource)
-
-
-  volume_attachments (False, list, None)
-    None
-
-
-  primary_network_interface (False, list, None)
-    (Required for new resource)
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  volumes (False, list, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  gpu (False, list, None)
-    None
 
 
   profile (False, str, None)
@@ -90,24 +58,28 @@ Parameters
     None
 
 
-  user_data (False, str, None)
+  tags (False, list, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  volume_attachments (False, list, None)
+    None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (False, str, None)
+  primary_network_interface (False, list, None)
     (Required for new resource)
 
 
-  image (False, str, None)
+  boot_volume (False, list, None)
+    None
+
+
+  vpc (False, str, None)
     (Required for new resource)
+
+
+  vcpu (False, list, None)
+    None
 
 
   resource_controller_url (False, str, None)
@@ -116,6 +88,34 @@ Parameters
 
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  volumes (False, list, None)
+    None
+
+
+  gpu (False, list, None)
+    None
+
+
+  status (False, str, None)
+    None
 
 
   id (False, str, None)

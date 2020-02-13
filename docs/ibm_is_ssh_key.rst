@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  fingerprint (False, str, None)
+  length (False, int, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_group (False, str, None)
+    None
 
 
   resource_crn (False, str, None)
     The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   name (False, str, None)
@@ -54,11 +54,15 @@ Parameters
     None
 
 
-  length (False, int, None)
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  fingerprint (False, str, None)
     None
 
 
-  resource_group (False, str, None)
+  tags (False, list, None)
     None
 
 

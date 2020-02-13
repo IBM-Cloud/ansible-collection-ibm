@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,43 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  order_approver_email_address (False, str, None)
-    (Required for new resource)
-
-
-  billing_address_same_as_organization_flag (False, bool, False)
-    None
-
-
-  billing_contact (False, list, None)
-    None
-
-
-  administrative_address_same_as_organization_flag (False, bool, False)
-    None
-
-
   server_type (False, str, None)
-    (Required for new resource)
-
-
-  renewal_flag (False, bool, True)
-    None
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    None
-
-
-  technical_contact (False, list, None)
-    (Required for new resource)
-
-
-  administrative_contact (False, list, None)
-    None
-
-
-  server_count (False, int, None)
     (Required for new resource)
 
 
@@ -70,23 +34,59 @@ Parameters
     (Required for new resource)
 
 
+  certificate_signing_request (False, str, None)
+    (Required for new resource)
+
+
   ssl_type (False, str, None)
     (Required for new resource)
+
+
+  billing_address_same_as_organization_flag (False, bool, False)
+    None
 
 
   organization_information (False, list, None)
     (Required for new resource)
 
 
-  certificate_signing_request (False, str, None)
-    (Required for new resource)
+  billing_contact (False, list, None)
+    None
 
 
   technical_contact_same_as_org_address_flag (False, bool, False)
     None
 
 
+  technical_contact (False, list, None)
+    (Required for new resource)
+
+
+  server_count (False, int, None)
+    (Required for new resource)
+
+
+  renewal_flag (False, bool, True)
+    None
+
+
+  order_approver_email_address (False, str, None)
+    (Required for new resource)
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    None
+
+
   billing_contact_same_as_technical_flag (False, bool, False)
+    None
+
+
+  administrative_address_same_as_organization_flag (False, bool, False)
+    None
+
+
+  administrative_contact (False, list, None)
     None
 
 

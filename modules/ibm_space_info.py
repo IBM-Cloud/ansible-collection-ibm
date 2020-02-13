@@ -371,22 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_space' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    managers:
-        description:
-            - The IBMID of the users who  have manager role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    developers:
-        description:
-            - The IBMID of the users who  have developer role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
     space:
         description:
             - Space name, for example dev
@@ -400,6 +388,18 @@ options:
     auditors:
         description:
             - The IBMID of the users who  have auditor role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    managers:
+        description:
+            - The IBMID of the users who  have manager role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    developers:
+        description:
+            - The IBMID of the users who  have developer role in this space, ex - user@example.com
         required: False
         type: list
         elements: str
@@ -426,24 +426,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'managers',
-    'developers',
     'space',
     'org',
     'auditors',
+    'managers',
+    'developers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    developers=dict(
-        required=False,
-        elements='',
-        type='list'),
     space=dict(
         required=True,
         type='str'),
@@ -451,6 +443,14 @@ module_args = dict(
         required=True,
         type='str'),
     auditors=dict(
+        required=False,
+        elements='',
+        type='list'),
+    managers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    developers=dict(
         required=False,
         elements='',
         type='list'),
@@ -478,7 +478,7 @@ def run_module():
         resource_type='ibm_space',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

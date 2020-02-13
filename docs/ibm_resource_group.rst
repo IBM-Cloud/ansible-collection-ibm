@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default (False, bool, None)
-    Specifies whether its default resource group or not
-
-
-  state_ (False, str, None)
-    State of the resource group
-
-
   tags (False, list, None)
     None
 
 
   name (False, str, None)
     (Required for new resource) The name of the resource group
+
+
+  default (False, bool, None)
+    Specifies whether its default resource group or not
+
+
+  state_ (False, str, None)
+    State of the resource group
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
+  cpu_count (False, int, None)
+    The capacity that the dedicated host's CPU allocation is restricted to.
+
+
+  memory_capacity (False, int, None)
+    The capacity that the dedicated host's memory allocation is restricted to.
+
+
+  hourly_billing (False, bool, True)
+    The billing type for the dedicatated host.
 
 
   router_hostname (False, str, None)
@@ -36,6 +44,10 @@ Parameters
 
   disk_capacity (False, int, None)
     The capacity that the dedicated host's disk allocation is restricted to.
+
+
+  wait_time_minutes (False, int, 90)
+    None
 
 
   hostname (False, str, None)
@@ -50,24 +62,12 @@ Parameters
     (Required for new resource) The data center in which the dedicatated host is to be provisioned.
 
 
-  wait_time_minutes (False, int, 90)
-    None
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
 
 
   tags (False, list, None)
     None
-
-
-  hourly_billing (False, bool, True)
-    The billing type for the dedicatated host.
-
-
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
-
-
-  memory_capacity (False, int, None)
-    The capacity that the dedicated host's memory allocation is restricted to.
 
 
   id (False, str, None)

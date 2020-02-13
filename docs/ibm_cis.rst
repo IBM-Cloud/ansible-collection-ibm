@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
 
   resource_name (False, str, None)
     The name of the resource
@@ -40,18 +36,6 @@ Parameters
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
-
-
-  resource_group_id (False, str, None)
-    The resource group id
 
 
   location (False, str, None)
@@ -66,12 +50,28 @@ Parameters
     Status of resource instance
 
 
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
   resource_crn (False, str, None)
     The crn of the resource
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
   name (False, str, None)
     (Required for new resource) A name for the resource instance
+
+
+  service (False, str, None)
+    The name of the Cloud Internet Services offering
 
 
   plan (False, str, None)

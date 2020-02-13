@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cross_region_location (False, str, None)
-    None
+  s3_endpoint_private (False, str, None)
+    Private endpoint for the COS bucket
 
 
   bucket_region (True, str, None)
@@ -46,16 +46,12 @@ Parameters
     None
 
 
-  storage_class (False, str, None)
+  cross_region_location (False, str, None)
     None
 
 
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  s3_endpoint_private (False, str, None)
-    Private endpoint for the COS bucket
+  storage_class (False, str, None)
+    None
 
 
   bucket_name (True, str, None)
@@ -72,6 +68,10 @@ Parameters
 
   single_site_location (False, str, None)
     None
+
+
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
 
 
   ibmcloud_api_key (True, any, None)

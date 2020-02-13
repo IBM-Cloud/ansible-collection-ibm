@@ -371,16 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_versions' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    valid_openshift_versions:
-        description:
-            - List of supported openshift-versions
-        required: False
-        type: list
-        elements: str
     org_guid:
         description:
             - The bluemix organization guid this cluster belongs to
@@ -412,6 +406,12 @@ options:
         required: False
         type: list
         elements: str
+    valid_openshift_versions:
+        description:
+            - List of supported openshift-versions
+        required: False
+        type: list
+        elements: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -433,22 +433,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'valid_openshift_versions',
     'org_guid',
     'space_guid',
     'account_guid',
     'region',
     'resource_group_id',
     'valid_kube_versions',
+    'valid_openshift_versions',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    valid_openshift_versions=dict(
-        required=False,
-        elements='',
-        type='list'),
     org_guid=dict(
         required=False,
         type='str'),
@@ -465,6 +461,10 @@ module_args = dict(
         required=False,
         type='str'),
     valid_kube_versions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    valid_openshift_versions=dict(
         required=False,
         elements='',
         type='list'),
@@ -492,7 +492,7 @@ def run_module():
         resource_type='ibm_container_cluster_versions',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

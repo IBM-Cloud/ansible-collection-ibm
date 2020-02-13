@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,39 +26,31 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (False, str, None)
+  name (False, str, None)
     (Required for new resource)
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  ipv6_cidr_block (False, str, None)
-    None
 
 
   vpc (False, str, None)
     (Required for new resource)
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  zone (False, str, None)
+    (Required for new resource)
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  ipv4_cidr_block (False, str, None)
+  resource_group (False, str, None)
     None
 
 
-  available_ipv4_address_count (False, str, None)
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  ipv6_cidr_block (False, str, None)
     None
 
 
@@ -66,19 +58,27 @@ Parameters
     None
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  status (False, str, None)
+  public_gateway (False, str, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_name (False, str, None)
+    The name of the resource
 
 
   total_ipv4_address_count (False, int, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  available_ipv4_address_count (False, str, None)
     None
 
 
@@ -86,11 +86,11 @@ Parameters
     None
 
 
-  public_gateway (False, str, None)
+  status (False, str, None)
     None
 
 
-  resource_group (False, str, None)
+  ipv4_cidr_block (False, str, None)
     None
 
 

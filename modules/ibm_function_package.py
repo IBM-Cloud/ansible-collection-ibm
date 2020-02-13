@@ -371,10 +371,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_package' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
+    parameters:
+        description:
+            - All parameters set on package by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    bind_package_name:
+        description:
+            - Name of package to be binded.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of package.
+        required: False
+        type: str
     publish:
         description:
             - Package visibilty.
@@ -401,21 +416,6 @@ options:
     annotations:
         description:
             - All annotations set on package by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    parameters:
-        description:
-            - All parameters set on package by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    bind_package_name:
-        description:
-            - Name of package to be binded.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of package.
         required: False
         type: str
     id:
@@ -453,19 +453,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'parameters',
+    'bind_package_name',
+    'name',
     'publish',
     'version',
     'user_defined_annotations',
     'user_defined_parameters',
     'annotations',
-    'parameters',
-    'bind_package_name',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    parameters=dict(
+        required=False,
+        type='str'),
+    bind_package_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     publish=dict(
         default=False,
         type='bool'),
@@ -479,15 +488,6 @@ module_args = dict(
         default='[]',
         type='str'),
     annotations=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='str'),
-    bind_package_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -532,7 +532,7 @@ def run_module():
         resource_type='ibm_function_package',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

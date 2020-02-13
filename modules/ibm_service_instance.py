@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    service_plan_guid:
-        description:
-            - The uniquie identifier of the service offering plan type
-        required: False
-        type: str
     space_guid:
         description:
             - (Required for new resource) The guid of the space in which the instance will be created
@@ -390,17 +385,11 @@ options:
             - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
         required: False
         type: str
-    credentials:
+    service_plan_guid:
         description:
-            - The service broker-provided credentials to use this service.
+            - The uniquie identifier of the service offering plan type
         required: False
-        type: dict
-    service_keys:
-        description:
-            - The service keys asociated with the service instance
-        required: False
-        type: list
-        elements: dict
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -417,17 +406,28 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) A name for the service instance
-        required: False
-        type: str
     wait_time_minutes:
         description:
             - Define timeout to wait for the service instances to succeeded/deleted etc.
         required: False
         type: int
         default: 10
+    name:
+        description:
+            - (Required for new resource) A name for the service instance
+        required: False
+        type: str
+    credentials:
+        description:
+            - The service broker-provided credentials to use this service.
+        required: False
+        type: dict
+    service_keys:
+        description:
+            - The service keys asociated with the service instance
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -466,37 +466,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_plan_guid',
     'space_guid',
     'service',
-    'credentials',
-    'service_keys',
+    'service_plan_guid',
     'parameters',
     'plan',
     'tags',
-    'name',
     'wait_time_minutes',
+    'name',
+    'credentials',
+    'service_keys',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_plan_guid=dict(
-        required=False,
-        type='str'),
     space_guid=dict(
         required=False,
         type='str'),
     service=dict(
         required=False,
         type='str'),
-    credentials=dict(
+    service_plan_guid=dict(
         required=False,
-        type='dict'),
-    service_keys=dict(
-        required=False,
-        elements='',
-        type='list'),
+        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
@@ -507,12 +500,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     wait_time_minutes=dict(
         default=10,
         type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    credentials=dict(
+        required=False,
+        type='dict'),
+    service_keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -555,7 +555,7 @@ def run_module():
         resource_type='ibm_service_instance',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,29 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  provisioning_status (False, str, None)
-    None
-
-
-  health (False, str, None)
-    None
-
-
-  href (False, str, None)
-    None
-
-
-  pool (False, str, None)
-    (Required for new resource)
-
 
   lb (False, str, None)
     (Required for new resource)
@@ -56,6 +40,22 @@ Parameters
 
   weight (False, int, None)
     None
+
+
+  provisioning_status (False, str, None)
+    None
+
+
+  health (False, str, None)
+    None
+
+
+  href (False, str, None)
+    None
+
+
+  pool (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

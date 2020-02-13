@@ -371,28 +371,23 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    cluster_name_id:
-        description:
-            - Name of the cluster
-        required: True
-        type: str
-    kube_version:
-        description:
-            - None
-        required: False
-        type: str
     resource_crn:
         description:
             - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
         required: False
         type: str
     crn:
@@ -400,7 +395,7 @@ options:
             - CRN of resource instance
         required: False
         type: str
-    master_url:
+    private_service_endpoint_url:
         description:
             - None
         required: False
@@ -410,12 +405,25 @@ options:
             - The status of the cluster master
         required: False
         type: str
-    resource_group_name:
+    workers:
         description:
-            - The resource group name in which resource is provisioned
+            - None
+        required: False
+        type: list
+        elements: str
+    worker_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    alb_type:
+        description:
+            - None
         required: False
         type: str
-    worker_pools:
+        default: all
+    albs:
         description:
             - None
         required: False
@@ -426,39 +434,12 @@ options:
             - None
         required: False
         type: bool
-    private_service_endpoint_url:
+    public_service_endpoint_url:
         description:
             - None
         required: False
         type: str
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-        required: False
-        type: str
-    worker_count:
-        description:
-            - Number of workers
-        required: False
-        type: int
-    workers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    albs:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    health:
+    master_url:
         description:
             - None
         required: False
@@ -469,23 +450,42 @@ options:
         required: False
         type: list
         elements: str
+    cluster_name_id:
+        description:
+            - Name of the cluster
+        required: True
+        type: str
+    worker_count:
+        description:
+            - Number of workers
+        required: False
+        type: int
+    kube_version:
+        description:
+            - None
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    alb_type:
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    public_service_endpoint:
         description:
             - None
         required: False
-        type: str
-        default: all
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    public_service_endpoint_url:
+        type: bool
+    health:
         description:
             - None
         required: False
@@ -512,101 +512,101 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_status',
-    'cluster_name_id',
-    'kube_version',
     'resource_crn',
-    'crn',
-    'master_url',
-    'status',
     'resource_group_name',
-    'worker_pools',
-    'private_service_endpoint',
-    'private_service_endpoint_url',
-    'public_service_endpoint',
-    'resource_controller_url',
-    'worker_count',
-    'workers',
-    'albs',
-    'health',
-    'tags',
-    'resource_name',
-    'alb_type',
     'resource_group_id',
+    'crn',
+    'private_service_endpoint_url',
+    'status',
+    'workers',
+    'worker_pools',
+    'alb_type',
+    'albs',
+    'private_service_endpoint',
     'public_service_endpoint_url',
+    'master_url',
+    'tags',
+    'cluster_name_id',
+    'worker_count',
+    'kube_version',
+    'resource_controller_url',
+    'resource_name',
+    'resource_status',
+    'public_service_endpoint',
+    'health',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_status=dict(
-        required=False,
-        type='str'),
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
     resource_crn=dict(
-        required=False,
-        type='str'),
-    crn=dict(
-        required=False,
-        type='str'),
-    master_url=dict(
-        required=False,
-        type='str'),
-    status=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
         required=False,
         type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    workers=dict(
+        required=False,
+        elements='',
+        type='list'),
     worker_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    alb_type=dict(
+        default='all',
+        type='str'),
+    albs=dict(
         required=False,
         elements='',
         type='list'),
     private_service_endpoint=dict(
         required=False,
         type='bool'),
-    private_service_endpoint_url=dict(
+    public_service_endpoint_url=dict(
         required=False,
         type='str'),
-    public_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    workers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    albs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    health=dict(
+    master_url=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
+    worker_count=dict(
+        required=False,
+        type='int'),
+    kube_version=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    alb_type=dict(
-        default='all',
-        type='str'),
-    resource_group_id=dict(
+    resource_status=dict(
         required=False,
         type='str'),
-    public_service_endpoint_url=dict(
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    health=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -633,7 +633,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

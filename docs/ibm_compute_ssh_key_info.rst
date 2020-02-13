@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  label (True, str, None)
-    The label associated with the ssh key
-
-
-  public_key (False, str, None)
-    The public ssh key
-
 
   fingerprint (False, str, None)
     A sequence of bytes to authenticate or lookup a longer ssh key
@@ -44,6 +36,14 @@ Parameters
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created key is used. If false, an error is returned
+
+
+  label (True, str, None)
+    The label associated with the ssh key
+
+
+  public_key (False, str, None)
+    The public ssh key
 
 
   ibmcloud_api_key (True, any, None)

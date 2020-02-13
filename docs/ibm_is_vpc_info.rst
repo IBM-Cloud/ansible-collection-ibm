@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -38,23 +38,15 @@ Parameters
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   classic_access (False, bool, None)
     None
 
 
-  status (False, str, None)
+  name (True, str, None)
     None
 
 
   resource_group (False, str, None)
-    None
-
-
-  tags (False, list, None)
     None
 
 
@@ -66,8 +58,16 @@ Parameters
     None
 
 
-  name (True, str, None)
+  status (False, str, None)
     None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   generation (False, any, 2)

@@ -371,20 +371,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    vlanid:
+    pi_network_name:
+        description:
+            - Network Name to be used for pvminstances
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    vlan_id:
         description:
             - None
         required: False
         type: int
-    gateway:
-        description:
-            - None
-        required: False
-        type: str
     available_ip_count:
         description:
             - None
@@ -400,12 +405,7 @@ options:
             - None
         required: False
         type: float
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
-    name:
+    cidr:
         description:
             - None
         required: False
@@ -415,17 +415,7 @@ options:
             - None
         required: False
         type: str
-    pi_network_name:
-        description:
-            - Network Name to be used for pvminstances
-        required: True
-        type: str
-    networkid:
-        description:
-            - None
-        required: False
-        type: str
-    cidr:
+    gateway:
         description:
             - None
         required: False
@@ -447,34 +437,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vlanid',
-    'gateway',
+    'pi_network_name',
+    'pi_cloud_instance_id',
+    'vlan_id',
     'available_ip_count',
     'used_ip_count',
     'used_ip_percent',
-    'pi_cloud_instance_id',
-    'name',
-    'type',
-    'pi_network_name',
-    'networkid',
     'cidr',
+    'type',
+    'gateway',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vlanid=dict(
+    pi_network_name=dict(
+        required=True,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
+    vlan_id=dict(
         required=False,
         type='int'),
-    gateway=dict(
-        required=False,
-        type='str'),
     available_ip_count=dict(
         required=False,
         type='float'),
@@ -484,22 +475,13 @@ module_args = dict(
     used_ip_percent=dict(
         required=False,
         type='float'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
-    name=dict(
+    cidr=dict(
         required=False,
         type='str'),
     type=dict(
         required=False,
         type='str'),
-    pi_network_name=dict(
-        required=True,
-        type='str'),
-    networkid=dict(
-        required=False,
-        type='str'),
-    cidr=dict(
+    gateway=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -526,7 +508,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,52 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_name_id (True, str, None)
-    Name of the cluster
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  worker_count (False, int, None)
-    Number of workers
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  public_service_endpoint (False, bool, None)
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  private_service_endpoint_url (False, str, None)
     None
 
 
   status (False, str, None)
     The status of the cluster master
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  master_url (False, str, None)
-    None
-
-
-  health (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   workers (False, list, None)
@@ -90,14 +66,6 @@ Parameters
     None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   private_service_endpoint (False, bool, None)
     None
 
@@ -106,11 +74,43 @@ Parameters
     None
 
 
-  private_service_endpoint_url (False, str, None)
+  master_url (False, str, None)
     None
 
 
+  tags (False, list, None)
+    None
+
+
+  cluster_name_id (True, str, None)
+    Name of the cluster
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
   kube_version (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  health (False, str, None)
     None
 
 

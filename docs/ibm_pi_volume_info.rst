@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -30,15 +30,27 @@ Parameters
     None
 
 
-  name (False, str, None)
-    None
-
-
   bootable (False, bool, None)
     None
 
 
-  disktype (False, str, None)
+  state (False, str, None)
+    None
+
+
+  size (False, int, None)
+    None
+
+
+  name (False, str, None)
+    None
+
+
+  creation_date (False, str, None)
+    None
+
+
+  disk_type (False, str, None)
     None
 
 
@@ -47,22 +59,6 @@ Parameters
 
 
   pi_cloud_instance_id (True, str, None)
-    None
-
-
-  size (False, int, None)
-    None
-
-
-  creationdate (False, str, None)
-    None
-
-
-  volumeid (False, str, None)
-    None
-
-
-  state (False, str, None)
     None
 
 

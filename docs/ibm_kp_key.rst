@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,32 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_name (False, str, None)
-    (Required for new resource)
-
-
-  payload (False, str, None)
-    None
-
-
-  encrypted_nonce (False, str, None)
-    Only for imported root key
-
-
-  crn (False, str, None)
-    Crn of the key
-
-
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
   key_protect_id (False, str, None)
     (Required for new resource)
 
 
-  standard_key (False, bool, False)
+  key_id (False, str, None)
     None
+
+
+  key_name (False, str, None)
+    (Required for new resource)
 
 
   iv_value (False, str, None)
@@ -70,12 +62,20 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  key_id (False, str, None)
+  standard_key (False, bool, False)
     None
+
+
+  payload (False, str, None)
+    None
+
+
+  encrypted_nonce (False, str, None)
+    Only for imported root key
+
+
+  crn (False, str, None)
+    Crn of the key
 
 
   id (False, str, None)

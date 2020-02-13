@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,15 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  flavor (False, str, None)
+    (Required for new resource)
+
+
   name (False, str, None)
     (Required for new resource) The cluster name
 
 
-  zones (False, list, None)
-    (Required for new resource)
+  vpc_id (False, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
-  tags (False, list, None)
+  kube_version (False, str, None)
     None
 
 
@@ -42,24 +46,24 @@ Parameters
     ID of the resource group.
 
 
-  public_service_endpoint_url (False, str, None)
+  master_url (False, str, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  vpc_id (False, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  zones (False, list, None)
+    (Required for new resource)
 
 
   pod_subnet (False, str, 172.30.0.0/16)
     Custom subnet CIDR to provide private IP addresses for pods
+
+
+  state_ (False, str, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
 
 
   resource_controller_url (False, str, None)
@@ -70,31 +74,11 @@ Parameters
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   albs (False, list, None)
     None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  kube_version (False, str, None)
-    None
-
-
-  service_subnet (False, str, 172.21.0.0/16)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  disable_public_service_endpoint (False, bool, False)
-    None
-
-
-  state_ (False, str, None)
+  private_service_endpoint_url (False, str, None)
     None
 
 
@@ -102,20 +86,36 @@ Parameters
     CRN of resource instance
 
 
-  flavor (False, str, None)
-    (Required for new resource)
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  service_subnet (False, str, 172.21.0.0/16)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
   worker_count (False, int, 1)
     None
 
 
-  master_url (False, str, None)
+  disable_public_service_endpoint (False, bool, False)
     None
 
 
-  private_service_endpoint_url (False, str, None)
+  tags (False, list, None)
     None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

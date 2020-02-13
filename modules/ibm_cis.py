@@ -371,7 +371,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -380,14 +380,45 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
     resource_status:
         description:
             - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) The location where the instance available
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    status:
+        description:
+            - Status of resource instance
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
+    resource_crn:
+        description:
+            - The crn of the resource
         required: False
         type: str
     resource_controller_url:
@@ -405,42 +436,11 @@ options:
             - The name of the Cloud Internet Services offering
         required: False
         type: str
-    resource_group_id:
-        description:
-            - The resource group id
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    status:
-        description:
-            - Status of resource instance
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
     plan:
         description:
             - (Required for new resource) The plan type of the service
         required: False
         type: str
-    location:
-        description:
-            - (Required for new resource) The location where the instance available
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -471,26 +471,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('location', 'str'),
     ('name', 'str'),
     ('plan', 'str'),
-    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_name',
-    'resource_crn',
     'resource_status',
+    'resource_group_name',
+    'location',
+    'tags',
+    'status',
+    'resource_group_id',
+    'parameters',
+    'resource_crn',
     'resource_controller_url',
     'name',
     'service',
-    'resource_group_id',
-    'tags',
-    'status',
-    'resource_group_name',
     'plan',
-    'location',
-    'parameters',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -499,10 +499,29 @@ module_args = dict(
     resource_name=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_status=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    status=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
+    resource_crn=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
@@ -514,28 +533,9 @@ module_args = dict(
     service=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    status=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
     plan=dict(
         required=False,
         type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -578,7 +578,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

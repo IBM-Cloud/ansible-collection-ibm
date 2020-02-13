@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_health_status (False, str, None)
+  pi_volume_ids (False, list, None)
     None
 
 
@@ -34,51 +34,19 @@ Parameters
     (Required for new resource)
 
 
-  pi_key_pair_name (False, str, None)
+  pi_memory (False, float, None)
     (Required for new resource)
 
 
-  pi_minproc (False, float, None)
+  pi_replication_scheme (False, str, suffix)
     None
-
-
-  pi_user_data (False, str, None)
-    Base64 encoded data to be passed in for invoking a cloud init script
 
 
   addresses (False, list, None)
     None
 
 
-  instance_volumes (False, list, None)
-    None
-
-
-  pi_image_id (False, str, None)
-    (Required for new resource)
-
-
-  pi_replicants (False, float, None)
-    None
-
-
-  pi_progress (False, float, None)
-    Progress of the operation
-
-
-  pi_cloud_instance_id (False, str, None)
-    (Required for new resource) This is the Power Instance id that is assigned to the account
-
-
-  pi_disk_size (False, int, None)
-    None
-
-
-  pi_migratable (False, bool, None)
-    (Required for new resource)
-
-
-  pi_creation_date (False, str, None)
+  instance_id (False, str, None)
     None
 
 
@@ -86,11 +54,15 @@ Parameters
     (Required for new resource)
 
 
-  pi_sys_type (False, str, None)
-    (Required for new resource)
+  pi_replicants (False, float, 1)
+    None
 
 
-  pi_replication_policy (False, str, None)
+  pi_cloud_instance_id (False, str, None)
+    (Required for new resource) This is the Power Instance id that is assigned to the account
+
+
+  min_processors (False, float, None)
     None
 
 
@@ -98,11 +70,31 @@ Parameters
     (Required for new resource) Set of Networks that have been configured for the account
 
 
-  pi_volume_ids (False, list, None)
+  pi_user_data (False, str, None)
+    Base64 encoded data to be passed in for invoking a cloud init script
+
+
+  pi_progress (False, float, None)
+    Progress of the operation
+
+
+  migratable (False, bool, None)
+    None
+
+
+  health_status (False, str, None)
+    None
+
+
+  pi_image_id (False, str, None)
     (Required for new resource)
 
 
-  pi_instance_id (False, str, None)
+  pi_replication_policy (False, str, none)
+    None
+
+
+  status (False, str, None)
     None
 
 
@@ -110,20 +102,12 @@ Parameters
     (Required for new resource)
 
 
-  pi_instance_status (False, str, None)
-    None
-
-
-  pi_public_network (False, bool, False)
-    Public Network to be attached to the vm
-
-
-  pi_memory (False, float, None)
+  pi_key_pair_name (False, str, None)
     (Required for new resource)
 
 
-  pi_replication_scheme (False, str, None)
-    None
+  pi_sys_type (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

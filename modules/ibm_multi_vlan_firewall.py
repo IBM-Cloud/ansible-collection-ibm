@@ -371,11 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    pod:
         description:
             - (Required for new resource) 
         required: False
@@ -385,17 +385,12 @@ options:
             - None
         required: False
         type: int
-    private_vlan_id:
+    firewall_type:
         description:
-            - None
-        required: False
-        type: int
-    public_ipv6:
-        description:
-            - None
+            - (Required for new resource) 
         required: False
         type: str
-    private_ip:
+    public_ipv6:
         description:
             - None
         required: False
@@ -411,7 +406,7 @@ options:
         required: False
         type: list
         elements: str
-    pod:
+    datacenter:
         description:
             - (Required for new resource) 
         required: False
@@ -421,12 +416,17 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    firewall_type:
+    private_vlan_id:
         description:
-            - (Required for new resource) 
+            - None
+        required: False
+        type: int
+    public_ip:
+        description:
+            - None
         required: False
         type: str
-    public_ip:
+    private_ip:
         description:
             - None
         required: False
@@ -466,44 +466,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('pod', 'str'),
-    ('name', 'str'),
     ('firewall_type', 'str'),
+    ('datacenter', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
+    'pod',
     'public_vlan_id',
-    'private_vlan_id',
+    'firewall_type',
     'public_ipv6',
-    'private_ip',
     'password',
     'addon_configuration',
-    'pod',
+    'datacenter',
     'name',
-    'firewall_type',
+    'private_vlan_id',
     'public_ip',
+    'private_ip',
     'username',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    pod=dict(
         required=False,
         type='str'),
     public_vlan_id=dict(
         required=False,
         type='int'),
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
-    public_ipv6=dict(
+    firewall_type=dict(
         required=False,
         type='str'),
-    private_ip=dict(
+    public_ipv6=dict(
         required=False,
         type='str'),
     password=dict(
@@ -513,16 +510,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pod=dict(
+    datacenter=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    firewall_type=dict(
+    private_vlan_id=dict(
+        required=False,
+        type='int'),
+    public_ip=dict(
         required=False,
         type='str'),
-    public_ip=dict(
+    private_ip=dict(
         required=False,
         type='str'),
     username=dict(
@@ -570,7 +570,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

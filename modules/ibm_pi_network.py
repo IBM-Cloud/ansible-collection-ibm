@@ -371,33 +371,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    pi_dns:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: list
-        elements: str
-    pi_ipaddress_range:
+    pi_cidr:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: str
+    pi_gateway:
+        description:
+            - None
+        required: False
+        type: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    pi_networkid:
+    network_id:
         description:
             - None
         required: False
         type: str
-    pi_vlan_id:
+    vlan_id:
         description:
             - None
         required: False
@@ -412,16 +410,12 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    pi_cidr:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    pi_gateway:
+    pi_dns:
         description:
             - None
         required: False
-        type: str
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -452,44 +446,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_dns', 'list'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_network_type', 'str'),
     ('pi_network_name', 'str'),
-    ('pi_cidr', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_dns',
-    'pi_ipaddress_range',
-    'pi_cloud_instance_id',
-    'pi_networkid',
-    'pi_vlan_id',
-    'pi_network_type',
-    'pi_network_name',
     'pi_cidr',
     'pi_gateway',
+    'pi_cloud_instance_id',
+    'network_id',
+    'vlan_id',
+    'pi_network_type',
+    'pi_network_name',
+    'pi_dns',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_dns=dict(
+    pi_cidr=dict(
         required=False,
-        elements='',
-        type='list'),
-    pi_ipaddress_range=dict(
+        type='str'),
+    pi_gateway=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_networkid=dict(
+    network_id=dict(
         required=False,
         type='str'),
-    pi_vlan_id=dict(
+    vlan_id=dict(
         required=False,
         type='float'),
     pi_network_type=dict(
@@ -498,12 +487,10 @@ module_args = dict(
     pi_network_name=dict(
         required=False,
         type='str'),
-    pi_cidr=dict(
+    pi_dns=dict(
         required=False,
-        type='str'),
-    pi_gateway=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -546,7 +533,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,7 +371,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_vpc' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -385,12 +385,22 @@ options:
             - The crn of the resource
         required: False
         type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
     classic_access:
         description:
             - None
         required: False
         type: bool
-    status:
+    name:
+        description:
+            - None
+        required: True
+        type: str
+    resource_group:
         description:
             - None
         required: False
@@ -400,35 +410,25 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
+    default_network_acl:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    default_network_acl:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: True
-        type: str
-    resource_group:
-        description:
-            - None
         required: False
         type: str
     generation:
@@ -476,15 +476,15 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'resource_name',
     'resource_crn',
-    'classic_access',
-    'status',
-    'resource_controller_url',
-    'tags',
     'resource_status',
-    'resource_group_name',
-    'default_network_acl',
+    'classic_access',
     'name',
     'resource_group',
+    'resource_controller_url',
+    'default_network_acl',
+    'status',
+    'tags',
+    'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -496,32 +496,32 @@ module_args = dict(
     resource_crn=dict(
         required=False,
         type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
     classic_access=dict(
         required=False,
         type='bool'),
-    status=dict(
+    name=dict(
+        required=True,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    default_network_acl=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_status=dict(
-        required=False,
-        type='str'),
     resource_group_name=dict(
-        required=False,
-        type='str'),
-    default_network_acl=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=True,
-        type='str'),
-    resource_group=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -580,7 +580,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

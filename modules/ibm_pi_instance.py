@@ -371,126 +371,39 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    pi_migratable:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: bool
-    pi_network_ids:
-        description:
-            - (Required for new resource) Set of Networks that have been configured for the account
-        required: False
-        type: list
-        elements: str
-    pi_public_network:
-        description:
-            - Public Network to be attached to the vm
-        required: False
-        type: bool
-        default: False
     pi_volume_ids:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: list
-        elements: str
-    instance_volumes:
         description:
             - None
         required: False
         type: list
-        elements: dict
-    pi_image_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
+        elements: str
     pi_processors:
         description:
             - (Required for new resource) 
         required: False
         type: float
-    pi_instance_name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    pi_replicants:
-        description:
-            - None
-        required: False
-        type: float
-    pi_instance_status:
-        description:
-            - None
-        required: False
-        type: str
-    pi_minproc:
-        description:
-            - None
-        required: False
-        type: float
-    pi_user_data:
-        description:
-            - Base64 encoded data to be passed in for invoking a cloud init script
-        required: False
-        type: str
-    pi_creation_date:
-        description:
-            - None
-        required: False
-        type: str
     pi_memory:
         description:
             - (Required for new resource) 
         required: False
         type: float
-    pi_sys_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     pi_replication_scheme:
         description:
             - None
         required: False
         type: str
-    pi_progress:
-        description:
-            - Progress of the operation
-        required: False
-        type: float
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) This is the Power Instance id that is assigned to the account
-        required: False
-        type: str
-    pi_disk_size:
-        description:
-            - None
-        required: False
-        type: int
-    pi_health_status:
-        description:
-            - None
-        required: False
-        type: str
-    pi_replication_policy:
-        description:
-            - None
-        required: False
-        type: str
+        default: suffix
     addresses:
         description:
             - None
         required: False
         type: list
         elements: dict
-    pi_instance_id:
+    instance_id:
         description:
             - None
         required: False
@@ -500,7 +413,75 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    pi_replicants:
+        description:
+            - None
+        required: False
+        type: float
+        default: 1
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) This is the Power Instance id that is assigned to the account
+        required: False
+        type: str
+    min_processors:
+        description:
+            - None
+        required: False
+        type: float
+    pi_network_ids:
+        description:
+            - (Required for new resource) Set of Networks that have been configured for the account
+        required: False
+        type: list
+        elements: str
+    pi_user_data:
+        description:
+            - Base64 encoded data to be passed in for invoking a cloud init script
+        required: False
+        type: str
+    pi_progress:
+        description:
+            - Progress of the operation
+        required: False
+        type: float
+    migratable:
+        description:
+            - None
+        required: False
+        type: bool
+    health_status:
+        description:
+            - None
+        required: False
+        type: str
+    pi_image_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    pi_replication_policy:
+        description:
+            - None
+        required: False
+        type: str
+        default: none
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     pi_key_pair_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    pi_sys_type:
         description:
             - (Required for new resource) 
         required: False
@@ -535,128 +516,109 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_migratable', 'bool'),
-    ('pi_network_ids', 'list'),
-    ('pi_volume_ids', 'list'),
-    ('pi_image_id', 'str'),
     ('pi_processors', 'float'),
-    ('pi_instance_name', 'str'),
     ('pi_memory', 'float'),
-    ('pi_sys_type', 'str'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_proc_type', 'str'),
+    ('pi_cloud_instance_id', 'str'),
+    ('pi_network_ids', 'list'),
+    ('pi_image_id', 'str'),
+    ('pi_instance_name', 'str'),
     ('pi_key_pair_name', 'str'),
+    ('pi_sys_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_migratable',
-    'pi_network_ids',
-    'pi_public_network',
     'pi_volume_ids',
-    'instance_volumes',
-    'pi_image_id',
     'pi_processors',
-    'pi_instance_name',
-    'pi_replicants',
-    'pi_instance_status',
-    'pi_minproc',
-    'pi_user_data',
-    'pi_creation_date',
     'pi_memory',
-    'pi_sys_type',
     'pi_replication_scheme',
-    'pi_progress',
-    'pi_cloud_instance_id',
-    'pi_disk_size',
-    'pi_health_status',
-    'pi_replication_policy',
     'addresses',
-    'pi_instance_id',
+    'instance_id',
     'pi_proc_type',
+    'pi_replicants',
+    'pi_cloud_instance_id',
+    'min_processors',
+    'pi_network_ids',
+    'pi_user_data',
+    'pi_progress',
+    'migratable',
+    'health_status',
+    'pi_image_id',
+    'pi_replication_policy',
+    'status',
+    'pi_instance_name',
     'pi_key_pair_name',
+    'pi_sys_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_migratable=dict(
-        required=False,
-        type='bool'),
-    pi_network_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pi_public_network=dict(
-        default=False,
-        type='bool'),
     pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
-    instance_volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pi_image_id=dict(
-        required=False,
-        type='str'),
     pi_processors=dict(
         required=False,
         type='float'),
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
-    pi_replicants=dict(
-        required=False,
-        type='float'),
-    pi_instance_status=dict(
-        required=False,
-        type='str'),
-    pi_minproc=dict(
-        required=False,
-        type='float'),
-    pi_user_data=dict(
-        required=False,
-        type='str'),
-    pi_creation_date=dict(
-        required=False,
-        type='str'),
     pi_memory=dict(
         required=False,
         type='float'),
-    pi_sys_type=dict(
-        required=False,
-        type='str'),
     pi_replication_scheme=dict(
-        required=False,
-        type='str'),
-    pi_progress=dict(
-        required=False,
-        type='float'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_disk_size=dict(
-        required=False,
-        type='int'),
-    pi_health_status=dict(
-        required=False,
-        type='str'),
-    pi_replication_policy=dict(
-        required=False,
+        default='suffix',
         type='str'),
     addresses=dict(
         required=False,
         elements='',
         type='list'),
-    pi_instance_id=dict(
+    instance_id=dict(
         required=False,
         type='str'),
     pi_proc_type=dict(
         required=False,
         type='str'),
+    pi_replicants=dict(
+        default=1,
+        type='float'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    min_processors=dict(
+        required=False,
+        type='float'),
+    pi_network_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_user_data=dict(
+        required=False,
+        type='str'),
+    pi_progress=dict(
+        required=False,
+        type='float'),
+    migratable=dict(
+        required=False,
+        type='bool'),
+    health_status=dict(
+        required=False,
+        type='str'),
+    pi_image_id=dict(
+        required=False,
+        type='str'),
+    pi_replication_policy=dict(
+        default='none',
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
     pi_key_pair_name=dict(
+        required=False,
+        type='str'),
+    pi_sys_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -701,7 +663,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

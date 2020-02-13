@@ -371,31 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_action' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    version:
-        description:
-            - Semantic version of the item.
-        required: False
-        type: str
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-        required: False
-        type: str
-        default: []
-    parameters:
-        description:
-            - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of action.
-        required: False
-        type: str
     limits:
         description:
             - None
@@ -408,20 +387,41 @@ options:
         required: False
         type: list
         elements: dict
-    publish:
+    version:
         description:
-            - Action visibilty.
+            - Semantic version of the item.
         required: False
-        type: bool
+        type: str
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
         required: False
         type: str
         default: []
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+        required: False
+        type: str
+        default: []
     annotations:
         description:
             - All annotations set on action by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of action.
+        required: False
+        type: str
+    publish:
+        description:
+            - Action visibilty.
+        required: False
+        type: bool
+    parameters:
+        description:
+            - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
     id:
@@ -454,38 +454,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('exec', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'version',
-    'user_defined_parameters',
-    'parameters',
-    'name',
     'limits',
     'exec',
-    'publish',
+    'version',
     'user_defined_annotations',
+    'user_defined_parameters',
     'annotations',
+    'name',
+    'publish',
+    'parameters',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    version=dict(
-        required=False,
-        type='str'),
-    user_defined_parameters=dict(
-        default='[]',
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     limits=dict(
         required=False,
         elements='',
@@ -494,13 +482,25 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    publish=dict(
+    version=dict(
         required=False,
-        type='bool'),
+        type='str'),
     user_defined_annotations=dict(
         default='[]',
         type='str'),
+    user_defined_parameters=dict(
+        default='[]',
+        type='str'),
     annotations=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    publish=dict(
+        required=False,
+        type='bool'),
+    parameters=dict(
         required=False,
         type='str'),
     id=dict(
@@ -545,7 +545,7 @@ def run_module():
         resource_type='ibm_function_action',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,37 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    nad_controller_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
     load_balancing_method:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    persistence:
-        description:
-            - None
-        required: False
-        type: str
-    virtual_ip_address:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    name:
         description:
             - (Required for new resource) 
         required: False
@@ -421,6 +395,32 @@ options:
             - None
         required: False
         type: int
+    nad_controller_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    virtual_ip_address:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    persistence:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -451,47 +451,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
-    ('virtual_ip_address', 'str'),
-    ('name', 'str'),
     ('source_port', 'int'),
     ('type', 'str'),
+    ('nad_controller_id', 'int'),
+    ('name', 'str'),
+    ('virtual_ip_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'nad_controller_id',
     'load_balancing_method',
-    'persistence',
-    'virtual_ip_address',
-    'name',
     'source_port',
     'type',
     'security_certificate_id',
+    'nad_controller_id',
+    'name',
+    'virtual_ip_address',
+    'tags',
+    'persistence',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    nad_controller_id=dict(
-        required=False,
-        type='int'),
     load_balancing_method=dict(
-        required=False,
-        type='str'),
-    persistence=dict(
-        required=False,
-        type='str'),
-    virtual_ip_address=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     source_port=dict(
@@ -503,6 +487,22 @@ module_args = dict(
     security_certificate_id=dict(
         required=False,
         type='int'),
+    nad_controller_id=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    virtual_ip_address=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    persistence=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -545,7 +545,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

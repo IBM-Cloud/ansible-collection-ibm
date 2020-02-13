@@ -371,7 +371,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -380,17 +380,23 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    status:
+    volumes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    state:
         description:
             - None
         required: False
         type: str
-    replicants:
+    processors:
         description:
             - None
         required: False
         type: int
-    name:
+    health_status:
         description:
             - None
         required: False
@@ -401,48 +407,17 @@ options:
         required: False
         type: list
         elements: dict
+    proctype:
+        description:
+            - None
+        required: False
+        type: str
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
-    volumeid:
-        description:
-            - None
-        required: False
-        type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
-    replicationpolicy:
-        description:
-            - None
-        required: False
-        type: str
-    processors:
-        description:
-            - None
-        required: False
-        type: int
-    shareable:
-        description:
-            - None
-        required: False
-        type: bool
-    healthstatus:
-        description:
-            - None
-        required: False
-        type: str
-    health:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    proctype:
+    status:
         description:
             - None
         required: False
@@ -471,19 +446,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
-    'status',
-    'replicants',
-    'name',
-    'addresses',
-    'pi_cloud_instance_id',
-    'volumeid',
+    'volumes',
     'state',
-    'replicationpolicy',
     'processors',
-    'shareable',
-    'healthstatus',
-    'health',
+    'health_status',
+    'addresses',
     'proctype',
+    'pi_cloud_instance_id',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -492,45 +462,30 @@ module_args = dict(
     pi_instance_name=dict(
         required=True,
         type='str'),
-    status=dict(
+    volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    state=dict(
         required=False,
         type='str'),
-    replicants=dict(
+    processors=dict(
         required=False,
         type='int'),
-    name=dict(
+    health_status=dict(
         required=False,
         type='str'),
     addresses=dict(
         required=False,
         elements='',
         type='list'),
+    proctype=dict(
+        required=False,
+        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    volumeid=dict(
-        required=False,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    replicationpolicy=dict(
-        required=False,
-        type='str'),
-    processors=dict(
-        required=False,
-        type='int'),
-    shareable=dict(
-        required=False,
-        type='bool'),
-    healthstatus=dict(
-        required=False,
-        type='str'),
-    health=dict(
-        required=False,
-        elements='',
-        type='list'),
-    proctype=dict(
+    status=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -557,7 +512,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

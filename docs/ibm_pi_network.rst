@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,7 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_vlan_id (False, float, None)
+  pi_cidr (False, str, None)
+    None
+
+
+  pi_gateway (False, str, None)
     None
 
 
@@ -34,23 +38,11 @@ Parameters
     (Required for new resource)
 
 
-  pi_networkid (False, str, None)
+  network_id (False, str, None)
     None
 
 
-  pi_dns (False, list, None)
-    (Required for new resource)
-
-
-  pi_cidr (False, str, None)
-    (Required for new resource)
-
-
-  pi_ipaddress_range (False, list, None)
-    None
-
-
-  pi_gateway (False, str, None)
+  vlan_id (False, float, None)
     None
 
 
@@ -60,6 +52,10 @@ Parameters
 
   pi_network_name (False, str, None)
     (Required for new resource)
+
+
+  pi_dns (False, list, None)
+    None
 
 
   id (False, str, None)

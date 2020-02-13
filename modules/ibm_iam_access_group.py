@@ -371,20 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    version:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the access group
-        required: False
-        type: str
     description:
         description:
             - Description of the access group
@@ -396,6 +386,16 @@ options:
         required: False
         type: list
         elements: str
+    version:
+        description:
+            - None
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the access group
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -431,21 +431,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'version',
-    'name',
     'description',
     'tags',
+    'version',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    version=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -453,6 +447,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    version=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -495,7 +495,7 @@ def run_module():
         resource_type='ibm_iam_access_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

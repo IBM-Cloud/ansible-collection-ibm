@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
-
-
-  network (False, bool, False)
-    If set to true will download the Calico network config with the Admin config
-
-
-  config_file_path (False, str, None)
-    The absolute path to the kubernetes config yml file
-
 
   calico_config_file_path (False, str, None)
     The absolute path to the calico network config file
@@ -46,12 +34,20 @@ Parameters
     The bluemix space guid this cluster belongs to
 
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
+  config_dir (False, str, None)
+    The directory where the cluster config to be downloaded. Default is home directory
 
 
   region (False, str, None)
     The cluster region
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
 
 
   download (False, bool, True)
@@ -62,16 +58,20 @@ Parameters
     If set to true will download the config for admin
 
 
+  network (False, bool, False)
+    If set to true will download the Calico network config with the Admin config
+
+
   org_guid (False, str, None)
     The bluemix organization guid this cluster belongs to
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
+  config_file_path (False, str, None)
+    The absolute path to the kubernetes config yml file
 
 
   ibmcloud_api_key (True, any, None)

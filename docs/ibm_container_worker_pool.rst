@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
 
   cluster (False, str, None)
     (Required for new resource)
@@ -34,23 +38,7 @@ Parameters
     (Required for new resource)
 
 
-  size_per_zone (False, int, None)
-    (Required for new resource)
-
-
   hardware (False, str, shared)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_pool_name (False, str, None)
-    (Required for new resource)
-
-
-  disk_encryption (False, bool, True)
     None
 
 
@@ -62,16 +50,28 @@ Parameters
     None
 
 
-  labels (False, dict, None)
-    None
-
-
   region (False, str, None)
     The worker pool region
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  worker_pool_name (False, str, None)
+    (Required for new resource)
+
+
+  size_per_zone (False, int, None)
+    (Required for new resource)
+
+
+  disk_encryption (False, bool, True)
+    None
+
+
+  labels (False, dict, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   id (False, str, None)

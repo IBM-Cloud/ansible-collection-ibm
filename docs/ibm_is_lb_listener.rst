@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (False, int, None)
+    (Required for new resource)
+
+
+  protocol (False, str, None)
+    (Required for new resource)
+
 
   certificate_instance (False, str, None)
     None
@@ -43,14 +51,6 @@ Parameters
 
 
   lb (False, str, None)
-    (Required for new resource)
-
-
-  port (False, int, None)
-    (Required for new resource)
-
-
-  protocol (False, str, None)
     (Required for new resource)
 
 

@@ -371,13 +371,29 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    resource_group:
+    is_frozen:
         description:
-            - The resource group of workspace
+            - None
+        required: False
+        type: bool
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
         type: str
     status:
@@ -391,14 +407,14 @@ options:
         required: False
         type: list
         elements: str
-    is_frozen:
+    name:
         description:
-            - None
+            - The name of workspace
         required: False
-        type: bool
-    resource_controller_url:
+        type: str
+    resource_group:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
+            - The resource group of workspace
         required: False
         type: str
     workspace_id:
@@ -409,22 +425,6 @@ options:
     template_id:
         description:
             - The id of templates
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - The name of workspace
-        required: False
-        type: str
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
-    tags:
-        description:
-            - None
         required: False
         type: list
         elements: str
@@ -450,22 +450,32 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'status',
-    'types',
     'is_frozen',
-    'resource_controller_url',
-    'workspace_id',
-    'template_id',
-    'name',
     'is_locked',
     'tags',
+    'resource_controller_url',
+    'status',
+    'types',
+    'name',
+    'resource_group',
+    'workspace_id',
+    'template_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
+    is_frozen=dict(
+        required=False,
+        type='bool'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     status=dict(
@@ -475,26 +485,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    is_frozen=dict(
+    name=dict(
         required=False,
-        type='bool'),
-    resource_controller_url=dict(
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     workspace_id=dict(
         required=True,
         type='str'),
     template_id=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    is_locked=dict(
-        required=False,
-        type='bool'),
-    tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -522,7 +522,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,7 +371,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -385,7 +385,7 @@ options:
             - None
         required: True
         type: str
-    creationdate:
+    creation_date:
         description:
             - None
         required: False
@@ -420,7 +420,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_key_name',
     'pi_cloud_instance_id',
-    'creationdate',
+    'creation_date',
     'sshkey',
 ]
 
@@ -433,7 +433,7 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    creationdate=dict(
+    creation_date=dict(
         required=False,
         type='str'),
     sshkey=dict(
@@ -463,7 +463,7 @@ def run_module():
         resource_type='ibm_pi_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

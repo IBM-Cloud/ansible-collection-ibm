@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,23 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (True, str, None)
+    None
+
+
   pi_network_name (True, str, None)
     None
 
 
-  name (False, str, None)
+  ip (False, str, None)
     None
 
 
-  requestip (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  ipoctet (False, str, None)
+  external_ip (False, str, None)
     None
 
 
@@ -50,7 +46,19 @@ Parameters
     Server Name to be used for pvminstances
 
 
-  pi_cloud_instance_id (True, str, None)
+  ipoctet (False, str, None)
+    None
+
+
+  macaddress (False, str, None)
+    None
+
+
+  network_id (False, str, None)
+    None
+
+
+  type (False, str, None)
     None
 
 

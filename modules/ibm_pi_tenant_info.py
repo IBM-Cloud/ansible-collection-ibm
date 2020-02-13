@@ -371,31 +371,11 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_tenant' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    tenantid:
-        description:
-            - None
-        required: False
-        type: str
-    creationdate:
-        description:
-            - None
-        required: False
-        type: str
-    enabled:
-        description:
-            - None
-        required: False
-        type: bool
-    tenantname:
-        description:
-            - None
-        required: False
-        type: str
-    cloudinstances:
+    cloud_instances:
         description:
             - None
         required: False
@@ -405,6 +385,21 @@ options:
         description:
             - None
         required: True
+        type: str
+    creation_date:
+        description:
+            - None
+        required: False
+        type: str
+    enabled:
+        description:
+            - None
+        required: False
+        type: bool
+    tenant_name:
+        description:
+            - None
+        required: False
         type: str
     ibmcloud_api_key:
         description:
@@ -428,35 +423,31 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tenantid',
-    'creationdate',
-    'enabled',
-    'tenantname',
-    'cloudinstances',
+    'cloud_instances',
     'pi_cloud_instance_id',
+    'creation_date',
+    'enabled',
+    'tenant_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tenantid=dict(
-        required=False,
-        type='str'),
-    creationdate=dict(
-        required=False,
-        type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    tenantname=dict(
-        required=False,
-        type='str'),
-    cloudinstances=dict(
+    cloud_instances=dict(
         required=False,
         elements='',
         type='list'),
     pi_cloud_instance_id=dict(
         required=True,
+        type='str'),
+    creation_date=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    tenant_name=dict(
+        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -482,7 +473,7 @@ def run_module():
         resource_type='ibm_pi_tenant',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

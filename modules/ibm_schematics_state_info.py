@@ -371,20 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_state' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    workspace_id:
-        description:
-            - The id of workspace
-        required: True
-        type: str
-    template_id:
-        description:
-            - The id of template
-        required: True
-        type: str
     state_store:
         description:
             - None
@@ -394,6 +384,16 @@ options:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
+        type: str
+    workspace_id:
+        description:
+            - The id of workspace
+        required: True
+        type: str
+    template_id:
+        description:
+            - The id of template
+        required: True
         type: str
     ibmcloud_api_key:
         description:
@@ -418,26 +418,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'workspace_id',
-    'template_id',
     'state_store',
     'resource_controller_url',
+    'workspace_id',
+    'template_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    workspace_id=dict(
-        required=True,
-        type='str'),
-    template_id=dict(
-        required=True,
-        type='str'),
     state_store=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
+        type='str'),
+    workspace_id=dict(
+        required=True,
+        type='str'),
+    template_id=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -463,7 +463,7 @@ def run_module():
         resource_type='ibm_schematics_state',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

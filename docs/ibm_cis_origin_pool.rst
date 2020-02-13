@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notification_email (False, str, None)
+  description (False, str, None)
     None
+
+
+  enabled (False, bool, None)
+    (Required for new resource)
 
 
   origins (False, list, None)
@@ -35,22 +39,6 @@ Parameters
 
 
   created_on (False, str, None)
-    None
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  description (False, str, None)
-    None
-
-
-  minimum_origins (False, int, 1)
-    None
-
-
-  monitor (False, str, None)
     None
 
 
@@ -66,11 +54,23 @@ Parameters
     (Required for new resource)
 
 
-  enabled (False, bool, None)
-    (Required for new resource)
+  monitor (False, str, None)
+    None
+
+
+  notification_email (False, str, None)
+    None
 
 
   healthy (False, str, None)
+    None
+
+
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  minimum_origins (False, int, 1)
     None
 
 

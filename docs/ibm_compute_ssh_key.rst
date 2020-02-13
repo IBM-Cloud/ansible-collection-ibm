@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  notes (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
 
   label (False, str, None)
     (Required for new resource)
@@ -35,14 +43,6 @@ Parameters
 
 
   fingerprint (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  tags (False, list, None)
     None
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  subnet_id (False, int, None)
-    None
+  datacenter (False, str, None)
+    (Required for new resource)
 
 
   dedicated (False, bool, False)
@@ -35,6 +35,14 @@ Parameters
 
 
   ssl_enabled (False, bool, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  subnet_id (False, int, None)
     None
 
 
@@ -46,11 +54,7 @@ Parameters
     None
 
 
-  security_certificate_id (False, int, None)
-    None
-
-
-  datacenter (False, str, None)
+  connections (False, int, None)
     (Required for new resource)
 
 
@@ -58,16 +62,12 @@ Parameters
     None
 
 
+  security_certificate_id (False, int, None)
+    None
+
+
   ip_address (False, str, None)
     None
-
-
-  tags (False, list, None)
-    None
-
-
-  connections (False, int, None)
-    (Required for new resource)
 
 
   id (False, str, None)

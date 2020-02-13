@@ -371,20 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    ipoctet:
-        description:
-            - None
-        required: False
-        type: str
-    pi_instance_name:
-        description:
-            - Server Name to be used for pvminstances
-        required: True
-        type: str
     pi_cloud_instance_id:
         description:
             - None
@@ -395,17 +385,37 @@ options:
             - None
         required: True
         type: str
-    name:
+    ip:
         description:
             - None
         required: False
         type: str
-    requestip:
+    external_ip:
         description:
             - None
         required: False
         type: str
-    status:
+    pi_instance_name:
+        description:
+            - Server Name to be used for pvminstances
+        required: True
+        type: str
+    ipoctet:
+        description:
+            - None
+        required: False
+        type: str
+    macaddress:
+        description:
+            - None
+        required: False
+        type: str
+    network_id:
+        description:
+            - None
+        required: False
+        type: str
+    type:
         description:
             - None
         required: False
@@ -427,44 +437,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ipoctet',
-    'pi_instance_name',
     'pi_cloud_instance_id',
     'pi_network_name',
-    'name',
-    'requestip',
-    'status',
+    'ip',
+    'external_ip',
+    'pi_instance_name',
+    'ipoctet',
+    'macaddress',
+    'network_id',
+    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ipoctet=dict(
-        required=False,
-        type='str'),
-    pi_instance_name=dict(
-        required=True,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
     pi_network_name=dict(
         required=True,
         type='str'),
-    name=dict(
+    ip=dict(
         required=False,
         type='str'),
-    requestip=dict(
+    external_ip=dict(
         required=False,
         type='str'),
-    status=dict(
+    pi_instance_name=dict(
+        required=True,
+        type='str'),
+    ipoctet=dict(
+        required=False,
+        type='str'),
+    macaddress=dict(
+        required=False,
+        type='str'),
+    network_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -491,7 +509,7 @@ def run_module():
         resource_type='ibm_pi_instance_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

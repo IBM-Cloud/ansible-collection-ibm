@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  path (False, str, None)
+    The path of the route
+
+
+  port (False, str, None)
+    The port of the route
+
 
   space_guid (True, str, None)
     The guid of the space
@@ -36,14 +44,6 @@ Parameters
 
   host (False, str, None)
     The host of the route
-
-
-  path (False, str, None)
-    The path of the route
-
-
-  port (False, str, None)
-    The port of the route
 
 
   ibmcloud_api_key (True, any, None)

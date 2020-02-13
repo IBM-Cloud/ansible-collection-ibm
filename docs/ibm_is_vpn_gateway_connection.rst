@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,11 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  timeout (False, int, 120)
+  vpn_gateway (False, str, None)
+    (Required for new resource)
+
+
+  peer_address (False, str, None)
+    (Required for new resource)
+
+
+  peer_cidrs (False, list, None)
     None
 
 
-  ipsec_policy (False, str, None)
+  action (False, str, none)
     None
 
 
@@ -42,7 +50,7 @@ Parameters
     None
 
 
-  preshared_key (False, str, None)
+  name (False, str, None)
     (Required for new resource)
 
 
@@ -54,28 +62,20 @@ Parameters
     None
 
 
-  peer_cidrs (False, list, None)
-    None
-
-
   interval (False, int, 30)
     None
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  vpn_gateway (False, str, None)
-    (Required for new resource)
-
-
-  peer_address (False, str, None)
-    (Required for new resource)
-
-
-  action (False, str, none)
+  timeout (False, int, 120)
     None
+
+
+  ipsec_policy (False, str, None)
+    None
+
+
+  preshared_key (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

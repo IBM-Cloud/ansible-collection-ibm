@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     worker_pool:
         description:
             - (Required for new resource) 
@@ -415,6 +410,11 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    cluster:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -445,14 +445,13 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('worker_pool', 'str'),
     ('zone', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'worker_pool',
     'private_vlan_id',
     'public_vlan_id',
@@ -460,14 +459,12 @@ TL_ALL_PARAMETERS = [
     'region',
     'worker_count',
     'zone',
+    'cluster',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
     worker_pool=dict(
         required=False,
         type='str'),
@@ -487,6 +484,9 @@ module_args = dict(
         required=False,
         type='int'),
     zone=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
         required=False,
         type='str'),
     id=dict(
@@ -531,7 +531,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

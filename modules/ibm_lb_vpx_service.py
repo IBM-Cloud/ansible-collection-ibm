@@ -371,16 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    destination_port:
+    weight:
         description:
             - (Required for new resource) 
         required: False
@@ -391,12 +386,17 @@ options:
         required: False
         type: str
         default: NO
-    vip_id:
+    destination_ip_address:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    weight:
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    destination_port:
         description:
             - (Required for new resource) 
         required: False
@@ -417,7 +417,7 @@ options:
         required: False
         type: list
         elements: str
-    destination_ip_address:
+    vip_id:
         description:
             - (Required for new resource) 
         required: False
@@ -452,44 +452,44 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('weight', 'int'),
+    ('destination_ip_address', 'str'),
     ('name', 'str'),
     ('destination_port', 'int'),
-    ('vip_id', 'str'),
-    ('weight', 'int'),
     ('connection_limit', 'int'),
     ('health_check', 'str'),
-    ('destination_ip_address', 'str'),
+    ('vip_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'weight',
+    'usip',
+    'destination_ip_address',
     'name',
     'destination_port',
-    'usip',
-    'vip_id',
-    'weight',
     'connection_limit',
     'health_check',
     'tags',
-    'destination_ip_address',
+    'vip_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    destination_port=dict(
+    weight=dict(
         required=False,
         type='int'),
     usip=dict(
         default='NO',
         type='str'),
-    vip_id=dict(
+    destination_ip_address=dict(
         required=False,
         type='str'),
-    weight=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    destination_port=dict(
         required=False,
         type='int'),
     connection_limit=dict(
@@ -502,7 +502,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    destination_ip_address=dict(
+    vip_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -547,7 +547,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

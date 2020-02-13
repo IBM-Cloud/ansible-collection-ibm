@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,27 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    None
+  pi_instance_name (True, str, None)
+    Server Name to be used for pvminstances
 
 
-  volumeid (False, str, None)
-    None
-
-
-  replicationpolicy (False, str, None)
-    None
-
-
-  processors (False, int, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  pi_cloud_instance_id (True, str, None)
+  volumes (False, list, None)
     None
 
 
@@ -54,15 +38,11 @@ Parameters
     None
 
 
-  replicants (False, int, None)
+  processors (False, int, None)
     None
 
 
-  shareable (False, bool, None)
-    None
-
-
-  healthstatus (False, str, None)
+  health_status (False, str, None)
     None
 
 
@@ -74,11 +54,11 @@ Parameters
     None
 
 
-  pi_instance_name (True, str, None)
-    Server Name to be used for pvminstances
+  pi_cloud_instance_id (True, str, None)
+    None
 
 
-  health (False, list, None)
+  status (False, str, None)
     None
 
 

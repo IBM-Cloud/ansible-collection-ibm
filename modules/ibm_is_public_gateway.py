@@ -371,7 +371,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
@@ -401,9 +401,9 @@ options:
         required: False
         type: dict
         elements: dict
-    zone:
+    status:
         description:
-            - (Required for new resource) 
+            - None
         required: False
         type: str
     vpc:
@@ -411,9 +411,9 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    resource_status:
+    zone:
         description:
-            - The status of the resource
+            - (Required for new resource) 
         required: False
         type: str
     name:
@@ -421,9 +421,9 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    status:
+    resource_status:
         description:
-            - None
+            - The status of the resource
         required: False
         type: str
     id:
@@ -477,8 +477,8 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('vpc', 'str'),
+    ('zone', 'str'),
     ('name', 'str'),
 ]
 
@@ -489,11 +489,11 @@ TL_ALL_PARAMETERS = [
     'resource_crn',
     'resource_group_name',
     'floating_ip',
-    'zone',
-    'vpc',
-    'resource_status',
-    'name',
     'status',
+    'vpc',
+    'zone',
+    'name',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -515,19 +515,19 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    zone=dict(
+    status=dict(
         required=False,
         type='str'),
     vpc=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    zone=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    status=dict(
+    resource_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -604,7 +604,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

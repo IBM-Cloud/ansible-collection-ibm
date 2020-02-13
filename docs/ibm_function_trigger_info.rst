@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  annotations (False, str, None)
+    All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
+
+
+  parameters (False, str, None)
+    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+
 
   name (True, str, None)
     Name of Trigger.
@@ -36,14 +44,6 @@ Parameters
 
   version (False, str, None)
     Semantic version of the trigger.
-
-
-  annotations (False, str, None)
-    All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
 
 
   ibmcloud_api_key (True, any, None)

@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    status:
-        description:
-            - None
-        required: False
-        type: str
     name_servers:
         description:
             - None
@@ -407,6 +402,11 @@ options:
             - None
         required: False
         type: bool
+    status:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -443,20 +443,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
     'name_servers',
     'original_name_servers',
     'cis_id',
     'domain',
     'paused',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
     name_servers=dict(
         required=False,
         elements='',
@@ -474,6 +471,9 @@ module_args = dict(
     paused=dict(
         required=False,
         type='bool'),
+    status=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -516,7 +516,7 @@ def run_module():
         resource_type='ibm_cis_domain',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

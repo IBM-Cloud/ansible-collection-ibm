@@ -371,11 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_user' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    email:
+    state_:
         description:
             - (Required for new resource) 
         required: False
@@ -386,26 +386,9 @@ options:
         required: False
         type: str
         default: ACTIVE
-    permissions:
+    username:
         description:
             - None
-        required: False
-        type: list
-        elements: str
-    has_api_key:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    ibm_id:
-        description:
-            - None
-        required: False
-        type: str
-    last_name:
-        description:
-            - (Required for new resource) 
         required: False
         type: str
     first_name:
@@ -413,17 +396,22 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    address1:
+    last_name:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    timezone:
+    email:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    username:
+    company_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    address2:
         description:
             - None
         required: False
@@ -434,17 +422,7 @@ options:
         required: False
         type: list
         elements: str
-    city:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    address2:
-        description:
-            - None
-        required: False
-        type: str
-    state_:
+    address1:
         description:
             - (Required for new resource) 
         required: False
@@ -459,14 +437,36 @@ options:
             - None
         required: False
         type: str
+    permissions:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    has_api_key:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    city:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    timezone:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     api_key:
         description:
             - None
         required: False
         type: str
-    company_name:
+    ibm_id:
         description:
-            - (Required for new resource) 
+            - None
         required: False
         type: str
     id:
@@ -499,84 +499,71 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('email', 'str'),
-    ('last_name', 'str'),
-    ('first_name', 'str'),
-    ('address1', 'str'),
-    ('timezone', 'str'),
-    ('city', 'str'),
     ('state_', 'str'),
-    ('country', 'str'),
+    ('first_name', 'str'),
+    ('last_name', 'str'),
+    ('email', 'str'),
     ('company_name', 'str'),
+    ('address1', 'str'),
+    ('country', 'str'),
+    ('city', 'str'),
+    ('timezone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'email',
-    'user_status',
-    'permissions',
-    'has_api_key',
-    'ibm_id',
-    'last_name',
-    'first_name',
-    'address1',
-    'timezone',
-    'username',
-    'tags',
-    'city',
-    'address2',
     'state_',
+    'user_status',
+    'username',
+    'first_name',
+    'last_name',
+    'email',
+    'company_name',
+    'address2',
+    'tags',
+    'address1',
     'country',
     'password',
+    'permissions',
+    'has_api_key',
+    'city',
+    'timezone',
     'api_key',
-    'company_name',
+    'ibm_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    email=dict(
+    state_=dict(
         required=False,
         type='str'),
     user_status=dict(
         default='ACTIVE',
         type='str'),
-    permissions=dict(
-        required=False,
-        elements='',
-        type='list'),
-    has_api_key=dict(
-        default=False,
-        type='bool'),
-    ibm_id=dict(
-        required=False,
-        type='str'),
-    last_name=dict(
+    username=dict(
         required=False,
         type='str'),
     first_name=dict(
         required=False,
         type='str'),
-    address1=dict(
+    last_name=dict(
         required=False,
         type='str'),
-    timezone=dict(
+    email=dict(
         required=False,
         type='str'),
-    username=dict(
+    company_name=dict(
+        required=False,
+        type='str'),
+    address2=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    city=dict(
-        required=False,
-        type='str'),
-    address2=dict(
-        required=False,
-        type='str'),
-    state_=dict(
+    address1=dict(
         required=False,
         type='str'),
     country=dict(
@@ -585,10 +572,23 @@ module_args = dict(
     password=dict(
         required=False,
         type='str'),
+    permissions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    has_api_key=dict(
+        default=False,
+        type='bool'),
+    city=dict(
+        required=False,
+        type='str'),
+    timezone=dict(
+        required=False,
+        type='str'),
     api_key=dict(
         required=False,
         type='str'),
-    company_name=dict(
+    ibm_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -633,7 +633,7 @@ def run_module():
         resource_type='ibm_compute_user',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

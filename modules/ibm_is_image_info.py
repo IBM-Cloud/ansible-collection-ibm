@@ -371,20 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    visibility:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
     os:
         description:
             - None
@@ -404,6 +394,16 @@ options:
         description:
             - None
         required: True
+        type: str
+    visibility:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
         type: str
     generation:
         description:
@@ -448,23 +448,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'visibility',
-    'status',
     'os',
     'architecture',
     'crn',
     'name',
+    'visibility',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    visibility=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
     os=dict(
         required=False,
         type='str'),
@@ -476,6 +470,12 @@ module_args = dict(
         type='str'),
     name=dict(
         required=True,
+        type='str'),
+    visibility=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
         type='str'),
     generation=dict(
         type='int',
@@ -533,7 +533,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

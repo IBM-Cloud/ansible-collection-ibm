@@ -371,23 +371,13 @@ description:
     - Retrieve an IBM Cloud 'ibm_cis' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.0
+    - IBM-Cloud terraform-provider-ibm v1.2.1
     - Terraform v0.12.20
 
 options:
-    plan:
+    service:
         description:
-            - The plan type of the cis instance
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
+            - The name of the Cloud Internet Services offering, 'internet-svcs'
         required: False
         type: str
     resource_name:
@@ -395,14 +385,24 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_status:
+    resource_group_name:
         description:
-            - The status of the resource
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     name:
@@ -420,9 +420,9 @@ options:
             - The location or the environment in which cis instance exists
         required: False
         type: str
-    service:
+    plan:
         description:
-            - The name of the Cloud Internet Services offering, 'internet-svcs'
+            - The plan type of the cis instance
         required: False
         type: str
     status:
@@ -452,38 +452,38 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'plan',
-    'resource_crn',
-    'resource_group_name',
+    'service',
     'resource_name',
-    'resource_status',
+    'resource_group_name',
     'resource_controller_url',
+    'resource_crn',
+    'resource_status',
     'name',
     'resource_group_id',
     'location',
-    'service',
+    'plan',
     'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    plan=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
+    service=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
         required=False,
         type='str'),
     name=dict(
@@ -495,7 +495,7 @@ module_args = dict(
     location=dict(
         required=False,
         type='str'),
-    service=dict(
+    plan=dict(
         required=False,
         type='str'),
     status=dict(
@@ -525,7 +525,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.0',
+        ibm_provider_version='1.2.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

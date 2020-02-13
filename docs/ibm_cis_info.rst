@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.0
+- IBM-Cloud terraform-provider-ibm v1.2.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  service (False, str, None)
+    The name of the Cloud Internet Services offering, 'internet-svcs'
+
+
   resource_name (False, str, None)
     The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  name (True, str, None)
-    Resource instance name for example, my cis instance
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  plan (False, str, None)
-    The plan type of the cis instance
-
-
-  service (False, str, None)
-    The name of the Cloud Internet Services offering, 'internet-svcs'
-
-
-  status (False, dict, None)
-    The resource instance status
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+  name (True, str, None)
+    Resource instance name for example, my cis instance
 
 
   resource_group_id (False, str, None)
@@ -68,6 +60,14 @@ Parameters
 
   location (False, str, None)
     The location or the environment in which cis instance exists
+
+
+  plan (False, str, None)
+    The plan type of the cis instance
+
+
+  status (False, dict, None)
+    The resource instance status
 
 
   ibmcloud_api_key (True, any, None)
