@@ -10,10 +10,10 @@ the [docs](docs) directory.
 
 1. Install [Python3]
 
-2. [RedHat Ansible] 2.8+
+2. [RedHat Ansible] 2.9+
 
     ```
-    pip install "ansible>=2.8.0"
+    pip install "ansible>=2.9.2"
     ```
 
 
@@ -29,8 +29,8 @@ the [docs](docs) directory.
 
     ```
     cd ansible-collection-ibm
-    cp modules/* $HOME/.ansible/plugins/modules/.
-    cp module_utils/* $HOME/.ansible/plugins/module_utils/.
+    cp plugins/modules/* $HOME/.ansible/plugins/modules/.
+    cp plugins/module_utils/* $HOME/.ansible/plugins/module_utils/.
 
     ```
 
