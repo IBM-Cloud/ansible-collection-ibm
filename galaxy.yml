@@ -1,0 +1,14 @@
+namespace: "ibmcloud"
+name: "ansible-collection-ibm"
+version: "1.2.1"
+dependencies:
+readme: "README.md"
+authors:
+    - "Jay W Carman"
+    - "Anilkumar C M"
+license:
+    - "MPL"
+tags:
+    - ibmcloud
+    - terraform
+repository: "https://github.com/IBM-Cloud/ansible-collection-ibm"
