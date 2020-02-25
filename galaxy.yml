@@ -1,5 +1,5 @@
 namespace: "ibmcloud"
-name: "ansible-collection-ibm"
+name: "ansible_collection"
 version: "1.2.1"
 dependencies:
 readme: "README.md"
@@ -7,7 +7,7 @@ authors:
     - "Jay W Carman"
     - "Anilkumar C M"
 license:
-    - "MPL"
+    - "MPL-2.0"
 tags:
     - ibmcloud
     - terraform
