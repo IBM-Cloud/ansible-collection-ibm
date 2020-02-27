@@ -371,15 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_service_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    service_plan_guid:
-        description:
-            - The uniquie identifier of the service offering plan type
-        required: False
-        type: str
     name:
         description:
             - Service instance name for example, speech_to_text
@@ -401,6 +396,11 @@ options:
         required: False
         type: list
         elements: dict
+    service_plan_guid:
+        description:
+            - The uniquie identifier of the service offering plan type
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -424,19 +424,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_plan_guid',
     'name',
     'space_guid',
     'credentials',
     'service_keys',
+    'service_plan_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_plan_guid=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),
@@ -450,6 +447,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    service_plan_guid=dict(
+        required=False,
+        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -474,7 +474,7 @@ def run_module():
         resource_type='ibm_service_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

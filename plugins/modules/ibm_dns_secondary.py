@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    zone_name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     status_id:
         description:
             - None
@@ -406,6 +401,11 @@ options:
             - (Required for new resource) 
         required: False
         type: int
+    zone_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -436,27 +436,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone_name', 'str'),
     ('master_ip_address', 'str'),
     ('transfer_frequency', 'int'),
+    ('zone_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone_name',
     'status_id',
     'status_text',
     'tags',
     'master_ip_address',
     'transfer_frequency',
+    'zone_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone_name=dict(
-        required=False,
-        type='str'),
     status_id=dict(
         required=False,
         type='int'),
@@ -473,6 +470,9 @@ module_args = dict(
     transfer_frequency=dict(
         required=False,
         type='int'),
+    zone_name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -515,7 +515,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

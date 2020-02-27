@@ -371,11 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    service_group_id:
+    virtual_server_id:
         description:
             - None
         required: False
@@ -383,6 +383,16 @@ options:
     load_balancer_id:
         description:
             - (Required for new resource) 
+        required: False
+        type: int
+    timeout:
+        description:
+            - None
+        required: False
+        type: int
+    service_group_id:
+        description:
+            - None
         required: False
         type: int
     allocation:
@@ -400,21 +410,11 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    virtual_server_id:
-        description:
-            - None
-        required: False
-        type: int
     routing_type:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    timeout:
-        description:
-            - None
-        required: False
-        type: int
     tags:
         description:
             - None
@@ -460,24 +460,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_group_id',
+    'virtual_server_id',
     'load_balancer_id',
+    'timeout',
+    'service_group_id',
     'allocation',
     'port',
     'routing_method',
-    'virtual_server_id',
     'routing_type',
-    'timeout',
     'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_group_id=dict(
+    virtual_server_id=dict(
         required=False,
         type='int'),
     load_balancer_id=dict(
+        required=False,
+        type='int'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    service_group_id=dict(
         required=False,
         type='int'),
     allocation=dict(
@@ -489,15 +495,9 @@ module_args = dict(
     routing_method=dict(
         required=False,
         type='str'),
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
     routing_type=dict(
         required=False,
         type='str'),
-    timeout=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -544,7 +544,7 @@ def run_module():
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

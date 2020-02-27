@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  description (False, str, None)
-    None
-
-
-  issuer (False, str, None)
-    None
-
 
   begins_on (False, int, None)
     None
@@ -42,7 +34,15 @@ Parameters
     None
 
 
-  has_previous (False, str, None)
+  status (False, str, None)
+    None
+
+
+  key_algorithm (False, str, None)
+    None
+
+
+  algorithm (False, str, None)
     None
 
 
@@ -54,23 +54,23 @@ Parameters
     (Required for new resource)
 
 
+  description (False, str, None)
+    None
+
+
+  has_previous (False, str, None)
+    None
+
+
   data (False, dict, None)
     (Required for new resource)
 
 
-  key_algorithm (False, str, None)
-    None
-
-
-  algorithm (False, str, None)
+  issuer (False, str, None)
     None
 
 
   imported (False, bool, None)
-    None
-
-
-  status (False, str, None)
     None
 
 

@@ -371,16 +371,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    image_id:
+    pi_key_id:
         description:
             - None
         required: False
@@ -393,6 +388,16 @@ options:
     pi_image_id:
         description:
             - (Required for new resource) 
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    imageid:
+        description:
+            - None
         required: False
         type: str
     id:
@@ -425,32 +430,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_image_name', 'str'),
     ('pi_image_id', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
-    'image_id',
+    'pi_key_id',
     'pi_image_name',
     'pi_image_id',
+    'pi_cloud_instance_id',
+    'imageid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    image_id=dict(
+    pi_key_id=dict(
         required=False,
         type='str'),
     pi_image_name=dict(
         required=False,
         type='str'),
     pi_image_id=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    imageid=dict(
         required=False,
         type='str'),
     id=dict(
@@ -495,7 +504,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,31 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    softlayer_managed:
-        description:
-            - None
-        required: False
-        type: bool
-    child_resource_count:
-        description:
-            - None
-        required: False
-        type: int
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
     datacenter:
         description:
             - (Required for new resource) 
@@ -411,27 +390,48 @@ options:
             - None
         required: False
         type: str
+    router_hostname:
+        description:
+            - None
+        required: False
+        type: str
+    softlayer_managed:
+        description:
+            - None
+        required: False
+        type: bool
+    child_resource_count:
+        description:
+            - None
+        required: False
+        type: int
     subnets:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    router_hostname:
-        description:
-            - None
-        required: False
-        type: str
     vlan_number:
         description:
             - None
         required: False
         type: int
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -468,35 +468,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'softlayer_managed',
-    'child_resource_count',
-    'tags',
-    'resource_name',
     'datacenter',
     'type',
     'name',
-    'subnets',
-    'resource_controller_url',
     'router_hostname',
+    'softlayer_managed',
+    'child_resource_count',
+    'subnets',
     'vlan_number',
+    'tags',
+    'resource_controller_url',
+    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    softlayer_managed=dict(
-        required=False,
-        type='bool'),
-    child_resource_count=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_name=dict(
-        required=False,
-        type='str'),
     datacenter=dict(
         required=False,
         type='str'),
@@ -506,19 +493,32 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    router_hostname=dict(
+        required=False,
+        type='str'),
+    softlayer_managed=dict(
+        required=False,
+        type='bool'),
+    child_resource_count=dict(
+        required=False,
+        type='int'),
     subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vlan_number=dict(
+        required=False,
+        type='int'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
     resource_controller_url=dict(
         required=False,
         type='str'),
-    router_hostname=dict(
+    resource_name=dict(
         required=False,
         type='str'),
-    vlan_number=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -561,7 +561,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

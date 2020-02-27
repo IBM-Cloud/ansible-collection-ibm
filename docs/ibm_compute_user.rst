@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  state_ (False, str, None)
-    (Required for new resource)
-
-
-  user_status (False, str, ACTIVE)
-    None
-
 
   username (False, str, None)
     None
@@ -46,11 +38,31 @@ Parameters
     (Required for new resource)
 
 
+  timezone (False, str, None)
+    (Required for new resource)
+
+
+  has_api_key (False, bool, False)
+    None
+
+
   email (False, str, None)
     (Required for new resource)
 
 
+  state_ (False, str, None)
+    (Required for new resource)
+
+
+  permissions (False, list, None)
+    None
+
+
   company_name (False, str, None)
+    (Required for new resource)
+
+
+  address1 (False, str, None)
     (Required for new resource)
 
 
@@ -58,11 +70,7 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  address1 (False, str, None)
+  city (False, str, None)
     (Required for new resource)
 
 
@@ -74,27 +82,19 @@ Parameters
     None
 
 
-  permissions (False, list, None)
-    None
-
-
-  has_api_key (False, bool, False)
-    None
-
-
-  city (False, str, None)
-    (Required for new resource)
-
-
-  timezone (False, str, None)
-    (Required for new resource)
-
-
   api_key (False, str, None)
     None
 
 
   ibm_id (False, str, None)
+    None
+
+
+  user_status (False, str, ACTIVE)
+    None
+
+
+  tags (False, list, None)
     None
 
 

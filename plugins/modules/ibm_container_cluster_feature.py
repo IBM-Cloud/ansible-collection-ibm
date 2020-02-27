@@ -371,15 +371,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    private_service_endpoint:
+    cluster:
         description:
-            - None
+            - (Required for new resource) 
         required: False
-        type: bool
+        type: str
     refresh_api_servers:
         description:
             - None
@@ -391,12 +391,12 @@ options:
             - None
         required: False
         type: str
-    cluster:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    private_service_endpoint:
         description:
             - None
         required: False
@@ -452,11 +452,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_service_endpoint',
+    'cluster',
     'refresh_api_servers',
     'private_service_endpoint_url',
-    'cluster',
     'public_service_endpoint',
+    'private_service_endpoint',
     'public_service_endpoint_url',
     'reload_workers',
     'resource_group_id',
@@ -465,19 +465,19 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_service_endpoint=dict(
+    cluster=dict(
         required=False,
-        type='bool'),
+        type='str'),
     refresh_api_servers=dict(
         default=True,
         type='bool'),
     private_service_endpoint_url=dict(
         required=False,
         type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    private_service_endpoint=dict(
         required=False,
         type='bool'),
     public_service_endpoint_url=dict(
@@ -531,7 +531,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

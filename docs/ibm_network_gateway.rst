@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,15 +26,31 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  public_ip_address_id (False, int, None)
+    None
+
+
+  public_ipv6_address_id (False, int, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  associated_vlans (False, list, None)
+    The VLAN instances associated with this Network Gateway
+
+
   post_install_script_uri (False, str, None)
     None
 
 
-  private_ip_address_id (False, int, None)
+  private_ipv4_address (False, str, None)
     None
 
 
-  private_ipv4_address (False, str, None)
+  private_vlan_id (False, int, None)
     None
 
 
@@ -58,24 +74,8 @@ Parameters
     None
 
 
-  private_vlan_id (False, int, None)
+  private_ip_address_id (False, int, None)
     None
-
-
-  public_ip_address_id (False, int, None)
-    None
-
-
-  public_ipv6_address_id (False, int, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  associated_vlans (False, list, None)
-    The VLAN instances associated with this Network Gateway
 
 
   id (False, str, None)

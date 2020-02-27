@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
 
   region (False, str, None)
     The cluster region
@@ -52,6 +40,18 @@ Parameters
 
   valid_openshift_versions (False, list, None)
     List of supported openshift-versions
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   ibmcloud_api_key (True, any, None)

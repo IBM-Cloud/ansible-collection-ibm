@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  public_key (False, str, None)
+    The public ssh key
+
 
   fingerprint (False, str, None)
     A sequence of bytes to authenticate or lookup a longer ssh key
@@ -40,10 +44,6 @@ Parameters
 
   label (True, str, None)
     The label associated with the ssh key
-
-
-  public_key (False, str, None)
-    The public ssh key
 
 
   ibmcloud_api_key (True, any, None)

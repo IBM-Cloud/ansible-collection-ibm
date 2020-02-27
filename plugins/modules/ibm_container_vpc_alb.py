@@ -371,10 +371,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    alb_type:
+        description:
+            - None
+        required: False
+        type: str
+    name:
+        description:
+            - None
+        required: False
+        type: str
+    resize:
+        description:
+            - None
+        required: False
+        type: bool
+    zone:
+        description:
+            - None
+        required: False
+        type: str
+    alb_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    cluster:
+        description:
+            - None
+        required: False
+        type: str
     enable:
         description:
             - None
@@ -390,42 +420,12 @@ options:
             - None
         required: False
         type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    zone:
-        description:
-            - None
-        required: False
-        type: str
-    alb_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    alb_type:
-        description:
-            - None
-        required: False
-        type: str
-    cluster:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    resize:
-        description:
-            - None
-        required: False
-        type: bool
     state_:
+        description:
+            - None
+        required: False
+        type: str
+    status:
         description:
             - None
         required: False
@@ -465,22 +465,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'alb_type',
+    'name',
+    'resize',
+    'zone',
+    'alb_id',
+    'cluster',
     'enable',
     'disable_deployment',
     'load_balancer_hostname',
-    'status',
-    'zone',
-    'alb_id',
-    'alb_type',
-    'cluster',
-    'name',
-    'resize',
     'state_',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    alb_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resize=dict(
+        required=False,
+        type='bool'),
+    zone=dict(
+        required=False,
+        type='str'),
+    alb_id=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
     enable=dict(
         required=False,
         type='bool'),
@@ -490,28 +508,10 @@ module_args = dict(
     load_balancer_hostname=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    alb_id=dict(
-        required=False,
-        type='str'),
-    alb_type=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    resize=dict(
-        required=False,
-        type='bool'),
     state_=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -556,7 +556,7 @@ def run_module():
         resource_type='ibm_container_vpc_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

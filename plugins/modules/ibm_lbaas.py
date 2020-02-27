@@ -371,45 +371,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    wait_time_minutes:
-        description:
-            - None
-        required: False
-        type: int
-        default: 90
-    ssl_ciphers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    description:
-        description:
-            - Description of a load balancer.
-        required: False
-        type: str
     vip:
         description:
             - The virtual ip address of this load balancer
-        required: False
-        type: str
-    datacenter:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
         required: False
         type: str
     use_system_public_ip_pool:
@@ -417,9 +385,15 @@ options:
             - Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
         required: False
         type: bool
-    resource_status:
+    health_monitors:
         description:
-            - The status of the resource
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     name:
@@ -427,21 +401,19 @@ options:
             - (Required for new resource) The load balancer's name.
         required: False
         type: str
-    type:
+    status:
         description:
-            - Specifies if a load balancer is public or private
+            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
         required: False
         type: str
-        default: PUBLIC
-    health_monitors:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    datacenter:
+        description:
+            - None
         required: False
         type: str
     subnets:
@@ -456,6 +428,34 @@ options:
         required: False
         type: list
         elements: dict
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    description:
+        description:
+            - Description of a load balancer.
+        required: False
+        type: str
+    type:
+        description:
+            - Specifies if a load balancer is public or private
+        required: False
+        type: str
+        default: PUBLIC
+    ssl_ciphers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    wait_time_minutes:
+        description:
+            - None
+        required: False
+        type: int
+        default: 90
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -492,65 +492,49 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'wait_time_minutes',
-    'ssl_ciphers',
-    'resource_name',
-    'description',
     'vip',
-    'datacenter',
-    'status',
     'use_system_public_ip_pool',
-    'resource_status',
-    'name',
-    'type',
     'health_monitors',
+    'resource_name',
+    'name',
+    'status',
     'resource_controller_url',
+    'datacenter',
     'subnets',
     'protocols',
+    'resource_status',
+    'description',
+    'type',
+    'ssl_ciphers',
+    'wait_time_minutes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    wait_time_minutes=dict(
-        default=90,
-        type='int'),
-    ssl_ciphers=dict(
+    vip=dict(
+        required=False,
+        type='str'),
+    use_system_public_ip_pool=dict(
+        required=False,
+        type='bool'),
+    health_monitors=dict(
         required=False,
         elements='',
         type='list'),
     resource_name=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    vip=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
+    name=dict(
         required=False,
         type='str'),
     status=dict(
         required=False,
         type='str'),
-    use_system_public_ip_pool=dict(
-        required=False,
-        type='bool'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        default='PUBLIC',
-        type='str'),
-    health_monitors=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
         required=False,
         type='str'),
     subnets=dict(
@@ -561,6 +545,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        default='PUBLIC',
+        type='str'),
+    ssl_ciphers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    wait_time_minutes=dict(
+        default=90,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -603,7 +603,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

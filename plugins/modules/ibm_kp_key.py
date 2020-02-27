@@ -371,38 +371,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    key_protect_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    key_id:
-        description:
-            - None
-        required: False
-        type: str
     key_name:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    iv_value:
+    payload:
         description:
-            - Only for imported root key
+            - None
         required: False
         type: str
     resource_crn:
@@ -410,14 +390,19 @@ options:
             - The crn of the resource
         required: False
         type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    key_id:
+        description:
+            - None
         required: False
         type: str
     standard_key:
@@ -426,12 +411,12 @@ options:
         required: False
         type: bool
         default: False
-    payload:
+    encrypted_nonce:
         description:
-            - None
+            - Only for imported root key
         required: False
         type: str
-    encrypted_nonce:
+    iv_value:
         description:
             - Only for imported root key
         required: False
@@ -439,6 +424,21 @@ options:
     crn:
         description:
             - Crn of the key
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    key_protect_id:
+        description:
+            - (Required for new resource) 
         required: False
         type: str
     id:
@@ -471,67 +471,67 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key_protect_id', 'str'),
     ('key_name', 'str'),
+    ('key_protect_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'resource_controller_url',
-    'key_protect_id',
-    'key_id',
     'key_name',
-    'iv_value',
-    'resource_crn',
-    'resource_status',
-    'resource_group_name',
-    'standard_key',
     'payload',
+    'resource_crn',
+    'resource_group_name',
+    'resource_controller_url',
+    'key_id',
+    'standard_key',
     'encrypted_nonce',
+    'iv_value',
     'crn',
+    'resource_name',
+    'resource_status',
+    'key_protect_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    key_protect_id=dict(
-        required=False,
-        type='str'),
-    key_id=dict(
-        required=False,
-        type='str'),
     key_name=dict(
         required=False,
         type='str'),
-    iv_value=dict(
+    payload=dict(
         required=False,
         type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    key_id=dict(
         required=False,
         type='str'),
     standard_key=dict(
         default=False,
         type='bool'),
-    payload=dict(
-        required=False,
-        type='str'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
+    iv_value=dict(
+        required=False,
+        type='str'),
     crn=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    key_protect_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -576,7 +576,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

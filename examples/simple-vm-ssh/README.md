@@ -50,6 +50,8 @@ The following parameters can be set by the user:
 
     Note: Modules also support the 'ibmcloud_region' parameter.
 
+4. Update the ansible collection path in `ansible.cfg` if collections are installed in non default path
+
 ### Create
 
 1. To create all resources and test public SSH connection to the VM, run the
@@ -79,3 +81,4 @@ The following parameters can be set by the user:
 [retrieve available profiles]: #list-available-vsi-images-and-profiles
 [Ansible search path]:https://docs.ansible.com/ansible/latest/dev_guide/overview_architecture.html#ansible-search-path
 [Obtain an IBM Cloud API key]:https://cloud.ibm.com/docs/iam?topic=iam-userapikey
+[Ansible search path]: https://docs.ansible.com/ansible/latest/dev_guide/overview_architecture.html#ansible-search-path

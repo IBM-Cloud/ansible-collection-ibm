@@ -1,10 +1,9 @@
 # IBM Cloud Ansible Collections
 
-Ansible modules for IBM cloud.
+Ansible modules collection for IBM cloud.
 
 ## Getting Started
-Below steps are follwed to install ansible modules for IBM Cloud resources. All the resources are documented under
-the [docs](docs) directory.
+Below steps are follwed to install ansible collections for the IBM Cloud resources. All the resources are documented under the [docs](docs) directory.
 
 ## Prerequisites
 
@@ -19,19 +18,10 @@ the [docs](docs) directory.
 
 ## Install
 
-1. Download modules collection
+1. Download and Install collection
 
     ```
-    git clone https://github.com/IBM-Cloud/ansible-collection-ibm.git
-    ```
-
-2. Add modules and module_utils to the [Ansible search path]. E.g.:
-
-    ```
-    cd ansible-collection-ibm
-    cp plugins/modules/* $HOME/.ansible/plugins/modules/.
-    cp plugins/module_utils/* $HOME/.ansible/plugins/module_utils/.
-
+    ansible-galaxy collection install ibmcloud.ansible_collection
     ```
 
 ### Example Projects
@@ -43,6 +33,3 @@ the [docs](docs) directory.
 
 [IBM Cloud Terraform Provider]: https://github.com/IBM-Cloud/terraform-provider-ibm
 [Python3]: https://www.python.org/downloads/
-[RedHat Ansible]: https://www.ansible.com/
-[Ansible search path]: https://docs.ansible.com/ansible/latest/dev_guide/overview_architecture.html#ansible-search-path
-[release page]:https://github.com/IBM-Cloud/terraform-provider-ibm/releases

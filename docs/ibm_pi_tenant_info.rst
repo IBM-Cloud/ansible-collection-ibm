@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tenant_name (False, str, None)
+    None
+
 
   cloud_instances (False, list, None)
     None
@@ -39,10 +43,6 @@ Parameters
 
 
   enabled (False, bool, None)
-    None
-
-
-  tenant_name (False, str, None)
     None
 
 

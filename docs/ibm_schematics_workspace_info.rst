@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,7 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  is_frozen (False, bool, None)
+  template_id (False, list, None)
+    The id of templates
+
+
+  types (False, list, None)
     None
 
 
@@ -42,12 +46,8 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
 
 
-  status (False, str, None)
-    The status of workspace
-
-
-  types (False, list, None)
-    None
+  workspace_id (True, str, None)
+    The id of workspace
 
 
   name (False, str, None)
@@ -58,12 +58,12 @@ Parameters
     The resource group of workspace
 
 
-  workspace_id (True, str, None)
-    The id of workspace
+  status (False, str, None)
+    The status of workspace
 
 
-  template_id (False, list, None)
-    The id of templates
+  is_frozen (False, bool, None)
+    None
 
 
   ibmcloud_api_key (True, any, None)

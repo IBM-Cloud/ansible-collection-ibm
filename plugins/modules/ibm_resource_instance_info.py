@@ -371,18 +371,28 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    resource_crn:
+    status:
         description:
-            - The crn of the resource
+            - The resource instance status
+        required: False
+        type: dict
+    crn:
+        description:
+            - CRN of resource instance
         required: False
         type: str
     resource_status:
         description:
             - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     name:
@@ -400,19 +410,14 @@ options:
             - The service type of the instance
         required: False
         type: str
-    status:
+    plan:
         description:
-            - The resource instance status
-        required: False
-        type: dict
-    crn:
-        description:
-            - CRN of resource instance
+            - The plan type of the instance
         required: False
         type: str
-    resource_name:
+    resource_controller_url:
         description:
-            - The name of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
         type: str
     location:
@@ -420,19 +425,14 @@ options:
             - The location or the environment in which instance exists
         required: False
         type: str
-    plan:
+    resource_name:
         description:
-            - The plan type of the instance
+            - The name of the resource
         required: False
         type: str
-    resource_group_name:
+    resource_crn:
         description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+            - The crn of the resource
         required: False
         type: str
     ibmcloud_api_key:
@@ -457,27 +457,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_crn',
+    'status',
+    'crn',
     'resource_status',
+    'resource_group_name',
     'name',
     'resource_group_id',
     'service',
-    'status',
-    'crn',
-    'resource_name',
-    'location',
     'plan',
-    'resource_group_name',
     'resource_controller_url',
+    'location',
+    'resource_name',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_crn=dict(
+    status=dict(
+        required=False,
+        type='dict'),
+    crn=dict(
         required=False,
         type='str'),
     resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     name=dict(
@@ -489,25 +495,19 @@ module_args = dict(
     service=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='dict'),
-    crn=dict(
+    plan=dict(
         required=False,
         type='str'),
-    resource_name=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     location=dict(
         required=False,
         type='str'),
-    plan=dict(
+    resource_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -534,7 +534,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

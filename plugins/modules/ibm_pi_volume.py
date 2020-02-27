@@ -371,10 +371,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource)  Cloud Instance ID - This is the service_instance_id.
+        required: False
+        type: str
+    pi_volume_status:
+        description:
+            - None
+        required: False
+        type: str
+    pi_volume_id:
+        description:
+            - None
+        required: False
+        type: str
     pi_volume_name:
         description:
             - (Required for new resource) Volume Name to create
@@ -382,7 +397,7 @@ options:
         type: str
     pi_volume_shareable:
         description:
-            - Flag to indicate if the volume can be shared across multiple instances?
+            - (Required for new resource) Flag to indicate if the volume can be shared across multiple instances?
         required: False
         type: bool
     pi_volume_size:
@@ -393,21 +408,6 @@ options:
     pi_volume_type:
         description:
             - (Required for new resource) 
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource)  Cloud Instance ID - This is the service_instance_id.
-        required: False
-        type: str
-    volume_status:
-        description:
-            - None
-        required: False
-        type: str
-    volume_id:
-        description:
-            - None
         required: False
         type: str
     id:
@@ -440,26 +440,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_name', 'str'),
+    ('pi_volume_shareable', 'bool'),
     ('pi_volume_size', 'float'),
     ('pi_volume_type', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_cloud_instance_id',
+    'pi_volume_status',
+    'pi_volume_id',
     'pi_volume_name',
     'pi_volume_shareable',
     'pi_volume_size',
     'pi_volume_type',
-    'pi_cloud_instance_id',
-    'volume_status',
-    'volume_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_status=dict(
+        required=False,
+        type='str'),
+    pi_volume_id=dict(
+        required=False,
+        type='str'),
     pi_volume_name=dict(
         required=False,
         type='str'),
@@ -470,15 +480,6 @@ module_args = dict(
         required=False,
         type='float'),
     pi_volume_type=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    volume_status=dict(
-        required=False,
-        type='str'),
-    volume_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -523,7 +524,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

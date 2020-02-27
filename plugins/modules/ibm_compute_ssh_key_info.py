@@ -371,10 +371,20 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    label:
+        description:
+            - The label associated with the ssh key
+        required: True
+        type: str
+    public_key:
+        description:
+            - The public ssh key
+        required: False
+        type: str
     fingerprint:
         description:
             - A sequence of bytes to authenticate or lookup a longer ssh key
@@ -391,16 +401,6 @@ options:
         required: False
         type: bool
         default: False
-    label:
-        description:
-            - The label associated with the ssh key
-        required: True
-        type: str
-    public_key:
-        description:
-            - The public ssh key
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -423,16 +423,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'label',
+    'public_key',
     'fingerprint',
     'notes',
     'most_recent',
-    'label',
-    'public_key',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    label=dict(
+        required=True,
+        type='str'),
+    public_key=dict(
+        required=False,
+        type='str'),
     fingerprint=dict(
         required=False,
         type='str'),
@@ -442,12 +448,6 @@ module_args = dict(
     most_recent=dict(
         default=False,
         type='bool'),
-    label=dict(
-        required=True,
-        type='str'),
-    public_key=dict(
-        required=False,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -472,7 +472,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

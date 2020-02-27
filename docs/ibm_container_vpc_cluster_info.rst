@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,68 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  status (False, str, None)
-    The status of the cluster master
-
-
-  workers (False, list, None)
-    None
-
-
-  worker_pools (False, list, None)
-    None
-
-
   alb_type (False, str, all)
     None
 
 
-  albs (False, list, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  master_url (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  cluster_name_id (True, str, None)
-    Name of the cluster
-
-
-  worker_count (False, int, None)
-    Number of workers
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   kube_version (False, str, None)
@@ -102,16 +46,72 @@ Parameters
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  cluster_name_id (True, str, None)
+    Name of the cluster
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
+  albs (False, list, None)
+    None
+
+
+  health (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  worker_pools (False, list, None)
+    None
 
 
   public_service_endpoint (False, bool, None)
     None
 
 
-  health (False, str, None)
+  private_service_endpoint_url (False, str, None)
     None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  workers (False, list, None)
+    None
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  master_url (False, str, None)
+    None
+
+
+  status (False, str, None)
+    The status of the cluster master
 
 
   ibmcloud_api_key (True, any, None)

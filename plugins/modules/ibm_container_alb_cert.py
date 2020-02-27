@@ -371,7 +371,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
@@ -381,6 +381,16 @@ options:
         required: False
         type: str
     cloud_cert_instance_id:
+        description:
+            - None
+        required: False
+        type: str
+    domain_name:
+        description:
+            - None
+        required: False
+        type: str
+    issuer_name:
         description:
             - None
         required: False
@@ -408,16 +418,6 @@ options:
     secret_name:
         description:
             - (Required for new resource) 
-        required: False
-        type: str
-    domain_name:
-        description:
-            - None
-        required: False
-        type: str
-    issuer_name:
-        description:
-            - None
         required: False
         type: str
     id:
@@ -459,13 +459,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'expires_on',
     'cloud_cert_instance_id',
+    'domain_name',
+    'issuer_name',
     'cluster_crn',
     'region',
     'cert_crn',
     'cluster_id',
     'secret_name',
-    'domain_name',
-    'issuer_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -475,6 +475,12 @@ module_args = dict(
         required=False,
         type='str'),
     cloud_cert_instance_id=dict(
+        required=False,
+        type='str'),
+    domain_name=dict(
+        required=False,
+        type='str'),
+    issuer_name=dict(
         required=False,
         type='str'),
     cluster_crn=dict(
@@ -490,12 +496,6 @@ module_args = dict(
         required=False,
         type='str'),
     secret_name=dict(
-        required=False,
-        type='str'),
-    domain_name=dict(
-        required=False,
-        type='str'),
-    issuer_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -540,7 +540,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

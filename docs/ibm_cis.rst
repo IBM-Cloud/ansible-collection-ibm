@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,40 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    None
+
+
   resource_name (False, str, None)
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
+  service (False, str, None)
+    The name of the Cloud Internet Services offering
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
+
+
   location (False, str, None)
     (Required for new resource) The location where the instance available
 
 
-  tags (False, list, None)
-    None
-
-
-  status (False, str, None)
-    Status of resource instance
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   resource_controller_url (False, str, None)
@@ -70,12 +66,16 @@ Parameters
     (Required for new resource) A name for the resource instance
 
 
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
+  resource_group_id (False, str, None)
+    The resource group id
 
 
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
+  status (False, str, None)
+    Status of resource instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

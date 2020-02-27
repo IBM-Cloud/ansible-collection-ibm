@@ -1,6 +1,8 @@
 ---
 - name: List Power Virtual Server Cloud Images
   hosts: localhost
+  collections:
+   - ibmcloud.ansible_collection
   vars:
     pi_cloud_instance_id: "YOUR PI CLOUD INSTANCE ID"
 

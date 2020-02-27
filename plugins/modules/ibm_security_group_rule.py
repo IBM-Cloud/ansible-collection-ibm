@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    port_range_max:
-        description:
-            - None
-        required: False
-        type: int
     remote_group_id:
         description:
             - None
@@ -412,6 +407,11 @@ options:
         type: str
         default: IPv4
     port_range_min:
+        description:
+            - None
+        required: False
+        type: int
+    port_range_max:
         description:
             - None
         required: False
@@ -452,7 +452,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'port_range_max',
     'remote_group_id',
     'remote_ip',
     'protocol',
@@ -460,14 +459,12 @@ TL_ALL_PARAMETERS = [
     'direction',
     'ether_type',
     'port_range_min',
+    'port_range_max',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    port_range_max=dict(
-        required=False,
-        type='int'),
     remote_group_id=dict(
         required=False,
         type='int'),
@@ -487,6 +484,9 @@ module_args = dict(
         default='IPv4',
         type='str'),
     port_range_min=dict(
+        required=False,
+        type='int'),
+    port_range_max=dict(
         required=False,
         type='int'),
     id=dict(
@@ -531,7 +531,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

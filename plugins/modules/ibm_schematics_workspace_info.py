@@ -371,20 +371,26 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    is_frozen:
+    workspace_id:
+        description:
+            - The id of workspace
+        required: True
+        type: str
+    resource_group:
+        description:
+            - The resource group of workspace
+        required: False
+        type: str
+    types:
         description:
             - None
         required: False
-        type: bool
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
+        type: list
+        elements: str
     tags:
         description:
             - None
@@ -396,14 +402,9 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
         type: str
-    status:
+    template_id:
         description:
-            - The status of workspace
-        required: False
-        type: str
-    types:
-        description:
-            - None
+            - The id of templates
         required: False
         type: list
         elements: str
@@ -412,22 +413,21 @@ options:
             - The name of workspace
         required: False
         type: str
-    resource_group:
+    status:
         description:
-            - The resource group of workspace
+            - The status of workspace
         required: False
         type: str
-    workspace_id:
+    is_frozen:
         description:
-            - The id of workspace
-        required: True
-        type: str
-    template_id:
-        description:
-            - The id of templates
+            - None
         required: False
-        type: list
-        elements: str
+        type: bool
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -450,27 +450,31 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'is_frozen',
-    'is_locked',
+    'workspace_id',
+    'resource_group',
+    'types',
     'tags',
     'resource_controller_url',
-    'status',
-    'types',
-    'name',
-    'resource_group',
-    'workspace_id',
     'template_id',
+    'name',
+    'status',
+    'is_frozen',
+    'is_locked',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    is_frozen=dict(
+    workspace_id=dict(
+        required=True,
+        type='str'),
+    resource_group=dict(
         required=False,
-        type='bool'),
-    is_locked=dict(
+        type='str'),
+    types=dict(
         required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
@@ -478,26 +482,22 @@ module_args = dict(
     resource_controller_url=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    types=dict(
+    template_id=dict(
         required=False,
         elements='',
         type='list'),
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    status=dict(
         required=False,
         type='str'),
-    workspace_id=dict(
-        required=True,
-        type='str'),
-    template_id=dict(
+    is_frozen=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='bool'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -522,7 +522,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

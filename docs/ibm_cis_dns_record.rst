@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  data (False, dict, None)
-    None
-
 
   priority (False, int, None)
     None
@@ -38,16 +34,32 @@ Parameters
     None
 
 
+  proxiable (False, bool, None)
+    None
+
+
+  cis_id (False, str, None)
+    (Required for new resource) CIS object id
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  data (False, dict, None)
+    None
+
+
   created_on (False, str, None)
+    None
+
+
+  modified_on (False, str, None)
     None
 
 
   domain_id (False, str, None)
     (Required for new resource) Associated CIS domain
-
-
-  name (False, str, None)
-    (Required for new resource)
 
 
   type (False, str, None)
@@ -56,18 +68,6 @@ Parameters
 
   content (False, str, None)
     None
-
-
-  modified_on (False, str, None)
-    None
-
-
-  proxiable (False, bool, None)
-    None
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS object id
 
 
   id (False, str, None)

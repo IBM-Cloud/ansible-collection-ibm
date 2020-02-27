@@ -371,16 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    resources:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     account_management:
         description:
             - Give access to all account management services
@@ -409,6 +403,12 @@ options:
         required: False
         type: list
         elements: str
+    resources:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -445,21 +445,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resources',
     'account_management',
     'tags',
     'version',
     'ibm_id',
     'roles',
+    'resources',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resources=dict(
-        required=False,
-        elements='',
-        type='list'),
     account_management=dict(
         default=False,
         type='bool'),
@@ -474,6 +470,10 @@ module_args = dict(
         required=False,
         type='str'),
     roles=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resources=dict(
         required=False,
         elements='',
         type='list'),
@@ -519,7 +519,7 @@ def run_module():
         resource_type='ibm_iam_user_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

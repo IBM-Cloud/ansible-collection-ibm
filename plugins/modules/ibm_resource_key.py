@@ -371,7 +371,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
@@ -380,9 +380,30 @@ options:
             - (Required for new resource) The name of the resource key
         required: False
         type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    crn:
+        description:
+            - crn of resource key
+        required: False
+        type: str
     role:
         description:
             - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor.
+        required: False
+        type: str
+    resource_instance_id:
+        description:
+            - The id of the resource instance for which to create resource key
         required: False
         type: str
     resource_alias_id:
@@ -390,35 +411,14 @@ options:
             - The id of the resource alias for which to create resource key
         required: False
         type: str
-    status:
-        description:
-            - Status of resource key
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_instance_id:
-        description:
-            - The id of the resource instance for which to create resource key
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     credentials:
         description:
             - Credentials asociated with the key
         required: False
         type: dict
-    crn:
+    status:
         description:
-            - crn of resource key
+            - Status of resource key
         required: False
         type: str
     id:
@@ -458,14 +458,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'role',
-    'resource_alias_id',
-    'status',
-    'tags',
-    'resource_instance_id',
     'parameters',
-    'credentials',
+    'tags',
     'crn',
+    'role',
+    'resource_instance_id',
+    'resource_alias_id',
+    'credentials',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -474,29 +474,29 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    crn=dict(
+        required=False,
+        type='str'),
     role=dict(
+        required=False,
+        type='str'),
+    resource_instance_id=dict(
         required=False,
         type='str'),
     resource_alias_id=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
     credentials=dict(
         required=False,
         type='dict'),
-    crn=dict(
+    status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -541,7 +541,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

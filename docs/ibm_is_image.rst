@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -30,14 +30,6 @@ Parameters
     (Required for new resource)
 
 
-  operating_system (False, str, None)
-    (Required for new resource)
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
   tags (False, list, None)
     None
 
@@ -46,12 +38,8 @@ Parameters
     None
 
 
-  file (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_status (False, str, None)
+    The status of the resource
 
 
   resource_group_name (False, str, None)
@@ -62,12 +50,12 @@ Parameters
     (Required for new resource)
 
 
-  architecture (False, str, None)
-    None
-
-
   resource_group (False, str, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_name (False, str, None)
@@ -78,7 +66,19 @@ Parameters
     The crn of the resource
 
 
+  operating_system (False, str, None)
+    (Required for new resource)
+
+
   status (False, str, None)
+    None
+
+
+  architecture (False, str, None)
+    None
+
+
+  file (False, str, None)
     None
 
 

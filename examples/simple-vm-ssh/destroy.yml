@@ -1,6 +1,8 @@
 ---
 - name: Destroy IBM Cloud VPC VSI
   hosts: localhost
+  collections:
+   - ibmcloud.ansible_collection
 
   tasks:
     - name: Release Floating IP

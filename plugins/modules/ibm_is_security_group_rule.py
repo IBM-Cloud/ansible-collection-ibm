@@ -371,16 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    ip_version:
-        description:
-            - IP version: ipv4 or ipv6
-        required: False
-        type: str
-        default: ipv4
     remote:
         description:
             - Security group id: an IP address, a CIDR block, or a single security group identifier
@@ -419,6 +413,12 @@ options:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: False
         type: str
+    ip_version:
+        description:
+            - IP version: ipv4 or ipv6
+        required: False
+        type: str
+        default: ipv4
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -476,7 +476,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ip_version',
     'remote',
     'icmp',
     'tcp',
@@ -484,14 +483,12 @@ TL_ALL_PARAMETERS = [
     'group',
     'rule_id',
     'direction',
+    'ip_version',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ip_version=dict(
-        default='ipv4',
-        type='str'),
     remote=dict(
         required=False,
         type='str'),
@@ -515,6 +512,9 @@ module_args = dict(
         type='str'),
     direction=dict(
         required=False,
+        type='str'),
+    ip_version=dict(
+        default='ipv4',
         type='str'),
     id=dict(
         required=False,
@@ -590,7 +590,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

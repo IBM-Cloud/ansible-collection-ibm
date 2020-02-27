@@ -1,6 +1,8 @@
 ---
 - name: POWER VSI Creation Demo
   hosts: localhost
+  collections:
+   - ibmcloud.ansible_collection
   vars:
     pi_name: ansible-demo-power-vm
     sys_type: s922

@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cluster (False, str, None)
+    None
+
 
   enable (False, bool, None)
     None
@@ -34,15 +38,15 @@ Parameters
     None
 
 
+  name (False, str, None)
+    None
+
+
   load_balancer_hostname (False, str, None)
     None
 
 
-  status (False, str, None)
-    None
-
-
-  zone (False, str, None)
+  resize (False, bool, None)
     None
 
 
@@ -54,15 +58,11 @@ Parameters
     None
 
 
-  cluster (False, str, None)
+  status (False, str, None)
     None
 
 
-  name (False, str, None)
-    None
-
-
-  resize (False, bool, None)
+  zone (False, str, None)
     None
 
 

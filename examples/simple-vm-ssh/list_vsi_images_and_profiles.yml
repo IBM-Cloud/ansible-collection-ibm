@@ -1,6 +1,8 @@
 ---
 - name: List VPC Images and Instance Profiles
   hosts: localhost
+  collections:
+   - ibmcloud.ansible_collection
 
   tasks:
     - ibm_is_images_info:

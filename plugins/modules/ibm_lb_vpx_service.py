@@ -371,27 +371,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    weight:
+    vip_id:
         description:
             - (Required for new resource) 
         required: False
-        type: int
+        type: str
+    health_check:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     usip:
         description:
             - None
         required: False
         type: str
         default: NO
-    destination_ip_address:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    name:
+    destination_ip_address:
         description:
             - (Required for new resource) 
         required: False
@@ -401,27 +412,16 @@ options:
             - (Required for new resource) 
         required: False
         type: int
+    weight:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
     connection_limit:
         description:
             - (Required for new resource) 
         required: False
         type: int
-    health_check:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    vip_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -452,59 +452,59 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('weight', 'int'),
-    ('destination_ip_address', 'str'),
-    ('name', 'str'),
-    ('destination_port', 'int'),
-    ('connection_limit', 'int'),
-    ('health_check', 'str'),
     ('vip_id', 'str'),
+    ('health_check', 'str'),
+    ('name', 'str'),
+    ('destination_ip_address', 'str'),
+    ('destination_port', 'int'),
+    ('weight', 'int'),
+    ('connection_limit', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'weight',
-    'usip',
-    'destination_ip_address',
-    'name',
-    'destination_port',
-    'connection_limit',
-    'health_check',
-    'tags',
     'vip_id',
+    'health_check',
+    'usip',
+    'tags',
+    'name',
+    'destination_ip_address',
+    'destination_port',
+    'weight',
+    'connection_limit',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    weight=dict(
-        required=False,
-        type='int'),
-    usip=dict(
-        default='NO',
-        type='str'),
-    destination_ip_address=dict(
+    vip_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    destination_port=dict(
-        required=False,
-        type='int'),
-    connection_limit=dict(
-        required=False,
-        type='int'),
     health_check=dict(
         required=False,
+        type='str'),
+    usip=dict(
+        default='NO',
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    vip_id=dict(
+    name=dict(
         required=False,
         type='str'),
+    destination_ip_address=dict(
+        required=False,
+        type='str'),
+    destination_port=dict(
+        required=False,
+        type='int'),
+    weight=dict(
+        required=False,
+        type='int'),
+    connection_limit=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -547,7 +547,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

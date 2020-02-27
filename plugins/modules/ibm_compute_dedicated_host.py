@@ -371,36 +371,32 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    cpu_count:
+    datacenter:
         description:
-            - The capacity that the dedicated host's CPU allocation is restricted to.
+            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
         required: False
-        type: int
-    memory_capacity:
+        type: str
+    flavor:
         description:
-            - The capacity that the dedicated host's memory allocation is restricted to.
+            - The flavor of the dedicatated host.
         required: False
-        type: int
-    hourly_billing:
-        description:
-            - The billing type for the dedicatated host.
-        required: False
-        type: bool
-        default: True
+        type: str
+        default: 56_CORES_X_242_RAM_X_1_4_TB
     router_hostname:
         description:
             - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
         required: False
         type: str
-    disk_capacity:
+    tags:
         description:
-            - The capacity that the dedicated host's disk allocation is restricted to.
+            - None
         required: False
-        type: int
+        type: list
+        elements: str
     wait_time_minutes:
         description:
             - None
@@ -417,23 +413,27 @@ options:
             - (Required for new resource) The domain of dedicatated host.
         required: False
         type: str
-    datacenter:
+    hourly_billing:
         description:
-            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+            - The billing type for the dedicatated host.
         required: False
-        type: str
-    flavor:
+        type: bool
+        default: True
+    cpu_count:
         description:
-            - The flavor of the dedicatated host.
+            - The capacity that the dedicated host's CPU allocation is restricted to.
         required: False
-        type: str
-        default: 56_CORES_X_242_RAM_X_1_4_TB
-    tags:
+        type: int
+    disk_capacity:
         description:
-            - None
+            - The capacity that the dedicated host's disk allocation is restricted to.
         required: False
-        type: list
-        elements: str
+        type: int
+    memory_capacity:
+        description:
+            - The capacity that the dedicated host's memory allocation is restricted to.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -464,45 +464,43 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
     ('router_hostname', 'str'),
     ('hostname', 'str'),
     ('domain', 'str'),
-    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cpu_count',
-    'memory_capacity',
-    'hourly_billing',
+    'datacenter',
+    'flavor',
     'router_hostname',
-    'disk_capacity',
+    'tags',
     'wait_time_minutes',
     'hostname',
     'domain',
-    'datacenter',
-    'flavor',
-    'tags',
+    'hourly_billing',
+    'cpu_count',
+    'disk_capacity',
+    'memory_capacity',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cpu_count=dict(
+    datacenter=dict(
         required=False,
-        type='int'),
-    memory_capacity=dict(
-        required=False,
-        type='int'),
-    hourly_billing=dict(
-        default=True,
-        type='bool'),
+        type='str'),
+    flavor=dict(
+        default='56_CORES_X_242_RAM_X_1_4_TB',
+        type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
-    disk_capacity=dict(
+    tags=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
@@ -512,16 +510,18 @@ module_args = dict(
     domain=dict(
         required=False,
         type='str'),
-    datacenter=dict(
+    hourly_billing=dict(
+        default=True,
+        type='bool'),
+    cpu_count=dict(
         required=False,
-        type='str'),
-    flavor=dict(
-        default='56_CORES_X_242_RAM_X_1_4_TB',
-        type='str'),
-    tags=dict(
+        type='int'),
+    disk_capacity=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
+    memory_capacity=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -564,7 +564,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

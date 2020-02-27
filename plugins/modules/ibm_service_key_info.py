@@ -371,10 +371,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_service_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    space_guid:
+        description:
+            - The guid of the space in which the service instance is present
+        required: True
+        type: str
     credentials:
         description:
             - Credentials asociated with the key
@@ -388,11 +393,6 @@ options:
     service_instance_name:
         description:
             - Service instance name for example, speech_to_text
-        required: True
-        type: str
-    space_guid:
-        description:
-            - The guid of the space in which the service instance is present
         required: True
         type: str
     ibmcloud_api_key:
@@ -412,22 +412,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('space_guid', 'str'),
     ('name', 'str'),
     ('service_instance_name', 'str'),
-    ('space_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'space_guid',
     'credentials',
     'name',
     'service_instance_name',
-    'space_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    space_guid=dict(
+        required=True,
+        type='str'),
     credentials=dict(
         required=False,
         type='dict'),
@@ -435,9 +438,6 @@ module_args = dict(
         required=True,
         type='str'),
     service_instance_name=dict(
-        required=True,
-        type='str'),
-    space_guid=dict(
         required=True,
         type='str'),
     ibmcloud_api_key=dict(
@@ -464,7 +464,7 @@ def run_module():
         resource_type='ibm_service_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

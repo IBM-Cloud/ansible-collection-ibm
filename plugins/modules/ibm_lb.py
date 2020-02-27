@@ -371,15 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     dedicated:
         description:
             - None
@@ -397,22 +392,6 @@ options:
         required: False
         type: list
         elements: str
-    subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    ssl_offload:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
     connections:
         description:
             - (Required for new resource) 
@@ -432,6 +411,27 @@ options:
     ip_address:
         description:
             - None
+        required: False
+        type: str
+    subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    ssl_offload:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) 
         required: False
         type: str
     id:
@@ -464,31 +464,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('connections', 'int'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
     'dedicated',
     'ssl_enabled',
     'tags',
-    'subnet_id',
-    'ssl_offload',
-    'hostname',
     'connections',
     'ha_enabled',
     'security_certificate_id',
     'ip_address',
+    'subnet_id',
+    'ssl_offload',
+    'hostname',
+    'datacenter',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
-        required=False,
-        type='str'),
     dedicated=dict(
         default=False,
         type='bool'),
@@ -499,15 +496,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    subnet_id=dict(
-        required=False,
-        type='int'),
-    ssl_offload=dict(
-        default=False,
-        type='bool'),
-    hostname=dict(
-        required=False,
-        type='str'),
     connections=dict(
         required=False,
         type='int'),
@@ -518,6 +506,18 @@ module_args = dict(
         required=False,
         type='int'),
     ip_address=dict(
+        required=False,
+        type='str'),
+    subnet_id=dict(
+        required=False,
+        type='int'),
+    ssl_offload=dict(
+        default=False,
+        type='bool'),
+    hostname=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
         required=False,
         type='str'),
     id=dict(
@@ -562,7 +562,7 @@ def run_module():
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

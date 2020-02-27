@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (True, str, None)
-    Service name for example, cloudantNoSQLDB
-
-
   plan (True, str, None)
     The plan type ex- shared
+
+
+  service (True, str, None)
+    Service name for example, cloudantNoSQLDB
 
 
   ibmcloud_api_key (True, any, None)

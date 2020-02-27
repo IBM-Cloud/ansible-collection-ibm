@@ -371,10 +371,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_ha' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     primary_id:
         description:
             - (Required for new resource) 
@@ -390,12 +396,6 @@ options:
             - None
         required: False
         type: bool
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -432,15 +432,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'primary_id',
     'secondary_id',
     'stay_secondary',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     primary_id=dict(
         required=False,
         type='int'),
@@ -450,10 +454,6 @@ module_args = dict(
     stay_secondary=dict(
         required=False,
         type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -496,7 +496,7 @@ def run_module():
         resource_type='ibm_lb_vpx_ha',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,55 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_metadata (False, str, None)
-    None
-
-
-  image_template_id (False, int, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    None
-
-
-  private_ipv4_address (False, str, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
   private_ipv4_address_id (False, int, None)
     None
 
 
-  secondary_ip_count (False, int, None)
+  secondary_ip_addresses (False, list, None)
     None
 
 
-  file_storage_ids (False, list, None)
+  ipv6_enabled (False, bool, False)
     None
 
 
-  post_install_script_uri (False, str, None)
+  notes (False, str, None)
     None
 
 
-  software_guard_extensions (False, bool, False)
+  gpu_secondary_key_name (False, str, None)
     None
 
 
@@ -90,35 +58,23 @@ Parameters
     The unique global identifier of the bare metal server
 
 
-  public_bandwidth (False, int, None)
-    None
-
-
-  public_ipv4_address_id (False, int, None)
-    None
-
-
-  ipv6_address (False, str, None)
-    None
-
-
   domain (False, str, None)
     (Required for new resource)
 
 
-  block_storage_ids (False, list, None)
+  post_install_script_uri (False, str, None)
     None
 
 
-  datacenter (False, str, None)
+  redundant_power_supply (False, bool, None)
     None
 
 
-  hourly_billing (False, bool, True)
+  private_vlan_id (False, int, None)
     None
 
 
-  package_key_name (False, str, None)
+  restricted_network (False, bool, False)
     None
 
 
@@ -126,19 +82,15 @@ Parameters
     None
 
 
-  private_subnet (False, str, None)
+  private_ipv4_address (False, str, None)
     None
 
 
-  secondary_ip_addresses (False, list, None)
+  hostname (False, str, None)
     None
 
 
-  notes (False, str, None)
-    None
-
-
-  os_reference_code (False, str, None)
+  network_speed (False, int, 100)
     None
 
 
@@ -150,7 +102,19 @@ Parameters
     None
 
 
-  extended_hardware_testing (False, bool, False)
+  public_bandwidth (False, int, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  fixed_config_preset (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
     None
 
 
@@ -158,7 +122,15 @@ Parameters
     None
 
 
-  ipv6_enabled (False, bool, False)
+  ssh_key_ids (False, list, None)
+    None
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  quote_id (False, int, None)
     None
 
 
@@ -166,11 +138,7 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  process_key_name (False, str, None)
+  os_key_name (False, str, None)
     None
 
 
@@ -182,39 +150,71 @@ Parameters
     None
 
 
+  secondary_ip_count (False, int, None)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  package_key_name (False, str, None)
+    None
+
+
+  ipv6_address (False, str, None)
+    None
+
+
+  process_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  image_template_id (False, int, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
   public_ipv4_address (False, str, None)
     None
 
 
-  ssh_key_ids (False, list, None)
-    None
-
-
-  gpu_secondary_key_name (False, str, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  redundant_power_supply (False, bool, None)
-    None
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  quote_id (False, int, None)
+  public_ipv4_address_id (False, int, None)
     None
 
 

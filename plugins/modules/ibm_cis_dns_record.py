@@ -371,21 +371,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: False
+        type: str
     data:
         description:
             - None
         required: False
         type: dict
         elements: dict
-    priority:
+    modified_on:
         description:
             - None
         required: False
-        type: int
+        type: str
+    proxiable:
+        description:
+            - None
+        required: False
+        type: bool
     proxied:
         description:
             - None
@@ -397,9 +407,9 @@ options:
             - None
         required: False
         type: str
-    domain_id:
+    cis_id:
         description:
-            - (Required for new resource) Associated CIS domain
+            - (Required for new resource) CIS object id
         required: False
         type: str
     name:
@@ -417,21 +427,11 @@ options:
             - None
         required: False
         type: str
-    modified_on:
+    priority:
         description:
             - None
         required: False
-        type: str
-    proxiable:
-        description:
-            - None
-        required: False
-        type: bool
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: False
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -463,43 +463,49 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
     ('name', 'str'),
     ('type', 'str'),
-    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_id',
     'data',
-    'priority',
+    'modified_on',
+    'proxiable',
     'proxied',
     'created_on',
-    'domain_id',
+    'cis_id',
     'name',
     'type',
     'content',
-    'modified_on',
-    'proxiable',
-    'cis_id',
+    'priority',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_id=dict(
+        required=False,
+        type='str'),
     data=dict(
         required=False,
         elements='',
         type='dict'),
-    priority=dict(
+    modified_on=dict(
         required=False,
-        type='int'),
+        type='str'),
+    proxiable=dict(
+        required=False,
+        type='bool'),
     proxied=dict(
         default=False,
         type='bool'),
     created_on=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    cis_id=dict(
         required=False,
         type='str'),
     name=dict(
@@ -511,15 +517,9 @@ module_args = dict(
     content=dict(
         required=False,
         type='str'),
-    modified_on=dict(
+    priority=dict(
         required=False,
-        type='str'),
-    proxiable=dict(
-        required=False,
-        type='bool'),
-    cis_id=dict(
-        required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -562,7 +562,7 @@ def run_module():
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

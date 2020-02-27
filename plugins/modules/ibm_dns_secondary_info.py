@@ -371,10 +371,20 @@ description:
     - Retrieve an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    status_id:
+        description:
+            - None
+        required: False
+        type: int
+    status_text:
+        description:
+            - None
+        required: False
+        type: str
     zone_name:
         description:
             - The name of the secondary
@@ -390,16 +400,6 @@ options:
             - None
         required: False
         type: int
-    status_id:
-        description:
-            - None
-        required: False
-        type: int
-    status_text:
-        description:
-            - None
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -422,16 +422,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'status_id',
+    'status_text',
     'zone_name',
     'master_ip_address',
     'transfer_frequency',
-    'status_id',
-    'status_text',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    status_id=dict(
+        required=False,
+        type='int'),
+    status_text=dict(
+        required=False,
+        type='str'),
     zone_name=dict(
         required=True,
         type='str'),
@@ -441,12 +447,6 @@ module_args = dict(
     transfer_frequency=dict(
         required=False,
         type='int'),
-    status_id=dict(
-        required=False,
-        type='int'),
-    status_text=dict(
-        required=False,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -471,7 +471,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

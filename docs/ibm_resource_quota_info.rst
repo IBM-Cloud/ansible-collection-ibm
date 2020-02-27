@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  max_instances_per_app (False, int, None)
+    Defines the total instances limit per app.
+
+
+  max_app_instance_memory (False, str, None)
+    Defines the total memory of app instance.
+
 
   total_app_memory (False, str, None)
     Defines the total memory for app.
@@ -48,14 +56,6 @@ Parameters
 
   max_apps (False, int, None)
     Defines the total app limit.
-
-
-  max_instances_per_app (False, int, None)
-    Defines the total instances limit per app.
-
-
-  max_app_instance_memory (False, str, None)
-    Defines the total memory of app instance.
 
 
   ibmcloud_api_key (True, any, None)

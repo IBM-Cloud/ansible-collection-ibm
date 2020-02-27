@@ -371,10 +371,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    zones:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: list
+        elements: dict
     labels:
         description:
             - None
@@ -411,12 +417,6 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    zones:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -447,16 +447,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zones', 'list'),
     ('vpc_id', 'str'),
     ('worker_count', 'int'),
     ('cluster', 'str'),
     ('flavor', 'str'),
     ('worker_pool_name', 'str'),
-    ('zones', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zones',
     'labels',
     'resource_group_id',
     'vpc_id',
@@ -464,12 +465,15 @@ TL_ALL_PARAMETERS = [
     'cluster',
     'flavor',
     'worker_pool_name',
-    'zones',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
     labels=dict(
         required=False,
         elements='',
@@ -492,10 +496,6 @@ module_args = dict(
     worker_pool_name=dict(
         required=False,
         type='str'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -538,7 +538,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

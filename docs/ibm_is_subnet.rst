@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,63 +26,39 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  vpc (False, str, None)
-    (Required for new resource)
-
-
-  zone (False, str, None)
-    (Required for new resource)
+  ipv4_cidr_block (False, str, None)
+    None
 
 
   resource_group (False, str, None)
     None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  ipv6_cidr_block (False, str, None)
-    None
-
-
-  ip_version (False, str, ipv4)
-    None
-
-
-  public_gateway (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   total_ipv4_address_count (False, int, None)
     None
+
+
+  zone (False, str, None)
+    (Required for new resource)
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  available_ipv4_address_count (False, str, None)
-    None
+  name (False, str, None)
+    (Required for new resource)
 
 
-  network_acl (False, str, None)
+  public_gateway (False, str, None)
     None
 
 
@@ -90,8 +66,32 @@ Parameters
     None
 
 
-  ipv4_cidr_block (False, str, None)
+  vpc (False, str, None)
+    (Required for new resource)
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  ipv6_cidr_block (False, str, None)
     None
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  ip_version (False, str, ipv4)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

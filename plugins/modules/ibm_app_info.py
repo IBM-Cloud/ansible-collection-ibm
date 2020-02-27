@@ -371,20 +371,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_app' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    memory:
+    environment_json:
         description:
-            - The amount of memory each instance should have. In megabytes.
+            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
         required: False
-        type: int
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
+        type: dict
     health_check_timeout:
         description:
             - Timeout in seconds for health checking of an staged app when starting up.
@@ -400,19 +395,9 @@ options:
             - Define space guid to which app belongs
         required: True
         type: str
-    disk_quota:
+    buildpack:
         description:
-            - The maximum amount of disk available to an instance of an app. In megabytes.
-        required: False
-        type: int
-    environment_json:
-        description:
-            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
-        required: False
-        type: dict
-    state:
-        description:
-            - The state of the application
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
         required: False
         type: str
     instances:
@@ -432,19 +417,34 @@ options:
         required: False
         type: list
         elements: str
-    package_state:
+    health_check_http_endpoint:
         description:
-            - The state of the application package whether staged, pending etc
-        required: False
-        type: str
-    buildpack:
-        description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+            - Endpoint called to determine if the app is healthy.
         required: False
         type: str
     health_check_type:
         description:
             - Type of health check to perform.
+        required: False
+        type: str
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
+    disk_quota:
+        description:
+            - The maximum amount of disk available to an instance of an app. In megabytes.
+        required: False
+        type: int
+    package_state:
+        description:
+            - The state of the application package whether staged, pending etc
+        required: False
+        type: str
+    state:
+        description:
+            - The state of the application
         required: False
         type: str
     ibmcloud_api_key:
@@ -470,31 +470,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'memory',
-    'health_check_http_endpoint',
+    'environment_json',
     'health_check_timeout',
     'name',
     'space_guid',
-    'disk_quota',
-    'environment_json',
-    'state',
+    'buildpack',
     'instances',
     'route_guid',
     'service_instance_guid',
-    'package_state',
-    'buildpack',
+    'health_check_http_endpoint',
     'health_check_type',
+    'memory',
+    'disk_quota',
+    'package_state',
+    'state',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    memory=dict(
+    environment_json=dict(
         required=False,
-        type='int'),
-    health_check_http_endpoint=dict(
-        required=False,
-        type='str'),
+        type='dict'),
     health_check_timeout=dict(
         required=False,
         type='int'),
@@ -504,13 +501,7 @@ module_args = dict(
     space_guid=dict(
         required=True,
         type='str'),
-    disk_quota=dict(
-        required=False,
-        type='int'),
-    environment_json=dict(
-        required=False,
-        type='dict'),
-    state=dict(
+    buildpack=dict(
         required=False,
         type='str'),
     instances=dict(
@@ -524,13 +515,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    package_state=dict(
-        required=False,
-        type='str'),
-    buildpack=dict(
+    health_check_http_endpoint=dict(
         required=False,
         type='str'),
     health_check_type=dict(
+        required=False,
+        type='str'),
+    memory=dict(
+        required=False,
+        type='int'),
+    disk_quota=dict(
+        required=False,
+        type='int'),
+    package_state=dict(
+        required=False,
+        type='str'),
+    state=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -557,7 +557,7 @@ def run_module():
         resource_type='ibm_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

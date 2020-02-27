@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster (False, str, None)
-    (Required for new resource)
-
 
   machine_type (False, str, None)
     (Required for new resource)
@@ -42,16 +34,20 @@ Parameters
     None
 
 
-  state_ (False, str, None)
-    None
-
-
-  zones (False, list, None)
+  labels (False, dict, None)
     None
 
 
   region (False, str, None)
     The worker pool region
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  cluster (False, str, None)
+    (Required for new resource)
 
 
   worker_pool_name (False, str, None)
@@ -66,7 +62,11 @@ Parameters
     None
 
 
-  labels (False, dict, None)
+  state_ (False, str, None)
+    None
+
+
+  zones (False, list, None)
     None
 
 

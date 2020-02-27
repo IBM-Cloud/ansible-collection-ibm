@@ -371,16 +371,52 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    name:
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    operating_system:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    operating_system:
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    visibility:
+        description:
+            - None
+        required: False
+        type: str
+    format:
+        description:
+            - None
+        required: False
+        type: str
+    href:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    name:
         description:
             - (Required for new resource) 
         required: False
@@ -390,18 +426,7 @@ options:
             - The status of the resource
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    visibility:
-        description:
-            - None
-        required: False
-        type: str
-    file:
+    architecture:
         description:
             - None
         required: False
@@ -416,17 +441,7 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    href:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    architecture:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group:
+    file:
         description:
             - None
         required: False
@@ -434,21 +449,6 @@ options:
     resource_name:
         description:
             - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    format:
-        description:
-            - None
         required: False
         type: str
     id:
@@ -502,50 +502,65 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('operating_system', 'str'),
     ('href', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'operating_system',
-    'resource_status',
+    'resource_group',
+    'resource_crn',
     'tags',
+    'operating_system',
+    'status',
     'visibility',
-    'file',
+    'format',
+    'href',
+    'name',
+    'resource_status',
+    'architecture',
     'resource_controller_url',
     'resource_group_name',
-    'href',
-    'architecture',
-    'resource_group',
+    'file',
     'resource_name',
-    'resource_crn',
-    'status',
-    'format',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    operating_system=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    operating_system=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     visibility=dict(
         required=False,
         type='str'),
-    file=dict(
+    format=dict(
+        required=False,
+        type='str'),
+    href=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    architecture=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
@@ -554,25 +569,10 @@ module_args = dict(
     resource_group_name=dict(
         required=False,
         type='str'),
-    href=dict(
-        required=False,
-        type='str'),
-    architecture=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    file=dict(
         required=False,
         type='str'),
     resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    format=dict(
         required=False,
         type='str'),
     id=dict(
@@ -649,7 +649,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

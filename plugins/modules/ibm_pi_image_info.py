@@ -371,16 +371,11 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
     architecture:
-        description:
-            - None
-        required: False
-        type: str
-    operatingsystem:
         description:
             - None
         required: False
@@ -400,6 +395,16 @@ options:
             - None
         required: True
         type: str
+    id:
+        description:
+            - None
+        required: False
+        type: str
+    imageid:
+        description:
+            - None
+        required: False
+        type: str
     state:
         description:
             - None
@@ -410,6 +415,11 @@ options:
             - None
         required: False
         type: int
+    operatingsystem:
+        description:
+            - None
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -434,21 +444,19 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'architecture',
-    'operatingsystem',
     'hypervisor',
     'pi_image_name',
     'pi_cloud_instance_id',
+    'imageid',
     'state',
     'size',
+    'operatingsystem',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     architecture=dict(
-        required=False,
-        type='str'),
-    operatingsystem=dict(
         required=False,
         type='str'),
     hypervisor=dict(
@@ -460,12 +468,21 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
+    id=dict(
+        required=False,
+        type='str'),
+    imageid=dict(
+        required=False,
+        type='str'),
     state=dict(
         required=False,
         type='str'),
     size=dict(
         required=False,
         type='int'),
+    operatingsystem=dict(
+        required=False,
+        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -490,7 +507,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

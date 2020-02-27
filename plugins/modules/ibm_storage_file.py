@@ -371,46 +371,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    allowed_subnets:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    notes:
-        description:
-            - None
-        required: False
-        type: str
-    snapshot_schedule:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    datacenter:
+    type:
         description:
             - (Required for new resource) 
-        required: False
-        type: str
-    allowed_virtual_guest_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     iops:
@@ -423,12 +390,55 @@ options:
             - None
         required: False
         type: str
-    allowed_ip_addresses:
+    allowed_virtual_guest_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    capacity:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    allowed_hardware_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    allowed_subnets:
         description:
             - None
         required: False
         type: list
         elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
+    notes:
+        description:
+            - None
+        required: False
+        type: str
+    snapshot_schedule:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    mountpoint:
+        description:
+            - None
+        required: False
+        type: str
     tags:
         description:
             - None
@@ -441,40 +451,30 @@ options:
         required: False
         type: bool
         default: False
-    capacity:
+    datacenter:
         description:
             - (Required for new resource) 
         required: False
-        type: int
-    allowed_hardware_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
+        type: str
     snapshot_capacity:
         description:
             - None
         required: False
         type: int
-    mountpoint:
+    allowed_ip_addresses:
         description:
             - None
         required: False
-        type: str
+        type: list
+        elements: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    type:
+    resource_status:
         description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    hostname:
-        description:
-            - None
+            - The status of the resource
         required: False
         type: str
     id:
@@ -507,60 +507,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
+    ('type', 'str'),
     ('iops', 'float'),
     ('capacity', 'int'),
-    ('type', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'allowed_subnets',
-    'notes',
-    'snapshot_schedule',
-    'resource_status',
-    'datacenter',
-    'allowed_virtual_guest_ids',
-    'resource_controller_url',
+    'type',
     'iops',
     'volumename',
-    'allowed_ip_addresses',
-    'tags',
-    'hourly_billing',
+    'allowed_virtual_guest_ids',
     'capacity',
     'allowed_hardware_ids',
-    'snapshot_capacity',
-    'mountpoint',
-    'resource_name',
-    'type',
+    'allowed_subnets',
+    'resource_controller_url',
     'hostname',
+    'notes',
+    'snapshot_schedule',
+    'mountpoint',
+    'tags',
+    'hourly_billing',
+    'datacenter',
+    'snapshot_capacity',
+    'allowed_ip_addresses',
+    'resource_name',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    allowed_subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
-    snapshot_schedule=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
+    type=dict(
         required=False,
         type='str'),
     iops=dict(
@@ -569,17 +548,10 @@ module_args = dict(
     volumename=dict(
         required=False,
         type='str'),
-    allowed_ip_addresses=dict(
+    allowed_virtual_guest_ids=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    hourly_billing=dict(
-        default=False,
-        type='bool'),
     capacity=dict(
         required=False,
         type='int'),
@@ -587,19 +559,47 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    snapshot_capacity=dict(
+    allowed_subnets=dict(
         required=False,
-        type='int'),
-    mountpoint=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    type=dict(
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     hostname=dict(
+        required=False,
+        type='str'),
+    notes=dict(
+        required=False,
+        type='str'),
+    snapshot_schedule=dict(
+        required=False,
+        elements='',
+        type='list'),
+    mountpoint=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    hourly_billing=dict(
+        default=False,
+        type='bool'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    snapshot_capacity=dict(
+        required=False,
+        type='int'),
+    allowed_ip_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -644,7 +644,7 @@ def run_module():
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,32 +371,36 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    pi_instance_name:
-        description:
-            - Server Name to be used for pvminstances
-        required: True
-        type: str
-    volumes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    state:
+    proctype:
         description:
             - None
         required: False
         type: str
-    processors:
+    replicationpolicy:
         description:
             - None
         required: False
-        type: int
-    health_status:
+        type: str
+    shareable:
+        description:
+            - None
+        required: False
+        type: bool
+    volumeid:
+        description:
+            - None
+        required: False
+        type: str
+    healthstatus:
+        description:
+            - None
+        required: False
+        type: str
+    status:
         description:
             - None
         required: False
@@ -407,21 +411,42 @@ options:
         required: False
         type: list
         elements: dict
-    proctype:
+    pi_instance_name:
         description:
-            - None
-        required: False
+            - Server Name to be used for pvminstances
+        required: True
         type: str
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
-    status:
+    state:
         description:
             - None
         required: False
         type: str
+    replicants:
+        description:
+            - None
+        required: False
+        type: int
+    processors:
+        description:
+            - None
+        required: False
+        type: int
+    name:
+        description:
+            - None
+        required: False
+        type: str
+    health:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -445,49 +470,69 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
-    'volumes',
-    'state',
-    'processors',
-    'health_status',
-    'addresses',
     'proctype',
-    'pi_cloud_instance_id',
+    'replicationpolicy',
+    'shareable',
+    'volumeid',
+    'healthstatus',
     'status',
+    'addresses',
+    'pi_instance_name',
+    'pi_cloud_instance_id',
+    'state',
+    'replicants',
+    'processors',
+    'name',
+    'health',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required=True,
-        type='str'),
-    volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    state=dict(
+    proctype=dict(
         required=False,
         type='str'),
-    processors=dict(
+    replicationpolicy=dict(
         required=False,
-        type='int'),
-    health_status=dict(
+        type='str'),
+    shareable=dict(
+        required=False,
+        type='bool'),
+    volumeid=dict(
+        required=False,
+        type='str'),
+    healthstatus=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     addresses=dict(
         required=False,
         elements='',
         type='list'),
-    proctype=dict(
-        required=False,
+    pi_instance_name=dict(
+        required=True,
         type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    status=dict(
+    state=dict(
         required=False,
         type='str'),
+    replicants=dict(
+        required=False,
+        type='int'),
+    processors=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    health=dict(
+        required=False,
+        elements='',
+        type='list'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -512,7 +557,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

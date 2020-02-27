@@ -371,25 +371,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_evault' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    capacity:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    virtual_instance_id:
-        description:
-            - None
-        required: False
-        type: int
-    hardware_instance_id:
-        description:
-            - None
-        required: False
-        type: int
     username:
         description:
             - None
@@ -416,6 +401,21 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    capacity:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    virtual_instance_id:
+        description:
+            - None
+        required: False
+        type: int
+    hardware_instance_id:
+        description:
+            - None
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -446,34 +446,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('capacity', 'int'),
     ('datacenter', 'str'),
+    ('capacity', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'capacity',
-    'virtual_instance_id',
-    'hardware_instance_id',
     'username',
     'password',
     'service_resource_name',
     'tags',
     'datacenter',
+    'capacity',
+    'virtual_instance_id',
+    'hardware_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    capacity=dict(
-        required=False,
-        type='int'),
-    virtual_instance_id=dict(
-        required=False,
-        type='int'),
-    hardware_instance_id=dict(
-        required=False,
-        type='int'),
     username=dict(
         required=False,
         type='str'),
@@ -490,6 +481,15 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    virtual_instance_id=dict(
+        required=False,
+        type='int'),
+    hardware_instance_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -532,7 +532,7 @@ def run_module():
         resource_type='ibm_storage_evault',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

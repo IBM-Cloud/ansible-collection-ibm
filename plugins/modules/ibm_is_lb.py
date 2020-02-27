@@ -371,24 +371,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    name:
+    resource_controller_url:
         description:
-            - (Required for new resource) 
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    type:
+    resource_group_name:
         description:
-            - None
-        required: False
-        type: str
-        default: public
-    status:
-        description:
-            - None
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     operating_status:
@@ -396,6 +390,12 @@ options:
             - None
         required: False
         type: str
+    public_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     tags:
         description:
             - None
@@ -412,27 +412,27 @@ options:
             - None
         required: False
         type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    resource_group_name:
+    name:
         description:
-            - The resource group name in which resource is provisioned
+            - (Required for new resource) 
         required: False
         type: str
-    public_ips:
+    type:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: str
+        default: public
+    status:
+        description:
+            - None
+        required: False
+        type: str
     private_ips:
         description:
             - None
@@ -502,17 +502,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'type',
-    'status',
+    'resource_controller_url',
+    'resource_group_name',
     'operating_status',
+    'public_ips',
     'tags',
     'resource_group',
     'hostname',
-    'resource_controller_url',
     'resource_name',
-    'resource_group_name',
-    'public_ips',
+    'name',
+    'type',
+    'status',
     'private_ips',
     'subnets',
 ]
@@ -520,18 +520,19 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
-    type=dict(
-        default='public',
-        type='str'),
-    status=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     operating_status=dict(
         required=False,
         type='str'),
+    public_ips=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
@@ -542,19 +543,18 @@ module_args = dict(
     hostname=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    name=dict(
         required=False,
         type='str'),
-    public_ips=dict(
+    type=dict(
+        default='public',
+        type='str'),
+    status=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     private_ips=dict(
         required=False,
         elements='',
@@ -637,7 +637,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -371,13 +371,45 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
     post_install_script_uri:
         description:
             - None
+        required: False
+        type: str
+    public_ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    public_ip_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    public_ipv6_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    members:
+        description:
+            - (Required for new resource) The hardware members of this network Gateway
+        required: False
+        type: list
+        elements: dict
+    associated_vlans:
+        description:
+            - The VLAN instances associated with this Network Gateway
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) The name of the gateway
         required: False
         type: str
     private_ip_address_id:
@@ -390,44 +422,7 @@ options:
             - None
         required: False
         type: str
-    public_ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    members:
-        description:
-            - (Required for new resource) The hardware members of this network Gateway
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) The name of the gateway
-        required: False
-        type: str
-    ssh_key_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
     private_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ip_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ipv6_address_id:
         description:
             - None
         required: False
@@ -437,12 +432,17 @@ options:
             - None
         required: False
         type: int
-    associated_vlans:
+    status:
         description:
-            - The VLAN instances associated with this Network Gateway
+            - None
+        required: False
+        type: str
+    ssh_key_ids:
+        description:
+            - None
         required: False
         type: list
-        elements: dict
+        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -480,18 +480,18 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'post_install_script_uri',
-    'private_ip_address_id',
-    'private_ipv4_address',
     'public_ipv4_address',
-    'status',
-    'members',
-    'name',
-    'ssh_key_ids',
-    'private_vlan_id',
     'public_ip_address_id',
     'public_ipv6_address_id',
-    'public_vlan_id',
+    'members',
     'associated_vlans',
+    'name',
+    'private_ip_address_id',
+    'private_ipv4_address',
+    'private_vlan_id',
+    'public_vlan_id',
+    'status',
+    'ssh_key_ids',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -500,42 +500,42 @@ module_args = dict(
     post_install_script_uri=dict(
         required=False,
         type='str'),
-    private_ip_address_id=dict(
-        required=False,
-        type='int'),
-    private_ipv4_address=dict(
-        required=False,
-        type='str'),
     public_ipv4_address=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    members=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    ssh_key_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
     public_ip_address_id=dict(
         required=False,
         type='int'),
     public_ipv6_address_id=dict(
         required=False,
         type='int'),
+    members=dict(
+        required=False,
+        elements='',
+        type='list'),
+    associated_vlans=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    private_ip_address_id=dict(
+        required=False,
+        type='int'),
+    private_ipv4_address=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='int'),
     public_vlan_id=dict(
         required=False,
         type='int'),
-    associated_vlans=dict(
+    status=dict(
+        required=False,
+        type='str'),
+    ssh_key_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -581,7 +581,7 @@ def run_module():
         resource_type='ibm_network_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

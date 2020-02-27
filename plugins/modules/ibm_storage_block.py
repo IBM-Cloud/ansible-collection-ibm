@@ -371,58 +371,70 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_block' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    os_format_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    capacity:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    volumename:
-        description:
-            - None
-        required: False
-        type: str
-    allowed_hardware_ids:
+    allowed_ip_addresses:
         description:
             - None
         required: False
         type: list
-        elements: int
+        elements: str
     allowed_host_info:
         description:
             - None
         required: False
         type: list
         elements: dict
+    target_address:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    type:
+    snapshot_capacity:
+        description:
+            - None
+        required: False
+        type: int
+    os_format_type:
         description:
             - (Required for new resource) 
         required: False
         type: str
+    allowed_virtual_guest_info:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     allowed_virtual_guest_ids:
         description:
             - None
         required: False
         type: list
         elements: int
+    type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    volumename:
+        description:
+            - None
+        required: False
+        type: str
     notes:
         description:
             - None
@@ -434,6 +446,32 @@ options:
         required: False
         type: list
         elements: dict
+    capacity:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    iops:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: float
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    allowed_hardware_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
     tags:
         description:
             - None
@@ -446,44 +484,6 @@ options:
         required: False
         type: bool
         default: False
-    target_address:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    iops:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: float
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
-    snapshot_capacity:
-        description:
-            - None
-        required: False
-        type: int
-    allowed_virtual_guest_info:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    allowed_ip_addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -515,52 +515,40 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('os_format_type', 'str'),
-    ('capacity', 'int'),
     ('type', 'str'),
-    ('iops', 'float'),
     ('datacenter', 'str'),
+    ('capacity', 'int'),
+    ('iops', 'float'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'os_format_type',
-    'resource_controller_url',
-    'capacity',
-    'volumename',
-    'allowed_hardware_ids',
+    'allowed_ip_addresses',
     'allowed_host_info',
+    'target_address',
     'resource_name',
-    'type',
+    'snapshot_capacity',
+    'os_format_type',
+    'allowed_virtual_guest_info',
     'allowed_virtual_guest_ids',
+    'type',
+    'datacenter',
+    'volumename',
     'notes',
     'allowed_hardware_info',
-    'tags',
-    'hourly_billing',
-    'target_address',
+    'capacity',
     'iops',
     'hostname',
-    'snapshot_capacity',
-    'allowed_virtual_guest_info',
-    'allowed_ip_addresses',
-    'datacenter',
+    'resource_controller_url',
+    'allowed_hardware_ids',
+    'tags',
+    'hourly_billing',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    os_format_type=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    volumename=dict(
-        required=False,
-        type='str'),
-    allowed_hardware_ids=dict(
+    allowed_ip_addresses=dict(
         required=False,
         elements='',
         type='list'),
@@ -568,20 +556,56 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    target_address=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_name=dict(
         required=False,
         type='str'),
-    type=dict(
+    snapshot_capacity=dict(
+        required=False,
+        type='int'),
+    os_format_type=dict(
         required=False,
         type='str'),
+    allowed_virtual_guest_info=dict(
+        required=False,
+        elements='',
+        type='list'),
     allowed_virtual_guest_ids=dict(
         required=False,
         elements='',
         type='list'),
+    type=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    volumename=dict(
+        required=False,
+        type='str'),
     notes=dict(
         required=False,
         type='str'),
     allowed_hardware_info=dict(
+        required=False,
+        elements='',
+        type='list'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    iops=dict(
+        required=False,
+        type='float'),
+    hostname=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    allowed_hardware_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -592,30 +616,6 @@ module_args = dict(
     hourly_billing=dict(
         default=False,
         type='bool'),
-    target_address=dict(
-        required=False,
-        elements='',
-        type='list'),
-    iops=dict(
-        required=False,
-        type='float'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    snapshot_capacity=dict(
-        required=False,
-        type='int'),
-    allowed_virtual_guest_info=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_ip_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -658,7 +658,7 @@ def run_module():
         resource_type='ibm_storage_block',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,43 +26,27 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_validation_method (False, str, dns - 01)
-    None
-
-
-  dns_provider_instance_crn (False, str, None)
-    None
-
-
-  algorithm (False, str, None)
-    None
-
-
-  begins_on (False, int, None)
-    None
-
-
-  imported (False, bool, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
   rotate_keys (False, bool, False)
     None
 
 
-  expires_on (False, int, None)
+  has_previous (False, str, None)
+    None
+
+
+  issuance_info (False, dict, None)
     None
 
 
   description (False, str, None)
+    None
+
+
+  domain_validation_method (False, str, dns - 01)
+    None
+
+
+  issuer (False, str, None)
     None
 
 
@@ -74,11 +58,19 @@ Parameters
     (Required for new resource)
 
 
-  has_previous (False, str, None)
+  name (False, str, None)
+    (Required for new resource)
+
+
+  dns_provider_instance_crn (False, str, None)
     None
 
 
-  issuance_info (False, dict, None)
+  begins_on (False, int, None)
+    None
+
+
+  expires_on (False, int, None)
     None
 
 
@@ -86,7 +78,15 @@ Parameters
     (Required for new resource)
 
 
-  issuer (False, str, None)
+  algorithm (False, str, None)
+    None
+
+
+  imported (False, bool, None)
+    None
+
+
+  status (False, str, None)
     None
 
 

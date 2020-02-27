@@ -371,57 +371,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    pod:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    public_vlan_id:
+    public_ip:
         description:
             - None
-        required: False
-        type: int
-    firewall_type:
-        description:
-            - (Required for new resource) 
         required: False
         type: str
     public_ipv6:
-        description:
-            - None
-        required: False
-        type: str
-    password:
-        description:
-            - None
-        required: False
-        type: str
-    addon_configuration:
-        description:
-            - "Allowed Values:- ["FortiGate Security Appliance - Web Filtering Add-on (High Availability)","FortiGate Security Appliance - NGFW Add-on (High Availability)","FortiGate Security Appliance - AV Add-on (High Availability)"] or ["FortiGate Security Appliance - Web Filtering Add-on","FortiGate Security Appliance - NGFW Add-on","FortiGate Security Appliance - AV Add-on"]"
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ip:
         description:
             - None
         required: False
@@ -436,6 +395,47 @@ options:
             - None
         required: False
         type: str
+    datacenter:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
+    firewall_type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    password:
+        description:
+            - None
+        required: False
+        type: str
+    addon_configuration:
+        description:
+            - "Allowed Values:- ["FortiGate Security Appliance - Web Filtering Add-on (High Availability)","FortiGate Security Appliance - NGFW Add-on (High Availability)","FortiGate Security Appliance - AV Add-on (High Availability)"] or ["FortiGate Security Appliance - Web Filtering Add-on","FortiGate Security Appliance - NGFW Add-on","FortiGate Security Appliance - AV Add-on"]"
+        required: False
+        type: list
+        elements: str
+    pod:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -466,41 +466,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pod', 'str'),
-    ('firewall_type', 'str'),
     ('datacenter', 'str'),
     ('name', 'str'),
+    ('firewall_type', 'str'),
+    ('pod', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pod',
-    'public_vlan_id',
-    'firewall_type',
-    'public_ipv6',
-    'password',
-    'addon_configuration',
-    'datacenter',
-    'name',
-    'private_vlan_id',
     'public_ip',
+    'public_ipv6',
     'private_ip',
     'username',
+    'datacenter',
+    'name',
+    'public_vlan_id',
+    'firewall_type',
+    'password',
+    'addon_configuration',
+    'pod',
+    'private_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pod=dict(
+    public_ip=dict(
+        required=False,
+        type='str'),
+    public_ipv6=dict(
+        required=False,
+        type='str'),
+    private_ip=dict(
+        required=False,
+        type='str'),
+    username=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     public_vlan_id=dict(
         required=False,
         type='int'),
     firewall_type=dict(
-        required=False,
-        type='str'),
-    public_ipv6=dict(
         required=False,
         type='str'),
     password=dict(
@@ -510,24 +522,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    pod=dict(
         required=False,
         type='str'),
     private_vlan_id=dict(
         required=False,
         type='int'),
-    public_ip=dict(
-        required=False,
-        type='str'),
-    private_ip=dict(
-        required=False,
-        type='str'),
-    username=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -570,7 +570,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

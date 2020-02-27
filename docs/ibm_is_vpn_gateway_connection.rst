@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -34,15 +34,15 @@ Parameters
     (Required for new resource)
 
 
+  local_cidrs (False, list, None)
+    None
+
+
   peer_cidrs (False, list, None)
     None
 
 
-  action (False, str, none)
-    None
-
-
-  ike_policy (False, str, None)
+  timeout (False, int, 120)
     None
 
 
@@ -58,7 +58,7 @@ Parameters
     None
 
 
-  local_cidrs (False, list, None)
+  action (False, str, none)
     None
 
 
@@ -66,11 +66,11 @@ Parameters
     None
 
 
-  timeout (False, int, 120)
+  ipsec_policy (False, str, None)
     None
 
 
-  ipsec_policy (False, str, None)
+  ike_policy (False, str, None)
     None
 
 

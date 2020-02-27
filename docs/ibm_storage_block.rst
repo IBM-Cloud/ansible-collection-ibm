@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.1
+- IBM-Cloud terraform-provider-ibm v1.2.2
 - Terraform v0.12.20
 
 
@@ -26,12 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  os_format_type (False, str, None)
-    (Required for new resource)
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  allowed_ip_addresses (False, list, None)
+    None
 
 
   capacity (False, int, None)
@@ -42,11 +38,27 @@ Parameters
     None
 
 
+  hostname (False, str, None)
+    None
+
+
+  snapshot_capacity (False, int, None)
+    None
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
   allowed_hardware_ids (False, list, None)
     None
 
 
-  allowed_host_info (False, list, None)
+  tags (False, list, None)
     None
 
 
@@ -58,11 +70,15 @@ Parameters
     (Required for new resource)
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    None
+  datacenter (False, str, None)
+    (Required for new resource)
 
 
-  notes (False, str, None)
+  os_format_type (False, str, None)
+    (Required for new resource)
+
+
+  allowed_virtual_guest_info (False, list, None)
     None
 
 
@@ -70,11 +86,7 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  hourly_billing (False, bool, False)
+  allowed_host_info (False, list, None)
     None
 
 
@@ -86,24 +98,12 @@ Parameters
     (Required for new resource)
 
 
-  hostname (False, str, None)
+  hourly_billing (False, bool, False)
     None
 
 
-  snapshot_capacity (False, int, None)
-    None
-
-
-  allowed_virtual_guest_info (False, list, None)
-    None
-
-
-  allowed_ip_addresses (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource)
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

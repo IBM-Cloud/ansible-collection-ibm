@@ -371,15 +371,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_iam_auth_token' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
-    iam_access_token:
-        description:
-            - None
-        required: False
-        type: str
     iam_refresh_token:
         description:
             - None
@@ -391,6 +386,11 @@ options:
         required: False
         type: str
     uaa_refresh_token:
+        description:
+            - None
+        required: False
+        type: str
+    iam_access_token:
         description:
             - None
         required: False
@@ -416,18 +416,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iam_access_token',
     'iam_refresh_token',
     'uaa_access_token',
     'uaa_refresh_token',
+    'iam_access_token',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iam_access_token=dict(
-        required=False,
-        type='str'),
     iam_refresh_token=dict(
         required=False,
         type='str'),
@@ -435,6 +432,9 @@ module_args = dict(
         required=False,
         type='str'),
     uaa_refresh_token=dict(
+        required=False,
+        type='str'),
+    iam_access_token=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -461,7 +461,7 @@ def run_module():
         resource_type='ibm_iam_auth_token',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

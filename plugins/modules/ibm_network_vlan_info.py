@@ -371,10 +371,16 @@ description:
     - Retrieve an IBM Cloud 'ibm_network_vlan' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.1
+    - IBM-Cloud terraform-provider-ibm v1.2.0
     - Terraform v0.12.20
 
 options:
+    subnets:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - None
@@ -401,12 +407,6 @@ options:
         required: False
         type: list
         elements: dict
-    subnets:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be provided
@@ -428,16 +428,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'subnets',
     'name',
     'number',
     'router_hostname',
     'virtual_guests',
-    'subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='int'),
@@ -451,10 +455,6 @@ module_args = dict(
         required=False,
         type='str'),
     virtual_guests=dict(
-        required=False,
-        elements='',
-        type='list'),
-    subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -482,7 +482,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.1',
+        ibm_provider_version='1.2.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
