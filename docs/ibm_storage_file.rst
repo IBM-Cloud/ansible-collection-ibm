@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  snapshot_capacity (False, int, None)
+    None
+
+
+  hourly_billing (False, bool, False)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
   type (False, str, None)
     (Required for new resource)
 
 
-  datacenter (False, str, None)
+  capacity (False, int, None)
     (Required for new resource)
 
 
@@ -46,11 +58,7 @@ Parameters
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  capacity (False, int, None)
+  iops (False, float, None)
     (Required for new resource)
 
 
@@ -58,19 +66,23 @@ Parameters
     None
 
 
-  snapshot_capacity (False, int, None)
+  notes (False, str, None)
     None
 
 
-  allowed_ip_addresses (False, list, None)
+  tags (False, list, None)
     None
 
 
-  hourly_billing (False, bool, False)
-    None
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  iops (False, float, None)
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  datacenter (False, str, None)
     (Required for new resource)
 
 
@@ -82,24 +94,12 @@ Parameters
     None
 
 
+  allowed_ip_addresses (False, list, None)
+    None
+
+
   mountpoint (False, str, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  notes (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   id (False, str, None)

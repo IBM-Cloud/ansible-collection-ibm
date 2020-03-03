@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,7 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  refresh_api_servers (False, bool, True)
+  reload_workers (False, bool, True)
+    None
+
+
+  private_service_endpoint_url (False, str, None)
     None
 
 
@@ -42,11 +46,7 @@ Parameters
     None
 
 
-  reload_workers (False, bool, True)
-    None
-
-
-  private_service_endpoint_url (False, str, None)
+  refresh_api_servers (False, bool, True)
     None
 
 

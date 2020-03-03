@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,84 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  status (False, str, None)
-    The resource instance status
-
-
-  connectionstrings (False, list, None)
-    None
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  adminuser (False, str, None)
-    The admin user id for the instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  location (False, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  whitelist (False, list, None)
-    None
-
-
-  remote_leader_id (False, str, None)
-    The CRN of leader database
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  users (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
 
 
   plan (False, str, None)
@@ -114,24 +38,100 @@ Parameters
     The admin user password for the instance
 
 
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
+  remote_leader_id (False, str, None)
+    The CRN of leader database
 
 
-  groups (False, list, None)
+  status (False, str, None)
+    The resource instance status
+
+
+  users (False, list, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  tags (False, list, None)
+    None
+
+
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
+
+
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
+
+
+  name (False, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
   members_disk_allocation_mb (False, int, None)
     Disk allocation required for cluster
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  connectionstrings (False, list, None)
+    None
+
+
+  whitelist (False, list, None)
+    None
+
+
+  groups (False, list, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  location (False, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  service (False, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
+
+
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  adminuser (False, str, None)
+    The admin user id for the instance
+
+
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
 
 
   id (False, str, None)

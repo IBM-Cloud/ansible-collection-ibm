@@ -50,7 +50,7 @@ The following parameters can be set by the user:
 
     Note: Modules also support the 'ibmcloud_region' parameter.
 
-4. Update the ansible collection path in `ansible.cfg` if collections are installed in non default path
+4. Update the ibmcollection path in `ansible.cfg` if collections are installed in non default path
 
 ### Create
 

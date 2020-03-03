@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,47 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  is_trusted (False, bool, None)
-    None
-
-
-  subnet_id (False, list, None)
-    None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  kube_version (False, str, None)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  workers_info (False, list, None)
-    The IDs of the worker node
-
-
-  billing (False, str, None)
-    None
-
-
-  public_vlan_id (False, str, None)
-    None
-
-
-  server_url (False, str, None)
+  private_vlan_id (False, str, None)
     None
 
 
@@ -75,54 +35,6 @@ Parameters
 
 
   public_service_endpoint (False, bool, None)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  private_vlan_id (False, str, None)
-    None
-
-
-  webhook (False, list, None)
-    None
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  disk_encryption (False, bool, True)
-    None
-
-
-  machine_type (False, str, None)
-    None
-
-
-  worker_pools (False, list, None)
     None
 
 
@@ -138,39 +50,19 @@ Parameters
     The cluster region
 
 
-  hardware (False, str, None)
-    (Required for new resource)
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  name (False, str, None)
-    (Required for new resource) The cluster name
-
-
-  albs (False, list, None)
+  worker_pools (False, list, None)
     None
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  tags (False, list, None)
+  private_service_endpoint_url (False, str, None)
     None
 
 
-  update_all_workers (False, bool, False)
-    None
-
-
-  no_subnet (False, bool, False)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
+  billing (False, str, None)
     None
 
 
@@ -178,12 +70,120 @@ Parameters
     The size of the default worker pool
 
 
-  ingress_secret (False, str, None)
+  ingress_hostname (False, str, None)
+    None
+
+
+  no_subnet (False, bool, False)
+    None
+
+
+  subnet_id (False, list, None)
+    None
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  albs (False, list, None)
     None
 
 
   worker_num (False, int, 0)
     Number of worker nodes
+
+
+  workers_info (False, list, None)
+    The IDs of the worker node
+
+
+  server_url (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  name (False, str, None)
+    (Required for new resource) The cluster name
+
+
+  disk_encryption (False, bool, True)
+    None
+
+
+  kube_version (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  datacenter (False, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  public_vlan_id (False, str, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  is_trusted (False, bool, None)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  machine_type (False, str, None)
+    None
+
+
+  webhook (False, list, None)
+    None
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  update_all_workers (False, bool, False)
+    None
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  hardware (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

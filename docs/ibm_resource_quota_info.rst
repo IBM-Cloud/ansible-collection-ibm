@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  type (False, str, None)
+    Type of the quota.
+
+
+  max_apps (False, int, None)
+    Defines the total app limit.
+
 
   max_instances_per_app (False, int, None)
     Defines the total instances limit per app.
@@ -48,14 +56,6 @@ Parameters
 
   name (True, str, None)
     Resource quota name, for example Trial Quota
-
-
-  type (False, str, None)
-    Type of the quota.
-
-
-  max_apps (False, int, None)
-    Defines the total app limit.
 
 
   ibmcloud_api_key (True, any, None)

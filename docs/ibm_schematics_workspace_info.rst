@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -30,11 +30,7 @@ Parameters
     The id of templates
 
 
-  types (False, list, None)
-    None
-
-
-  is_locked (False, bool, None)
+  is_frozen (False, bool, None)
     None
 
 
@@ -62,7 +58,11 @@ Parameters
     The status of workspace
 
 
-  is_frozen (False, bool, None)
+  types (False, list, None)
+    None
+
+
+  is_locked (False, bool, None)
     None
 
 

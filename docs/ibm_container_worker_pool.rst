@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  machine_type (False, str, None)
-    (Required for new resource)
-
-
-  hardware (False, str, shared)
-    None
-
-
-  labels (False, dict, None)
+  zones (False, list, None)
     None
 
 
@@ -46,6 +38,30 @@ Parameters
     ID of the resource group.
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  machine_type (False, str, None)
+    (Required for new resource)
+
+
+  size_per_zone (False, int, None)
+    (Required for new resource)
+
+
+  state_ (False, str, None)
+    None
+
+
+  disk_encryption (False, bool, True)
+    None
+
+
+  labels (False, dict, None)
+    None
+
+
   cluster (False, str, None)
     (Required for new resource)
 
@@ -54,24 +70,8 @@ Parameters
     (Required for new resource)
 
 
-  size_per_zone (False, int, None)
-    (Required for new resource)
-
-
-  disk_encryption (False, bool, True)
+  hardware (False, str, shared)
     None
-
-
-  state_ (False, str, None)
-    None
-
-
-  zones (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   id (False, str, None)

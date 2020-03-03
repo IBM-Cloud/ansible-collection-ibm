@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -28,22 +28,6 @@ Parameters
 
   worker_id (True, str, None)
     ID of the worker
-
-
-  state (False, str, None)
-    State of the worker
-
-
-  pool_id (False, str, None)
-    worker pool id
-
-
-  pool_name (False, str, None)
-    worker pool name
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   cluster_name_id (True, str, None)
@@ -58,12 +42,28 @@ Parameters
     kube version of the worker
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  state (False, str, None)
+    State of the worker
+
+
+  pool_id (False, str, None)
+    worker pool id
+
+
+  pool_name (False, str, None)
+    worker pool name
+
+
   network_interfaces (False, list, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

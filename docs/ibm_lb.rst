@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,27 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ha_enabled (False, bool, False)
-    None
-
-
-  ip_address (False, str, None)
-    None
-
-
-  dedicated (False, bool, False)
-    None
-
-
-  subnet_id (False, int, None)
-    None
-
-
   ssl_enabled (False, bool, None)
-    None
-
-
-  ssl_offload (False, bool, False)
     None
 
 
@@ -67,6 +47,26 @@ Parameters
 
 
   security_certificate_id (False, int, None)
+    None
+
+
+  ip_address (False, str, None)
+    None
+
+
+  subnet_id (False, int, None)
+    None
+
+
+  ha_enabled (False, bool, False)
+    None
+
+
+  dedicated (False, bool, False)
+    None
+
+
+  ssl_offload (False, bool, False)
     None
 
 

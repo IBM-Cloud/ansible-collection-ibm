@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default_network_acl (False, str, None)
+  address_prefix_management (False, str, auto)
     None
 
 
@@ -38,11 +38,11 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  classic_access (False, bool, False)
-    None
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  status (False, str, None)
+  default_network_acl (False, str, None)
     None
 
 
@@ -50,23 +50,7 @@ Parameters
     The name of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  default_security_group (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  address_prefix_management (False, str, auto)
+  classic_access (False, bool, False)
     None
 
 
@@ -74,8 +58,24 @@ Parameters
     (Required for new resource)
 
 
+  status (False, str, None)
+    None
+
+
+  default_security_group (False, str, None)
+    None
+
+
   tags (False, list, None)
     None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

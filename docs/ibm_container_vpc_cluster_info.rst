@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,31 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_type (False, str, all)
+  tags (False, list, None)
     None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  cluster_name_id (True, str, None)
+    Name of the cluster
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  kube_version (False, str, None)
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  public_service_endpoint (False, bool, None)
     None
 
 
@@ -46,39 +62,7 @@ Parameters
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  cluster_name_id (True, str, None)
-    Name of the cluster
-
-
-  worker_count (False, int, None)
-    Number of workers
-
-
-  albs (False, list, None)
-    None
-
-
-  health (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  worker_pools (False, list, None)
-    None
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint_url (False, str, None)
+  kube_version (False, str, None)
     None
 
 
@@ -86,24 +70,16 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  workers (False, list, None)
+  alb_type (False, str, all)
     None
 
 
-  private_service_endpoint (False, bool, None)
+  albs (False, list, None)
     None
 
 
-  public_service_endpoint_url (False, str, None)
+  private_service_endpoint_url (False, str, None)
     None
-
-
-  crn (False, str, None)
-    CRN of resource instance
 
 
   master_url (False, str, None)
@@ -112,6 +88,30 @@ Parameters
 
   status (False, str, None)
     The status of the cluster master
+
+
+  health (False, str, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
+  workers (False, list, None)
+    None
+
+
+  worker_pools (False, list, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
 
 
   ibmcloud_api_key (True, any, None)

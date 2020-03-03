@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  org_guid (True, str, None)
-    The guid of the org
-
-
   account_users (False, list, None)
     None
+
+
+  org_guid (True, str, None)
+    The guid of the org
 
 
   ibmcloud_api_key (True, any, None)

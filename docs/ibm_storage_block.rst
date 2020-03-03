@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,11 +26,31 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  allowed_ip_addresses (False, list, None)
+  notes (False, str, None)
     None
 
 
-  capacity (False, int, None)
+  allowed_hardware_info (False, list, None)
+    None
+
+
+  allowed_host_info (False, list, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  allowed_virtual_guest_info (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    (Required for new resource)
+
+
+  iops (False, float, None)
     (Required for new resource)
 
 
@@ -46,47 +66,11 @@ Parameters
     None
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  allowed_hardware_ids (False, list, None)
-    None
-
-
   tags (False, list, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  type (False, str, None)
-    (Required for new resource)
-
-
-  datacenter (False, str, None)
-    (Required for new resource)
-
-
-  os_format_type (False, str, None)
-    (Required for new resource)
-
-
-  allowed_virtual_guest_info (False, list, None)
-    None
-
-
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  allowed_host_info (False, list, None)
+  hourly_billing (False, bool, False)
     None
 
 
@@ -94,16 +78,32 @@ Parameters
     None
 
 
-  iops (False, float, None)
-    (Required for new resource)
+  allowed_hardware_ids (False, list, None)
+    None
 
 
-  hourly_billing (False, bool, False)
+  allowed_ip_addresses (False, list, None)
     None
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  type (False, str, None)
+    (Required for new resource)
+
+
+  capacity (False, int, None)
+    (Required for new resource)
+
+
+  os_format_type (False, str, None)
+    (Required for new resource)
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    None
 
 
   id (False, str, None)

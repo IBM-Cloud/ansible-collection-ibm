@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  username (False, str, None)
-    None
-
-
-  first_name (False, str, None)
+  last_name (False, str, None)
     (Required for new resource)
 
 
-  last_name (False, str, None)
+  company_name (False, str, None)
     (Required for new resource)
 
 
@@ -42,43 +38,7 @@ Parameters
     (Required for new resource)
 
 
-  has_api_key (False, bool, False)
-    None
-
-
-  email (False, str, None)
-    (Required for new resource)
-
-
-  state_ (False, str, None)
-    (Required for new resource)
-
-
-  permissions (False, list, None)
-    None
-
-
-  company_name (False, str, None)
-    (Required for new resource)
-
-
-  address1 (False, str, None)
-    (Required for new resource)
-
-
-  address2 (False, str, None)
-    None
-
-
-  city (False, str, None)
-    (Required for new resource)
-
-
-  country (False, str, None)
-    (Required for new resource)
-
-
-  password (False, str, None)
+  user_status (False, str, ACTIVE)
     None
 
 
@@ -90,11 +50,51 @@ Parameters
     None
 
 
-  user_status (False, str, ACTIVE)
-    None
+  first_name (False, str, None)
+    (Required for new resource)
+
+
+  email (False, str, None)
+    (Required for new resource)
+
+
+  address1 (False, str, None)
+    (Required for new resource)
+
+
+  state_ (False, str, None)
+    (Required for new resource)
 
 
   tags (False, list, None)
+    None
+
+
+  username (False, str, None)
+    None
+
+
+  password (False, str, None)
+    None
+
+
+  permissions (False, list, None)
+    None
+
+
+  has_api_key (False, bool, False)
+    None
+
+
+  country (False, str, None)
+    (Required for new resource)
+
+
+  city (False, str, None)
+    (Required for new resource)
+
+
+  address2 (False, str, None)
     None
 
 

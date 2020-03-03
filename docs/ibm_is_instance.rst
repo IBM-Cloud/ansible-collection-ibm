@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  image (False, str, None)
-    (Required for new resource)
+  volume_attachments (False, list, None)
+    None
 
 
   gpu (False, list, None)
@@ -38,7 +38,27 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_group (False, str, None)
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  zone (False, str, None)
+    (Required for new resource)
+
+
+  keys (False, list, None)
+    (Required for new resource)
+
+
+  image (False, str, None)
+    (Required for new resource)
+
+
+  boot_volume (False, list, None)
     None
 
 
@@ -46,39 +66,19 @@ Parameters
     None
 
 
-  vpc (False, str, None)
-    (Required for new resource)
-
-
-  volume_attachments (False, list, None)
+  tags (False, list, None)
     None
 
 
-  primary_network_interface (False, list, None)
-    (Required for new resource)
-
-
-  user_data (False, str, None)
+  network_interfaces (False, list, None)
     None
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  zone (False, str, None)
-    (Required for new resource)
 
 
   profile (False, str, None)
+    (Required for new resource)
+
+
+  primary_network_interface (False, list, None)
     (Required for new resource)
 
 
@@ -90,31 +90,31 @@ Parameters
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  name (False, str, None)
+    (Required for new resource)
+
+
+  vpc (False, str, None)
+    (Required for new resource)
+
+
+  status (False, str, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  keys (False, list, None)
-    (Required for new resource)
-
-
-  tags (False, list, None)
+  user_data (False, str, None)
     None
 
 
-  network_interfaces (False, list, None)
-    None
-
-
-  status (False, str, None)
+  resource_group (False, str, None)
     None
 
 

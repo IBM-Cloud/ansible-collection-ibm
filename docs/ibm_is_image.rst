@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
 
   name (False, str, None)
     (Required for new resource)
@@ -34,23 +38,11 @@ Parameters
     None
 
 
-  visibility (False, str, None)
+  file (False, str, None)
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  href (False, str, None)
-    (Required for new resource)
-
-
-  resource_group (False, str, None)
+  format (False, str, None)
     None
 
 
@@ -62,12 +54,20 @@ Parameters
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  operating_system (False, str, None)
+  href (False, str, None)
     (Required for new resource)
+
+
+  resource_group (False, str, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  visibility (False, str, None)
+    None
 
 
   status (False, str, None)
@@ -78,12 +78,12 @@ Parameters
     None
 
 
-  file (False, str, None)
-    None
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  format (False, str, None)
-    None
+  operating_system (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

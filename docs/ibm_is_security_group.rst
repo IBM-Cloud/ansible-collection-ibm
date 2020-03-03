@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  rules (False, list, None)
-    Security Rules
-
-
-  resource_group (False, str, None)
-    None
-
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
@@ -56,6 +48,14 @@ Parameters
 
   vpc (False, str, None)
     (Required for new resource) Security group's resource group id
+
+
+  rules (False, list, None)
+    Security Rules
+
+
+  resource_group (False, str, None)
+    None
 
 
   id (False, str, None)

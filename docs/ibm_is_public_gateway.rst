@@ -18,13 +18,41 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  vpc (False, str, None)
+    (Required for new resource)
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  status (False, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
 
   zone (False, str, None)
     (Required for new resource)
@@ -38,39 +66,11 @@ Parameters
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  floating_ip (False, dict, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  vpc (False, str, None)
-    (Required for new resource)
-
-
-  tags (False, list, None)
-    None
-
-
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  resource_group (False, str, None)
+  floating_ip (False, dict, None)
     None
 
 

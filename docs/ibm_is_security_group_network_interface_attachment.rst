@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_network_interface (False, str, None)
-    None
-
-
-  primary_ipv4_address (False, str, None)
-    None
-
-
-  secondary_address (False, list, None)
+  status (False, str, None)
     None
 
 
@@ -43,6 +35,30 @@ Parameters
 
 
   security_groups (False, list, None)
+    None
+
+
+  security_group (False, str, None)
+    (Required for new resource)
+
+
+  instance_network_interface (False, str, None)
+    None
+
+
+  secondary_address (False, list, None)
+    None
+
+
+  primary_ipv4_address (False, str, None)
+    None
+
+
+  subnet (False, str, None)
+    None
+
+
+  floating_ips (False, list, None)
     None
 
 
@@ -56,22 +72,6 @@ Parameters
 
   port_speed (False, int, None)
     None
-
-
-  status (False, str, None)
-    None
-
-
-  subnet (False, str, None)
-    None
-
-
-  floating_ips (False, list, None)
-    None
-
-
-  security_group (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)

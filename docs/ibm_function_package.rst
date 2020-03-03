@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
+
 
   annotations (False, str, None)
     All annotations set on package by user and those set by the IBM Cloud Function backend/API.
@@ -48,14 +56,6 @@ Parameters
 
   version (False, str, None)
     Semantic version of the item.
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
-
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
 
 
   id (False, str, None)

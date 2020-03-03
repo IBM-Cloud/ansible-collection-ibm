@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  id (False, int, None)
+    A domain registration record's internal identifier
+
+
   name (True, str, None)
     The name of the domain registration
 
 
   name_servers (False, list, None)
     Custom name servers for the domain registration
-
-
-  id (False, int, None)
-    A domain registration record's internal identifier
 
 
   ibmcloud_api_key (True, any, None)

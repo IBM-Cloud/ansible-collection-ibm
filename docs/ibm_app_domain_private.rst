@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
   name (False, str, None)
     (Required for new resource) The name of the domain
 
 
   org_guid (False, str, None)
     (Required for new resource) The organization that owns the domain.
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

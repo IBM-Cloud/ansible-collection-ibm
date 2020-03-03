@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  private (False, bool, False)
-    None
-
-
-  capacity (False, int, None)
-    (Required for new resource)
-
-
-  vlan_id (False, int, None)
-    None
-
 
   endpoint_ip (False, str, None)
     None
@@ -46,8 +34,12 @@ Parameters
     None
 
 
-  type (False, str, None)
+  capacity (False, int, None)
     (Required for new resource)
+
+
+  vlan_id (False, int, None)
+    None
 
 
   ip_version (False, int, 4)
@@ -60,6 +52,14 @@ Parameters
 
   notes (False, str, None)
     None
+
+
+  private (False, bool, False)
+    None
+
+
+  type (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

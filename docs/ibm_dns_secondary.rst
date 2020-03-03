@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  master_ip_address (False, str, None)
+    (Required for new resource)
+
 
   transfer_frequency (False, int, None)
     (Required for new resource)
@@ -44,10 +48,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  master_ip_address (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)

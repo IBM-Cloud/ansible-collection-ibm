@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group (False, str, None)
-    None
-
-
-  key_lifetime (False, int, 28800)
-    None
-
 
   ike_version (False, int, None)
     None
@@ -50,32 +38,44 @@ Parameters
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource)
 
 
   authentication_algorithm (False, str, None)
     (Required for new resource)
 
 
-  encryption_algorithm (False, str, None)
-    (Required for new resource)
+  resource_group (False, str, None)
+    None
 
 
   dh_group (False, int, None)
     (Required for new resource)
 
 
+  key_lifetime (False, int, 28800)
+    None
+
+
   negotiation_mode (False, str, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  encryption_algorithm (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

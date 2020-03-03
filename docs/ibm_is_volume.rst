@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
 
   zone (False, str, None)
     (Required for new resource)
@@ -46,12 +38,40 @@ Parameters
     None
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  profile (False, str, None)
+    (Required for new resource)
+
+
   status (False, str, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   capacity (False, int, 100)
@@ -62,28 +82,8 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  profile (False, str, None)
-    (Required for new resource)
-
-
   crn (False, str, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
 
 
   id (False, str, None)

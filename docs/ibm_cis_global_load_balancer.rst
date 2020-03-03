@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,27 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  modified_on (False, str, None)
-    None
-
-
   name (False, str, None)
     (Required for new resource) name
 
 
+  fallback_pool_id (False, str, None)
+    (Required for new resource) name
+
+
+  default_pool_ids (False, list, None)
+    (Required for new resource)
+
+
+  description (False, str, None)
+    None
+
+
   ttl (False, int, None)
+    None
+
+
+  proxied (False, bool, False)
     None
 
 
@@ -42,15 +54,7 @@ Parameters
     None
 
 
-  created_on (False, str, None)
-    None
-
-
-  description (False, str, None)
-    None
-
-
-  proxied (False, bool, False)
+  modified_on (False, str, None)
     None
 
 
@@ -62,12 +66,8 @@ Parameters
     (Required for new resource) Associated CIS domain
 
 
-  fallback_pool_id (False, str, None)
-    (Required for new resource) name
-
-
-  default_pool_ids (False, list, None)
-    (Required for new resource)
+  created_on (False, str, None)
+    None
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
   crn (False, str, None)
@@ -46,12 +38,16 @@ Parameters
     Guid of resource instance
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
-  location (False, str, None)
-    (Required for new resource) The location where the instance available
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
 
 
   status (False, str, None)
@@ -62,32 +58,36 @@ Parameters
     The crn of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+  service (False, str, None)
+    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
   plan (False, str, None)
     (Required for new resource) The plan type of the service
 
 
-  service (False, str, None)
-    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
-
-
   resource_group_id (False, str, None)
     The resource group id
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  tags (False, list, None)
+    None
 
 
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
+  location (False, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

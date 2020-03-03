@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,31 +26,43 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_ipv4_address_id (False, int, None)
+  tcp_monitoring (False, bool, False)
     None
 
 
-  secondary_ip_addresses (False, list, None)
+  private_subnet (False, str, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
+  secondary_ip_count (False, int, None)
     None
 
 
-  notes (False, str, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
-  gpu_secondary_key_name (False, str, None)
+  file_storage_ids (False, list, None)
     None
 
 
-  disk_key_names (False, list, None)
+  datacenter (False, str, None)
     None
 
 
-  redundant_network (False, bool, False)
+  network_speed (False, int, 100)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  storage_groups (False, list, None)
+    None
+
+
+  public_subnet (False, str, None)
     None
 
 
@@ -62,79 +74,27 @@ Parameters
     (Required for new resource)
 
 
-  post_install_script_uri (False, str, None)
-    None
-
-
   redundant_power_supply (False, bool, None)
     None
 
 
-  private_vlan_id (False, int, None)
+  gpu_secondary_key_name (False, str, None)
     None
 
 
-  restricted_network (False, bool, False)
+  private_ipv4_address_id (False, int, None)
     None
 
 
-  storage_groups (False, list, None)
+  secondary_ip_addresses (False, list, None)
     None
 
 
-  private_ipv4_address (False, str, None)
+  notes (False, str, None)
     None
 
 
-  hostname (False, str, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  tcp_monitoring (False, bool, False)
-    None
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  software_guard_extensions (False, bool, False)
-    None
-
-
-  quote_id (False, int, None)
-    None
-
-
-  ipv6_address_id (False, int, None)
+  post_install_script_uri (False, str, None)
     None
 
 
@@ -142,55 +102,27 @@ Parameters
     None
 
 
-  gpu_key_name (False, str, None)
+  public_bandwidth (False, int, None)
     None
 
 
-  memory (False, int, None)
+  quote_id (False, int, None)
     None
 
 
-  secondary_ip_count (False, int, None)
+  private_vlan_id (False, int, None)
     None
 
 
-  block_storage_ids (False, list, None)
+  private_ipv4_address (False, str, None)
     None
 
 
-  tags (False, list, None)
+  ipv6_enabled (False, bool, False)
     None
 
 
-  datacenter (False, str, None)
-    None
-
-
-  package_key_name (False, str, None)
-    None
-
-
-  ipv6_address (False, str, None)
-    None
-
-
-  process_key_name (False, str, None)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  file_storage_ids (False, list, None)
+  user_metadata (False, str, None)
     None
 
 
@@ -206,7 +138,75 @@ Parameters
     None
 
 
-  private_subnet (False, str, None)
+  package_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  public_ipv4_address_id (False, int, None)
+    None
+
+
+  ipv6_address (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  fixed_config_preset (False, str, None)
+    None
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  process_key_name (False, str, None)
+    None
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  redundant_network (False, bool, False)
     None
 
 
@@ -214,7 +214,7 @@ Parameters
     None
 
 
-  public_ipv4_address_id (False, int, None)
+  ipv6_address_id (False, int, None)
     None
 
 

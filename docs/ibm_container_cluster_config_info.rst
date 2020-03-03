@@ -18,45 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  calico_config_file_path (False, str, None)
-    The absolute path to the calico network config file
-
-
-  token (False, str, None)
-    None
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
-
-
-  admin (False, bool, False)
-    If set to true will download the config for admin
-
-
-  ca_certificate (False, str, None)
-    None
-
-
-  admin_certificate (False, str, None)
-    None
-
 
   space_guid (False, str, None)
     The bluemix space guid this cluster belongs to
@@ -66,12 +34,40 @@ Parameters
     The cluster region
 
 
+  config_dir (False, str, None)
+    The directory where the cluster config to be downloaded. Default is home directory
+
+
+  config_file_path (False, str, None)
+    The absolute path to the kubernetes config yml file
+
+
+  calico_config_file_path (False, str, None)
+    The absolute path to the calico network config file
+
+
+  admin_key (False, str, None)
+    None
+
+
+  host (False, str, None)
+    None
+
+
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
+  ca_certificate (False, str, None)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
 
 
   download (False, bool, True)
@@ -82,15 +78,19 @@ Parameters
     If set to true will download the Calico network config with the Admin config
 
 
-  config_file_path (False, str, None)
-    The absolute path to the kubernetes config yml file
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
-  host (False, str, None)
+  admin (False, bool, False)
+    If set to true will download the config for admin
+
+
+  admin_certificate (False, str, None)
     None
 
 
-  admin_key (False, str, None)
+  token (False, str, None)
     None
 
 

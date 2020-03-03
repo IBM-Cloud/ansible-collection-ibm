@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -30,35 +30,11 @@ Parameters
     (Required for new resource)
 
 
-  peer_address (False, str, None)
-    (Required for new resource)
-
-
-  local_cidrs (False, list, None)
-    None
-
-
-  peer_cidrs (False, list, None)
-    None
-
-
-  timeout (False, int, 120)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
   admin_state_up (False, bool, False)
     None
 
 
-  action (False, str, none)
+  local_cidrs (False, list, None)
     None
 
 
@@ -70,12 +46,36 @@ Parameters
     None
 
 
-  ike_policy (False, str, None)
-    None
+  name (False, str, None)
+    (Required for new resource)
+
+
+  peer_address (False, str, None)
+    (Required for new resource)
 
 
   preshared_key (False, str, None)
     (Required for new resource)
+
+
+  peer_cidrs (False, list, None)
+    None
+
+
+  action (False, str, none)
+    None
+
+
+  timeout (False, int, 120)
+    None
+
+
+  ike_policy (False, str, None)
+    None
+
+
+  status (False, str, None)
+    None
 
 
   id (False, str, None)

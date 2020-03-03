@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  router_hostname (False, str, None)
+  name (False, str, None)
     None
 
 
   vlan_number (False, int, None)
-    None
-
-
-  softlayer_managed (False, bool, None)
     None
 
 
@@ -46,15 +42,19 @@ Parameters
     None
 
 
-  type (False, str, None)
-    (Required for new resource)
-
-
-  name (False, str, None)
+  tags (False, list, None)
     None
 
 
-  tags (False, list, None)
+  datacenter (False, str, None)
+    (Required for new resource)
+
+
+  router_hostname (False, str, None)
+    None
+
+
+  softlayer_managed (False, bool, None)
     None
 
 
@@ -66,7 +66,7 @@ Parameters
     The name of the resource
 
 
-  datacenter (False, str, None)
+  type (False, str, None)
     (Required for new resource)
 
 

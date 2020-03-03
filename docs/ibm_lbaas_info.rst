@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,19 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_instances_up (False, int, None)
-    None
-
-
-  active_connections (False, int, None)
-    None
-
-
-  use_system_public_ip_pool (False, bool, None)
-    None
-
-
-  description (False, str, None)
+  datacenter (False, str, None)
     None
 
 
@@ -46,7 +34,7 @@ Parameters
     None
 
 
-  ssl_ciphers (False, list, None)
+  use_system_public_ip_pool (False, bool, None)
     None
 
 
@@ -54,7 +42,23 @@ Parameters
     None
 
 
-  type (False, str, None)
+  name (True, str, None)
+    None
+
+
+  protocols (False, list, None)
+    None
+
+
+  description (False, str, None)
+    None
+
+
+  health_monitors (False, list, None)
+    None
+
+
+  server_instances_up (False, int, None)
     None
 
 
@@ -66,19 +70,15 @@ Parameters
     None
 
 
-  protocols (False, list, None)
+  active_connections (False, int, None)
     None
 
 
-  name (True, str, None)
+  ssl_ciphers (False, list, None)
     None
 
 
-  datacenter (False, str, None)
-    None
-
-
-  health_monitors (False, list, None)
+  type (False, str, None)
     None
 
 

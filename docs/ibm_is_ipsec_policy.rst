@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.2
+- IBM-Cloud terraform-provider-ibm v1.2.3
 - Terraform v0.12.20
 
 
@@ -26,7 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  transform_protocol (False, str, None)
+  resource_group (False, str, None)
+    None
+
+
+  key_lifetime (False, int, 3600)
+    None
+
+
+  encapsulation_mode (False, str, None)
     None
 
 
@@ -42,11 +50,7 @@ Parameters
     (Required for new resource)
 
 
-  pfs (False, str, None)
-    (Required for new resource)
-
-
-  encapsulation_mode (False, str, None)
+  transform_protocol (False, str, None)
     None
 
 
@@ -70,12 +74,8 @@ Parameters
     (Required for new resource)
 
 
-  resource_group (False, str, None)
-    None
-
-
-  key_lifetime (False, int, 3600)
-    None
+  pfs (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)
