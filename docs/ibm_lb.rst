@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  ssl_enabled (False, bool, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
 
   connections (False, int, None)
     (Required for new resource)
@@ -46,7 +34,7 @@ Parameters
     (Required for new resource)
 
 
-  security_certificate_id (False, int, None)
+  ha_enabled (False, bool, False)
     None
 
 
@@ -58,7 +46,15 @@ Parameters
     None
 
 
-  ha_enabled (False, bool, False)
+  ssl_enabled (False, bool, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  security_certificate_id (False, int, None)
     None
 
 
@@ -67,6 +63,10 @@ Parameters
 
 
   ssl_offload (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
     None
 
 
@@ -84,6 +84,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

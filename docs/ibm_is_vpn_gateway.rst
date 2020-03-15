@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  public_ip_address (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
@@ -38,12 +46,12 @@ Parameters
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  status (False, str, None)
+    None
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  tags (False, list, None)
+    None
 
 
   resource_name (False, str, None)
@@ -54,20 +62,12 @@ Parameters
     The crn of the resource
 
 
+  resource_status (False, str, None)
+    The status of the resource
+
+
   subnet (False, str, None)
     (Required for new resource)
-
-
-  status (False, str, None)
-    None
-
-
-  public_ip_address (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)
@@ -96,6 +96,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,19 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  creation_date (False, str, None)
-    None
-
-
-  disk_type (False, str, None)
-    None
-
-
   pi_volume_name (True, str, None)
     Volume Name to be used for pvminstances
 
 
-  state (False, str, None)
+  shareable (False, bool, None)
     None
 
 
@@ -46,7 +38,7 @@ Parameters
     None
 
 
-  bootable (False, bool, None)
+  disk_type (False, str, None)
     None
 
 
@@ -54,11 +46,19 @@ Parameters
     None
 
 
+  state (False, str, None)
+    None
+
+
   size (False, int, None)
     None
 
 
-  shareable (False, bool, None)
+  bootable (False, bool, None)
+    None
+
+
+  creation_date (False, str, None)
     None
 
 
@@ -68,6 +68,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

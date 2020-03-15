@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    customer_peer_ip:
-        description:
-            - None
-        required: False
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     internal_peer_ip_address:
         description:
             - None
@@ -46,6 +36,26 @@ options:
         required: False
         type: list
         elements: dict
+    customer_peer_ip:
+        description:
+            - None
+        required: False
+        type: str
+    internal_subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    service_subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    datacenter:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     phase_two:
         description:
             - None
@@ -63,11 +73,6 @@ options:
             - None
         required: False
         type: str
-    internal_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
     remote_subnet_id:
         description:
             - None
@@ -79,11 +84,6 @@ options:
         required: False
         type: list
         elements: dict
-    service_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,13 +99,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -119,29 +125,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'customer_peer_ip',
-    'datacenter',
     'internal_peer_ip_address',
     'name',
     'phase_one',
+    'customer_peer_ip',
+    'internal_subnet_id',
+    'service_subnet_id',
+    'datacenter',
     'phase_two',
     'address_translation',
     'preshared_key',
-    'internal_subnet_id',
     'remote_subnet_id',
     'remote_subnet',
-    'service_subnet_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    customer_peer_ip=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     internal_peer_ip_address=dict(
         required=False,
         type='str'),
@@ -152,6 +152,18 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    customer_peer_ip=dict(
+        required=False,
+        type='str'),
+    internal_subnet_id=dict(
+        required=False,
+        type='int'),
+    service_subnet_id=dict(
+        required=False,
+        type='int'),
+    datacenter=dict(
+        required=False,
+        type='str'),
     phase_two=dict(
         required=False,
         elements='',
@@ -163,9 +175,6 @@ module_args = dict(
     preshared_key=dict(
         required=False,
         type='str'),
-    internal_subnet_id=dict(
-        required=False,
-        type='int'),
     remote_subnet_id=dict(
         required=False,
         type='int'),
@@ -173,9 +182,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    service_subnet_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -192,7 +198,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -219,7 +228,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

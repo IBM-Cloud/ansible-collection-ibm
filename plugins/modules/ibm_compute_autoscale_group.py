@@ -16,15 +16,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    regional_group:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    maximum_member_count:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    virtual_server_id:
+        description:
+            - None
+        required: False
+        type: int
     port:
         description:
             - None
         required: False
         type: int
+    health_check:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
     virtual_guest_member_template:
         description:
             - (Required for new resource) 
@@ -37,26 +58,6 @@ options:
         required: False
         type: list
         elements: int
-    regional_group:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    minimum_member_count:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    maximum_member_count:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    cooldown:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
     tags:
         description:
             - None
@@ -68,22 +69,21 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    minimum_member_count:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    cooldown:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
     termination_policy:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    virtual_server_id:
-        description:
-            - None
-        required: False
-        type: int
-    health_check:
-        description:
-            - None
-        required: False
-        type: dict
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,13 +99,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -114,37 +120,50 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('virtual_guest_member_template', 'list'),
     ('regional_group', 'str'),
-    ('minimum_member_count', 'int'),
     ('maximum_member_count', 'int'),
-    ('cooldown', 'int'),
+    ('virtual_guest_member_template', 'list'),
     ('name', 'str'),
+    ('minimum_member_count', 'int'),
+    ('cooldown', 'int'),
     ('termination_policy', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'regional_group',
+    'maximum_member_count',
+    'virtual_server_id',
     'port',
+    'health_check',
     'virtual_guest_member_template',
     'network_vlan_ids',
-    'regional_group',
-    'minimum_member_count',
-    'maximum_member_count',
-    'cooldown',
     'tags',
     'name',
+    'minimum_member_count',
+    'cooldown',
     'termination_policy',
-    'virtual_server_id',
-    'health_check',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    regional_group=dict(
+        required=False,
+        type='str'),
+    maximum_member_count=dict(
+        required=False,
+        type='int'),
+    virtual_server_id=dict(
+        required=False,
+        type='int'),
     port=dict(
         required=False,
         type='int'),
+    health_check=dict(
+        required=False,
+        elements='',
+        type='dict'),
     virtual_guest_member_template=dict(
         required=False,
         elements='',
@@ -153,18 +172,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    regional_group=dict(
-        required=False,
-        type='str'),
-    minimum_member_count=dict(
-        required=False,
-        type='int'),
-    maximum_member_count=dict(
-        required=False,
-        type='int'),
-    cooldown=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -172,16 +179,15 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    minimum_member_count=dict(
+        required=False,
+        type='int'),
+    cooldown=dict(
+        required=False,
+        type='int'),
     termination_policy=dict(
         required=False,
         type='str'),
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
-    health_check=dict(
-        required=False,
-        elements='',
-        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -198,7 +204,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -225,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_autoscale_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

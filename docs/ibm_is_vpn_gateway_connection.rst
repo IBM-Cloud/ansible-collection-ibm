@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,19 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpn_gateway (False, str, None)
+  peer_address (False, str, None)
     (Required for new resource)
 
 
-  admin_state_up (False, bool, False)
-    None
+  preshared_key (False, str, None)
+    (Required for new resource)
 
 
   local_cidrs (False, list, None)
     None
 
 
-  interval (False, int, 30)
+  action (False, str, none)
+    None
+
+
+  timeout (False, int, 120)
     None
 
 
@@ -50,23 +54,19 @@ Parameters
     (Required for new resource)
 
 
-  peer_address (False, str, None)
+  vpn_gateway (False, str, None)
     (Required for new resource)
 
 
-  preshared_key (False, str, None)
-    (Required for new resource)
+  admin_state_up (False, bool, False)
+    None
 
 
   peer_cidrs (False, list, None)
     None
 
 
-  action (False, str, none)
-    None
-
-
-  timeout (False, int, 120)
+  interval (False, int, 30)
     None
 
 
@@ -104,6 +104,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

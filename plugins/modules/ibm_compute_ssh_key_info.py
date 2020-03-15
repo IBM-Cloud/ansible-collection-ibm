@@ -16,10 +16,20 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    fingerprint:
+        description:
+            - A sequence of bytes to authenticate or lookup a longer ssh key
+        required: False
+        type: str
+    notes:
+        description:
+            - A small note about a ssh key to use at your discretion
+        required: False
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created key is used. If false, an error is returned
@@ -36,25 +46,21 @@ options:
             - The public ssh key
         required: False
         type: str
-    fingerprint:
-        description:
-            - A sequence of bytes to authenticate or lookup a longer ssh key
-        required: False
-        type: str
-    notes:
-        description:
-            - A small note about a ssh key to use at your discretion
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -68,16 +74,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'fingerprint',
+    'notes',
     'most_recent',
     'label',
     'public_key',
-    'fingerprint',
-    'notes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    fingerprint=dict(
+        required=False,
+        type='str'),
+    notes=dict(
+        required=False,
+        type='str'),
     most_recent=dict(
         default=False,
         type='bool'),
@@ -85,12 +97,6 @@ module_args = dict(
         required=True,
         type='str'),
     public_key=dict(
-        required=False,
-        type='str'),
-    fingerprint=dict(
-        required=False,
-        type='str'),
-    notes=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -101,7 +107,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -118,7 +127,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

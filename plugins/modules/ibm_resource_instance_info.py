@@ -16,48 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    status:
+    plan:
         description:
-            - The resource instance status
-        required: False
-        type: dict
-    crn:
-        description:
-            - CRN of resource instance
+            - The plan type of the instance
         required: False
         type: str
     resource_name:
         description:
             - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    location:
-        description:
-            - The location or the environment in which instance exists
-        required: False
-        type: str
-    service:
-        description:
-            - The service type of the instance
-        required: False
-        type: str
-    plan:
-        description:
-            - The plan type of the instance
         required: False
         type: str
     resource_group_name:
@@ -75,20 +45,56 @@ options:
             - The id of the resource group in which the instance is present
         required: False
         type: str
+    location:
+        description:
+            - The location or the environment in which instance exists
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
     resource_status:
         description:
             - The status of the resource
         required: False
         type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    service:
+        description:
+            - The service type of the instance
+        required: False
+        type: str
+    status:
+        description:
+            - The resource instance status
+        required: False
+        type: dict
+    crn:
+        description:
+            - CRN of resource instance
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -102,45 +108,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'crn',
-    'resource_name',
-    'resource_crn',
-    'resource_controller_url',
-    'location',
-    'service',
     'plan',
+    'resource_name',
     'resource_group_name',
     'name',
     'resource_group_id',
+    'location',
+    'resource_crn',
     'resource_status',
+    'resource_controller_url',
+    'service',
+    'status',
+    'crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='dict'),
-    crn=dict(
+    plan=dict(
         required=False,
         type='str'),
     resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    plan=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
@@ -152,7 +140,25 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
     resource_status=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    service=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='dict'),
+    crn=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -163,7 +169,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -180,7 +189,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

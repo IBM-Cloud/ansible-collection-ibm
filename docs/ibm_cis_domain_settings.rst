@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -30,20 +30,12 @@ Parameters
     SSL/TLS setting
 
 
-  certificate_status (False, str, None)
-    Certificate status
-
-
   min_tls_version (False, str, 1.1)
     Minimum version of TLS required
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
 
 
   domain_id (False, str, None)
@@ -58,8 +50,16 @@ Parameters
     cname_flattening setting
 
 
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  certificate_status (False, str, None)
+    Certificate status
 
 
   id (False, str, None)
@@ -76,6 +76,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

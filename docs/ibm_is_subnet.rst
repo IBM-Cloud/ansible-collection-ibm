@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,16 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_version (False, str, ipv4)
-    None
+  vpc (False, str, None)
+    (Required for new resource)
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  resource_status (False, str, None)
+    The status of the resource
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
+
+
+  ipv4_cidr_block (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  ip_version (False, str, ipv4)
+    None
 
 
   network_acl (False, str, None)
@@ -46,10 +62,6 @@ Parameters
     (Required for new resource)
 
 
-  resource_group (False, str, None)
-    None
-
-
   resource_name (False, str, None)
     The name of the resource
 
@@ -58,19 +70,15 @@ Parameters
     The crn of the resource
 
 
-  total_ipv4_address_count (False, int, None)
-    None
+  name (False, str, None)
+    (Required for new resource)
 
 
   public_gateway (False, str, None)
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  ipv4_cidr_block (False, str, None)
+  resource_group (False, str, None)
     None
 
 
@@ -82,16 +90,8 @@ Parameters
     None
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
   status (False, str, None)
     None
-
-
-  vpc (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)
@@ -120,6 +120,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

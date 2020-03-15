@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  total_routes (False, int, None)
-    Defines the total route for organization.
-
-
   memory_limit (False, int, None)
     Defines the total memory limit for organization.
 
 
   instance_memory_limit (False, int, None)
     Defines the  total instance memory limit for organization.
+
+
+  trial_db_allowed (False, bool, None)
+    Defines trial db are allowed for organization.
 
 
   total_service_keys (False, int, None)
@@ -46,8 +46,8 @@ Parameters
     Org quota name, for example qIBM
 
 
-  non_basic_services_allowed (False, bool, None)
-    Define non basic services are allowed for organization.
+  total_services (False, int, None)
+    Defines the total services for organization.
 
 
   app_instance_limit (False, int, None)
@@ -66,12 +66,12 @@ Parameters
     Defines the number of reserved route ports for organization.
 
 
-  total_services (False, int, None)
-    Defines the total services for organization.
+  non_basic_services_allowed (False, bool, None)
+    Define non basic services are allowed for organization.
 
 
-  trial_db_allowed (False, bool, None)
-    Defines trial db are allowed for organization.
+  total_routes (False, int, None)
+    Defines the total route for organization.
 
 
   ibmcloud_api_key (True, any, None)
@@ -80,6 +80,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

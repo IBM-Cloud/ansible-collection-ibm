@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,15 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  cluster (False, str, None)
+    (Required for new resource)
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
   reload_workers (False, bool, True)
     None
 
 
   private_service_endpoint_url (False, str, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
     None
 
 
@@ -48,14 +56,6 @@ Parameters
 
   refresh_api_servers (False, bool, True)
     None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)
@@ -72,6 +72,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

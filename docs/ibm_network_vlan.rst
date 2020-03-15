@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  type (False, str, None)
+    (Required for new resource)
+
+
   name (False, str, None)
-    None
-
-
-  vlan_number (False, int, None)
     None
 
 
@@ -38,23 +38,7 @@ Parameters
     None
 
 
-  subnets (False, list, None)
-    None
-
-
   tags (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource)
-
-
-  router_hostname (False, str, None)
-    None
-
-
-  softlayer_managed (False, bool, None)
     None
 
 
@@ -66,8 +50,24 @@ Parameters
     The name of the resource
 
 
-  type (False, str, None)
+  datacenter (False, str, None)
     (Required for new resource)
+
+
+  router_hostname (False, str, None)
+    None
+
+
+  vlan_number (False, int, None)
+    None
+
+
+  softlayer_managed (False, bool, None)
+    None
+
+
+  subnets (False, list, None)
+    None
 
 
   id (False, str, None)
@@ -84,6 +84,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -16,10 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_quota' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    max_service_instances:
+        description:
+            - Defines the total service instances limit.
+        required: False
+        type: int
+    vsi_limit:
+        description:
+            - Defines the VSI limit.
+        required: False
+        type: int
+    name:
+        description:
+            - Resource quota name, for example Trial Quota
+        required: True
+        type: str
     type:
         description:
             - Type of the quota.
@@ -45,30 +60,21 @@ options:
             - Defines the total memory for app.
         required: False
         type: str
-    max_service_instances:
-        description:
-            - Defines the total service instances limit.
-        required: False
-        type: int
-    vsi_limit:
-        description:
-            - Defines the VSI limit.
-        required: False
-        type: int
-    name:
-        description:
-            - Resource quota name, for example Trial Quota
-        required: True
-        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -82,19 +88,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'max_service_instances',
+    'vsi_limit',
+    'name',
     'type',
     'max_apps',
     'max_instances_per_app',
     'max_app_instance_memory',
     'total_app_memory',
-    'max_service_instances',
-    'vsi_limit',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    max_service_instances=dict(
+        required=False,
+        type='int'),
+    vsi_limit=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=True,
+        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -110,15 +125,6 @@ module_args = dict(
     total_app_memory=dict(
         required=False,
         type='str'),
-    max_service_instances=dict(
-        required=False,
-        type='int'),
-    vsi_limit=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=True,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -127,7 +133,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -144,7 +153,7 @@ def run_module():
         resource_type='ibm_resource_quota',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

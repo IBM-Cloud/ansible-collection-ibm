@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,43 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notes (False, str, None)
-    None
-
-
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  allowed_host_info (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  allowed_virtual_guest_info (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
+  os_format_type (False, str, None)
     (Required for new resource)
 
 
-  iops (False, float, None)
-    (Required for new resource)
-
-
-  volumename (False, str, None)
+  allowed_virtual_guest_ids (False, list, None)
     None
 
 
-  hostname (False, str, None)
-    None
-
-
-  snapshot_capacity (False, int, None)
+  allowed_hardware_ids (False, list, None)
     None
 
 
@@ -74,15 +46,19 @@ Parameters
     None
 
 
-  target_address (False, list, None)
+  allowed_host_info (False, list, None)
     None
 
 
-  allowed_hardware_ids (False, list, None)
+  volumename (False, str, None)
     None
 
 
-  allowed_ip_addresses (False, list, None)
+  hostname (False, str, None)
+    None
+
+
+  allowed_hardware_info (False, list, None)
     None
 
 
@@ -98,11 +74,35 @@ Parameters
     (Required for new resource)
 
 
-  os_format_type (False, str, None)
+  snapshot_capacity (False, int, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  datacenter (False, str, None)
     (Required for new resource)
 
 
-  allowed_virtual_guest_ids (False, list, None)
+  iops (False, float, None)
+    (Required for new resource)
+
+
+  allowed_ip_addresses (False, list, None)
+    None
+
+
+  target_address (False, list, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  allowed_virtual_guest_info (False, list, None)
     None
 
 
@@ -120,6 +120,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

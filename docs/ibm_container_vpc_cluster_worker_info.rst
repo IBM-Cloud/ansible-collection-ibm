@@ -18,13 +18,33 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pool_name (False, str, None)
+    worker pool name
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  pool_id (False, str, None)
+    worker pool id
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
 
   worker_id (True, str, None)
     ID of the worker
@@ -42,28 +62,8 @@ Parameters
     kube version of the worker
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
   state (False, str, None)
     State of the worker
-
-
-  pool_id (False, str, None)
-    worker pool id
-
-
-  pool_name (False, str, None)
-    worker pool name
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)
@@ -72,6 +72,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

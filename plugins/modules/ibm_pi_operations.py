@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_operations' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    pi_operation:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    pi_progress:
+        description:
+            - Progress of the operation
+        required: False
+        type: float
     pi_cloud_instance_id:
         description:
             - (Required for new resource) 
@@ -46,16 +56,6 @@ options:
             - None
         required: False
         type: str
-    pi_operation:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    pi_progress:
-        description:
-            - Progress of the operation
-        required: False
-        type: float
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -71,13 +71,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -86,25 +92,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_operation', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
-    ('pi_operation', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_operation',
+    'pi_progress',
     'pi_cloud_instance_id',
     'pi_status',
     'pi_instance_name',
     'addresses',
     'pi_health_status',
-    'pi_operation',
-    'pi_progress',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_operation=dict(
+        required=False,
+        type='str'),
+    pi_progress=dict(
+        required=False,
+        type='float'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
@@ -121,12 +133,6 @@ module_args = dict(
     pi_health_status=dict(
         required=False,
         type='str'),
-    pi_operation=dict(
-        required=False,
-        type='str'),
-    pi_progress=dict(
-        required=False,
-        type='float'),
     id=dict(
         required=False,
         type='str'),
@@ -143,7 +149,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -170,7 +179,7 @@ def run_module():
         resource_type='ibm_pi_operations',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

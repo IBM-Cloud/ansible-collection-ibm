@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,28 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  exec (False, list, None)
+    (Required for new resource)
+
+
   version (False, str, None)
     Semantic version of the item.
 
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
-
-
-  annotations (False, str, None)
-    All annotations set on action by user and those set by the IBM Cloud Function backend/API.
-
-
-  limits (False, list, None)
-    None
-
-
-  exec (False, list, None)
-    (Required for new resource)
-
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
 
 
   parameters (False, str, None)
@@ -58,8 +46,20 @@ Parameters
     (Required for new resource) Name of action.
 
 
+  limits (False, list, None)
+    None
+
+
   publish (False, bool, None)
     Action visibilty.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+
+
+  annotations (False, str, None)
+    All annotations set on action by user and those set by the IBM Cloud Function backend/API.
 
 
   id (False, str, None)
@@ -76,6 +76,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

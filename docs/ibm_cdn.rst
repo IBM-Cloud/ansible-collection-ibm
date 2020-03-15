@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,7 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  respect_headers (False, bool, True)
+  host_name (False, str, None)
+    (Required for new resource)
+
+
+  https_port (False, int, 443)
+    None
+
+
+  vendor_name (False, str, akamai)
+    None
+
+
+  http_port (False, int, 80)
     None
 
 
@@ -34,19 +46,35 @@ Parameters
     None
 
 
+  cache_key_query_rule (False, str, include-all)
+    None
+
+
   origin_type (False, str, HOST_SERVER)
     None
 
 
-  https_port (False, int, 443)
+  origin_address (False, str, None)
+    (Required for new resource)
+
+
+  respect_headers (False, bool, True)
     None
 
 
-  cname (False, str, None)
+  file_extension (False, str, None)
     None
 
 
-  cache_key_query_rule (False, str, include-all)
+  certificate_type (False, str, None)
+    None
+
+
+  performance_configuration (False, str, General web delivery)
+    None
+
+
+  bucket_name (False, str, None)
     None
 
 
@@ -58,39 +86,11 @@ Parameters
     None
 
 
-  certificate_type (False, str, None)
-    None
-
-
-  origin_address (False, str, None)
-    (Required for new resource)
-
-
-  bucket_name (False, str, None)
-    None
-
-
-  http_port (False, int, 80)
+  cname (False, str, None)
     None
 
 
   header (False, str, None)
-    None
-
-
-  file_extension (False, str, None)
-    None
-
-
-  performance_configuration (False, str, General web delivery)
-    None
-
-
-  host_name (False, str, None)
-    (Required for new resource)
-
-
-  vendor_name (False, str, akamai)
     None
 
 
@@ -108,6 +108,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

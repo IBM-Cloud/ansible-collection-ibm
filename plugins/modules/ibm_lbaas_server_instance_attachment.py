@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_server_instance_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    uuid:
-        description:
-            - The UUID of a load balancer member
-        required: False
-        type: str
     private_ip_address:
         description:
             - (Required for new resource) The Private IP address of a load balancer member.
@@ -38,6 +33,11 @@ options:
     lbaas_id:
         description:
             - (Required for new resource) The UUID of a load balancer
+        required: False
+        type: str
+    uuid:
+        description:
+            - The UUID of a load balancer member
         required: False
         type: str
     id:
@@ -55,13 +55,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -76,18 +82,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'uuid',
     'private_ip_address',
     'weight',
     'lbaas_id',
+    'uuid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    uuid=dict(
-        required=False,
-        type='str'),
     private_ip_address=dict(
         required=False,
         type='str'),
@@ -95,6 +98,9 @@ module_args = dict(
         required=False,
         type='int'),
     lbaas_id=dict(
+        required=False,
+        type='str'),
+    uuid=dict(
         required=False,
         type='str'),
     id=dict(
@@ -113,7 +119,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -140,7 +149,7 @@ def run_module():
         resource_type='ibm_lbaas_server_instance_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

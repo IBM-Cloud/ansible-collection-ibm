@@ -51,7 +51,15 @@ The following parameters can be set by the user:
 
     Note: Modules also support the 'ibmcloud_region' parameter.
 
-4. Update the ibmcollection path in `ansible.cfg` if collections are installed in non default path
+4. Export desired IBM Cloud zone to the 'IC_ZONE' environment variable:
+
+    ```
+    export IC_ZONE=<ZONE_NAMW_HERE>
+    ```
+
+    Note: This is used of multizone supported power instances.
+
+5. Update the ibmcollection path in `ansible.cfg` if collections are installed in non default path
 
 ### Create
 

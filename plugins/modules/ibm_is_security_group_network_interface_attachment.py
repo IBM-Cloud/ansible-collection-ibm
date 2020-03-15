@@ -16,15 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_network_interface_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    status:
+    secondary_address:
         description:
             - None
         required: False
-        type: str
+        type: list
+        elements: str
     type:
         description:
             - None
@@ -36,7 +37,7 @@ options:
         required: False
         type: list
         elements: dict
-    security_group:
+    network_interface:
         description:
             - (Required for new resource) 
         required: False
@@ -46,13 +47,17 @@ options:
             - None
         required: False
         type: str
-    secondary_address:
+    port_speed:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: int
     primary_ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    status:
         description:
             - None
         required: False
@@ -68,7 +73,7 @@ options:
         required: False
         type: list
         elements: dict
-    network_interface:
+    security_group:
         description:
             - (Required for new resource) 
         required: False
@@ -78,11 +83,6 @@ options:
             - None
         required: False
         type: str
-    port_speed:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,10 +122,17 @@ options:
               Infrastructure API key. This can also be provided via the
               environmental variable 'IAAS_CLASSIC_API_KEY'.
         required: False
+
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -134,32 +141,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('security_group', 'str'),
     ('network_interface', 'str'),
+    ('security_group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
+    'secondary_address',
     'type',
     'security_groups',
-    'security_group',
+    'network_interface',
     'instance_network_interface',
-    'secondary_address',
+    'port_speed',
     'primary_ipv4_address',
+    'status',
     'subnet',
     'floating_ips',
-    'network_interface',
+    'security_group',
     'name',
-    'port_speed',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
+    secondary_address=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     type=dict(
         required=False,
         type='str'),
@@ -167,17 +175,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    security_group=dict(
+    network_interface=dict(
         required=False,
         type='str'),
     instance_network_interface=dict(
         required=False,
         type='str'),
-    secondary_address=dict(
+    port_speed=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
     primary_ipv4_address=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     subnet=dict(
@@ -187,15 +197,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    network_interface=dict(
+    security_group=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    port_speed=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -227,7 +234,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -271,7 +281,7 @@ def run_module():
         resource_type='ibm_is_security_group_network_interface_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

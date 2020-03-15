@@ -18,41 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  bucket_name (True, str, None)
-    None
-
-
-  bucket_region (True, str, None)
-    None
-
-
-  region_location (False, str, None)
-    None
-
-
-  cross_region_location (False, str, None)
-    None
-
-
-  single_site_location (False, str, None)
-    None
-
-
-  storage_class (False, str, None)
-    None
-
 
   s3_endpoint_private (False, str, None)
     Private endpoint for the COS bucket
@@ -63,6 +35,34 @@ Parameters
 
 
   resource_instance_id (True, str, None)
+    None
+
+
+  region_location (False, str, None)
+    None
+
+
+  storage_class (False, str, None)
+    None
+
+
+  single_site_location (False, str, None)
+    None
+
+
+  cross_region_location (False, str, None)
+    None
+
+
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
+
+
+  bucket_name (True, str, None)
+    None
+
+
+  bucket_region (True, str, None)
     None
 
 
@@ -80,6 +80,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

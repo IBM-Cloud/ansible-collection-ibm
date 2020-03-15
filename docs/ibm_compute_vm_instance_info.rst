@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (False, str, None)
-    Datacenter in which the virtual guest is deployed
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
 
 
-  public_subnet_id (False, int, None)
+  secondary_ip_count (False, int, None)
+    None
+
+
+  last_known_power_state (False, str, None)
+    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
+
+
+  power_state (False, str, None)
+    The current power state of a virtual guest.
+
+
+  private_subnet_id (False, int, None)
     None
 
 
@@ -38,11 +50,7 @@ Parameters
     None
 
 
-  ipv6_address (False, str, None)
-    None
-
-
-  public_ipv6_subnet_id (False, str, None)
+  ip_address_id (False, int, None)
     None
 
 
@@ -50,15 +58,19 @@ Parameters
     The hostname of the virtual guest
 
 
+  cores (False, int, None)
+    Number of cpu cores
+
+
   status (False, str, None)
     The VSI status
 
 
-  public_interface_id (False, int, None)
+  secondary_ip_addresses (False, list, None)
     None
 
 
-  ipv4_address_private (False, str, None)
+  ipv6_address (False, str, None)
     None
 
 
@@ -70,48 +82,36 @@ Parameters
     None
 
 
-  cores (False, int, None)
-    Number of cpu cores
-
-
-  private_subnet_id (False, int, None)
-    None
-
-
-  ip_address_id (False, int, None)
-    None
-
-
   ip_address_id_private (False, int, None)
     None
-
-
-  secondary_ip_addresses (False, list, None)
-    None
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
-
-
-  last_known_power_state (False, str, None)
-    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
 
 
   private_interface_id (False, int, None)
     None
 
 
-  power_state (False, str, None)
-    The current power state of a virtual guest.
+  public_subnet_id (False, int, None)
+    None
 
 
-  secondary_ip_count (False, int, None)
+  ipv4_address_private (False, str, None)
+    None
+
+
+  public_ipv6_subnet_id (False, str, None)
     None
 
 
   domain (True, str, None)
     The domain of the virtual guest
+
+
+  datacenter (False, str, None)
+    Datacenter in which the virtual guest is deployed
+
+
+  public_interface_id (False, int, None)
+    None
 
 
   ibmcloud_api_key (True, any, None)
@@ -120,6 +120,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

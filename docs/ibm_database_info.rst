@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,40 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (False, str, None)
-    The plan type of the Database instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  name (True, str, None)
-    Resource instance name for example, my Database instance
-
-
-  adminuser (False, str, None)
-    The admin user id for the instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  whitelist (False, list, None)
+  groups (False, list, None)
     None
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  service (False, str, None)
-    The name of the Cloud Internet database service
 
 
   location (False, str, None)
@@ -70,11 +42,11 @@ Parameters
     The admin user id for the instance
 
 
-  tags (False, list, None)
+  users (False, list, None)
     None
 
 
-  users (False, list, None)
+  tags (False, list, None)
     None
 
 
@@ -82,12 +54,36 @@ Parameters
     None
 
 
+  whitelist (False, list, None)
+    None
+
+
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  service (False, str, None)
+    The name of the Cloud Internet database service
+
+
+  adminuser (False, str, None)
+    The admin user id for the instance
+
+
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  status (False, str, None)
+    The resource instance status
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   members_memory_allocation_mb (False, int, None)
@@ -98,16 +94,20 @@ Parameters
     Disk allocation required for cluster
 
 
-  groups (False, list, None)
-    None
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  name (True, str, None)
+    Resource instance name for example, my Database instance
 
 
-  status (False, str, None)
-    The resource instance status
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  plan (False, str, None)
+    The plan type of the Database instance
 
 
   ibmcloud_api_key (True, any, None)
@@ -116,6 +116,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

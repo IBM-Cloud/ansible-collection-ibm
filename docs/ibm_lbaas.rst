@@ -18,37 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  subnets (False, list, None)
-    (Required for new resource) The subnet where this Load Balancer will be provisioned.
-
-
-  protocols (False, list, None)
-    Protocols to be assigned to this load balancer.
-
-
-  health_monitors (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  description (False, str, None)
-    Description of a load balancer.
-
 
   type (False, str, PUBLIC)
     Specifies if a load balancer is public or private
@@ -58,32 +34,56 @@ Parameters
     None
 
 
-  ssl_ciphers (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) The load balancer's name.
-
-
   status (False, str, None)
     The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   vip (False, str, None)
     The virtual ip address of this load balancer
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  health_monitors (False, list, None)
+    None
+
+
+  ssl_ciphers (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  name (False, str, None)
+    (Required for new resource) The load balancer's name.
+
+
+  description (False, str, None)
+    Description of a load balancer.
 
 
   use_system_public_ip_pool (False, bool, None)
     Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
 
 
-  wait_time_minutes (False, int, 90)
-    None
+  subnets (False, list, None)
+    (Required for new resource) The subnet where this Load Balancer will be provisioned.
+
+
+  protocols (False, list, None)
+    Protocols to be assigned to this load balancer.
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)
@@ -100,6 +100,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,31 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tcp_monitoring (False, bool, False)
+  post_install_script_uri (False, str, None)
     None
 
 
-  private_subnet (False, str, None)
+  os_reference_code (False, str, None)
     None
 
 
-  secondary_ip_count (False, int, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  network_speed (False, int, 100)
+  gpu_key_name (False, str, None)
     None
 
 
@@ -58,11 +42,55 @@ Parameters
     None
 
 
-  storage_groups (False, list, None)
+  public_ipv4_address (False, str, None)
     None
 
 
-  public_subnet (False, str, None)
+  file_storage_ids (False, list, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  public_ipv4_address_id (False, int, None)
+    None
+
+
+  ipv6_address_id (False, int, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  tcp_monitoring (False, bool, False)
+    None
+
+
+  package_key_name (False, str, None)
+    None
+
+
+  redundant_network (False, bool, False)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
     None
 
 
@@ -70,31 +98,35 @@ Parameters
     The unique global identifier of the bare metal server
 
 
-  domain (False, str, None)
-    (Required for new resource)
-
-
-  redundant_power_supply (False, bool, None)
+  user_metadata (False, str, None)
     None
 
 
-  gpu_secondary_key_name (False, str, None)
+  block_storage_ids (False, list, None)
     None
 
 
-  private_ipv4_address_id (False, int, None)
+  image_template_id (False, int, None)
     None
 
 
-  secondary_ip_addresses (False, list, None)
+  public_subnet (False, str, None)
     None
 
 
-  notes (False, str, None)
+  tags (False, list, None)
     None
 
 
-  post_install_script_uri (False, str, None)
+  fixed_config_preset (False, str, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  process_key_name (False, str, None)
     None
 
 
@@ -102,7 +134,47 @@ Parameters
     None
 
 
-  public_bandwidth (False, int, None)
+  disk_key_names (False, list, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  private_ipv4_address_id (False, int, None)
+    None
+
+
+  domain (False, str, None)
+    (Required for new resource)
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  gpu_secondary_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
     None
 
 
@@ -118,47 +190,7 @@ Parameters
     None
 
 
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  image_template_id (False, int, None)
-    None
-
-
-  hourly_billing (False, bool, True)
-    None
-
-
-  package_key_name (False, str, None)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  public_ipv4_address_id (False, int, None)
+  secondary_ip_addresses (False, list, None)
     None
 
 
@@ -166,55 +198,23 @@ Parameters
     None
 
 
-  tags (False, list, None)
+  notes (False, str, None)
     None
 
 
-  fixed_config_preset (False, str, None)
+  public_bandwidth (False, int, None)
     None
 
 
-  software_guard_extensions (False, bool, False)
+  storage_groups (False, list, None)
     None
 
 
-  process_key_name (False, str, None)
+  secondary_ip_count (False, int, None)
     None
 
 
-  disk_key_names (False, list, None)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  gpu_key_name (False, str, None)
-    None
-
-
-  redundant_network (False, bool, False)
-    None
-
-
-  public_ipv4_address (False, str, None)
-    None
-
-
-  ipv6_address_id (False, int, None)
+  ipv6_enabled (False, bool, False)
     None
 
 
@@ -232,6 +232,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

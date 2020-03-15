@@ -16,32 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssl_certificate' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    modify_date:
+    validity_days:
         description:
             - None
         required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    validity_begin:
-        description:
-            - None
-        required: False
-        type: str
+        type: int
     key_size:
         description:
             - None
         required: False
         type: int
     create_date:
+        description:
+            - None
+        required: False
+        type: str
+    intermediate_certificate:
+        description:
+            - None
+        required: False
+        type: str
+    validity_begin:
         description:
             - None
         required: False
@@ -56,24 +55,25 @@ options:
             - None
         required: False
         type: str
-    validity_days:
-        description:
-            - None
-        required: False
-        type: int
     validity_end:
         description:
             - None
         required: False
         type: str
+    modify_date:
+        description:
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     certificate:
         description:
             - (Required for new resource) 
-        required: False
-        type: str
-    intermediate_certificate:
-        description:
-            - None
         required: False
         type: str
     private_key:
@@ -96,13 +96,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -117,37 +123,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'modify_date',
-    'tags',
-    'validity_begin',
+    'validity_days',
     'key_size',
     'create_date',
+    'intermediate_certificate',
+    'validity_begin',
     'common_name',
     'organization_name',
-    'validity_days',
     'validity_end',
+    'modify_date',
+    'tags',
     'certificate',
-    'intermediate_certificate',
     'private_key',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    modify_date=dict(
+    validity_days=dict(
         required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    validity_begin=dict(
-        required=False,
-        type='str'),
+        type='int'),
     key_size=dict(
         required=False,
         type='int'),
     create_date=dict(
+        required=False,
+        type='str'),
+    intermediate_certificate=dict(
+        required=False,
+        type='str'),
+    validity_begin=dict(
         required=False,
         type='str'),
     common_name=dict(
@@ -156,16 +161,17 @@ module_args = dict(
     organization_name=dict(
         required=False,
         type='str'),
-    validity_days=dict(
-        required=False,
-        type='int'),
     validity_end=dict(
         required=False,
         type='str'),
-    certificate=dict(
+    modify_date=dict(
         required=False,
         type='str'),
-    intermediate_certificate=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    certificate=dict(
         required=False,
         type='str'),
     private_key=dict(
@@ -187,7 +193,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -214,7 +223,7 @@ def run_module():
         resource_type='ibm_compute_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

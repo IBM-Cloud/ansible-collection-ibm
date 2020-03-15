@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    vpc:
+        description:
+            - None
+        required: False
+        type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
@@ -46,16 +56,6 @@ options:
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    vpc:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,10 +95,17 @@ options:
               Infrastructure API key. This can also be provided via the
               environmental variable 'IAAS_CLASSIC_API_KEY'.
         required: False
+
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -112,18 +119,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'vpc',
     'resource_controller_url',
     'resource_name',
     'resource_crn',
     'resource_group_name',
     'rules',
-    'name',
-    'vpc',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
@@ -140,12 +153,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -177,7 +184,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -221,7 +231,7 @@ def run_module():
         resource_type='ibm_is_network_acl',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

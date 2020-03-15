@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  single_site_location (False, str, None)
-    None
+  crn (False, str, None)
+    CRN of resource instance
 
 
-  region_location (False, str, None)
-    None
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
-  storage_class (False, str, None)
-    (Required for new resource)
+  s3_endpoint_private (False, str, None)
+    Private endpoint for the COS bucket
 
 
   bucket_name (False, str, None)
@@ -50,20 +50,20 @@ Parameters
     None
 
 
+  storage_class (False, str, None)
+    (Required for new resource)
+
+
   s3_endpoint_public (False, str, None)
     Public endpoint for the COS bucket
 
 
-  s3_endpoint_private (False, str, None)
-    Private endpoint for the COS bucket
+  single_site_location (False, str, None)
+    None
 
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
+  region_location (False, str, None)
+    None
 
 
   id (False, str, None)
@@ -80,6 +80,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,7 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_ip_address_id (False, int, None)
+  status (False, str, None)
+    None
+
+
+  members (False, list, None)
+    (Required for new resource) The hardware members of this network Gateway
+
+
+  private_ip_address_id (False, int, None)
+    None
+
+
+  private_ipv4_address (False, str, None)
+    None
+
+
+  private_vlan_id (False, int, None)
     None
 
 
@@ -38,15 +54,19 @@ Parameters
     None
 
 
+  associated_vlans (False, list, None)
+    The VLAN instances associated with this Network Gateway
+
+
   name (False, str, None)
     (Required for new resource) The name of the gateway
 
 
-  post_install_script_uri (False, str, None)
+  ssh_key_ids (False, list, None)
     None
 
 
-  private_ip_address_id (False, int, None)
+  post_install_script_uri (False, str, None)
     None
 
 
@@ -54,28 +74,8 @@ Parameters
     None
 
 
-  private_vlan_id (False, int, None)
+  public_ip_address_id (False, int, None)
     None
-
-
-  members (False, list, None)
-    (Required for new resource) The hardware members of this network Gateway
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  private_ipv4_address (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  associated_vlans (False, list, None)
-    The VLAN instances associated with this Network Gateway
 
 
   id (False, str, None)
@@ -92,6 +92,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

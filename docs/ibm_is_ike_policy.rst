@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  dh_group (False, int, None)
+    (Required for new resource)
+
+
+  resource_group (False, str, None)
+    None
+
+
+  key_lifetime (False, int, 28800)
+    None
+
+
   ike_version (False, int, None)
     None
 
 
-  href (False, str, None)
+  negotiation_mode (False, str, None)
     None
 
 
@@ -42,23 +54,19 @@ Parameters
     The resource group name in which resource is provisioned
 
 
+  name (False, str, None)
+    (Required for new resource)
+
+
   authentication_algorithm (False, str, None)
     (Required for new resource)
 
 
-  resource_group (False, str, None)
-    None
-
-
-  dh_group (False, int, None)
+  encryption_algorithm (False, str, None)
     (Required for new resource)
 
 
-  key_lifetime (False, int, 28800)
-    None
-
-
-  negotiation_mode (False, str, None)
+  href (False, str, None)
     None
 
 
@@ -68,14 +76,6 @@ Parameters
 
   resource_name (False, str, None)
     The name of the resource
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)
@@ -104,6 +104,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

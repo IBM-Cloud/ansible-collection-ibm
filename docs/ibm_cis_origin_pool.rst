@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,12 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notification_email (False, str, None)
+  origins (False, list, None)
+    (Required for new resource)
+
+
+  healthy (False, str, None)
     None
 
 
-  origins (False, list, None)
-    (Required for new resource)
+  modified_on (False, str, None)
+    None
 
 
   cis_id (False, str, None)
@@ -42,26 +46,6 @@ Parameters
     (Required for new resource) name
 
 
-  description (False, str, None)
-    None
-
-
-  minimum_origins (False, int, 1)
-    None
-
-
-  created_on (False, str, None)
-    None
-
-
-  modified_on (False, str, None)
-    None
-
-
-  check_regions (False, list, None)
-    (Required for new resource)
-
-
   enabled (False, bool, None)
     (Required for new resource)
 
@@ -70,7 +54,23 @@ Parameters
     None
 
 
-  healthy (False, str, None)
+  notification_email (False, str, None)
+    None
+
+
+  created_on (False, str, None)
+    None
+
+
+  check_regions (False, list, None)
+    (Required for new resource)
+
+
+  description (False, str, None)
+    None
+
+
+  minimum_origins (False, int, 1)
     None
 
 
@@ -88,6 +88,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

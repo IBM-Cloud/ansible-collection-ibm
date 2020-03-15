@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,36 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, dict, None)
-    The resource instance status
-
-
-  crn (False, str, None)
-    CRN of resource instance
+  plan (False, str, None)
+    The plan type of the instance
 
 
   resource_name (False, str, None)
     The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  location (False, str, None)
-    The location or the environment in which instance exists
-
-
-  service (False, str, None)
-    The service type of the instance
-
-
-  plan (False, str, None)
-    The plan type of the instance
 
 
   resource_group_name (False, str, None)
@@ -70,8 +46,32 @@ Parameters
     The id of the resource group in which the instance is present
 
 
+  location (False, str, None)
+    The location or the environment in which instance exists
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
   resource_status (False, str, None)
     The status of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  service (False, str, None)
+    The service type of the instance
+
+
+  status (False, dict, None)
+    The resource instance status
+
+
+  crn (False, str, None)
+    CRN of resource instance
 
 
   ibmcloud_api_key (True, any, None)
@@ -80,6 +80,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

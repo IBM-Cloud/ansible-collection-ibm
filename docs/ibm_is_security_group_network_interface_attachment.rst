@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
+  secondary_address (False, list, None)
     None
 
 
@@ -38,7 +38,7 @@ Parameters
     None
 
 
-  security_group (False, str, None)
+  network_interface (False, str, None)
     (Required for new resource)
 
 
@@ -46,11 +46,15 @@ Parameters
     None
 
 
-  secondary_address (False, list, None)
+  port_speed (False, int, None)
     None
 
 
   primary_ipv4_address (False, str, None)
+    None
+
+
+  status (False, str, None)
     None
 
 
@@ -62,15 +66,11 @@ Parameters
     None
 
 
-  network_interface (False, str, None)
+  security_group (False, str, None)
     (Required for new resource)
 
 
   name (False, str, None)
-    None
-
-
-  port_speed (False, int, None)
     None
 
 
@@ -100,6 +100,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

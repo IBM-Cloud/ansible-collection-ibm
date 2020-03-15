@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (False, str, None)
-    None
-
-
-  vip (False, str, None)
-    None
-
-
-  use_system_public_ip_pool (False, bool, None)
+  health_monitors (False, list, None)
     None
 
 
@@ -46,27 +38,11 @@ Parameters
     None
 
 
-  protocols (False, list, None)
+  type (False, str, None)
     None
 
 
-  description (False, str, None)
-    None
-
-
-  health_monitors (False, list, None)
-    None
-
-
-  server_instances_up (False, int, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  server_instances_down (False, int, None)
+  datacenter (False, str, None)
     None
 
 
@@ -74,11 +50,35 @@ Parameters
     None
 
 
+  use_system_public_ip_pool (False, bool, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
   ssl_ciphers (False, list, None)
     None
 
 
-  type (False, str, None)
+  protocols (False, list, None)
+    None
+
+
+  server_instances_up (False, int, None)
+    None
+
+
+  server_instances_down (False, int, None)
+    None
+
+
+  description (False, str, None)
+    None
+
+
+  vip (False, str, None)
     None
 
 
@@ -88,6 +88,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

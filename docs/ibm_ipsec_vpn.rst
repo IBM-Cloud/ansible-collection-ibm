@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  customer_peer_ip (False, str, None)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource)
-
 
   internal_peer_ip_address (False, str, None)
     None
@@ -44,6 +36,22 @@ Parameters
 
   phase_one (False, list, None)
     None
+
+
+  customer_peer_ip (False, str, None)
+    None
+
+
+  internal_subnet_id (False, int, None)
+    None
+
+
+  service_subnet_id (False, int, None)
+    None
+
+
+  datacenter (False, str, None)
+    (Required for new resource)
 
 
   phase_two (False, list, None)
@@ -58,19 +66,11 @@ Parameters
     None
 
 
-  internal_subnet_id (False, int, None)
-    None
-
-
   remote_subnet_id (False, int, None)
     None
 
 
   remote_subnet (False, list, None)
-    None
-
-
-  service_subnet_id (False, int, None)
     None
 
 
@@ -88,6 +88,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

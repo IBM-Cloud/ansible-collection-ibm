@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  modify_date (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  validity_begin (False, str, None)
+  validity_days (False, int, None)
     None
 
 
@@ -46,6 +38,14 @@ Parameters
     None
 
 
+  intermediate_certificate (False, str, None)
+    None
+
+
+  validity_begin (False, str, None)
+    None
+
+
   common_name (False, str, None)
     None
 
@@ -54,20 +54,20 @@ Parameters
     None
 
 
-  validity_days (False, int, None)
+  validity_end (False, str, None)
     None
 
 
-  validity_end (False, str, None)
+  modify_date (False, str, None)
+    None
+
+
+  tags (False, list, None)
     None
 
 
   certificate (False, str, None)
     (Required for new resource)
-
-
-  intermediate_certificate (False, str, None)
-    None
 
 
   private_key (False, str, None)
@@ -88,6 +88,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

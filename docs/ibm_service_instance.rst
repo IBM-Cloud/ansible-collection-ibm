@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  wait_time_minutes (False, int, 10)
+    Define timeout to wait for the service instances to succeeded/deleted etc.
+
 
   space_guid (False, str, None)
     (Required for new resource) The guid of the space in which the instance will be created
@@ -40,6 +44,10 @@ Parameters
 
   service_plan_guid (False, str, None)
     The uniquie identifier of the service offering plan type
+
+
+  tags (False, list, None)
+    None
 
 
   name (False, str, None)
@@ -58,14 +66,6 @@ Parameters
     (Required for new resource) The plan type of the service
 
 
-  tags (False, list, None)
-    None
-
-
-  wait_time_minutes (False, int, 10)
-    Define timeout to wait for the service instances to succeeded/deleted etc.
-
-
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -80,6 +80,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

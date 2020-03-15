@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status (False, str, None)
-    Status of the rule.
-
-
-  publish (False, bool, None)
-    Rule visbility.
-
-
-  version (False, str, None)
-    Semantic version of the item.
-
 
   name (False, str, None)
     (Required for new resource) Name of rule.
@@ -48,6 +36,18 @@ Parameters
 
   action_name (False, str, None)
     (Required for new resource) Name of action.
+
+
+  status (False, str, None)
+    Status of the rule.
+
+
+  publish (False, bool, None)
+    Rule visbility.
+
+
+  version (False, str, None)
+    Semantic version of the item.
 
 
   id (False, str, None)
@@ -64,6 +64,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

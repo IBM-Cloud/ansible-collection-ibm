@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  publish (False, bool, None)
+    Trigger visbility.
+
 
   version (False, str, None)
     Semantic version of the item.
@@ -54,10 +58,6 @@ Parameters
     Trigger feed
 
 
-  publish (False, bool, None)
-    Trigger visbility.
-
-
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -72,6 +72,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

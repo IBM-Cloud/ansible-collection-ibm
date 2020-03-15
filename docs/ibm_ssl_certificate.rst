@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,23 +26,43 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_count (False, int, None)
+  technical_contact (False, list, None)
     (Required for new resource)
 
 
-  server_type (False, str, None)
-    (Required for new resource)
+  billing_contact (False, list, None)
+    None
 
 
-  order_approver_email_address (False, str, None)
-    (Required for new resource)
+  renewal_flag (False, bool, True)
+    None
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    None
 
 
   billing_address_same_as_organization_flag (False, bool, False)
     None
 
 
-  validity_months (False, int, None)
+  organization_information (False, list, None)
+    (Required for new resource)
+
+
+  server_count (False, int, None)
+    (Required for new resource)
+
+
+  certificate_signing_request (False, str, None)
+    (Required for new resource)
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    None
+
+
+  ssl_type (False, str, None)
     (Required for new resource)
 
 
@@ -54,40 +74,20 @@ Parameters
     None
 
 
-  organization_information (False, list, None)
-    (Required for new resource)
-
-
-  technical_contact (False, list, None)
-    (Required for new resource)
-
-
-  billing_contact (False, list, None)
-    None
-
-
   administrative_contact (False, list, None)
     None
 
 
-  ssl_type (False, str, None)
+  server_type (False, str, None)
     (Required for new resource)
 
 
-  renewal_flag (False, bool, True)
-    None
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    None
-
-
-  certificate_signing_request (False, str, None)
+  validity_months (False, int, None)
     (Required for new resource)
 
 
-  billing_contact_same_as_technical_flag (False, bool, False)
-    None
+  order_approver_email_address (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)
@@ -104,6 +104,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,19 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    None
-
-
-  dns_provider_instance_crn (False, str, None)
-    None
-
-
-  domain_validation_method (False, str, dns - 01)
-    None
-
-
-  name (False, str, None)
+  domains (False, list, None)
     (Required for new resource)
 
 
@@ -50,11 +38,11 @@ Parameters
     None
 
 
-  issuer (False, str, None)
+  domain_validation_method (False, str, dns - 01)
     None
 
 
-  has_previous (False, str, None)
+  key_algorithm (False, str, None)
     None
 
 
@@ -62,19 +50,35 @@ Parameters
     (Required for new resource)
 
 
-  key_algorithm (False, str, None)
+  issuer (False, str, None)
     None
 
 
-  algorithm (False, str, None)
+  expires_on (False, int, None)
     None
+
+
+  has_previous (False, str, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   begins_on (False, int, None)
     None
 
 
-  expires_on (False, int, None)
+  status (False, str, None)
+    None
+
+
+  dns_provider_instance_crn (False, str, None)
+    None
+
+
+  algorithm (False, str, None)
     None
 
 
@@ -84,10 +88,6 @@ Parameters
 
   issuance_info (False, dict, None)
     None
-
-
-  domains (False, list, None)
-    (Required for new resource)
 
 
   id (False, str, None)
@@ -104,6 +104,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

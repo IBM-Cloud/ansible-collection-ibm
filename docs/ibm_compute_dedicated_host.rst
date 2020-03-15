@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
-
-
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
-
 
   domain (False, str, None)
     (Required for new resource) The domain of dedicatated host.
@@ -44,14 +36,6 @@ Parameters
 
   hourly_billing (False, bool, True)
     The billing type for the dedicatated host.
-
-
-  router_hostname (False, str, None)
-    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-
-
-  disk_capacity (False, int, None)
-    The capacity that the dedicated host's disk allocation is restricted to.
 
 
   memory_capacity (False, int, None)
@@ -70,6 +54,22 @@ Parameters
     (Required for new resource) The host name of dedicatated host.
 
 
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
+
+
+  router_hostname (False, str, None)
+    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+
+
+  cpu_count (False, int, None)
+    The capacity that the dedicated host's CPU allocation is restricted to.
+
+
+  disk_capacity (False, int, None)
+    The capacity that the dedicated host's disk allocation is restricted to.
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -84,6 +84,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

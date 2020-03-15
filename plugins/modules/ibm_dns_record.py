@@ -16,11 +16,63 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    responsible_person:
+        description:
+            - None
+        required: False
+        type: str
     retry:
+        description:
+            - None
+        required: False
+        type: int
+    ttl:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    data:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    host:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    refresh:
+        description:
+            - None
+        required: False
+        type: int
+    priority:
+        description:
+            - None
+        required: False
+        type: int
+        default: 0
+    weight:
+        description:
+            - None
+        required: False
+        type: int
+        default: 0
+    domain_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    minimum_ttl:
         description:
             - None
         required: False
@@ -30,6 +82,17 @@ options:
             - None
         required: False
         type: str
+    protocol:
+        description:
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     expire:
         description:
             - None
@@ -41,72 +104,9 @@ options:
         required: False
         type: int
         default: 0
-    responsible_person:
-        description:
-            - None
-        required: False
-        type: str
-    protocol:
-        description:
-            - None
-        required: False
-        type: str
     port:
         description:
             - None
-        required: False
-        type: int
-    type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    priority:
-        description:
-            - None
-        required: False
-        type: int
-        default: 0
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    data:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    refresh:
-        description:
-            - None
-        required: False
-        type: int
-    weight:
-        description:
-            - None
-        required: False
-        type: int
-        default: 0
-    host:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    minimum_ttl:
-        description:
-            - None
-        required: False
-        type: int
-    ttl:
-        description:
-            - (Required for new resource) 
         required: False
         type: int
     id:
@@ -124,13 +124,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -139,87 +145,87 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('ttl', 'int'),
     ('type', 'str'),
     ('data', 'str'),
-    ('domain_id', 'int'),
     ('host', 'str'),
-    ('ttl', 'int'),
+    ('domain_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'responsible_person',
     'retry',
+    'ttl',
+    'type',
+    'data',
+    'host',
+    'refresh',
+    'priority',
+    'weight',
+    'domain_id',
+    'minimum_ttl',
     'service',
+    'protocol',
+    'tags',
     'expire',
     'mx_priority',
-    'responsible_person',
-    'protocol',
     'port',
-    'type',
-    'priority',
-    'tags',
-    'data',
-    'domain_id',
-    'refresh',
-    'weight',
-    'host',
-    'minimum_ttl',
-    'ttl',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    responsible_person=dict(
+        required=False,
+        type='str'),
     retry=dict(
+        required=False,
+        type='int'),
+    ttl=dict(
+        required=False,
+        type='int'),
+    type=dict(
+        required=False,
+        type='str'),
+    data=dict(
+        required=False,
+        type='str'),
+    host=dict(
+        required=False,
+        type='str'),
+    refresh=dict(
+        required=False,
+        type='int'),
+    priority=dict(
+        default=0,
+        type='int'),
+    weight=dict(
+        default=0,
+        type='int'),
+    domain_id=dict(
+        required=False,
+        type='int'),
+    minimum_ttl=dict(
         required=False,
         type='int'),
     service=dict(
         required=False,
         type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     expire=dict(
         required=False,
         type='int'),
     mx_priority=dict(
         default=0,
         type='int'),
-    responsible_person=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
     port=dict(
-        required=False,
-        type='int'),
-    type=dict(
-        required=False,
-        type='str'),
-    priority=dict(
-        default=0,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    data=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='int'),
-    refresh=dict(
-        required=False,
-        type='int'),
-    weight=dict(
-        default=0,
-        type='int'),
-    host=dict(
-        required=False,
-        type='str'),
-    minimum_ttl=dict(
-        required=False,
-        type='int'),
-    ttl=dict(
         required=False,
         type='int'),
     id=dict(
@@ -238,7 +244,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -265,7 +274,7 @@ def run_module():
         resource_type='ibm_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

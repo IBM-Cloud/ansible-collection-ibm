@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,28 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    None
+  authentication_algorithm (False, str, None)
+    (Required for new resource)
 
 
-  key_lifetime (False, int, 3600)
-    None
+  encryption_algorithm (False, str, None)
+    (Required for new resource)
+
+
+  pfs (False, str, None)
+    (Required for new resource)
 
 
   encapsulation_mode (False, str, None)
     None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource)
 
 
   transform_protocol (False, str, None)
@@ -55,6 +47,18 @@ Parameters
 
 
   vpn_connections (False, list, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  resource_group (False, str, None)
+    None
+
+
+  key_lifetime (False, int, 3600)
     None
 
 
@@ -66,16 +70,12 @@ Parameters
     The name of the resource
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource)
-
-
-  pfs (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)
@@ -104,6 +104,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

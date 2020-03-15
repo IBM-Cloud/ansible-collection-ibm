@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
@@ -25,25 +25,15 @@ options:
             - SSL/TLS setting
         required: False
         type: str
-    certificate_status:
-        description:
-            - Certificate status
-        required: False
-        type: str
     min_tls_version:
         description:
             - Minimum version of TLS required
         required: False
         type: str
         default: 1.1
-    automatic_https_rewrites:
+    opportunistic_encryption:
         description:
-            - automatic_https_rewrites setting
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
+            - opportunistic_encryption setting
         required: False
         type: str
     domain_id:
@@ -61,9 +51,19 @@ options:
             - cname_flattening setting
         required: False
         type: str
-    opportunistic_encryption:
+    automatic_https_rewrites:
         description:
-            - opportunistic_encryption setting
+            - automatic_https_rewrites setting
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
+    certificate_status:
+        description:
+            - Certificate status
         required: False
         type: str
     id:
@@ -81,13 +81,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -96,21 +102,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'ssl',
-    'certificate_status',
     'min_tls_version',
-    'automatic_https_rewrites',
-    'cis_id',
+    'opportunistic_encryption',
     'domain_id',
     'waf',
     'cname_flattening',
-    'opportunistic_encryption',
+    'automatic_https_rewrites',
+    'cis_id',
+    'certificate_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -119,16 +125,10 @@ module_args = dict(
     ssl=dict(
         required=False,
         type='str'),
-    certificate_status=dict(
-        required=False,
-        type='str'),
     min_tls_version=dict(
         default='1.1',
         type='str'),
-    automatic_https_rewrites=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
+    opportunistic_encryption=dict(
         required=False,
         type='str'),
     domain_id=dict(
@@ -140,7 +140,13 @@ module_args = dict(
     cname_flattening=dict(
         required=False,
         type='str'),
-    opportunistic_encryption=dict(
+    automatic_https_rewrites=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    certificate_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -159,7 +165,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -186,7 +195,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

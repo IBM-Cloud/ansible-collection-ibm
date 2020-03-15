@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  max_service_instances (False, int, None)
+    Defines the total service instances limit.
+
+
+  vsi_limit (False, int, None)
+    Defines the VSI limit.
+
+
+  name (True, str, None)
+    Resource quota name, for example Trial Quota
+
 
   type (False, str, None)
     Type of the quota.
@@ -46,24 +58,16 @@ Parameters
     Defines the total memory for app.
 
 
-  max_service_instances (False, int, None)
-    Defines the total service instances limit.
-
-
-  vsi_limit (False, int, None)
-    Defines the VSI limit.
-
-
-  name (True, str, None)
-    Resource quota name, for example Trial Quota
-
-
   ibmcloud_api_key (True, any, None)
     The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

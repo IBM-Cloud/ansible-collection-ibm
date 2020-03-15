@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  namespace_id (False, str, None)
-    (Required for new resource)
-
-
-  role (False, str, None)
-    None
-
 
   resource_group_id (False, str, None)
     ID of the resource group.
@@ -42,16 +34,28 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
+  region (False, str, None)
+    The cluster region
+
+
+  role (False, str, None)
+    None
 
 
   tags (False, list, None)
     None
 
 
-  cluster_name_id (False, str, None)
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  namespace_id (False, str, None)
     (Required for new resource)
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
 
 
   service_instance_name (False, str, None)
@@ -62,16 +66,12 @@ Parameters
     None
 
 
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
   key (False, str, None)
     None
 
 
-  region (False, str, None)
-    The cluster region
+  cluster_name_id (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)
@@ -88,6 +88,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

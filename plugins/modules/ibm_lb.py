@@ -16,10 +16,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
+    connections:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    datacenter:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    ha_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    ip_address:
+        description:
+            - None
+        required: False
+        type: str
+    subnet_id:
+        description:
+            - None
+        required: False
+        type: int
     ssl_enabled:
         description:
             - None
@@ -31,42 +57,11 @@ options:
         required: False
         type: list
         elements: str
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
-    connections:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    datacenter:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     security_certificate_id:
         description:
             - None
         required: False
         type: int
-    ip_address:
-        description:
-            - None
-        required: False
-        type: str
-    subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    ha_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
     dedicated:
         description:
             - None
@@ -79,6 +74,11 @@ options:
         required: False
         type: bool
         default: False
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,13 +94,19 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -115,22 +121,37 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ssl_enabled',
-    'tags',
-    'hostname',
     'connections',
     'datacenter',
-    'security_certificate_id',
+    'ha_enabled',
     'ip_address',
     'subnet_id',
-    'ha_enabled',
+    'ssl_enabled',
+    'tags',
+    'security_certificate_id',
     'dedicated',
     'ssl_offload',
+    'hostname',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    connections=dict(
+        required=False,
+        type='int'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    ha_enabled=dict(
+        default=False,
+        type='bool'),
+    ip_address=dict(
+        required=False,
+        type='str'),
+    subnet_id=dict(
+        required=False,
+        type='int'),
     ssl_enabled=dict(
         required=False,
         type='bool'),
@@ -138,33 +159,18 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    connections=dict(
-        required=False,
-        type='int'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     security_certificate_id=dict(
         required=False,
         type='int'),
-    ip_address=dict(
-        required=False,
-        type='str'),
-    subnet_id=dict(
-        required=False,
-        type='int'),
-    ha_enabled=dict(
-        default=False,
-        type='bool'),
     dedicated=dict(
         default=False,
         type='bool'),
     ssl_offload=dict(
         default=False,
         type='bool'),
+    hostname=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -181,7 +187,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -208,7 +217,7 @@ def run_module():
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  template_id (False, list, None)
-    The id of templates
-
-
-  is_frozen (False, bool, None)
-    None
-
 
   tags (False, list, None)
     None
@@ -42,8 +34,8 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
 
 
-  workspace_id (True, str, None)
-    The id of workspace
+  template_id (False, list, None)
+    The id of templates
 
 
   name (False, str, None)
@@ -62,8 +54,16 @@ Parameters
     None
 
 
+  is_frozen (False, bool, None)
+    None
+
+
   is_locked (False, bool, None)
     None
+
+
+  workspace_id (True, str, None)
+    The id of workspace
 
 
   ibmcloud_api_key (True, any, None)
@@ -72,6 +72,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,32 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  min_processors (False, float, None)
-    None
-
-
-  pi_volume_ids (False, list, None)
-    None
-
-
   pi_user_data (False, str, None)
     Base64 encoded data to be passed in for invoking a cloud init script
-
-
-  instance_id (False, str, None)
-    None
-
-
-  pi_progress (False, float, None)
-    Progress of the operation
-
-
-  pi_network_ids (False, list, None)
-    (Required for new resource) Set of Networks that have been configured for the account
-
-
-  addresses (False, list, None)
-    None
 
 
   pi_image_id (False, str, None)
@@ -62,12 +38,36 @@ Parameters
     (Required for new resource)
 
 
-  pi_proc_type (False, str, None)
+  pi_key_pair_name (False, str, None)
+    (Required for new resource)
+
+
+  addresses (False, list, None)
+    None
+
+
+  health_status (False, str, None)
+    None
+
+
+  instance_id (False, str, None)
+    None
+
+
+  pi_memory (False, float, None)
     (Required for new resource)
 
 
   pi_replicants (False, float, 1)
     None
+
+
+  pi_replication_policy (False, str, none)
+    None
+
+
+  pi_proc_type (False, str, None)
+    (Required for new resource)
 
 
   pi_cloud_instance_id (False, str, None)
@@ -82,7 +82,19 @@ Parameters
     None
 
 
-  pi_memory (False, float, None)
+  min_processors (False, float, None)
+    None
+
+
+  pi_network_ids (False, list, None)
+    (Required for new resource) Set of Networks that have been configured for the account
+
+
+  pi_volume_ids (False, list, None)
+    None
+
+
+  pi_instance_name (False, str, None)
     (Required for new resource)
 
 
@@ -94,20 +106,8 @@ Parameters
     None
 
 
-  health_status (False, str, None)
-    None
-
-
-  pi_instance_name (False, str, None)
-    (Required for new resource)
-
-
-  pi_key_pair_name (False, str, None)
-    (Required for new resource)
-
-
-  pi_replication_policy (False, str, none)
-    None
+  pi_progress (False, float, None)
+    Progress of the operation
 
 
   id (False, str, None)
@@ -124,6 +124,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    None
-
-
-  visibility (False, str, None)
-    None
-
 
   status (False, str, None)
     None
@@ -47,6 +39,14 @@ Parameters
 
 
   crn (False, str, None)
+    None
+
+
+  name (True, str, None)
+    None
+
+
+  visibility (False, str, None)
     None
 
 
@@ -68,6 +68,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

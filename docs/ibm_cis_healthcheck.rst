@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
-
 
   expected_codes (False, str, None)
     (Required for new resource) expected_codes
@@ -42,8 +38,8 @@ Parameters
     timeout
 
 
-  interval (False, int, 60)
-    interval
+  retries (False, int, 2)
+    retries
 
 
   allow_insecure (False, bool, True)
@@ -54,19 +50,19 @@ Parameters
     type
 
 
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  expected_body (False, str, None)
+    (Required for new resource) expected_body
+
+
+  interval (False, int, 60)
+    interval
+
+
   modified_on (False, str, None)
-    None
-
-
-  description (False, str, None)
-    description
-
-
-  retries (False, int, 2)
-    retries
-
-
-  created_on (False, str, None)
     None
 
 
@@ -74,12 +70,16 @@ Parameters
     path
 
 
-  expected_body (False, str, None)
-    (Required for new resource) expected_body
+  description (False, str, None)
+    description
 
 
   follow_redirects (False, bool, True)
     follow_redirects
+
+
+  created_on (False, str, None)
+    None
 
 
   id (False, str, None)
@@ -96,6 +96,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

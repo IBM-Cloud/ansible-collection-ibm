@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,11 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  volume_attachments (False, list, None)
+  primary_network_interface (False, list, None)
+    (Required for new resource)
+
+
+  network_interfaces (False, list, None)
     None
 
 
-  gpu (False, list, None)
+  resource_group (False, str, None)
+    None
+
+
+  memory (False, int, None)
     None
 
 
@@ -42,43 +50,23 @@ Parameters
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  zone (False, str, None)
-    (Required for new resource)
-
-
-  keys (False, list, None)
-    (Required for new resource)
-
-
-  image (False, str, None)
-    (Required for new resource)
-
-
-  boot_volume (False, list, None)
+  volume_attachments (False, list, None)
     None
 
 
-  memory (False, int, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  network_interfaces (False, list, None)
-    None
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   profile (False, str, None)
     (Required for new resource)
 
 
-  primary_network_interface (False, list, None)
+  user_data (False, str, None)
+    None
+
+
+  image (False, str, None)
     (Required for new resource)
 
 
@@ -90,32 +78,44 @@ Parameters
     None
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  vpc (False, str, None)
-    (Required for new resource)
-
-
   status (False, str, None)
     None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  user_data (False, str, None)
+  tags (False, list, None)
     None
 
 
-  resource_group (False, str, None)
+  vpc (False, str, None)
+    (Required for new resource)
+
+
+  zone (False, str, None)
+    (Required for new resource)
+
+
+  keys (False, list, None)
+    (Required for new resource)
+
+
+  boot_volume (False, list, None)
     None
+
+
+  gpu (False, list, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)
@@ -144,6 +144,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

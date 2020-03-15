@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.3
+- IBM-Cloud terraform-provider-ibm v1.2.4
 - Terraform v0.12.20
 
 
@@ -26,11 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_version (False, int, None)
+  name (False, str, None)
     None
 
 
-  public_gateway (False, str, None)
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  network_acl (False, str, None)
     None
 
 
@@ -42,27 +46,11 @@ Parameters
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  ipv6_cidr_block (False, str, None)
+  ipv4_cidr_block (False, str, None)
     None
 
 
-  total_ipv4_address_count (False, int, None)
-    None
-
-
-  identifier (True, str, None)
-    None
-
-
-  network_acl (False, str, None)
-    None
-
-
-  name (False, str, None)
+  public_gateway (False, str, None)
     None
 
 
@@ -78,11 +66,15 @@ Parameters
     None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  ipv4_cidr_block (False, str, None)
+  identifier (True, str, None)
+    None
+
+
+  ipv6_cidr_block (False, str, None)
     None
 
 
@@ -90,8 +82,16 @@ Parameters
     None
 
 
+  ip_version (False, int, None)
+    None
+
+
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   generation (False, any, 2)
@@ -112,6 +112,10 @@ Parameters
 
   ibmcloud_region (False, any, us-south)
     Denotes which IBM Cloud region to connect to
+
+
+  ibmcloud_zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
 
 
 

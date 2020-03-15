@@ -16,25 +16,16 @@ description:
     - Retrieve an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.3
+    - IBM-Cloud terraform-provider-ibm v1.2.4
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    health_monitors:
         description:
             - None
         required: False
-        type: str
-    vip:
-        description:
-            - None
-        required: False
-        type: str
-    use_system_public_ip_pool:
-        description:
-            - None
-        required: False
-        type: bool
+        type: list
+        elements: dict
     server_instances:
         description:
             - None
@@ -46,18 +37,38 @@ options:
             - None
         required: True
         type: str
-    protocols:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    description:
+    type:
         description:
             - None
         required: False
         type: str
-    health_monitors:
+    datacenter:
+        description:
+            - None
+        required: False
+        type: str
+    active_connections:
+        description:
+            - None
+        required: False
+        type: int
+    use_system_public_ip_pool:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    ssl_ciphers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    protocols:
         description:
             - None
         required: False
@@ -68,41 +79,36 @@ options:
             - None
         required: False
         type: int
-    status:
-        description:
-            - None
-        required: False
-        type: str
     server_instances_down:
         description:
             - None
         required: False
         type: int
-    active_connections:
+    description:
         description:
             - None
         required: False
-        type: int
-    ssl_ciphers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    type:
+        type: str
+    vip:
         description:
             - None
         required: False
         type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be provided
-              via the environment variable 'IC_API_KEY'.
+            - The API Key used for authentification. This can also be 
+              provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
         description:
             - Denotes which IBM Cloud region to connect to
         default: us-south
+        required: False
+    ibmcloud_zone:
+        description:
+            - Denotes which IBM Cloud zone to connect to in multizone 
+              environment. This can also be provided via the environmental
+              variable 'IC_ZONE'.
         required: False
 
 author:
@@ -116,34 +122,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'vip',
-    'use_system_public_ip_pool',
+    'health_monitors',
     'server_instances',
     'name',
-    'protocols',
-    'description',
-    'health_monitors',
-    'server_instances_up',
-    'status',
-    'server_instances_down',
-    'active_connections',
-    'ssl_ciphers',
     'type',
+    'datacenter',
+    'active_connections',
+    'use_system_public_ip_pool',
+    'status',
+    'ssl_ciphers',
+    'protocols',
+    'server_instances_up',
+    'server_instances_down',
+    'description',
+    'vip',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    health_monitors=dict(
         required=False,
-        type='str'),
-    vip=dict(
-        required=False,
-        type='str'),
-    use_system_public_ip_pool=dict(
-        required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     server_instances=dict(
         required=False,
         elements='',
@@ -151,34 +152,39 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    protocols=dict(
+    type=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    active_connections=dict(
+        required=False,
+        type='int'),
+    use_system_public_ip_pool=dict(
+        required=False,
+        type='bool'),
+    status=dict(
+        required=False,
+        type='str'),
+    ssl_ciphers=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    health_monitors=dict(
+    protocols=dict(
         required=False,
         elements='',
         type='list'),
     server_instances_up=dict(
         required=False,
         type='int'),
-    status=dict(
-        required=False,
-        type='str'),
     server_instances_down=dict(
         required=False,
         type='int'),
-    active_connections=dict(
+    description=dict(
         required=False,
-        type='int'),
-    ssl_ciphers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    type=dict(
+        type='str'),
+    vip=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -189,7 +195,10 @@ module_args = dict(
     ibmcloud_region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
-        default='us-south')
+        default='us-south'),
+    ibmcloud_zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE']))
 )
 
 
@@ -206,7 +215,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.3',
+        ibm_provider_version='1.2.4',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
