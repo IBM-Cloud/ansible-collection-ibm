@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster (False, str, None)
-    (Required for new resource)
-
-
-  public_service_endpoint_url (False, str, None)
+  refresh_api_servers (False, bool, True)
     None
 
 
@@ -46,6 +38,10 @@ Parameters
     None
 
 
+  cluster (False, str, None)
+    (Required for new resource)
+
+
   public_service_endpoint (False, bool, None)
     None
 
@@ -54,8 +50,12 @@ Parameters
     None
 
 
-  refresh_api_servers (False, bool, True)
+  public_service_endpoint_url (False, str, None)
     None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

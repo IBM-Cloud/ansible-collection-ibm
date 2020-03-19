@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  health_check_type (False, str, None)
-    (Required for new resource)
-
 
   weight (False, int, None)
     (Required for new resource)
@@ -51,6 +47,10 @@ Parameters
 
 
   enabled (False, bool, None)
+    (Required for new resource)
+
+
+  health_check_type (False, str, None)
     (Required for new resource)
 
 

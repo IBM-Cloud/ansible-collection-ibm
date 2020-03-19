@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  speed (False, int, None)
+  ip_count (False, int, None)
     (Required for new resource)
 
 
@@ -38,7 +38,11 @@ Parameters
     None
 
 
-  private_subnet (False, str, None)
+  speed (False, int, None)
+    (Required for new resource)
+
+
+  private_vlan_id (False, int, None)
     None
 
 
@@ -46,12 +50,16 @@ Parameters
     None
 
 
+  name (False, str, None)
+    None
+
+
+  type (False, str, None)
+    None
+
+
   datacenter (False, str, None)
     (Required for new resource)
-
-
-  vip_pool (False, list, None)
-    None
 
 
   plan (False, str, None)
@@ -62,23 +70,15 @@ Parameters
     None
 
 
-  ip_count (False, int, None)
-    (Required for new resource)
-
-
-  type (False, str, None)
-    None
-
-
   version (False, str, None)
     (Required for new resource)
 
 
-  private_vlan_id (False, int, None)
+  private_subnet (False, str, None)
     None
 
 
-  name (False, str, None)
+  vip_pool (False, list, None)
     None
 
 

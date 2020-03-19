@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway_id (False, int, None)
-    (Required for new resource)
-
-
   network_vlan_id (False, int, None)
     (Required for new resource) The Identifier of the VLAN to be associated
 
 
   bypass (False, bool, True)
     Indicates if the VLAN should be in bypass or routed modes
+
+
+  gateway_id (False, int, None)
+    (Required for new resource)
 
 
   id (False, str, None)

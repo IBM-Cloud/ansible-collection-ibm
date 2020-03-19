@@ -18,33 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  type (False, str, None)
-    (Required for new resource)
-
-
-  name (False, str, None)
-    None
-
-
-  child_resource_count (False, int, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
 
   resource_name (False, str, None)
     The name of the resource
@@ -54,11 +34,11 @@ Parameters
     (Required for new resource)
 
 
-  router_hostname (False, str, None)
+  name (False, str, None)
     None
 
 
-  vlan_number (False, int, None)
+  router_hostname (False, str, None)
     None
 
 
@@ -66,7 +46,27 @@ Parameters
     None
 
 
+  child_resource_count (False, int, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  type (False, str, None)
+    (Required for new resource)
+
+
+  vlan_number (False, int, None)
+    None
+
+
   subnets (False, list, None)
+    None
+
+
+  tags (False, list, None)
     None
 
 

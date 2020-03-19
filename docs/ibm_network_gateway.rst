@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    None
-
-
-  members (False, list, None)
-    (Required for new resource) The hardware members of this network Gateway
-
-
-  private_ip_address_id (False, int, None)
+  ssh_key_ids (False, list, None)
     None
 
 
@@ -46,11 +38,7 @@ Parameters
     None
 
 
-  public_ipv6_address_id (False, int, None)
-    None
-
-
-  public_vlan_id (False, int, None)
+  public_ip_address_id (False, int, None)
     None
 
 
@@ -62,11 +50,11 @@ Parameters
     (Required for new resource) The name of the gateway
 
 
-  ssh_key_ids (False, list, None)
+  post_install_script_uri (False, str, None)
     None
 
 
-  post_install_script_uri (False, str, None)
+  private_ip_address_id (False, int, None)
     None
 
 
@@ -74,8 +62,20 @@ Parameters
     None
 
 
-  public_ip_address_id (False, int, None)
+  public_ipv6_address_id (False, int, None)
     None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  members (False, list, None)
+    (Required for new resource) The hardware members of this network Gateway
 
 
   id (False, str, None)

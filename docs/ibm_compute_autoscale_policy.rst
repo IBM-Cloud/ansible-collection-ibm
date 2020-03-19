@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    (Required for new resource)
-
 
   scale_type (False, str, None)
     (Required for new resource)
@@ -52,6 +48,10 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

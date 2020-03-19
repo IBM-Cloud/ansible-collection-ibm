@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  health (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
   resource_status (False, str, None)
     The status of the resource
 
 
-  worker_pools (False, list, None)
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  public_service_endpoint (False, bool, None)
     None
 
 
@@ -38,48 +50,12 @@ Parameters
     None
 
 
-  health (False, str, None)
-    None
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_count (False, int, None)
-    Number of workers
-
-
-  albs (False, list, None)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  master_url (False, str, None)
-    None
-
-
   status (False, str, None)
     The status of the cluster master
 
 
-  kube_version (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   cluster_name_id (True, str, None)
@@ -90,35 +66,59 @@ Parameters
     None
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  worker_pools (False, list, None)
+    None
+
+
+  ingress_hostname (False, str, None)
+    None
 
 
   crn (False, str, None)
     CRN of resource instance
 
 
+  master_url (False, str, None)
+    None
+
+
   tags (False, list, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  worker_count (False, int, None)
+    Number of workers
 
 
   workers (False, list, None)
     None
 
 
-  alb_type (False, str, all)
+  private_service_endpoint (False, bool, None)
     None
 
 
   public_service_endpoint_url (False, str, None)
+    None
+
+
+  kube_version (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  alb_type (False, str, all)
+    None
+
+
+  albs (False, list, None)
     None
 
 

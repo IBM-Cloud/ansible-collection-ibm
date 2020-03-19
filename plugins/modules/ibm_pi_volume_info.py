@@ -16,33 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    pi_volume_name:
-        description:
-            - Volume Name to be used for pvminstances
-        required: True
-        type: str
-    shareable:
-        description:
-            - None
-        required: False
-        type: bool
-    name:
-        description:
-            - None
-        required: False
-        type: str
     disk_type:
         description:
             - None
         required: False
         type: str
-    pi_cloud_instance_id:
+    pi_volume_name:
         description:
-            - None
+            - Volume Name to be used for pvminstances
         required: True
         type: str
     state:
@@ -55,6 +40,21 @@ options:
             - None
         required: False
         type: int
+    shareable:
+        description:
+            - None
+        required: False
+        type: bool
+    name:
+        description:
+            - None
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
     bootable:
         description:
             - None
@@ -67,7 +67,7 @@ options:
         type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -77,7 +77,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -94,13 +94,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_volume_name',
-    'shareable',
-    'name',
     'disk_type',
-    'pi_cloud_instance_id',
+    'pi_volume_name',
     'state',
     'size',
+    'shareable',
+    'name',
+    'pi_cloud_instance_id',
     'bootable',
     'creation_date',
 ]
@@ -108,19 +108,10 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_volume_name=dict(
-        required=True,
-        type='str'),
-    shareable=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     disk_type=dict(
         required=False,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_volume_name=dict(
         required=True,
         type='str'),
     state=dict(
@@ -129,6 +120,15 @@ module_args = dict(
     size=dict(
         required=False,
         type='int'),
+    shareable=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
     bootable=dict(
         required=False,
         type='bool'),
@@ -163,7 +163,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

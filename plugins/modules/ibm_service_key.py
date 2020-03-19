@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) The name of the service key
-        required: False
-        type: str
-    service_instance_guid:
-        description:
-            - (Required for new resource) The guid of the service instance for which to create service key
-        required: False
-        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -46,6 +36,16 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) The name of the service key
+        required: False
+        type: str
+    service_instance_guid:
+        description:
+            - (Required for new resource) The guid of the service instance for which to create service key
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -61,7 +61,7 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -71,7 +71,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -88,22 +88,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'service_instance_guid',
     'parameters',
     'credentials',
     'tags',
+    'name',
+    'service_instance_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    service_instance_guid=dict(
-        required=False,
-        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
@@ -114,6 +108,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    service_instance_guid=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -160,7 +160,7 @@ def run_module():
         resource_type='ibm_service_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

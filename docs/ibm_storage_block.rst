@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,15 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  os_format_type (False, str, None)
-    (Required for new resource)
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    None
-
-
-  allowed_hardware_ids (False, list, None)
+  allowed_virtual_guest_info (False, list, None)
     None
 
 
@@ -50,34 +42,6 @@ Parameters
     None
 
 
-  volumename (False, str, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  type (False, str, None)
-    (Required for new resource)
-
-
-  capacity (False, int, None)
-    (Required for new resource)
-
-
-  snapshot_capacity (False, int, None)
-    None
-
-
   resource_name (False, str, None)
     The name of the resource
 
@@ -86,8 +50,48 @@ Parameters
     (Required for new resource)
 
 
+  capacity (False, int, None)
+    (Required for new resource)
+
+
   iops (False, float, None)
     (Required for new resource)
+
+
+  hostname (False, str, None)
+    None
+
+
+  os_format_type (False, str, None)
+    (Required for new resource)
+
+
+  snapshot_capacity (False, int, None)
+    None
+
+
+  type (False, str, None)
+    (Required for new resource)
+
+
+  volumename (False, str, None)
+    None
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  allowed_hardware_ids (False, list, None)
+    None
+
+
+  allowed_hardware_info (False, list, None)
+    None
 
 
   allowed_ip_addresses (False, list, None)
@@ -98,12 +102,8 @@ Parameters
     None
 
 
-  notes (False, str, None)
-    None
-
-
-  allowed_virtual_guest_info (False, list, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

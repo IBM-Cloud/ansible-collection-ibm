@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,20 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  token (False, str, None)
-    None
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   cluster_name_id (True, str, None)
     The name/id of the cluster
 
 
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
+  config_file_path (False, str, None)
+    The absolute path to the kubernetes config yml file
 
 
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+  admin_key (False, str, None)
+    None
+
+
+  ca_certificate (False, str, None)
+    None
 
 
   network (False, bool, False)
@@ -50,12 +54,12 @@ Parameters
     The absolute path to the calico network config file
 
 
-  admin_key (False, str, None)
-    None
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
 
 
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   region (False, str, None)
@@ -66,23 +70,7 @@ Parameters
     If set to true will download the config for admin
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  config_file_path (False, str, None)
-    The absolute path to the kubernetes config yml file
-
-
   admin_certificate (False, str, None)
-    None
-
-
-  ca_certificate (False, str, None)
     None
 
 
@@ -90,8 +78,20 @@ Parameters
     None
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  token (False, str, None)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  config_dir (False, str, None)
+    The directory where the cluster config to be downloaded. Default is home directory
+
+
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   ibmcloud_api_key (True, any, None)

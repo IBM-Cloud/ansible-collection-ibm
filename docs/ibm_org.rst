@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  billing_managers (False, list, None)
-    The IBMID of the users who will have billing manager role in this org, ex - user@example.com
-
-
-  managers (False, list, None)
-    The IBMID of the users who will have manager role in this org, ex - user@example.com
-
-
-  auditors (False, list, None)
-    The IBMID of the users who will have auditor role in this org, ex - user@example.com
-
 
   users (False, list, None)
     The IBMID of the users who will have user role in this org, ex - user@example.com
@@ -52,6 +40,18 @@ Parameters
 
   org_quota_definition_guid (False, str, None)
     Org quota guid
+
+
+  billing_managers (False, list, None)
+    The IBMID of the users who will have billing manager role in this org, ex - user@example.com
+
+
+  managers (False, list, None)
+    The IBMID of the users who will have manager role in this org, ex - user@example.com
+
+
+  auditors (False, list, None)
+    The IBMID of the users who will have auditor role in this org, ex - user@example.com
 
 
   id (False, str, None)

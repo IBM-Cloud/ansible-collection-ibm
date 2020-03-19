@@ -18,33 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  service (False, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  users (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
 
   members_disk_allocation_mb (False, int, None)
     Disk allocation required for cluster
@@ -54,36 +34,12 @@ Parameters
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
-  adminpassword (False, str, None)
-    The admin user password for the instance
+  remote_leader_id (False, str, None)
+    The CRN of leader database
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  name (False, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
-
-
-  location (False, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
+  users (False, list, None)
+    None
 
 
   whitelist (False, list, None)
@@ -94,36 +50,80 @@ Parameters
     (Required for new resource) The plan type of the Database instance
 
 
-  adminuser (False, str, None)
-    The admin user id for the instance
+  guid (False, str, None)
+    Unique identifier of resource instance
 
 
-  status (False, str, None)
-    The resource instance status
-
-
-  groups (False, list, None)
-    None
+  adminpassword (False, str, None)
+    The admin user password for the instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
   connectionstrings (False, list, None)
     None
+
+
+  service (False, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
   version (False, str, None)
     The database version to provision if specified
 
 
-  remote_leader_id (False, str, None)
-    The CRN of leader database
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  location (False, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  status (False, str, None)
+    The resource instance status
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  name (False, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  groups (False, list, None)
+    None
+
+
+  adminuser (False, str, None)
+    The admin user id for the instance
+
+
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
   tags (False, list, None)
@@ -132,6 +132,10 @@ Parameters
 
   resource_status (False, str, None)
     The status of the resource
+
+
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
 
 
   id (False, str, None)

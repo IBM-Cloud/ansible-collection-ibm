@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  path (False, str, None)
-    The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
-
 
   tags (False, list, None)
     None
@@ -48,6 +44,10 @@ Parameters
 
   port (False, int, None)
     The port of the route. Supported for domains of TCP router groups only.
+
+
+  path (False, str, None)
+    The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
 
 
   id (False, str, None)

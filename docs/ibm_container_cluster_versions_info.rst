@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  region (False, str, None)
-    The cluster region
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
 
   valid_kube_versions (False, list, None)
     List supported kube-versions
@@ -52,6 +44,14 @@ Parameters
 
   account_guid (False, str, None)
     The bluemix account guid this cluster belongs to
+
+
+  region (False, str, None)
+    The cluster region
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,44 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  health_delay (False, int, None)
-    (Required for new resource)
-
-
-  health_retries (False, int, None)
-    (Required for new resource)
-
-
-  health_timeout (False, int, None)
-    (Required for new resource)
-
-
-  health_monitor_url (False, str, None)
-    None
-
-
-  provisioning_status (False, str, None)
-    None
-
-
-  algorithm (False, str, None)
-    (Required for new resource)
-
-
-  lb (False, str, None)
-    (Required for new resource)
-
-
   protocol (False, str, None)
     (Required for new resource)
 
 
   health_type (False, str, None)
     (Required for new resource)
-
-
-  health_monitor_port (False, int, None)
-    None
 
 
   session_persistence_type (False, str, None)
@@ -74,8 +42,40 @@ Parameters
     None
 
 
+  health_timeout (False, int, None)
+    (Required for new resource)
+
+
+  health_monitor_url (False, str, None)
+    None
+
+
+  health_monitor_port (False, int, None)
+    None
+
+
   name (False, str, None)
     (Required for new resource)
+
+
+  lb (False, str, None)
+    (Required for new resource)
+
+
+  algorithm (False, str, None)
+    (Required for new resource)
+
+
+  health_delay (False, int, None)
+    (Required for new resource)
+
+
+  health_retries (False, int, None)
+    (Required for new resource)
+
+
+  provisioning_status (False, str, None)
+    None
 
 
   id (False, str, None)

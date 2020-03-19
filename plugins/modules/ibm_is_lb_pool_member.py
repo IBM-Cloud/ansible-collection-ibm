@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
+    port:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    target_address:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    weight:
+        description:
+            - None
+        required: False
+        type: int
     provisioning_status:
         description:
             - None
@@ -45,21 +60,6 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    port:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    target_address:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    weight:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,7 +107,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -118,27 +118,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pool', 'str'),
-    ('lb', 'str'),
     ('port', 'int'),
     ('target_address', 'str'),
+    ('pool', 'str'),
+    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'port',
+    'target_address',
+    'weight',
     'provisioning_status',
     'health',
     'href',
     'pool',
     'lb',
-    'port',
-    'target_address',
-    'weight',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    port=dict(
+        required=False,
+        type='int'),
+    target_address=dict(
+        required=False,
+        type='str'),
+    weight=dict(
+        required=False,
+        type='int'),
     provisioning_status=dict(
         required=False,
         type='str'),
@@ -154,15 +163,6 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    target_address=dict(
-        required=False,
-        type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,39 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    ssl:
-        description:
-            - SSL/TLS setting
-        required: False
-        type: str
     min_tls_version:
         description:
             - Minimum version of TLS required
         required: False
         type: str
         default: 1.1
-    opportunistic_encryption:
-        description:
-            - opportunistic_encryption setting
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: False
-        type: str
-    waf:
-        description:
-            - WAF setting
-        required: False
-        type: str
     cname_flattening:
         description:
             - cname_flattening setting
+        required: False
+        type: str
+    opportunistic_encryption:
+        description:
+            - opportunistic_encryption setting
         required: False
         type: str
     automatic_https_rewrites:
@@ -56,14 +41,29 @@ options:
             - automatic_https_rewrites setting
         required: False
         type: str
-    cis_id:
+    waf:
         description:
-            - (Required for new resource) CIS instance crn
+            - WAF setting
         required: False
         type: str
     certificate_status:
         description:
             - Certificate status
+        required: False
+        type: str
+    ssl:
+        description:
+            - SSL/TLS setting
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
         required: False
         type: str
     id:
@@ -81,7 +81,7 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -91,7 +91,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -102,51 +102,51 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ssl',
     'min_tls_version',
-    'opportunistic_encryption',
-    'domain_id',
-    'waf',
     'cname_flattening',
+    'opportunistic_encryption',
     'automatic_https_rewrites',
-    'cis_id',
+    'waf',
     'certificate_status',
+    'ssl',
+    'cis_id',
+    'domain_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ssl=dict(
-        required=False,
-        type='str'),
     min_tls_version=dict(
         default='1.1',
         type='str'),
-    opportunistic_encryption=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    waf=dict(
-        required=False,
-        type='str'),
     cname_flattening=dict(
+        required=False,
+        type='str'),
+    opportunistic_encryption=dict(
         required=False,
         type='str'),
     automatic_https_rewrites=dict(
         required=False,
         type='str'),
-    cis_id=dict(
+    waf=dict(
         required=False,
         type='str'),
     certificate_status=dict(
+        required=False,
+        type='str'),
+    ssl=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

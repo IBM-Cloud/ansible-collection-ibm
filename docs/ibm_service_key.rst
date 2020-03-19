@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    (Required for new resource) The name of the service key
-
-
-  service_instance_guid (False, str, None)
-    (Required for new resource) The guid of the service instance for which to create service key
-
 
   parameters (False, dict, None)
     Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -44,6 +36,14 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  name (False, str, None)
+    (Required for new resource) The name of the service key
+
+
+  service_instance_guid (False, str, None)
+    (Required for new resource) The guid of the service instance for which to create service key
 
 
   id (False, str, None)

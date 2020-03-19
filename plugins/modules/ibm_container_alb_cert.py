@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
@@ -30,19 +30,9 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    expires_on:
+    domain_name:
         description:
             - None
-        required: False
-        type: str
-    cloud_cert_instance_id:
-        description:
-            - None
-        required: False
-        type: str
-    cert_crn:
-        description:
-            - (Required for new resource) 
         required: False
         type: str
     issuer_name:
@@ -55,12 +45,22 @@ options:
             - None
         required: False
         type: str
+    cloud_cert_instance_id:
+        description:
+            - None
+        required: False
+        type: str
     region:
         description:
             - None
         required: False
         type: str
-    domain_name:
+    cert_crn:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    expires_on:
         description:
             - None
         required: False
@@ -80,7 +80,7 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -90,7 +90,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -110,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cluster_id',
     'secret_name',
-    'expires_on',
-    'cloud_cert_instance_id',
-    'cert_crn',
+    'domain_name',
     'issuer_name',
     'cluster_crn',
+    'cloud_cert_instance_id',
     'region',
-    'domain_name',
+    'cert_crn',
+    'expires_on',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -128,13 +128,7 @@ module_args = dict(
     secret_name=dict(
         required=False,
         type='str'),
-    expires_on=dict(
-        required=False,
-        type='str'),
-    cloud_cert_instance_id=dict(
-        required=False,
-        type='str'),
-    cert_crn=dict(
+    domain_name=dict(
         required=False,
         type='str'),
     issuer_name=dict(
@@ -143,10 +137,16 @@ module_args = dict(
     cluster_crn=dict(
         required=False,
         type='str'),
+    cloud_cert_instance_id=dict(
+        required=False,
+        type='str'),
     region=dict(
         required=False,
         type='str'),
-    domain_name=dict(
+    cert_crn=dict(
+        required=False,
+        type='str'),
+    expires_on=dict(
         required=False,
         type='str'),
     id=dict(
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

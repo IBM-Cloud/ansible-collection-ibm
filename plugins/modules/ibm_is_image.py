@@ -16,13 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    visibility:
+    href:
         description:
-            - None
+            - (Required for new resource) 
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     operating_system:
@@ -30,14 +35,24 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    status:
+    architecture:
         description:
             - None
         required: False
         type: str
-    architecture:
+    file:
         description:
             - None
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     resource_group_name:
@@ -45,7 +60,7 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    href:
+    name:
         description:
             - (Required for new resource) 
         required: False
@@ -56,22 +71,17 @@ options:
         required: False
         type: list
         elements: str
-    resource_status:
+    status:
         description:
-            - The status of the resource
+            - None
         required: False
         type: str
-    resource_name:
+    visibility:
         description:
-            - The name of the resource
+            - None
         required: False
         type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    file:
+    format:
         description:
             - None
         required: False
@@ -81,19 +91,9 @@ options:
             - None
         required: False
         type: str
-    resource_controller_url:
+    resource_crn:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    format:
-        description:
-            - None
+            - The crn of the resource
         required: False
         type: str
     id:
@@ -143,7 +143,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -154,77 +154,77 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('operating_system', 'str'),
     ('href', 'str'),
+    ('operating_system', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'visibility',
-    'operating_system',
-    'status',
-    'architecture',
-    'resource_group_name',
     'href',
-    'tags',
-    'resource_status',
-    'resource_name',
-    'resource_crn',
-    'file',
-    'resource_group',
     'resource_controller_url',
+    'operating_system',
+    'architecture',
+    'file',
+    'resource_name',
+    'resource_status',
+    'resource_group_name',
     'name',
+    'tags',
+    'status',
+    'visibility',
     'format',
+    'resource_group',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    visibility=dict(
+    href=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     operating_system=dict(
         required=False,
         type='str'),
-    status=dict(
+    architecture=dict(
         required=False,
         type='str'),
-    architecture=dict(
+    file=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
         required=False,
         type='str'),
-    href=dict(
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_status=dict(
+    status=dict(
         required=False,
         type='str'),
-    resource_name=dict(
+    visibility=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    file=dict(
+    format=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    format=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -305,7 +305,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

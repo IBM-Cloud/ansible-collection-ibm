@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  ipv6_cidr_block (False, str, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
 
   vpc (False, str, None)
     (Required for new resource)
@@ -46,35 +54,15 @@ Parameters
     None
 
 
+  available_ipv4_address_count (False, str, None)
+    None
+
+
   total_ipv4_address_count (False, int, None)
     None
 
 
-  ip_version (False, str, ipv4)
-    None
-
-
-  network_acl (False, str, None)
-    None
-
-
-  zone (False, str, None)
-    (Required for new resource)
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  public_gateway (False, str, None)
+  status (False, str, None)
     None
 
 
@@ -82,16 +70,28 @@ Parameters
     None
 
 
-  ipv6_cidr_block (False, str, None)
+  name (False, str, None)
+    (Required for new resource)
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  ip_version (False, str, ipv4)
     None
 
 
-  available_ipv4_address_count (False, str, None)
+  public_gateway (False, str, None)
     None
 
 
-  status (False, str, None)
-    None
+  zone (False, str, None)
+    (Required for new resource)
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   id (False, str, None)

@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    None
+
+
+  number (False, int, None)
+    None
+
 
   router_hostname (False, str, None)
     None
@@ -39,14 +47,6 @@ Parameters
 
 
   id (False, int, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  number (False, int, None)
     None
 
 

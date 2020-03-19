@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,12 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  snapshot_capacity (False, int, None)
+  allowed_ip_addresses (False, list, None)
     None
 
 
-  allowed_hardware_ids (False, list, None)
+  tags (False, list, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  iops (False, float, None)
+    (Required for new resource)
+
+
+  volumename (False, str, None)
+    None
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    None
+
+
+  allowed_subnets (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    (Required for new resource)
+
+
+  capacity (False, int, None)
+    (Required for new resource)
+
+
+  snapshot_schedule (False, list, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  hostname (False, str, None)
+    None
+
+
+  hourly_billing (False, bool, False)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   mountpoint (False, str, None)
@@ -42,64 +90,16 @@ Parameters
     (Required for new resource)
 
 
-  capacity (False, int, None)
-    (Required for new resource)
-
-
-  tags (False, list, None)
+  snapshot_capacity (False, int, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  iops (False, float, None)
-    (Required for new resource)
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    None
-
-
-  allowed_ip_addresses (False, list, None)
-    None
-
-
-  snapshot_schedule (False, list, None)
-    None
-
-
-  hourly_billing (False, bool, False)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource)
-
-
-  volumename (False, str, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  allowed_subnets (False, list, None)
+  allowed_hardware_ids (False, list, None)
     None
 
 
   notes (False, str, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   id (False, str, None)

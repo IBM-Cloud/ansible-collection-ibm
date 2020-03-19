@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,7 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  validity_days (False, int, None)
+  intermediate_certificate (False, str, None)
+    None
+
+
+  private_key (False, str, None)
+    (Required for new resource)
+
+
+  organization_name (False, str, None)
+    None
+
+
+  validity_begin (False, str, None)
     None
 
 
@@ -38,19 +50,15 @@ Parameters
     None
 
 
-  intermediate_certificate (False, str, None)
-    None
-
-
-  validity_begin (False, str, None)
-    None
+  certificate (False, str, None)
+    (Required for new resource)
 
 
   common_name (False, str, None)
     None
 
 
-  organization_name (False, str, None)
+  validity_days (False, int, None)
     None
 
 
@@ -64,14 +72,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  certificate (False, str, None)
-    (Required for new resource)
-
-
-  private_key (False, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)

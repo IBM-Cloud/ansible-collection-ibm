@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,15 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_count (False, int, 1)
+  private_service_endpoint_url (False, str, None)
     None
 
 
-  disable_public_service_endpoint (False, bool, False)
+  ingress_hostname (False, str, None)
     None
+
+
+  pod_subnet (False, str, 172.30.0.0/16)
+    Custom subnet CIDR to provide private IP addresses for pods
 
 
   state_ (False, str, None)
+    None
+
+
+  master_status (False, str, None)
     None
 
 
@@ -42,16 +50,36 @@ Parameters
     None
 
 
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  zones (False, list, None)
-    (Required for new resource)
+  vpc_id (False, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
-  kube_version (False, str, None)
+  service_subnet (False, str, 172.21.0.0/16)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  worker_count (False, int, 1)
     None
+
+
+  crn (False, str, None)
+    CRN of resource instance
 
 
   resource_group_id (False, str, None)
@@ -62,72 +90,44 @@ Parameters
     None
 
 
-  private_service_endpoint_url (False, str, None)
+  ingress_secret (False, str, None)
     None
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  service_subnet (False, str, 172.21.0.0/16)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  pod_subnet (False, str, 172.30.0.0/16)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  master_status (False, str, None)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  flavor (False, str, None)
-    (Required for new resource)
 
 
   name (False, str, None)
     (Required for new resource) The cluster name
 
 
-  vpc_id (False, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  disable_public_service_endpoint (False, bool, False)
+    None
 
 
   tags (False, list, None)
     None
 
 
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
   albs (False, list, None)
     None
 
 
-  ingress_secret (False, str, None)
+  flavor (False, str, None)
+    (Required for new resource)
+
+
+  zones (False, list, None)
+    (Required for new resource)
+
+
+  kube_version (False, str, None)
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   id (False, str, None)

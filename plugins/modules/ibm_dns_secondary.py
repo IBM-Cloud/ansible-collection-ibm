@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
+    status_id:
+        description:
+            - None
+        required: False
+        type: int
     status_text:
         description:
             - None
@@ -46,11 +51,6 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    status_id:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -66,7 +66,7 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -76,7 +76,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -94,17 +94,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'status_id',
     'status_text',
     'tags',
     'master_ip_address',
     'transfer_frequency',
     'zone_name',
-    'status_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    status_id=dict(
+        required=False,
+        type='int'),
     status_text=dict(
         required=False,
         type='str'),
@@ -121,9 +124,6 @@ module_args = dict(
     zone_name=dict(
         required=False,
         type='str'),
-    status_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -170,7 +170,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

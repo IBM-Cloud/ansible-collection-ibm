@@ -16,13 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    expected_codes:
+    description:
         description:
-            - (Required for new resource) expected_codes
+            - description
+        required: False
+        type: str
+    modified_on:
+        description:
+            - None
+        required: False
+        type: str
+    expected_body:
+        description:
+            - (Required for new resource) expected_body
         required: False
         type: str
     method:
@@ -37,41 +47,42 @@ options:
         required: False
         type: int
         default: 5
-    retries:
+    follow_redirects:
         description:
-            - retries
-        required: False
-        type: int
-        default: 2
-    allow_insecure:
-        description:
-            - allow_insecure
+            - follow_redirects
         required: False
         type: bool
         default: True
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
     type:
         description:
             - type
         required: False
         type: str
         default: http
-    cis_id:
+    retries:
         description:
-            - (Required for new resource) CIS instance crn
+            - retries
         required: False
-        type: str
-    expected_body:
-        description:
-            - (Required for new resource) expected_body
-        required: False
-        type: str
+        type: int
+        default: 2
     interval:
         description:
             - interval
         required: False
         type: int
         default: 60
-    modified_on:
+    allow_insecure:
+        description:
+            - allow_insecure
+        required: False
+        type: bool
+        default: True
+    created_on:
         description:
             - None
         required: False
@@ -82,20 +93,9 @@ options:
         required: False
         type: str
         default: /
-    description:
+    expected_codes:
         description:
-            - description
-        required: False
-        type: str
-    follow_redirects:
-        description:
-            - follow_redirects
-        required: False
-        type: bool
-        default: True
-    created_on:
-        description:
-            - None
+            - (Required for new resource) expected_codes
         required: False
         type: str
     id:
@@ -113,7 +113,7 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -123,7 +123,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -134,33 +134,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('expected_codes', 'str'),
-    ('cis_id', 'str'),
     ('expected_body', 'str'),
+    ('cis_id', 'str'),
+    ('expected_codes', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'expected_codes',
+    'description',
+    'modified_on',
+    'expected_body',
     'method',
     'timeout',
-    'retries',
-    'allow_insecure',
-    'type',
-    'cis_id',
-    'expected_body',
-    'interval',
-    'modified_on',
-    'path',
-    'description',
     'follow_redirects',
+    'cis_id',
+    'type',
+    'retries',
+    'interval',
+    'allow_insecure',
     'created_on',
+    'path',
+    'expected_codes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expected_codes=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    modified_on=dict(
+        required=False,
+        type='str'),
+    expected_body=dict(
         required=False,
         type='str'),
     method=dict(
@@ -169,37 +175,31 @@ module_args = dict(
     timeout=dict(
         default=5,
         type='int'),
+    follow_redirects=dict(
+        default=True,
+        type='bool'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        default='http',
+        type='str'),
     retries=dict(
         default=2,
+        type='int'),
+    interval=dict(
+        default=60,
         type='int'),
     allow_insecure=dict(
         default=True,
         type='bool'),
-    type=dict(
-        default='http',
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    expected_body=dict(
-        required=False,
-        type='str'),
-    interval=dict(
-        default=60,
-        type='int'),
-    modified_on=dict(
+    created_on=dict(
         required=False,
         type='str'),
     path=dict(
         default='/',
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    follow_redirects=dict(
-        default=True,
-        type='bool'),
-    created_on=dict(
+    expected_codes=dict(
         required=False,
         type='str'),
     id=dict(
@@ -248,7 +248,7 @@ def run_module():
         resource_type='ibm_cis_healthcheck',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

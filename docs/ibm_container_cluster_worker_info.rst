@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,19 +26,27 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_id (True, str, None)
-    ID of the worker
-
-
-  state (False, str, None)
-    State of the worker
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   status (False, str, None)
     Status of the worker
 
 
+  private_ip (False, str, None)
+    None
+
+
+  region (False, str, None)
+    The cluster region
+
+
   public_vlan (False, str, None)
+    None
+
+
+  public_ip (False, str, None)
     None
 
 
@@ -54,28 +62,20 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  region (False, str, None)
-    The cluster region
+  worker_id (True, str, None)
+    ID of the worker
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+  state (False, str, None)
+    State of the worker
 
 
   private_vlan (False, str, None)
     None
 
 
-  private_ip (False, str, None)
-    None
-
-
-  public_ip (False, str, None)
-    None
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

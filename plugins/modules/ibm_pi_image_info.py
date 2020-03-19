@@ -16,15 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    pi_image_name:
-        description:
-            - Imagename Name to be used for pvminstances
-        required: True
-        type: str
     pi_cloud_instance_id:
         description:
             - None
@@ -55,9 +50,14 @@ options:
             - None
         required: False
         type: str
+    pi_image_name:
+        description:
+            - Imagename Name to be used for pvminstances
+        required: True
+        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -67,7 +67,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -78,27 +78,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_image_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_image_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_image_name',
     'pi_cloud_instance_id',
     'state',
     'size',
     'architecture',
     'operatingsystem',
     'hypervisor',
+    'pi_image_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_image_name=dict(
-        required=True,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
@@ -116,6 +113,9 @@ module_args = dict(
         type='str'),
     hypervisor=dict(
         required=False,
+        type='str'),
+    pi_image_name=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -145,7 +145,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

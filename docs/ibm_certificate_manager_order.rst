@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  issuance_info (False, dict, None)
+    None
+
 
   domains (False, list, None)
     (Required for new resource)
@@ -34,15 +38,15 @@ Parameters
     None
 
 
-  description (False, str, None)
+  algorithm (False, str, None)
     None
 
 
-  domain_validation_method (False, str, dns - 01)
+  expires_on (False, int, None)
     None
 
 
-  key_algorithm (False, str, None)
+  status (False, str, None)
     None
 
 
@@ -54,7 +58,7 @@ Parameters
     None
 
 
-  expires_on (False, int, None)
+  begins_on (False, int, None)
     None
 
 
@@ -66,11 +70,7 @@ Parameters
     (Required for new resource)
 
 
-  begins_on (False, int, None)
-    None
-
-
-  status (False, str, None)
+  domain_validation_method (False, str, dns - 01)
     None
 
 
@@ -78,15 +78,15 @@ Parameters
     None
 
 
-  algorithm (False, str, None)
-    None
-
-
   imported (False, bool, None)
     None
 
 
-  issuance_info (False, dict, None)
+  description (False, str, None)
+    None
+
+
+  key_algorithm (False, str, None)
     None
 
 

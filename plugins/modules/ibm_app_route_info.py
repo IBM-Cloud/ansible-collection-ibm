@@ -16,20 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_app_route' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    domain_guid:
-        description:
-            - The guid of the domain
-        required: True
-        type: str
-    host:
-        description:
-            - The host of the route
-        required: False
-        type: str
     path:
         description:
             - The path of the route
@@ -45,9 +35,19 @@ options:
             - The guid of the space
         required: True
         type: str
+    domain_guid:
+        description:
+            - The guid of the domain
+        required: True
+        type: str
+    host:
+        description:
+            - The host of the route
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -57,7 +57,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -68,28 +68,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_guid', 'str'),
     ('space_guid', 'str'),
+    ('domain_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_guid',
-    'host',
     'path',
     'port',
     'space_guid',
+    'domain_guid',
+    'host',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_guid=dict(
-        required=True,
-        type='str'),
-    host=dict(
-        required=False,
-        type='str'),
     path=dict(
         required=False,
         type='str'),
@@ -98,6 +92,12 @@ module_args = dict(
         type='str'),
     space_guid=dict(
         required=True,
+        type='str'),
+    domain_guid=dict(
+        required=True,
+        type='str'),
+    host=dict(
+        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -127,7 +127,7 @@ def run_module():
         resource_type='ibm_app_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -30,8 +30,24 @@ Parameters
     (Required for new resource)
 
 
+  load_balancing_method (False, str, None)
+    (Required for new resource)
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
   source_port (False, int, None)
     (Required for new resource)
+
+
+  virtual_ip_address (False, str, None)
+    (Required for new resource)
+
+
+  persistence (False, str, None)
+    None
 
 
   type (False, str, None)
@@ -40,22 +56,6 @@ Parameters
 
   security_certificate_id (False, int, None)
     None
-
-
-  load_balancing_method (False, str, None)
-    (Required for new resource)
-
-
-  persistence (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  virtual_ip_address (False, str, None)
-    (Required for new resource)
 
 
   tags (False, list, None)

@@ -16,20 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
-    status:
-        description:
-            - Status of resource key
-        required: False
-        type: str
-    credentials:
-        description:
-            - Credentials asociated with the key
-        required: False
-        type: dict
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
@@ -61,9 +51,19 @@ options:
             - User role
         required: False
         type: str
+    status:
+        description:
+            - Status of resource key
+        required: False
+        type: str
+    credentials:
+        description:
+            - Credentials asociated with the key
+        required: False
+        type: dict
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -73,7 +73,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -89,25 +89,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'credentials',
     'most_recent',
     'crn',
     'name',
     'resource_instance_id',
     'resource_alias_id',
     'role',
+    'status',
+    'credentials',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    credentials=dict(
-        required=False,
-        type='dict'),
     most_recent=dict(
         default=False,
         type='bool'),
@@ -126,6 +120,12 @@ module_args = dict(
     role=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    credentials=dict(
+        required=False,
+        type='dict'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -154,7 +154,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

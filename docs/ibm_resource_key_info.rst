@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status (False, str, None)
-    Status of resource key
-
-
-  credentials (False, dict, None)
-    Credentials asociated with the key
-
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
@@ -56,6 +48,14 @@ Parameters
 
   role (False, str, None)
     User role
+
+
+  status (False, str, None)
+    Status of resource key
+
+
+  credentials (False, dict, None)
+    Credentials asociated with the key
 
 
   ibmcloud_api_key (True, any, None)

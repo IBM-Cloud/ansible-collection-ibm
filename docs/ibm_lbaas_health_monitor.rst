@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  url_path (False, str, /)
-    None
-
-
-  monitor_id (False, str, None)
-    (Required for new resource)
-
-
-  lbaas_id (False, str, None)
-    (Required for new resource)
-
 
   protocol (False, str, None)
     (Required for new resource)
@@ -56,6 +44,18 @@ Parameters
 
   timeout (False, int, 2)
     None
+
+
+  url_path (False, str, /)
+    None
+
+
+  monitor_id (False, str, None)
+    (Required for new resource)
+
+
+  lbaas_id (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

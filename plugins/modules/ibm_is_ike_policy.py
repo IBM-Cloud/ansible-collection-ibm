@@ -16,15 +16,51 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    authentication_algorithm:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     dh_group:
         description:
             - (Required for new resource) 
         required: False
         type: int
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    href:
+        description:
+            - None
+        required: False
+        type: str
+    vpn_connections:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    encryption_algorithm:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     resource_group:
         description:
             - None
@@ -46,45 +82,9 @@ options:
             - None
         required: False
         type: str
-    vpn_connections:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    authentication_algorithm:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    encryption_algorithm:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    href:
-        description:
-            - None
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
         required: False
         type: str
     id:
@@ -134,7 +134,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -145,35 +145,57 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('dh_group', 'int'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
+    ('dh_group', 'int'),
     ('encryption_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'authentication_algorithm',
     'dh_group',
+    'resource_name',
+    'href',
+    'vpn_connections',
+    'resource_controller_url',
+    'encryption_algorithm',
     'resource_group',
     'key_lifetime',
     'ike_version',
     'negotiation_mode',
-    'vpn_connections',
     'resource_group_name',
-    'name',
-    'authentication_algorithm',
-    'encryption_algorithm',
-    'href',
-    'resource_controller_url',
-    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    authentication_algorithm=dict(
+        required=False,
+        type='str'),
     dh_group=dict(
         required=False,
         type='int'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    href=dict(
+        required=False,
+        type='str'),
+    vpn_connections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    encryption_algorithm=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -186,29 +208,7 @@ module_args = dict(
     negotiation_mode=dict(
         required=False,
         type='str'),
-    vpn_connections=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    authentication_algorithm=dict(
-        required=False,
-        type='str'),
-    encryption_algorithm=dict(
-        required=False,
-        type='str'),
-    href=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -289,7 +289,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

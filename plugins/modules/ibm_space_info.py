@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_space' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.4
+    - IBM-Cloud terraform-provider-ibm v1.2.5
     - Terraform v0.12.20
 
 options:
+    space:
+        description:
+            - Space name, for example dev
+        required: True
+        type: str
     org:
         description:
             - The org this space belongs to
@@ -43,14 +48,9 @@ options:
         required: False
         type: list
         elements: str
-    space:
-        description:
-            - Space name, for example dev
-        required: True
-        type: str
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be 
+            - The API Key used for authentification. This can also be
               provided via the environment variable 'IC_API_KEY'.
         required: True
     ibmcloud_region:
@@ -60,7 +60,7 @@ options:
         required: False
     ibmcloud_zone:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone 
+            - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environmental
               variable 'IC_ZONE'.
         required: False
@@ -71,22 +71,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('org', 'str'),
     ('space', 'str'),
+    ('org', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'space',
     'org',
     'auditors',
     'managers',
     'developers',
-    'space',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    space=dict(
+        required=True,
+        type='str'),
     org=dict(
         required=True,
         type='str'),
@@ -102,9 +105,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    space=dict(
-        required=True,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -133,7 +133,7 @@ def run_module():
         resource_type='ibm_space',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.4',
+        ibm_provider_version='1.2.5',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (False, int, None)
+    (Required for new resource)
+
+
+  target_address (False, str, None)
+    (Required for new resource)
+
+
+  weight (False, int, None)
+    None
+
 
   provisioning_status (False, str, None)
     None
@@ -44,18 +56,6 @@ Parameters
 
   lb (False, str, None)
     (Required for new resource)
-
-
-  port (False, int, None)
-    (Required for new resource)
-
-
-  target_address (False, str, None)
-    (Required for new resource)
-
-
-  weight (False, int, None)
-    None
 
 
   id (False, str, None)

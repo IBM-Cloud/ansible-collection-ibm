@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,12 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  status (False, str, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  name (False, str, None)
+    (Required for new resource)
+
+
+  zone (False, str, None)
+    (Required for new resource)
+
+
+  iops (False, int, None)
+    None
+
+
+  crn (False, str, None)
+    None
 
 
   profile (False, str, None)
@@ -42,27 +58,7 @@ Parameters
     None
 
 
-  status (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  zone (False, str, None)
-    (Required for new resource)
-
-
-  crn (False, str, None)
+  resource_group (False, str, None)
     None
 
 
@@ -70,20 +66,24 @@ Parameters
     The name of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  iops (False, int, None)
-    None
+  resource_status (False, str, None)
+    The status of the resource
 
 
   encryption_key (False, str, None)
     None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   id (False, str, None)

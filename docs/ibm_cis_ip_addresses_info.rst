@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipv4_cidrs (False, list, None)
+  ipv6_cidrs (False, list, None)
     None
 
 
-  ipv6_cidrs (False, list, None)
+  ipv4_cidrs (False, list, None)
     None
 
 

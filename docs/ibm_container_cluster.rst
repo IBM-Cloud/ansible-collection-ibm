@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.4
+- IBM-Cloud terraform-provider-ibm v1.2.5
 - Terraform v0.12.20
 
 
@@ -26,16 +26,96 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hardware (False, str, None)
-    (Required for new resource)
+  kube_version (False, str, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
 
 
   ingress_hostname (False, str, None)
     None
 
 
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource) The cluster name
+
+
   region (False, str, None)
     The cluster region
+
+
+  disk_encryption (False, bool, True)
+    None
+
+
+  subnet_id (False, list, None)
+    None
+
+
+  public_vlan_id (False, str, None)
+    None
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  datacenter (False, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  private_vlan_id (False, str, None)
+    None
+
+
+  no_subnet (False, bool, False)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  albs (False, list, None)
+    None
+
+
+  private_service_endpoint_url (False, str, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   workers_info (False, list, None)
@@ -46,119 +126,7 @@ Parameters
     None
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  datacenter (False, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  update_all_workers (False, bool, False)
-    None
-
-
-  private_vlan_id (False, str, None)
-    None
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  tags (False, list, None)
-    None
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  worker_num (False, int, 0)
-    Number of worker nodes
-
-
-  ingress_secret (False, str, None)
-    None
-
-
-  no_subnet (False, bool, False)
-    None
-
-
-  worker_pools (False, list, None)
-    None
-
-
-  albs (False, list, None)
-    None
-
-
-  kube_version (False, str, None)
-    None
-
-
-  public_vlan_id (False, str, None)
-    None
-
-
-  server_url (False, str, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource) The cluster name
-
-
-  webhook (False, list, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  disk_encryption (False, bool, True)
+  billing (False, str, None)
     None
 
 
@@ -166,24 +134,56 @@ Parameters
     None
 
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  wait_time_minutes (False, int, 90)
+  tags (False, list, None)
     None
+
+
+  worker_pools (False, list, None)
+    None
+
+
+  worker_num (False, int, 0)
+    Number of worker nodes
+
+
+  update_all_workers (False, bool, False)
+    None
+
+
+  server_url (False, str, None)
+    None
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
 
 
   crn (False, str, None)
     CRN of resource instance
 
 
-  billing (False, str, None)
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  hardware (False, str, None)
+    (Required for new resource)
+
+
+  webhook (False, list, None)
     None
 
 
-  subnet_id (False, list, None)
-    None
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   id (False, str, None)
