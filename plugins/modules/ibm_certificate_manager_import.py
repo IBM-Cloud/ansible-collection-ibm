@@ -16,25 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    expires_on:
-        description:
-            - None
-        required: False
-        type: int
-    imported:
-        description:
-            - None
-        required: False
-        type: bool
-    status:
-        description:
-            - None
-        required: False
-        type: str
     certificate_manager_instance_id:
         description:
             - (Required for new resource) 
@@ -43,6 +28,27 @@ options:
     name:
         description:
             - (Required for new resource) 
+        required: False
+        type: str
+    data:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: dict
+        elements: dict
+    key_algorithm:
+        description:
+            - None
+        required: False
+        type: str
+    has_previous:
+        description:
+            - None
+        required: False
+        type: str
+    algorithm:
+        description:
+            - None
         required: False
         type: str
     description:
@@ -60,27 +66,21 @@ options:
             - None
         required: False
         type: int
-    has_previous:
+    expires_on:
+        description:
+            - None
+        required: False
+        type: int
+    imported:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
         description:
             - None
         required: False
         type: str
-    key_algorithm:
-        description:
-            - None
-        required: False
-        type: str
-    algorithm:
-        description:
-            - None
-        required: False
-        type: str
-    data:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: dict
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -124,36 +124,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'expires_on',
-    'imported',
-    'status',
     'certificate_manager_instance_id',
     'name',
+    'data',
+    'key_algorithm',
+    'has_previous',
+    'algorithm',
     'description',
     'issuer',
     'begins_on',
-    'has_previous',
-    'key_algorithm',
-    'algorithm',
-    'data',
+    'expires_on',
+    'imported',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expires_on=dict(
-        required=False,
-        type='int'),
-    imported=dict(
-        required=False,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
     certificate_manager_instance_id=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    data=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    key_algorithm=dict(
+        required=False,
+        type='str'),
+    has_previous=dict(
+        required=False,
+        type='str'),
+    algorithm=dict(
         required=False,
         type='str'),
     description=dict(
@@ -165,19 +169,15 @@ module_args = dict(
     begins_on=dict(
         required=False,
         type='int'),
-    has_previous=dict(
+    expires_on=dict(
+        required=False,
+        type='int'),
+    imported=dict(
+        required=False,
+        type='bool'),
+    status=dict(
         required=False,
         type='str'),
-    key_algorithm=dict(
-        required=False,
-        type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
-    data=dict(
-        required=False,
-        elements='',
-        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_certificate_manager_import',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

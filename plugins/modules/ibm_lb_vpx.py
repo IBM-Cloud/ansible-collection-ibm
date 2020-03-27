@@ -16,26 +16,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
     ip_count:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    speed:
         description:
             - (Required for new resource) 
         required: False
@@ -45,17 +30,12 @@ options:
             - None
         required: False
         type: int
+    public_subnet:
+        description:
+            - None
+        required: False
+        type: str
     management_ip_address:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    type:
         description:
             - None
         required: False
@@ -65,18 +45,12 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    plan:
+    speed:
         description:
             - (Required for new resource) 
         required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    version:
+        type: int
+    plan:
         description:
             - (Required for new resource) 
         required: False
@@ -92,6 +66,32 @@ options:
         required: False
         type: list
         elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - None
+        required: False
+        type: str
+    version:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    type:
+        description:
+            - None
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,8 +129,8 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('ip_count', 'int'),
-    ('speed', 'int'),
     ('datacenter', 'str'),
+    ('speed', 'int'),
     ('plan', 'str'),
     ('version', 'str'),
 ]
@@ -138,19 +138,19 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'ip_count',
-    'public_vlan_id',
-    'public_subnet',
-    'speed',
     'private_vlan_id',
+    'public_subnet',
     'management_ip_address',
-    'name',
-    'type',
     'datacenter',
+    'speed',
     'plan',
-    'tags',
-    'version',
     'private_subnet',
     'vip_pool',
+    'tags',
+    'name',
+    'version',
+    'type',
+    'public_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -159,38 +159,22 @@ module_args = dict(
     ip_count=dict(
         required=False,
         type='int'),
-    public_vlan_id=dict(
+    private_vlan_id=dict(
         required=False,
         type='int'),
     public_subnet=dict(
         required=False,
         type='str'),
-    speed=dict(
-        required=False,
-        type='int'),
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
     management_ip_address=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
         required=False,
         type='str'),
     datacenter=dict(
         required=False,
         type='str'),
+    speed=dict(
+        required=False,
+        type='int'),
     plan=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    version=dict(
         required=False,
         type='str'),
     private_subnet=dict(
@@ -200,6 +184,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    version=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_lb_vpx',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

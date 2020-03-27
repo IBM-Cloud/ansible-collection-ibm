@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    (Required for new resource)
-
 
   vpc (False, str, None)
     None
@@ -52,6 +48,10 @@ Parameters
 
   rules (False, list, None)
     None
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

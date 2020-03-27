@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vip_id (False, str, None)
-    (Required for new resource)
-
-
   weight (False, int, None)
     (Required for new resource)
 
 
-  tags (False, list, None)
-    None
+  connection_limit (False, int, None)
+    (Required for new resource)
+
+
+  vip_id (False, str, None)
+    (Required for new resource)
 
 
   name (False, str, None)
@@ -46,11 +46,11 @@ Parameters
     (Required for new resource)
 
 
+  tags (False, list, None)
+    None
+
+
   destination_port (False, int, None)
-    (Required for new resource)
-
-
-  connection_limit (False, int, None)
     (Required for new resource)
 
 

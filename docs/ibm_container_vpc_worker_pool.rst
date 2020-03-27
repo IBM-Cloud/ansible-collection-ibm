@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  worker_pool_name (False, str, None)
-    (Required for new resource)
-
 
   zones (False, list, None)
     (Required for new resource)
@@ -55,6 +51,10 @@ Parameters
 
 
   flavor (False, str, None)
+    (Required for new resource)
+
+
+  worker_pool_name (False, str, None)
     (Required for new resource)
 
 

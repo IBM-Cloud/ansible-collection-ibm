@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status (False, str, None)
-    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
-
-
-  use_system_public_ip_pool (False, bool, None)
-    Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
-
 
   ssl_ciphers (False, list, None)
     None
@@ -46,8 +38,16 @@ Parameters
     Description of a load balancer.
 
 
-  vip (False, str, None)
-    The virtual ip address of this load balancer
+  type (False, str, PUBLIC)
+    Specifies if a load balancer is public or private
+
+
+  status (False, str, None)
+    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+
+
+  protocols (False, list, None)
+    Protocols to be assigned to this load balancer.
 
 
   wait_time_minutes (False, int, 90)
@@ -62,28 +62,28 @@ Parameters
     None
 
 
-  subnets (False, list, None)
-    (Required for new resource) The subnet where this Load Balancer will be provisioned.
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  type (False, str, PUBLIC)
-    Specifies if a load balancer is public or private
-
-
-  protocols (False, list, None)
-    Protocols to be assigned to this load balancer.
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   health_monitors (False, list, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  subnets (False, list, None)
+    (Required for new resource) The subnet where this Load Balancer will be provisioned.
+
+
+  vip (False, str, None)
+    The virtual ip address of this load balancer
+
+
+  use_system_public_ip_pool (False, bool, None)
+    Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
 
 
   id (False, str, None)

@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  service_plan_guid (False, str, None)
+    The uniquie identifier of the service offering plan type
+
 
   name (True, str, None)
     Service instance name for example, speech_to_text
@@ -40,10 +44,6 @@ Parameters
 
   service_keys (False, list, None)
     Service keys asociated with the service instance
-
-
-  service_plan_guid (False, str, None)
-    The uniquie identifier of the service offering plan type
 
 
   ibmcloud_api_key (True, any, None)

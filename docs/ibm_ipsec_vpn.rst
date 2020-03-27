@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  preshared_key (False, str, None)
-    None
-
-
-  service_subnet_id (False, int, None)
-    None
-
 
   datacenter (False, str, None)
     (Required for new resource)
@@ -50,7 +42,11 @@ Parameters
     None
 
 
-  remote_subnet_id (False, int, None)
+  customer_peer_ip (False, str, None)
+    None
+
+
+  internal_subnet_id (False, int, None)
     None
 
 
@@ -66,11 +62,15 @@ Parameters
     None
 
 
-  customer_peer_ip (False, str, None)
+  preshared_key (False, str, None)
     None
 
 
-  internal_subnet_id (False, int, None)
+  remote_subnet_id (False, int, None)
+    None
+
+
+  service_subnet_id (False, int, None)
     None
 
 

@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status_id (False, int, None)
-    None
-
-
-  status_text (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
 
   master_ip_address (False, str, None)
     (Required for new resource)
@@ -48,6 +36,18 @@ Parameters
 
   zone_name (False, str, None)
     (Required for new resource)
+
+
+  status_id (False, int, None)
+    None
+
+
+  status_text (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

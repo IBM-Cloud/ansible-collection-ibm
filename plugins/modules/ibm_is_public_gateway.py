@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -31,21 +31,6 @@ options:
         required: False
         type: dict
         elements: dict
-    vpc:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     status:
         description:
             - None
@@ -54,6 +39,21 @@ options:
     resource_group:
         description:
             - None
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) 
         required: False
         type: str
     zone:
@@ -67,9 +67,9 @@ options:
         required: False
         type: list
         elements: str
-    resource_name:
+    resource_controller_url:
         description:
-            - The name of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_crn:
@@ -77,9 +77,9 @@ options:
             - The crn of the resource
         required: False
         type: str
-    resource_group_name:
+    resource_status:
         description:
-            - The resource group name in which resource is provisioned
+            - The status of the resource
         required: False
         type: str
     id:
@@ -149,16 +149,16 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'floating_ip',
-    'vpc',
-    'resource_controller_url',
-    'resource_status',
     'status',
     'resource_group',
+    'resource_name',
+    'resource_group_name',
+    'vpc',
     'zone',
     'tags',
-    'resource_name',
+    'resource_controller_url',
     'resource_crn',
-    'resource_group_name',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -171,19 +171,19 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
     status=dict(
         required=False,
         type='str'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
         required=False,
         type='str'),
     zone=dict(
@@ -193,13 +193,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_name=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    resource_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -280,7 +280,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

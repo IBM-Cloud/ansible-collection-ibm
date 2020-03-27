@@ -16,10 +16,16 @@ description:
     - Retrieve an IBM Cloud 'ibm_kp_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
+    keys:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     key_protect_id:
         description:
             - None
@@ -30,12 +36,6 @@ options:
             - None
         required: False
         type: str
-    keys:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -64,24 +64,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'keys',
     'key_protect_id',
     'key_name',
-    'keys',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     key_protect_id=dict(
         required=True,
         type='str'),
     key_name=dict(
         required=False,
         type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -110,7 +110,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

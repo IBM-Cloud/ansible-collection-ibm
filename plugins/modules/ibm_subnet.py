@@ -16,47 +16,47 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    subnet_cidr:
-        description:
-            - None
-        required: False
-        type: str
     private:
         description:
             - None
         required: False
         type: bool
         default: False
-    type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     ip_version:
         description:
             - None
         required: False
         type: int
         default: 4
-    endpoint_ip:
-        description:
-            - None
-        required: False
-        type: str
     capacity:
         description:
             - (Required for new resource) 
         required: False
         type: int
+    type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     vlan_id:
         description:
             - None
         required: False
         type: int
+    endpoint_ip:
+        description:
+            - None
+        required: False
+        type: str
+    subnet_cidr:
+        description:
+            - None
+        required: False
+        type: str
     notes:
         description:
             - None
@@ -104,19 +104,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnet_cidr',
     'private',
-    'type',
     'ip_version',
-    'endpoint_ip',
     'capacity',
+    'type',
     'vlan_id',
+    'endpoint_ip',
+    'subnet_cidr',
     'notes',
     'tags',
 ]
@@ -124,27 +124,27 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnet_cidr=dict(
-        required=False,
-        type='str'),
     private=dict(
         default=False,
         type='bool'),
+    ip_version=dict(
+        default=4,
+        type='int'),
+    capacity=dict(
+        required=False,
+        type='int'),
     type=dict(
         required=False,
         type='str'),
-    ip_version=dict(
-        default=4,
+    vlan_id=dict(
+        required=False,
         type='int'),
     endpoint_ip=dict(
         required=False,
         type='str'),
-    capacity=dict(
+    subnet_cidr=dict(
         required=False,
-        type='int'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
+        type='str'),
     notes=dict(
         required=False,
         type='str'),
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

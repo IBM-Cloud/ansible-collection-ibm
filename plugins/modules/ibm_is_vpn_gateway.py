@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -25,9 +25,9 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    public_ip_address:
+    name:
         description:
-            - None
+            - (Required for new resource) 
         required: False
         type: str
     resource_controller_url:
@@ -35,12 +35,12 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    resource_group:
+    resource_status:
         description:
-            - None
+            - The status of the resource
         required: False
         type: str
-    status:
+    public_ip_address:
         description:
             - None
         required: False
@@ -61,19 +61,19 @@ options:
             - The crn of the resource
         required: False
         type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     subnet:
         description:
             - (Required for new resource) 
+        required: False
+        type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
         required: False
         type: str
     id:
@@ -141,16 +141,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_name',
-    'public_ip_address',
+    'name',
     'resource_controller_url',
-    'resource_group',
-    'status',
+    'resource_status',
+    'public_ip_address',
     'tags',
     'resource_name',
     'resource_crn',
-    'resource_status',
-    'name',
     'subnet',
+    'resource_group',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -159,16 +159,16 @@ module_args = dict(
     resource_group_name=dict(
         required=False,
         type='str'),
-    public_ip_address=dict(
+    name=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    resource_status=dict(
         required=False,
         type='str'),
-    status=dict(
+    public_ip_address=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -181,13 +181,13 @@ module_args = dict(
     resource_crn=dict(
         required=False,
         type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     subnet=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -268,7 +268,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ibm_id (True, str, None)
-    The ibm id or email of user
-
-
   policies (False, list, None)
     None
+
+
+  ibm_id (True, str, None)
+    The ibm id or email of user
 
 
   ibmcloud_api_key (True, any, None)

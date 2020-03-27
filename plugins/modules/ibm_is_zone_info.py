@@ -16,21 +16,21 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_zone' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
+    region:
+        description:
+            - None
+        required: True
+        type: str
     status:
         description:
             - None
         required: False
         type: str
     name:
-        description:
-            - None
-        required: True
-        type: str
-    region:
         description:
             - None
         required: True
@@ -80,27 +80,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('region', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'region',
     'status',
     'name',
-    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    region=dict(
+        required=True,
+        type='str'),
     status=dict(
         required=False,
         type='str'),
     name=dict(
-        required=True,
-        type='str'),
-    region=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -163,7 +163,7 @@ def run_module():
         resource_type='ibm_is_zone',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

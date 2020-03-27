@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  version (False, str, None)
+    Semantic version of the rule
+
+
+  name (True, str, None)
+    Name of the rule.
+
 
   trigger_name (False, str, None)
     Name of the trigger.
@@ -40,14 +48,6 @@ Parameters
 
   publish (False, bool, None)
     Rule Visibility.
-
-
-  version (False, str, None)
-    Semantic version of the rule
-
-
-  name (True, str, None)
-    Name of the rule.
 
 
   ibmcloud_api_key (True, any, None)

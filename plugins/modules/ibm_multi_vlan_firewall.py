@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -30,12 +30,12 @@ options:
             - None
         required: False
         type: int
-    public_ip:
+    firewall_type:
         description:
-            - None
+            - (Required for new resource) 
         required: False
         type: str
-    public_ipv6:
+    private_ip:
         description:
             - None
         required: False
@@ -45,11 +45,12 @@ options:
             - None
         required: False
         type: str
-    password:
+    addon_configuration:
         description:
-            - None
+            - "Allowed Values:- ["FortiGate Security Appliance - Web Filtering Add-on (High Availability)","FortiGate Security Appliance - NGFW Add-on (High Availability)","FortiGate Security Appliance - AV Add-on (High Availability)"] or ["FortiGate Security Appliance - Web Filtering Add-on","FortiGate Security Appliance - NGFW Add-on","FortiGate Security Appliance - AV Add-on"]"
         required: False
-        type: str
+        type: list
+        elements: str
     datacenter:
         description:
             - (Required for new resource) 
@@ -65,22 +66,21 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    firewall_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    private_ip:
+    public_ip:
         description:
             - None
         required: False
         type: str
-    addon_configuration:
+    public_ipv6:
         description:
-            - "Allowed Values:- ["FortiGate Security Appliance - Web Filtering Add-on (High Availability)","FortiGate Security Appliance - NGFW Add-on (High Availability)","FortiGate Security Appliance - AV Add-on (High Availability)"] or ["FortiGate Security Appliance - Web Filtering Add-on","FortiGate Security Appliance - NGFW Add-on","FortiGate Security Appliance - AV Add-on"]"
+            - None
         required: False
-        type: list
-        elements: str
+        type: str
+    password:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,26 +117,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('firewall_type', 'str'),
     ('datacenter', 'str'),
     ('pod', 'str'),
     ('name', 'str'),
-    ('firewall_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'public_vlan_id',
     'private_vlan_id',
-    'public_ip',
-    'public_ipv6',
+    'firewall_type',
+    'private_ip',
     'username',
-    'password',
+    'addon_configuration',
     'datacenter',
     'pod',
     'name',
-    'firewall_type',
-    'private_ip',
-    'addon_configuration',
+    'public_ip',
+    'public_ipv6',
+    'password',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -148,18 +148,19 @@ module_args = dict(
     private_vlan_id=dict(
         required=False,
         type='int'),
-    public_ip=dict(
+    firewall_type=dict(
         required=False,
         type='str'),
-    public_ipv6=dict(
+    private_ip=dict(
         required=False,
         type='str'),
     username=dict(
         required=False,
         type='str'),
-    password=dict(
+    addon_configuration=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     datacenter=dict(
         required=False,
         type='str'),
@@ -169,16 +170,15 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    firewall_type=dict(
+    public_ip=dict(
         required=False,
         type='str'),
-    private_ip=dict(
+    public_ipv6=dict(
         required=False,
         type='str'),
-    addon_configuration=dict(
+    password=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

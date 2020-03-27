@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,39 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_user_data (False, str, None)
-    Base64 encoded data to be passed in for invoking a cloud init script
-
-
-  pi_image_id (False, str, None)
-    (Required for new resource)
-
-
-  pi_instance_name (False, str, None)
-    (Required for new resource)
-
-
-  pi_memory (False, float, None)
-    (Required for new resource)
-
-
-  pi_sys_type (False, str, None)
-    (Required for new resource)
-
-
-  pi_cloud_instance_id (False, str, None)
-    (Required for new resource) This is the Power Instance id that is assigned to the account
-
-
-  health_status (False, str, None)
+  status (False, str, None)
     None
 
 
-  pi_replication_scheme (False, str, suffix)
-    None
-
-
-  pi_volume_ids (False, list, None)
+  migratable (False, bool, None)
     None
 
 
@@ -66,15 +38,35 @@ Parameters
     None
 
 
+  pi_volume_ids (False, list, None)
+    None
+
+
+  pi_user_data (False, str, None)
+    Base64 encoded data to be passed in for invoking a cloud init script
+
+
+  pi_proc_type (False, str, None)
+    (Required for new resource)
+
+
+  min_memory (False, float, None)
+    None
+
+
+  max_memory (False, float, None)
+    None
+
+
   pi_network_ids (False, list, None)
     (Required for new resource) Set of Networks that have been configured for the account
 
 
-  addresses (False, list, None)
-    None
+  pi_memory (False, float, None)
+    (Required for new resource)
 
 
-  instance_id (False, str, None)
+  pi_replication_policy (False, str, none)
     None
 
 
@@ -82,7 +74,7 @@ Parameters
     (Required for new resource)
 
 
-  pi_proc_type (False, str, None)
+  pi_instance_name (False, str, None)
     (Required for new resource)
 
 
@@ -90,15 +82,11 @@ Parameters
     (Required for new resource)
 
 
-  status (False, str, None)
-    None
-
-
   pi_replicants (False, float, 1)
     None
 
 
-  pi_replication_policy (False, str, none)
+  pi_replication_scheme (False, str, suffix)
     None
 
 
@@ -106,8 +94,32 @@ Parameters
     Progress of the operation
 
 
-  migratable (False, bool, None)
+  pi_cloud_instance_id (False, str, None)
+    (Required for new resource) This is the Power Instance id that is assigned to the account
+
+
+  max_processors (False, float, None)
     None
+
+
+  addresses (False, list, None)
+    None
+
+
+  health_status (False, str, None)
+    None
+
+
+  instance_id (False, str, None)
+    None
+
+
+  pi_image_id (False, str, None)
+    (Required for new resource)
+
+
+  pi_sys_type (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,51 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  username (False, str, None)
-    None
-
-
-  first_name (False, str, None)
-    (Required for new resource)
-
-
-  address2 (False, str, None)
-    None
-
-
-  city (False, str, None)
-    (Required for new resource)
-
-
-  permissions (False, list, None)
-    None
-
-
-  api_key (False, str, None)
-    None
-
-
-  company_name (False, str, None)
-    (Required for new resource)
-
-
-  address1 (False, str, None)
-    (Required for new resource)
-
-
   state_ (False, str, None)
-    (Required for new resource)
-
-
-  timezone (False, str, None)
-    (Required for new resource)
-
-
-  has_api_key (False, bool, False)
-    None
-
-
-  last_name (False, str, None)
     (Required for new resource)
 
 
@@ -78,7 +34,35 @@ Parameters
     None
 
 
+  password (False, str, None)
+    None
+
+
+  city (False, str, None)
+    (Required for new resource)
+
+
   email (False, str, None)
+    (Required for new resource)
+
+
+  address1 (False, str, None)
+    (Required for new resource)
+
+
+  address2 (False, str, None)
+    None
+
+
+  timezone (False, str, None)
+    (Required for new resource)
+
+
+  last_name (False, str, None)
+    (Required for new resource)
+
+
+  first_name (False, str, None)
     (Required for new resource)
 
 
@@ -86,7 +70,23 @@ Parameters
     (Required for new resource)
 
 
-  password (False, str, None)
+  permissions (False, list, None)
+    None
+
+
+  has_api_key (False, bool, False)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  username (False, str, None)
+    None
+
+
+  api_key (False, str, None)
     None
 
 
@@ -94,8 +94,8 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
+  company_name (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

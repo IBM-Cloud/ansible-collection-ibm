@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_domain_registration_nameservers' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    dns_registration_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     name_servers:
         description:
             - (Required for new resource) Custom name servers for the domain registration
@@ -37,6 +32,11 @@ options:
         required: False
         type: list
         elements: str
+    dns_registration_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,23 +73,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('dns_registration_id', 'str'),
     ('name_servers', 'list'),
+    ('dns_registration_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dns_registration_id',
     'name_servers',
     'original_name_servers',
+    'dns_registration_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dns_registration_id=dict(
-        required=False,
-        type='str'),
     name_servers=dict(
         required=False,
         elements='',
@@ -98,6 +95,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    dns_registration_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_dns_domain_registration_nameservers',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,20 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    pi_key_name:
-        description:
-            - SSHKey Name to be used for pvminstances
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     creation_date:
         description:
             - None
@@ -39,6 +29,16 @@ options:
         description:
             - None
         required: False
+        type: str
+    pi_key_name:
+        description:
+            - SSHKey Name to be used for pvminstances
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
         type: str
     ibmcloud_api_key:
         description:
@@ -69,26 +69,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_key_name',
-    'pi_cloud_instance_id',
     'creation_date',
     'sshkey',
+    'pi_key_name',
+    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_key_name=dict(
-        required=True,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
     creation_date=dict(
         required=False,
         type='str'),
     sshkey=dict(
         required=False,
+        type='str'),
+    pi_key_name=dict(
+        required=True,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -118,7 +118,7 @@ def run_module():
         resource_type='ibm_pi_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

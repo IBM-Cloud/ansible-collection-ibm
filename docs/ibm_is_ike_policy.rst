@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,35 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource)
-
-
-  dh_group (False, int, None)
-    (Required for new resource)
-
-
   resource_name (False, str, None)
     The name of the resource
 
 
-  href (False, str, None)
-    None
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  vpn_connections (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  encryption_algorithm (False, str, None)
+  authentication_algorithm (False, str, None)
     (Required for new resource)
 
 
@@ -74,8 +54,28 @@ Parameters
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  href (False, str, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  encryption_algorithm (False, str, None)
+    (Required for new resource)
+
+
+  dh_group (False, int, None)
+    (Required for new resource)
+
+
+  vpn_connections (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  lbaas_id (False, str, None)
+    (Required for new resource) The UUID of a load balancer
+
 
   uuid (False, str, None)
     The UUID of a load balancer member
@@ -36,10 +40,6 @@ Parameters
 
   weight (False, int, None)
     The weight of a load balancer member.
-
-
-  lbaas_id (False, str, None)
-    (Required for new resource) The UUID of a load balancer
 
 
   id (False, str, None)

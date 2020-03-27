@@ -16,16 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    refresh_api_servers:
+    public_service_endpoint_url:
         description:
             - None
         required: False
-        type: bool
-        default: True
+        type: str
     reload_workers:
         description:
             - None
@@ -47,21 +46,22 @@ options:
             - None
         required: False
         type: bool
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
         type: str
+    private_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    refresh_api_servers:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,22 +103,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'refresh_api_servers',
+    'public_service_endpoint_url',
     'reload_workers',
     'private_service_endpoint_url',
     'cluster',
     'public_service_endpoint',
-    'private_service_endpoint',
-    'public_service_endpoint_url',
     'resource_group_id',
+    'private_service_endpoint',
+    'refresh_api_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    refresh_api_servers=dict(
-        default=True,
-        type='bool'),
+    public_service_endpoint_url=dict(
+        required=False,
+        type='str'),
     reload_workers=dict(
         default=True,
         type='bool'),
@@ -131,15 +131,15 @@ module_args = dict(
     public_service_endpoint=dict(
         required=False,
         type='bool'),
-    private_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    public_service_endpoint_url=dict(
-        required=False,
-        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
+    private_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    refresh_api_servers=dict(
+        default=True,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

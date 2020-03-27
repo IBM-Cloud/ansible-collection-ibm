@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -31,9 +31,9 @@ options:
             - The name of workspace
         required: False
         type: str
-    resource_group:
+    resource_controller_url:
         description:
-            - The resource group of workspace
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
         type: str
     types:
@@ -42,6 +42,16 @@ options:
         required: False
         type: list
         elements: str
+    is_frozen:
+        description:
+            - None
+        required: False
+        type: bool
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
     tags:
         description:
             - None
@@ -53,24 +63,14 @@ options:
             - The id of workspace
         required: True
         type: str
+    resource_group:
+        description:
+            - The resource group of workspace
+        required: False
+        type: str
     status:
         description:
             - The status of workspace
-        required: False
-        type: str
-    is_frozen:
-        description:
-            - None
-        required: False
-        type: bool
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
         type: str
     ibmcloud_api_key:
@@ -103,14 +103,14 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'template_id',
     'name',
-    'resource_group',
+    'resource_controller_url',
     'types',
-    'tags',
-    'workspace_id',
-    'status',
     'is_frozen',
     'is_locked',
-    'resource_controller_url',
+    'tags',
+    'workspace_id',
+    'resource_group',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -123,13 +123,19 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     types=dict(
         required=False,
         elements='',
         type='list'),
+    is_frozen=dict(
+        required=False,
+        type='bool'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
     tags=dict(
         required=False,
         elements='',
@@ -137,16 +143,10 @@ module_args = dict(
     workspace_id=dict(
         required=True,
         type='str'),
-    status=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    is_frozen=dict(
-        required=False,
-        type='bool'),
-    is_locked=dict(
-        required=False,
-        type='bool'),
-    resource_controller_url=dict(
+    status=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -177,7 +177,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  protocol (False, str, None)
-    (Required for new resource)
-
-
-  port (False, int, None)
-    (Required for new resource)
-
 
   interval (False, int, 5)
     None
@@ -55,6 +47,14 @@ Parameters
 
 
   lbaas_id (False, str, None)
+    (Required for new resource)
+
+
+  protocol (False, str, None)
+    (Required for new resource)
+
+
+  port (False, int, None)
     (Required for new resource)
 
 

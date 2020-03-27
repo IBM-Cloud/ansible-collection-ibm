@@ -16,15 +16,36 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    minproc:
+        description:
+            - None
+        required: False
+        type: int
+    maxproc:
+        description:
+            - None
+        required: False
+        type: int
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
+    volumes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     state:
         description:
             - None
@@ -35,6 +56,21 @@ options:
             - None
         required: False
         type: int
+    proctype:
+        description:
+            - None
+        required: False
+        type: str
+    maxmem:
+        description:
+            - None
+        required: False
+        type: int
+    pi_instance_name:
+        description:
+            - Server Name to be used for pvminstances
+        required: True
+        type: str
     health_status:
         description:
             - None
@@ -46,27 +82,11 @@ options:
         required: False
         type: list
         elements: dict
-    pi_instance_name:
-        description:
-            - Server Name to be used for pvminstances
-        required: True
-        type: str
-    volumes:
+    minmem:
         description:
             - None
         required: False
-        type: list
-        elements: str
-    proctype:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
+        type: int
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -96,29 +116,55 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'status',
+    'minproc',
+    'maxproc',
     'pi_cloud_instance_id',
+    'volumes',
     'state',
     'processors',
+    'proctype',
+    'maxmem',
+    'pi_instance_name',
     'health_status',
     'addresses',
-    'pi_instance_name',
-    'volumes',
-    'proctype',
-    'status',
+    'minmem',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    status=dict(
+        required=False,
+        type='str'),
+    minproc=dict(
+        required=False,
+        type='int'),
+    maxproc=dict(
+        required=False,
+        type='int'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
+    volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
     state=dict(
         required=False,
         type='str'),
     processors=dict(
         required=False,
         type='int'),
+    proctype=dict(
+        required=False,
+        type='str'),
+    maxmem=dict(
+        required=False,
+        type='int'),
+    pi_instance_name=dict(
+        required=True,
+        type='str'),
     health_status=dict(
         required=False,
         type='str'),
@@ -126,19 +172,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_instance_name=dict(
-        required=True,
-        type='str'),
-    volumes=dict(
+    minmem=dict(
         required=False,
-        elements='',
-        type='list'),
-    proctype=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
+        type='int'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -167,7 +203,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

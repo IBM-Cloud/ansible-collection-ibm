@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -28,30 +28,6 @@ Parameters
 
   description (False, str, None)
     description
-
-
-  modified_on (False, str, None)
-    None
-
-
-  expected_body (False, str, None)
-    (Required for new resource) expected_body
-
-
-  method (False, str, GET)
-    method
-
-
-  timeout (False, int, 5)
-    timeout
-
-
-  follow_redirects (False, bool, True)
-    follow_redirects
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
 
 
   type (False, str, http)
@@ -66,20 +42,44 @@ Parameters
     interval
 
 
-  allow_insecure (False, bool, True)
-    allow_insecure
+  path (False, str, /)
+    path
+
+
+  expected_body (False, str, None)
+    (Required for new resource) expected_body
+
+
+  method (False, str, GET)
+    method
+
+
+  expected_codes (False, str, None)
+    (Required for new resource) expected_codes
+
+
+  timeout (False, int, 5)
+    timeout
 
 
   created_on (False, str, None)
     None
 
 
-  path (False, str, /)
-    path
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  expected_codes (False, str, None)
-    (Required for new resource) expected_codes
+  follow_redirects (False, bool, True)
+    follow_redirects
+
+
+  allow_insecure (False, bool, True)
+    allow_insecure
+
+
+  modified_on (False, str, None)
+    None
 
 
   id (False, str, None)

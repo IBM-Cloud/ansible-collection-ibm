@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -30,7 +30,7 @@ Parameters
     (Required for new resource)
 
 
-  public_vlan_id (False, int, None)
+  private_vlan_id (False, int, None)
     None
 
 
@@ -38,23 +38,7 @@ Parameters
     None
 
 
-  speed (False, int, None)
-    (Required for new resource)
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
   management_ip_address (False, str, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  type (False, str, None)
     None
 
 
@@ -62,15 +46,11 @@ Parameters
     (Required for new resource)
 
 
-  plan (False, str, None)
+  speed (False, int, None)
     (Required for new resource)
 
 
-  tags (False, list, None)
-    None
-
-
-  version (False, str, None)
+  plan (False, str, None)
     (Required for new resource)
 
 
@@ -79,6 +59,26 @@ Parameters
 
 
   vip_pool (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  name (False, str, None)
+    None
+
+
+  version (False, str, None)
+    (Required for new resource)
+
+
+  type (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
     None
 
 

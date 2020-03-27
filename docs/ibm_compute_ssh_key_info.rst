@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created key is used. If false, an error is returned
-
 
   label (True, str, None)
     The label associated with the ssh key
@@ -44,6 +40,10 @@ Parameters
 
   notes (False, str, None)
     A small note about a ssh key to use at your discretion
+
+
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created key is used. If false, an error is returned
 
 
   ibmcloud_api_key (True, any, None)

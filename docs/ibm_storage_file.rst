@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,11 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  allowed_ip_addresses (False, list, None)
+  volumename (False, str, None)
     None
 
 
-  tags (False, list, None)
+  hostname (False, str, None)
+    None
+
+
+  allowed_subnets (False, list, None)
+    None
+
+
+  notes (False, str, None)
     None
 
 
@@ -42,15 +50,31 @@ Parameters
     (Required for new resource)
 
 
-  volumename (False, str, None)
-    None
-
-
   allowed_virtual_guest_ids (False, list, None)
     None
 
 
-  allowed_subnets (False, list, None)
+  allowed_ip_addresses (False, list, None)
+    None
+
+
+  snapshot_schedule (False, list, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  type (False, str, None)
+    (Required for new resource)
+
+
+  allowed_hardware_ids (False, list, None)
+    None
+
+
+  hourly_billing (False, bool, False)
     None
 
 
@@ -62,44 +86,20 @@ Parameters
     (Required for new resource)
 
 
-  snapshot_schedule (False, list, None)
+  snapshot_capacity (False, int, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  hostname (False, str, None)
-    None
-
-
-  hourly_billing (False, bool, False)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   mountpoint (False, str, None)
     None
 
 
-  type (False, str, None)
-    (Required for new resource)
-
-
-  snapshot_capacity (False, int, None)
+  tags (False, list, None)
     None
 
 
-  allowed_hardware_ids (False, list, None)
-    None
-
-
-  notes (False, str, None)
-    None
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

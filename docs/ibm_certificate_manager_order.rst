@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,35 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  issuance_info (False, dict, None)
-    None
-
-
-  domains (False, list, None)
-    (Required for new resource)
-
-
-  rotate_keys (False, bool, False)
-    None
-
-
-  algorithm (False, str, None)
-    None
-
-
-  expires_on (False, int, None)
-    None
-
-
   status (False, str, None)
     None
 
 
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource)
+  domain_validation_method (False, str, dns - 01)
+    None
 
 
-  issuer (False, str, None)
+  dns_provider_instance_crn (False, str, None)
     None
 
 
@@ -66,19 +46,15 @@ Parameters
     None
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  domain_validation_method (False, str, dns - 01)
+  issuer (False, str, None)
     None
 
 
-  dns_provider_instance_crn (False, str, None)
+  key_algorithm (False, str, None)
     None
 
 
-  imported (False, bool, None)
+  algorithm (False, str, None)
     None
 
 
@@ -86,8 +62,32 @@ Parameters
     None
 
 
-  key_algorithm (False, str, None)
+  expires_on (False, int, None)
     None
+
+
+  imported (False, bool, None)
+    None
+
+
+  issuance_info (False, dict, None)
+    None
+
+
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource)
+
+
+  domains (False, list, None)
+    (Required for new resource)
+
+
+  rotate_keys (False, bool, False)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource)
 
 
   id (False, str, None)

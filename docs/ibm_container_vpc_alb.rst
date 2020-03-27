@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    None
+
+
+  load_balancer_hostname (False, str, None)
+    None
+
 
   resize (False, bool, None)
     None
@@ -34,8 +42,8 @@ Parameters
     None
 
 
-  zone (False, str, None)
-    None
+  alb_id (False, str, None)
+    (Required for new resource)
 
 
   alb_type (False, str, None)
@@ -50,23 +58,15 @@ Parameters
     None
 
 
-  name (False, str, None)
+  zone (False, str, None)
     None
 
 
-  load_balancer_hostname (False, str, None)
+  enable (False, bool, None)
     None
 
 
   state_ (False, str, None)
-    None
-
-
-  alb_id (False, str, None)
-    (Required for new resource)
-
-
-  enable (False, bool, None)
     None
 
 

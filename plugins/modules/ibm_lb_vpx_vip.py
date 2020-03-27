@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,22 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    persistence:
+        description:
+            - None
+        required: False
+        type: str
+    virtual_ip_address:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - (Required for new resource) 
@@ -40,16 +56,6 @@ options:
             - (Required for new resource) 
         required: False
         type: int
-    virtual_ip_address:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    persistence:
-        description:
-            - None
-        required: False
-        type: str
     type:
         description:
             - (Required for new resource) 
@@ -60,12 +66,6 @@ options:
             - None
         required: False
         type: int
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,9 +104,9 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
+    ('virtual_ip_address', 'str'),
     ('name', 'str'),
     ('source_port', 'int'),
-    ('virtual_ip_address', 'str'),
     ('type', 'str'),
 ]
 
@@ -114,13 +114,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'nad_controller_id',
     'load_balancing_method',
+    'persistence',
+    'virtual_ip_address',
+    'tags',
     'name',
     'source_port',
-    'virtual_ip_address',
-    'persistence',
     'type',
     'security_certificate_id',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -132,28 +132,28 @@ module_args = dict(
     load_balancing_method=dict(
         required=False,
         type='str'),
+    persistence=dict(
+        required=False,
+        type='str'),
+    virtual_ip_address=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
     source_port=dict(
         required=False,
         type='int'),
-    virtual_ip_address=dict(
-        required=False,
-        type='str'),
-    persistence=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
     security_certificate_id=dict(
         required=False,
         type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

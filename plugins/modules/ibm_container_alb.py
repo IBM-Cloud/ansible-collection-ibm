@@ -16,13 +16,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
     alb_id:
         description:
             - (Required for new resource) 
+        required: False
+        type: str
+    user_ip:
+        description:
+            - None
+        required: False
+        type: str
+    enable:
+        description:
+            - None
+        required: False
+        type: bool
+    zone:
+        description:
+            - None
         required: False
         type: str
     alb_type:
@@ -35,26 +50,11 @@ options:
             - None
         required: False
         type: str
-    enable:
-        description:
-            - None
-        required: False
-        type: bool
     disable_deployment:
         description:
             - None
         required: False
         type: bool
-    zone:
-        description:
-            - None
-        required: False
-        type: str
-    user_ip:
-        description:
-            - None
-        required: False
-        type: str
     name:
         description:
             - None
@@ -107,12 +107,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'alb_id',
+    'user_ip',
+    'enable',
+    'zone',
     'alb_type',
     'cluster',
-    'enable',
     'disable_deployment',
-    'zone',
-    'user_ip',
     'name',
     'region',
 ]
@@ -123,24 +123,24 @@ module_args = dict(
     alb_id=dict(
         required=False,
         type='str'),
+    user_ip=dict(
+        required=False,
+        type='str'),
+    enable=dict(
+        required=False,
+        type='bool'),
+    zone=dict(
+        required=False,
+        type='str'),
     alb_type=dict(
         required=False,
         type='str'),
     cluster=dict(
         required=False,
         type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
     disable_deployment=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
-    user_ip=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

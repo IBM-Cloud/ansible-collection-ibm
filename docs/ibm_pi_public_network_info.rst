@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    None
-
-
-  type (False, str, None)
-    None
-
-
-  vlan_id (False, int, None)
-    None
-
 
   pi_network_name (False, str, None)
     Network Name to be used for pvminstances
@@ -47,6 +35,18 @@ Parameters
 
 
   network_id (False, str, None)
+    None
+
+
+  name (False, str, None)
+    None
+
+
+  type (False, str, None)
+    None
+
+
+  vlan_id (False, int, None)
     None
 
 

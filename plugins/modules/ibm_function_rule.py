@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    publish:
-        description:
-            - Rule visbility.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the item.
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of rule.
@@ -48,6 +38,16 @@ options:
     status:
         description:
             - Status of the rule.
+        required: False
+        type: str
+    publish:
+        description:
+            - Rule visbility.
+        required: False
+        type: bool
+    version:
+        description:
+            - Semantic version of the item.
         required: False
         type: str
     id:
@@ -93,23 +93,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'publish',
-    'version',
     'name',
     'trigger_name',
     'action_name',
     'status',
+    'publish',
+    'version',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    publish=dict(
-        required=False,
-        type='bool'),
-    version=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -120,6 +114,12 @@ module_args = dict(
         required=False,
         type='str'),
     status=dict(
+        required=False,
+        type='str'),
+    publish=dict(
+        required=False,
+        type='bool'),
+    version=dict(
         required=False,
         type='str'),
     id=dict(
@@ -168,7 +168,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

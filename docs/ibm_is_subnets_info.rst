@@ -1,6 +1,6 @@
 
-ibm_is_images_info -- Retrieve IBM Cloud 'ibm_is_images' resource
-=================================================================
+ibm_is_subnets_info -- Retrieve IBM Cloud 'ibm_is_subnets' resource
+===================================================================
 
 .. contents::
    :local:
@@ -10,7 +10,7 @@ ibm_is_images_info -- Retrieve IBM Cloud 'ibm_is_images' resource
 Synopsis
 --------
 
-Retrieve an IBM Cloud 'ibm_is_images' resource
+Retrieve an IBM Cloud 'ibm_is_subnets' resource
 
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  images (False, list, None)
-    List of images
+  subnets (False, list, None)
+    List of subnets
 
 
   generation (False, any, 2)

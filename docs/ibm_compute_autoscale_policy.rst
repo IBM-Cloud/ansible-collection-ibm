@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  scale_type (False, str, None)
-    (Required for new resource)
-
-
-  scale_amount (False, int, None)
-    (Required for new resource)
-
-
-  cooldown (False, int, None)
-    None
-
 
   scale_group_id (False, int, None)
     (Required for new resource)
@@ -52,6 +40,18 @@ Parameters
 
   name (False, str, None)
     (Required for new resource)
+
+
+  scale_type (False, str, None)
+    (Required for new resource)
+
+
+  scale_amount (False, int, None)
+    (Required for new resource)
+
+
+  cooldown (False, int, None)
+    None
 
 
   id (False, str, None)

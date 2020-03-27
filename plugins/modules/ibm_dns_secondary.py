@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
+    master_ip_address:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    transfer_frequency:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    zone_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     status_id:
         description:
             - None
@@ -36,21 +51,6 @@ options:
         required: False
         type: list
         elements: str
-    master_ip_address:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    transfer_frequency:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    zone_name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,17 +94,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status_id',
-    'status_text',
-    'tags',
     'master_ip_address',
     'transfer_frequency',
     'zone_name',
+    'status_id',
+    'status_text',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    master_ip_address=dict(
+        required=False,
+        type='str'),
+    transfer_frequency=dict(
+        required=False,
+        type='int'),
+    zone_name=dict(
+        required=False,
+        type='str'),
     status_id=dict(
         required=False,
         type='int'),
@@ -115,15 +124,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    master_ip_address=dict(
-        required=False,
-        type='str'),
-    transfer_frequency=dict(
-        required=False,
-        type='int'),
-    zone_name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -170,7 +170,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

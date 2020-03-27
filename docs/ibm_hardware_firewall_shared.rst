@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  billing_item_id (False, int, None)
-    None
-
 
   firewall_type (False, str, None)
     (Required for new resource)
@@ -39,6 +35,10 @@ Parameters
 
 
   hardware_instance_id (False, int, None)
+    None
+
+
+  billing_item_id (False, int, None)
     None
 
 

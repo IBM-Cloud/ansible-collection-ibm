@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  valid_kube_versions (False, list, None)
-    List supported kube-versions
-
-
-  valid_openshift_versions (False, list, None)
-    List of supported openshift-versions
-
 
   org_guid (False, str, None)
     The bluemix organization guid this cluster belongs to
@@ -52,6 +44,14 @@ Parameters
 
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  valid_kube_versions (False, list, None)
+    List supported kube-versions
+
+
+  valid_openshift_versions (False, list, None)
+    List of supported openshift-versions
 
 
   ibmcloud_api_key (True, any, None)

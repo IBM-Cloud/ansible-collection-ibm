@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,48 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
-
-
-  guid (False, str, None)
-    Guid of resource instance
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
 
 
-  tags (False, list, None)
-    None
+  status (False, str, None)
+    Status of resource instance
 
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
-
-
-  location (False, str, None)
-    (Required for new resource) The location where the instance available
+  guid (False, str, None)
+    Guid of resource instance
 
 
   service_endpoints (False, str, None)
@@ -86,8 +54,40 @@ Parameters
     The resource group id
 
 
-  status (False, str, None)
-    Status of resource instance
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
+
+
+  tags (False, list, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  location (False, str, None)
+    (Required for new resource) The location where the instance available
 
 
   id (False, str, None)

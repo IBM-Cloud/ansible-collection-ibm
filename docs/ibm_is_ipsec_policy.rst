@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_name (False, str, None)
+    The name of the resource
+
 
   key_lifetime (False, int, 3600)
     None
@@ -34,20 +38,8 @@ Parameters
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource)
+  vpn_connections (False, list, None)
+    None
 
 
   pfs (False, str, None)
@@ -58,8 +50,12 @@ Parameters
     None
 
 
-  vpn_connections (False, list, None)
+  encapsulation_mode (False, str, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
@@ -74,8 +70,12 @@ Parameters
     (Required for new resource)
 
 
-  encapsulation_mode (False, str, None)
-    None
+  encryption_algorithm (False, str, None)
+    (Required for new resource)
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

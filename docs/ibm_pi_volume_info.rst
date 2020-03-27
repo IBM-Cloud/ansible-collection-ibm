@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disk_type (False, str, None)
-    None
-
-
   pi_volume_name (True, str, None)
     Volume Name to be used for pvminstances
-
-
-  state (False, str, None)
-    None
 
 
   size (False, int, None)
@@ -46,7 +38,11 @@ Parameters
     None
 
 
-  name (False, str, None)
+  bootable (False, bool, None)
+    None
+
+
+  disk_type (False, str, None)
     None
 
 
@@ -54,7 +50,11 @@ Parameters
     None
 
 
-  bootable (False, bool, None)
+  state (False, str, None)
+    None
+
+
+  name (False, str, None)
     None
 
 

@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,27 @@ options:
             - ID of the worker
         required: True
         type: str
+    flavor:
+        description:
+            - flavor of the worker
+        required: False
+        type: str
+    pool_id:
+        description:
+            - worker pool id
+        required: False
+        type: str
+    pool_name:
+        description:
+            - worker pool name
+        required: False
+        type: str
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     cluster_name_id:
         description:
             - Name or ID of the cluster
@@ -35,9 +56,9 @@ options:
             - kube version of the worker
         required: False
         type: str
-    pool_name:
+    state:
         description:
-            - worker pool name
+            - State of the worker
         required: False
         type: str
     resource_group_id:
@@ -45,27 +66,6 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    flavor:
-        description:
-            - flavor of the worker
-        required: False
-        type: str
-    state:
-        description:
-            - State of the worker
-        required: False
-        type: str
-    pool_id:
-        description:
-            - worker pool id
-        required: False
-        type: str
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
@@ -101,14 +101,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'worker_id',
+    'flavor',
+    'pool_id',
+    'pool_name',
+    'network_interfaces',
     'cluster_name_id',
     'kube_version',
-    'pool_name',
-    'resource_group_id',
-    'flavor',
     'state',
-    'pool_id',
-    'network_interfaces',
+    'resource_group_id',
     'resource_controller_url',
 ]
 
@@ -118,31 +118,31 @@ module_args = dict(
     worker_id=dict(
         required=True,
         type='str'),
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    pool_name=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     flavor=dict(
         required=False,
         type='str'),
-    state=dict(
+    pool_id=dict(
         required=False,
         type='str'),
-    pool_id=dict(
+    pool_name=dict(
         required=False,
         type='str'),
     network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
+    kube_version=dict(
+        required=False,
+        type='str'),
+    state=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

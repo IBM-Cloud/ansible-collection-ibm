@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,43 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_count (False, int, None)
-    (Required for new resource)
-
-
-  server_type (False, str, None)
-    (Required for new resource)
-
-
   ssl_type (False, str, None)
-    (Required for new resource)
-
-
-  order_approver_email_address (False, str, None)
-    (Required for new resource)
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    None
-
-
-  organization_information (False, list, None)
-    (Required for new resource)
-
-
-  billing_contact (False, list, None)
-    None
-
-
-  validity_months (False, int, None)
-    (Required for new resource)
-
-
-  renewal_flag (False, bool, True)
-    None
-
-
-  technical_contact (False, list, None)
     (Required for new resource)
 
 
@@ -70,11 +34,23 @@ Parameters
     (Required for new resource)
 
 
-  billing_contact_same_as_technical_flag (False, bool, False)
+  administrative_contact_same_as_technical_flag (False, bool, False)
     None
 
 
   administrative_contact (False, list, None)
+    None
+
+
+  server_count (False, int, None)
+    (Required for new resource)
+
+
+  technical_contact (False, list, None)
+    (Required for new resource)
+
+
+  billing_contact (False, list, None)
     None
 
 
@@ -86,8 +62,32 @@ Parameters
     None
 
 
+  organization_information (False, list, None)
+    (Required for new resource)
+
+
+  server_type (False, str, None)
+    (Required for new resource)
+
+
+  renewal_flag (False, bool, True)
+    None
+
+
+  order_approver_email_address (False, str, None)
+    (Required for new resource)
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    None
+
+
   billing_address_same_as_organization_flag (False, bool, False)
     None
+
+
+  validity_months (False, int, None)
+    (Required for new resource)
 
 
   id (False, str, None)

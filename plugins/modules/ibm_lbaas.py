@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    status:
-        description:
-            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
-        required: False
-        type: str
-    use_system_public_ip_pool:
-        description:
-            - Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
-        required: False
-        type: bool
     ssl_ciphers:
         description:
             - None
@@ -46,11 +36,23 @@ options:
             - Description of a load balancer.
         required: False
         type: str
-    vip:
+    type:
         description:
-            - The virtual ip address of this load balancer
+            - Specifies if a load balancer is public or private
         required: False
         type: str
+        default: PUBLIC
+    status:
+        description:
+            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+        required: False
+        type: str
+    protocols:
+        description:
+            - Protocols to be assigned to this load balancer.
+        required: False
+        type: list
+        elements: dict
     wait_time_minutes:
         description:
             - None
@@ -67,40 +69,38 @@ options:
             - None
         required: False
         type: str
-    subnets:
+    resource_controller_url:
         description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: False
-        type: list
-        elements: int
-    resource_name:
-        description:
-            - The name of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    type:
-        description:
-            - Specifies if a load balancer is public or private
-        required: False
-        type: str
-        default: PUBLIC
-    protocols:
-        description:
-            - Protocols to be assigned to this load balancer.
-        required: False
-        type: list
-        elements: dict
     health_monitors:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_controller_url:
+    resource_name:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - The name of the resource
         required: False
         type: str
+    subnets:
+        description:
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: False
+        type: list
+        elements: int
+    vip:
+        description:
+            - The virtual ip address of this load balancer
+        required: False
+        type: str
+    use_system_public_ip_pool:
+        description:
+            - Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -143,32 +143,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'use_system_public_ip_pool',
     'ssl_ciphers',
     'name',
     'description',
-    'vip',
+    'type',
+    'status',
+    'protocols',
     'wait_time_minutes',
     'resource_status',
     'datacenter',
-    'subnets',
-    'resource_name',
-    'type',
-    'protocols',
-    'health_monitors',
     'resource_controller_url',
+    'health_monitors',
+    'resource_name',
+    'subnets',
+    'vip',
+    'use_system_public_ip_pool',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    use_system_public_ip_pool=dict(
-        required=False,
-        type='bool'),
     ssl_ciphers=dict(
         required=False,
         elements='',
@@ -179,9 +173,16 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    vip=dict(
+    type=dict(
+        default='PUBLIC',
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
+    protocols=dict(
+        required=False,
+        elements='',
+        type='list'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
@@ -191,27 +192,26 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    health_monitors=dict(
         required=False,
         elements='',
         type='list'),
     resource_name=dict(
         required=False,
         type='str'),
-    type=dict(
-        default='PUBLIC',
-        type='str'),
-    protocols=dict(
+    subnets=dict(
         required=False,
         elements='',
         type='list'),
-    health_monitors=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
+    vip=dict(
         required=False,
         type='str'),
+    use_system_public_ip_pool=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -258,7 +258,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,10 +16,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
+    port_range_max:
+        description:
+            - None
+        required: False
+        type: int
+    remote_group_id:
+        description:
+            - None
+        required: False
+        type: int
+    remote_ip:
+        description:
+            - None
+        required: False
+        type: str
+    protocol:
+        description:
+            - icmp, tcp or udp
+        required: False
+        type: str
     security_group_id:
         description:
             - (Required for new resource) 
@@ -41,26 +61,6 @@ options:
             - None
         required: False
         type: int
-    port_range_max:
-        description:
-            - None
-        required: False
-        type: int
-    remote_group_id:
-        description:
-            - None
-        required: False
-        type: int
-    remote_ip:
-        description:
-            - None
-        required: False
-        type: str
-    protocol:
-        description:
-            - icmp, tcp or udp
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,31 +103,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'security_group_id',
-    'direction',
-    'ether_type',
-    'port_range_min',
     'port_range_max',
     'remote_group_id',
     'remote_ip',
     'protocol',
+    'security_group_id',
+    'direction',
+    'ether_type',
+    'port_range_min',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    security_group_id=dict(
-        required=False,
-        type='int'),
-    direction=dict(
-        required=False,
-        type='str'),
-    ether_type=dict(
-        default='IPv4',
-        type='str'),
-    port_range_min=dict(
-        required=False,
-        type='int'),
     port_range_max=dict(
         required=False,
         type='int'),
@@ -140,6 +128,18 @@ module_args = dict(
     protocol=dict(
         required=False,
         type='str'),
+    security_group_id=dict(
+        required=False,
+        type='int'),
+    direction=dict(
+        required=False,
+        type='str'),
+    ether_type=dict(
+        default='IPv4',
+        type='str'),
+    port_range_min=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

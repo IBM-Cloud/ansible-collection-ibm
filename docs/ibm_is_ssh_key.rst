@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,16 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  fingerprint (False, str, None)
+  tags (False, list, None)
     None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  length (False, int, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   name (False, str, None)
@@ -50,24 +66,8 @@ Parameters
     None
 
 
-  length (False, int, None)
+  fingerprint (False, str, None)
     None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

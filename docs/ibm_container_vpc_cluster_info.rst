@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
@@ -26,43 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  health (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  status (False, str, None)
-    The status of the cluster master
-
-
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  cluster_name_id (True, str, None)
-    Name of the cluster
-
-
-  ingress_secret (False, str, None)
+  workers (False, list, None)
     None
 
 
@@ -70,7 +38,47 @@ Parameters
     None
 
 
+  alb_type (False, str, all)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
   ingress_hostname (False, str, None)
+    None
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  albs (False, list, None)
+    None
+
+
+  ingress_secret (False, str, None)
     None
 
 
@@ -82,27 +90,7 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  worker_count (False, int, None)
-    Number of workers
-
-
-  workers (False, list, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
+  health (False, str, None)
     None
 
 
@@ -114,12 +102,24 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
-  alb_type (False, str, all)
+  cluster_name_id (True, str, None)
+    Name of the cluster
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
+  private_service_endpoint_url (False, str, None)
     None
 
 
-  albs (False, list, None)
-    None
+  status (False, str, None)
+    The status of the cluster master
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   ibmcloud_api_key (True, any, None)

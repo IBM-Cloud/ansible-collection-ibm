@@ -16,61 +16,16 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_vm_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.5
+    - IBM-Cloud terraform-provider-ibm v1.2.6
     - Terraform v0.12.20
 
 options:
-    public_interface_id:
-        description:
-            - None
-        required: False
-        type: int
-    private_interface_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
-    ipv4_address_private:
-        description:
-            - None
-        required: False
-        type: str
-    ipv6_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ipv6_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    hostname:
-        description:
-            - The hostname of the virtual guest
-        required: True
-        type: str
-    datacenter:
-        description:
-            - Datacenter in which the virtual guest is deployed
-        required: False
-        type: str
-    private_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
     ip_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    ipv6_address_id:
         description:
             - None
         required: False
@@ -86,16 +41,21 @@ options:
             - None
         required: False
         type: int
-    domain:
+    hostname:
         description:
-            - The domain of the virtual guest
+            - The hostname of the virtual guest
         required: True
         type: str
-    last_known_power_state:
+    status:
         description:
-            - The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
+            - The VSI status
         required: False
         type: str
+    public_interface_id:
+        description:
+            - None
+        required: False
+        type: int
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
@@ -107,16 +67,26 @@ options:
             - None
         required: False
         type: int
-    status:
+    domain:
         description:
-            - The VSI status
+            - The domain of the virtual guest
+        required: True
+        type: str
+    cores:
+        description:
+            - Number of cpu cores
+        required: False
+        type: int
+    last_known_power_state:
+        description:
+            - The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
         required: False
         type: str
-    power_state:
+    private_interface_id:
         description:
-            - The current power state of a virtual guest.
+            - None
         required: False
-        type: str
+        type: int
     ipv6_address:
         description:
             - None
@@ -127,11 +97,41 @@ options:
             - None
         required: False
         type: str
-    cores:
+    power_state:
         description:
-            - Number of cpu cores
+            - The current power state of a virtual guest.
+        required: False
+        type: str
+    private_subnet_id:
+        description:
+            - None
         required: False
         type: int
+    ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    ipv4_address_private:
+        description:
+            - None
+        required: False
+        type: str
+    datacenter:
+        description:
+            - Datacenter in which the virtual guest is deployed
+        required: False
+        type: str
+    public_subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    public_ipv6_subnet:
+        description:
+            - None
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -161,64 +161,37 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_interface_id',
-    'private_interface_id',
-    'public_subnet_id',
-    'ipv4_address',
-    'ipv4_address_private',
-    'ipv6_address_id',
-    'public_ipv6_subnet',
-    'hostname',
-    'datacenter',
-    'private_subnet_id',
     'ip_address_id',
+    'ipv6_address_id',
     'secondary_ip_addresses',
     'secondary_ip_count',
-    'domain',
-    'last_known_power_state',
+    'hostname',
+    'status',
+    'public_interface_id',
     'most_recent',
     'ip_address_id_private',
-    'status',
-    'power_state',
+    'domain',
+    'cores',
+    'last_known_power_state',
+    'private_interface_id',
     'ipv6_address',
     'public_ipv6_subnet_id',
-    'cores',
+    'power_state',
+    'private_subnet_id',
+    'ipv4_address',
+    'ipv4_address_private',
+    'datacenter',
+    'public_subnet_id',
+    'public_ipv6_subnet',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_interface_id=dict(
-        required=False,
-        type='int'),
-    private_interface_id=dict(
-        required=False,
-        type='int'),
-    public_subnet_id=dict(
-        required=False,
-        type='int'),
-    ipv4_address=dict(
-        required=False,
-        type='str'),
-    ipv4_address_private=dict(
-        required=False,
-        type='str'),
-    ipv6_address_id=dict(
-        required=False,
-        type='int'),
-    public_ipv6_subnet=dict(
-        required=False,
-        type='str'),
-    hostname=dict(
-        required=True,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    private_subnet_id=dict(
-        required=False,
-        type='int'),
     ip_address_id=dict(
+        required=False,
+        type='int'),
+    ipv6_address_id=dict(
         required=False,
         type='int'),
     secondary_ip_addresses=dict(
@@ -228,33 +201,60 @@ module_args = dict(
     secondary_ip_count=dict(
         required=False,
         type='int'),
-    domain=dict(
+    hostname=dict(
         required=True,
         type='str'),
-    last_known_power_state=dict(
+    status=dict(
         required=False,
         type='str'),
+    public_interface_id=dict(
+        required=False,
+        type='int'),
     most_recent=dict(
         default=False,
         type='bool'),
     ip_address_id_private=dict(
         required=False,
         type='int'),
-    status=dict(
+    domain=dict(
+        required=True,
+        type='str'),
+    cores=dict(
+        required=False,
+        type='int'),
+    last_known_power_state=dict(
         required=False,
         type='str'),
-    power_state=dict(
+    private_interface_id=dict(
         required=False,
-        type='str'),
+        type='int'),
     ipv6_address=dict(
         required=False,
         type='str'),
     public_ipv6_subnet_id=dict(
         required=False,
         type='str'),
-    cores=dict(
+    power_state=dict(
+        required=False,
+        type='str'),
+    private_subnet_id=dict(
         required=False,
         type='int'),
+    ipv4_address=dict(
+        required=False,
+        type='str'),
+    ipv4_address_private=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    public_subnet_id=dict(
+        required=False,
+        type='int'),
+    public_ipv6_subnet=dict(
+        required=False,
+        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -283,7 +283,7 @@ def run_module():
         resource_type='ibm_compute_vm_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.5',
+        ibm_provider_version='1.2.6',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

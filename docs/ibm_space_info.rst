@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.5
+- IBM-Cloud terraform-provider-ibm v1.2.6
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  developers (False, list, None)
+    The IBMID of the users who  have developer role in this space, ex - user@example.com
+
 
   space (True, str, None)
     Space name, for example dev
@@ -40,10 +44,6 @@ Parameters
 
   managers (False, list, None)
     The IBMID of the users who  have manager role in this space, ex - user@example.com
-
-
-  developers (False, list, None)
-    The IBMID of the users who  have developer role in this space, ex - user@example.com
 
 
   ibmcloud_api_key (True, any, None)
