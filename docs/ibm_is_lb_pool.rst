@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  session_persistence_type (False, str, None)
-    None
-
 
   health_retries (False, int, None)
     (Required for new resource)
@@ -46,19 +42,7 @@ Parameters
     None
 
 
-  health_delay (False, int, None)
-    (Required for new resource)
-
-
-  health_timeout (False, int, None)
-    (Required for new resource)
-
-
-  session_persistence_cookie_name (False, str, None)
-    None
-
-
-  provisioning_status (False, str, None)
+  session_persistence_type (False, str, None)
     None
 
 
@@ -70,11 +54,27 @@ Parameters
     (Required for new resource)
 
 
+  protocol (False, str, None)
+    (Required for new resource)
+
+
+  session_persistence_cookie_name (False, str, None)
+    None
+
+
+  provisioning_status (False, str, None)
+    None
+
+
   algorithm (False, str, None)
     (Required for new resource)
 
 
-  protocol (False, str, None)
+  health_delay (False, int, None)
+    (Required for new resource)
+
+
+  health_timeout (False, int, None)
     (Required for new resource)
 
 

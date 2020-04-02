@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,43 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  type (False, str, public)
-    None
-
-
-  public_ips (False, list, None)
-    None
-
-
   subnets (False, list, None)
     (Required for new resource)
 
 
-  resource_group (False, str, None)
+  tags (False, list, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   hostname (False, str, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   name (False, str, None)
     (Required for new resource)
 
 
-  status (False, str, None)
+  public_ips (False, list, None)
     None
 
 
@@ -74,7 +54,27 @@ Parameters
     None
 
 
-  tags (False, list, None)
+  resource_group (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  type (False, str, public)
+    None
+
+
+  status (False, str, None)
     None
 
 

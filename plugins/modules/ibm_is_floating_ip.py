@@ -16,18 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    resource_name:
+    target:
         description:
-            - The name of the resource
+            - None
         required: False
         type: str
-    resource_crn:
+    address:
         description:
-            - The crn of the resource
+            - None
         required: False
         type: str
     name:
@@ -35,22 +35,21 @@ options:
             - (Required for new resource) 
         required: False
         type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
     zone:
         description:
             - None
         required: False
         type: str
-    target:
+    resource_crn:
         description:
-            - None
+            - The crn of the resource
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     resource_status:
         description:
             - The status of the resource
@@ -61,24 +60,25 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    address:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
     resource_group:
         description:
             - None
         required: False
         type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     id:
@@ -144,58 +144,58 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'resource_crn',
-    'name',
-    'zone',
     'target',
-    'tags',
+    'address',
+    'name',
+    'status',
+    'zone',
+    'resource_crn',
     'resource_status',
     'resource_group_name',
-    'address',
-    'status',
     'resource_group',
+    'tags',
     'resource_controller_url',
+    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
+    target=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    address=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     zone=dict(
         required=False,
         type='str'),
-    target=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_status=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
         required=False,
         type='str'),
-    address=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -276,7 +276,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,20 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    type:
         description:
             - (Required for new resource) 
         required: False
         type: str
-    softlayer_managed:
-        description:
-            - None
-        required: False
-        type: bool
     subnets:
         description:
             - None
@@ -42,21 +37,6 @@ options:
         required: False
         type: list
         elements: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
     router_hostname:
         description:
             - None
@@ -67,11 +47,31 @@ options:
             - None
         required: False
         type: int
+    softlayer_managed:
+        description:
+            - None
+        required: False
+        type: bool
     child_resource_count:
         description:
             - None
         required: False
         type: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    name:
+        description:
+            - None
+        required: False
+        type: str
     resource_name:
         description:
             - The name of the resource
@@ -113,34 +113,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('type', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'softlayer_managed',
+    'type',
     'subnets',
     'tags',
-    'resource_controller_url',
-    'type',
-    'name',
     'router_hostname',
     'vlan_number',
+    'softlayer_managed',
     'child_resource_count',
+    'resource_controller_url',
+    'datacenter',
+    'name',
     'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    type=dict(
         required=False,
         type='str'),
-    softlayer_managed=dict(
-        required=False,
-        type='bool'),
     subnets=dict(
         required=False,
         elements='',
@@ -149,24 +146,27 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
     vlan_number=dict(
         required=False,
         type='int'),
+    softlayer_managed=dict(
+        required=False,
+        type='bool'),
     child_resource_count=dict(
         required=False,
         type='int'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

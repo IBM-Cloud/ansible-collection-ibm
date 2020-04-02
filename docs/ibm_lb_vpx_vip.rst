@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  source_port (False, int, None)
+    (Required for new resource)
+
+
+  security_certificate_id (False, int, None)
+    None
+
+
+  virtual_ip_address (False, str, None)
+    (Required for new resource)
+
 
   nad_controller_id (False, int, None)
     (Required for new resource)
@@ -38,19 +50,7 @@ Parameters
     None
 
 
-  virtual_ip_address (False, str, None)
-    (Required for new resource)
-
-
-  tags (False, list, None)
-    None
-
-
   name (False, str, None)
-    (Required for new resource)
-
-
-  source_port (False, int, None)
     (Required for new resource)
 
 
@@ -58,7 +58,7 @@ Parameters
     (Required for new resource)
 
 
-  security_certificate_id (False, int, None)
+  tags (False, list, None)
     None
 
 

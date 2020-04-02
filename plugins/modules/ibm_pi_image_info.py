@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    state:
+        description:
+            - None
+        required: False
+        type: str
     size:
         description:
             - None
@@ -50,11 +55,6 @@ options:
             - None
         required: True
         type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -84,18 +84,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'state',
     'size',
     'architecture',
     'operatingsystem',
     'hypervisor',
     'pi_image_name',
     'pi_cloud_instance_id',
-    'state',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    state=dict(
+        required=False,
+        type='str'),
     size=dict(
         required=False,
         type='int'),
@@ -113,9 +116,6 @@ module_args = dict(
         type='str'),
     pi_cloud_instance_id=dict(
         required=True,
-        type='str'),
-    state=dict(
-        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -145,7 +145,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

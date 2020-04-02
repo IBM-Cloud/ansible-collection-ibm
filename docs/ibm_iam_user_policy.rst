@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  roles (False, list, None)
-    (Required for new resource) Role names of the policy definition
-
 
   resources (False, list, None)
     None
@@ -48,6 +44,10 @@ Parameters
 
   ibm_id (False, str, None)
     (Required for new resource) The ibm id or email of user
+
+
+  roles (False, list, None)
+    (Required for new resource) Role names of the policy definition
 
 
   id (False, str, None)

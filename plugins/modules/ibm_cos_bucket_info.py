@@ -16,10 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    bucket_name:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_region:
+        description:
+            - None
+        required: True
+        type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
     region_location:
         description:
             - None
@@ -35,30 +50,10 @@ options:
             - Private endpoint for the COS bucket
         required: False
         type: str
-    bucket_name:
-        description:
-            - None
-        required: True
-        type: str
     bucket_type:
         description:
             - None
         required: True
-        type: str
-    bucket_region:
-        description:
-            - None
-        required: True
-        type: str
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
-    single_site_location:
-        description:
-            - None
-        required: False
         type: str
     resource_instance_id:
         description:
@@ -68,6 +63,11 @@ options:
     crn:
         description:
             - CRN of resource instance
+        required: False
+        type: str
+    single_site_location:
+        description:
+            - None
         required: False
         type: str
     cross_region_location:
@@ -104,23 +104,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bucket_name', 'str'),
-    ('bucket_type', 'str'),
     ('bucket_region', 'str'),
+    ('bucket_type', 'str'),
     ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'bucket_name',
+    'bucket_region',
+    'key_protect',
     'region_location',
     's3_endpoint_public',
     's3_endpoint_private',
-    'bucket_name',
     'bucket_type',
-    'bucket_region',
-    'key_protect',
-    'single_site_location',
     'resource_instance_id',
     'crn',
+    'single_site_location',
     'cross_region_location',
     'storage_class',
 ]
@@ -128,6 +128,15 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    bucket_name=dict(
+        required=True,
+        type='str'),
+    bucket_region=dict(
+        required=True,
+        type='str'),
+    key_protect=dict(
+        required=False,
+        type='str'),
     region_location=dict(
         required=False,
         type='str'),
@@ -137,25 +146,16 @@ module_args = dict(
     s3_endpoint_private=dict(
         required=False,
         type='str'),
-    bucket_name=dict(
-        required=True,
-        type='str'),
     bucket_type=dict(
         required=True,
-        type='str'),
-    bucket_region=dict(
-        required=True,
-        type='str'),
-    key_protect=dict(
-        required=False,
-        type='str'),
-    single_site_location=dict(
-        required=False,
         type='str'),
     resource_instance_id=dict(
         required=True,
         type='str'),
     crn=dict(
+        required=False,
+        type='str'),
+    single_site_location=dict(
         required=False,
         type='str'),
     cross_region_location=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

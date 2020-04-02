@@ -16,16 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    volumename:
+    iops:
         description:
-            - None
+            - (Required for new resource) 
         required: False
-        type: str
-    hostname:
+        type: float
+    volumename:
         description:
             - None
         required: False
@@ -36,42 +36,59 @@ options:
         required: False
         type: list
         elements: str
-    notes:
+    tags:
         description:
             - None
         required: False
-        type: str
-    resource_controller_url:
+        type: list
+        elements: str
+    resource_status:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - The status of the resource
         required: False
         type: str
-    iops:
+    snapshot_capacity:
         description:
-            - (Required for new resource) 
+            - None
         required: False
-        type: float
+        type: int
     allowed_virtual_guest_ids:
         description:
             - None
         required: False
         type: list
         elements: int
-    allowed_ip_addresses:
+    notes:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: str
     snapshot_schedule:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_status:
+    hourly_billing:
         description:
-            - The status of the resource
+            - None
+        required: False
+        type: bool
+        default: False
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
+    allowed_ip_addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    mountpoint:
+        description:
+            - None
         required: False
         type: str
     type:
@@ -79,18 +96,6 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    allowed_hardware_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    hourly_billing:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
     datacenter:
         description:
             - (Required for new resource) 
@@ -101,22 +106,17 @@ options:
             - (Required for new resource) 
         required: False
         type: int
-    snapshot_capacity:
-        description:
-            - None
-        required: False
-        type: int
-    mountpoint:
-        description:
-            - None
-        required: False
-        type: str
-    tags:
+    allowed_hardware_ids:
         description:
             - None
         required: False
         type: list
-        elements: str
+        elements: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
     resource_name:
         description:
             - The name of the resource
@@ -166,90 +166,90 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'volumename',
-    'hostname',
-    'allowed_subnets',
-    'notes',
-    'resource_controller_url',
     'iops',
-    'allowed_virtual_guest_ids',
-    'allowed_ip_addresses',
-    'snapshot_schedule',
+    'volumename',
+    'allowed_subnets',
+    'tags',
     'resource_status',
-    'type',
-    'allowed_hardware_ids',
+    'snapshot_capacity',
+    'allowed_virtual_guest_ids',
+    'notes',
+    'snapshot_schedule',
     'hourly_billing',
+    'hostname',
+    'allowed_ip_addresses',
+    'mountpoint',
+    'type',
     'datacenter',
     'capacity',
-    'snapshot_capacity',
-    'mountpoint',
-    'tags',
+    'allowed_hardware_ids',
+    'resource_controller_url',
     'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    volumename=dict(
+    iops=dict(
         required=False,
-        type='str'),
-    hostname=dict(
+        type='float'),
+    volumename=dict(
         required=False,
         type='str'),
     allowed_subnets=dict(
         required=False,
         elements='',
         type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    iops=dict(
-        required=False,
-        type='float'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_ip_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    snapshot_schedule=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
     resource_status=dict(
         required=False,
         type='str'),
-    type=dict(
+    snapshot_capacity=dict(
+        required=False,
+        type='int'),
+    allowed_virtual_guest_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    notes=dict(
         required=False,
         type='str'),
-    allowed_hardware_ids=dict(
+    snapshot_schedule=dict(
         required=False,
         elements='',
         type='list'),
     hourly_billing=dict(
         default=False,
         type='bool'),
+    hostname=dict(
+        required=False,
+        type='str'),
+    allowed_ip_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    mountpoint=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     datacenter=dict(
         required=False,
         type='str'),
     capacity=dict(
         required=False,
         type='int'),
-    snapshot_capacity=dict(
-        required=False,
-        type='int'),
-    mountpoint=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    allowed_hardware_ids=dict(
         required=False,
         elements='',
         type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
@@ -299,7 +299,7 @@ def run_module():
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

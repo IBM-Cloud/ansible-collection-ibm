@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    source_service_name:
-        description:
-            - (Required for new resource) The source service name
-        required: False
-        type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -36,9 +31,9 @@ options:
             - The source resource instance Id
         required: False
         type: str
-    source_resource_type:
+    target_resource_instance_id:
         description:
-            - Resource type of source service
+            - The target resource instance Id
         required: False
         type: str
     target_resource_type:
@@ -51,19 +46,24 @@ options:
             - Account GUID of source service
         required: False
         type: str
+    version:
+        description:
+            - None
+        required: False
+        type: str
     target_service_name:
         description:
             - (Required for new resource) The target service name
         required: False
         type: str
-    target_resource_instance_id:
+    source_resource_type:
         description:
-            - The target resource instance Id
+            - Resource type of source service
         required: False
         type: str
-    version:
+    source_service_name:
         description:
-            - None
+            - (Required for new resource) The source service name
         required: False
         type: str
     id:
@@ -102,30 +102,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('source_service_name', 'str'),
     ('roles', 'list'),
     ('target_service_name', 'str'),
+    ('source_service_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_service_name',
     'roles',
     'source_resource_instance_id',
-    'source_resource_type',
+    'target_resource_instance_id',
     'target_resource_type',
     'source_service_account',
-    'target_service_name',
-    'target_resource_instance_id',
     'version',
+    'target_service_name',
+    'source_resource_type',
+    'source_service_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_service_name=dict(
-        required=False,
-        type='str'),
     roles=dict(
         required=False,
         elements='',
@@ -133,7 +130,7 @@ module_args = dict(
     source_resource_instance_id=dict(
         required=False,
         type='str'),
-    source_resource_type=dict(
+    target_resource_instance_id=dict(
         required=False,
         type='str'),
     target_resource_type=dict(
@@ -142,13 +139,16 @@ module_args = dict(
     source_service_account=dict(
         required=False,
         type='str'),
+    version=dict(
+        required=False,
+        type='str'),
     target_service_name=dict(
         required=False,
         type='str'),
-    target_resource_instance_id=dict(
+    source_resource_type=dict(
         required=False,
         type='str'),
-    version=dict(
+    source_service_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

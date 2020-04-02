@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  ip_address (False, str, None)
+    None
+
 
   routes_to (False, str, None)
     (Required for new resource)
@@ -35,10 +39,6 @@ Parameters
 
 
   notes (False, str, None)
-    None
-
-
-  ip_address (False, str, None)
     None
 
 

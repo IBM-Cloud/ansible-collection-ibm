@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -30,11 +30,7 @@ Parameters
     None
 
 
-  ttl (False, int, None)
-    (Required for new resource)
-
-
-  protocol (False, str, None)
+  minimum_ttl (False, int, None)
     None
 
 
@@ -42,11 +38,23 @@ Parameters
     None
 
 
+  tags (False, list, None)
+    None
+
+
   data (False, str, None)
     (Required for new resource)
 
 
+  expire (False, int, None)
+    None
+
+
   mx_priority (False, int, 0)
+    None
+
+
+  refresh (False, int, None)
     None
 
 
@@ -54,32 +62,12 @@ Parameters
     None
 
 
-  service (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  weight (False, int, 0)
-    None
-
-
-  expire (False, int, None)
-    None
-
-
-  host (False, str, None)
+  ttl (False, int, None)
     (Required for new resource)
 
 
-  refresh (False, int, None)
-    None
-
-
-  minimum_ttl (False, int, None)
-    None
+  type (False, str, None)
+    (Required for new resource)
 
 
   priority (False, int, 0)
@@ -90,8 +78,20 @@ Parameters
     (Required for new resource)
 
 
-  type (False, str, None)
+  host (False, str, None)
     (Required for new resource)
+
+
+  weight (False, int, 0)
+    None
+
+
+  service (False, str, None)
+    None
+
+
+  protocol (False, str, None)
+    None
 
 
   id (False, str, None)

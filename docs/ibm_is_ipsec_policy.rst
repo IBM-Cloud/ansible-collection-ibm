@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,11 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  key_lifetime (False, int, 3600)
+  encapsulation_mode (False, str, None)
     None
 
 
@@ -38,8 +34,16 @@ Parameters
     None
 
 
-  vpn_connections (False, list, None)
-    None
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  encryption_algorithm (False, str, None)
+    (Required for new resource)
 
 
   pfs (False, str, None)
@@ -50,7 +54,15 @@ Parameters
     None
 
 
-  encapsulation_mode (False, str, None)
+  key_lifetime (False, int, 3600)
+    None
+
+
+  authentication_algorithm (False, str, None)
+    (Required for new resource)
+
+
+  vpn_connections (False, list, None)
     None
 
 
@@ -60,18 +72,6 @@ Parameters
 
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource)
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource)
 
 
   resource_group_name (False, str, None)

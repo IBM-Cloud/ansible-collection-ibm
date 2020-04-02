@@ -16,10 +16,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    cluster:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    machine_type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    hardware:
+        description:
+            - None
+        required: False
+        type: str
+        default: shared
+    disk_encryption:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    state_:
+        description:
+            - None
+        required: False
+        type: str
     labels:
         description:
             - None
@@ -31,14 +58,9 @@ options:
             - The worker pool region
         required: False
         type: str
-    resource_controller_url:
+    resource_group_id:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) 
+            - ID of the resource group.
         required: False
         type: str
     worker_pool_name:
@@ -51,37 +73,15 @@ options:
             - (Required for new resource) 
         required: False
         type: int
-    hardware:
-        description:
-            - None
-        required: False
-        type: str
-        default: shared
-    state_:
-        description:
-            - None
-        required: False
-        type: str
-    machine_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    disk_encryption:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
     zones:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_group_id:
+    resource_controller_url:
         description:
-            - ID of the resource group.
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
         required: False
         type: str
     id:
@@ -121,30 +121,45 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cluster', 'str'),
+    ('machine_type', 'str'),
     ('worker_pool_name', 'str'),
     ('size_per_zone', 'int'),
-    ('machine_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cluster',
+    'machine_type',
+    'hardware',
+    'disk_encryption',
+    'state_',
     'labels',
     'region',
-    'resource_controller_url',
-    'cluster',
+    'resource_group_id',
     'worker_pool_name',
     'size_per_zone',
-    'hardware',
-    'state_',
-    'machine_type',
-    'disk_encryption',
     'zones',
-    'resource_group_id',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cluster=dict(
+        required=False,
+        type='str'),
+    machine_type=dict(
+        required=False,
+        type='str'),
+    hardware=dict(
+        default='shared',
+        type='str'),
+    disk_encryption=dict(
+        default=True,
+        type='bool'),
+    state_=dict(
+        required=False,
+        type='str'),
     labels=dict(
         required=False,
         elements='',
@@ -152,10 +167,7 @@ module_args = dict(
     region=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
@@ -164,23 +176,11 @@ module_args = dict(
     size_per_zone=dict(
         required=False,
         type='int'),
-    hardware=dict(
-        default='shared',
-        type='str'),
-    state_=dict(
-        required=False,
-        type='str'),
-    machine_type=dict(
-        required=False,
-        type='str'),
-    disk_encryption=dict(
-        default=True,
-        type='bool'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

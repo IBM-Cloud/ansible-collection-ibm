@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  instance_volumes (False, list, None)
+    None
+
 
   pi_instance_name (True, str, None)
     Instance Name to be used for pvminstances
@@ -35,10 +39,6 @@ Parameters
 
 
   boot_volume_id (False, str, None)
-    None
-
-
-  instance_volumes (False, list, None)
     None
 
 

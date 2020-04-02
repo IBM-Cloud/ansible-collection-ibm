@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    certificate_status:
-        description:
-            - Certificate status
-        required: False
-        type: str
     cname_flattening:
         description:
             - cname_flattening setting
@@ -35,9 +30,9 @@ options:
             - opportunistic_encryption setting
         required: False
         type: str
-    automatic_https_rewrites:
+    cis_id:
         description:
-            - automatic_https_rewrites setting
+            - (Required for new resource) CIS instance crn
         required: False
         type: str
     domain_id:
@@ -50,14 +45,9 @@ options:
             - WAF setting
         required: False
         type: str
-    ssl:
+    certificate_status:
         description:
-            - SSL/TLS setting
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
+            - Certificate status
         required: False
         type: str
     min_tls_version:
@@ -66,6 +56,16 @@ options:
         required: False
         type: str
         default: 1.1
+    ssl:
+        description:
+            - SSL/TLS setting
+        required: False
+        type: str
+    automatic_https_rewrites:
+        description:
+            - automatic_https_rewrites setting
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,36 +102,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate_status',
     'cname_flattening',
     'opportunistic_encryption',
-    'automatic_https_rewrites',
+    'cis_id',
     'domain_id',
     'waf',
-    'ssl',
-    'cis_id',
+    'certificate_status',
     'min_tls_version',
+    'ssl',
+    'automatic_https_rewrites',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate_status=dict(
-        required=False,
-        type='str'),
     cname_flattening=dict(
         required=False,
         type='str'),
     opportunistic_encryption=dict(
         required=False,
         type='str'),
-    automatic_https_rewrites=dict(
+    cis_id=dict(
         required=False,
         type='str'),
     domain_id=dict(
@@ -140,14 +137,17 @@ module_args = dict(
     waf=dict(
         required=False,
         type='str'),
-    ssl=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
+    certificate_status=dict(
         required=False,
         type='str'),
     min_tls_version=dict(
         default='1.1',
+        type='str'),
+    ssl=dict(
+        required=False,
+        type='str'),
+    automatic_https_rewrites=dict(
+        required=False,
         type='str'),
     id=dict(
         required=False,
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

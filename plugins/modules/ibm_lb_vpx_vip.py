@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    source_port:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    security_certificate_id:
+        description:
+            - None
+        required: False
+        type: int
+    virtual_ip_address:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     nad_controller_id:
         description:
             - (Required for new resource) 
@@ -35,7 +50,12 @@ options:
             - None
         required: False
         type: str
-    virtual_ip_address:
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    type:
         description:
             - (Required for new resource) 
         required: False
@@ -46,26 +66,6 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    source_port:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    security_certificate_id:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,30 +102,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('source_port', 'int'),
+    ('virtual_ip_address', 'str'),
     ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
-    ('virtual_ip_address', 'str'),
     ('name', 'str'),
-    ('source_port', 'int'),
     ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'source_port',
+    'security_certificate_id',
+    'virtual_ip_address',
     'nad_controller_id',
     'load_balancing_method',
     'persistence',
-    'virtual_ip_address',
-    'tags',
     'name',
-    'source_port',
     'type',
-    'security_certificate_id',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    source_port=dict(
+        required=False,
+        type='int'),
+    security_certificate_id=dict(
+        required=False,
+        type='int'),
+    virtual_ip_address=dict(
+        required=False,
+        type='str'),
     nad_controller_id=dict(
         required=False,
         type='int'),
@@ -135,25 +144,16 @@ module_args = dict(
     persistence=dict(
         required=False,
         type='str'),
-    virtual_ip_address=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    source_port=dict(
-        required=False,
-        type='int'),
-    type=dict(
-        required=False,
-        type='str'),
-    security_certificate_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

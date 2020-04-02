@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
@@ -30,46 +30,13 @@ options:
             - None
         required: False
         type: int
-    health_check:
-        description:
-            - None
-        required: False
-        type: dict
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    regional_group:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    maximum_member_count:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
     virtual_guest_member_template:
         description:
             - (Required for new resource) 
         required: False
         type: list
         elements: dict
-    network_vlan_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    minimum_member_count:
+    maximum_member_count:
         description:
             - (Required for new resource) 
         required: False
@@ -84,6 +51,39 @@ options:
             - None
         required: False
         type: int
+    health_check:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
+    network_vlan_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    regional_group:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    minimum_member_count:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,28 +121,28 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('termination_policy', 'str'),
+    ('virtual_guest_member_template', 'list'),
+    ('maximum_member_count', 'int'),
+    ('cooldown', 'int'),
     ('name', 'str'),
     ('regional_group', 'str'),
-    ('maximum_member_count', 'int'),
-    ('virtual_guest_member_template', 'list'),
     ('minimum_member_count', 'int'),
-    ('cooldown', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'termination_policy',
     'virtual_server_id',
-    'health_check',
-    'name',
-    'regional_group',
-    'maximum_member_count',
     'virtual_guest_member_template',
-    'network_vlan_ids',
-    'tags',
-    'minimum_member_count',
+    'maximum_member_count',
     'cooldown',
     'port',
+    'health_check',
+    'network_vlan_ids',
+    'name',
+    'regional_group',
+    'minimum_member_count',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -154,32 +154,11 @@ module_args = dict(
     virtual_server_id=dict(
         required=False,
         type='int'),
-    health_check=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    name=dict(
-        required=False,
-        type='str'),
-    regional_group=dict(
-        required=False,
-        type='str'),
-    maximum_member_count=dict(
-        required=False,
-        type='int'),
     virtual_guest_member_template=dict(
         required=False,
         elements='',
         type='list'),
-    network_vlan_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    minimum_member_count=dict(
+    maximum_member_count=dict(
         required=False,
         type='int'),
     cooldown=dict(
@@ -188,6 +167,27 @@ module_args = dict(
     port=dict(
         required=False,
         type='int'),
+    health_check=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    network_vlan_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    regional_group=dict(
+        required=False,
+        type='str'),
+    minimum_member_count=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_autoscale_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

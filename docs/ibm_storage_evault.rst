@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  virtual_instance_id (False, int, None)
-    None
-
-
-  hardware_instance_id (False, int, None)
-    None
-
 
   username (False, str, None)
     None
@@ -56,6 +48,14 @@ Parameters
 
   capacity (False, int, None)
     (Required for new resource)
+
+
+  virtual_instance_id (False, int, None)
+    None
+
+
+  hardware_instance_id (False, int, None)
+    None
 
 
   id (False, str, None)

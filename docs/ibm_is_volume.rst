@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
+  resource_group (False, str, None)
     None
 
 
-  tags (False, list, None)
+  crn (False, str, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  capacity (False, int, 100)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   profile (False, str, None)
@@ -54,23 +66,7 @@ Parameters
     None
 
 
-  resource_group (False, str, None)
-    None
-
-
-  crn (False, str, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  zone (False, str, None)
-    (Required for new resource)
-
-
-  capacity (False, int, 100)
+  iops (False, int, None)
     None
 
 
@@ -78,12 +74,16 @@ Parameters
     The name of the resource
 
 
-  name (False, str, None)
+  zone (False, str, None)
     (Required for new resource)
 
 
-  iops (False, int, None)
+  tags (False, list, None)
     None
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_function_trigger' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    parameters:
+        description:
+            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
     name:
         description:
             - Name of Trigger.
@@ -38,11 +43,6 @@ options:
     annotations:
         description:
             - All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    parameters:
-        description:
-            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
     ibmcloud_api_key:
@@ -73,16 +73,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'parameters',
     'name',
     'publish',
     'version',
     'annotations',
-    'parameters',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    parameters=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
@@ -93,9 +96,6 @@ module_args = dict(
         required=False,
         type='str'),
     annotations=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -126,7 +126,7 @@ def run_module():
         resource_type='ibm_function_trigger',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

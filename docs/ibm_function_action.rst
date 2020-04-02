@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  version (False, str, None)
+    Semantic version of the item.
+
+
   parameters (False, str, None)
     All paramters set on action by user and those set by the IBM Cloud Function backend/API.
 
 
-  name (False, str, None)
-    (Required for new resource) Name of action.
+  publish (False, bool, None)
+    Action visibilty.
 
 
   limits (False, list, None)
     None
 
 
-  version (False, str, None)
-    Semantic version of the item.
+  exec (False, list, None)
+    (Required for new resource)
+
+
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
 
 
   user_defined_parameters (False, str, [])
@@ -50,16 +58,8 @@ Parameters
     All annotations set on action by user and those set by the IBM Cloud Function backend/API.
 
 
-  exec (False, list, None)
-    (Required for new resource)
-
-
-  publish (False, bool, None)
-    Action visibilty.
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
+  name (False, str, None)
+    (Required for new resource) Name of action.
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,12 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (False, str, None)
+  image (False, str, None)
     (Required for new resource)
 
 
-  tags (False, list, None)
+  boot_volume (False, list, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   volume_attachments (False, list, None)
@@ -42,11 +50,7 @@ Parameters
     (Required for new resource)
 
 
-  volumes (False, list, None)
-    None
-
-
-  vcpu (False, list, None)
+  network_interfaces (False, list, None)
     None
 
 
@@ -54,40 +58,28 @@ Parameters
     The crn of the resource
 
 
-  name (False, str, None)
-    (Required for new resource)
-
-
-  image (False, str, None)
-    (Required for new resource)
-
-
-  gpu (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_status (False, str, None)
+    The status of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  user_data (False, str, None)
+  name (False, str, None)
+    (Required for new resource)
+
+
+  vpc (False, str, None)
+    (Required for new resource)
+
+
+  volumes (False, list, None)
     None
 
 
-  status (False, str, None)
+  resource_group (False, str, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   zone (False, str, None)
@@ -98,15 +90,11 @@ Parameters
     (Required for new resource)
 
 
-  network_interfaces (False, list, None)
+  vcpu (False, list, None)
     None
 
 
-  boot_volume (False, list, None)
-    None
-
-
-  resource_group (False, str, None)
+  status (False, str, None)
     None
 
 
@@ -114,8 +102,20 @@ Parameters
     None
 
 
-  vpc (False, str, None)
+  profile (False, str, None)
     (Required for new resource)
+
+
+  tags (False, list, None)
+    None
+
+
+  user_data (False, str, None)
+    None
+
+
+  gpu (False, list, None)
+    None
 
 
   id (False, str, None)

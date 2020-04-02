@@ -16,20 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    status:
-        description:
-            - Status of resource instance
-        required: False
-        type: str
     guid:
         description:
             - Guid of resource instance
@@ -40,9 +40,9 @@ options:
             - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
         type: str
-    resource_crn:
+    name:
         description:
-            - The crn of the resource
+            - (Required for new resource) A name for the resource instance
         required: False
         type: str
     service:
@@ -50,9 +50,14 @@ options:
             - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
         required: False
         type: str
-    resource_group_id:
+    plan:
         description:
-            - The resource group id
+            - (Required for new resource) The plan type of the service
+        required: False
+        type: str
+    crn:
+        description:
+            - CRN of resource instance
         required: False
         type: str
     resource_name:
@@ -60,35 +65,14 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A name for the resource instance
-        required: False
-        type: str
-    plan:
-        description:
-            - (Required for new resource) The plan type of the service
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
     resource_status:
         description:
             - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     resource_controller_url:
@@ -99,6 +83,22 @@ options:
     location:
         description:
             - (Required for new resource) The location where the instance available
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    status:
+        description:
+            - Status of resource instance
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
         required: False
         type: str
     id:
@@ -137,82 +137,82 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('service', 'str'),
     ('name', 'str'),
+    ('service', 'str'),
     ('plan', 'str'),
     ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_group_id',
     'parameters',
-    'status',
     'guid',
     'service_endpoints',
-    'resource_crn',
-    'service',
-    'resource_group_id',
-    'resource_name',
-    'resource_group_name',
     'name',
+    'service',
     'plan',
-    'tags',
     'crn',
+    'resource_name',
     'resource_status',
+    'resource_group_name',
     'resource_controller_url',
     'location',
+    'tags',
+    'status',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
-    status=dict(
-        required=False,
-        type='str'),
     guid=dict(
         required=False,
         type='str'),
     service_endpoints=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    name=dict(
         required=False,
         type='str'),
     service=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    plan=dict(
+        required=False,
+        type='str'),
+    crn=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    plan=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    crn=dict(
-        required=False,
-        type='str'),
     resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
     location=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    status=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -261,7 +261,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

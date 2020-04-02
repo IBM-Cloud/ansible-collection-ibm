@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,36 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  network (False, bool, False)
+    If set to true will download the Calico network config with the Admin config
 
 
   config_file_path (False, str, None)
     The absolute path to the kubernetes config yml file
 
 
-  token (False, str, None)
-    None
-
-
   space_guid (False, str, None)
     The bluemix space guid this cluster belongs to
 
 
-  admin (False, bool, False)
-    If set to true will download the config for admin
-
-
-  admin_key (False, str, None)
-    None
-
-
-  ca_certificate (False, str, None)
-    None
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   region (False, str, None)
@@ -66,15 +54,11 @@ Parameters
     The name/id of the cluster
 
 
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
-
-
   host (False, str, None)
     None
 
 
-  admin_certificate (False, str, None)
+  token (False, str, None)
     None
 
 
@@ -82,16 +66,32 @@ Parameters
     The bluemix organization guid this cluster belongs to
 
 
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+  config_dir (False, str, None)
+    The directory where the cluster config to be downloaded. Default is home directory
 
 
-  network (False, bool, False)
-    If set to true will download the Calico network config with the Admin config
+  admin (False, bool, False)
+    If set to true will download the config for admin
 
 
   calico_config_file_path (False, str, None)
     The absolute path to the calico network config file
+
+
+  admin_certificate (False, str, None)
+    None
+
+
+  ca_certificate (False, str, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  admin_key (False, str, None)
+    None
 
 
   ibmcloud_api_key (True, any, None)

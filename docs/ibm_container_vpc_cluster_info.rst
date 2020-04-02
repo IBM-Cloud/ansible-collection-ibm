@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,12 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  workers (False, list, None)
+  cluster_name_id (True, str, None)
+    Name of the cluster
+
+
+  public_service_endpoint (False, bool, None)
     None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   worker_pools (False, list, None)
@@ -42,15 +62,35 @@ Parameters
     None
 
 
+  ingress_hostname (False, str, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
+
+
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  private_service_endpoint (False, bool, None)
+  private_service_endpoint_url (False, str, None)
     None
 
 
-  public_service_endpoint_url (False, str, None)
+  status (False, str, None)
+    The status of the cluster master
+
+
+  kube_version (False, str, None)
+    None
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
+  albs (False, list, None)
     None
 
 
@@ -58,11 +98,11 @@ Parameters
     The crn of the resource
 
 
-  ingress_hostname (False, str, None)
+  master_url (False, str, None)
     None
 
 
-  public_service_endpoint (False, bool, None)
+  health (False, str, None)
     None
 
 
@@ -74,52 +114,12 @@ Parameters
     The name of the resource
 
 
-  albs (False, list, None)
+  workers (False, list, None)
     None
 
 
-  ingress_secret (False, str, None)
+  public_service_endpoint_url (False, str, None)
     None
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  master_url (False, str, None)
-    None
-
-
-  health (False, str, None)
-    None
-
-
-  kube_version (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  cluster_name_id (True, str, None)
-    Name of the cluster
-
-
-  worker_count (False, int, None)
-    Number of workers
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  status (False, str, None)
-    The status of the cluster master
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   ibmcloud_api_key (True, any, None)

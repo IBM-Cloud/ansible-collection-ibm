@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pool (False, str, None)
+    (Required for new resource)
+
+
+  lb (False, str, None)
+    (Required for new resource)
+
+
+  port (False, int, None)
+    (Required for new resource)
+
 
   target_address (False, str, None)
     (Required for new resource)
@@ -44,18 +56,6 @@ Parameters
 
   href (False, str, None)
     None
-
-
-  pool (False, str, None)
-    (Required for new resource)
-
-
-  lb (False, str, None)
-    (Required for new resource)
-
-
-  port (False, int, None)
-    (Required for new resource)
 
 
   id (False, str, None)

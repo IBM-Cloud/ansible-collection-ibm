@@ -16,10 +16,16 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_volumes' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    instance_volumes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     pi_instance_name:
         description:
             - Instance Name to be used for pvminstances
@@ -35,12 +41,6 @@ options:
             - None
         required: False
         type: str
-    instance_volumes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -70,15 +70,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'instance_volumes',
     'pi_instance_name',
     'pi_cloud_instance_id',
     'boot_volume_id',
-    'instance_volumes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    instance_volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
     pi_instance_name=dict(
         required=True,
         type='str'),
@@ -88,10 +92,6 @@ module_args = dict(
     boot_volume_id=dict(
         required=False,
         type='str'),
-    instance_volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -120,7 +120,7 @@ def run_module():
         resource_type='ibm_pi_instance_volumes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

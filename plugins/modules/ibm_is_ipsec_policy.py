@@ -16,32 +16,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    key_lifetime:
+    encapsulation_mode:
         description:
             - None
         required: False
-        type: int
-        default: 3600
+        type: str
     transform_protocol:
         description:
             - None
         required: False
         type: str
-    vpn_connections:
+    resource_name:
         description:
-            - None
+            - The name of the resource
         required: False
-        type: list
-        elements: dict
+        type: str
+    name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    encryption_algorithm:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     pfs:
         description:
             - (Required for new resource) 
@@ -52,11 +55,23 @@ options:
             - None
         required: False
         type: str
-    encapsulation_mode:
+    key_lifetime:
         description:
             - None
         required: False
+        type: int
+        default: 3600
+    authentication_algorithm:
+        description:
+            - (Required for new resource) 
+        required: False
         type: str
+    vpn_connections:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
@@ -65,21 +80,6 @@ options:
     resource_crn:
         description:
             - The crn of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    authentication_algorithm:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    encryption_algorithm:
-        description:
-            - (Required for new resource) 
         required: False
         type: str
     resource_group_name:
@@ -145,67 +145,67 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pfs', 'str'),
     ('name', 'str'),
-    ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
+    ('pfs', 'str'),
+    ('authentication_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'key_lifetime',
+    'encapsulation_mode',
     'transform_protocol',
-    'vpn_connections',
+    'resource_name',
+    'name',
+    'encryption_algorithm',
     'pfs',
     'resource_group',
-    'encapsulation_mode',
+    'key_lifetime',
+    'authentication_algorithm',
+    'vpn_connections',
     'resource_controller_url',
     'resource_crn',
-    'name',
-    'authentication_algorithm',
-    'encryption_algorithm',
     'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
+    encapsulation_mode=dict(
         required=False,
         type='str'),
-    key_lifetime=dict(
-        default=3600,
-        type='int'),
     transform_protocol=dict(
         required=False,
         type='str'),
-    vpn_connections=dict(
+    resource_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    encryption_algorithm=dict(
+        required=False,
+        type='str'),
     pfs=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    encapsulation_mode=dict(
+    key_lifetime=dict(
+        default=3600,
+        type='int'),
+    authentication_algorithm=dict(
         required=False,
         type='str'),
+    vpn_connections=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_controller_url=dict(
         required=False,
         type='str'),
     resource_crn=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    authentication_algorithm=dict(
-        required=False,
-        type='str'),
-    encryption_algorithm=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
@@ -289,7 +289,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

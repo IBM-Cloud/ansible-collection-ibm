@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: False
-        type: list
-        elements: str
     resources:
         description:
             - None
@@ -54,6 +48,12 @@ options:
             - (Required for new resource) The ibm id or email of user
         required: False
         type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,27 +90,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('roles', 'list'),
     ('ibm_id', 'str'),
+    ('roles', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'roles',
     'resources',
     'account_management',
     'tags',
     'version',
     'ibm_id',
+    'roles',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     resources=dict(
         required=False,
         elements='',
@@ -128,6 +124,10 @@ module_args = dict(
     ibm_id=dict(
         required=False,
         type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_iam_user_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,7 +26,35 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  format (False, str, None)
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  href (False, str, None)
+    (Required for new resource)
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  resource_group (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  tags (False, list, None)
     None
 
 
@@ -34,27 +62,15 @@ Parameters
     (Required for new resource)
 
 
-  visibility (False, str, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
   status (False, str, None)
+    None
+
+
+  architecture (False, str, None)
+    None
+
+
+  visibility (False, str, None)
     None
 
 
@@ -62,28 +78,12 @@ Parameters
     None
 
 
-  href (False, str, None)
-    (Required for new resource)
-
-
-  architecture (False, str, None)
+  format (False, str, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

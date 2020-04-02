@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -30,7 +30,31 @@ Parameters
     The resource group name in which resource is provisioned
 
 
+  default_network_acl (False, str, None)
+    None
+
+
   classic_access (False, bool, None)
+    None
+
+
+  name (True, str, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group (False, str, None)
     None
 
 
@@ -46,31 +70,11 @@ Parameters
     The status of the resource
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
   cse_source_addresses (False, list, None)
     None
 
 
-  default_network_acl (False, str, None)
-    None
-
-
-  name (True, str, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  status (False, str, None)
+  subnets (False, list, None)
     None
 
 

@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  bucket_name (True, str, None)
+    None
+
+
+  bucket_region (True, str, None)
+    None
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
 
   region_location (False, str, None)
     None
@@ -38,23 +50,7 @@ Parameters
     Private endpoint for the COS bucket
 
 
-  bucket_name (True, str, None)
-    None
-
-
   bucket_type (True, str, None)
-    None
-
-
-  bucket_region (True, str, None)
-    None
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  single_site_location (False, str, None)
     None
 
 
@@ -64,6 +60,10 @@ Parameters
 
   crn (False, str, None)
     CRN of resource instance
+
+
+  single_site_location (False, str, None)
+    None
 
 
   cross_region_location (False, str, None)

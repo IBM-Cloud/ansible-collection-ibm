@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_public_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    vlan_id:
+        description:
+            - None
+        required: False
+        type: int
     pi_network_name:
         description:
             - Network Name to be used for pvminstances
@@ -45,11 +50,6 @@ options:
             - None
         required: False
         type: str
-    vlan_id:
-        description:
-            - None
-        required: False
-        type: int
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -78,17 +78,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'vlan_id',
     'pi_network_name',
     'pi_cloud_instance_id',
     'network_id',
     'name',
     'type',
-    'vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    vlan_id=dict(
+        required=False,
+        type='int'),
     pi_network_name=dict(
         required=False,
         type='str'),
@@ -104,9 +107,6 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -135,7 +135,7 @@ def run_module():
         resource_type='ibm_pi_public_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

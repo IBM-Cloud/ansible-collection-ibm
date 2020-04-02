@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    pool:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    port:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
     target_address:
         description:
             - (Required for new resource) 
@@ -45,21 +60,6 @@ options:
             - None
         required: False
         type: str
-    pool:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    port:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,27 +118,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('target_address', 'str'),
     ('pool', 'str'),
     ('lb', 'str'),
     ('port', 'int'),
+    ('target_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pool',
+    'lb',
+    'port',
     'target_address',
     'weight',
     'provisioning_status',
     'health',
     'href',
-    'pool',
-    'lb',
-    'port',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pool=dict(
+        required=False,
+        type='str'),
+    lb=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
     target_address=dict(
         required=False,
         type='str'),
@@ -154,15 +163,6 @@ module_args = dict(
     href=dict(
         required=False,
         type='str'),
-    pool=dict(
-        required=False,
-        type='str'),
-    lb=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

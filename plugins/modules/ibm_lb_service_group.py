@@ -16,36 +16,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    load_balancer_id:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    port:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
     routing_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    service_group_id:
-        description:
-            - None
-        required: False
-        type: int
-    allocation:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    routing_method:
         description:
             - (Required for new resource) 
         required: False
@@ -55,17 +30,42 @@ options:
             - None
         required: False
         type: int
+    virtual_server_id:
+        description:
+            - None
+        required: False
+        type: int
+    service_group_id:
+        description:
+            - None
+        required: False
+        type: int
+    load_balancer_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    allocation:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    port:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    routing_method:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    virtual_server_id:
-        description:
-            - None
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,57 +102,57 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('load_balancer_id', 'int'),
-    ('port', 'int'),
     ('routing_type', 'str'),
+    ('load_balancer_id', 'int'),
     ('allocation', 'int'),
+    ('port', 'int'),
     ('routing_method', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'load_balancer_id',
-    'port',
     'routing_type',
-    'service_group_id',
-    'allocation',
-    'routing_method',
     'timeout',
-    'tags',
     'virtual_server_id',
+    'service_group_id',
+    'load_balancer_id',
+    'allocation',
+    'port',
+    'routing_method',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    load_balancer_id=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
     routing_type=dict(
-        required=False,
-        type='str'),
-    service_group_id=dict(
-        required=False,
-        type='int'),
-    allocation=dict(
-        required=False,
-        type='int'),
-    routing_method=dict(
         required=False,
         type='str'),
     timeout=dict(
         required=False,
         type='int'),
+    virtual_server_id=dict(
+        required=False,
+        type='int'),
+    service_group_id=dict(
+        required=False,
+        type='int'),
+    load_balancer_id=dict(
+        required=False,
+        type='int'),
+    allocation=dict(
+        required=False,
+        type='int'),
+    port=dict(
+        required=False,
+        type='int'),
+    routing_method=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -199,7 +199,7 @@ def run_module():
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

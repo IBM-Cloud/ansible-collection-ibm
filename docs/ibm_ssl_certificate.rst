@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -30,10 +30,6 @@ Parameters
     (Required for new resource)
 
 
-  certificate_signing_request (False, str, None)
-    (Required for new resource)
-
-
   administrative_contact_same_as_technical_flag (False, bool, False)
     None
 
@@ -42,12 +38,24 @@ Parameters
     None
 
 
-  server_count (False, int, None)
+  certificate_signing_request (False, str, None)
+    (Required for new resource)
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    None
+
+
+  organization_information (False, list, None)
     (Required for new resource)
 
 
   technical_contact (False, list, None)
     (Required for new resource)
+
+
+  billing_address_same_as_organization_flag (False, bool, False)
+    None
 
 
   billing_contact (False, list, None)
@@ -62,11 +70,15 @@ Parameters
     None
 
 
-  organization_information (False, list, None)
+  server_count (False, int, None)
     (Required for new resource)
 
 
   server_type (False, str, None)
+    (Required for new resource)
+
+
+  validity_months (False, int, None)
     (Required for new resource)
 
 
@@ -75,18 +87,6 @@ Parameters
 
 
   order_approver_email_address (False, str, None)
-    (Required for new resource)
-
-
-  billing_contact_same_as_technical_flag (False, bool, False)
-    None
-
-
-  billing_address_same_as_organization_flag (False, bool, False)
-    None
-
-
-  validity_months (False, int, None)
     (Required for new resource)
 
 

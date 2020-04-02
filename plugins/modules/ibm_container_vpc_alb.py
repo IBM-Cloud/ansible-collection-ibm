@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    alb_id:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    cluster:
+        description:
+            - None
+        required: False
+        type: str
+    enable:
+        description:
+            - None
+        required: False
+        type: bool
     name:
         description:
             - None
@@ -35,22 +50,17 @@ options:
             - None
         required: False
         type: bool
-    status:
+    state_:
         description:
             - None
         required: False
         type: str
-    alb_id:
+    zone:
         description:
-            - (Required for new resource) 
+            - None
         required: False
         type: str
     alb_type:
-        description:
-            - None
-        required: False
-        type: str
-    cluster:
         description:
             - None
         required: False
@@ -60,17 +70,7 @@ options:
             - None
         required: False
         type: bool
-    zone:
-        description:
-            - None
-        required: False
-        type: str
-    enable:
-        description:
-            - None
-        required: False
-        type: bool
-    state_:
+    status:
         description:
             - None
         required: False
@@ -116,22 +116,31 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'alb_id',
+    'cluster',
+    'enable',
     'name',
     'load_balancer_hostname',
     'resize',
-    'status',
-    'alb_id',
-    'alb_type',
-    'cluster',
-    'disable_deployment',
-    'zone',
-    'enable',
     'state_',
+    'zone',
+    'alb_type',
+    'disable_deployment',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    alb_id=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    enable=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),
@@ -141,28 +150,19 @@ module_args = dict(
     resize=dict(
         required=False,
         type='bool'),
-    status=dict(
+    state_=dict(
         required=False,
         type='str'),
-    alb_id=dict(
+    zone=dict(
         required=False,
         type='str'),
     alb_type=dict(
         required=False,
         type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     disable_deployment=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
-    state_=dict(
+    status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -211,7 +211,7 @@ def run_module():
         resource_type='ibm_container_vpc_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

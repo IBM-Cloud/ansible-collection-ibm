@@ -16,10 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_quota' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - Type of the quota.
+        required: False
+        type: str
+    max_apps:
+        description:
+            - Defines the total app limit.
+        required: False
+        type: int
+    max_instances_per_app:
+        description:
+            - Defines the total instances limit per app.
+        required: False
+        type: int
     max_app_instance_memory:
         description:
             - Defines the total memory of app instance.
@@ -45,21 +60,6 @@ options:
             - Resource quota name, for example Trial Quota
         required: True
         type: str
-    type:
-        description:
-            - Type of the quota.
-        required: False
-        type: str
-    max_apps:
-        description:
-            - Defines the total app limit.
-        required: False
-        type: int
-    max_instances_per_app:
-        description:
-            - Defines the total instances limit per app.
-        required: False
-        type: int
     ibmcloud_api_key:
         description:
             - The API Key used for authentification. This can also be
@@ -88,19 +88,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'max_apps',
+    'max_instances_per_app',
     'max_app_instance_memory',
     'total_app_memory',
     'max_service_instances',
     'vsi_limit',
     'name',
-    'type',
-    'max_apps',
-    'max_instances_per_app',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required=False,
+        type='str'),
+    max_apps=dict(
+        required=False,
+        type='int'),
+    max_instances_per_app=dict(
+        required=False,
+        type='int'),
     max_app_instance_memory=dict(
         required=False,
         type='str'),
@@ -116,15 +125,6 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    max_apps=dict(
-        required=False,
-        type='int'),
-    max_instances_per_app=dict(
-        required=False,
-        type='int'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -153,7 +153,7 @@ def run_module():
         resource_type='ibm_resource_quota',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

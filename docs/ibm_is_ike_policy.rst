@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,39 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource)
-
-
-  resource_group (False, str, None)
-    None
-
-
-  key_lifetime (False, int, 28800)
-    None
-
-
-  ike_version (False, int, None)
-    None
-
-
-  negotiation_mode (False, str, None)
-    None
-
-
-  href (False, str, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   name (False, str, None)
+    (Required for new resource)
+
+
+  authentication_algorithm (False, str, None)
     (Required for new resource)
 
 
@@ -70,12 +46,36 @@ Parameters
     (Required for new resource)
 
 
+  key_lifetime (False, int, 28800)
+    None
+
+
+  negotiation_mode (False, str, None)
+    None
+
+
   vpn_connections (False, list, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_group (False, str, None)
+    None
+
+
+  ike_version (False, int, None)
+    None
+
+
+  href (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

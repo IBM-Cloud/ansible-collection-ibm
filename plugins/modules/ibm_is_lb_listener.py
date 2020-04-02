@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    default_pool:
-        description:
-            - None
-        required: False
-        type: str
     status:
         description:
             - None
@@ -55,6 +50,11 @@ options:
             - None
         required: False
         type: int
+    default_pool:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -120,21 +120,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default_pool',
     'status',
     'lb',
     'port',
     'protocol',
     'certificate_instance',
     'connection_limit',
+    'default_pool',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default_pool=dict(
-        required=False,
-        type='str'),
     status=dict(
         required=False,
         type='str'),
@@ -153,6 +150,9 @@ module_args = dict(
     connection_limit=dict(
         required=False,
         type='int'),
+    default_pool=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +231,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

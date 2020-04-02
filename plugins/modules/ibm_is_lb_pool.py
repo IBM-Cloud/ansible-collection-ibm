@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    session_persistence_type:
-        description:
-            - None
-        required: False
-        type: str
     health_retries:
         description:
             - (Required for new resource) 
@@ -45,22 +40,7 @@ options:
             - None
         required: False
         type: int
-    health_delay:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    health_timeout:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: int
-    session_persistence_cookie_name:
-        description:
-            - None
-        required: False
-        type: str
-    provisioning_status:
+    session_persistence_type:
         description:
             - None
         required: False
@@ -75,16 +55,36 @@ options:
             - (Required for new resource) 
         required: False
         type: str
-    algorithm:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     protocol:
         description:
             - (Required for new resource) 
         required: False
         type: str
+    session_persistence_cookie_name:
+        description:
+            - None
+        required: False
+        type: str
+    provisioning_status:
+        description:
+            - None
+        required: False
+        type: str
+    algorithm:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    health_delay:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
+    health_timeout:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -145,37 +145,34 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('health_retries', 'int'),
     ('health_type', 'str'),
-    ('health_delay', 'int'),
-    ('health_timeout', 'int'),
     ('name', 'str'),
     ('lb', 'str'),
-    ('algorithm', 'str'),
     ('protocol', 'str'),
+    ('algorithm', 'str'),
+    ('health_delay', 'int'),
+    ('health_timeout', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'session_persistence_type',
     'health_retries',
     'health_type',
     'health_monitor_url',
     'health_monitor_port',
-    'health_delay',
-    'health_timeout',
-    'session_persistence_cookie_name',
-    'provisioning_status',
+    'session_persistence_type',
     'name',
     'lb',
-    'algorithm',
     'protocol',
+    'session_persistence_cookie_name',
+    'provisioning_status',
+    'algorithm',
+    'health_delay',
+    'health_timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    session_persistence_type=dict(
-        required=False,
-        type='str'),
     health_retries=dict(
         required=False,
         type='int'),
@@ -188,16 +185,7 @@ module_args = dict(
     health_monitor_port=dict(
         required=False,
         type='int'),
-    health_delay=dict(
-        required=False,
-        type='int'),
-    health_timeout=dict(
-        required=False,
-        type='int'),
-    session_persistence_cookie_name=dict(
-        required=False,
-        type='str'),
-    provisioning_status=dict(
+    session_persistence_type=dict(
         required=False,
         type='str'),
     name=dict(
@@ -206,12 +194,24 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
     protocol=dict(
         required=False,
         type='str'),
+    session_persistence_cookie_name=dict(
+        required=False,
+        type='str'),
+    provisioning_status=dict(
+        required=False,
+        type='str'),
+    algorithm=dict(
+        required=False,
+        type='str'),
+    health_delay=dict(
+        required=False,
+        type='int'),
+    health_timeout=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -290,7 +290,7 @@ def run_module():
         resource_type='ibm_is_lb_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

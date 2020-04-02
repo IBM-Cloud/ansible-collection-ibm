@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_network_name (False, str, None)
+    (Required for new resource)
+
 
   pi_dns (False, list, None)
     None
@@ -51,10 +55,6 @@ Parameters
 
 
   pi_network_type (False, str, None)
-    (Required for new resource)
-
-
-  pi_network_name (False, str, None)
     (Required for new resource)
 
 

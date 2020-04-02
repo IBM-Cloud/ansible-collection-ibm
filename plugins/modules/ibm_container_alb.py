@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
@@ -30,12 +30,17 @@ options:
             - None
         required: False
         type: str
-    enable:
+    disable_deployment:
         description:
             - None
         required: False
         type: bool
     zone:
+        description:
+            - None
+        required: False
+        type: str
+    region:
         description:
             - None
         required: False
@@ -50,17 +55,12 @@ options:
             - None
         required: False
         type: str
-    disable_deployment:
+    enable:
         description:
             - None
         required: False
         type: bool
     name:
-        description:
-            - None
-        required: False
-        type: str
-    region:
         description:
             - None
         required: False
@@ -108,13 +108,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'alb_id',
     'user_ip',
-    'enable',
+    'disable_deployment',
     'zone',
+    'region',
     'alb_type',
     'cluster',
-    'disable_deployment',
+    'enable',
     'name',
-    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -126,10 +126,13 @@ module_args = dict(
     user_ip=dict(
         required=False,
         type='str'),
-    enable=dict(
+    disable_deployment=dict(
         required=False,
         type='bool'),
     zone=dict(
+        required=False,
+        type='str'),
+    region=dict(
         required=False,
         type='str'),
     alb_type=dict(
@@ -138,13 +141,10 @@ module_args = dict(
     cluster=dict(
         required=False,
         type='str'),
-    disable_deployment=dict(
+    enable=dict(
         required=False,
         type='bool'),
     name=dict(
-        required=False,
-        type='str'),
-    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

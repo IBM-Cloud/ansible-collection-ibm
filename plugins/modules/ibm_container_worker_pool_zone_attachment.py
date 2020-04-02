@@ -16,30 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    zone:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    worker_pool:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
     public_vlan_id:
         description:
             - None
@@ -60,6 +40,26 @@ options:
             - None
         required: False
         type: int
+    zone:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    worker_pool:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,31 +103,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone',
-    'cluster',
-    'worker_pool',
-    'private_vlan_id',
     'public_vlan_id',
     'resource_group_id',
     'region',
     'worker_count',
+    'zone',
+    'cluster',
+    'worker_pool',
+    'private_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    worker_pool=dict(
-        required=False,
-        type='str'),
-    private_vlan_id=dict(
-        required=False,
-        type='str'),
     public_vlan_id=dict(
         required=False,
         type='str'),
@@ -140,6 +128,18 @@ module_args = dict(
     worker_count=dict(
         required=False,
         type='int'),
+    zone=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    worker_pool=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

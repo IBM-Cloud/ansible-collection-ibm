@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
+    pi_network_name:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
     pi_dns:
         description:
             - None
@@ -52,11 +57,6 @@ options:
         required: False
         type: float
     pi_network_type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    pi_network_name:
         description:
             - (Required for new resource) 
         required: False
@@ -97,13 +97,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_network_type', 'str'),
-    ('pi_network_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_network_name',
     'pi_dns',
     'pi_cidr',
     'pi_gateway',
@@ -111,12 +112,14 @@ TL_ALL_PARAMETERS = [
     'network_id',
     'vlan_id',
     'pi_network_type',
-    'pi_network_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_network_name=dict(
+        required=False,
+        type='str'),
     pi_dns=dict(
         required=False,
         elements='',
@@ -137,9 +140,6 @@ module_args = dict(
         required=False,
         type='float'),
     pi_network_type=dict(
-        required=False,
-        type='str'),
-    pi_network_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -188,7 +188,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

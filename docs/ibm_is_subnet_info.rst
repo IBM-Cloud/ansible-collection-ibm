@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_version (False, int, None)
+  ipv4_cidr_block (False, str, None)
     None
 
 
@@ -34,12 +34,12 @@ Parameters
     None
 
 
-  available_ipv4_address_count (False, str, None)
+  public_gateway (False, str, None)
     None
 
 
-  total_ipv4_address_count (False, int, None)
-    None
+  resource_name (False, str, None)
+    The name of the resource
 
 
   vpc (False, str, None)
@@ -50,24 +50,20 @@ Parameters
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  ipv4_cidr_block (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
   resource_status (False, str, None)
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  identifier (True, str, None)
+    None
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  name (False, str, None)
+    None
 
 
   status (False, str, None)
@@ -78,20 +74,24 @@ Parameters
     None
 
 
-  name (False, str, None)
+  total_ipv4_address_count (False, int, None)
     None
 
 
-  public_gateway (False, str, None)
+  ip_version (False, int, None)
     None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  identifier (True, str, None)
-    None
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   generation (False, any, 2)

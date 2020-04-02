@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  state (False, str, None)
+    None
+
 
   size (False, int, None)
     None
@@ -47,10 +51,6 @@ Parameters
 
 
   pi_cloud_instance_id (True, str, None)
-    None
-
-
-  state (False, str, None)
     None
 
 

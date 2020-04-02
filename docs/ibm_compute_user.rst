@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
@@ -26,19 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  state_ (False, str, None)
-    (Required for new resource)
-
-
-  user_status (False, str, ACTIVE)
+  permissions (False, list, None)
     None
 
 
-  password (False, str, None)
-    None
-
-
-  city (False, str, None)
+  last_name (False, str, None)
     (Required for new resource)
 
 
@@ -46,23 +38,7 @@ Parameters
     (Required for new resource)
 
 
-  address1 (False, str, None)
-    (Required for new resource)
-
-
-  address2 (False, str, None)
-    None
-
-
-  timezone (False, str, None)
-    (Required for new resource)
-
-
-  last_name (False, str, None)
-    (Required for new resource)
-
-
-  first_name (False, str, None)
+  company_name (False, str, None)
     (Required for new resource)
 
 
@@ -70,19 +46,7 @@ Parameters
     (Required for new resource)
 
 
-  permissions (False, list, None)
-    None
-
-
-  has_api_key (False, bool, False)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  username (False, str, None)
+  password (False, str, None)
     None
 
 
@@ -94,7 +58,43 @@ Parameters
     None
 
 
-  company_name (False, str, None)
+  first_name (False, str, None)
+    (Required for new resource)
+
+
+  tags (False, list, None)
+    None
+
+
+  address2 (False, str, None)
+    None
+
+
+  city (False, str, None)
+    (Required for new resource)
+
+
+  timezone (False, str, None)
+    (Required for new resource)
+
+
+  user_status (False, str, ACTIVE)
+    None
+
+
+  username (False, str, None)
+    None
+
+
+  state_ (False, str, None)
+    (Required for new resource)
+
+
+  has_api_key (False, bool, False)
+    None
+
+
+  address1 (False, str, None)
     (Required for new resource)
 
 

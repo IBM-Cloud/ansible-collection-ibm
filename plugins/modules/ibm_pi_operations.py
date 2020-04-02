@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_operations' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    pi_status:
-        description:
-            - None
-        required: False
-        type: str
     pi_instance_name:
         description:
             - (Required for new resource) 
@@ -54,6 +49,11 @@ options:
     pi_cloud_instance_id:
         description:
             - (Required for new resource) 
+        required: False
+        type: str
+    pi_status:
+        description:
+            - None
         required: False
         type: str
     id:
@@ -99,21 +99,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_status',
     'pi_instance_name',
     'addresses',
     'pi_health_status',
     'pi_operation',
     'pi_progress',
     'pi_cloud_instance_id',
+    'pi_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_status=dict(
-        required=False,
-        type='str'),
     pi_instance_name=dict(
         required=False,
         type='str'),
@@ -131,6 +128,9 @@ module_args = dict(
         required=False,
         type='float'),
     pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -179,7 +179,7 @@ def run_module():
         resource_type='ibm_pi_operations',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

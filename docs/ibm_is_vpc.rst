@@ -18,13 +18,33 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.2.6
+- IBM-Cloud terraform-provider-ibm v1.3.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  address_prefix_management (False, str, auto)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  default_network_acl (False, str, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource)
+
+
+  resource_group (False, str, None)
+    None
+
 
   default_security_group (False, str, None)
     None
@@ -34,19 +54,19 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  default_network_acl (False, str, None)
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  cse_source_addresses (False, list, None)
     None
 
 
-  resource_group (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  address_prefix_management (False, str, auto)
+  subnets (False, list, None)
     None
 
 
@@ -54,32 +74,16 @@ Parameters
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource)
+  status (False, str, None)
+    None
 
 
   tags (False, list, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
   resource_status (False, str, None)
     The status of the resource
-
-
-  cse_source_addresses (False, list, None)
-    None
 
 
   id (False, str, None)

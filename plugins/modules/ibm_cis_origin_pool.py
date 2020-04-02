@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.2.6
+    - IBM-Cloud terraform-provider-ibm v1.3.0
     - Terraform v0.12.20
 
 options:
-    created_on:
-        description:
-            - None
-        required: False
-        type: str
-    modified_on:
-        description:
-            - None
-        required: False
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -40,28 +30,33 @@ options:
             - (Required for new resource) name
         required: False
         type: str
-    minimum_origins:
-        description:
-            - None
-        required: False
-        type: int
-        default: 1
-    monitor:
-        description:
-            - None
-        required: False
-        type: str
-    notification_email:
-        description:
-            - None
-        required: False
-        type: str
     check_regions:
         description:
             - (Required for new resource) 
         required: False
         type: list
         elements: str
+    monitor:
+        description:
+            - None
+        required: False
+        type: str
+    origins:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: list
+        elements: dict
+    created_on:
+        description:
+            - None
+        required: False
+        type: str
+    modified_on:
+        description:
+            - None
+        required: False
+        type: str
     description:
         description:
             - None
@@ -72,12 +67,17 @@ options:
             - (Required for new resource) 
         required: False
         type: bool
-    origins:
+    minimum_origins:
         description:
-            - (Required for new resource) 
+            - None
         required: False
-        type: list
-        elements: dict
+        type: int
+        default: 1
+    notification_email:
+        description:
+            - None
+        required: False
+        type: str
     healthy:
         description:
             - None
@@ -122,64 +122,64 @@ TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
     ('name', 'str'),
     ('check_regions', 'list'),
-    ('enabled', 'bool'),
     ('origins', 'list'),
+    ('enabled', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'created_on',
-    'modified_on',
     'cis_id',
     'name',
-    'minimum_origins',
-    'monitor',
-    'notification_email',
     'check_regions',
+    'monitor',
+    'origins',
+    'created_on',
+    'modified_on',
     'description',
     'enabled',
-    'origins',
+    'minimum_origins',
+    'notification_email',
     'healthy',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    created_on=dict(
-        required=False,
-        type='str'),
-    modified_on=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    minimum_origins=dict(
-        default=1,
-        type='int'),
-    monitor=dict(
-        required=False,
-        type='str'),
-    notification_email=dict(
-        required=False,
-        type='str'),
     check_regions=dict(
         required=False,
         elements='',
         type='list'),
+    monitor=dict(
+        required=False,
+        type='str'),
+    origins=dict(
+        required=False,
+        elements='',
+        type='list'),
+    created_on=dict(
+        required=False,
+        type='str'),
+    modified_on=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    origins=dict(
+    minimum_origins=dict(
+        default=1,
+        type='int'),
+    notification_email=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     healthy=dict(
         required=False,
         type='str'),
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_cis_origin_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.2.6',
+        ibm_provider_version='1.3.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
