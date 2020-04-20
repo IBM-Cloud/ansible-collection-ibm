@@ -16,20 +16,57 @@ description:
     - Retrieve an IBM Cloud 'ibm_app' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    package_state:
-        description:
-            - The state of the application package whether staged, pending etc
-        required: False
-        type: str
     health_check_timeout:
         description:
             - Timeout in seconds for health checking of an staged app when starting up.
         required: False
         type: int
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
+    instances:
+        description:
+            - The number of instances
+        required: False
+        type: int
+    service_instance_guid:
+        description:
+            - Define the service instance guids that should be bound to this application.
+        required: False
+        type: list
+        elements: str
+    package_state:
+        description:
+            - The state of the application package whether staged, pending etc
+        required: False
+        type: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    buildpack:
+        description:
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+        required: False
+        type: str
+    route_guid:
+        description:
+            - Define the route guids which should be bound to the application.
+        required: False
+        type: list
+        elements: str
+    health_check_type:
+        description:
+            - Type of health check to perform.
+        required: False
+        type: str
     name:
         description:
             - The name for the app
@@ -45,69 +82,42 @@ options:
             - The maximum amount of disk available to an instance of an app. In megabytes.
         required: False
         type: int
-    buildpack:
-        description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
-        required: False
-        type: str
     environment_json:
         description:
             - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
         required: False
         type: dict
-    service_instance_guid:
-        description:
-            - Define the service instance guids that should be bound to this application.
-        required: False
-        type: list
-        elements: str
-    instances:
-        description:
-            - The number of instances
-        required: False
-        type: int
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
-    health_check_type:
-        description:
-            - Type of health check to perform.
-        required: False
-        type: str
-    memory:
-        description:
-            - The amount of memory each instance should have. In megabytes.
-        required: False
-        type: int
-    route_guid:
-        description:
-            - Define the route guids which should be bound to the application.
-        required: False
-        type: list
-        elements: str
     state:
         description:
             - The state of the application
         required: False
         type: str
-    ibmcloud_api_key:
+    iaas_classic_username:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
-        required: True
-    ibmcloud_region:
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure (SoftLayer) user name. This can also be provided
+              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+        required: False
+    iaas_classic_api_key:
         description:
-            - Denotes which IBM Cloud region to connect to
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure API key. This can also be provided via the
+              environment variable 'IAAS_CLASSIC_API_KEY'.
+        required: False
+    region:
+        description:
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
         default: us-south
         required: False
-    ibmcloud_zone:
+    ibmcloud_api_key:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -121,31 +131,54 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'package_state',
     'health_check_timeout',
+    'memory',
+    'instances',
+    'service_instance_guid',
+    'package_state',
+    'health_check_http_endpoint',
+    'buildpack',
+    'route_guid',
+    'health_check_type',
     'name',
     'space_guid',
     'disk_quota',
-    'buildpack',
     'environment_json',
-    'service_instance_guid',
-    'instances',
-    'health_check_http_endpoint',
-    'health_check_type',
-    'memory',
-    'route_guid',
     'state',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    package_state=dict(
-        required=False,
-        type='str'),
     health_check_timeout=dict(
         required=False,
         type='int'),
+    memory=dict(
+        required=False,
+        type='int'),
+    instances=dict(
+        required=False,
+        type='int'),
+    service_instance_guid=dict(
+        required=False,
+        elements='',
+        type='list'),
+    package_state=dict(
+        required=False,
+        type='str'),
+    health_check_http_endpoint=dict(
+        required=False,
+        type='str'),
+    buildpack=dict(
+        required=False,
+        type='str'),
+    route_guid=dict(
+        required=False,
+        elements='',
+        type='list'),
+    health_check_type=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
@@ -155,47 +188,31 @@ module_args = dict(
     disk_quota=dict(
         required=False,
         type='int'),
-    buildpack=dict(
-        required=False,
-        type='str'),
     environment_json=dict(
         required=False,
         type='dict'),
-    service_instance_guid=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instances=dict(
-        required=False,
-        type='int'),
-    health_check_http_endpoint=dict(
-        required=False,
-        type='str'),
-    health_check_type=dict(
-        required=False,
-        type='str'),
-    memory=dict(
-        required=False,
-        type='int'),
-    route_guid=dict(
-        required=False,
-        elements='',
-        type='list'),
     state=dict(
         required=False,
         type='str'),
+    iaas_classic_username=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
+        required=False),
+    iaas_classic_api_key=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
+        required=False),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -212,7 +229,7 @@ def run_module():
         resource_type='ibm_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

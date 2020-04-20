@@ -16,48 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    size:
-        description:
-            - None
-        required: False
-        type: int
-    bootable:
-        description:
-            - None
-        required: False
-        type: bool
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
     shareable:
         description:
-            - None
+            - NA
         required: False
         type: bool
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    creation_date:
-        description:
-            - None
-        required: False
-        type: str
     disk_type:
         description:
-            - None
+            - NA
         required: False
         type: str
     pi_volume_name:
@@ -65,22 +35,56 @@ options:
             - Volume Name to be used for pvminstances
         required: True
         type: str
-    ibmcloud_api_key:
+    pi_cloud_instance_id:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
+            - NA
         required: True
-    ibmcloud_region:
+        type: str
+    state:
         description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
+            - NA
         required: False
-    ibmcloud_zone:
+        type: str
+    size:
+        description:
+            - NA
+        required: False
+        type: int
+    name:
+        description:
+            - NA
+        required: False
+        type: str
+    bootable:
+        description:
+            - NA
+        required: False
+        type: bool
+    creation_date:
+        description:
+            - NA
+        required: False
+        type: str
+    zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
+              environment. This can also be provided via the environment
               variable 'IC_ZONE'.
         required: False
+    region:
+        description:
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
+        default: us-south
+        required: False
+    ibmcloud_api_key:
+        description:
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -88,65 +92,65 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'size',
-    'bootable',
-    'pi_cloud_instance_id',
-    'state',
     'shareable',
-    'name',
-    'creation_date',
     'disk_type',
     'pi_volume_name',
+    'pi_cloud_instance_id',
+    'state',
+    'size',
+    'name',
+    'bootable',
+    'creation_date',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    size=dict(
-        required=False,
-        type='int'),
-    bootable=dict(
-        required=False,
-        type='bool'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
     shareable=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    creation_date=dict(
-        required=False,
-        type='str'),
     disk_type=dict(
         required=False,
         type='str'),
     pi_volume_name=dict(
         required=True,
         type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
+    state=dict(
+        required=False,
+        type='str'),
+    size=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    bootable=dict(
+        required=False,
+        type='bool'),
+    creation_date=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE'])),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -163,7 +167,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,36 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  router_hostname (False, str, None)
-    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+  memory_capacity (False, int, None)
+    The capacity that the dedicated host's memory allocation is restricted to.
 
 
-  disk_capacity (False, int, None)
-    The capacity that the dedicated host's disk allocation is restricted to.
+  wait_time_minutes (False, int, 90)
+    NA
 
 
   tags (False, list, None)
-    None
+    NA
 
 
   domain (False, str, None)
     (Required for new resource) The domain of dedicatated host.
 
 
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
-
-
   hourly_billing (False, bool, True)
     The billing type for the dedicatated host.
 
 
-  memory_capacity (False, int, None)
-    The capacity that the dedicated host's memory allocation is restricted to.
+  disk_capacity (False, int, None)
+    The capacity that the dedicated host's disk allocation is restricted to.
 
 
-  wait_time_minutes (False, int, 90)
-    None
+  router_hostname (False, str, None)
+    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+
+
+  cpu_count (False, int, None)
+    The capacity that the dedicated host's CPU allocation is restricted to.
 
 
   hostname (False, str, None)
@@ -66,8 +66,8 @@ Parameters
     (Required for new resource) The data center in which the dedicatated host is to be provisioned.
 
 
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
 
 
   id (False, str, None)
@@ -78,16 +78,20 @@ Parameters
     State of resource
 
 
+  iaas_classic_username (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+
+
+  iaas_classic_api_key (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

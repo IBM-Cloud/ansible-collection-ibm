@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,68 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource)
-
-
-  name (False, str, None)
-    (Required for new resource)
-
-
-  issuer (False, str, None)
-    None
-
-
-  expires_on (False, int, None)
-    None
-
-
-  issuance_info (False, dict, None)
-    None
-
-
-  has_previous (False, str, None)
-    None
-
-
   rotate_keys (False, bool, False)
-    None
-
-
-  domain_validation_method (False, str, dns - 01)
-    None
-
-
-  algorithm (False, str, None)
-    None
-
-
-  begins_on (False, int, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  dns_provider_instance_crn (False, str, None)
-    None
-
-
-  key_algorithm (False, str, None)
-    None
-
-
-  imported (False, bool, None)
-    None
-
-
-  domains (False, list, None)
-    (Required for new resource)
+    NA
 
 
   description (False, str, None)
-    None
+    NA
+
+
+  issuer (False, str, None)
+    NA
+
+
+  issuance_info (False, dict, None)
+    NA
+
+
+  name (False, str, None)
+    (Required for new resource) NA
+
+
+  domains (False, list, None)
+    (Required for new resource) NA
+
+
+  begins_on (False, int, None)
+    NA
+
+
+  imported (False, bool, None)
+    NA
+
+
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource) NA
+
+
+  algorithm (False, str, None)
+    NA
+
+
+  status (False, str, None)
+    NA
+
+
+  has_previous (False, str, None)
+    NA
+
+
+  domain_validation_method (False, str, dns - 01)
+    NA
+
+
+  dns_provider_instance_crn (False, str, None)
+    NA
+
+
+  key_algorithm (False, str, None)
+    NA
+
+
+  expires_on (False, int, None)
+    NA
 
 
   id (False, str, None)
@@ -98,16 +98,20 @@ Parameters
     State of resource
 
 
+  iaas_classic_username (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+
+
+  iaas_classic_api_key (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

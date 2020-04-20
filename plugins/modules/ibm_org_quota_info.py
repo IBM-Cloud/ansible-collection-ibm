@@ -16,23 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_org_quota' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    total_routes:
-        description:
-            - Defines the total route for organization.
-        required: False
-        type: int
-    trial_db_allowed:
-        description:
-            - Defines trial db are allowed for organization.
-        required: False
-        type: bool
     app_instance_limit:
         description:
             - Defines the total app instance limit for organization.
+        required: False
+        type: int
+    total_private_domains:
+        description:
+            - Defines the total private domain limit for organization.v
         required: False
         type: int
     total_service_keys:
@@ -40,14 +35,14 @@ options:
             - Defines the total service keys for organization.
         required: False
         type: int
-    name:
+    non_basic_services_allowed:
         description:
-            - Org quota name, for example qIBM
-        required: True
-        type: str
-    total_services:
+            - Define non basic services are allowed for organization.
+        required: False
+        type: bool
+    total_routes:
         description:
-            - Defines the total services for organization.
+            - Defines the total route for organization.
         required: False
         type: int
     memory_limit:
@@ -60,9 +55,19 @@ options:
             - Defines the  total instance memory limit for organization.
         required: False
         type: int
-    total_private_domains:
+    trial_db_allowed:
         description:
-            - Defines the total private domain limit for organization.v
+            - Defines trial db are allowed for organization.
+        required: False
+        type: bool
+    name:
+        description:
+            - Org quota name, for example qIBM
+        required: True
+        type: str
+    total_services:
+        description:
+            - Defines the total services for organization.
         required: False
         type: int
     app_tasks_limit:
@@ -75,27 +80,32 @@ options:
             - Defines the number of reserved route ports for organization.
         required: False
         type: int
-    non_basic_services_allowed:
+    iaas_classic_username:
         description:
-            - Define non basic services are allowed for organization.
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure (SoftLayer) user name. This can also be provided
+              via the environment variable 'IAAS_CLASSIC_USERNAME'.
         required: False
-        type: bool
-    ibmcloud_api_key:
+    iaas_classic_api_key:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
-        required: True
-    ibmcloud_region:
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure API key. This can also be provided via the
+              environment variable 'IAAS_CLASSIC_API_KEY'.
+        required: False
+    region:
         description:
-            - Denotes which IBM Cloud region to connect to
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
         default: us-south
         required: False
-    ibmcloud_zone:
+    ibmcloud_api_key:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -108,39 +118,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'total_routes',
-    'trial_db_allowed',
     'app_instance_limit',
+    'total_private_domains',
     'total_service_keys',
-    'name',
-    'total_services',
+    'non_basic_services_allowed',
+    'total_routes',
     'memory_limit',
     'instance_memory_limit',
-    'total_private_domains',
+    'trial_db_allowed',
+    'name',
+    'total_services',
     'app_tasks_limit',
     'total_reserved_route_ports',
-    'non_basic_services_allowed',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    total_routes=dict(
+    app_instance_limit=dict(
         required=False,
         type='int'),
-    trial_db_allowed=dict(
-        required=False,
-        type='bool'),
-    app_instance_limit=dict(
+    total_private_domains=dict(
         required=False,
         type='int'),
     total_service_keys=dict(
         required=False,
         type='int'),
-    name=dict(
-        required=True,
-        type='str'),
-    total_services=dict(
+    non_basic_services_allowed=dict(
+        required=False,
+        type='bool'),
+    total_routes=dict(
         required=False,
         type='int'),
     memory_limit=dict(
@@ -149,7 +156,13 @@ module_args = dict(
     instance_memory_limit=dict(
         required=False,
         type='int'),
-    total_private_domains=dict(
+    trial_db_allowed=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=True,
+        type='str'),
+    total_services=dict(
         required=False,
         type='int'),
     app_tasks_limit=dict(
@@ -158,21 +171,25 @@ module_args = dict(
     total_reserved_route_ports=dict(
         required=False,
         type='int'),
-    non_basic_services_allowed=dict(
-        required=False,
-        type='bool'),
+    iaas_classic_username=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
+        required=False),
+    iaas_classic_api_key=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
+        required=False),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -189,7 +206,7 @@ def run_module():
         resource_type='ibm_org_quota',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

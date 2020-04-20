@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,112 +26,104 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  cluster_name_id (True, str, None)
-    Name of the cluster
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
   crn (False, str, None)
     CRN of resource instance
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_pools (False, list, None)
-    None
-
-
-  alb_type (False, str, all)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  ingress_secret (False, str, None)
-    None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  private_service_endpoint_url (False, str, None)
-    None
 
 
   status (False, str, None)
     The status of the cluster master
 
 
-  kube_version (False, str, None)
-    None
-
-
   worker_count (False, int, None)
     Number of workers
 
 
-  albs (False, list, None)
-    None
+  workers (False, list, None)
+    NA
+
+
+  private_service_endpoint (False, bool, None)
+    NA
+
+
+  private_service_endpoint_url (False, str, None)
+    NA
+
+
+  kube_version (False, str, None)
+    NA
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  master_url (False, str, None)
-    None
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  ingress_hostname (False, str, None)
+    NA
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  albs (False, list, None)
+    NA
+
+
+  ingress_secret (False, str, None)
+    NA
+
+
+  public_service_endpoint_url (False, str, None)
+    NA
 
 
   health (False, str, None)
-    None
+    NA
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  cluster_name_id (True, str, None)
+    Name of the cluster
+
+
+  worker_pools (False, list, None)
+    NA
+
+
+  master_url (False, str, None)
+    NA
 
 
   tags (False, list, None)
-    None
+    NA
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  workers (False, list, None)
-    None
+  alb_type (False, str, all)
+    NA
 
 
-  public_service_endpoint_url (False, str, None)
-    None
+  public_service_endpoint (False, bool, None)
+    NA
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

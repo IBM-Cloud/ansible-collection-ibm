@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,28 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  version (False, str, None)
-    Semantic version of the item.
-
-
-  parameters (False, str, None)
-    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
-
-
-  publish (False, bool, None)
-    Action visibilty.
-
-
   limits (False, list, None)
-    None
-
-
-  exec (False, list, None)
-    (Required for new resource)
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
+    NA
 
 
   user_defined_parameters (False, str, [])
@@ -62,6 +42,26 @@ Parameters
     (Required for new resource) Name of action.
 
 
+  exec (False, list, None)
+    (Required for new resource) NA
+
+
+  publish (False, bool, None)
+    Action visibilty.
+
+
+  version (False, str, None)
+    Semantic version of the item.
+
+
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
+
+
+  parameters (False, str, None)
+    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -70,16 +70,12 @@ Parameters
     State of resource
 
 
+  function_namespace (True, any, None)
+    The namespace in IBM Cloud™ Functions where you want to create your resources. This can also be provided via the environment variable 'FUNCTION_NAMESPACE'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

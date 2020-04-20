@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  wait_time_minutes (False, int, 10)
-    Define timeout to wait for the service instances to succeeded/deleted etc.
-
 
   name (False, str, None)
     (Required for new resource) A name for the service instance
@@ -46,12 +42,12 @@ Parameters
     The uniquie identifier of the service offering plan type
 
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass along to the service broker. Must be a JSON object
-
-
   tags (False, list, None)
-    None
+    NA
+
+
+  wait_time_minutes (False, int, 10)
+    Define timeout to wait for the service instances to succeeded/deleted etc.
 
 
   service (False, str, None)
@@ -60,6 +56,10 @@ Parameters
 
   service_keys (False, list, None)
     The service keys asociated with the service instance
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass along to the service broker. Must be a JSON object
 
 
   plan (False, str, None)
@@ -74,16 +74,20 @@ Parameters
     State of resource
 
 
+  iaas_classic_username (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+
+
+  iaas_classic_api_key (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

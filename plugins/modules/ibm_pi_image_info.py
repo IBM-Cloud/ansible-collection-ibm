@@ -16,35 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    state:
-        description:
-            - None
-        required: False
-        type: str
-    size:
-        description:
-            - None
-        required: False
-        type: int
-    architecture:
-        description:
-            - None
-        required: False
-        type: str
-    operatingsystem:
-        description:
-            - None
-        required: False
-        type: str
-    hypervisor:
-        description:
-            - None
-        required: False
-        type: str
     pi_image_name:
         description:
             - Imagename Name to be used for pvminstances
@@ -52,25 +27,54 @@ options:
         type: str
     pi_cloud_instance_id:
         description:
-            - None
+            - NA
         required: True
         type: str
-    ibmcloud_api_key:
+    state:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
-        required: True
-    ibmcloud_region:
-        description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
+            - NA
         required: False
-    ibmcloud_zone:
+        type: str
+    size:
+        description:
+            - NA
+        required: False
+        type: int
+    architecture:
+        description:
+            - NA
+        required: False
+        type: str
+    operatingsystem:
+        description:
+            - NA
+        required: False
+        type: str
+    hypervisor:
+        description:
+            - NA
+        required: False
+        type: str
+    zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
+              environment. This can also be provided via the environment
               variable 'IC_ZONE'.
         required: False
+    region:
+        description:
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
+        default: us-south
+        required: False
+    ibmcloud_api_key:
+        description:
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -84,18 +88,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_image_name',
+    'pi_cloud_instance_id',
     'state',
     'size',
     'architecture',
     'operatingsystem',
     'hypervisor',
-    'pi_image_name',
-    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_image_name=dict(
+        required=True,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
     state=dict(
         required=False,
         type='str'),
@@ -111,24 +121,18 @@ module_args = dict(
     hypervisor=dict(
         required=False,
         type='str'),
-    pi_image_name=dict(
-        required=True,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
+    zone=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_ZONE'])),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -145,7 +149,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

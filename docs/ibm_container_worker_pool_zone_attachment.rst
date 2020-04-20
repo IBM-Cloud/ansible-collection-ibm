@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zone (False, str, None)
+    (Required for new resource) NA
+
+
+  cluster (False, str, None)
+    (Required for new resource) NA
+
+
+  worker_pool (False, str, None)
+    (Required for new resource) NA
+
+
+  private_vlan_id (False, str, None)
+    NA
+
+
   public_vlan_id (False, str, None)
-    None
+    NA
 
 
   resource_group_id (False, str, None)
@@ -39,23 +55,7 @@ Parameters
 
 
   worker_count (False, int, None)
-    None
-
-
-  zone (False, str, None)
-    (Required for new resource)
-
-
-  cluster (False, str, None)
-    (Required for new resource)
-
-
-  worker_pool (False, str, None)
-    (Required for new resource)
-
-
-  private_vlan_id (False, str, None)
-    None
+    NA
 
 
   id (False, str, None)
@@ -67,15 +67,7 @@ Parameters
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

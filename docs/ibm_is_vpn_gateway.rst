@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   subnet (False, str, None)
-    (Required for new resource)
+    (Required for new resource) NA
+
+
+  resource_group (False, str, None)
+    NA
 
 
   status (False, str, None)
-    None
+    NA
 
 
   public_ip_address (False, str, None)
-    None
+    NA
+
+
+  tags (False, list, None)
+    NA
 
 
   resource_controller_url (False, str, None)
@@ -46,28 +66,8 @@ Parameters
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
   name (False, str, None)
-    (Required for new resource)
-
-
-  resource_group (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+    (Required for new resource) NA
 
 
   id (False, str, None)
@@ -79,27 +79,15 @@ Parameters
 
 
   generation (False, any, 2)
-    IBM Cloud infrastructure generation.
+    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  ibmcloud_api_key (False, any, None)
-    (Required when generation = 2) The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
-  iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environmental variable 'IAAS_CLASSIC_USERNAME'.
-
-
-  iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environmental variable 'IAAS_CLASSIC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+  ibmcloud_api_key (True, any, None)
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

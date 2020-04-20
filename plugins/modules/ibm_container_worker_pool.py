@@ -16,40 +16,45 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
     cluster:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
         type: str
-    machine_type:
+    size_per_zone:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
-        type: str
+        type: int
     hardware:
         description:
-            - None
+            - NA
         required: False
         type: str
         default: shared
-    disk_encryption:
+    resource_group_id:
         description:
-            - None
-        required: False
-        type: bool
-        default: True
-    state_:
-        description:
-            - None
+            - ID of the resource group.
         required: False
         type: str
+    zones:
+        description:
+            - NA
+        required: False
+        type: list
+        elements: dict
     labels:
         description:
-            - None
+            - NA
         required: False
         type: dict
         elements: 
@@ -58,30 +63,25 @@ options:
             - The worker pool region
         required: False
         type: str
-    resource_group_id:
+    machine_type:
         description:
-            - ID of the resource group.
+            - (Required for new resource) NA
         required: False
         type: str
     worker_pool_name:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
         type: str
-    size_per_zone:
+    disk_encryption:
         description:
-            - (Required for new resource) 
+            - NA
         required: False
-        type: int
-    zones:
+        type: bool
+        default: True
+    state_:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+            - NA
         required: False
         type: str
     id:
@@ -99,20 +99,10 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
         required: True
-    ibmcloud_region:
-        description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
-        required: False
-    ibmcloud_zone:
-        description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
 
 author:
     - Jay Carman (@jaywcarman)
@@ -121,45 +111,49 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cluster', 'str'),
+    ('size_per_zone', 'int'),
     ('machine_type', 'str'),
     ('worker_pool_name', 'str'),
-    ('size_per_zone', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_controller_url',
     'cluster',
-    'machine_type',
+    'size_per_zone',
     'hardware',
-    'disk_encryption',
-    'state_',
+    'resource_group_id',
+    'zones',
     'labels',
     'region',
-    'resource_group_id',
+    'machine_type',
     'worker_pool_name',
-    'size_per_zone',
-    'zones',
-    'resource_controller_url',
+    'disk_encryption',
+    'state_',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
     cluster=dict(
         required=False,
         type='str'),
-    machine_type=dict(
+    size_per_zone=dict(
         required=False,
-        type='str'),
+        type='int'),
     hardware=dict(
         default='shared',
         type='str'),
-    disk_encryption=dict(
-        default=True,
-        type='bool'),
-    state_=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
     labels=dict(
         required=False,
         elements='',
@@ -167,20 +161,16 @@ module_args = dict(
     region=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    machine_type=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
         required=False,
         type='str'),
-    size_per_zone=dict(
-        required=False,
-        type='int'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
+    disk_encryption=dict(
+        default=True,
+        type='bool'),
+    state_=dict(
         required=False,
         type='str'),
     id=dict(
@@ -195,14 +185,7 @@ module_args = dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -229,7 +212,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

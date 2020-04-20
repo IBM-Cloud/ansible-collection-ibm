@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -30,80 +30,72 @@ Parameters
     If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
-  network (False, bool, False)
-    If set to true will download the Calico network config with the Admin config
-
-
-  config_file_path (False, str, None)
-    The absolute path to the kubernetes config yml file
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  region (False, str, None)
-    The cluster region
-
-
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
-
-
   host (False, str, None)
-    None
-
-
-  token (False, str, None)
-    None
+    NA
 
 
   org_guid (False, str, None)
     The bluemix organization guid this cluster belongs to
 
 
+  region (False, str, None)
+    The cluster region
+
+
+  config_file_path (False, str, None)
+    The absolute path to the kubernetes config yml file
+
+
+  admin_certificate (False, str, None)
+    NA
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
   config_dir (False, str, None)
     The directory where the cluster config to be downloaded. Default is home directory
 
 
-  admin (False, bool, False)
-    If set to true will download the config for admin
+  network (False, bool, False)
+    If set to true will download the Calico network config with the Admin config
 
 
   calico_config_file_path (False, str, None)
     The absolute path to the calico network config file
 
 
-  admin_certificate (False, str, None)
-    None
-
-
-  ca_certificate (False, str, None)
-    None
+  admin_key (False, str, None)
+    NA
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  admin_key (False, str, None)
-    None
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
+
+
+  admin (False, bool, False)
+    If set to true will download the config for admin
+
+
+  ca_certificate (False, str, None)
+    NA
+
+
+  token (False, str, None)
+    NA
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

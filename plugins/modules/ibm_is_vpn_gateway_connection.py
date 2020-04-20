@@ -16,79 +16,79 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway_connection' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    peer_address:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     admin_state_up:
         description:
-            - None
+            - NA
         required: False
         type: bool
         default: False
+    action:
+        description:
+            - NA
+        required: False
+        type: str
+        default: none
+    ipsec_policy:
+        description:
+            - NA
+        required: False
+        type: str
+    ike_policy:
+        description:
+            - NA
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) NA
+        required: False
+        type: str
+    peer_address:
+        description:
+            - (Required for new resource) NA
+        required: False
+        type: str
+    preshared_key:
+        description:
+            - (Required for new resource) NA
+        required: False
+        type: str
     local_cidrs:
         description:
-            - None
+            - NA
         required: False
         type: list
         elements: str
     peer_cidrs:
         description:
-            - None
+            - NA
         required: False
         type: list
         elements: str
-    action:
-        description:
-            - None
-        required: False
-        type: str
-        default: none
     interval:
         description:
-            - None
+            - NA
         required: False
         type: int
         default: 30
     timeout:
         description:
-            - None
+            - NA
         required: False
         type: int
         default: 120
-    name:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    ike_policy:
-        description:
-            - None
-        required: False
-        type: str
     status:
         description:
-            - None
-        required: False
-        type: str
-    ipsec_policy:
-        description:
-            - None
-        required: False
-        type: str
-    preshared_key:
-        description:
-            - (Required for new resource) 
+            - NA
         required: False
         type: str
     vpn_gateway:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
         type: str
     id:
@@ -106,42 +106,28 @@ options:
         required: False
     generation:
         description:
-            - IBM Cloud infrastructure generation.
-        choices:
-            - 1
-            - 2
+            - The generation of Virtual Private Cloud infrastructure
+              that you want to use. Supported values are 1 for VPC
+              generation 1, and 2 for VPC generation 2 infrastructure.
+              If this value is not specified, 2 is used by default. This
+              can also be provided via the environment variable
+              'IC_GENERATION'.
         default: 2
+        required: False
+    region:
+        description:
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
+        default: us-south
         required: False
     ibmcloud_api_key:
         description:
-            - (Required when generation = 2) The API Key used for
-              authentification. This can also be provided via the environment
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
               variable 'IC_API_KEY'.
-        required: False
-    iaas_classic_username:
-        description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environmental variable 'IAAS_CLASSIC_USERNAME'.
-        required: False
-    iaas_classic_api_key:
-        description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environmental variable 'IAAS_CLASSIC_API_KEY'.
-        required: False
-
-    ibmcloud_region:
-        description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
-        required: False
-    ibmcloud_zone:
-        description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -149,38 +135,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('peer_address', 'str'),
     ('name', 'str'),
+    ('peer_address', 'str'),
     ('preshared_key', 'str'),
     ('vpn_gateway', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'peer_address',
     'admin_state_up',
+    'action',
+    'ipsec_policy',
+    'ike_policy',
+    'name',
+    'peer_address',
+    'preshared_key',
     'local_cidrs',
     'peer_cidrs',
-    'action',
     'interval',
     'timeout',
-    'name',
-    'ike_policy',
     'status',
-    'ipsec_policy',
-    'preshared_key',
     'vpn_gateway',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    peer_address=dict(
-        required=False,
-        type='str'),
     admin_state_up=dict(
         default=False,
         type='bool'),
+    action=dict(
+        default='none',
+        type='str'),
+    ipsec_policy=dict(
+        required=False,
+        type='str'),
+    ike_policy=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    peer_address=dict(
+        required=False,
+        type='str'),
+    preshared_key=dict(
+        required=False,
+        type='str'),
     local_cidrs=dict(
         required=False,
         elements='',
@@ -189,28 +190,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    action=dict(
-        default='none',
-        type='str'),
     interval=dict(
         default=30,
         type='int'),
     timeout=dict(
         default=120,
         type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    ike_policy=dict(
-        required=False,
-        type='str'),
     status=dict(
-        required=False,
-        type='str'),
-    ipsec_policy=dict(
-        required=False,
-        type='str'),
-    preshared_key=dict(
         required=False,
         type='str'),
     vpn_gateway=dict(
@@ -229,28 +215,15 @@ module_args = dict(
         required=False,
         fallback=(env_fallback, ['IC_GENERATION']),
         default=2),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=False),
-    iaas_classic_username=dict(
-        type='str',
-        no_log=True,
-        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
-        required=False),
-    iaas_classic_api_key=dict(
-        type='str',
-        no_log=True,
-        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
-        required=False),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -294,7 +267,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

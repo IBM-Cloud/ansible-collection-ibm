@@ -16,53 +16,53 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    domain_name:
-        description:
-            - None
-        required: False
-        type: str
-    cloud_cert_instance_id:
-        description:
-            - None
-        required: False
-        type: str
-    region:
-        description:
-            - None
-        required: False
-        type: str
-    cert_crn:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     secret_name:
         description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    expires_on:
-        description:
-            - None
+            - (Required for new resource) NA
         required: False
         type: str
     issuer_name:
         description:
-            - None
+            - NA
         required: False
         type: str
-    cluster_crn:
+    cloud_cert_instance_id:
         description:
-            - None
+            - NA
+        required: False
+        type: str
+    cert_crn:
+        description:
+            - (Required for new resource) NA
         required: False
         type: str
     cluster_id:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
+        required: False
+        type: str
+    domain_name:
+        description:
+            - NA
+        required: False
+        type: str
+    expires_on:
+        description:
+            - NA
+        required: False
+        type: str
+    cluster_crn:
+        description:
+            - NA
+        required: False
+        type: str
+    region:
+        description:
+            - NA
         required: False
         type: str
     id:
@@ -80,20 +80,10 @@ options:
         required: False
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
         required: True
-    ibmcloud_region:
-        description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
-        required: False
-    ibmcloud_zone:
-        description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
 
 author:
     - Jay Carman (@jaywcarman)
@@ -101,52 +91,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cert_crn', 'str'),
     ('secret_name', 'str'),
+    ('cert_crn', 'str'),
     ('cluster_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_name',
-    'cloud_cert_instance_id',
-    'region',
-    'cert_crn',
     'secret_name',
-    'expires_on',
     'issuer_name',
-    'cluster_crn',
+    'cloud_cert_instance_id',
+    'cert_crn',
     'cluster_id',
+    'domain_name',
+    'expires_on',
+    'cluster_crn',
+    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_name=dict(
-        required=False,
-        type='str'),
-    cloud_cert_instance_id=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
-    cert_crn=dict(
-        required=False,
-        type='str'),
     secret_name=dict(
-        required=False,
-        type='str'),
-    expires_on=dict(
         required=False,
         type='str'),
     issuer_name=dict(
         required=False,
         type='str'),
-    cluster_crn=dict(
+    cloud_cert_instance_id=dict(
+        required=False,
+        type='str'),
+    cert_crn=dict(
         required=False,
         type='str'),
     cluster_id=dict(
+        required=False,
+        type='str'),
+    domain_name=dict(
+        required=False,
+        type='str'),
+    expires_on=dict(
+        required=False,
+        type='str'),
+    cluster_crn=dict(
+        required=False,
+        type='str'),
+    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -161,14 +151,7 @@ module_args = dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -195,7 +178,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

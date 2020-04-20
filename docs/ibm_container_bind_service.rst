@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace_id (False, str, None)
-    (Required for new resource)
-
-
-  role (False, str, None)
-    None
-
-
-  cluster_name_id (False, str, None)
-    (Required for new resource)
-
-
-  service_instance_name (False, str, None)
-    None
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   service_instance_id (False, str, None)
-    None
+    NA
 
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  key (False, str, None)
-    None
+  namespace_id (False, str, None)
+    (Required for new resource) NA
 
 
   region (False, str, None)
     The cluster region
 
 
-  tags (False, list, None)
-    None
+  role (False, str, None)
+    NA
+
+
+  cluster_name_id (False, str, None)
+    (Required for new resource) NA
+
+
+  service_instance_name (False, str, None)
+    NA
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  key (False, str, None)
+    NA
 
 
   org_guid (False, str, None)
     The bluemix organization guid this cluster belongs to
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  tags (False, list, None)
+    NA
 
 
   id (False, str, None)
@@ -83,15 +83,7 @@ Parameters
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

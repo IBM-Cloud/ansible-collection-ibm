@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,68 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  health_status (False, str, None)
+    NA
+
+
   status (False, str, None)
-    None
+    NA
 
 
-  minmem (False, int, None)
-    None
+  minproc (False, int, None)
+    NA
+
+
+  maxproc (False, int, None)
+    NA
+
+
+  pi_cloud_instance_id (True, str, None)
+    NA
 
 
   volumes (False, list, None)
-    None
+    NA
 
 
   state (False, str, None)
-    None
+    NA
 
 
   processors (False, int, None)
-    None
+    NA
 
 
-  health_status (False, str, None)
-    None
-
-
-  addresses (False, list, None)
-    None
-
-
-  proctype (False, str, None)
-    None
+  maxmem (False, int, None)
+    NA
 
 
   pi_instance_name (True, str, None)
     Server Name to be used for pvminstances
 
 
-  pi_cloud_instance_id (True, str, None)
-    None
+  addresses (False, list, None)
+    NA
 
 
-  minproc (False, int, None)
-    None
+  proctype (False, str, None)
+    NA
 
 
-  maxproc (False, int, None)
-    None
+  minmem (False, int, None)
+    NA
 
 
-  maxmem (False, int, None)
-    None
+  zone (False, any, None)
+    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

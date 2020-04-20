@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name of rule.
-        required: False
-        type: str
     trigger_name:
         description:
             - (Required for new resource) Name of trigger.
@@ -50,6 +45,11 @@ options:
             - Semantic version of the item.
         required: False
         type: str
+    name:
+        description:
+            - (Required for new resource) Name of rule.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -63,22 +63,18 @@ options:
             - absent
         default: available
         required: False
+    function_namespace:
+        description:
+            - The namespace in IBM Cloud™ Functions where you want to
+              create your resources. This can also be provided via the
+              environment variable 'FUNCTION_NAMESPACE'.
+        required: True
     ibmcloud_api_key:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
         required: True
-    ibmcloud_region:
-        description:
-            - Denotes which IBM Cloud region to connect to
-        default: us-south
-        required: False
-    ibmcloud_zone:
-        description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
 
 author:
     - Jay Carman (@jaywcarman)
@@ -86,27 +82,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('trigger_name', 'str'),
     ('action_name', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'trigger_name',
     'action_name',
     'status',
     'publish',
     'version',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     trigger_name=dict(
         required=False,
         type='str'),
@@ -122,6 +115,9 @@ module_args = dict(
     version=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -130,18 +126,15 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
+    function_namespace=dict(
+        type='str',
+        fallback=(env_fallback, ['FUNCTION_NAMESPACE']),
+        required=True),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -168,7 +161,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

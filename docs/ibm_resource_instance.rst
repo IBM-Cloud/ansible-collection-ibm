@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -38,40 +38,12 @@ Parameters
     Guid of resource instance
 
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
-
-
-  service (False, str, None)
-    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
-
-
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   resource_status (False, str, None)
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
 
 
   location (False, str, None)
@@ -79,7 +51,19 @@ Parameters
 
 
   tags (False, list, None)
-    None
+    NA
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  service (False, str, None)
+    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
   status (False, str, None)
@@ -90,6 +74,22 @@ Parameters
     The crn of the resource
 
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -98,16 +98,20 @@ Parameters
     State of resource
 
 
+  iaas_classic_username (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+
+
+  iaas_classic_api_key (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

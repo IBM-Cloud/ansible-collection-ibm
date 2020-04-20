@@ -417,8 +417,9 @@ def ibmcloud_terraform(
     env = dict(os.environ)
     # Set 'no_log' provider parameters via env vars to prevent
     # exposing key in plaintext provider file
-    if 'api_key' in parameters and parameters['api_key'] is not None:
-        env['IC_API_KEY'] = parameters['api_key']
+    if ('ibmcloud_api_key' in parameters and
+            parameters['ibmcloud_api_key'] is not None):
+        env['IC_API_KEY'] = parameters['ibmcloud_api_key']
     if ('iaas_classic_username' in parameters and
             parameters['iaas_classic_username'] is not None):
         env['IAAS_CLASSIC_USERNAME'] = parameters['iaas_classic_username']
@@ -615,6 +616,12 @@ class Terraform:
     {{% if region is not none %}}
         region           = "{{{{ region }}}}"
     {{% endif %}}
+    {{% if zone is not none %}}
+        zone             = "{{{{ zone }}}}"
+    {{% endif %}}
+    {{% if function_namespace is not none %}}
+        function_namespace = "{{{{ function_namespace }}}}"
+    {{% endif %}}
     }}
     """
 
@@ -630,8 +637,14 @@ class Terraform:
         if 'generation' in parameters:
             self.generation = parameters['generation']
         self.region = None
-        if 'ibmcloud_region' in parameters:
-            self.region = parameters['ibmcloud_region']
+        if 'region' in parameters:
+            self.region = parameters['region']
+        self.zone = None
+        if 'zone' in parameters:
+            self.zone = parameters['zone']
+        self.function_namespace = None
+        if 'function_namespace' in parameters:
+            self.function_namespace = parameters['function_namespace']
         self.terraform_dir = terraform_dir
         self.ibm_provider_version = ibm_provider_version
         self.terraform_version = terraform_version
@@ -726,7 +739,10 @@ class Terraform:
         with open(
                 os.path.join(self.directory, 'provider.tf'), 'w') as file_obj:
             file_obj.write(provider_template.render(
-                {'generation': self.generation, 'region': self.region}))
+                {'generation': self.generation,
+                 'region': self.region,
+                 'zone': self.zone,
+                 'function_namespace': self.function_namespace}))
             file_obj.write("\n")
 
     def cleanup(self, result, rm_subdir):

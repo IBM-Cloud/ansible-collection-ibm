@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,60 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipv4_cidr_block (False, str, None)
-    None
-
-
-  network_acl (False, str, None)
-    None
-
-
-  public_gateway (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  vpc (False, str, None)
-    None
-
-
-  zone (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  identifier (True, str, None)
-    None
-
-
-  available_ipv4_address_count (False, str, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  ipv6_cidr_block (False, str, None)
-    None
-
-
-  total_ipv4_address_count (False, int, None)
-    None
-
-
-  ip_version (False, int, None)
-    None
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   resource_controller_url (False, str, None)
@@ -90,32 +38,72 @@ Parameters
     The crn of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  ip_version (False, int, None)
+    NA
+
+
+  name (False, str, None)
+    NA
+
+
+  network_acl (False, str, None)
+    NA
+
+
+  public_gateway (False, str, None)
+    NA
+
+
+  status (False, str, None)
+    NA
+
+
+  identifier (True, str, None)
+    NA
+
+
+  ipv4_cidr_block (False, str, None)
+    NA
+
+
+  available_ipv4_address_count (False, str, None)
+    NA
+
+
+  zone (False, str, None)
+    NA
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  ipv6_cidr_block (False, str, None)
+    NA
+
+
+  total_ipv4_address_count (False, int, None)
+    NA
+
+
+  vpc (False, str, None)
+    NA
 
 
   generation (False, any, 2)
-    IBM Cloud infrastructure generation.
+    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  ibmcloud_api_key (False, any, None)
-    (Required when generation = 2) The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
-  iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environmental variable 'IAAS_CLASSIC_USERNAME'.
-
-
-  iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environmental variable 'IAAS_CLASSIC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+  ibmcloud_api_key (True, any, None)
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

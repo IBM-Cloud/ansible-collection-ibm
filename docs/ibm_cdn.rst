@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
@@ -26,72 +26,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bucket_name (False, str, None)
-    None
-
-
-  header (False, str, None)
-    None
-
-
-  performance_configuration (False, str, General web delivery)
-    None
-
-
   host_name (False, str, None)
-    (Required for new resource)
-
-
-  origin_address (False, str, None)
-    (Required for new resource)
-
-
-  cache_key_query_rule (False, str, include-all)
-    None
-
-
-  path (False, str, /*)
-    None
-
-
-  cname (False, str, None)
-    None
-
-
-  certificate_type (False, str, None)
-    None
-
-
-  protocol (False, str, HTTP)
-    None
-
-
-  http_port (False, int, 80)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  https_port (False, int, 443)
-    None
-
-
-  respect_headers (False, bool, True)
-    None
-
-
-  file_extension (False, str, None)
-    None
+    (Required for new resource) NA
 
 
   vendor_name (False, str, akamai)
-    None
+    NA
+
+
+  http_port (False, int, 80)
+    NA
+
+
+  cache_key_query_rule (False, str, include-all)
+    NA
+
+
+  bucket_name (False, str, None)
+    NA
+
+
+  protocol (False, str, HTTP)
+    NA
+
+
+  https_port (False, int, 443)
+    NA
+
+
+  respect_headers (False, bool, True)
+    NA
+
+
+  performance_configuration (False, str, General web delivery)
+    NA
 
 
   origin_type (False, str, HOST_SERVER)
-    None
+    NA
+
+
+  origin_address (False, str, None)
+    (Required for new resource) NA
+
+
+  cname (False, str, None)
+    NA
+
+
+  header (False, str, None)
+    NA
+
+
+  certificate_type (False, str, None)
+    NA
+
+
+  status (False, str, None)
+    NA
+
+
+  file_extension (False, str, None)
+    NA
+
+
+  path (False, str, /*)
+    NA
 
 
   id (False, str, None)
@@ -102,16 +102,20 @@ Parameters
     State of resource
 
 
+  iaas_classic_username (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+
+
+  iaas_classic_api_key (False, any, None)
+    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 

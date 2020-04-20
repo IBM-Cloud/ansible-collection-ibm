@@ -16,110 +16,110 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.3.0
+    - IBM-Cloud terraform-provider-ibm v1.4.0
     - Terraform v0.12.20
 
 options:
-    iops:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: float
-    volumename:
-        description:
-            - None
-        required: False
-        type: str
-    allowed_subnets:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     snapshot_capacity:
         description:
-            - None
+            - NA
         required: False
         type: int
     allowed_virtual_guest_ids:
         description:
-            - None
+            - NA
         required: False
         type: list
         elements: int
-    notes:
-        description:
-            - None
-        required: False
-        type: str
     snapshot_schedule:
         description:
-            - None
+            - NA
         required: False
         type: list
         elements: dict
-    hourly_billing:
+    tags:
         description:
-            - None
-        required: False
-        type: bool
-        default: False
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
-    allowed_ip_addresses:
-        description:
-            - None
+            - NA
         required: False
         type: list
         elements: str
-    mountpoint:
-        description:
-            - None
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
     datacenter:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
         type: str
-    capacity:
+    iops:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) NA
         required: False
-        type: int
+        type: float
     allowed_hardware_ids:
         description:
-            - None
+            - NA
         required: False
         type: list
         elements: int
-    resource_controller_url:
+    allowed_ip_addresses:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - NA
+        required: False
+        type: list
+        elements: str
+    notes:
+        description:
+            - NA
         required: False
         type: str
     resource_name:
         description:
             - The name of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) NA
+        required: False
+        type: str
+    hostname:
+        description:
+            - NA
+        required: False
+        type: str
+    hourly_billing:
+        description:
+            - NA
+        required: False
+        type: bool
+        default: False
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    allowed_subnets:
+        description:
+            - NA
+        required: False
+        type: list
+        elements: str
+    mountpoint:
+        description:
+            - NA
+        required: False
+        type: str
+    capacity:
+        description:
+            - (Required for new resource) NA
+        required: False
+        type: int
+    volumename:
+        description:
+            - NA
         required: False
         type: str
     id:
@@ -135,22 +135,32 @@ options:
             - absent
         default: available
         required: False
-    ibmcloud_api_key:
+    iaas_classic_username:
         description:
-            - The API Key used for authentification. This can also be
-              provided via the environment variable 'IC_API_KEY'.
-        required: True
-    ibmcloud_region:
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure (SoftLayer) user name. This can also be provided
+              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+        required: False
+    iaas_classic_api_key:
         description:
-            - Denotes which IBM Cloud region to connect to
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure API key. This can also be provided via the
+              environment variable 'IAAS_CLASSIC_API_KEY'.
+        required: False
+    region:
+        description:
+            - The IBM Cloud region where you want to create your
+              resources. If this value is not specified, us-south is
+              used by default. This can also be provided via the
+              environment variable 'IC_REGION'.
         default: us-south
         required: False
-    ibmcloud_zone:
+    ibmcloud_api_key:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environmental
-              variable 'IC_ZONE'.
-        required: False
+            - The IBM Cloud API key to authenticate with the IBM Cloud
+              platform. This can also be provided via the environment
+              variable 'IC_API_KEY'.
+        required: True
 
 author:
     - Jay Carman (@jaywcarman)
@@ -158,55 +168,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
     ('iops', 'float'),
     ('type', 'str'),
-    ('datacenter', 'str'),
     ('capacity', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iops',
-    'volumename',
-    'allowed_subnets',
-    'tags',
-    'resource_status',
     'snapshot_capacity',
     'allowed_virtual_guest_ids',
-    'notes',
     'snapshot_schedule',
-    'hourly_billing',
-    'hostname',
-    'allowed_ip_addresses',
-    'mountpoint',
-    'type',
+    'tags',
     'datacenter',
-    'capacity',
+    'iops',
     'allowed_hardware_ids',
-    'resource_controller_url',
+    'allowed_ip_addresses',
+    'notes',
     'resource_name',
+    'resource_status',
+    'type',
+    'hostname',
+    'hourly_billing',
+    'resource_controller_url',
+    'allowed_subnets',
+    'mountpoint',
+    'capacity',
+    'volumename',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iops=dict(
-        required=False,
-        type='float'),
-    volumename=dict(
-        required=False,
-        type='str'),
-    allowed_subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_status=dict(
-        required=False,
-        type='str'),
     snapshot_capacity=dict(
         required=False,
         type='int'),
@@ -214,43 +207,60 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
     snapshot_schedule=dict(
         required=False,
         elements='',
         type='list'),
-    hourly_billing=dict(
-        default=False,
-        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    iops=dict(
+        required=False,
+        type='float'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allowed_ip_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    notes=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     hostname=dict(
         required=False,
         type='str'),
-    allowed_ip_addresses=dict(
+    hourly_billing=dict(
+        default=False,
+        type='bool'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    allowed_subnets=dict(
         required=False,
         elements='',
         type='list'),
     mountpoint=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     capacity=dict(
         required=False,
         type='int'),
-    allowed_hardware_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
+    volumename=dict(
         required=False,
         type='str'),
     id=dict(
@@ -261,18 +271,25 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
+    iaas_classic_username=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
+        required=False),
+    iaas_classic_api_key=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
+        required=False),
+    region=dict(
+        type='str',
+        fallback=(env_fallback, ['IC_REGION']),
+        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
         fallback=(env_fallback, ['IC_API_KEY']),
-        required=True),
-    ibmcloud_region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
-    ibmcloud_zone=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_ZONE']))
+        required=True)
 )
 
 
@@ -299,7 +316,7 @@ def run_module():
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.3.0',
+        ibm_provider_version='1.4.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

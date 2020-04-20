@@ -18,41 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.3.0
+- IBM-Cloud terraform-provider-ibm v1.4.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  status (False, str, None)
-    Status of the worker
-
-
-  public_vlan (False, str, None)
-    None
-
-
-  public_ip (False, str, None)
-    None
-
-
-  private_ip (False, str, None)
-    None
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
 
   account_guid (False, str, None)
     The bluemix account guid this cluster belongs to
@@ -70,8 +42,36 @@ Parameters
     State of the worker
 
 
+  status (False, str, None)
+    Status of the worker
+
+
+  public_vlan (False, str, None)
+    NA
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   private_vlan (False, str, None)
-    None
+    NA
+
+
+  private_ip (False, str, None)
+    NA
+
+
+  public_ip (False, str, None)
+    NA
 
 
   resource_controller_url (False, str, None)
@@ -79,15 +79,7 @@ Parameters
 
 
   ibmcloud_api_key (True, any, None)
-    The API Key used for authentification. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-  ibmcloud_region (False, any, us-south)
-    Denotes which IBM Cloud region to connect to
-
-
-  ibmcloud_zone (False, any, None)
-    Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environmental variable 'IC_ZONE'.
+    The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
 
 
 
