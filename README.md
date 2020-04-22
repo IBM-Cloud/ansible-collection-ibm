@@ -34,3 +34,4 @@ Below steps are follwed to install ansible collections for the IBM Cloud resourc
 [IBM Cloud Terraform Provider]: https://github.com/IBM-Cloud/terraform-provider-ibm
 [Python3]: https://www.python.org/downloads/
 [Docs]: https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/docs
+[Red Hat Ansible]: https://www.ansible.com/
