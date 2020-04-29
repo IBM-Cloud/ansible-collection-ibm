@@ -16,100 +16,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_bare_metal' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    storage_groups:
+    fixed_config_preset:
         description:
-            - NA
+            - Fixed config preset value
         required: False
-        type: list
-        elements: dict
-    public_vlan_id:
+        type: str
+    tcp_monitoring:
         description:
-            - NA
-        required: False
-        type: int
-    block_storage_ids:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: int
-    image_template_id:
-        description:
-            - NA
-        required: False
-        type: int
-    hourly_billing:
-        description:
-            - NA
+            - TCP monitoring enabled if set as true
         required: False
         type: bool
-        default: True
-    public_bandwidth:
-        description:
-            - NA
-        required: False
-        type: int
-    datacenter:
-        description:
-            - NA
-        required: False
-        type: str
-    gpu_key_name:
-        description:
-            - NA
-        required: False
-        type: str
+        default: False
     disk_key_names:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: str
-    redundant_power_supply:
-        description:
-            - NA
-        required: False
-        type: bool
-    private_vlan_id:
-        description:
-            - NA
-        required: False
-        type: int
-    secondary_ip_addresses:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: str
-    domain:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    ssh_key_ids:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: int
-    network_speed:
-        description:
-            - NA
-        required: False
-        type: int
-        default: 100
-    public_subnet:
-        description:
-            - NA
-        required: False
-        type: str
     private_subnet:
         description:
-            - NA
+            - None
         required: False
         type: str
     global_identifier:
@@ -117,165 +47,235 @@ options:
             - The unique global identifier of the bare metal server
         required: False
         type: str
-    tcp_monitoring:
+    user_metadata:
         description:
-            - NA
+            - User metadata info
+        required: False
+        type: str
+    os_reference_code:
+        description:
+            - OS refernece code value
+        required: False
+        type: str
+    image_template_id:
+        description:
+            - OS image template ID
+        required: False
+        type: int
+    package_key_name:
+        description:
+            - None
+        required: False
+        type: str
+    os_key_name:
+        description:
+            - None
+        required: False
+        type: str
+    gpu_key_name:
+        description:
+            - None
+        required: False
+        type: str
+    gpu_secondary_key_name:
+        description:
+            - None
+        required: False
+        type: str
+    unbonded_network:
+        description:
+            - None
         required: False
         type: bool
         default: False
-    software_guard_extensions:
+    public_bandwidth:
         description:
-            - NA
+            - None
+        required: False
+        type: int
+    memory:
+        description:
+            - None
+        required: False
+        type: int
+    hostname:
+        description:
+            - Host name
+        required: False
+        type: str
+    ssh_key_ids:
+        description:
+            - SSH KEY IDS list
+        required: False
+        type: list
+        elements: int
+    network_speed:
+        description:
+            - Network speed in MBPS
+        required: False
+        type: int
+        default: 100
+    redundant_power_supply:
+        description:
+            - None
         required: False
         type: bool
-        default: False
-    extended_hardware_testing:
+    private_vlan_id:
         description:
-            - NA
+            - None
+        required: False
+        type: int
+    secondary_ip_count:
+        description:
+            - Secondary IP addresses count
+        required: False
+        type: int
+    block_storage_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    post_install_script_uri:
+        description:
+            - None
+        required: False
+        type: str
+    hourly_billing:
+        description:
+            - Enables hourly billing
+        required: False
+        type: bool
+        default: True
+    private_network_only:
+        description:
+            - only private network configured if is true
         required: False
         type: bool
         default: False
     redundant_network:
         description:
-            - NA
+            - None
+        required: False
+        type: bool
+        default: False
+    extended_hardware_testing:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    public_ipv4_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    ipv6_address:
+        description:
+            - None
+        required: False
+        type: str
+    public_subnet:
+        description:
+            - None
+        required: False
+        type: str
+    public_ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    private_ipv4_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    ipv6_enabled:
+        description:
+            - Boolean value true if IPV6 ia enabled or false
+        required: False
+        type: bool
+        default: False
+    domain:
+        description:
+            - (Required for new resource) Domain name
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    datacenter:
+        description:
+            - None
+        required: False
+        type: str
+    process_key_name:
+        description:
+            - None
+        required: False
+        type: str
+    storage_groups:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
+    ipv6_static_enabled:
+        description:
+            - boolean value true if ipv6 static is enabled else false
+        required: False
+        type: bool
+        default: False
+    notes:
+        description:
+            - Optional notes info
+        required: False
+        type: str
+    file_storage_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    private_ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    secondary_ip_addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    software_guard_extensions:
+        description:
+            - None
         required: False
         type: bool
         default: False
     restricted_network:
         description:
-            - NA
+            - None
         required: False
         type: bool
         default: False
-    memory:
-        description:
-            - NA
-        required: False
-        type: int
     quote_id:
         description:
-            - NA
+            - Quote ID for Quote based provisioning
         required: False
         type: int
-    private_ipv4_address_id:
-        description:
-            - NA
-        required: False
-        type: int
-    file_storage_ids:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: str
-    gpu_secondary_key_name:
-        description:
-            - NA
-        required: False
-        type: str
-    ipv6_enabled:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
-    ipv6_address:
-        description:
-            - NA
-        required: False
-        type: str
-    ipv6_static_enabled:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
-    os_key_name:
-        description:
-            - NA
-        required: False
-        type: str
-    private_ipv4_address:
-        description:
-            - NA
-        required: False
-        type: str
-    user_metadata:
-        description:
-            - NA
-        required: False
-        type: str
-    private_network_only:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
-    package_key_name:
-        description:
-            - NA
-        required: False
-        type: str
-    fixed_config_preset:
-        description:
-            - NA
-        required: False
-        type: str
-    os_reference_code:
-        description:
-            - NA
-        required: False
-        type: str
-    process_key_name:
-        description:
-            - NA
-        required: False
-        type: str
-    secondary_ip_count:
-        description:
-            - NA
-        required: False
-        type: int
-    hostname:
-        description:
-            - NA
-        required: False
-        type: str
-    notes:
-        description:
-            - NA
-        required: False
-        type: str
-    post_install_script_uri:
-        description:
-            - NA
-        required: False
-        type: str
     ipv6_address_id:
         description:
-            - NA
-        required: False
-        type: int
-    unbonded_network:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
-    public_ipv4_address:
-        description:
-            - NA
-        required: False
-        type: str
-    public_ipv4_address_id:
-        description:
-            - NA
+            - None
         required: False
         type: int
     id:
@@ -329,100 +329,106 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'storage_groups',
-    'public_vlan_id',
-    'block_storage_ids',
-    'image_template_id',
-    'hourly_billing',
-    'public_bandwidth',
-    'datacenter',
-    'gpu_key_name',
+    'fixed_config_preset',
+    'tcp_monitoring',
     'disk_key_names',
-    'redundant_power_supply',
-    'private_vlan_id',
-    'secondary_ip_addresses',
-    'domain',
-    'ssh_key_ids',
-    'network_speed',
-    'public_subnet',
     'private_subnet',
     'global_identifier',
-    'tcp_monitoring',
-    'software_guard_extensions',
-    'extended_hardware_testing',
-    'redundant_network',
-    'restricted_network',
-    'memory',
-    'quote_id',
-    'private_ipv4_address_id',
-    'file_storage_ids',
-    'tags',
-    'gpu_secondary_key_name',
-    'ipv6_enabled',
-    'ipv6_address',
-    'ipv6_static_enabled',
-    'os_key_name',
-    'private_ipv4_address',
     'user_metadata',
-    'private_network_only',
-    'package_key_name',
-    'fixed_config_preset',
     'os_reference_code',
-    'process_key_name',
-    'secondary_ip_count',
-    'hostname',
-    'notes',
-    'post_install_script_uri',
-    'ipv6_address_id',
+    'image_template_id',
+    'package_key_name',
+    'os_key_name',
+    'gpu_key_name',
+    'gpu_secondary_key_name',
     'unbonded_network',
-    'public_ipv4_address',
+    'public_bandwidth',
+    'memory',
+    'hostname',
+    'ssh_key_ids',
+    'network_speed',
+    'redundant_power_supply',
+    'private_vlan_id',
+    'secondary_ip_count',
+    'block_storage_ids',
+    'post_install_script_uri',
+    'hourly_billing',
+    'private_network_only',
+    'redundant_network',
+    'extended_hardware_testing',
     'public_ipv4_address_id',
+    'ipv6_address',
+    'public_subnet',
+    'public_ipv4_address',
+    'private_ipv4_address_id',
+    'ipv6_enabled',
+    'domain',
+    'tags',
+    'datacenter',
+    'process_key_name',
+    'storage_groups',
+    'public_vlan_id',
+    'ipv6_static_enabled',
+    'notes',
+    'file_storage_ids',
+    'private_ipv4_address',
+    'secondary_ip_addresses',
+    'software_guard_extensions',
+    'restricted_network',
+    'quote_id',
+    'ipv6_address_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    storage_groups=dict(
+    fixed_config_preset=dict(
+        required=False,
+        type='str'),
+    tcp_monitoring=dict(
+        default=False,
+        type='bool'),
+    disk_key_names=dict(
         required=False,
         elements='',
         type='list'),
-    public_vlan_id=dict(
+    private_subnet=dict(
         required=False,
-        type='int'),
-    block_storage_ids=dict(
+        type='str'),
+    global_identifier=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    user_metadata=dict(
+        required=False,
+        type='str'),
+    os_reference_code=dict(
+        required=False,
+        type='str'),
     image_template_id=dict(
         required=False,
         type='int'),
-    hourly_billing=dict(
-        default=True,
-        type='bool'),
-    public_bandwidth=dict(
+    package_key_name=dict(
         required=False,
-        type='int'),
-    datacenter=dict(
+        type='str'),
+    os_key_name=dict(
         required=False,
         type='str'),
     gpu_key_name=dict(
         required=False,
         type='str'),
-    disk_key_names=dict(
+    gpu_secondary_key_name=dict(
         required=False,
-        elements='',
-        type='list'),
-    redundant_power_supply=dict(
-        required=False,
+        type='str'),
+    unbonded_network=dict(
+        default=False,
         type='bool'),
-    private_vlan_id=dict(
+    public_bandwidth=dict(
         required=False,
         type='int'),
-    secondary_ip_addresses=dict(
+    memory=dict(
         required=False,
-        elements='',
-        type='list'),
-    domain=dict(
+        type='int'),
+    hostname=dict(
         required=False,
         type='str'),
     ssh_key_ids=dict(
@@ -432,105 +438,99 @@ module_args = dict(
     network_speed=dict(
         default=100,
         type='int'),
-    public_subnet=dict(
+    redundant_power_supply=dict(
         required=False,
-        type='str'),
-    private_subnet=dict(
-        required=False,
-        type='str'),
-    global_identifier=dict(
-        required=False,
-        type='str'),
-    tcp_monitoring=dict(
-        default=False,
         type='bool'),
-    software_guard_extensions=dict(
-        default=False,
+    private_vlan_id=dict(
+        required=False,
+        type='int'),
+    secondary_ip_count=dict(
+        required=False,
+        type='int'),
+    block_storage_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    post_install_script_uri=dict(
+        required=False,
+        type='str'),
+    hourly_billing=dict(
+        default=True,
         type='bool'),
-    extended_hardware_testing=dict(
+    private_network_only=dict(
         default=False,
         type='bool'),
     redundant_network=dict(
         default=False,
         type='bool'),
-    restricted_network=dict(
+    extended_hardware_testing=dict(
         default=False,
         type='bool'),
-    memory=dict(
+    public_ipv4_address_id=dict(
         required=False,
         type='int'),
-    quote_id=dict(
+    ipv6_address=dict(
         required=False,
-        type='int'),
+        type='str'),
+    public_subnet=dict(
+        required=False,
+        type='str'),
+    public_ipv4_address=dict(
+        required=False,
+        type='str'),
     private_ipv4_address_id=dict(
         required=False,
         type='int'),
-    file_storage_ids=dict(
+    ipv6_enabled=dict(
+        default=False,
+        type='bool'),
+    domain=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    gpu_secondary_key_name=dict(
-        required=False,
-        type='str'),
-    ipv6_enabled=dict(
-        default=False,
-        type='bool'),
-    ipv6_address=dict(
-        required=False,
-        type='str'),
-    ipv6_static_enabled=dict(
-        default=False,
-        type='bool'),
-    os_key_name=dict(
-        required=False,
-        type='str'),
-    private_ipv4_address=dict(
-        required=False,
-        type='str'),
-    user_metadata=dict(
-        required=False,
-        type='str'),
-    private_network_only=dict(
-        default=False,
-        type='bool'),
-    package_key_name=dict(
-        required=False,
-        type='str'),
-    fixed_config_preset=dict(
-        required=False,
-        type='str'),
-    os_reference_code=dict(
+    datacenter=dict(
         required=False,
         type='str'),
     process_key_name=dict(
         required=False,
         type='str'),
-    secondary_ip_count=dict(
+    storage_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    public_vlan_id=dict(
         required=False,
         type='int'),
-    hostname=dict(
-        required=False,
-        type='str'),
+    ipv6_static_enabled=dict(
+        default=False,
+        type='bool'),
     notes=dict(
         required=False,
         type='str'),
-    post_install_script_uri=dict(
+    file_storage_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    private_ipv4_address=dict(
         required=False,
         type='str'),
-    ipv6_address_id=dict(
+    secondary_ip_addresses=dict(
         required=False,
-        type='int'),
-    unbonded_network=dict(
+        elements='',
+        type='list'),
+    software_guard_extensions=dict(
         default=False,
         type='bool'),
-    public_ipv4_address=dict(
+    restricted_network=dict(
+        default=False,
+        type='bool'),
+    quote_id=dict(
         required=False,
-        type='str'),
-    public_ipv4_address_id=dict(
+        type='int'),
+    ipv6_address_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -586,7 +586,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

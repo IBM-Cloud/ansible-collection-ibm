@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,36 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  port (False, int, None)
-    (Required for new resource) NA
-
-
   interval (False, int, 5)
-    NA
+    Interval value
 
 
   max_retries (False, int, 2)
-    NA
+    Maximum retry counts
 
 
   timeout (False, int, 2)
-    NA
+    Timeout in seconds
 
 
   url_path (False, str, /)
-    NA
+    URL Path
 
 
   monitor_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Monitor ID
 
 
   lbaas_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) LBAAS id
 
 
   protocol (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Protocol value
+
+
+  port (False, int, None)
+    (Required for new resource) Port number
 
 
   id (False, str, None)

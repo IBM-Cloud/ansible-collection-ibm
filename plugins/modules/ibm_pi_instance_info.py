@@ -16,54 +16,70 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    processors:
+        description:
+            - None
+        required: False
+        type: int
     health_status:
         description:
-            - NA
+            - None
         required: False
         type: str
     status:
         description:
-            - NA
+            - None
         required: False
         type: str
-    minproc:
+    minmem:
         description:
-            - NA
+            - None
         required: False
         type: int
     maxproc:
         description:
-            - NA
+            - None
+        required: False
+        type: int
+    maxmem:
+        description:
+            - None
         required: False
         type: int
     pi_cloud_instance_id:
         description:
-            - NA
+            - None
         required: True
         type: str
     volumes:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: str
     state:
         description:
-            - NA
+            - None
         required: False
         type: str
-    processors:
+    addresses:
         description:
-            - NA
+            - None
         required: False
-        type: int
-    maxmem:
+        type: list
+        elements: dict
+    proctype:
         description:
-            - NA
+            - None
+        required: False
+        type: str
+    minproc:
+        description:
+            - None
         required: False
         type: int
     pi_instance_name:
@@ -71,22 +87,6 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    addresses:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
-    proctype:
-        description:
-            - NA
-        required: False
-        type: str
-    minmem:
-        description:
-            - NA
-        required: False
-        type: int
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -120,34 +120,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'processors',
     'health_status',
     'status',
-    'minproc',
+    'minmem',
     'maxproc',
+    'maxmem',
     'pi_cloud_instance_id',
     'volumes',
     'state',
-    'processors',
-    'maxmem',
-    'pi_instance_name',
     'addresses',
     'proctype',
-    'minmem',
+    'minproc',
+    'pi_instance_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    processors=dict(
+        required=False,
+        type='int'),
     health_status=dict(
         required=False,
         type='str'),
     status=dict(
         required=False,
         type='str'),
-    minproc=dict(
+    minmem=dict(
         required=False,
         type='int'),
     maxproc=dict(
+        required=False,
+        type='int'),
+    maxmem=dict(
         required=False,
         type='int'),
     pi_cloud_instance_id=dict(
@@ -160,15 +166,6 @@ module_args = dict(
     state=dict(
         required=False,
         type='str'),
-    processors=dict(
-        required=False,
-        type='int'),
-    maxmem=dict(
-        required=False,
-        type='int'),
-    pi_instance_name=dict(
-        required=True,
-        type='str'),
     addresses=dict(
         required=False,
         elements='',
@@ -176,9 +173,12 @@ module_args = dict(
     proctype=dict(
         required=False,
         type='str'),
-    minmem=dict(
+    minproc=dict(
         required=False,
         type='int'),
+    pi_instance_name=dict(
+        required=True,
+        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

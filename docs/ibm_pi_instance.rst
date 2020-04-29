@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  status (False, str, None)
+    PI instance status
+
+
+  migratable (False, bool, None)
+    set to true to enable migration of the PI instance
+
+
   max_processors (False, float, None)
-    NA
+    Maximum number of processors
 
 
   max_memory (False, float, None)
-    NA
-
-
-  pi_user_data (False, str, None)
-    Base64 encoded data to be passed in for invoking a cloud init script
-
-
-  pi_processors (False, float, None)
-    (Required for new resource) NA
-
-
-  pi_proc_type (False, str, None)
-    (Required for new resource) NA
+    Maximum memory size
 
 
   pi_replicants (False, float, 1)
-    NA
+    PI Instance repicas count
 
 
-  pi_progress (False, float, None)
-    Progress of the operation
+  pi_replication_scheme (False, str, suffix)
+    Replication scheme
+
+
+  min_memory (False, float, None)
+    Minimum memory
+
+
+  addresses (False, list, None)
+    None
+
+
+  pi_instance_name (False, str, None)
+    (Required for new resource) PI Instance name
+
+
+  pi_proc_type (False, str, None)
+    (Required for new resource) Instance processor type
+
+
+  pi_key_pair_name (False, str, None)
+    (Required for new resource) SSH key name
+
+
+  pi_sys_type (False, str, None)
+    (Required for new resource) PI Instance system type
+
+
+  pi_replication_policy (False, str, none)
+    Replication policy for the PI INstance
 
 
   pi_cloud_instance_id (False, str, None)
@@ -59,67 +83,43 @@ Parameters
 
 
   min_processors (False, float, None)
-    NA
+    Minimum number of the CPUs
 
 
-  pi_volume_ids (False, list, None)
-    NA
+  pi_user_data (False, str, None)
+    Base64 encoded data to be passed in for invoking a cloud init script
 
 
   health_status (False, str, None)
-    NA
+    PI Instance health status
 
 
-  instance_id (False, str, None)
-    NA
+  pi_processors (False, float, None)
+    (Required for new resource) Processors count
 
 
-  pi_replication_policy (False, str, none)
-    NA
-
-
-  pi_replication_scheme (False, str, suffix)
-    NA
-
-
-  status (False, str, None)
-    NA
-
-
-  min_memory (False, float, None)
-    NA
-
-
-  pi_instance_name (False, str, None)
-    (Required for new resource) NA
-
-
-  pi_key_pair_name (False, str, None)
-    (Required for new resource) NA
-
-
-  pi_memory (False, float, None)
-    (Required for new resource) NA
-
-
-  pi_sys_type (False, str, None)
-    (Required for new resource) NA
-
-
-  migratable (False, bool, None)
-    NA
+  pi_progress (False, float, None)
+    Progress of the operation
 
 
   pi_network_ids (False, list, None)
     (Required for new resource) Set of Networks that have been configured for the account
 
 
-  addresses (False, list, None)
-    NA
+  pi_volume_ids (False, list, None)
+    List of PI volumes
+
+
+  instance_id (False, str, None)
+    Instance ID
 
 
   pi_image_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) PI instance image name
+
+
+  pi_memory (False, float, None)
+    (Required for new resource) Memory size
 
 
   id (False, str, None)

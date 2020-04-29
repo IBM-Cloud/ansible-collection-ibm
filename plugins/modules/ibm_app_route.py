@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_route' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    domain_guid:
+        description:
+            - (Required for new resource) The guid of the associated domain
+        required: False
+        type: str
+    port:
+        description:
+            - The port of the route. Supported for domains of TCP router groups only.
+        required: False
+        type: int
     path:
         description:
             - The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
@@ -27,7 +37,7 @@ options:
         type: str
     tags:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: str
@@ -41,16 +51,6 @@ options:
             - (Required for new resource) The guid of the associated space
         required: False
         type: str
-    domain_guid:
-        description:
-            - (Required for new resource) The guid of the associated domain
-        required: False
-        type: str
-    port:
-        description:
-            - The port of the route. Supported for domains of TCP router groups only.
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,23 +97,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('space_guid', 'str'),
     ('domain_guid', 'str'),
+    ('space_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_guid',
+    'port',
     'path',
     'tags',
     'host',
     'space_guid',
-    'domain_guid',
-    'port',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_guid=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
     path=dict(
         required=False,
         type='str'),
@@ -127,12 +133,6 @@ module_args = dict(
     space_guid=dict(
         required=False,
         type='str'),
-    domain_guid=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_app_route',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

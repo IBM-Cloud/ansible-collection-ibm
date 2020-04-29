@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_status (False, str, None)
@@ -38,40 +38,40 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  name (False, str, None)
-    (Required for new resource) NA
-
-
   status (False, str, None)
-    NA
+    Public gateway instance status
+
+
+  vpc (False, str, None)
+    (Required for new resource) Public gateway VPC info
 
 
   zone (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Public gateway zone info
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  tags (False, list, None)
+    Service tags for the public gateway instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
+  name (False, str, None)
+    (Required for new resource) Name of the Public gateway instance
+
+
   floating_ip (False, dict, None)
-    NA
+    None
 
 
   resource_group (False, str, None)
-    NA
+    Public gateway resource group info
 
 
-  vpc (False, str, None)
-    (Required for new resource) NA
-
-
-  tags (False, list, None)
-    NA
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

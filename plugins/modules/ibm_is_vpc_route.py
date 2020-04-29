@@ -16,38 +16,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_route' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    destination:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    status:
-        description:
-            - NA
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    next_hop:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) VPC route name
         required: False
         type: str
     zone:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) VPC route location
+        required: False
+        type: str
+    destination:
+        description:
+            - (Required for new resource) VPC route destination CIDR value
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC instance ID
+        required: False
+        type: str
+    next_hop:
+        description:
+            - (Required for new resource) VPC route next hop value
         required: False
         type: str
     id:
@@ -94,26 +94,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
+    ('zone', 'str'),
     ('destination', 'str'),
     ('vpc', 'str'),
     ('next_hop', 'str'),
-    ('name', 'str'),
-    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'zone',
     'destination',
     'status',
     'vpc',
     'next_hop',
-    'name',
-    'zone',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
     destination=dict(
         required=False,
         type='str'),
@@ -124,12 +130,6 @@ module_args = dict(
         required=False,
         type='str'),
     next_hop=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_is_vpc_route',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

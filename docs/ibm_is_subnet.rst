@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,48 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (False, str, None)
-    (Required for new resource) NA
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
 
 
-  zone (False, str, None)
-    (Required for new resource) NA
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  resource_group (False, str, None)
-    NA
+  ip_version (False, str, ipv4)
+    Subnet IP version
+
+
+  status (False, str, None)
+    None
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  available_ipv4_address_count (False, str, None)
-    NA
+  vpc (False, str, None)
+    (Required for new resource) VPC instance ID
 
 
-  ip_version (False, str, ipv4)
-    NA
-
-
-  network_acl (False, str, None)
-    NA
-
-
-  status (False, str, None)
-    NA
-
-
-  ipv6_cidr_block (False, str, None)
-    NA
-
-
-  public_gateway (False, str, None)
-    NA
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_name (False, str, None)
@@ -78,20 +66,32 @@ Parameters
     The crn of the resource
 
 
-  ipv4_cidr_block (False, str, None)
-    NA
-
-
-  total_ipv4_address_count (False, int, None)
-    NA
+  available_ipv4_address_count (False, str, None)
+    None
 
 
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Subnet name
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  network_acl (False, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  ipv6_cidr_block (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  zone (False, str, None)
+    (Required for new resource) Subnet zone info
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,44 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
+  tags (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
+
+
   location (False, str, None)
     (Required for new resource) The location where the instance available
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    NA
-
-
-  status (False, str, None)
-    Status of resource instance
-
-
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
 
 
   resource_group_id (False, str, None)
     The resource group id
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
 
 
   guid (False, str, None)
@@ -74,12 +66,20 @@ Parameters
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  status (False, str, None)
+    Status of resource instance
+
+
+  service (False, str, None)
+    The name of the Cloud Internet Services offering
+
+
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
 
 
   id (False, str, None)

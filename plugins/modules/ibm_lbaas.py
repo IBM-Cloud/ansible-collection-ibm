@@ -16,30 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    subnets:
-        description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: False
-        type: list
-        elements: int
-    status:
-        description:
-            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
-        required: False
-        type: str
-    ssl_ciphers:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: str
     name:
         description:
             - (Required for new resource) The load balancer's name.
+        required: False
+        type: str
+    vip:
+        description:
+            - The virtual ip address of this load balancer
         required: False
         type: str
     protocols:
@@ -48,31 +36,14 @@ options:
         required: False
         type: list
         elements: dict
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    type:
-        description:
-            - Specifies if a load balancer is public or private
-        required: False
-        type: str
-        default: PUBLIC
-    vip:
-        description:
-            - The virtual ip address of this load balancer
-        required: False
-        type: str
-    wait_time_minutes:
-        description:
-            - NA
-        required: False
-        type: int
-        default: 90
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     description:
@@ -80,27 +51,56 @@ options:
             - Description of a load balancer.
         required: False
         type: str
+    status:
+        description:
+            - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+        required: False
+        type: str
+    wait_time_minutes:
+        description:
+            - None
+        required: False
+        type: int
+        default: 90
+    type:
+        description:
+            - Specifies if a load balancer is public or private
+        required: False
+        type: str
+        default: PUBLIC
     datacenter:
         description:
-            - NA
+            - None
         required: False
         type: str
     use_system_public_ip_pool:
         description:
-            - Applicable for public load balancer only. It specifies whether the public IP addresses are allocated from system public IP pool or public subnet from the account ordering the load balancer.
+            - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
     health_monitors:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
-    resource_name:
+    resource_status:
         description:
-            - The name of the resource
+            - The status of the resource
         required: False
         type: str
+    subnets:
+        description:
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: False
+        type: list
+        elements: int
+    ssl_ciphers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -147,67 +147,59 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnets',
-    'status',
-    'ssl_ciphers',
     'name',
-    'protocols',
-    'resource_status',
-    'type',
     'vip',
-    'wait_time_minutes',
+    'protocols',
     'resource_controller_url',
+    'resource_name',
     'description',
+    'status',
+    'wait_time_minutes',
+    'type',
     'datacenter',
     'use_system_public_ip_pool',
     'health_monitors',
-    'resource_name',
+    'resource_status',
+    'subnets',
+    'ssl_ciphers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    status=dict(
+    name=dict(
         required=False,
         type='str'),
-    ssl_ciphers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
+    vip=dict(
         required=False,
         type='str'),
     protocols=dict(
         required=False,
         elements='',
         type='list'),
-    resource_status=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
-    type=dict(
-        default='PUBLIC',
+    resource_name=dict(
+        required=False,
         type='str'),
-    vip=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
+    type=dict(
+        default='PUBLIC',
         type='str'),
     datacenter=dict(
         required=False,
@@ -219,9 +211,17 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_name=dict(
+    resource_status=dict(
         required=False,
         type='str'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ssl_ciphers=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -275,7 +275,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

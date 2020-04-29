@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
@@ -25,49 +25,49 @@ options:
             - Network Name to be used for pvminstances
         required: True
         type: str
-    pi_cloud_instance_id:
-        description:
-            - NA
-        required: True
-        type: str
-    cidr:
-        description:
-            - NA
-        required: False
-        type: str
-    type:
-        description:
-            - NA
-        required: False
-        type: str
-    gateway:
-        description:
-            - NA
-        required: False
-        type: str
     vlan_id:
         description:
-            - NA
+            - None
         required: False
         type: int
+    gateway:
+        description:
+            - None
+        required: False
+        type: str
     available_ip_count:
         description:
-            - NA
+            - None
         required: False
         type: float
     used_ip_count:
         description:
-            - NA
+            - None
         required: False
         type: float
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    cidr:
+        description:
+            - None
+        required: False
+        type: str
+    type:
+        description:
+            - None
+        required: False
+        type: str
     used_ip_percent:
         description:
-            - NA
+            - None
         required: False
         type: float
     name:
         description:
-            - NA
+            - None
         required: False
         type: str
     zone:
@@ -104,13 +104,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_network_name',
+    'vlan_id',
+    'gateway',
+    'available_ip_count',
+    'used_ip_count',
     'pi_cloud_instance_id',
     'cidr',
     'type',
-    'gateway',
-    'vlan_id',
-    'available_ip_count',
-    'used_ip_count',
     'used_ip_percent',
     'name',
 ]
@@ -121,6 +121,18 @@ module_args = dict(
     pi_network_name=dict(
         required=True,
         type='str'),
+    vlan_id=dict(
+        required=False,
+        type='int'),
+    gateway=dict(
+        required=False,
+        type='str'),
+    available_ip_count=dict(
+        required=False,
+        type='float'),
+    used_ip_count=dict(
+        required=False,
+        type='float'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
@@ -130,18 +142,6 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    gateway=dict(
-        required=False,
-        type='str'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
-    available_ip_count=dict(
-        required=False,
-        type='float'),
-    used_ip_count=dict(
-        required=False,
-        type='float'),
     used_ip_percent=dict(
         required=False,
         type='float'),
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

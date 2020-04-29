@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  image_id (False, str, None)
+    Image ID
+
+
   pi_image_name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Image name
 
 
   pi_image_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Instance image name
 
 
   pi_cloud_instance_id (False, str, None)
-    (Required for new resource) NA
-
-
-  image_id (False, str, None)
-    NA
+    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,95 +27,95 @@ Parameters
 ----------
 
   primary_network_interface (False, list, None)
-    (Required for new resource) NA
+    (Required for new resource) Primary Network interface info
 
 
-  network_interfaces (False, list, None)
-    NA
+  keys (False, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
-  image (False, str, None)
-    (Required for new resource) NA
-
-
-  resource_group (False, str, None)
-    NA
-
-
-  vcpu (False, list, None)
-    NA
-
-
-  status (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  vpc (False, str, None)
-    (Required for new resource) NA
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  memory (False, int, None)
-    NA
-
-
-  zone (False, str, None)
-    (Required for new resource) NA
+  tags (False, list, None)
+    list of tags for the instance
 
 
   volume_attachments (False, list, None)
-    NA
+    None
 
 
   user_data (False, str, None)
-    NA
+    User data given for the instance
 
 
-  boot_volume (False, list, None)
-    NA
-
-
-  gpu (False, list, None)
-    NA
+  resource_group (False, str, None)
+    Instance resource group
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
+  name (False, str, None)
+    (Required for new resource) Instance name
+
+
+  vpc (False, str, None)
+    (Required for new resource) VPC id
+
+
   profile (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Profile info
 
 
-  keys (False, list, None)
-    (Required for new resource) NA
+  image (False, str, None)
+    (Required for new resource) image name
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  volumes (False, list, None)
+    List of volumes
+
+
+  vcpu (False, list, None)
+    None
+
+
+  gpu (False, list, None)
+    None
+
+
+  memory (False, int, None)
+    Instance memory
+
+
+  zone (False, str, None)
+    (Required for new resource) Zone name
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  tags (False, list, None)
-    NA
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  volumes (False, list, None)
-    NA
+  boot_volume (False, list, None)
+    None
+
+
+  status (False, str, None)
+    instance status
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

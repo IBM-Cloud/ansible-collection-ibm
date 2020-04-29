@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  rules (False, list, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource) Network ACL name
+
+
+  vpc (False, str, None)
+    Network ACL VPC name
+
+
   resource_group (False, str, None)
-    NA
+    Resource group ID for the network ACL
 
 
   resource_controller_url (False, str, None)
@@ -40,22 +56,6 @@ Parameters
 
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  rules (False, list, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  vpc (False, str, None)
-    NA
 
 
   id (False, str, None)

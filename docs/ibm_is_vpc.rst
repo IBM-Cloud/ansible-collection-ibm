@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,39 +26,55 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default_network_acl (False, str, None)
-    NA
+  classic_access (False, bool, False)
+    Set to true if classic access needs to enabled to VPC
 
 
   default_security_group (False, str, None)
-    NA
+    Security group associated with VPC
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  status (False, str, None)
+    VPC status
+
+
+  tags (False, list, None)
+    List of tags
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  cse_source_addresses (False, list, None)
-    NA
+  resource_name (False, str, None)
+    The name of the resource
 
 
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) VPC name
 
 
-  resource_group (False, str, None)
-    NA
-
-
-  status (False, str, None)
-    NA
+  default_network_acl (False, str, None)
+    Default network ACL
 
 
   crn (False, str, None)
+    The crn of the resource
+
+
+  resource_crn (False, str, None)
     The crn of the resource
 
 
@@ -66,28 +82,12 @@ Parameters
     The status of the resource
 
 
-  address_prefix_management (False, str, auto)
-    NA
-
-
-  tags (False, list, None)
-    NA
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  classic_access (False, bool, False)
-    NA
-
-
-  resource_name (False, str, None)
-    The name of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   subnets (False, list, None)
-    NA
+    None
 
 
   id (False, str, None)

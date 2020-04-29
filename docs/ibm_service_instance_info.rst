@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  service_keys (False, list, None)
-    Service keys asociated with the service instance
-
 
   service_plan_guid (False, str, None)
     The uniquie identifier of the service offering plan type
@@ -44,6 +40,10 @@ Parameters
 
   credentials (False, dict, None)
     The service broker-provided credentials to use this service.
+
+
+  service_keys (False, list, None)
+    Service keys asociated with the service instance
 
 
   iaas_classic_username (False, any, None)

@@ -16,72 +16,72 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     network_vlan_ids:
         description:
-            - NA
+            - List of network VLAN ids
         required: False
         type: list
         elements: int
     tags:
         description:
-            - NA
+            - List of tags
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    termination_policy:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    health_check:
-        description:
-            - NA
-        required: False
-        type: dict
-        elements: dict
-    cooldown:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    virtual_server_id:
-        description:
-            - NA
-        required: False
-        type: int
-    port:
-        description:
-            - NA
-        required: False
-        type: int
-    virtual_guest_member_template:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: list
-        elements: dict
     regional_group:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) regional group
         required: False
         type: str
     minimum_member_count:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Minimum member count
         required: False
         type: int
     maximum_member_count:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Maximum member count
+        required: False
+        type: int
+    termination_policy:
+        description:
+            - (Required for new resource) Termination policy
+        required: False
+        type: str
+    health_check:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
+    virtual_guest_member_template:
+        description:
+            - (Required for new resource) Virtual guest member template
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) Name
+        required: False
+        type: str
+    cooldown:
+        description:
+            - (Required for new resource) Cooldown value
+        required: False
+        type: int
+    virtual_server_id:
+        description:
+            - virtual server ID
+        required: False
+        type: int
+    port:
+        description:
+            - Port number
         required: False
         type: int
     id:
@@ -130,29 +130,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('termination_policy', 'str'),
-    ('cooldown', 'int'),
-    ('virtual_guest_member_template', 'list'),
     ('regional_group', 'str'),
     ('minimum_member_count', 'int'),
     ('maximum_member_count', 'int'),
+    ('termination_policy', 'str'),
+    ('virtual_guest_member_template', 'list'),
+    ('name', 'str'),
+    ('cooldown', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'network_vlan_ids',
     'tags',
-    'name',
-    'termination_policy',
-    'health_check',
-    'cooldown',
-    'virtual_server_id',
-    'port',
-    'virtual_guest_member_template',
     'regional_group',
     'minimum_member_count',
     'maximum_member_count',
+    'termination_policy',
+    'health_check',
+    'virtual_guest_member_template',
+    'name',
+    'cooldown',
+    'virtual_server_id',
+    'port',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -166,29 +166,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    termination_policy=dict(
-        required=False,
-        type='str'),
-    health_check=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    cooldown=dict(
-        required=False,
-        type='int'),
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
-    virtual_guest_member_template=dict(
-        required=False,
-        elements='',
-        type='list'),
     regional_group=dict(
         required=False,
         type='str'),
@@ -196,6 +173,29 @@ module_args = dict(
         required=False,
         type='int'),
     maximum_member_count=dict(
+        required=False,
+        type='int'),
+    termination_policy=dict(
+        required=False,
+        type='str'),
+    health_check=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    virtual_guest_member_template=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    cooldown=dict(
+        required=False,
+        type='int'),
+    virtual_server_id=dict(
+        required=False,
+        type='int'),
+    port=dict(
         required=False,
         type='int'),
     id=dict(
@@ -251,7 +251,7 @@ def run_module():
         resource_type='ibm_compute_autoscale_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

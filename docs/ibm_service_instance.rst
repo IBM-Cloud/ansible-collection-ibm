@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,44 +26,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) A name for the service instance
-
-
-  space_guid (False, str, None)
-    (Required for new resource) The guid of the space in which the instance will be created
-
-
-  credentials (False, dict, None)
-    The service broker-provided credentials to use this service.
-
-
-  service_plan_guid (False, str, None)
-    The uniquie identifier of the service offering plan type
-
-
-  tags (False, list, None)
-    NA
-
-
-  wait_time_minutes (False, int, 10)
-    Define timeout to wait for the service instances to succeeded/deleted etc.
-
-
-  service (False, str, None)
-    (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
-
-
-  service_keys (False, list, None)
-    The service keys asociated with the service instance
-
-
   parameters (False, dict, None)
     Arbitrary parameters to pass along to the service broker. Must be a JSON object
 
 
   plan (False, str, None)
     (Required for new resource) The plan type of the service
+
+
+  name (False, str, None)
+    (Required for new resource) A name for the service instance
+
+
+  credentials (False, dict, None)
+    The service broker-provided credentials to use this service.
+
+
+  service_keys (False, list, None)
+    The service keys asociated with the service instance
+
+
+  service_plan_guid (False, str, None)
+    The uniquie identifier of the service offering plan type
+
+
+  space_guid (False, str, None)
+    (Required for new resource) The guid of the space in which the instance will be created
+
+
+  service (False, str, None)
+    (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
+
+
+  tags (False, list, None)
+    None
+
+
+  wait_time_minutes (False, int, 10)
+    Define timeout to wait for the service instances to succeeded/deleted etc.
 
 
   id (False, str, None)

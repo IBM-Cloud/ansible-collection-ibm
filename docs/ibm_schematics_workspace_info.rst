@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The resource group of workspace
+  is_locked (False, bool, None)
+    None
 
 
-  status (False, str, None)
-    The status of workspace
-
-
-  types (False, list, None)
-    NA
+  tags (False, list, None)
+    None
 
 
   workspace_id (True, str, None)
@@ -46,12 +42,12 @@ Parameters
     The name of workspace
 
 
-  is_locked (False, bool, None)
-    NA
+  resource_group (False, str, None)
+    The resource group of workspace
 
 
-  tags (False, list, None)
-    NA
+  is_frozen (False, bool, None)
+    None
 
 
   resource_controller_url (False, str, None)
@@ -62,8 +58,12 @@ Parameters
     The id of templates
 
 
-  is_frozen (False, bool, None)
-    NA
+  status (False, str, None)
+    The status of workspace
+
+
+  types (False, list, None)
+    None
 
 
   iaas_classic_username (False, any, None)

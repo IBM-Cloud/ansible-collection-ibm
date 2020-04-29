@@ -16,19 +16,19 @@ description:
     - Retrieve an IBM Cloud 'ibm_cis_ip_addresses' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     ipv4_cidrs:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: str
     ipv6_cidrs:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: str
@@ -119,7 +119,7 @@ def run_module():
         resource_type='ibm_cis_ip_addresses',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

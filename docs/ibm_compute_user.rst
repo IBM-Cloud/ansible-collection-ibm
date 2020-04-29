@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,76 +26,76 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  username (False, str, None)
-    NA
-
-
-  last_name (False, str, None)
-    (Required for new resource) NA
-
-
-  country (False, str, None)
-    (Required for new resource) NA
-
-
-  password (False, str, None)
-    NA
-
-
-  permissions (False, list, None)
-    NA
-
-
-  has_api_key (False, bool, False)
-    NA
-
-
-  api_key (False, str, None)
-    NA
-
-
   first_name (False, str, None)
-    (Required for new resource) NA
-
-
-  email (False, str, None)
-    (Required for new resource) NA
-
-
-  address1 (False, str, None)
-    (Required for new resource) NA
-
-
-  address2 (False, str, None)
-    NA
+    (Required for new resource) First name of the user
 
 
   state_ (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Satate name
 
 
   user_status (False, str, ACTIVE)
-    NA
-
-
-  ibm_id (False, str, None)
-    NA
-
-
-  company_name (False, str, None)
-    (Required for new resource) NA
-
-
-  city (False, str, None)
-    (Required for new resource) NA
-
-
-  timezone (False, str, None)
-    (Required for new resource) NA
+    user status info
 
 
   tags (False, list, None)
-    NA
+    Tags set for the resources
+
+
+  username (False, str, None)
+    user name
+
+
+  last_name (False, str, None)
+    (Required for new resource) Last name of the user
+
+
+  city (False, str, None)
+    (Required for new resource) City name
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  api_key (False, str, None)
+    API key for the user
+
+
+  email (False, str, None)
+    (Required for new resource) email address of the user
+
+
+  company_name (False, str, None)
+    (Required for new resource) comapany name
+
+
+  address1 (False, str, None)
+    (Required for new resource) Address info of the user
+
+
+  address2 (False, str, None)
+    Address info of the user
+
+
+  country (False, str, None)
+    (Required for new resource) Country name
+
+
+  timezone (False, str, None)
+    (Required for new resource) time zone info
+
+
+  password (False, str, None)
+    password for the user
+
+
+  has_api_key (False, bool, False)
+    API Key info of the user
+
+
+  ibm_id (False, str, None)
+    IBM ID of the  user
 
 
   id (False, str, None)

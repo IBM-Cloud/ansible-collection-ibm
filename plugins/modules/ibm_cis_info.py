@@ -16,28 +16,13 @@ description:
     - Retrieve an IBM Cloud 'ibm_cis' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    guid:
-        description:
-            - Unique identifier of resource instance
-        required: False
-        type: str
-    status:
-        description:
-            - The resource instance status
-        required: False
-        type: dict
     resource_name:
         description:
             - The name of the resource
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
         required: False
         type: str
     resource_crn:
@@ -45,20 +30,15 @@ options:
             - The crn of the resource
         required: False
         type: str
-    resource_group_name:
+    resource_status:
         description:
-            - The resource group name in which resource is provisioned
+            - The status of the resource
         required: False
         type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
-        type: str
-    name:
-        description:
-            - Resource instance name for example, my cis instance
-        required: True
         type: str
     resource_group_id:
         description:
@@ -75,9 +55,29 @@ options:
             - The name of the Cloud Internet Services offering, 'internet-svcs'
         required: False
         type: str
+    status:
+        description:
+            - The resource instance status
+        required: False
+        type: dict
+    name:
+        description:
+            - Resource instance name for example, my cis instance
+        required: True
+        type: str
+    guid:
+        description:
+            - Unique identifier of resource instance
+        required: False
+        type: str
     plan:
         description:
             - The plan type of the cis instance
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     iaas_classic_username:
@@ -118,46 +118,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
-    'status',
     'resource_name',
-    'resource_status',
     'resource_crn',
-    'resource_group_name',
+    'resource_status',
     'resource_controller_url',
-    'name',
     'resource_group_id',
     'location',
     'service',
+    'status',
+    'name',
+    'guid',
     'plan',
+    'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='dict'),
     resource_name=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
         required=False,
         type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    resource_status=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     resource_group_id=dict(
         required=False,
@@ -168,7 +156,19 @@ module_args = dict(
     service=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='dict'),
+    name=dict(
+        required=True,
+        type='str'),
+    guid=dict(
+        required=False,
+        type='str'),
     plan=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

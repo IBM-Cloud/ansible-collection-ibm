@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  single_site_location (False, str, None)
+    None
+
+
   storage_class (False, str, None)
-    NA
+    None
+
+
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
 
 
   bucket_name (True, str, None)
-    NA
+    None
 
 
   bucket_type (True, str, None)
-    NA
+    None
+
+
+  bucket_region (True, str, None)
+    None
 
 
   resource_instance_id (True, str, None)
-    NA
+    None
 
 
-  crn (False, str, None)
-    CRN of resource instance
+  s3_endpoint_private (False, str, None)
+    Private endpoint for the COS bucket
 
 
   key_protect (False, str, None)
@@ -51,27 +67,11 @@ Parameters
 
 
   region_location (False, str, None)
-    NA
-
-
-  bucket_region (True, str, None)
-    NA
-
-
-  single_site_location (False, str, None)
-    NA
+    None
 
 
   cross_region_location (False, str, None)
-    NA
-
-
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  s3_endpoint_private (False, str, None)
-    Private endpoint for the COS bucket
+    None
 
 
   iaas_classic_username (False, any, None)

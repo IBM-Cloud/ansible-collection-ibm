@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  begins_on (False, int, None)
-    NA
-
-
-  imported (False, bool, None)
-    NA
-
-
-  status (False, str, None)
-    NA
-
-
-  key_algorithm (False, str, None)
-    NA
-
-
-  description (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
   data (False, dict, None)
-    (Required for new resource) NA
+    (Required for new resource) certificate data
 
 
   issuer (False, str, None)
-    NA
+    certificate issuer info
 
 
-  expires_on (False, int, None)
-    NA
+  imported (False, bool, None)
+    None
+
+
+  status (False, str, None)
+    None
 
 
   has_previous (False, str, None)
-    NA
+    None
+
+
+  name (False, str, None)
+    (Required for new resource) Name of the instance
+
+
+  description (False, str, None)
+    Description of the certificate instance
+
+
+  begins_on (False, int, None)
+    Certificate validity start date
+
+
+  expires_on (False, int, None)
+    certificate expiry date
+
+
+  key_algorithm (False, str, None)
+    None
 
 
   algorithm (False, str, None)
-    NA
+    None
 
 
   certificate_manager_instance_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Instance ID of the certificate manager resource
 
 
   id (False, str, None)

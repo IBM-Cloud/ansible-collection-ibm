@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,232 +26,232 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_ipv6_subnet_id (False, str, None)
-    NA
+  ipv6_static_enabled (False, bool, False)
+    None
 
 
-  secondary_ip_addresses (False, list, None)
-    NA
+  private_security_group_ids (False, list, None)
+    None
 
 
-  notes (False, str, None)
-    NA
+  public_interface_id (False, int, None)
+    None
 
 
-  image_id (False, int, None)
-    NA
+  network_speed (False, int, 100)
+    None
 
 
-  os_reference_code (False, str, None)
-    NA
+  tags (False, list, None)
+    None
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  public_ipv6_subnet (False, str, None)
+    None
 
 
   flavor_key_name (False, str, None)
     Flavor key name used to provision vm.
 
 
-  transient (False, bool, None)
-    NA
-
-
-  ipv4_address_private (False, str, None)
-    NA
-
-
-  public_bandwidth_limited (False, int, None)
-    NA
-
-
-  dedicated_acct_host_only (False, bool, None)
-    NA
-
-
-  public_security_group_ids (False, list, None)
-    NA
-
-
-  ipv6_address (False, str, None)
-    NA
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  private_network_only (False, bool, False)
-    NA
-
-
-  secondary_ip_count (False, int, None)
-    NA
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    NA
-
-
-  evault (False, int, None)
-    NA
-
-
-  domain (False, str, None)
-    NA
-
-
-  memory (False, int, None)
-    NA
-
-
-  public_interface_id (False, int, None)
-    NA
-
-
-  ssh_key_ids (False, list, None)
-    NA
-
-
-  private_subnet (False, str, None)
-    NA
-
-
-  private_security_group_ids (False, list, None)
-    NA
-
-
-  local_disk (False, bool, True)
-    NA
-
-
-  ipv6_static_enabled (False, bool, False)
-    NA
-
-
   block_storage_ids (False, list, None)
-    NA
+    None
+
+
+  os_reference_code (False, str, None)
+    None
 
 
   cores (False, int, None)
-    NA
+    None
 
 
-  dedicated_host_name (False, str, None)
-    NA
+  transient (False, bool, None)
+    None
 
 
-  public_vlan_id (False, int, None)
-    NA
-
-
-  public_subnet (False, str, None)
-    NA
-
-
-  private_interface_id (False, int, None)
-    NA
-
-
-  network_speed (False, int, 100)
-    NA
-
-
-  user_metadata (False, str, None)
-    NA
-
-
-  hostname (False, str, None)
-    NA
-
-
-  private_vlan_id (False, int, None)
-    NA
-
-
-  public_ipv6_subnet (False, str, None)
-    NA
-
-
-  private_subnet_id (False, int, None)
-    NA
-
-
-  ip_address_id (False, int, None)
-    NA
+  ipv6_enabled (False, bool, False)
+    None
 
 
   placement_group_id (False, int, None)
     The placement group id
 
 
-  ipv6_address_id (False, int, None)
-    NA
+  private_vlan_id (False, int, None)
+    None
 
 
-  post_install_script_uri (False, str, None)
-    NA
-
-
-  disks (False, list, None)
-    NA
-
-
-  tags (False, list, None)
-    NA
-
-
-  bulk_vms (False, list, None)
-    NA
-
-
-  datacenter (False, str, None)
-    NA
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  dedicated_host_id (False, int, None)
-    NA
-
-
-  hourly_billing (False, bool, True)
-    NA
-
-
-  ip_address_id_private (False, int, None)
-    NA
+  notes (False, str, None)
+    None
 
 
   wait_time_minutes (False, int, 90)
-    NA
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
+    None
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  private_interface_id (False, int, None)
+    None
+
+
+  private_subnet_id (False, int, None)
+    None
+
+
+  secondary_ip_addresses (False, list, None)
+    None
+
+
+  image_id (False, int, None)
+    None
+
+
+  domain (False, str, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
+  ip_address_id_private (False, int, None)
+    None
+
+
+  ipv6_address (False, str, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  ipv4_address_private (False, str, None)
+    None
+
+
+  public_ipv6_subnet_id (False, str, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  ip_address_id (False, int, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  evault (False, int, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  datacenter (False, str, None)
+    None
+
+
   public_subnet_id (False, int, None)
-    NA
-
-
-  ipv4_address (False, str, None)
-    NA
-
-
-  ipv6_enabled (False, bool, False)
-    NA
+    None
 
 
   file_storage_ids (False, list, None)
-    NA
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  ipv4_address (False, str, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  ipv6_address_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
 
 
   id (False, str, None)

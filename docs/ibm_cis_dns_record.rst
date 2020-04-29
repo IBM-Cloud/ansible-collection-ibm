@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,56 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  priority (False, int, None)
-    NA
+  domain_id (False, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  content (False, str, None)
+    DNS record content
+
+
+  proxied (False, bool, False)
+    Boolean value true if proxied else flase
 
 
   ttl (False, int, 1)
-    NA
+    TTL value
+
+
+  created_on (False, str, None)
+    None
 
 
   modified_on (False, str, None)
-    NA
+    None
 
 
   proxiable (False, bool, None)
-    NA
+    None
 
 
   cis_id (False, str, None)
     (Required for new resource) CIS object id
 
 
-  domain_id (False, str, None)
-    (Required for new resource) Associated CIS domain
+  name (False, str, None)
+    DNS record name
 
 
   type (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Record type
 
 
   data (False, dict, None)
-    NA
+    None
+
+
+  priority (False, int, None)
+    Priority Value
 
 
   record_id (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    NA
-
-
-  content (False, str, None)
-    NA
-
-
-  proxied (False, bool, False)
-    NA
-
-
-  created_on (False, str, None)
-    NA
+    None
 
 
   id (False, str, None)

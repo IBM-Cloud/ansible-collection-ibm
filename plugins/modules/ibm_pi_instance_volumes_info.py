@@ -16,21 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_volumes' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    boot_volume_id:
-        description:
-            - NA
-        required: False
-        type: str
-    instance_volumes:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
     pi_instance_name:
         description:
             - Instance Name to be used for pvminstances
@@ -38,9 +27,20 @@ options:
         type: str
     pi_cloud_instance_id:
         description:
-            - NA
+            - None
         required: True
         type: str
+    boot_volume_id:
+        description:
+            - None
+        required: False
+        type: str
+    instance_volumes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -74,15 +74,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'boot_volume_id',
-    'instance_volumes',
     'pi_instance_name',
     'pi_cloud_instance_id',
+    'boot_volume_id',
+    'instance_volumes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_instance_name=dict(
+        required=True,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
     boot_volume_id=dict(
         required=False,
         type='str'),
@@ -90,12 +96,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_instance_name=dict(
-        required=True,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -124,7 +124,7 @@ def run_module():
         resource_type='ibm_pi_instance_volumes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

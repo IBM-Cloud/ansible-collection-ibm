@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,71 +27,71 @@ Parameters
 ----------
 
   host (False, str, None)
-    (Required for new resource) NA
-
-
-  minimum_ttl (False, int, None)
-    NA
-
-
-  data (False, str, None)
-    (Required for new resource) NA
-
-
-  expire (False, int, None)
-    NA
-
-
-  ttl (False, int, None)
-    (Required for new resource) NA
-
-
-  type (False, str, None)
-    (Required for new resource) NA
-
-
-  priority (False, int, 0)
-    NA
-
-
-  mx_priority (False, int, 0)
-    NA
-
-
-  refresh (False, int, None)
-    NA
-
-
-  service (False, str, None)
-    NA
-
-
-  protocol (False, str, None)
-    NA
+    (Required for new resource) Hostname
 
 
   port (False, int, None)
-    NA
+    port number
 
 
-  weight (False, int, 0)
-    NA
+  data (False, str, None)
+    (Required for new resource) DNS record data
 
 
-  tags (False, list, None)
-    NA
+  expire (False, int, None)
+    DNS record expiry info
 
 
   responsible_person (False, str, None)
-    NA
+    Responsible person for DNS record
 
 
   retry (False, int, None)
-    NA
+    Retry count
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  type (False, str, None)
+    (Required for new resource) DNS record type
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  weight (False, int, 0)
+    weight info
 
 
   domain_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Domain ID of dns record instance
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  service (False, str, None)
+    service info
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  ttl (False, int, None)
+    (Required for new resource) TTL configuration
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
   id (False, str, None)

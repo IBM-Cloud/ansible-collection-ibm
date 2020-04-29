@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  parameters (False, str, None)
+    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
+
+
   name (True, str, None)
     Name of action.
 
 
   limits (False, list, None)
-    NA
+    None
 
 
   exec (False, list, None)
-    NA
+    None
 
 
   publish (False, bool, None)
@@ -48,10 +52,6 @@ Parameters
 
   annotations (False, str, None)
     All annotations set on action by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
 
 
   function_namespace (True, any, None)

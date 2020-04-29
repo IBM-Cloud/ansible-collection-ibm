@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
@@ -33,22 +33,22 @@ options:
         default: IPv4
     port_range_min:
         description:
-            - NA
+            - Port number minimum range
         required: False
         type: int
     port_range_max:
         description:
-            - NA
+            - Port number max range
         required: False
         type: int
     remote_group_id:
         description:
-            - NA
+            - remote group ID
         required: False
         type: int
     remote_ip:
         description:
-            - NA
+            - Remote IP Address
         required: False
         type: str
     protocol:
@@ -58,7 +58,7 @@ options:
         type: str
     security_group_id:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Security group ID
         required: False
         type: int
     id:
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

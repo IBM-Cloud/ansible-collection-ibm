@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  app_instance_limit (False, int, None)
-    Defines the total app instance limit for organization.
+  total_services (False, int, None)
+    Defines the total services for organization.
+
+
+  total_routes (False, int, None)
+    Defines the total route for organization.
 
 
   total_private_domains (False, int, None)
     Defines the total private domain limit for organization.v
 
 
+  app_instance_limit (False, int, None)
+    Defines the total app instance limit for organization.
+
+
+  app_tasks_limit (False, int, None)
+    Defines the total app task limit for organization.
+
+
   total_service_keys (False, int, None)
     Defines the total service keys for organization.
 
 
+  name (True, str, None)
+    Org quota name, for example qIBM
+
+
   non_basic_services_allowed (False, bool, None)
     Define non basic services are allowed for organization.
-
-
-  total_routes (False, int, None)
-    Defines the total route for organization.
 
 
   memory_limit (False, int, None)
@@ -56,18 +68,6 @@ Parameters
 
   trial_db_allowed (False, bool, None)
     Defines trial db are allowed for organization.
-
-
-  name (True, str, None)
-    Org quota name, for example qIBM
-
-
-  total_services (False, int, None)
-    Defines the total services for organization.
-
-
-  app_tasks_limit (False, int, None)
-    Defines the total app task limit for organization.
 
 
   total_reserved_route_ports (False, int, None)

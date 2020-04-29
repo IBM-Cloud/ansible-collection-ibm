@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,60 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_instances_down (False, int, None)
-    NA
-
-
-  use_system_public_ip_pool (False, bool, None)
-    NA
-
-
-  datacenter (False, str, None)
-    NA
-
-
-  vip (False, str, None)
-    NA
-
-
-  server_instances_up (False, int, None)
-    NA
-
-
   description (False, str, None)
-    NA
-
-
-  protocols (False, list, None)
-    NA
-
-
-  health_monitors (False, list, None)
-    NA
+    None
 
 
   type (False, str, None)
-    NA
+    None
 
 
-  ssl_ciphers (False, list, None)
-    NA
-
-
-  server_instances (False, list, None)
-    NA
-
-
-  name (True, str, None)
-    NA
+  server_instances_down (False, int, None)
+    None
 
 
   status (False, str, None)
-    NA
+    None
+
+
+  vip (False, str, None)
+    None
+
+
+  protocols (False, list, None)
+    None
+
+
+  ssl_ciphers (False, list, None)
+    None
+
+
+  health_monitors (False, list, None)
+    None
+
+
+  server_instances (False, list, None)
+    None
+
+
+  name (True, str, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
 
 
   active_connections (False, int, None)
-    NA
+    None
+
+
+  server_instances_up (False, int, None)
+    None
+
+
+  use_system_public_ip_pool (False, bool, None)
+    None
 
 
   iaas_classic_username (False, any, None)

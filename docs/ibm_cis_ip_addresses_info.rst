@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,11 +27,11 @@ Parameters
 ----------
 
   ipv4_cidrs (False, list, None)
-    NA
+    None
 
 
   ipv6_cidrs (False, list, None)
-    NA
+    None
 
 
   iaas_classic_username (False, any, None)

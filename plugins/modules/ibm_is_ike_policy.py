@@ -16,55 +16,39 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    negotiation_mode:
-        description:
-            - NA
-        required: False
-        type: str
-    vpn_connections:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_group:
-        description:
-            - NA
-        required: False
-        type: str
-    key_lifetime:
-        description:
-            - NA
-        required: False
-        type: int
-        default: 28800
-    encryption_algorithm:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     dh_group:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) IKE DH group
         required: False
         type: int
     ike_version:
         description:
-            - NA
+            - IKE version
         required: False
         type: int
-    href:
+    negotiation_mode:
         description:
-            - NA
+            - IKE negotiation mode
+        required: False
+        type: str
+    vpn_connections:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_name:
@@ -72,19 +56,35 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) IKE name
         required: False
         type: str
     authentication_algorithm:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Authentication algorithm type
+        required: False
+        type: str
+    encryption_algorithm:
+        description:
+            - (Required for new resource) Encryption alogorithm type
+        required: False
+        type: str
+    resource_group:
+        description:
+            - IKE resource group ID
+        required: False
+        type: str
+    key_lifetime:
+        description:
+            - IKE Key lifetime
+        required: False
+        type: int
+        default: 28800
+    href:
+        description:
+            - IKE href value
         required: False
         type: str
     id:
@@ -131,32 +131,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('encryption_algorithm', 'str'),
     ('dh_group', 'int'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
+    ('encryption_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'negotiation_mode',
-    'vpn_connections',
-    'resource_controller_url',
-    'resource_group',
-    'key_lifetime',
-    'encryption_algorithm',
     'dh_group',
     'ike_version',
-    'href',
-    'resource_name',
+    'negotiation_mode',
+    'vpn_connections',
     'resource_group_name',
+    'resource_controller_url',
+    'resource_name',
     'name',
     'authentication_algorithm',
+    'encryption_algorithm',
+    'resource_group',
+    'key_lifetime',
+    'href',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    dh_group=dict(
+        required=False,
+        type='int'),
+    ike_version=dict(
+        required=False,
+        type='int'),
     negotiation_mode=dict(
         required=False,
         type='str'),
@@ -164,7 +170,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    authentication_algorithm=dict(
+        required=False,
+        type='str'),
+    encryption_algorithm=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -173,28 +194,7 @@ module_args = dict(
     key_lifetime=dict(
         default=28800,
         type='int'),
-    encryption_algorithm=dict(
-        required=False,
-        type='str'),
-    dh_group=dict(
-        required=False,
-        type='int'),
-    ike_version=dict(
-        required=False,
-        type='int'),
     href=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    authentication_algorithm=dict(
         required=False,
         type='str'),
     id=dict(
@@ -262,7 +262,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

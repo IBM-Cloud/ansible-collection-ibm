@@ -16,13 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy_detach' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     authorization_policy_id:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Authorization policy ID
         required: False
         type: str
     id:
@@ -138,7 +138,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy_detach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

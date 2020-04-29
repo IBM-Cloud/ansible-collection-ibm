@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,56 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  negotiation_mode (False, str, None)
-    NA
-
-
-  vpn_connections (False, list, None)
-    NA
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group (False, str, None)
-    NA
-
-
-  key_lifetime (False, int, 28800)
-    NA
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource) NA
-
-
   dh_group (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) IKE DH group
 
 
   ike_version (False, int, None)
-    NA
+    IKE version
 
 
-  href (False, str, None)
-    NA
+  negotiation_mode (False, str, None)
+    IKE negotiation mode
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  vpn_connections (False, list, None)
+    None
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) IKE name
 
 
   authentication_algorithm (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Authentication algorithm type
+
+
+  encryption_algorithm (False, str, None)
+    (Required for new resource) Encryption alogorithm type
+
+
+  resource_group (False, str, None)
+    IKE resource group ID
+
+
+  key_lifetime (False, int, 28800)
+    IKE Key lifetime
+
+
+  href (False, str, None)
+    IKE href value
 
 
   id (False, str, None)

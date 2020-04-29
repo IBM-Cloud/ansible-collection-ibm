@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (False, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
   key_id (False, str, None)
-    NA
+    Key ID in the PI instance
 
 
   pi_key_name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Key name in the PI instance
 
 
   pi_ssh_key (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) PI instance key info
 
 
   pi_creation_date (False, str, None)
-    NA
-
-
-  pi_cloud_instance_id (False, str, None)
-    (Required for new resource) NA
+    Date info
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,7 +27,7 @@ Parameters
 ----------
 
   cloud_foundry_roles (False, list, None)
-    NA
+    None
 
 
   users (False, list, None)
@@ -39,11 +39,11 @@ Parameters
 
 
   iam_policy (False, list, None)
-    NA
+    None
 
 
   classic_infra_roles (False, list, None)
-    NA
+    None
 
 
   id (False, str, None)

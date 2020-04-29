@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  trigger_name (False, str, None)
+    Name of the trigger.
+
+
+  action_name (False, str, None)
+    Name of an action.
+
 
   status (False, str, None)
     Status of the rule.
@@ -40,14 +48,6 @@ Parameters
 
   name (True, str, None)
     Name of the rule.
-
-
-  trigger_name (False, str, None)
-    Name of the trigger.
-
-
-  action_name (False, str, None)
-    Name of an action.
 
 
   function_namespace (True, any, None)

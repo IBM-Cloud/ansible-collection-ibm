@@ -16,52 +16,75 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    default_network_acl:
+    classic_access:
         description:
-            - NA
+            - Set to true if classic access needs to enabled to VPC
         required: False
-        type: str
+        type: bool
+        default: False
     default_security_group:
         description:
-            - NA
+            - Security group associated with VPC
         required: False
         type: str
+    cse_source_addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    address_prefix_management:
+        description:
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    resource_group:
+        description:
+            - Resource group info
+        required: False
+        type: str
+    status:
+        description:
+            - VPC status
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    resource_group_name:
+    resource_name:
         description:
-            - The resource group name in which resource is provisioned
+            - The name of the resource
         required: False
         type: str
-    cse_source_addresses:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) VPC name
         required: False
         type: str
-    resource_group:
+    default_network_acl:
         description:
-            - NA
-        required: False
-        type: str
-    status:
-        description:
-            - NA
+            - Default network ACL
         required: False
         type: str
     crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_crn:
         description:
             - The crn of the resource
         required: False
@@ -71,37 +94,14 @@ options:
             - The status of the resource
         required: False
         type: str
-    address_prefix_management:
+    resource_group_name:
         description:
-            - NA
-        required: False
-        type: str
-        default: auto
-    tags:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    classic_access:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
-    resource_name:
-        description:
-            - The name of the resource
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     subnets:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
@@ -154,45 +154,39 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default_network_acl',
+    'classic_access',
     'default_security_group',
-    'resource_controller_url',
-    'resource_group_name',
     'cse_source_addresses',
-    'name',
+    'address_prefix_management',
     'resource_group',
     'status',
-    'crn',
-    'resource_status',
-    'address_prefix_management',
     'tags',
-    'resource_crn',
-    'classic_access',
+    'resource_controller_url',
     'resource_name',
+    'name',
+    'default_network_acl',
+    'crn',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
     'subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default_network_acl=dict(
-        required=False,
-        type='str'),
+    classic_access=dict(
+        default=False,
+        type='bool'),
     default_security_group=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
         required=False,
         type='str'),
     cse_source_addresses=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
+    address_prefix_management=dict(
+        default='auto',
         type='str'),
     resource_group=dict(
         required=False,
@@ -200,26 +194,32 @@ module_args = dict(
     status=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    default_network_acl=dict(
+        required=False,
+        type='str'),
     crn=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
         required=False,
         type='str'),
     resource_status=dict(
         required=False,
         type='str'),
-    address_prefix_management=dict(
-        default='auto',
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    classic_access=dict(
-        default=False,
-        type='bool'),
-    resource_name=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     subnets=dict(
@@ -291,7 +291,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

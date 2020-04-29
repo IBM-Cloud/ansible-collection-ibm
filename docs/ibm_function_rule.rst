@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  trigger_name (False, str, None)
-    (Required for new resource) Name of trigger.
-
 
   action_name (False, str, None)
     (Required for new resource) Name of action.
@@ -48,6 +44,10 @@ Parameters
 
   name (False, str, None)
     (Required for new resource) Name of rule.
+
+
+  trigger_name (False, str, None)
+    (Required for new resource) Name of trigger.
 
 
   id (False, str, None)

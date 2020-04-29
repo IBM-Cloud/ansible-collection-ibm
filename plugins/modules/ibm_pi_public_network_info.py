@@ -16,23 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_public_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - NA
-        required: False
-        type: str
     type:
         description:
-            - NA
+            - None
         required: False
         type: str
     vlan_id:
         description:
-            - NA
+            - None
         required: False
         type: int
     pi_network_name:
@@ -42,12 +37,17 @@ options:
         type: str
     pi_cloud_instance_id:
         description:
-            - NA
+            - None
         required: True
         type: str
     network_id:
         description:
-            - NA
+            - None
+        required: False
+        type: str
+    name:
+        description:
+            - None
         required: False
         type: str
     zone:
@@ -82,20 +82,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'type',
     'vlan_id',
     'pi_network_name',
     'pi_cloud_instance_id',
     'network_id',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -109,6 +106,9 @@ module_args = dict(
         required=True,
         type='str'),
     network_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     zone=dict(
@@ -139,7 +139,7 @@ def run_module():
         resource_type='ibm_pi_public_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

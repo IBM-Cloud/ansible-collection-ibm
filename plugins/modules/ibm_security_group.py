@@ -16,21 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Security group name
         required: False
         type: str
     description:
         description:
-            - NA
+            - Security group description
         required: False
         type: str
-        default: 
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,7 +92,7 @@ module_args = dict(
         required=False,
         type='str'),
     description=dict(
-        default='',
+        required=False,
         type='str'),
     id=dict(
         required=False,
@@ -148,7 +147,7 @@ def run_module():
         resource_type='ibm_security_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

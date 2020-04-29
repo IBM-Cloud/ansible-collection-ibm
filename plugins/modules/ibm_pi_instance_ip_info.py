@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
@@ -25,44 +25,44 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    ip:
+    pi_network_name:
         description:
-            - NA
-        required: False
-        type: str
-    ipoctet:
-        description:
-            - NA
-        required: False
-        type: str
-    macaddress:
-        description:
-            - NA
-        required: False
+            - None
+        required: True
         type: str
     type:
         description:
-            - NA
+            - None
         required: False
         type: str
     external_ip:
         description:
-            - NA
+            - None
         required: False
         type: str
     pi_cloud_instance_id:
         description:
-            - NA
+            - None
         required: True
         type: str
-    pi_network_name:
+    ip:
         description:
-            - NA
-        required: True
+            - None
+        required: False
+        type: str
+    ipoctet:
+        description:
+            - None
+        required: False
+        type: str
+    macaddress:
+        description:
+            - None
+        required: False
         type: str
     network_id:
         description:
-            - NA
+            - None
         required: False
         type: str
     zone:
@@ -93,20 +93,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_instance_name', 'str'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
-    'ip',
-    'ipoctet',
-    'macaddress',
+    'pi_network_name',
     'type',
     'external_ip',
     'pi_cloud_instance_id',
-    'pi_network_name',
+    'ip',
+    'ipoctet',
+    'macaddress',
     'network_id',
 ]
 
@@ -116,14 +116,8 @@ module_args = dict(
     pi_instance_name=dict(
         required=True,
         type='str'),
-    ip=dict(
-        required=False,
-        type='str'),
-    ipoctet=dict(
-        required=False,
-        type='str'),
-    macaddress=dict(
-        required=False,
+    pi_network_name=dict(
+        required=True,
         type='str'),
     type=dict(
         required=False,
@@ -134,8 +128,14 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    pi_network_name=dict(
-        required=True,
+    ip=dict(
+        required=False,
+        type='str'),
+    ipoctet=dict(
+        required=False,
+        type='str'),
+    macaddress=dict(
+        required=False,
         type='str'),
     network_id=dict(
         required=False,
@@ -168,7 +168,7 @@ def run_module():
         resource_type='ibm_pi_instance_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

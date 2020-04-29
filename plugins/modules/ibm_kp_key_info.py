@@ -16,26 +16,26 @@ description:
     - Retrieve an IBM Cloud 'ibm_kp_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    key_protect_id:
-        description:
-            - NA
-        required: True
-        type: str
     key_name:
         description:
-            - NA
+            - None
         required: False
         type: str
     keys:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
+    key_protect_id:
+        description:
+            - None
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -74,17 +74,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_protect_id',
     'key_name',
     'keys',
+    'key_protect_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_protect_id=dict(
-        required=True,
-        type='str'),
     key_name=dict(
         required=False,
         type='str'),
@@ -92,6 +89,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    key_protect_id=dict(
+        required=True,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -127,7 +127,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,36 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  modified_on (False, str, None)
-    NA
-
-
-  instance_id (False, str, None)
-    (Required for new resource) NA
-
-
-  zone_id (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  description (False, str, None)
-    NA
-
-
-  state_ (False, str, None)
-    NA
-
-
   label (False, str, None)
-    NA
+    Label
 
 
   created_on (False, str, None)
-    NA
+    Creation date
+
+
+  modified_on (False, str, None)
+    Modification date
+
+
+  instance_id (False, str, None)
+    (Required for new resource) Instance ID
+
+
+  zone_id (False, str, None)
+    Zone ID
+
+
+  name (False, str, None)
+    (Required for new resource) Zone name
+
+
+  description (False, str, None)
+    Zone description
+
+
+  state_ (False, str, None)
+    Zone state
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,60 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (False, str, None)
-    (Required for new resource) NA
-
-
-  name (False, str, None)
-    NA
-
-
-  public_vlan_id (False, int, None)
-    NA
-
-
   private_subnet (False, str, None)
-    NA
-
-
-  vip_pool (False, list, None)
-    NA
-
-
-  type (False, str, None)
-    NA
-
-
-  speed (False, int, None)
-    (Required for new resource) NA
-
-
-  version (False, str, None)
-    (Required for new resource) NA
-
-
-  public_subnet (False, str, None)
-    NA
-
-
-  management_ip_address (False, str, None)
-    NA
-
-
-  tags (False, list, None)
-    NA
+    Private subnet
 
 
   datacenter (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Datacenter name
 
 
-  ip_count (False, int, None)
-    (Required for new resource) NA
+  version (False, str, None)
+    (Required for new resource) version info
 
 
   private_vlan_id (False, int, None)
-    NA
+    Private VLAN id
+
+
+  public_subnet (False, str, None)
+    Public subnet
+
+
+  vip_pool (False, list, None)
+    List of VIP ids
+
+
+  management_ip_address (False, str, None)
+    management IP address
+
+
+  tags (False, list, None)
+    List of the tags
+
+
+  name (False, str, None)
+    Name
+
+
+  speed (False, int, None)
+    (Required for new resource) Speed value
+
+
+  ip_count (False, int, None)
+    (Required for new resource) IP address count
+
+
+  type (False, str, None)
+    Type of the VPX
+
+
+  plan (False, str, None)
+    (Required for new resource) Plan info
+
+
+  public_vlan_id (False, int, None)
+    Piblic VLAN id
 
 
   id (False, str, None)

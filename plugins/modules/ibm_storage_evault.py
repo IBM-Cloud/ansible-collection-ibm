@@ -16,49 +16,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_evault' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    capacity:
+        description:
+            - (Required for new resource) Capacity
+        required: False
+        type: int
+    virtual_instance_id:
+        description:
+            - Virtual instance ID
+        required: False
+        type: int
+    hardware_instance_id:
+        description:
+            - Hardware instance ID
+        required: False
+        type: int
+    username:
+        description:
+            - user name
+        required: False
+        type: str
+    password:
+        description:
+            - password
+        required: False
+        type: str
     service_resource_name:
         description:
-            - NA
+            - service resource name
         required: False
         type: str
     tags:
         description:
-            - NA
+            - Tags set for the resource
         required: False
         type: list
         elements: str
     datacenter:
         description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    capacity:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    virtual_instance_id:
-        description:
-            - NA
-        required: False
-        type: int
-    hardware_instance_id:
-        description:
-            - NA
-        required: False
-        type: int
-    username:
-        description:
-            - NA
-        required: False
-        type: str
-    password:
-        description:
-            - NA
+            - (Required for new resource) Datacenter name
         required: False
         type: str
     id:
@@ -107,35 +107,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('capacity', 'int'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_resource_name',
-    'tags',
-    'datacenter',
     'capacity',
     'virtual_instance_id',
     'hardware_instance_id',
     'username',
     'password',
+    'service_resource_name',
+    'tags',
+    'datacenter',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_resource_name=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     capacity=dict(
         required=False,
         type='int'),
@@ -149,6 +139,16 @@ module_args = dict(
         required=False,
         type='str'),
     password=dict(
+        required=False,
+        type='str'),
+    service_resource_name=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    datacenter=dict(
         required=False,
         type='str'),
     id=dict(
@@ -204,7 +204,7 @@ def run_module():
         resource_type='ibm_storage_evault',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

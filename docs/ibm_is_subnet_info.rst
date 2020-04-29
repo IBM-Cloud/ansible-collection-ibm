@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,72 +26,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  identifier (True, str, None)
+    None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  ipv6_cidr_block (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  zone (False, str, None)
+    None
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  ipv4_cidr_block (False, str, None)
+    None
+
+
+  ip_version (False, int, None)
+    None
+
+
+  public_gateway (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
   resource_status (False, str, None)
     The status of the resource
 
 
-  ip_version (False, int, None)
-    NA
-
-
   name (False, str, None)
-    NA
-
-
-  network_acl (False, str, None)
-    NA
-
-
-  public_gateway (False, str, None)
-    NA
+    None
 
 
   status (False, str, None)
-    NA
+    None
 
 
-  identifier (True, str, None)
-    NA
-
-
-  ipv4_cidr_block (False, str, None)
-    NA
-
-
-  available_ipv4_address_count (False, str, None)
-    NA
-
-
-  zone (False, str, None)
-    NA
+  vpc (False, str, None)
+    None
 
 
   resource_name (False, str, None)
     The name of the resource
-
-
-  ipv6_cidr_block (False, str, None)
-    NA
-
-
-  total_ipv4_address_count (False, int, None)
-    NA
-
-
-  vpc (False, str, None)
-    NA
 
 
   generation (False, any, 2)

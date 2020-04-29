@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,40 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  secret_name (False, str, None)
-    (Required for new resource) NA
-
-
-  issuer_name (False, str, None)
-    NA
-
-
-  cloud_cert_instance_id (False, str, None)
-    NA
-
-
-  cert_crn (False, str, None)
-    (Required for new resource) NA
-
-
   cluster_id (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Cluster ID
 
 
-  domain_name (False, str, None)
-    NA
+  secret_name (False, str, None)
+    (Required for new resource) Secret name
 
 
   expires_on (False, str, None)
-    NA
+    Certificate expaire on date
 
 
-  cluster_crn (False, str, None)
-    NA
+  cloud_cert_instance_id (False, str, None)
+    cloud cert instance ID
 
 
   region (False, str, None)
-    NA
+    region name
+
+
+  cert_crn (False, str, None)
+    (Required for new resource) Certificate CRN id
+
+
+  domain_name (False, str, None)
+    Domain name
+
+
+  issuer_name (False, str, None)
+    certificate issuer name
+
+
+  cluster_crn (False, str, None)
+    cluster CRN
 
 
   id (False, str, None)

@@ -16,73 +16,73 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_network_interface_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    security_group:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     name:
         description:
-            - NA
+            - security group network interface attachment name
         required: False
         type: str
-    instance_network_interface:
-        description:
-            - NA
-        required: False
-        type: str
-    port_speed:
-        description:
-            - NA
-        required: False
-        type: int
-    primary_ipv4_address:
-        description:
-            - NA
-        required: False
-        type: str
-    network_interface:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    secondary_address:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: str
     status:
         description:
-            - NA
+            - security group network interface attachment status
         required: False
         type: str
     subnet:
         description:
-            - NA
+            - security group network interface attachment subnet
         required: False
         type: str
     type:
         description:
-            - NA
+            - security group network interface attachment type
         required: False
         type: str
-    floating_ips:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
     security_groups:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
+    floating_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    security_group:
+        description:
+            - (Required for new resource) security group network interface attachment group ID
+        required: False
+        type: str
+    network_interface:
+        description:
+            - (Required for new resource) security group network interface attachment NIC ID
+        required: False
+        type: str
+    instance_network_interface:
+        description:
+            - security group network interface attachment network interface ID
+        required: False
+        type: str
+    port_speed:
+        description:
+            - security group network interface attachment port speed
+        required: False
+        type: int
+    primary_ipv4_address:
+        description:
+            - security group network interface attachment Primary IPV4 address
+        required: False
+        type: str
+    secondary_address:
+        description:
+            - security group network interface attachment secondary address
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -133,27 +133,47 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'security_group',
     'name',
-    'instance_network_interface',
-    'port_speed',
-    'primary_ipv4_address',
-    'network_interface',
-    'secondary_address',
     'status',
     'subnet',
     'type',
-    'floating_ips',
     'security_groups',
+    'floating_ips',
+    'security_group',
+    'network_interface',
+    'instance_network_interface',
+    'port_speed',
+    'primary_ipv4_address',
+    'secondary_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    subnet=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    floating_ips=dict(
+        required=False,
+        elements='',
+        type='list'),
     security_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    network_interface=dict(
         required=False,
         type='str'),
     instance_network_interface=dict(
@@ -165,27 +185,7 @@ module_args = dict(
     primary_ipv4_address=dict(
         required=False,
         type='str'),
-    network_interface=dict(
-        required=False,
-        type='str'),
     secondary_address=dict(
-        required=False,
-        elements='',
-        type='list'),
-    status=dict(
-        required=False,
-        type='str'),
-    subnet=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    floating_ips=dict(
-        required=False,
-        elements='',
-        type='list'),
-    security_groups=dict(
         required=False,
         elements='',
         type='list'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_is_security_group_network_interface_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

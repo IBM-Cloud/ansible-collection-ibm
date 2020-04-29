@@ -16,25 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    fingerprint:
-        description:
-            - NA
-        required: False
-        type: str
-    length:
-        description:
-            - NA
-        required: False
-        type: int
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
     resource_name:
         description:
             - The name of the resource
@@ -52,12 +37,27 @@ options:
         type: str
     name:
         description:
-            - NA
+            - None
         required: True
         type: str
     type:
         description:
-            - NA
+            - None
+        required: False
+        type: str
+    fingerprint:
+        description:
+            - None
+        required: False
+        type: str
+    length:
+        description:
+            - None
+        required: False
+        type: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     generation:
@@ -96,28 +96,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'fingerprint',
-    'length',
-    'resource_controller_url',
     'resource_name',
     'resource_crn',
     'resource_group_name',
     'name',
     'type',
+    'fingerprint',
+    'length',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    fingerprint=dict(
-        required=False,
-        type='str'),
-    length=dict(
-        required=False,
-        type='int'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
@@ -131,6 +122,15 @@ module_args = dict(
         required=True,
         type='str'),
     type=dict(
+        required=False,
+        type='str'),
+    fingerprint=dict(
+        required=False,
+        type='str'),
+    length=dict(
+        required=False,
+        type='int'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -180,7 +180,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

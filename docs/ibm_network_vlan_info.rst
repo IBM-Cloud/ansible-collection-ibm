@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,28 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  virtual_guests (False, list, None)
-    NA
-
-
-  subnets (False, list, None)
-    NA
-
-
-  id (False, int, None)
-    NA
-
-
-  name (False, str, None)
-    NA
-
-
   number (False, int, None)
-    NA
+    None
 
 
   router_hostname (False, str, None)
-    NA
+    None
+
+
+  virtual_guests (False, list, None)
+    None
+
+
+  subnets (False, list, None)
+    None
+
+
+  id (False, int, None)
+    None
+
+
+  name (False, str, None)
+    None
 
 
   iaas_classic_username (False, any, None)

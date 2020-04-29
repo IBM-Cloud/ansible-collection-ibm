@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
@@ -27,22 +27,22 @@ options:
         type: str
     master_ip_address:
         description:
-            - NA
+            - None
         required: False
         type: str
     transfer_frequency:
         description:
-            - NA
+            - None
         required: False
         type: int
     status_id:
         description:
-            - NA
+            - None
         required: False
         type: int
     status_text:
         description:
-            - NA
+            - None
         required: False
         type: str
     iaas_classic_username:
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

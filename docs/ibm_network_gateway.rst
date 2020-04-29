@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,56 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) The name of the gateway
-
-
   private_ip_address_id (False, int, None)
-    NA
+    None
 
 
-  private_ipv4_address (False, str, None)
-    NA
-
-
-  public_ipv4_address (False, str, None)
-    NA
+  private_vlan_id (False, int, None)
+    None
 
 
   public_ipv6_address_id (False, int, None)
-    NA
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  members (False, list, None)
+    (Required for new resource) The hardware members of this network Gateway
 
 
   associated_vlans (False, list, None)
     The VLAN instances associated with this Network Gateway
 
 
+  name (False, str, None)
+    (Required for new resource) The name of the gateway
+
+
   ssh_key_ids (False, list, None)
-    NA
+    None
 
 
   post_install_script_uri (False, str, None)
-    NA
+    None
 
 
-  private_vlan_id (False, int, None)
-    NA
+  private_ipv4_address (False, str, None)
+    None
+
+
+  public_ipv4_address (False, str, None)
+    None
 
 
   public_ip_address_id (False, int, None)
-    NA
+    None
 
 
   public_vlan_id (False, int, None)
-    NA
-
-
-  status (False, str, None)
-    NA
-
-
-  members (False, list, None)
-    (Required for new resource) The hardware members of this network Gateway
+    None
 
 
   id (False, str, None)

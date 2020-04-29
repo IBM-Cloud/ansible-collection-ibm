@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,36 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (False, str, None)
-    Unique identifier of resource instance
-
-
-  status (False, dict, None)
-    The resource instance status
-
-
   resource_name (False, str, None)
     The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_status (False, str, None)
+    The status of the resource
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  name (True, str, None)
-    Resource instance name for example, my cis instance
 
 
   resource_group_id (False, str, None)
@@ -70,8 +54,24 @@ Parameters
     The name of the Cloud Internet Services offering, 'internet-svcs'
 
 
+  status (False, dict, None)
+    The resource instance status
+
+
+  name (True, str, None)
+    Resource instance name for example, my cis instance
+
+
+  guid (False, str, None)
+    Unique identifier of resource instance
+
+
   plan (False, str, None)
     The plan type of the cis instance
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   iaas_classic_username (False, any, None)

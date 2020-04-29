@@ -16,13 +16,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    resource_crn:
+    resource_group:
         description:
-            - The crn of the resource
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - VPN Gateway tags list
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     resource_status:
@@ -37,43 +53,27 @@ options:
         type: str
     subnet:
         description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    resource_group:
-        description:
-            - NA
+            - (Required for new resource) VPNGateway subnet info
         required: False
         type: str
     status:
         description:
-            - NA
+            - None
         required: False
         type: str
     public_ip_address:
         description:
-            - NA
+            - None
         required: False
         type: str
-    tags:
+    resource_crn:
         description:
-            - NA
-        required: False
-        type: list
-        elements: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
+            - The crn of the resource
         required: False
         type: str
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) VPN Gateway instance name
         required: False
         type: str
     id:
@@ -126,23 +126,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_crn',
-    'resource_status',
-    'resource_group_name',
-    'subnet',
     'resource_group',
-    'status',
-    'public_ip_address',
     'tags',
     'resource_controller_url',
     'resource_name',
+    'resource_status',
+    'resource_group_name',
+    'subnet',
+    'status',
+    'public_ip_address',
+    'resource_crn',
     'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_crn=dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
         required=False,
         type='str'),
     resource_status=dict(
@@ -154,23 +164,13 @@ module_args = dict(
     subnet=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     status=dict(
         required=False,
         type='str'),
     public_ip_address=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     name=dict(
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

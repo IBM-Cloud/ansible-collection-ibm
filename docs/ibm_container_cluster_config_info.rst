@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+  token (False, str, None)
+    None
 
 
-  host (False, str, None)
-    NA
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
 
 
   region (False, str, None)
     The cluster region
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  calico_config_file_path (False, str, None)
+    The absolute path to the calico network config file
 
 
   config_file_path (False, str, None)
@@ -47,35 +51,39 @@ Parameters
 
 
   admin_certificate (False, str, None)
-    NA
+    None
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
+  host (False, str, None)
+    None
 
 
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
+
+
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   network (False, bool, False)
     If set to true will download the Calico network config with the Admin config
 
 
-  calico_config_file_path (False, str, None)
-    The absolute path to the calico network config file
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
+
+
+  config_dir (False, str, None)
+    The directory where the cluster config to be downloaded. Default is home directory
 
 
   admin_key (False, str, None)
-    NA
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
+    None
 
 
   admin (False, bool, False)
@@ -83,15 +91,7 @@ Parameters
 
 
   ca_certificate (False, str, None)
-    NA
-
-
-  token (False, str, None)
-    NA
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
+    None
 
 
   ibmcloud_api_key (True, any, None)

@@ -16,23 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_provisioning_hook' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Provision hook name
         required: False
         type: str
     uri:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) URI of the hook
         required: False
         type: str
     tags:
         description:
-            - NA
+            - Tags associated with resource
         required: False
         type: list
         elements: str
@@ -159,7 +159,7 @@ def run_module():
         resource_type='ibm_compute_provisioning_hook',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,48 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ssl_offload (False, bool, False)
-    NA
-
-
-  tags (False, list, None)
-    NA
-
-
-  hostname (False, str, None)
-    NA
-
-
-  datacenter (False, str, None)
-    (Required for new resource) NA
-
-
-  security_certificate_id (False, int, None)
-    NA
+  ip_address (False, str, None)
+    None
 
 
   subnet_id (False, int, None)
-    NA
+    None
 
 
   dedicated (False, bool, False)
-    NA
-
-
-  connections (False, int, None)
-    (Required for new resource) NA
-
-
-  ha_enabled (False, bool, False)
-    NA
-
-
-  ip_address (False, str, None)
-    NA
+    Boolena value true if Load balncer is dedicated type
 
 
   ssl_enabled (False, bool, None)
-    NA
+    None
+
+
+  tags (False, list, None)
+    Tags associated with resource
+
+
+  hostname (False, str, None)
+    None
+
+
+  connections (False, int, None)
+    (Required for new resource) Connections value
+
+
+  ha_enabled (False, bool, False)
+    true if High availability is enabled
+
+
+  ssl_offload (False, bool, False)
+    boolean value true if SSL offload is enabled
+
+
+  datacenter (False, str, None)
+    (Required for new resource) Datacenter name info
+
+
+  security_certificate_id (False, int, None)
+    Security certificate ID
 
 
   id (False, str, None)

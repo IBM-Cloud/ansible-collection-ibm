@@ -16,38 +16,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     master_ip_address:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Master IP Address
         required: False
         type: str
     transfer_frequency:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Transfer frequency value
         required: False
         type: int
     zone_name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Zone name
         required: False
         type: str
     status_id:
         description:
-            - NA
+            - Status ID
         required: False
         type: int
     status_text:
         description:
-            - NA
+            - Status text
         required: False
         type: str
     tags:
         description:
-            - NA
+            - List of tags
         required: False
         type: list
         elements: str
@@ -187,7 +187,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

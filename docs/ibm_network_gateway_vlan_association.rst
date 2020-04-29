@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,7 +27,7 @@ Parameters
 ----------
 
   gateway_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Gateway instance ID
 
 
   network_vlan_id (False, int, None)

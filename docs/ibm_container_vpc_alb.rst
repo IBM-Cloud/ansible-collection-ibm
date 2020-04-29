@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,48 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_id (False, str, None)
-    (Required for new resource) NA
-
-
-  cluster (False, str, None)
-    NA
-
-
   enable (False, bool, None)
-    NA
+    Enable the ALB instance in the cluster
 
 
   disable_deployment (False, bool, None)
-    NA
-
-
-  load_balancer_hostname (False, str, None)
-    NA
+    Disable the ALB instance in the cluster
 
 
   resize (False, bool, None)
-    NA
-
-
-  alb_type (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    NA
-
-
-  state_ (False, str, None)
-    NA
-
-
-  status (False, str, None)
-    NA
+    boolean value to resize the albs
 
 
   zone (False, str, None)
-    NA
+    Zone info.
+
+
+  state_ (False, str, None)
+    ALB state
+
+
+  status (False, str, None)
+    Status of the ALB
+
+
+  alb_id (False, str, None)
+    (Required for new resource) ALB ID
+
+
+  alb_type (False, str, None)
+    Type of the ALB
+
+
+  cluster (False, str, None)
+    cluster id
+
+
+  name (False, str, None)
+    ALB name
+
+
+  load_balancer_hostname (False, str, None)
+    Load balancer host name
 
 
   id (False, str, None)

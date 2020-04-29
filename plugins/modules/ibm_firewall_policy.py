@@ -16,24 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_firewall_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     firewall_id:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Firewall ID
         required: False
         type: int
     rules:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Policy rules info
         required: False
         type: list
         elements: dict
     tags:
         description:
-            - NA
+            - List of tags
         required: False
         type: list
         elements: str
@@ -161,7 +161,7 @@ def run_module():
         resource_type='ibm_firewall_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

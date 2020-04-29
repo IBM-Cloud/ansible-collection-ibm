@@ -16,50 +16,50 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    default_pool:
-        description:
-            - NA
-        required: False
-        type: str
-    status:
-        description:
-            - NA
-        required: False
-        type: str
-    listener_id:
-        description:
-            - NA
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    port:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    protocol:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     certificate_instance:
         description:
-            - NA
+            - certificate instance for the Loadbalancer
         required: False
         type: str
     connection_limit:
         description:
-            - NA
+            - Connection limit for Loadbalancer
         required: False
         type: int
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    status:
+        description:
+            - Loadbalancer listener status
+        required: False
+        type: str
+    listener_id:
+        description:
+            - None
+        required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: False
+        type: str
+    port:
+        description:
+            - (Required for new resource) Loadbalancer listener port
+        required: False
+        type: int
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,19 +111,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'certificate_instance',
+    'connection_limit',
     'default_pool',
     'status',
     'listener_id',
     'lb',
     'port',
     'protocol',
-    'certificate_instance',
-    'connection_limit',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    certificate_instance=dict(
+        required=False,
+        type='str'),
+    connection_limit=dict(
+        required=False,
+        type='int'),
     default_pool=dict(
         required=False,
         type='str'),
@@ -142,12 +148,6 @@ module_args = dict(
     protocol=dict(
         required=False,
         type='str'),
-    certificate_instance=dict(
-        required=False,
-        type='str'),
-    connection_limit=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

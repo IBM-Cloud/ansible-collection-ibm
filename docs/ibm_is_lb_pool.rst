@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,56 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  lb (False, str, None)
-    (Required for new resource) NA
-
-
-  algorithm (False, str, None)
-    (Required for new resource) NA
-
-
-  health_delay (False, int, None)
-    (Required for new resource) NA
-
-
-  health_timeout (False, int, None)
-    (Required for new resource) NA
-
-
-  health_type (False, str, None)
-    (Required for new resource) NA
-
-
-  session_persistence_cookie_name (False, str, None)
-    NA
+  health_monitor_port (False, int, None)
+    None
 
 
   provisioning_status (False, str, None)
-    NA
+    None
 
 
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Load Balancer Pool name
+
+
+  algorithm (False, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  health_delay (False, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_timeout (False, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_type (False, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
+
+
+  lb (False, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   protocol (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Load Balancer Protocol
 
 
   health_retries (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Load Balancer health retry count
 
 
   health_monitor_url (False, str, None)
-    NA
-
-
-  health_monitor_port (False, int, None)
-    NA
+    None
 
 
   session_persistence_type (False, str, None)
-    NA
+    Load Balancer Pool session persisence type.
 
 
   id (False, str, None)

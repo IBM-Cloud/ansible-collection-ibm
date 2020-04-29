@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  flavor (False, str, None)
-    (Required for new resource) NA
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  master_url (False, str, None)
-    NA
-
-
-  public_service_endpoint_url (False, str, None)
-    NA
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  ingress_secret (False, str, None)
-    NA
-
-
-  resource_name (False, str, None)
-    The name of the resource
+  name (False, str, None)
+    (Required for new resource) The cluster name
 
 
   vpc_id (False, str, None)
@@ -59,75 +39,95 @@ Parameters
 
 
   kube_version (False, str, None)
-    NA
+    Kubernetes version
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
   worker_count (False, int, 1)
-    NA
-
-
-  disable_public_service_endpoint (False, bool, False)
-    NA
-
-
-  ingress_hostname (False, str, None)
-    NA
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  state_ (False, str, None)
-    NA
-
-
-  master_status (False, str, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) The cluster name
-
-
-  zones (False, list, None)
-    (Required for new resource) NA
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  tags (False, list, None)
-    NA
+    Number of worker nodes in the cluster
 
 
   wait_till (False, str, IngressReady)
     wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
-  albs (False, list, None)
-    NA
+  state_ (False, str, None)
+    None
 
 
   private_service_endpoint_url (False, str, None)
-    NA
+    None
+
+
+  flavor (False, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  master_status (False, str, None)
+    None
+
+
+  albs (False, list, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  zones (False, list, None)
+    (Required for new resource) Zone info
+
+
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  master_url (False, str, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  ingress_hostname (False, str, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
 
 
   crn (False, str, None)
     CRN of resource instance
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

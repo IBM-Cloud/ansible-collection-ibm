@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  version (False, str, None)
+    None
+
 
   ibm_id (False, str, None)
     (Required for new resource) The ibm id or email of user
@@ -35,7 +39,7 @@ Parameters
 
 
   resources (False, list, None)
-    NA
+    None
 
 
   account_management (False, bool, False)
@@ -43,11 +47,7 @@ Parameters
 
 
   tags (False, list, None)
-    NA
-
-
-  version (False, str, None)
-    NA
+    None
 
 
   id (False, str, None)

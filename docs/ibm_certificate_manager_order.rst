@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,68 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rotate_keys (False, bool, False)
-    NA
-
-
-  description (False, str, None)
-    NA
-
-
-  issuer (False, str, None)
-    NA
-
-
-  issuance_info (False, dict, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  domains (False, list, None)
-    (Required for new resource) NA
+  algorithm (False, str, None)
+    Algorithm info
 
 
   begins_on (False, int, None)
-    NA
-
-
-  imported (False, bool, None)
-    NA
-
-
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource) NA
-
-
-  algorithm (False, str, None)
-    NA
-
-
-  status (False, str, None)
-    NA
+    Cerificate validity from date
 
 
   has_previous (False, str, None)
-    NA
+    Has Previous
+
+
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource) Certificate manager instance ID
+
+
+  domains (False, list, None)
+    (Required for new resource) List of domain names
+
+
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
 
 
   domain_validation_method (False, str, dns - 01)
-    NA
+    Domain validation methods
+
+
+  description (False, str, None)
+    Certicate description
 
 
   dns_provider_instance_crn (False, str, None)
-    NA
+    DNS provider instance CRN
 
 
   key_algorithm (False, str, None)
-    NA
+    Keyalgorithm info
 
 
   expires_on (False, int, None)
-    NA
+    Certificaet expairy date
+
+
+  issuance_info (False, dict, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource) Certificate name
+
+
+  issuer (False, str, None)
+    Certificate issuer info
+
+
+  imported (False, bool, None)
+    set to true if certificate is imported
+
+
+  status (False, str, None)
+    Status  of the certificate
 
 
   id (False, str, None)

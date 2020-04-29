@@ -16,58 +16,58 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    type:
+    private:
         description:
-            - (Required for new resource) NA
+            - private subnet
         required: False
-        type: str
+        type: bool
+        default: False
     capacity:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) number of ip addresses in the subnet
         required: False
         type: int
+    subnet_cidr:
+        description:
+            - CIDR notation for the subnet
+        required: False
+        type: str
     endpoint_ip:
         description:
-            - NA
+            - endpoint IP
+        required: False
+        type: str
+    notes:
+        description:
+            - Notes
         required: False
         type: str
     tags:
         description:
-            - NA
+            - tags set for the resource
         required: False
         type: list
         elements: str
-    notes:
+    type:
         description:
-            - NA
+            - (Required for new resource) subnet type
         required: False
         type: str
-    private:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
     ip_version:
         description:
-            - NA
+            - ip version
         required: False
         type: int
         default: 4
     vlan_id:
         description:
-            - NA
+            - VLAN ID for the subnet
         required: False
         type: int
-    subnet_cidr:
-        description:
-            - NA
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,54 +114,54 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'capacity',
-    'endpoint_ip',
-    'tags',
-    'notes',
     'private',
+    'capacity',
+    'subnet_cidr',
+    'endpoint_ip',
+    'notes',
+    'tags',
+    'type',
     'ip_version',
     'vlan_id',
-    'subnet_cidr',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
+    private=dict(
+        default=False,
+        type='bool'),
     capacity=dict(
         required=False,
         type='int'),
+    subnet_cidr=dict(
+        required=False,
+        type='str'),
     endpoint_ip=dict(
+        required=False,
+        type='str'),
+    notes=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    notes=dict(
+    type=dict(
         required=False,
         type='str'),
-    private=dict(
-        default=False,
-        type='bool'),
     ip_version=dict(
         default=4,
         type='int'),
     vlan_id=dict(
         required=False,
         type='int'),
-    subnet_cidr=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

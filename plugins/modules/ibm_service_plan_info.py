@@ -16,18 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_service_plan' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    plan:
-        description:
-            - The plan type ex- shared
-        required: True
-        type: str
     service:
         description:
             - Service name for example, cloudantNoSQLDB
+        required: True
+        type: str
+    plan:
+        description:
+            - The plan type ex- shared
         required: True
         type: str
     iaas_classic_username:
@@ -63,23 +63,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('plan', 'str'),
     ('service', 'str'),
+    ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'plan',
     'service',
+    'plan',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    plan=dict(
+    service=dict(
         required=True,
         type='str'),
-    service=dict(
+    plan=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -117,7 +117,7 @@ def run_module():
         resource_type='ibm_service_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notified_users (False, list, None)
-    NA
-
-
-  tags (False, list, None)
-    NA
-
-
   guest_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Guest ID
 
 
   ip_address (False, str, None)
-    NA
+    IP Address
 
 
   query_type_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Query Type ID
 
 
   response_action_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Response action ID
 
 
   wait_cycles (False, int, None)
-    NA
+    wait cycles count
+
+
+  notified_users (False, list, None)
+    List of users notified
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

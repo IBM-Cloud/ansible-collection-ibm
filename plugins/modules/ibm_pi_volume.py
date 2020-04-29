@@ -16,18 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     volume_status:
         description:
-            - NA
+            - Volume status
         required: False
         type: str
     volume_id:
         description:
-            - NA
+            - Volume ID
         required: False
         type: str
     pi_volume_name:
@@ -47,7 +47,7 @@ options:
         type: float
     pi_volume_type:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Volume type
         required: False
         type: str
     pi_cloud_instance_id:
@@ -182,7 +182,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

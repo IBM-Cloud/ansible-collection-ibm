@@ -16,72 +16,72 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     name:
         description:
-            - NA
+            - None
         required: False
         type: str
     phase_one:
         description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
     address_translation:
         description:
-            - NA
-        required: False
-        type: list
-        elements: dict
-    remote_subnet:
-        description:
-            - NA
-        required: False
-        type: list
-        elements: dict
-    service_subnet_id:
-        description:
-            - NA
-        required: False
-        type: int
-    internal_peer_ip_address:
-        description:
-            - NA
-        required: False
-        type: str
-    phase_two:
-        description:
-            - NA
+            - None
         required: False
         type: list
         elements: dict
     preshared_key:
         description:
-            - NA
+            - Preshared Key data
         required: False
         type: str
     customer_peer_ip:
         description:
-            - NA
+            - Customer Peer IP Address
         required: False
         type: str
+    remote_subnet:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: False
+        type: str
+    internal_peer_ip_address:
+        description:
+            - None
+        required: False
+        type: str
+    phase_two:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     internal_subnet_id:
         description:
-            - NA
+            - Internal subnet ID value
         required: False
         type: int
     remote_subnet_id:
         description:
-            - NA
+            - Remote subnet ID value
+        required: False
+        type: int
+    service_subnet_id:
+        description:
+            - Service subnet ID value
         required: False
         type: int
     id:
@@ -135,26 +135,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
     'name',
     'phase_one',
     'address_translation',
-    'remote_subnet',
-    'service_subnet_id',
-    'internal_peer_ip_address',
-    'phase_two',
     'preshared_key',
     'customer_peer_ip',
+    'remote_subnet',
+    'datacenter',
+    'internal_peer_ip_address',
+    'phase_two',
     'internal_subnet_id',
     'remote_subnet_id',
+    'service_subnet_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -166,13 +163,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    preshared_key=dict(
+        required=False,
+        type='str'),
+    customer_peer_ip=dict(
+        required=False,
+        type='str'),
     remote_subnet=dict(
         required=False,
         elements='',
         type='list'),
-    service_subnet_id=dict(
+    datacenter=dict(
         required=False,
-        type='int'),
+        type='str'),
     internal_peer_ip_address=dict(
         required=False,
         type='str'),
@@ -180,16 +183,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    preshared_key=dict(
-        required=False,
-        type='str'),
-    customer_peer_ip=dict(
-        required=False,
-        type='str'),
     internal_subnet_id=dict(
         required=False,
         type='int'),
     remote_subnet_id=dict(
+        required=False,
+        type='int'),
+    service_subnet_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -245,7 +245,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

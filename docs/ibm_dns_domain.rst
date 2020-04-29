@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  update_date (False, str, None)
-    NA
-
-
   target (False, str, None)
-    NA
+    DNS target info
 
 
   tags (False, list, None)
-    NA
+    tags associated with reosurce.
 
 
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) DNS name
 
 
   serial (False, str, None)
-    NA
+    DNS serial info
+
+
+  update_date (False, str, None)
+    DNS update date
 
 
   id (False, str, None)

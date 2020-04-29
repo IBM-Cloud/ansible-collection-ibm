@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,19 +27,19 @@ Parameters
 ----------
 
   ip_address (False, str, None)
-    NA
+    IP Address
 
 
   routes_to (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Route info
 
 
   tags (False, list, None)
-    NA
+    List of tags
 
 
   notes (False, str, None)
-    NA
+    Additional notes
 
 
   id (False, str, None)

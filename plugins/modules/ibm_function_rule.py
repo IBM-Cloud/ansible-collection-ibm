@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    trigger_name:
-        description:
-            - (Required for new resource) Name of trigger.
-        required: False
-        type: str
     action_name:
         description:
             - (Required for new resource) Name of action.
@@ -48,6 +43,11 @@ options:
     name:
         description:
             - (Required for new resource) Name of rule.
+        required: False
+        type: str
+    trigger_name:
+        description:
+            - (Required for new resource) Name of trigger.
         required: False
         type: str
     id:
@@ -82,27 +82,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('trigger_name', 'str'),
     ('action_name', 'str'),
     ('name', 'str'),
+    ('trigger_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'trigger_name',
     'action_name',
     'status',
     'publish',
     'version',
     'name',
+    'trigger_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    trigger_name=dict(
-        required=False,
-        type='str'),
     action_name=dict(
         required=False,
         type='str'),
@@ -116,6 +113,9 @@ module_args = dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    trigger_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -161,7 +161,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

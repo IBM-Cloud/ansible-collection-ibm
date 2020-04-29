@@ -16,29 +16,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_public_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     ip_address:
         description:
-            - NA
+            - IP Address
         required: False
         type: str
     routes_to:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Route info
         required: False
         type: str
     tags:
         description:
-            - NA
+            - List of tags
         required: False
         type: list
         elements: str
     notes:
         description:
-            - NA
+            - Additional notes
         required: False
         type: str
     id:
@@ -167,7 +167,7 @@ def run_module():
         resource_type='ibm_network_public_ip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

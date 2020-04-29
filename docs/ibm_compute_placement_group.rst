@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,24 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    List of tags
+
+
   datacenter (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Dataceneter name
 
 
   pod (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Pod name
 
 
   name (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Name
 
 
   rule (False, str, SPREAD)
-    NA
-
-
-  tags (False, list, None)
-    NA
+    Rule info
 
 
   id (False, str, None)

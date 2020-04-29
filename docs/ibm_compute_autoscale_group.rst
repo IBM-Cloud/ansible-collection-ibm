@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,51 +27,51 @@ Parameters
 ----------
 
   network_vlan_ids (False, list, None)
-    NA
+    List of network VLAN ids
 
 
   tags (False, list, None)
-    NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  termination_policy (False, str, None)
-    (Required for new resource) NA
-
-
-  health_check (False, dict, None)
-    NA
-
-
-  cooldown (False, int, None)
-    (Required for new resource) NA
-
-
-  virtual_server_id (False, int, None)
-    NA
-
-
-  port (False, int, None)
-    NA
-
-
-  virtual_guest_member_template (False, list, None)
-    (Required for new resource) NA
+    List of tags
 
 
   regional_group (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) regional group
 
 
   minimum_member_count (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Minimum member count
 
 
   maximum_member_count (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Maximum member count
+
+
+  termination_policy (False, str, None)
+    (Required for new resource) Termination policy
+
+
+  health_check (False, dict, None)
+    None
+
+
+  virtual_guest_member_template (False, list, None)
+    (Required for new resource) Virtual guest member template
+
+
+  name (False, str, None)
+    (Required for new resource) Name
+
+
+  cooldown (False, int, None)
+    (Required for new resource) Cooldown value
+
+
+  virtual_server_id (False, int, None)
+    virtual server ID
+
+
+  port (False, int, None)
+    Port number
 
 
   id (False, str, None)

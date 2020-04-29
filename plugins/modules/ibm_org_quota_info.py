@@ -16,13 +16,18 @@ description:
     - Retrieve an IBM Cloud 'ibm_org_quota' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    app_instance_limit:
+    total_services:
         description:
-            - Defines the total app instance limit for organization.
+            - Defines the total services for organization.
+        required: False
+        type: int
+    total_routes:
+        description:
+            - Defines the total route for organization.
         required: False
         type: int
     total_private_domains:
@@ -30,21 +35,31 @@ options:
             - Defines the total private domain limit for organization.v
         required: False
         type: int
+    app_instance_limit:
+        description:
+            - Defines the total app instance limit for organization.
+        required: False
+        type: int
+    app_tasks_limit:
+        description:
+            - Defines the total app task limit for organization.
+        required: False
+        type: int
     total_service_keys:
         description:
             - Defines the total service keys for organization.
         required: False
         type: int
+    name:
+        description:
+            - Org quota name, for example qIBM
+        required: True
+        type: str
     non_basic_services_allowed:
         description:
             - Define non basic services are allowed for organization.
         required: False
         type: bool
-    total_routes:
-        description:
-            - Defines the total route for organization.
-        required: False
-        type: int
     memory_limit:
         description:
             - Defines the total memory limit for organization.
@@ -60,21 +75,6 @@ options:
             - Defines trial db are allowed for organization.
         required: False
         type: bool
-    name:
-        description:
-            - Org quota name, for example qIBM
-        required: True
-        type: str
-    total_services:
-        description:
-            - Defines the total services for organization.
-        required: False
-        type: int
-    app_tasks_limit:
-        description:
-            - Defines the total app task limit for organization.
-        required: False
-        type: int
     total_reserved_route_ports:
         description:
             - Defines the number of reserved route ports for organization.
@@ -118,38 +118,47 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'app_instance_limit',
-    'total_private_domains',
-    'total_service_keys',
-    'non_basic_services_allowed',
+    'total_services',
     'total_routes',
+    'total_private_domains',
+    'app_instance_limit',
+    'app_tasks_limit',
+    'total_service_keys',
+    'name',
+    'non_basic_services_allowed',
     'memory_limit',
     'instance_memory_limit',
     'trial_db_allowed',
-    'name',
-    'total_services',
-    'app_tasks_limit',
     'total_reserved_route_ports',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    app_instance_limit=dict(
+    total_services=dict(
+        required=False,
+        type='int'),
+    total_routes=dict(
         required=False,
         type='int'),
     total_private_domains=dict(
         required=False,
         type='int'),
+    app_instance_limit=dict(
+        required=False,
+        type='int'),
+    app_tasks_limit=dict(
+        required=False,
+        type='int'),
     total_service_keys=dict(
         required=False,
         type='int'),
+    name=dict(
+        required=True,
+        type='str'),
     non_basic_services_allowed=dict(
         required=False,
         type='bool'),
-    total_routes=dict(
-        required=False,
-        type='int'),
     memory_limit=dict(
         required=False,
         type='int'),
@@ -159,15 +168,6 @@ module_args = dict(
     trial_db_allowed=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=True,
-        type='str'),
-    total_services=dict(
-        required=False,
-        type='int'),
-    app_tasks_limit=dict(
-        required=False,
-        type='int'),
     total_reserved_route_ports=dict(
         required=False,
         type='int'),
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_org_quota',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

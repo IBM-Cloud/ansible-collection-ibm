@@ -16,53 +16,53 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    secret_name:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    issuer_name:
-        description:
-            - NA
-        required: False
-        type: str
-    cloud_cert_instance_id:
-        description:
-            - NA
-        required: False
-        type: str
-    cert_crn:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     cluster_id:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Cluster ID
         required: False
         type: str
-    domain_name:
+    secret_name:
         description:
-            - NA
+            - (Required for new resource) Secret name
         required: False
         type: str
     expires_on:
         description:
-            - NA
+            - Certificate expaire on date
         required: False
         type: str
-    cluster_crn:
+    cloud_cert_instance_id:
         description:
-            - NA
+            - cloud cert instance ID
         required: False
         type: str
     region:
         description:
-            - NA
+            - region name
+        required: False
+        type: str
+    cert_crn:
+        description:
+            - (Required for new resource) Certificate CRN id
+        required: False
+        type: str
+    domain_name:
+        description:
+            - Domain name
+        required: False
+        type: str
+    issuer_name:
+        description:
+            - certificate issuer name
+        required: False
+        type: str
+    cluster_crn:
+        description:
+            - cluster CRN
         required: False
         type: str
     id:
@@ -91,52 +91,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cluster_id', 'str'),
     ('secret_name', 'str'),
     ('cert_crn', 'str'),
-    ('cluster_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'secret_name',
-    'issuer_name',
-    'cloud_cert_instance_id',
-    'cert_crn',
     'cluster_id',
-    'domain_name',
+    'secret_name',
     'expires_on',
-    'cluster_crn',
+    'cloud_cert_instance_id',
     'region',
+    'cert_crn',
+    'domain_name',
+    'issuer_name',
+    'cluster_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    secret_name=dict(
-        required=False,
-        type='str'),
-    issuer_name=dict(
-        required=False,
-        type='str'),
-    cloud_cert_instance_id=dict(
-        required=False,
-        type='str'),
-    cert_crn=dict(
-        required=False,
-        type='str'),
     cluster_id=dict(
         required=False,
         type='str'),
-    domain_name=dict(
+    secret_name=dict(
         required=False,
         type='str'),
     expires_on=dict(
         required=False,
         type='str'),
-    cluster_crn=dict(
+    cloud_cert_instance_id=dict(
         required=False,
         type='str'),
     region=dict(
+        required=False,
+        type='str'),
+    cert_crn=dict(
+        required=False,
+        type='str'),
+    domain_name=dict(
+        required=False,
+        type='str'),
+    issuer_name=dict(
+        required=False,
+        type='str'),
+    cluster_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -178,7 +178,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

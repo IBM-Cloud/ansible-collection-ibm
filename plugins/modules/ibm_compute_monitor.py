@@ -16,47 +16,47 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_monitor' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    guest_id:
+        description:
+            - (Required for new resource) Guest ID
+        required: False
+        type: int
+    ip_address:
+        description:
+            - IP Address
+        required: False
+        type: str
+    query_type_id:
+        description:
+            - (Required for new resource) Query Type ID
+        required: False
+        type: int
+    response_action_id:
+        description:
+            - (Required for new resource) Response action ID
+        required: False
+        type: int
+    wait_cycles:
+        description:
+            - wait cycles count
+        required: False
+        type: int
     notified_users:
         description:
-            - NA
+            - List of users notified
         required: False
         type: list
         elements: int
     tags:
         description:
-            - NA
+            - List of tags
         required: False
         type: list
         elements: str
-    guest_id:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    ip_address:
-        description:
-            - NA
-        required: False
-        type: str
-    query_type_id:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    response_action_id:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: int
-    wait_cycles:
-        description:
-            - NA
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,26 +110,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notified_users',
-    'tags',
     'guest_id',
     'ip_address',
     'query_type_id',
     'response_action_id',
     'wait_cycles',
+    'notified_users',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notified_users=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     guest_id=dict(
         required=False,
         type='int'),
@@ -145,6 +137,14 @@ module_args = dict(
     wait_cycles=dict(
         required=False,
         type='int'),
+    notified_users=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_compute_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

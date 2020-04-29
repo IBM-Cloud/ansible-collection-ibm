@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
 
   name (False, str, None)
     (Required for new resource) The name for the space
@@ -48,10 +52,6 @@ Parameters
 
   space_quota (False, str, None)
     The name of the Space Quota Definition
-
-
-  tags (False, list, None)
-    NA
 
 
   id (False, str, None)

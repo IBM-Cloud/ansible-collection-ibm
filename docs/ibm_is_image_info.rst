@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,27 +27,27 @@ Parameters
 ----------
 
   name (True, str, None)
-    NA
+    None
 
 
   visibility (False, str, None)
-    NA
+    None
 
 
   status (False, str, None)
-    NA
+    None
 
 
   os (False, str, None)
-    NA
+    None
 
 
   architecture (False, str, None)
-    NA
+    None
 
 
   crn (False, str, None)
-    NA
+    None
 
 
   generation (False, any, 2)

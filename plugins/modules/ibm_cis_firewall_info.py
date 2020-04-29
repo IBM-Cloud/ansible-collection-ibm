@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_cis_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    domain_id:
+        description:
+            - Associated CIS domain
+        required: True
+        type: str
     firewall_type:
         description:
             - Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
@@ -34,11 +39,6 @@ options:
     cis_id:
         description:
             - CIS object id
-        required: True
-        type: str
-    domain_id:
-        description:
-            - Associated CIS domain
         required: True
         type: str
     iaas_classic_username:
@@ -74,22 +74,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('domain_id', 'str'),
     ('firewall_type', 'str'),
     ('cis_id', 'str'),
-    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_id',
     'firewall_type',
     'lockdown',
     'cis_id',
-    'domain_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_id=dict(
+        required=True,
+        type='str'),
     firewall_type=dict(
         required=True,
         type='str'),
@@ -98,9 +101,6 @@ module_args = dict(
         elements='',
         type='list'),
     cis_id=dict(
-        required=True,
-        type='str'),
-    domain_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -138,7 +138,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

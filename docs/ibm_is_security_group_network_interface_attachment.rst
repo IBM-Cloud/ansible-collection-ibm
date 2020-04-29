@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  security_group (False, str, None)
-    (Required for new resource) NA
-
-
   name (False, str, None)
-    NA
-
-
-  instance_network_interface (False, str, None)
-    NA
-
-
-  port_speed (False, int, None)
-    NA
-
-
-  primary_ipv4_address (False, str, None)
-    NA
-
-
-  network_interface (False, str, None)
-    (Required for new resource) NA
-
-
-  secondary_address (False, list, None)
-    NA
+    security group network interface attachment name
 
 
   status (False, str, None)
-    NA
+    security group network interface attachment status
 
 
   subnet (False, str, None)
-    NA
+    security group network interface attachment subnet
 
 
   type (False, str, None)
-    NA
-
-
-  floating_ips (False, list, None)
-    NA
+    security group network interface attachment type
 
 
   security_groups (False, list, None)
-    NA
+    None
+
+
+  floating_ips (False, list, None)
+    None
+
+
+  security_group (False, str, None)
+    (Required for new resource) security group network interface attachment group ID
+
+
+  network_interface (False, str, None)
+    (Required for new resource) security group network interface attachment NIC ID
+
+
+  instance_network_interface (False, str, None)
+    security group network interface attachment network interface ID
+
+
+  port_speed (False, int, None)
+    security group network interface attachment port speed
+
+
+  primary_ipv4_address (False, str, None)
+    security group network interface attachment Primary IPV4 address
+
+
+  secondary_address (False, list, None)
+    security group network interface attachment secondary address
 
 
   id (False, str, None)

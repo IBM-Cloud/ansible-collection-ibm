@@ -16,87 +16,87 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_resource_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    ttl:
+    preference:
         description:
-            - NA
+            - DNS maximum preference
         required: False
         type: int
-        default: 900
+        default: 0
+    weight:
+        description:
+            - DNS server weight
+        required: False
+        type: int
+        default: 0
     service:
         description:
-            - NA
-        required: False
-        type: str
-    protocol:
-        description:
-            - NA
-        required: False
-        type: str
-    resource_record_id:
-        description:
-            - NA
-        required: False
-        type: str
-    port:
-        description:
-            - NA
-        required: False
-        type: int
-    instance_id:
-        description:
-            - (Required for new resource) NA
+            - Service info
         required: False
         type: str
     type:
         description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    rdata:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    preference:
-        description:
-            - NA
-        required: False
-        type: int
-        default: 0
-    priority:
-        description:
-            - NA
-        required: False
-        type: int
-        default: 0
-    zone_id:
-        description:
-            - (Required for new resource) NA
+            - (Required for new resource) DNS record Type
         required: False
         type: str
     name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) DNS record name
         required: False
         type: str
-    weight:
+    ttl:
         description:
-            - NA
+            - DNS record TTL
+        required: False
+        type: int
+        default: 900
+    port:
+        description:
+            - DNS server Port
+        required: False
+        type: int
+    protocol:
+        description:
+            - Protocol
+        required: False
+        type: str
+    created_on:
+        description:
+            - Creation Data
+        required: False
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) Instance ID
+        required: False
+        type: str
+    zone_id:
+        description:
+            - (Required for new resource) Zone ID
+        required: False
+        type: str
+    rdata:
+        description:
+            - (Required for new resource) DNS record Data
+        required: False
+        type: str
+    priority:
+        description:
+            - DNS server Priority
         required: False
         type: int
         default: 0
-    created_on:
-        description:
-            - NA
-        required: False
-        type: str
     modified_on:
         description:
-            - NA
+            - Modification date
+        required: False
+        type: str
+    resource_record_id:
+        description:
+            - Resource record ID
         required: False
         type: str
     id:
@@ -145,78 +145,78 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('type', 'str'),
-    ('rdata', 'str'),
-    ('zone_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
+    ('zone_id', 'str'),
+    ('rdata', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ttl',
-    'service',
-    'protocol',
-    'resource_record_id',
-    'port',
-    'instance_id',
-    'type',
-    'rdata',
     'preference',
-    'priority',
-    'zone_id',
-    'name',
     'weight',
+    'service',
+    'type',
+    'name',
+    'ttl',
+    'port',
+    'protocol',
     'created_on',
+    'instance_id',
+    'zone_id',
+    'rdata',
+    'priority',
     'modified_on',
+    'resource_record_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ttl=dict(
-        default=900,
+    preference=dict(
+        default=0,
+        type='int'),
+    weight=dict(
+        default=0,
         type='int'),
     service=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    resource_record_id=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    instance_id=dict(
         required=False,
         type='str'),
     type=dict(
         required=False,
         type='str'),
-    rdata=dict(
-        required=False,
-        type='str'),
-    preference=dict(
-        default=0,
-        type='int'),
-    priority=dict(
-        default=0,
-        type='int'),
-    zone_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    weight=dict(
-        default=0,
+    ttl=dict(
+        default=900,
         type='int'),
+    port=dict(
+        required=False,
+        type='int'),
+    protocol=dict(
+        required=False,
+        type='str'),
     created_on=dict(
         required=False,
         type='str'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    zone_id=dict(
+        required=False,
+        type='str'),
+    rdata=dict(
+        required=False,
+        type='str'),
+    priority=dict(
+        default=0,
+        type='int'),
     modified_on=dict(
+        required=False,
+        type='str'),
+    resource_record_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -272,7 +272,7 @@ def run_module():
         resource_type='ibm_dns_resource_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,13 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_attach' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     volumeattachid:
         description:
-            - NA
+            - Volume attachment ID
         required: False
         type: str
     pi_cloud_instance_id:
@@ -37,17 +37,17 @@ options:
         type: str
     pi_instance_name:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) PI Instance name
         required: False
         type: str
     status:
         description:
-            - NA
+            - None
         required: False
         type: str
     pi_volume_shareable:
         description:
-            - NA
+            - None
         required: False
         type: bool
     id:
@@ -172,7 +172,7 @@ def run_module():
         resource_type='ibm_pi_volume_attach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

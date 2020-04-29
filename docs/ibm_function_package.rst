@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    (Required for new resource) Name of package.
+
+
+  publish (False, bool, False)
+    Package visibilty.
+
 
   version (False, str, None)
     Semantic version of the item.
@@ -48,14 +56,6 @@ Parameters
 
   bind_package_name (False, str, None)
     Name of package to be binded.
-
-
-  name (False, str, None)
-    (Required for new resource) Name of package.
-
-
-  publish (False, bool, False)
-    Package visibilty.
 
 
   id (False, str, None)

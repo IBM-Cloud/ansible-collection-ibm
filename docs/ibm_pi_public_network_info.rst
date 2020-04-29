@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    NA
-
-
   type (False, str, None)
-    NA
+    None
 
 
   vlan_id (False, int, None)
-    NA
+    None
 
 
   pi_network_name (False, str, None)
@@ -43,11 +39,15 @@ Parameters
 
 
   pi_cloud_instance_id (True, str, None)
-    NA
+    None
 
 
   network_id (False, str, None)
-    NA
+    None
+
+
+  name (False, str, None)
+    None
 
 
   zone (False, any, None)

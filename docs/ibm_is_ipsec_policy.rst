@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,47 +27,15 @@ Parameters
 ----------
 
   name (False, str, None)
-    (Required for new resource) NA
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource) NA
-
-
-  encryption_algorithm (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) IPSEC name
 
 
   resource_group (False, str, None)
-    NA
-
-
-  key_lifetime (False, int, 3600)
-    NA
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  pfs (False, str, None)
-    (Required for new resource) NA
-
-
-  encapsulation_mode (False, str, None)
-    NA
+    Resource group info
 
 
   transform_protocol (False, str, None)
-    NA
-
-
-  vpn_connections (False, list, None)
-    NA
+    IPSEC transform protocol
 
 
   resource_controller_url (False, str, None)
@@ -76,6 +44,38 @@ Parameters
 
   resource_name (False, str, None)
     The name of the resource
+
+
+  authentication_algorithm (False, str, None)
+    (Required for new resource) Authentication alorothm
+
+
+  encryption_algorithm (False, str, None)
+    (Required for new resource) Encryption algorithm
+
+
+  pfs (False, str, None)
+    (Required for new resource) PFS info
+
+
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
+
+
+  encapsulation_mode (False, str, None)
+    IPSEC encapsulation mode
+
+
+  vpn_connections (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

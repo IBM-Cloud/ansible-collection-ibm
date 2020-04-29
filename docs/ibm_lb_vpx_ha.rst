@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    NA
-
-
   primary_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) primary ID
 
 
   secondary_id (False, int, None)
-    (Required for new resource) NA
+    (Required for new resource) Secondary ID
 
 
   stay_secondary (False, bool, None)
-    NA
+    Boolean value for stay secondary
+
+
+  tags (False, list, None)
+    Tags set for the resource
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate (False, str, None)
-    (Required for new resource) NA
-
-
-  validity_end (False, str, None)
-    NA
+  validity_begin (False, str, None)
+    Validity begins from
 
 
   key_size (False, int, None)
-    NA
+    SSL key size
 
 
   create_date (False, str, None)
-    NA
-
-
-  modify_date (False, str, None)
-    NA
-
-
-  tags (False, list, None)
-    NA
+    certificate creation date
 
 
   intermediate_certificate (False, str, None)
-    NA
-
-
-  private_key (False, str, None)
-    (Required for new resource) NA
+    Intermediate certificate value
 
 
   common_name (False, str, None)
-    NA
+    Common name
 
 
   organization_name (False, str, None)
-    NA
+    Organization name
 
 
-  validity_begin (False, str, None)
-    NA
+  validity_end (False, str, None)
+    Validity ends before
+
+
+  modify_date (False, str, None)
+    certificate modificatiob date
+
+
+  tags (False, list, None)
+    Tags set for resource
+
+
+  certificate (False, str, None)
+    (Required for new resource) SSL Certifcate
+
+
+  private_key (False, str, None)
+    (Required for new resource) SSL Private Key
 
 
   validity_days (False, int, None)
-    NA
+    Validity days
 
 
   id (False, str, None)

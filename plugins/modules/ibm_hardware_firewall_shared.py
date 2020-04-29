@@ -16,28 +16,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hardware_firewall_shared' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
     billing_item_id:
         description:
-            - NA
+            - Billing Item ID
         required: False
         type: int
     firewall_type:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Firewall type
         required: False
         type: str
     virtual_instance_id:
         description:
-            - NA
+            - Virtual instance ID
         required: False
         type: int
     hardware_instance_id:
         description:
-            - NA
+            - Hardware instance ID
         required: False
         type: int
     id:
@@ -165,7 +165,7 @@ def run_module():
         resource_type='ibm_hardware_firewall_shared',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
+    waf:
+        description:
+            - WAF setting
+        required: False
+        type: str
+    cname_flattening:
+        description:
+            - cname_flattening setting
+        required: False
+        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -35,6 +45,12 @@ options:
             - Certificate status
         required: False
         type: str
+    min_tls_version:
+        description:
+            - Minimum version of TLS required
+        required: False
+        type: str
+        default: 1.1
     opportunistic_encryption:
         description:
             - opportunistic_encryption setting
@@ -48,22 +64,6 @@ options:
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
-        required: False
-        type: str
-    waf:
-        description:
-            - WAF setting
-        required: False
-        type: str
-    min_tls_version:
-        description:
-            - Minimum version of TLS required
-        required: False
-        type: str
-        default: 1.1
-    cname_flattening:
-        description:
-            - cname_flattening setting
         required: False
         type: str
     id:
@@ -118,20 +118,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'waf',
+    'cname_flattening',
     'cis_id',
     'ssl',
     'certificate_status',
+    'min_tls_version',
     'opportunistic_encryption',
     'automatic_https_rewrites',
     'domain_id',
-    'waf',
-    'min_tls_version',
-    'cname_flattening',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    waf=dict(
+        required=False,
+        type='str'),
+    cname_flattening=dict(
+        required=False,
+        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -141,6 +147,9 @@ module_args = dict(
     certificate_status=dict(
         required=False,
         type='str'),
+    min_tls_version=dict(
+        default='1.1',
+        type='str'),
     opportunistic_encryption=dict(
         required=False,
         type='str'),
@@ -148,15 +157,6 @@ module_args = dict(
         required=False,
         type='str'),
     domain_id=dict(
-        required=False,
-        type='str'),
-    waf=dict(
-        required=False,
-        type='str'),
-    min_tls_version=dict(
-        default='1.1',
-        type='str'),
-    cname_flattening=dict(
         required=False,
         type='str'),
     id=dict(
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

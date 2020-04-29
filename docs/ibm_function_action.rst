@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,11 +27,7 @@ Parameters
 ----------
 
   limits (False, list, None)
-    NA
-
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+    None
 
 
   annotations (False, str, None)
@@ -43,7 +39,7 @@ Parameters
 
 
   exec (False, list, None)
-    (Required for new resource) NA
+    (Required for new resource) Execution info
 
 
   publish (False, bool, None)
@@ -56,6 +52,10 @@ Parameters
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
 
 
   parameters (False, str, None)

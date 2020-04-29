@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -26,60 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  architecture (False, str, None)
-    NA
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  href (False, str, None)
-    (Required for new resource) NA
-
-
-  name (False, str, None)
-    (Required for new resource) NA
-
-
-  tags (False, list, None)
-    NA
-
-
-  operating_system (False, str, None)
-    (Required for new resource) NA
-
-
-  status (False, str, None)
-    NA
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  visibility (False, str, None)
-    NA
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  file (False, str, None)
-    NA
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  format (False, str, None)
-    NA
+  name (False, str, None)
+    (Required for new resource) Image name
+
+
+  tags (False, list, None)
+    Tags for the image
+
+
+  operating_system (False, str, None)
+    (Required for new resource) Image Operating system
 
 
   resource_group (False, str, None)
-    NA
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  architecture (False, str, None)
+    None
+
+
+  format (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  href (False, str, None)
+    (Required for new resource) Image Href value
+
+
+  visibility (False, str, None)
+    None
+
+
+  file (False, str, None)
+    None
 
 
   resource_controller_url (False, str, None)

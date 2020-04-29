@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.4.0
+- IBM-Cloud terraform-provider-ibm v1.5.0
 - Terraform v0.12.20
 
 
@@ -27,23 +27,23 @@ Parameters
 ----------
 
   label (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) SSH Key label
 
 
   public_key (False, str, None)
-    (Required for new resource) NA
+    (Required for new resource) Plublic Key info
 
 
   fingerprint (False, str, None)
-    NA
+    SSH key fingerprint
 
 
   notes (False, str, None)
-    NA
+    Additional notes
 
 
   tags (False, list, None)
-    NA
+    List of tags for the resource
 
 
   id (False, str, None)

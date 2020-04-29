@@ -16,69 +16,69 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    ssl_offload:
+    ip_address:
         description:
-            - NA
+            - None
+        required: False
+        type: str
+    subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    dedicated:
+        description:
+            - Boolena value true if Load balncer is dedicated type
         required: False
         type: bool
         default: False
+    ssl_enabled:
+        description:
+            - None
+        required: False
+        type: bool
     tags:
         description:
-            - NA
+            - Tags associated with resource
         required: False
         type: list
         elements: str
     hostname:
         description:
-            - NA
+            - None
         required: False
         type: str
-    datacenter:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    security_certificate_id:
-        description:
-            - NA
-        required: False
-        type: int
-    subnet_id:
-        description:
-            - NA
-        required: False
-        type: int
-    dedicated:
-        description:
-            - NA
-        required: False
-        type: bool
-        default: False
     connections:
         description:
-            - (Required for new resource) NA
+            - (Required for new resource) Connections value
         required: False
         type: int
     ha_enabled:
         description:
-            - NA
+            - true if High availability is enabled
         required: False
         type: bool
         default: False
-    ip_address:
+    ssl_offload:
         description:
-            - NA
-        required: False
-        type: str
-    ssl_enabled:
-        description:
-            - NA
+            - boolean value true if SSL offload is enabled
         required: False
         type: bool
+        default: False
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name info
+        required: False
+        type: str
+    security_certificate_id:
+        description:
+            - Security certificate ID
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,30 +125,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('connections', 'int'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ssl_offload',
-    'tags',
-    'hostname',
-    'datacenter',
-    'security_certificate_id',
+    'ip_address',
     'subnet_id',
     'dedicated',
+    'ssl_enabled',
+    'tags',
+    'hostname',
     'connections',
     'ha_enabled',
-    'ip_address',
-    'ssl_enabled',
+    'ssl_offload',
+    'datacenter',
+    'security_certificate_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ssl_offload=dict(
+    ip_address=dict(
+        required=False,
+        type='str'),
+    subnet_id=dict(
+        required=False,
+        type='int'),
+    dedicated=dict(
         default=False,
+        type='bool'),
+    ssl_enabled=dict(
+        required=False,
         type='bool'),
     tags=dict(
         required=False,
@@ -157,30 +166,21 @@ module_args = dict(
     hostname=dict(
         required=False,
         type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    security_certificate_id=dict(
-        required=False,
-        type='int'),
-    subnet_id=dict(
-        required=False,
-        type='int'),
-    dedicated=dict(
-        default=False,
-        type='bool'),
     connections=dict(
         required=False,
         type='int'),
     ha_enabled=dict(
         default=False,
         type='bool'),
-    ip_address=dict(
+    ssl_offload=dict(
+        default=False,
+        type='bool'),
+    datacenter=dict(
         required=False,
         type='str'),
-    ssl_enabled=dict(
+    security_certificate_id=dict(
         required=False,
-        type='bool'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,49 +16,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.4.0
+    - IBM-Cloud terraform-provider-ibm v1.5.0
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    network_id:
-        description:
-            - NA
-        required: False
-        type: str
-    vlan_id:
-        description:
-            - NA
-        required: False
-        type: float
-    pi_network_type:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
-    pi_network_name:
-        description:
-            - (Required for new resource) NA
-        required: False
-        type: str
     pi_dns:
         description:
-            - NA
+            - List of PI network DNS name
         required: False
         type: list
         elements: str
     pi_cidr:
         description:
-            - NA
+            - PI network CIDR
         required: False
         type: str
     pi_gateway:
         description:
-            - NA
+            - PI network gateway
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: False
+        type: str
+    network_id:
+        description:
+            - PI network ID
+        required: False
+        type: str
+    vlan_id:
+        description:
+            - VLAN Id value
+        required: False
+        type: float
+    pi_network_type:
+        description:
+            - (Required for new resource) PI network type
+        required: False
+        type: str
+    pi_network_name:
+        description:
+            - (Required for new resource) PI network name
         required: False
         type: str
     id:
@@ -108,19 +108,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_dns',
+    'pi_cidr',
+    'pi_gateway',
     'pi_cloud_instance_id',
     'network_id',
     'vlan_id',
     'pi_network_type',
     'pi_network_name',
-    'pi_dns',
-    'pi_cidr',
-    'pi_gateway',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_dns=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_cidr=dict(
+        required=False,
+        type='str'),
+    pi_gateway=dict(
+        required=False,
+        type='str'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
@@ -134,16 +144,6 @@ module_args = dict(
         required=False,
         type='str'),
     pi_network_name=dict(
-        required=False,
-        type='str'),
-    pi_dns=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pi_cidr=dict(
-        required=False,
-        type='str'),
-    pi_gateway=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.4.0',
+        ibm_provider_version='1.5.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
