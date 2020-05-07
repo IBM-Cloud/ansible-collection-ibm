@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -30,28 +30,16 @@ Parameters
     Volume encryption key info
 
 
-  capacity (False, int, 100)
-    Vloume capacity value
-
-
   tags (False, list, None)
     Tags for the volume instance
 
 
-  crn (False, str, None)
-    CRN value for the volume instance
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  status (False, str, None)
-    Volume status
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
+  profile (False, str, None)
+    (Required for new resource) Vloume profile name
 
 
   resource_group (False, str, None)
@@ -66,24 +54,36 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   name (False, str, None)
     (Required for new resource) Volume name
-
-
-  profile (False, str, None)
-    (Required for new resource) Vloume profile name
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  zone (False, str, None)
+    (Required for new resource) Zone name
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  crn (False, str, None)
+    CRN value for the volume instance
+
+
+  status (False, str, None)
+    Volume status
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  capacity (False, int, 100)
+    Vloume capacity value
 
 
   id (False, str, None)

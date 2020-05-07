@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,11 @@ options:
             - (Required for new resource) Listener ID
         required: False
         type: str
-    priority:
+    action:
         description:
-            - (Required for new resource) Listener Policy Priority
+            - (Required for new resource) Policy Action
         required: False
-        type: int
+        type: str
     policy_id:
         description:
             - Listener Policy ID
@@ -50,11 +50,11 @@ options:
             - Listner Policy status
         required: False
         type: str
-    action:
+    priority:
         description:
-            - (Required for new resource) Policy Action
+            - (Required for new resource) Listener Policy Priority
         required: False
-        type: str
+        type: int
     name:
         description:
             - Policy name
@@ -122,19 +122,19 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('lb', 'str'),
     ('listener', 'str'),
-    ('priority', 'int'),
     ('action', 'str'),
+    ('priority', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
     'listener',
-    'priority',
+    'action',
     'policy_id',
     'target_http_status_code',
     'provisioning_status',
-    'action',
+    'priority',
     'name',
     'rules',
     'target_id',
@@ -150,9 +150,9 @@ module_args = dict(
     listener=dict(
         required=False,
         type='str'),
-    priority=dict(
+    action=dict(
         required=False,
-        type='int'),
+        type='str'),
     policy_id=dict(
         required=False,
         type='str'),
@@ -162,9 +162,9 @@ module_args = dict(
     provisioning_status=dict(
         required=False,
         type='str'),
-    action=dict(
+    priority=dict(
         required=False,
-        type='str'),
+        type='int'),
     name=dict(
         required=False,
         type='str'),
@@ -243,7 +243,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -30,52 +30,16 @@ Parameters
     Set to true if classic access needs to enabled to VPC
 
 
-  default_security_group (False, str, None)
-    Security group associated with VPC
-
-
-  cse_source_addresses (False, list, None)
-    None
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  status (False, str, None)
-    VPC status
-
-
   tags (False, list, None)
     List of tags
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  name (False, str, None)
-    (Required for new resource) VPC name
-
-
-  default_network_acl (False, str, None)
-    Default network ACL
 
 
   crn (False, str, None)
     The crn of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_status (False, str, None)
@@ -84,6 +48,42 @@ Parameters
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  default_network_acl (False, str, None)
+    Default network ACL
+
+
+  name (False, str, None)
+    (Required for new resource) VPC name
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  default_security_group (False, str, None)
+    Security group associated with VPC
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  status (False, str, None)
+    VPC status
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   subnets (False, list, None)

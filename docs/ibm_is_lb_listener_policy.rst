@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -34,8 +34,8 @@ Parameters
     (Required for new resource) Listener ID
 
 
-  priority (False, int, None)
-    (Required for new resource) Listener Policy Priority
+  action (False, str, None)
+    (Required for new resource) Policy Action
 
 
   policy_id (False, str, None)
@@ -50,8 +50,8 @@ Parameters
     Listner Policy status
 
 
-  action (False, str, None)
-    (Required for new resource) Policy Action
+  priority (False, int, None)
+    (Required for new resource) Listener Policy Priority
 
 
   name (False, str, None)

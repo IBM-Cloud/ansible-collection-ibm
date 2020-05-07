@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,20 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  name (False, str, None)
+    (Required for new resource) Name of the Public gateway instance
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  floating_ip (False, dict, None)
+    None
 
 
   status (False, str, None)
     Public gateway instance status
+
+
+  resource_group (False, str, None)
+    Public gateway resource group info
+
+
+  tags (False, list, None)
+    Service tags for the public gateway instance
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   vpc (False, str, None)
@@ -50,28 +58,20 @@ Parameters
     (Required for new resource) Public gateway zone info
 
 
-  tags (False, list, None)
-    Service tags for the public gateway instance
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  name (False, str, None)
-    (Required for new resource) Name of the Public gateway instance
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  floating_ip (False, dict, None)
-    None
-
-
-  resource_group (False, str, None)
-    Public gateway resource group info
-
-
-  resource_name (False, str, None)
-    The name of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

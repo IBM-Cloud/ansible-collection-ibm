@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,28 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  waf (False, str, None)
-    WAF setting
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
 
 
   cname_flattening (False, str, None)
     cname_flattening setting
 
 
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
   certificate_status (False, str, None)
     Certificate status
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
 
 
   opportunistic_encryption (False, str, None)
@@ -60,6 +52,14 @@ Parameters
 
   domain_id (False, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  ipaddress (False, str, None)
+    (Required for new resource) IP Address
+
+
   hostname (False, str, None)
     (Required for new resource) Host name
 
 
   ttl (False, int, None)
     TTL value
-
-
-  ipaddress (False, str, None)
-    (Required for new resource) IP Address
 
 
   id (False, str, None)

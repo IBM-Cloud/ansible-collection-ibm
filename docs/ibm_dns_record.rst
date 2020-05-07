@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,24 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  host (False, str, None)
-    (Required for new resource) Hostname
-
-
   port (False, int, None)
     port number
 
 
   data (False, str, None)
     (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
 
 
   retry (False, int, None)
@@ -54,44 +42,56 @@ Parameters
     Minimun TTL configuration
 
 
-  type (False, str, None)
-    (Required for new resource) DNS record type
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  domain_id (False, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
   service (False, str, None)
     service info
+
+
+  host (False, str, None)
+    (Required for new resource) Hostname
 
 
   refresh (False, int, None)
     refresh rate
 
 
-  ttl (False, int, None)
-    (Required for new resource) TTL configuration
+  weight (False, int, 0)
+    weight info
 
 
-  priority (False, int, 0)
-    priority info
+  tags (False, list, None)
+    tags set for the resource
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   mx_priority (False, int, 0)
     Maximum priority
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  type (False, str, None)
+    (Required for new resource) DNS record type
+
+
+  domain_id (False, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  ttl (False, int, None)
+    (Required for new resource) TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  priority (False, int, 0)
+    priority info
 
 
   id (False, str, None)

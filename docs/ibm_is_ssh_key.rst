@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,48 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) SSH Key name
-
-
-  type (False, str, None)
-    Key type
-
-
-  fingerprint (False, str, None)
-    SSH key Fingerprint info
-
-
-  length (False, int, None)
-    SSH key Length
-
-
-  resource_group (False, str, None)
-    Resource group ID
-
-
-  resource_name (False, str, None)
-    The name of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  public_key (False, str, None)
-    (Required for new resource) SSH Public key data
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  type (False, str, None)
+    Key type
+
+
+  length (False, int, None)
+    SSH key Length
 
 
   tags (False, list, None)
     List of tags for SSH key
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_group (False, str, None)
+    Resource group ID
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  name (False, str, None)
+    (Required for new resource) SSH Key name
+
+
+  public_key (False, str, None)
+    (Required for new resource) SSH Public key data
+
+
+  fingerprint (False, str, None)
+    SSH key Fingerprint info
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

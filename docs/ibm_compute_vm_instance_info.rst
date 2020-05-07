@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -30,24 +30,20 @@ Parameters
     The hostname of the virtual guest
 
 
-  ip_address_id (False, int, None)
-    None
+  status (False, str, None)
+    The VSI status
 
 
-  ipv6_address_id (False, int, None)
-    None
-
-
-  public_ipv6_subnet (False, str, None)
-    None
-
-
-  ipv6_address (False, str, None)
+  secondary_ip_count (False, int, None)
     None
 
 
   cores (False, int, None)
     Number of cpu cores
+
+
+  last_known_power_state (False, str, None)
+    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
 
 
   private_interface_id (False, int, None)
@@ -58,11 +54,15 @@ Parameters
     If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
 
 
-  ipv4_address (False, str, None)
+  private_subnet_id (False, int, None)
     None
 
 
-  ip_address_id_private (False, int, None)
+  ip_address_id (False, int, None)
+    None
+
+
+  public_ipv6_subnet (False, str, None)
     None
 
 
@@ -70,8 +70,16 @@ Parameters
     The domain of the virtual guest
 
 
-  power_state (False, str, None)
-    The current power state of a virtual guest.
+  public_interface_id (False, int, None)
+    None
+
+
+  public_subnet_id (False, int, None)
+    None
+
+
+  ipv4_address (False, str, None)
+    None
 
 
   public_ipv6_subnet_id (False, str, None)
@@ -82,35 +90,27 @@ Parameters
     None
 
 
-  secondary_ip_count (False, int, None)
-    None
+  datacenter (False, str, None)
+    Datacenter in which the virtual guest is deployed
 
 
-  private_subnet_id (False, int, None)
-    None
+  power_state (False, str, None)
+    The current power state of a virtual guest.
 
 
   ipv4_address_private (False, str, None)
     None
 
 
-  datacenter (False, str, None)
-    Datacenter in which the virtual guest is deployed
-
-
-  status (False, str, None)
-    The VSI status
-
-
-  last_known_power_state (False, str, None)
-    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
-
-
-  public_interface_id (False, int, None)
+  ip_address_id_private (False, int, None)
     None
 
 
-  public_subnet_id (False, int, None)
+  ipv6_address (False, str, None)
+    None
+
+
+  ipv6_address_id (False, int, None)
     None
 
 

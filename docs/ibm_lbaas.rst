@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,52 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) The load balancer's name.
-
-
-  vip (False, str, None)
-    The virtual ip address of this load balancer
-
-
-  protocols (False, list, None)
-    Protocols to be assigned to this load balancer.
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  description (False, str, None)
-    Description of a load balancer.
-
-
-  status (False, str, None)
-    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+  use_system_public_ip_pool (False, bool, None)
+    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
 
 
   wait_time_minutes (False, int, 90)
     None
 
 
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  vip (False, str, None)
+    The virtual ip address of this load balancer
+
+
   type (False, str, PUBLIC)
     Specifies if a load balancer is public or private
+
+
+  health_monitors (False, list, None)
+    None
+
+
+  description (False, str, None)
+    Description of a load balancer.
 
 
   datacenter (False, str, None)
     None
 
 
-  use_system_public_ip_pool (False, bool, None)
-    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
+  status (False, str, None)
+    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
 
 
-  health_monitors (False, list, None)
+  protocols (False, list, None)
+    Protocols to be assigned to this load balancer.
+
+
+  ssl_ciphers (False, list, None)
     None
+
+
+  name (False, str, None)
+    (Required for new resource) The load balancer's name.
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_status (False, str, None)
@@ -80,10 +84,6 @@ Parameters
 
   subnets (False, list, None)
     (Required for new resource) The subnet where this Load Balancer will be provisioned.
-
-
-  ssl_ciphers (False, list, None)
-    None
 
 
   id (False, str, None)

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
@@ -26,67 +26,20 @@ options:
         required: False
         type: bool
         default: False
-    default_security_group:
-        description:
-            - Security group associated with VPC
-        required: False
-        type: str
-    cse_source_addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    address_prefix_management:
-        description:
-            - Address Prefix management value
-        required: False
-        type: str
-        default: auto
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
-    status:
-        description:
-            - VPC status
-        required: False
-        type: str
     tags:
         description:
             - List of tags
         required: False
         type: list
         elements: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) VPC name
-        required: False
-        type: str
-    default_network_acl:
-        description:
-            - Default network ACL
-        required: False
-        type: str
     crn:
         description:
             - The crn of the resource
         required: False
         type: str
-    resource_crn:
+    resource_controller_url:
         description:
-            - The crn of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_status:
@@ -97,6 +50,53 @@ options:
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    address_prefix_management:
+        description:
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    default_network_acl:
+        description:
+            - Default network ACL
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) VPC name
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group info
+        required: False
+        type: str
+    default_security_group:
+        description:
+            - Security group associated with VPC
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    cse_source_addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    status:
+        description:
+            - VPC status
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     subnets:
@@ -155,20 +155,20 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'classic_access',
-    'default_security_group',
-    'cse_source_addresses',
-    'address_prefix_management',
-    'resource_group',
-    'status',
     'tags',
-    'resource_controller_url',
-    'resource_name',
-    'name',
-    'default_network_acl',
     'crn',
-    'resource_crn',
+    'resource_controller_url',
     'resource_status',
     'resource_group_name',
+    'address_prefix_management',
+    'default_network_acl',
+    'name',
+    'resource_group',
+    'default_security_group',
+    'resource_crn',
+    'cse_source_addresses',
+    'status',
+    'resource_name',
     'subnets',
 ]
 
@@ -178,48 +178,48 @@ module_args = dict(
     classic_access=dict(
         default=False,
         type='bool'),
-    default_security_group=dict(
-        required=False,
-        type='str'),
-    cse_source_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    address_prefix_management=dict(
-        default='auto',
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    default_network_acl=dict(
-        required=False,
-        type='str'),
     crn=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_status=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
+        required=False,
+        type='str'),
+    address_prefix_management=dict(
+        default='auto',
+        type='str'),
+    default_network_acl=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    default_security_group=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    cse_source_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    status=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
         required=False,
         type='str'),
     subnets=dict(
@@ -291,7 +291,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

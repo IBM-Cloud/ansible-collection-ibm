@@ -16,28 +16,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    resource_controller_url:
+    name:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - (Required for new resource) Name of the Public gateway instance
         required: False
         type: str
-    resource_status:
+    floating_ip:
         description:
-            - The status of the resource
+            - None
         required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
+        type: dict
+        elements: dict
     status:
         description:
             - Public gateway instance status
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
+        type: str
+    tags:
+        description:
+            - Service tags for the public gateway instance
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     vpc:
@@ -50,36 +62,24 @@ options:
             - (Required for new resource) Public gateway zone info
         required: False
         type: str
-    tags:
+    resource_name:
         description:
-            - Service tags for the public gateway instance
+            - The name of the resource
         required: False
-        type: list
-        elements: str
+        type: str
     resource_crn:
         description:
             - The crn of the resource
         required: False
         type: str
-    name:
+    resource_status:
         description:
-            - (Required for new resource) Name of the Public gateway instance
+            - The status of the resource
         required: False
         type: str
-    floating_ip:
+    resource_group_name:
         description:
-            - None
-        required: False
-        type: dict
-        elements: dict
-    resource_group:
-        description:
-            - Public gateway resource group info
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     id:
@@ -126,40 +126,48 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('vpc', 'str'),
     ('zone', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_controller_url',
-    'resource_status',
-    'resource_group_name',
-    'status',
-    'vpc',
-    'zone',
-    'tags',
-    'resource_crn',
     'name',
     'floating_ip',
+    'status',
     'resource_group',
+    'tags',
+    'resource_controller_url',
+    'vpc',
+    'zone',
     'resource_name',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_controller_url=dict(
+    name=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    floating_ip=dict(
         required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='dict'),
     status=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     vpc=dict(
@@ -168,24 +176,16 @@ module_args = dict(
     zone=dict(
         required=False,
         type='str'),
-    tags=dict(
+    resource_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
-    name=dict(
+    resource_status=dict(
         required=False,
         type='str'),
-    floating_ip=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -253,7 +253,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

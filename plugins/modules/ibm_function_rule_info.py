@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_function_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - Name of the rule.
+        required: True
+        type: str
     trigger_name:
         description:
             - Name of the trigger.
@@ -45,11 +50,6 @@ options:
             - Semantic version of the rule
         required: False
         type: str
-    name:
-        description:
-            - Name of the rule.
-        required: True
-        type: str
     function_namespace:
         description:
             - The namespace in IBM Cloud™ Functions where you want to
@@ -74,17 +74,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'trigger_name',
     'action_name',
     'status',
     'publish',
     'version',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=True,
+        type='str'),
     trigger_name=dict(
         required=False,
         type='str'),
@@ -99,9 +102,6 @@ module_args = dict(
         type='bool'),
     version=dict(
         required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     function_namespace=dict(
         type='str',
@@ -128,7 +128,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

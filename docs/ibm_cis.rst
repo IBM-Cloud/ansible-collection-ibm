@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,40 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
-
-
   location (False, str, None)
     (Required for new resource) The location where the instance available
 
 
   resource_group_id (False, str, None)
     The resource group id
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  guid (False, str, None)
-    Unique identifier of resource instance
 
 
   resource_name (False, str, None)
@@ -74,12 +46,40 @@ Parameters
     Status of resource instance
 
 
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   name (False, str, None)
     (Required for new resource) A name for the resource instance
+
+
+  service (False, str, None)
+    The name of the Cloud Internet Services offering
+
+
+  guid (False, str, None)
+    Unique identifier of resource instance
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

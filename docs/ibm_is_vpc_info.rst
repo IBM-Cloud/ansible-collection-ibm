@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,12 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  cse_source_addresses (False, list, None)
-    None
+  crn (False, str, None)
+    The crn of the resource
 
 
   subnets (False, list, None)
@@ -42,39 +38,43 @@ Parameters
     None
 
 
-  crn (False, str, None)
-    The crn of the resource
-
-
-  resource_name (False, str, None)
-    The name of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
   status (False, str, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  name (True, str, None)
+    None
 
 
   resource_group (False, str, None)
     None
 
 
-  default_network_acl (False, str, None)
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  cse_source_addresses (False, list, None)
     None
 
 
-  name (True, str, None)
+  default_network_acl (False, str, None)
     None
 
 

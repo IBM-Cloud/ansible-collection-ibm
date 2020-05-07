@@ -1,6 +1,6 @@
 namespace: "ibmcloud"
 name: "ibmcollection"
-version: "1.5.0"
+version: "1.5.2"
 readme: "README.md"
 authors:
     - "Jay W Carman"

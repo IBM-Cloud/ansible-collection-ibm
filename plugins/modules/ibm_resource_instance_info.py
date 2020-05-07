@@ -16,14 +16,24 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    name:
+    resource_group_name:
         description:
-            - Resource instance name for example, myobjectstorage
-        required: True
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    crn:
+        description:
+            - CRN of resource instance
+        required: False
         type: str
     resource_group_id:
         description:
@@ -33,16 +43,6 @@ options:
     location:
         description:
             - The location or the environment in which instance exists
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
         required: False
         type: str
     service:
@@ -60,24 +60,24 @@ options:
             - The resource instance status
         required: False
         type: dict
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    name:
+        description:
+            - Resource instance name for example, myobjectstorage
+        required: True
+        type: str
     resource_status:
         description:
             - The status of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
         type: str
     iaas_classic_username:
@@ -118,36 +118,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'resource_group_name',
+    'resource_controller_url',
+    'crn',
     'resource_group_id',
     'location',
-    'resource_crn',
-    'resource_group_name',
     'service',
     'plan',
     'status',
-    'crn',
     'resource_name',
+    'resource_crn',
+    'name',
     'resource_status',
-    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     location=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
         required=False,
         type='str'),
     service=dict(
@@ -159,16 +159,16 @@ module_args = dict(
     status=dict(
         required=False,
         type='dict'),
-    crn=dict(
-        required=False,
-        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    name=dict(
+        required=True,
+        type='str'),
+    resource_status=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,29 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  public_vlan_id (False, int, None)
-    (Required for new resource) Public VLAN ID
-
-
-  tags (False, list, None)
-    List of tags for the firewall
-
-
-  location (False, str, None)
-    Location info
-
-
-  primary_ip (False, str, None)
-    Primary IP address
-
 
   username (False, str, None)
     User name
@@ -56,6 +40,22 @@ Parameters
 
   ha_enabled (False, bool, False)
     set to true if High availability is enabled
+
+
+  public_vlan_id (False, int, None)
+    (Required for new resource) Public VLAN ID
+
+
+  tags (False, list, None)
+    List of tags for the firewall
+
+
+  location (False, str, None)
+    Location info
+
+
+  primary_ip (False, str, None)
+    Primary IP address
 
 
   id (False, str, None)

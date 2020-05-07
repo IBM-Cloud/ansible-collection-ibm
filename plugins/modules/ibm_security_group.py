@@ -16,18 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Security group name
-        required: False
-        type: str
     description:
         description:
             - Security group description
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Security group name
         required: False
         type: str
     id:
@@ -81,17 +81,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'description',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -147,7 +147,7 @@ def run_module():
         resource_type='ibm_security_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

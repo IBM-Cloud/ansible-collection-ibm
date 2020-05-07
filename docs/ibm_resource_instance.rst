@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,20 +26,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
 
 
-  crn (False, str, None)
-    CRN of resource instance
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
 
 
-  resource_group_id (False, str, None)
-    The resource group id
+  tags (False, list, None)
+    None
 
 
   status (False, str, None)
     Status of resource instance
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  location (False, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  resource_group_id (False, str, None)
+    The resource group id
 
 
   resource_name (False, str, None)
@@ -54,40 +78,16 @@ Parameters
     (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
-  location (False, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
-
-
-  tags (False, list, None)
-    None
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
+  crn (False, str, None)
+    CRN of resource instance
 
 
   guid (False, str, None)
     Guid of resource instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   id (False, str, None)

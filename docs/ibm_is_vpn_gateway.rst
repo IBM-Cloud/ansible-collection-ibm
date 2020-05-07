@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,7 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource) VPN Gateway instance name
+
+
+  status (False, str, None)
     None
 
 
@@ -54,20 +62,12 @@ Parameters
     (Required for new resource) VPNGateway subnet info
 
 
-  status (False, str, None)
+  resource_group (False, str, None)
     None
 
 
   public_ip_address (False, str, None)
     None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (False, str, None)
-    (Required for new resource) VPN Gateway instance name
 
 
   id (False, str, None)

@@ -16,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_operations' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI instance Operation server name
-        required: False
-        type: str
-    addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     pi_health_status:
         description:
             - PI instance health status
@@ -56,6 +45,17 @@ options:
             - PI instance operation status
         required: False
         type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI instance Operation server name
+        required: False
+        type: str
+    addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,32 +96,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_operation', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
-    'addresses',
     'pi_health_status',
     'pi_operation',
     'pi_progress',
     'pi_cloud_instance_id',
     'pi_status',
+    'pi_instance_name',
+    'addresses',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
-    addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
     pi_health_status=dict(
         required=False,
         type='str'),
@@ -137,6 +130,13 @@ module_args = dict(
     pi_status=dict(
         required=False,
         type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
+    addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_pi_operations',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

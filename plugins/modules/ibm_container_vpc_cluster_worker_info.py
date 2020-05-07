@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
@@ -25,19 +25,25 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
         required: False
         type: str
-    cluster_name_id:
+    worker_id:
         description:
-            - Name or ID of the cluster
+            - ID of the worker
         required: True
-        type: str
-    flavor:
-        description:
-            - flavor of the worker
-        required: False
         type: str
     state:
         description:
             - State of the worker
+        required: False
+        type: str
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    pool_id:
+        description:
+            - worker pool id
         required: False
         type: str
     pool_name:
@@ -50,27 +56,21 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    worker_id:
+    cluster_name_id:
         description:
-            - ID of the worker
+            - Name or ID of the cluster
         required: True
+        type: str
+    flavor:
+        description:
+            - flavor of the worker
+        required: False
         type: str
     kube_version:
         description:
             - kube version of the worker
         required: False
         type: str
-    pool_id:
-        description:
-            - worker pool id
-        required: False
-        type: str
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -84,22 +84,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster_name_id', 'str'),
     ('worker_id', 'str'),
+    ('cluster_name_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_controller_url',
-    'cluster_name_id',
-    'flavor',
+    'worker_id',
     'state',
+    'network_interfaces',
+    'pool_id',
     'pool_name',
     'resource_group_id',
-    'worker_id',
+    'cluster_name_id',
+    'flavor',
     'kube_version',
-    'pool_id',
-    'network_interfaces',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -108,13 +108,17 @@ module_args = dict(
     resource_controller_url=dict(
         required=False,
         type='str'),
-    cluster_name_id=dict(
+    worker_id=dict(
         required=True,
         type='str'),
-    flavor=dict(
+    state=dict(
         required=False,
         type='str'),
-    state=dict(
+    network_interfaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pool_id=dict(
         required=False,
         type='str'),
     pool_name=dict(
@@ -123,19 +127,15 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    worker_id=dict(
+    cluster_name_id=dict(
         required=True,
+        type='str'),
+    flavor=dict(
+        required=False,
         type='str'),
     kube_version=dict(
         required=False,
         type='str'),
-    pool_id=dict(
-        required=False,
-        type='str'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -157,7 +157,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

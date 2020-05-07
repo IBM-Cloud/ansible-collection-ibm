@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_cloud_instance_id (True, str, None)
+    None
+
+
+  creation_date (False, str, None)
+    None
+
 
   enabled (False, bool, None)
     None
@@ -35,14 +43,6 @@ Parameters
 
 
   cloud_instances (False, list, None)
-    None
-
-
-  pi_cloud_instance_id (True, str, None)
-    None
-
-
-  creation_date (False, str, None)
     None
 
 

@@ -16,45 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    reload_workers:
+    cluster:
         description:
-            - Boolean value set true if worker nodes to be reloaded
+            - (Required for new resource) Cluster name of ID
         required: False
-        type: bool
-        default: True
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
+        type: str
     public_service_endpoint_url:
         description:
             - None
         required: False
         type: str
-    refresh_api_servers:
-        description:
-            - Boolean value true of API server to be refreshed in K8S cluster
-        required: False
-        type: bool
-        default: True
     private_service_endpoint_url:
         description:
             - None
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) Cluster name of ID
         required: False
         type: str
     public_service_endpoint:
@@ -62,6 +40,28 @@ options:
             - None
         required: False
         type: bool
+    private_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    refresh_api_servers:
+        description:
+            - Boolean value true of API server to be refreshed in K8S cluster
+        required: False
+        type: bool
+        default: True
+    reload_workers:
+        description:
+            - Boolean value set true if worker nodes to be reloaded
+        required: False
+        type: bool
+        default: True
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,43 +93,43 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'reload_workers',
-    'private_service_endpoint',
-    'public_service_endpoint_url',
-    'refresh_api_servers',
-    'private_service_endpoint_url',
-    'resource_group_id',
     'cluster',
+    'public_service_endpoint_url',
+    'private_service_endpoint_url',
     'public_service_endpoint',
+    'private_service_endpoint',
+    'refresh_api_servers',
+    'reload_workers',
+    'resource_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    reload_workers=dict(
-        default=True,
-        type='bool'),
-    private_service_endpoint=dict(
+    cluster=dict(
         required=False,
-        type='bool'),
+        type='str'),
     public_service_endpoint_url=dict(
         required=False,
         type='str'),
-    refresh_api_servers=dict(
-        default=True,
-        type='bool'),
     private_service_endpoint_url=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
         required=False,
         type='str'),
     public_service_endpoint=dict(
         required=False,
         type='bool'),
+    private_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    refresh_api_servers=dict(
+        default=True,
+        type='bool'),
+    reload_workers=dict(
+        default=True,
+        type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

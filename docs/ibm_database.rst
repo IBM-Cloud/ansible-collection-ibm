@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
+  plan (False, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   adminuser (False, str, None)
@@ -38,24 +38,8 @@ Parameters
     The database version to provision if specified
 
 
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
-  location (False, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  users (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
 
 
   remote_leader_id (False, str, None)
@@ -66,28 +50,16 @@ Parameters
     The name of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  plan (False, str, None)
-    (Required for new resource) The plan type of the Database instance
+  location (False, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
 
 
-  status (False, str, None)
-    The resource instance status
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
   connectionstrings (False, list, None)
@@ -98,52 +70,80 @@ Parameters
     None
 
 
-  groups (False, list, None)
+  service (False, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
+
+
+  users (False, list, None)
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
 
 
   members_cpu_allocation_count (False, int, None)
     CPU allocation required for cluster
 
 
-  tags (False, list, None)
-    None
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
 
 
   point_in_time_recovery_deployment_id (False, str, None)
     The CRN of source instance
 
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  name (False, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
   guid (False, str, None)
     Unique identifier of resource instance
 
 
-  adminpassword (False, str, None)
-    The admin user password for the instance
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  status (False, str, None)
+    The resource instance status
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  tags (False, list, None)
+    None
+
+
+  groups (False, list, None)
+    None
 
 
   resource_status (False, str, None)
     The status of the resource
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
 
 
   id (False, str, None)

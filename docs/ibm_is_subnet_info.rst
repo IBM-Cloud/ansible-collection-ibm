@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -30,11 +30,15 @@ Parameters
     None
 
 
-  available_ipv4_address_count (False, str, None)
+  network_acl (False, str, None)
     None
 
 
-  network_acl (False, str, None)
+  vpc (False, str, None)
+    None
+
+
+  ipv4_cidr_block (False, str, None)
     None
 
 
@@ -42,31 +46,15 @@ Parameters
     None
 
 
-  total_ipv4_address_count (False, int, None)
-    None
-
-
-  zone (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  ipv4_cidr_block (False, str, None)
-    None
-
-
-  ip_version (False, int, None)
+  name (False, str, None)
     None
 
 
   public_gateway (False, str, None)
+    None
+
+
+  zone (False, str, None)
     None
 
 
@@ -78,7 +66,19 @@ Parameters
     The status of the resource
 
 
-  name (False, str, None)
+  ip_version (False, int, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
     None
 
 
@@ -86,12 +86,12 @@ Parameters
     None
 
 
-  vpc (False, str, None)
-    None
-
-
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   generation (False, any, 2)

@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_versions' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
     region:
         description:
             - The cluster region
@@ -52,11 +57,6 @@ options:
             - The bluemix space guid this cluster belongs to
         required: False
         type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -74,18 +74,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'account_guid',
     'region',
     'resource_group_id',
     'valid_kube_versions',
     'valid_openshift_versions',
     'org_guid',
     'space_guid',
-    'account_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    account_guid=dict(
+        required=False,
+        type='str'),
     region=dict(
         required=False,
         type='str'),
@@ -104,9 +107,6 @@ module_args = dict(
         required=False,
         type='str'),
     space_guid=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -130,7 +130,7 @@ def run_module():
         resource_type='ibm_container_cluster_versions',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

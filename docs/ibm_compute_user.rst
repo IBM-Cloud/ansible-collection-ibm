@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  first_name (False, str, None)
-    (Required for new resource) First name of the user
-
-
-  state_ (False, str, None)
-    (Required for new resource) Satate name
-
-
-  user_status (False, str, ACTIVE)
-    user status info
+  ibm_id (False, str, None)
+    IBM ID of the  user
 
 
   tags (False, list, None)
@@ -44,34 +36,6 @@ Parameters
 
   username (False, str, None)
     user name
-
-
-  last_name (False, str, None)
-    (Required for new resource) Last name of the user
-
-
-  city (False, str, None)
-    (Required for new resource) City name
-
-
-  permissions (False, list, None)
-    set of persmissions assigned for the user
-
-
-  api_key (False, str, None)
-    API key for the user
-
-
-  email (False, str, None)
-    (Required for new resource) email address of the user
-
-
-  company_name (False, str, None)
-    (Required for new resource) comapany name
-
-
-  address1 (False, str, None)
-    (Required for new resource) Address info of the user
 
 
   address2 (False, str, None)
@@ -86,16 +50,52 @@ Parameters
     (Required for new resource) time zone info
 
 
-  password (False, str, None)
-    password for the user
+  email (False, str, None)
+    (Required for new resource) email address of the user
+
+
+  state_ (False, str, None)
+    (Required for new resource) Satate name
 
 
   has_api_key (False, bool, False)
     API Key info of the user
 
 
-  ibm_id (False, str, None)
-    IBM ID of the  user
+  first_name (False, str, None)
+    (Required for new resource) First name of the user
+
+
+  last_name (False, str, None)
+    (Required for new resource) Last name of the user
+
+
+  city (False, str, None)
+    (Required for new resource) City name
+
+
+  user_status (False, str, ACTIVE)
+    user status info
+
+
+  password (False, str, None)
+    password for the user
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  api_key (False, str, None)
+    API key for the user
+
+
+  company_name (False, str, None)
+    (Required for new resource) comapany name
+
+
+  address1 (False, str, None)
+    (Required for new resource) Address info of the user
 
 
   id (False, str, None)

@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  space_quota (False, str, None)
+    The name of the Space Quota Definition
+
 
   tags (False, list, None)
     None
@@ -48,10 +52,6 @@ Parameters
 
   developers (False, list, None)
     The IBMID of the users who will have developer role in this space, ex - user@example.com
-
-
-  space_quota (False, str, None)
-    The name of the Space Quota Definition
 
 
   id (False, str, None)

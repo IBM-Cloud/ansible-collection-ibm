@@ -16,11 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
+    policy:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    field:
+        description:
+            - None
+        required: False
+        type: str
     lb:
+        description:
+            - (Required for new resource) 
+        required: False
+        type: str
+    listener:
         description:
             - (Required for new resource) 
         required: False
@@ -31,26 +51,6 @@ options:
         required: False
         type: str
     value:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    field:
-        description:
-            - None
-        required: False
-        type: str
-    listener:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    policy:
-        description:
-            - (Required for new resource) 
-        required: False
-        type: str
-    type:
         description:
             - (Required for new resource) 
         required: False
@@ -109,23 +109,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
-    ('condition', 'str'),
-    ('value', 'str'),
-    ('listener', 'str'),
     ('policy', 'str'),
     ('type', 'str'),
+    ('lb', 'str'),
+    ('listener', 'str'),
+    ('condition', 'str'),
+    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
-    'condition',
-    'value',
-    'field',
-    'listener',
     'policy',
     'type',
+    'field',
+    'lb',
+    'listener',
+    'condition',
+    'value',
     'rule',
     'provisioning_status',
 ]
@@ -133,25 +133,25 @@ TL_ALL_PARAMETERS = [
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    policy=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    field=dict(
+        required=False,
+        type='str'),
     lb=dict(
+        required=False,
+        type='str'),
+    listener=dict(
         required=False,
         type='str'),
     condition=dict(
         required=False,
         type='str'),
     value=dict(
-        required=False,
-        type='str'),
-    field=dict(
-        required=False,
-        type='str'),
-    listener=dict(
-        required=False,
-        type='str'),
-    policy=dict(
-        required=False,
-        type='str'),
-    type=dict(
         required=False,
         type='str'),
     rule=dict(
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

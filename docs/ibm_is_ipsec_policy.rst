@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,16 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   name (False, str, None)
     (Required for new resource) IPSEC name
+
+
+  pfs (False, str, None)
+    (Required for new resource) PFS info
 
 
   resource_group (False, str, None)
     Resource group info
 
 
-  transform_protocol (False, str, None)
-    IPSEC transform protocol
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
+
+
+  vpn_connections (False, list, None)
+    None
 
 
   resource_controller_url (False, str, None)
@@ -54,28 +66,16 @@ Parameters
     (Required for new resource) Encryption algorithm
 
 
-  pfs (False, str, None)
-    (Required for new resource) PFS info
-
-
-  key_lifetime (False, int, 3600)
-    IPSEC key lifetime
-
-
   encapsulation_mode (False, str, None)
     IPSEC encapsulation mode
 
 
-  vpn_connections (False, list, None)
-    None
+  transform_protocol (False, str, None)
+    IPSEC transform protocol
 
 
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

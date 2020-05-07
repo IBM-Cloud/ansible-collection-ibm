@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    (Required for new resource) Name
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
-
 
   cidr (False, str, None)
     (Required for new resource) CIDIR address prefix
@@ -44,6 +36,14 @@ Parameters
 
   has_subnets (False, bool, None)
     Boolean value, set to true if VPC instance have subnets
+
+
+  name (False, str, None)
+    (Required for new resource) Name
+
+
+  zone (False, str, None)
+    (Required for new resource) Zone name
 
 
   id (False, str, None)

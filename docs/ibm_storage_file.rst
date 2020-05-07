@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
 
   capacity (False, int, None)
     (Required for new resource) Storage capacity
@@ -38,52 +34,20 @@ Parameters
     Storage volume name
 
 
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
   allowed_hardware_ids (False, list, None)
     Hardaware ID
-
-
-  mountpoint (False, str, None)
-    Storage mount point
-
-
-  hourly_billing (False, bool, False)
-    Hourly based billing type
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
 
 
   allowed_subnets (False, list, None)
     Allowed network subnets
 
 
-  snapshot_schedule (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    Tags set for the storage volume
-
-
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  hostname (False, str, None)
-    Hostname
-
-
-  type (False, str, None)
-    (Required for new resource) Storage type
-
-
-  iops (False, float, None)
-    (Required for new resource) iops rate
+  resource_name (False, str, None)
+    The name of the resource
 
 
   allowed_ip_addresses (False, list, None)
@@ -94,8 +58,44 @@ Parameters
     Notes
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  tags (False, list, None)
+    Tags set for the storage volume
+
+
+  type (False, str, None)
+    (Required for new resource) Storage type
+
+
+  datacenter (False, str, None)
+    (Required for new resource) Datacenter name
+
+
+  iops (False, float, None)
+    (Required for new resource) iops rate
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
+
+
+  mountpoint (False, str, None)
+    Storage mount point
+
+
+  hourly_billing (False, bool, False)
+    Hourly based billing type
+
+
+  hostname (False, str, None)
+    Hostname
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
+
+
+  snapshot_schedule (False, list, None)
+    None
 
 
   resource_status (False, str, None)

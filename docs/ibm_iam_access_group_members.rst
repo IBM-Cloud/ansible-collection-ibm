@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  members (False, list, None)
-    None
-
 
   access_group_id (False, str, None)
     (Required for new resource) Unique identifier of the access group
@@ -39,6 +35,10 @@ Parameters
 
 
   iam_service_ids (False, list, None)
+    None
+
+
+  members (False, list, None)
     None
 
 

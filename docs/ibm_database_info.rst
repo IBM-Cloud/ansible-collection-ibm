@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,60 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  whitelist (False, list, None)
-    None
-
-
-  groups (False, list, None)
-    None
-
-
-  name (True, str, None)
-    Resource instance name for example, my Database instance
-
-
-  location (False, str, None)
-    The location or the region in which the Database instance exists
-
-
-  status (False, str, None)
-    The resource instance status
-
-
-  adminpassword (False, str, None)
-    The admin user id for the instance
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  connectionstrings (False, list, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
   resource_group_id (False, str, None)
     The id of the resource group in which the Database instance is present
 
 
-  service (False, str, None)
-    The name of the Cloud Internet database service
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  guid (False, str, None)
-    Unique identifier of resource instance
+  location (False, str, None)
+    The location or the region in which the Database instance exists
 
 
   plan (False, str, None)
@@ -90,28 +42,76 @@ Parameters
     The admin user id for the instance
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  users (False, list, None)
-    None
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  service (False, str, None)
+    The name of the Cloud Internet database service
+
+
+  adminpassword (False, str, None)
+    The admin user id for the instance
+
+
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  tags (False, list, None)
+    None
+
+
+  users (False, list, None)
+    None
+
+
+  whitelist (False, list, None)
+    None
+
+
   resource_status (False, str, None)
     The status of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  name (True, str, None)
+    Resource instance name for example, my Database instance
+
+
+  guid (False, str, None)
+    Unique identifier of resource instance
+
+
+  status (False, str, None)
+    The resource instance status
+
+
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
+
+
+  connectionstrings (False, list, None)
+    None
+
+
+  groups (False, list, None)
+    None
 
 
   iaas_classic_username (False, any, None)

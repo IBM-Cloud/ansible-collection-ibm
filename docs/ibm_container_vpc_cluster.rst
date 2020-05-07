@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,35 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  name (False, str, None)
-    (Required for new resource) The cluster name
-
-
-  vpc_id (False, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  kube_version (False, str, None)
-    Kubernetes version
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   wait_till (False, str, IngressReady)
     wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
-  state_ (False, str, None)
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  public_service_endpoint_url (False, str, None)
     None
 
 
@@ -62,39 +46,43 @@ Parameters
     None
 
 
-  flavor (False, str, None)
-    (Required for new resource) Cluster nodes flavour
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  master_status (False, str, None)
+  state_ (False, str, None)
     None
 
 
-  albs (False, list, None)
-    None
+  crn (False, str, None)
+    CRN of resource instance
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  zones (False, list, None)
-    (Required for new resource) Zone info
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
 
 
   tags (False, list, None)
     List of tags for the resources
 
 
-  master_url (False, str, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
+  albs (False, list, None)
     None
 
 
@@ -106,28 +94,40 @@ Parameters
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  name (False, str, None)
+    (Required for new resource) The cluster name
 
 
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
+  zones (False, list, None)
+    (Required for new resource) Zone info
 
 
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
+  kube_version (False, str, None)
+    Kubernetes version
 
 
-  crn (False, str, None)
-    CRN of resource instance
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  master_url (False, str, None)
+    None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  flavor (False, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  vpc_id (False, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  master_status (False, str, None)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

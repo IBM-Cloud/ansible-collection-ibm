@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,7 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  policy (False, str, None)
+    (Required for new resource)
+
+
+  type (False, str, None)
+    (Required for new resource)
+
+
+  field (False, str, None)
+    None
+
+
   lb (False, str, None)
+    (Required for new resource)
+
+
+  listener (False, str, None)
     (Required for new resource)
 
 
@@ -35,22 +51,6 @@ Parameters
 
 
   value (False, str, None)
-    (Required for new resource)
-
-
-  field (False, str, None)
-    None
-
-
-  listener (False, str, None)
-    (Required for new resource)
-
-
-  policy (False, str, None)
-    (Required for new resource)
-
-
-  type (False, str, None)
     (Required for new resource)
 
 

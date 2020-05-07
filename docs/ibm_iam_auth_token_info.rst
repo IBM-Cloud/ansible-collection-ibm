@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,19 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  uaa_refresh_token (False, str, None)
-    None
-
-
-  iam_access_token (False, str, None)
-    None
-
-
   iam_refresh_token (False, str, None)
     None
 
 
   uaa_access_token (False, str, None)
+    None
+
+
+  uaa_refresh_token (False, str, None)
+    None
+
+
+  iam_access_token (False, str, None)
     None
 
 

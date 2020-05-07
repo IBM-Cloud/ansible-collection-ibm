@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,8 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Resource instance name for example, myobjectstorage
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  crn (False, str, None)
+    CRN of resource instance
 
 
   resource_group_id (False, str, None)
@@ -36,14 +44,6 @@ Parameters
 
   location (False, str, None)
     The location or the environment in which instance exists
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
 
 
   service (False, str, None)
@@ -58,20 +58,20 @@ Parameters
     The resource instance status
 
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
   resource_name (False, str, None)
     The name of the resource
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (True, str, None)
+    Resource instance name for example, myobjectstorage
+
+
   resource_status (False, str, None)
     The status of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
   iaas_classic_username (False, any, None)

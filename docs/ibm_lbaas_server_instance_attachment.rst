@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_ip_address (False, str, None)
-    (Required for new resource) The Private IP address of a load balancer member.
-
-
-  weight (False, int, None)
-    The weight of a load balancer member.
-
-
   lbaas_id (False, str, None)
     (Required for new resource) The UUID of a load balancer
 
 
   uuid (False, str, None)
     The UUID of a load balancer member
+
+
+  private_ip_address (False, str, None)
+    (Required for new resource) The Private IP address of a load balancer member.
+
+
+  weight (False, int, None)
+    The weight of a load balancer member.
 
 
   id (False, str, None)

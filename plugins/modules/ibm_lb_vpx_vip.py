@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
@@ -25,32 +25,21 @@ options:
             - (Required for new resource) Load balancing method
         required: False
         type: str
-    name:
+    source_port:
         description:
-            - (Required for new resource) Name
+            - (Required for new resource) Source Port number
         required: False
-        type: str
-    virtual_ip_address:
-        description:
-            - (Required for new resource) Virtual IP address
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Type
-        required: False
-        type: str
+        type: int
     security_certificate_id:
         description:
             - security certificate ID
         required: False
         type: int
-    tags:
+    virtual_ip_address:
         description:
-            - List of tags
+            - (Required for new resource) Virtual IP address
         required: False
-        type: list
-        elements: str
+        type: str
     nad_controller_id:
         description:
             - (Required for new resource) NAD controller ID
@@ -61,11 +50,22 @@ options:
             - Persistance value
         required: False
         type: str
-    source_port:
+    name:
         description:
-            - (Required for new resource) Source Port number
+            - (Required for new resource) Name
         required: False
-        type: int
+        type: str
+    type:
+        description:
+            - (Required for new resource) Type
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,24 +113,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('load_balancing_method', 'str'),
-    ('name', 'str'),
-    ('virtual_ip_address', 'str'),
-    ('type', 'str'),
-    ('nad_controller_id', 'int'),
     ('source_port', 'int'),
+    ('virtual_ip_address', 'str'),
+    ('nad_controller_id', 'int'),
+    ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'load_balancing_method',
-    'name',
-    'virtual_ip_address',
-    'type',
+    'source_port',
     'security_certificate_id',
-    'tags',
+    'virtual_ip_address',
     'nad_controller_id',
     'persistence',
-    'source_port',
+    'name',
+    'type',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -139,31 +139,31 @@ module_args = dict(
     load_balancing_method=dict(
         required=False,
         type='str'),
-    name=dict(
+    source_port=dict(
         required=False,
-        type='str'),
-    virtual_ip_address=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
+        type='int'),
     security_certificate_id=dict(
         required=False,
         type='int'),
-    tags=dict(
+    virtual_ip_address=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     nad_controller_id=dict(
         required=False,
         type='int'),
     persistence=dict(
         required=False,
         type='str'),
-    source_port=dict(
+    name=dict(
         required=False,
-        type='int'),
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

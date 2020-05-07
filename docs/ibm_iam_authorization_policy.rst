@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  source_resource_type (False, str, None)
-    Resource type of source service
-
-
-  target_resource_type (False, str, None)
-    Resource type of target service
-
-
-  target_resource_instance_id (False, str, None)
-    The target resource instance Id
-
 
   target_service_name (False, str, None)
     (Required for new resource) The target service name
@@ -46,20 +34,40 @@ Parameters
     (Required for new resource) Role names of the policy definition
 
 
-  source_resource_instance_id (False, str, None)
-    The source resource instance Id
+  target_resource_instance_id (False, str, None)
+    The target resource instance Id
+
+
+  target_resource_type (False, str, None)
+    Resource type of target service
 
 
   source_service_account (False, str, None)
     Account GUID of source service
 
 
+  source_service_name (False, str, None)
+    (Required for new resource) The source service name
+
+
+  source_resource_group_id (False, str, None)
+    The source resource group Id
+
+
+  target_resource_group_id (False, str, None)
+    The target resource group Id
+
+
+  source_resource_type (False, str, None)
+    Resource type of source service
+
+
   version (False, str, None)
     None
 
 
-  source_service_name (False, str, None)
-    (Required for new resource) The source service name
+  source_resource_instance_id (False, str, None)
+    The source resource instance Id
 
 
   id (False, str, None)

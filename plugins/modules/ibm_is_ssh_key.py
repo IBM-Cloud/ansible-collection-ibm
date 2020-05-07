@@ -16,38 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    name:
+    resource_controller_url:
         description:
-            - (Required for new resource) SSH Key name
-        required: False
-        type: str
-    type:
-        description:
-            - Key type
-        required: False
-        type: str
-    fingerprint:
-        description:
-            - SSH key Fingerprint info
-        required: False
-        type: str
-    length:
-        description:
-            - SSH key Length
-        required: False
-        type: int
-    resource_group:
-        description:
-            - Resource group ID
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_crn:
@@ -55,25 +30,50 @@ options:
             - The crn of the resource
         required: False
         type: str
-    public_key:
+    resource_group_name:
         description:
-            - (Required for new resource) SSH Public key data
+            - The resource group name in which resource is provisioned
         required: False
         type: str
+    type:
+        description:
+            - Key type
+        required: False
+        type: str
+    length:
+        description:
+            - SSH key Length
+        required: False
+        type: int
     tags:
         description:
             - List of tags for SSH key
         required: False
         type: list
         elements: str
-    resource_controller_url:
+    resource_group:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - Resource group ID
         required: False
         type: str
-    resource_group_name:
+    name:
         description:
-            - The resource group name in which resource is provisioned
+            - (Required for new resource) SSH Key name
+        required: False
+        type: str
+    public_key:
+        description:
+            - (Required for new resource) SSH Public key data
+        required: False
+        type: str
+    fingerprint:
+        description:
+            - SSH key Fingerprint info
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     id:
@@ -126,54 +126,54 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'type',
-    'fingerprint',
-    'length',
-    'resource_group',
-    'resource_name',
-    'resource_crn',
-    'public_key',
-    'tags',
     'resource_controller_url',
+    'resource_crn',
     'resource_group_name',
+    'type',
+    'length',
+    'tags',
+    'resource_group',
+    'name',
+    'public_key',
+    'fingerprint',
+    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    fingerprint=dict(
-        required=False,
-        type='str'),
-    length=dict(
-        required=False,
-        type='int'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
-    public_key=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    length=dict(
+        required=False,
+        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    public_key=dict(
+        required=False,
+        type='str'),
+    fingerprint=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

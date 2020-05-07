@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,16 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  total_services (False, int, None)
-    Defines the total services for organization.
+  total_private_domains (False, int, None)
+    Defines the total private domain limit for organization.v
+
+
+  total_reserved_route_ports (False, int, None)
+    Defines the number of reserved route ports for organization.
 
 
   total_routes (False, int, None)
     Defines the total route for organization.
 
 
-  total_private_domains (False, int, None)
-    Defines the total private domain limit for organization.v
+  instance_memory_limit (False, int, None)
+    Defines the  total instance memory limit for organization.
+
+
+  trial_db_allowed (False, bool, None)
+    Defines trial db are allowed for organization.
 
 
   app_instance_limit (False, int, None)
@@ -58,20 +66,12 @@ Parameters
     Define non basic services are allowed for organization.
 
 
+  total_services (False, int, None)
+    Defines the total services for organization.
+
+
   memory_limit (False, int, None)
     Defines the total memory limit for organization.
-
-
-  instance_memory_limit (False, int, None)
-    Defines the  total instance memory limit for organization.
-
-
-  trial_db_allowed (False, bool, None)
-    Defines trial db are allowed for organization.
-
-
-  total_reserved_route_ports (False, int, None)
-    Defines the number of reserved route ports for organization.
 
 
   iaas_classic_username (False, any, None)

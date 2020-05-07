@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  key_algorithm (False, str, None)
+    Keyalgorithm info
+
 
   algorithm (False, str, None)
     Algorithm info
@@ -34,16 +38,28 @@ Parameters
     Cerificate validity from date
 
 
-  has_previous (False, str, None)
-    Has Previous
+  expires_on (False, int, None)
+    Certificaet expairy date
 
 
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource) Certificate manager instance ID
+  imported (False, bool, None)
+    set to true if certificate is imported
 
 
-  domains (False, list, None)
-    (Required for new resource) List of domain names
+  name (False, str, None)
+    (Required for new resource) Certificate name
+
+
+  dns_provider_instance_crn (False, str, None)
+    DNS provider instance CRN
+
+
+  status (False, str, None)
+    Status  of the certificate
+
+
+  description (False, str, None)
+    Certicate description
 
 
   rotate_keys (False, bool, False)
@@ -54,40 +70,24 @@ Parameters
     Domain validation methods
 
 
-  description (False, str, None)
-    Certicate description
-
-
-  dns_provider_instance_crn (False, str, None)
-    DNS provider instance CRN
-
-
-  key_algorithm (False, str, None)
-    Keyalgorithm info
-
-
-  expires_on (False, int, None)
-    Certificaet expairy date
-
-
-  issuance_info (False, dict, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) Certificate name
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource) Certificate manager instance ID
 
 
   issuer (False, str, None)
     Certificate issuer info
 
 
-  imported (False, bool, None)
-    set to true if certificate is imported
+  has_previous (False, str, None)
+    Has Previous
 
 
-  status (False, str, None)
-    Status  of the certificate
+  issuance_info (False, dict, None)
+    None
+
+
+  domains (False, list, None)
+    (Required for new resource) List of domain names
 
 
   id (False, str, None)

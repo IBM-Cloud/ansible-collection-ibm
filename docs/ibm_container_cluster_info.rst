@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,87 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_name_id (True, str, None)
-    Name or id of the cluster
-
-
-  worker_count (False, int, None)
-    Number of workers
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  server_url (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_pools (False, list, None)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  is_trusted (False, bool, None)
-    None
-
-
-  albs (False, list, None)
-    None
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  workers (False, list, None)
-    None
-
-
-  bounded_services (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  region (False, str, None)
-    The cluster region
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  ingress_secret (False, str, None)
+  alb_type (False, str, all)
     None
 
 
@@ -114,24 +34,104 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  cluster_name_id (True, str, None)
+    Name or id of the cluster
+
+
+  bounded_services (False, list, None)
+    None
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  worker_pools (False, list, None)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  is_trusted (False, bool, None)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  albs (False, list, None)
+    None
+
+
+  ingress_hostname (False, str, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  private_service_endpoint_url (False, str, None)
+    None
+
+
+  server_url (False, str, None)
+    None
+
+
+  region (False, str, None)
+    The cluster region
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  workers (False, list, None)
+    None
+
+
+  public_service_endpoint (False, bool, None)
+    None
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
+  worker_count (False, int, None)
+    Number of workers
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
   vlans (False, list, None)
     None
-
-
-  alb_type (False, str, all)
-    None
-
-
-  crn (False, str, None)
-    CRN of resource instance
 
 
   ibmcloud_api_key (True, any, None)

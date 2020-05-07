@@ -16,23 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    s3_endpoint_public:
+    bucket_name:
         description:
-            - Public endpoint for the COS bucket
+            - (Required for new resource) COS Bucket name
         required: False
         type: str
-    s3_endpoint_private:
+    resource_instance_id:
         description:
-            - Private endpoint for the COS bucket
+            - (Required for new resource) resource instance ID
         required: False
         type: str
-    key_protect:
+    crn:
         description:
-            - CRN of the key you want to use data at rest encryption
+            - CRN of resource instance
         required: False
         type: str
     single_site_location:
@@ -50,24 +50,24 @@ options:
             - Cros region location info
         required: False
         type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
     storage_class:
         description:
             - (Required for new resource) Storage class info
         required: False
         type: str
-    bucket_name:
+    s3_endpoint_public:
         description:
-            - (Required for new resource) COS Bucket name
+            - Public endpoint for the COS bucket
         required: False
         type: str
-    resource_instance_id:
+    s3_endpoint_private:
         description:
-            - (Required for new resource) resource instance ID
-        required: False
-        type: str
-    crn:
-        description:
-            - CRN of resource instance
+            - Private endpoint for the COS bucket
         required: False
         type: str
     id:
@@ -116,35 +116,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('storage_class', 'str'),
     ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
+    ('storage_class', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    's3_endpoint_public',
-    's3_endpoint_private',
-    'key_protect',
-    'single_site_location',
-    'region_location',
-    'cross_region_location',
-    'storage_class',
     'bucket_name',
     'resource_instance_id',
     'crn',
+    'single_site_location',
+    'region_location',
+    'cross_region_location',
+    'key_protect',
+    'storage_class',
+    's3_endpoint_public',
+    's3_endpoint_private',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    s3_endpoint_public=dict(
+    bucket_name=dict(
         required=False,
         type='str'),
-    s3_endpoint_private=dict(
+    resource_instance_id=dict(
         required=False,
         type='str'),
-    key_protect=dict(
+    crn=dict(
         required=False,
         type='str'),
     single_site_location=dict(
@@ -156,16 +156,16 @@ module_args = dict(
     cross_region_location=dict(
         required=False,
         type='str'),
+    key_protect=dict(
+        required=False,
+        type='str'),
     storage_class=dict(
         required=False,
         type='str'),
-    bucket_name=dict(
+    s3_endpoint_public=dict(
         required=False,
         type='str'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
-    crn=dict(
+    s3_endpoint_private=dict(
         required=False,
         type='str'),
     id=dict(
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

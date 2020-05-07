@@ -16,33 +16,13 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    public_bandwidth:
+    network_speed:
         description:
-            - The amount of public network traffic, allowed per month.
-        required: False
-        type: int
-    os_reference_code:
-        description:
-            - None
-        required: False
-        type: str
-    ipv6_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_subnet:
-        description:
-            - The public subnet used for the public network interface of the server.
-        required: False
-        type: int
-    memory:
-        description:
-            - The amount of memory in gigabytes, for the server.
+            - The connection speed, expressed in Mbps,  for the server network components.
         required: False
         type: int
     private_subnet:
@@ -50,14 +30,30 @@ options:
             - The private subnet used for the private network interface of the server.
         required: False
         type: int
+    hourly_billing:
+        description:
+            - The billing type of the server.
+        required: False
+        type: bool
+    user_metadata:
+        description:
+            - Arbitrary data available to the computing server.
+        required: False
+        type: str
+    secondary_ip_addresses:
+        description:
+            - The public secondary IPv4 addresses of the bare metal server.
+        required: False
+        type: list
+        elements: str
+    private_vlan_id:
+        description:
+            - The private VLAN used for the private network interface of the server.
+        required: False
+        type: int
     redundant_power_supply:
         description:
             - When the value is `true`, it indicates additional power supply is provided.
-        required: False
-        type: bool
-    redundant_network:
-        description:
-            - When the value is `true`, two physical network interfaces are provided with a bonding configuration.
         required: False
         type: bool
     unbonded_network:
@@ -65,11 +61,54 @@ options:
             - When the value is `true`, two physical network interfaces are provided without a bonding configuration.
         required: False
         type: bool
+    hostname:
+        description:
+            - The hostname of the bare metal server
+        required: False
+        type: str
+    notes:
+        description:
+            - Notes associated with the server.
+        required: False
+        type: str
+    block_storage_ids:
+        description:
+            - Block storage to which this computing server have access.
+        required: False
+        type: list
+        elements: int
+    tags:
+        description:
+            - Tags associated with this bare metal server.
+        required: False
+        type: list
+        elements: str
+    file_storage_ids:
+        description:
+            - File storage to which this computing server have access.
+        required: False
+        type: list
+        elements: int
     secondary_ip_count:
         description:
             - The number of secondary IPv4 addresses of the bare metal server.
         required: False
         type: int
+    private_network_only:
+        description:
+            - Specifies whether the server only has access to the private network.
+        required: False
+        type: bool
+    memory:
+        description:
+            - The amount of memory in gigabytes, for the server.
+        required: False
+        type: int
+    redundant_network:
+        description:
+            - When the value is `true`, two physical network interfaces are provided with a bonding configuration.
+        required: False
+        type: bool
     private_ipv4_address_id:
         description:
             - None
@@ -80,76 +119,44 @@ options:
             - The public VLAN used for the public network interface of the server.
         required: False
         type: int
-    network_speed:
+    public_subnet:
         description:
-            - The connection speed, expressed in Mbps,  for the server network components.
+            - The public subnet used for the public network interface of the server.
         required: False
         type: int
-    notes:
-        description:
-            - Notes associated with the server.
-        required: False
-        type: str
-    private_network_only:
-        description:
-            - Specifies whether the server only has access to the private network.
-        required: False
-        type: bool
-    public_ipv4_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    hourly_billing:
-        description:
-            - The billing type of the server.
-        required: False
-        type: bool
-    domain:
-        description:
-            - The domain of the bare metal server
-        required: False
-        type: str
-    datacenter:
-        description:
-            - Datacenter in which the bare metal is deployed
-        required: False
-        type: str
-    user_metadata:
-        description:
-            - Arbitrary data available to the computing server.
-        required: False
-        type: str
-    block_storage_ids:
-        description:
-            - Block storage to which this computing server have access.
-        required: False
-        type: list
-        elements: int
-    file_storage_ids:
-        description:
-            - File storage to which this computing server have access.
-        required: False
-        type: list
-        elements: int
     ipv6_enabled:
         description:
             - Indicates whether the public IPv6 address enabled or not
         required: False
         type: bool
+    ipv6_address_id:
+        description:
+            - None
+        required: False
+        type: int
     global_identifier:
         description:
             - The unique global identifier of the bare metal server
         required: False
         type: str
-    hostname:
+    domain:
         description:
-            - The hostname of the bare metal server
+            - The domain of the bare metal server
         required: False
         type: str
-    ipv6_address:
+    private_ipv4_address:
         description:
-            - The public IPv6 address of the bare metal server
+            - The private IPv4 address of the bare metal server.
+        required: False
+        type: str
+    public_bandwidth:
+        description:
+            - The amount of public network traffic, allowed per month.
+        required: False
+        type: int
+    public_ipv4_address:
+        description:
+            - The public IPv4 address of the bare metal server.
         required: False
         type: str
     most_recent:
@@ -158,31 +165,24 @@ options:
         required: False
         type: bool
         default: False
-    private_vlan_id:
+    ipv6_address:
         description:
-            - The private VLAN used for the private network interface of the server.
-        required: False
-        type: int
-    tags:
-        description:
-            - Tags associated with this bare metal server.
-        required: False
-        type: list
-        elements: str
-    secondary_ip_addresses:
-        description:
-            - The public secondary IPv4 addresses of the bare metal server.
-        required: False
-        type: list
-        elements: str
-    public_ipv4_address:
-        description:
-            - The public IPv4 address of the bare metal server.
+            - The public IPv6 address of the bare metal server
         required: False
         type: str
-    private_ipv4_address:
+    datacenter:
         description:
-            - The private IPv4 address of the bare metal server.
+            - Datacenter in which the bare metal is deployed
+        required: False
+        type: str
+    public_ipv4_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    os_reference_code:
+        description:
+            - None
         required: False
         type: str
     iaas_classic_username:
@@ -222,104 +222,79 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_bandwidth',
-    'os_reference_code',
-    'ipv6_address_id',
-    'public_subnet',
-    'memory',
+    'network_speed',
     'private_subnet',
+    'hourly_billing',
+    'user_metadata',
+    'secondary_ip_addresses',
+    'private_vlan_id',
     'redundant_power_supply',
-    'redundant_network',
     'unbonded_network',
+    'hostname',
+    'notes',
+    'block_storage_ids',
+    'tags',
+    'file_storage_ids',
     'secondary_ip_count',
+    'private_network_only',
+    'memory',
+    'redundant_network',
     'private_ipv4_address_id',
     'public_vlan_id',
-    'network_speed',
-    'notes',
-    'private_network_only',
-    'public_ipv4_address_id',
-    'hourly_billing',
-    'domain',
-    'datacenter',
-    'user_metadata',
-    'block_storage_ids',
-    'file_storage_ids',
+    'public_subnet',
     'ipv6_enabled',
+    'ipv6_address_id',
     'global_identifier',
-    'hostname',
-    'ipv6_address',
-    'most_recent',
-    'private_vlan_id',
-    'tags',
-    'secondary_ip_addresses',
-    'public_ipv4_address',
+    'domain',
     'private_ipv4_address',
+    'public_bandwidth',
+    'public_ipv4_address',
+    'most_recent',
+    'ipv6_address',
+    'datacenter',
+    'public_ipv4_address_id',
+    'os_reference_code',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_bandwidth=dict(
-        required=False,
-        type='int'),
-    os_reference_code=dict(
-        required=False,
-        type='str'),
-    ipv6_address_id=dict(
-        required=False,
-        type='int'),
-    public_subnet=dict(
-        required=False,
-        type='int'),
-    memory=dict(
+    network_speed=dict(
         required=False,
         type='int'),
     private_subnet=dict(
         required=False,
         type='int'),
-    redundant_power_supply=dict(
+    hourly_billing=dict(
         required=False,
         type='bool'),
-    redundant_network=dict(
+    user_metadata=dict(
+        required=False,
+        type='str'),
+    secondary_ip_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    private_vlan_id=dict(
+        required=False,
+        type='int'),
+    redundant_power_supply=dict(
         required=False,
         type='bool'),
     unbonded_network=dict(
         required=False,
         type='bool'),
-    secondary_ip_count=dict(
+    hostname=dict(
         required=False,
-        type='int'),
-    private_ipv4_address_id=dict(
-        required=False,
-        type='int'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    network_speed=dict(
-        required=False,
-        type='int'),
+        type='str'),
     notes=dict(
         required=False,
         type='str'),
-    private_network_only=dict(
-        required=False,
-        type='bool'),
-    public_ipv4_address_id=dict(
-        required=False,
-        type='int'),
-    hourly_billing=dict(
-        required=False,
-        type='bool'),
-    domain=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    user_metadata=dict(
-        required=False,
-        type='str'),
     block_storage_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -327,36 +302,61 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    secondary_ip_count=dict(
+        required=False,
+        type='int'),
+    private_network_only=dict(
+        required=False,
+        type='bool'),
+    memory=dict(
+        required=False,
+        type='int'),
+    redundant_network=dict(
+        required=False,
+        type='bool'),
+    private_ipv4_address_id=dict(
+        required=False,
+        type='int'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
+    public_subnet=dict(
+        required=False,
+        type='int'),
     ipv6_enabled=dict(
         required=False,
         type='bool'),
+    ipv6_address_id=dict(
+        required=False,
+        type='int'),
     global_identifier=dict(
         required=False,
         type='str'),
-    hostname=dict(
+    domain=dict(
         required=False,
         type='str'),
-    ipv6_address=dict(
+    private_ipv4_address=dict(
+        required=False,
+        type='str'),
+    public_bandwidth=dict(
+        required=False,
+        type='int'),
+    public_ipv4_address=dict(
         required=False,
         type='str'),
     most_recent=dict(
         default=False,
         type='bool'),
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    secondary_ip_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    public_ipv4_address=dict(
+    ipv6_address=dict(
         required=False,
         type='str'),
-    private_ipv4_address=dict(
+    datacenter=dict(
+        required=False,
+        type='str'),
+    public_ipv4_address_id=dict(
+        required=False,
+        type='int'),
+    os_reference_code=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -394,7 +394,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

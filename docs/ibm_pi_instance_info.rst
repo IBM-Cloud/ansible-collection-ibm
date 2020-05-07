@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  processors (False, int, None)
-    None
-
-
-  health_status (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
 
   minmem (False, int, None)
     None
@@ -46,11 +34,27 @@ Parameters
     None
 
 
-  maxmem (False, int, None)
-    None
+  pi_instance_name (True, str, None)
+    Server Name to be used for pvminstances
 
 
   pi_cloud_instance_id (True, str, None)
+    None
+
+
+  processors (False, int, None)
+    None
+
+
+  addresses (False, list, None)
+    None
+
+
+  minproc (False, int, None)
+    None
+
+
+  maxmem (False, int, None)
     None
 
 
@@ -62,7 +66,7 @@ Parameters
     None
 
 
-  addresses (False, list, None)
+  health_status (False, str, None)
     None
 
 
@@ -70,12 +74,8 @@ Parameters
     None
 
 
-  minproc (False, int, None)
+  status (False, str, None)
     None
-
-
-  pi_instance_name (True, str, None)
-    Server Name to be used for pvminstances
 
 
   zone (False, any, None)

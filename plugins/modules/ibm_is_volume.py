@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
@@ -25,36 +25,20 @@ options:
             - Volume encryption key info
         required: False
         type: str
-    capacity:
-        description:
-            - Vloume capacity value
-        required: False
-        type: int
-        default: 100
     tags:
         description:
             - Tags for the volume instance
         required: False
         type: list
         elements: str
-    crn:
+    resource_status:
         description:
-            - CRN value for the volume instance
+            - The status of the resource
         required: False
         type: str
-    status:
+    profile:
         description:
-            - Volume status
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
+            - (Required for new resource) Vloume profile name
         required: False
         type: str
     resource_group:
@@ -72,14 +56,14 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Volume name
-        required: False
-        type: str
-    profile:
-        description:
-            - (Required for new resource) Vloume profile name
         required: False
         type: str
     resource_name:
@@ -87,16 +71,32 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_status:
+    zone:
         description:
-            - The status of the resource
+            - (Required for new resource) Zone name
         required: False
         type: str
-    resource_group_name:
+    crn:
         description:
-            - The resource group name in which resource is provisioned
+            - CRN value for the volume instance
         required: False
         type: str
+    status:
+        description:
+            - Volume status
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    capacity:
+        description:
+            - Vloume capacity value
+        required: False
+        type: int
+        default: 100
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -141,28 +141,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
-    ('name', 'str'),
     ('profile', 'str'),
+    ('name', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'encryption_key',
-    'capacity',
     'tags',
-    'crn',
-    'status',
-    'resource_crn',
-    'zone',
+    'resource_status',
+    'profile',
     'resource_group',
     'iops',
     'resource_controller_url',
-    'name',
-    'profile',
-    'resource_name',
-    'resource_status',
     'resource_group_name',
+    'name',
+    'resource_name',
+    'zone',
+    'crn',
+    'status',
+    'resource_crn',
+    'capacity',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -171,23 +171,14 @@ module_args = dict(
     encryption_key=dict(
         required=False,
         type='str'),
-    capacity=dict(
-        default=100,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    crn=dict(
+    resource_status=dict(
         required=False,
         type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    zone=dict(
+    profile=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -199,21 +190,30 @@ module_args = dict(
     resource_controller_url=dict(
         required=False,
         type='str'),
-    name=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
-    profile=dict(
+    name=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    zone=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    crn=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    capacity=dict(
+        default=100,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -279,7 +279,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,26 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    shared:
-        description:
-            - The Shared status of an endpoint
-        required: False
-        type: bool
     type:
         description:
             - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
         required: False
         type: str
         default: unshare
-    service_instance_crn:
-        description:
-            - (Required for new resource) Api Gateway Service Instance Crn
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Endpoint name
@@ -53,11 +43,6 @@ options:
         required: False
         type: bool
         default: False
-    open_api_doc_name:
-        description:
-            - (Required for new resource) Json File path
-        required: False
-        type: str
     base_path:
         description:
             - Base path of an endpoint
@@ -74,6 +59,21 @@ options:
             - Endpoint ID
         required: False
         type: str
+    service_instance_crn:
+        description:
+            - (Required for new resource) Api Gateway Service Instance Crn
+        required: False
+        type: str
+    open_api_doc_name:
+        description:
+            - (Required for new resource) Json File path
+        required: False
+        type: str
+    shared:
+        description:
+            - The Shared status of an endpoint
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -120,36 +120,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('service_instance_crn', 'str'),
     ('name', 'str'),
+    ('service_instance_crn', 'str'),
     ('open_api_doc_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shared',
     'type',
-    'service_instance_crn',
     'name',
     'routes',
     'managed',
-    'open_api_doc_name',
     'base_path',
     'provider_id',
     'endpoint_id',
+    'service_instance_crn',
+    'open_api_doc_name',
+    'shared',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shared=dict(
-        required=False,
-        type='bool'),
     type=dict(
         default='unshare',
-        type='str'),
-    service_instance_crn=dict(
-        required=False,
         type='str'),
     name=dict(
         required=False,
@@ -161,9 +155,6 @@ module_args = dict(
     managed=dict(
         default=False,
         type='bool'),
-    open_api_doc_name=dict(
-        required=False,
-        type='str'),
     base_path=dict(
         required=False,
         type='str'),
@@ -173,6 +164,15 @@ module_args = dict(
     endpoint_id=dict(
         required=False,
         type='str'),
+    service_instance_crn=dict(
+        required=False,
+        type='str'),
+    open_api_doc_name=dict(
+        required=False,
+        type='str'),
+    shared=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

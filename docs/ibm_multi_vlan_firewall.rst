@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,28 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pod (False, str, None)
-    (Required for new resource) POD name
-
-
-  private_vlan_id (False, int, None)
-    Private VLAN id
-
-
-  firewall_type (False, str, None)
-    (Required for new resource) Firewall type
-
-
-  public_ipv6 (False, str, None)
-    Public IPV6 IP
-
-
-  private_ip (False, str, None)
-    Private IP Address
-
-
-  username (False, str, None)
-    User name
+  password (False, str, None)
+    Password
 
 
   addon_configuration (False, list, None)
@@ -58,20 +38,40 @@ Parameters
     (Required for new resource) Datacenter name
 
 
+  private_vlan_id (False, int, None)
+    Private VLAN id
+
+
+  firewall_type (False, str, None)
+    (Required for new resource) Firewall type
+
+
+  username (False, str, None)
+    User name
+
+
+  public_ipv6 (False, str, None)
+    Public IPV6 IP
+
+
+  private_ip (False, str, None)
+    Private IP Address
+
+
+  pod (False, str, None)
+    (Required for new resource) POD name
+
+
+  name (False, str, None)
+    (Required for new resource) name
+
+
   public_vlan_id (False, int, None)
     Public VLAN id
 
 
   public_ip (False, str, None)
     Public IP Address
-
-
-  password (False, str, None)
-    Password
-
-
-  name (False, str, None)
-    (Required for new resource) name
 
 
   id (False, str, None)

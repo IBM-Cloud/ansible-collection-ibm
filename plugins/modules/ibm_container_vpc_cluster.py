@@ -16,48 +16,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.0
+    - IBM-Cloud terraform-provider-ibm v1.5.2
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    resource_group_name:
         description:
-            - ID of the resource group.
+            - The resource group name in which resource is provisioned
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: False
-        type: str
-    vpc_id:
-        description:
-            - (Required for new resource) The vpc id where the cluster is
-        required: False
-        type: str
-    kube_version:
-        description:
-            - Kubernetes version
-        required: False
-        type: str
-    service_subnet:
-        description:
-            - Custom subnet CIDR to provide private IP addresses for services
-        required: False
-        type: str
-    worker_count:
-        description:
-            - Number of worker nodes in the cluster
-        required: False
-        type: int
-        default: 1
     wait_till:
         description:
             - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
         required: False
         type: str
         default: IngressReady
-    state_:
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
+    public_service_endpoint_url:
         description:
             - None
         required: False
@@ -67,54 +46,60 @@ options:
             - None
         required: False
         type: str
-    flavor:
+    resource_crn:
         description:
-            - (Required for new resource) Cluster nodes flavour
+            - The crn of the resource
         required: False
         type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-        required: False
-        type: str
-    master_status:
+    state_:
         description:
             - None
         required: False
         type: str
-    albs:
+    crn:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_status:
-        description:
-            - The status of the resource
+            - CRN of resource instance
         required: False
         type: str
-    zones:
+    resource_name:
         description:
-            - (Required for new resource) Zone info
+            - The name of the resource
         required: False
-        type: list
-        elements: dict
+        type: str
+    service_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for services
+        required: False
+        type: str
+    pod_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for pods
+        required: False
+        type: str
+    worker_count:
+        description:
+            - Number of worker nodes in the cluster
+        required: False
+        type: int
+        default: 1
+    disable_public_service_endpoint:
+        description:
+            - Boolean value true if Public service endpoint to be disabled
+        required: False
+        type: bool
+        default: False
     tags:
         description:
             - List of tags for the resources
         required: False
         type: list
         elements: str
-    master_url:
+    albs:
         description:
             - None
         required: False
-        type: str
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
+        type: list
+        elements: dict
     ingress_hostname:
         description:
             - None
@@ -125,35 +110,50 @@ options:
             - None
         required: False
         type: str
-    resource_name:
+    name:
         description:
-            - The name of the resource
+            - (Required for new resource) The cluster name
         required: False
         type: str
-    pod_subnet:
+    zones:
         description:
-            - Custom subnet CIDR to provide private IP addresses for pods
+            - (Required for new resource) Zone info
+        required: False
+        type: list
+        elements: dict
+    kube_version:
+        description:
+            - Kubernetes version
         required: False
         type: str
-    disable_public_service_endpoint:
+    resource_group_id:
         description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
-    crn:
-        description:
-            - CRN of resource instance
+            - ID of the resource group.
         required: False
         type: str
-    resource_crn:
+    master_url:
         description:
-            - The crn of the resource
+            - None
         required: False
         type: str
-    resource_group_name:
+    flavor:
         description:
-            - The resource group name in which resource is provisioned
+            - (Required for new resource) Cluster nodes flavour
+        required: False
+        type: str
+    vpc_id:
+        description:
+            - (Required for new resource) The vpc id where the cluster is
+        required: False
+        type: str
+    master_status:
+        description:
+            - None
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     id:
@@ -183,123 +183,123 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('vpc_id', 'str'),
-    ('flavor', 'str'),
     ('zones', 'list'),
+    ('flavor', 'str'),
+    ('vpc_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'name',
-    'vpc_id',
-    'kube_version',
-    'service_subnet',
-    'worker_count',
+    'resource_group_name',
     'wait_till',
-    'state_',
-    'private_service_endpoint_url',
-    'flavor',
     'resource_controller_url',
-    'master_status',
-    'albs',
-    'resource_status',
-    'zones',
-    'tags',
-    'master_url',
     'public_service_endpoint_url',
+    'private_service_endpoint_url',
+    'resource_crn',
+    'state_',
+    'crn',
+    'resource_name',
+    'service_subnet',
+    'pod_subnet',
+    'worker_count',
+    'disable_public_service_endpoint',
+    'tags',
+    'albs',
     'ingress_hostname',
     'ingress_secret',
-    'resource_name',
-    'pod_subnet',
-    'disable_public_service_endpoint',
-    'crn',
-    'resource_crn',
-    'resource_group_name',
+    'name',
+    'zones',
+    'kube_version',
+    'resource_group_id',
+    'master_url',
+    'flavor',
+    'vpc_id',
+    'master_status',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    vpc_id=dict(
-        required=False,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    service_subnet=dict(
-        required=False,
-        type='str'),
-    worker_count=dict(
-        default=1,
-        type='int'),
     wait_till=dict(
         default='IngressReady',
         type='str'),
-    state_=dict(
-        required=False,
-        type='str'),
-    private_service_endpoint_url=dict(
-        required=False,
-        type='str'),
-    flavor=dict(
-        required=False,
-        type='str'),
     resource_controller_url=dict(
-        required=False,
-        type='str'),
-    master_status=dict(
-        required=False,
-        type='str'),
-    albs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    master_url=dict(
         required=False,
         type='str'),
     public_service_endpoint_url=dict(
         required=False,
         type='str'),
+    private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    state_=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    service_subnet=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
+    worker_count=dict(
+        default=1,
+        type='int'),
+    disable_public_service_endpoint=dict(
+        default=False,
+        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    albs=dict(
+        required=False,
+        elements='',
+        type='list'),
     ingress_hostname=dict(
         required=False,
         type='str'),
     ingress_secret=dict(
         required=False,
         type='str'),
-    resource_name=dict(
+    name=dict(
         required=False,
         type='str'),
-    pod_subnet=dict(
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    kube_version=dict(
         required=False,
         type='str'),
-    disable_public_service_endpoint=dict(
-        default=False,
-        type='bool'),
-    crn=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    master_url=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    flavor=dict(
+        required=False,
+        type='str'),
+    vpc_id=dict(
+        required=False,
+        type='str'),
+    master_status=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -341,7 +341,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.0',
+        ibm_provider_version='1.5.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

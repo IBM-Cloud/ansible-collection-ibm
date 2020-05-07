@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,44 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dh_group (False, int, None)
-    (Required for new resource) IKE DH group
+  authentication_algorithm (False, str, None)
+    (Required for new resource) Authentication algorithm type
 
 
   ike_version (False, int, None)
     IKE version
 
 
-  negotiation_mode (False, str, None)
-    IKE negotiation mode
+  href (False, str, None)
+    IKE href value
 
 
   vpn_connections (False, list, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   name (False, str, None)
     (Required for new resource) IKE name
 
 
-  authentication_algorithm (False, str, None)
-    (Required for new resource) Authentication algorithm type
-
-
   encryption_algorithm (False, str, None)
     (Required for new resource) Encryption alogorithm type
+
+
+  dh_group (False, int, None)
+    (Required for new resource) IKE DH group
 
 
   resource_group (False, str, None)
@@ -74,8 +70,12 @@ Parameters
     IKE Key lifetime
 
 
-  href (False, str, None)
-    IKE href value
+  negotiation_mode (False, str, None)
+    IKE negotiation mode
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

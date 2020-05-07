@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_ips (False, list, None)
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  type (False, str, public)
+    Load Balancer type
+
+
+  operating_status (False, str, None)
     None
+
+
+  hostname (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   subnets (False, list, None)
@@ -38,7 +54,7 @@ Parameters
     None
 
 
-  hostname (False, str, None)
+  resource_group (False, str, None)
     None
 
 
@@ -46,20 +62,8 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  operating_status (False, str, None)
-    None
-
-
-  type (False, str, public)
-    Load Balancer type
+  name (False, str, None)
+    (Required for new resource) Load Balancer name
 
 
   status (False, str, None)
@@ -70,12 +74,8 @@ Parameters
     None
 
 
-  resource_group (False, str, None)
+  private_ips (False, list, None)
     None
-
-
-  name (False, str, None)
-    (Required for new resource) Load Balancer name
 
 
   id (False, str, None)

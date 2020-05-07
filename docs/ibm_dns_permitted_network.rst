@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.0
+- IBM-Cloud terraform-provider-ibm v1.5.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  permitted_network_id (False, str, None)
+    Network Id
+
+
+  instance_id (False, str, None)
+    (Required for new resource) Instance Id
+
+
+  zone_id (False, str, None)
+    (Required for new resource) Zone Id
+
 
   type (False, str, vpc)
     Network Type
@@ -44,18 +56,6 @@ Parameters
 
   state_ (False, str, None)
     Network status
-
-
-  permitted_network_id (False, str, None)
-    Network Id
-
-
-  instance_id (False, str, None)
-    (Required for new resource) Instance Id
-
-
-  zone_id (False, str, None)
-    (Required for new resource) Zone Id
 
 
   id (False, str, None)
