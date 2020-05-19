@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    role:
+        description:
+            - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
+        required: False
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass. Must be a JSON object
@@ -30,17 +35,6 @@ options:
             - Status of resource key
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    credentials:
-        description:
-            - Credentials asociated with the key
-        required: False
-        type: dict
     crn:
         description:
             - crn of resource key
@@ -51,19 +45,25 @@ options:
             - (Required for new resource) The name of the resource key
         required: False
         type: str
-    role:
-        description:
-            - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor.
-        required: False
-        type: str
-    resource_instance_id:
-        description:
-            - The id of the resource instance for which to create resource key
-        required: False
-        type: str
     resource_alias_id:
         description:
             - The id of the resource alias for which to create resource key
+        required: False
+        type: str
+    credentials:
+        description:
+            - Credentials asociated with the key
+        required: False
+        type: dict
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_instance_id:
+        description:
+            - The id of the resource instance for which to create resource key
         required: False
         type: str
     id:
@@ -112,52 +112,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('role', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'role',
     'parameters',
     'status',
-    'tags',
-    'credentials',
     'crn',
     'name',
-    'role',
-    'resource_instance_id',
     'resource_alias_id',
+    'credentials',
+    'tags',
+    'resource_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    role=dict(
+        required=False,
+        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
     status=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    credentials=dict(
-        required=False,
-        type='dict'),
     crn=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    role=dict(
-        required=False,
-        type='str'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
     resource_alias_id=dict(
+        required=False,
+        type='str'),
+    credentials=dict(
+        required=False,
+        type='dict'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +193,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -209,17 +209,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_resource_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

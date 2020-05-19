@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,40 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bucket_type (True, str, None)
-    None
-
-
-  resource_instance_id (True, str, None)
-    None
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  cross_region_location (False, str, None)
-    None
-
-
-  storage_class (False, str, None)
-    None
-
-
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  s3_endpoint_private (False, str, None)
-    Private endpoint for the COS bucket
-
-
-  bucket_name (True, str, None)
+  bucket_region (True, str, None)
     None
 
 
   crn (False, str, None)
     CRN of resource instance
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   single_site_location (False, str, None)
@@ -70,7 +46,31 @@ Parameters
     None
 
 
-  bucket_region (True, str, None)
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
+
+
+  bucket_type (True, str, None)
+    None
+
+
+  resource_instance_id (True, str, None)
+    None
+
+
+  cross_region_location (False, str, None)
+    None
+
+
+  storage_class (False, str, None)
+    None
+
+
+  s3_endpoint_private (False, str, None)
+    Private endpoint for the COS bucket
+
+
+  bucket_name (True, str, None)
     None
 
 

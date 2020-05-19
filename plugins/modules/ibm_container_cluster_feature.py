@@ -16,23 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    cluster:
+    refresh_api_servers:
         description:
-            - (Required for new resource) Cluster name of ID
+            - Boolean value true of API server to be refreshed in K8S cluster
         required: False
-        type: str
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
+        type: bool
+        default: True
     private_service_endpoint_url:
         description:
             - None
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
         required: False
         type: str
     public_service_endpoint:
@@ -45,21 +46,20 @@ options:
             - None
         required: False
         type: bool
-    refresh_api_servers:
-        description:
-            - Boolean value true of API server to be refreshed in K8S cluster
-        required: False
-        type: bool
-        default: True
     reload_workers:
         description:
             - Boolean value set true if worker nodes to be reloaded
         required: False
         type: bool
         default: True
-    resource_group_id:
+    cluster:
         description:
-            - ID of the resource group.
+            - (Required for new resource) Cluster name of ID
+        required: False
+        type: str
+    public_service_endpoint_url:
+        description:
+            - None
         required: False
         type: str
     id:
@@ -93,26 +93,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
-    'public_service_endpoint_url',
+    'refresh_api_servers',
     'private_service_endpoint_url',
+    'resource_group_id',
     'public_service_endpoint',
     'private_service_endpoint',
-    'refresh_api_servers',
     'reload_workers',
-    'resource_group_id',
+    'cluster',
+    'public_service_endpoint_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
-    public_service_endpoint_url=dict(
-        required=False,
-        type='str'),
+    refresh_api_servers=dict(
+        default=True,
+        type='bool'),
     private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     public_service_endpoint=dict(
@@ -121,13 +122,13 @@ module_args = dict(
     private_service_endpoint=dict(
         required=False,
         type='bool'),
-    refresh_api_servers=dict(
-        default=True,
-        type='bool'),
     reload_workers=dict(
         default=True,
         type='bool'),
-    resource_group_id=dict(
+    cluster=dict(
+        required=False,
+        type='str'),
+    public_service_endpoint_url=dict(
         required=False,
         type='str'),
     id=dict(
@@ -148,7 +149,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -165,17 +165,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

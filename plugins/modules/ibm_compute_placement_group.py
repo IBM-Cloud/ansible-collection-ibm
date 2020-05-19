@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_placement_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -108,6 +108,7 @@ TL_ALL_PARAMETERS = [
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     datacenter=dict(
@@ -158,7 +159,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -175,17 +175,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_compute_placement_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

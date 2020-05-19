@@ -16,25 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - cluster id
-        required: False
-        type: str
-    disable_deployment:
-        description:
-            - Disable the ALB instance in the cluster
-        required: False
-        type: bool
-    load_balancer_hostname:
-        description:
-            - Load balancer host name
-        required: False
-        type: str
     state_:
         description:
             - ALB state
@@ -45,19 +30,24 @@ options:
             - Status of the ALB
         required: False
         type: str
-    alb_id:
-        description:
-            - (Required for new resource) ALB ID
-        required: False
-        type: str
     alb_type:
         description:
             - Type of the ALB
         required: False
         type: str
+    load_balancer_hostname:
+        description:
+            - Load balancer host name
+        required: False
+        type: str
     enable:
         description:
             - Enable the ALB instance in the cluster
+        required: False
+        type: bool
+    disable_deployment:
+        description:
+            - Disable the ALB instance in the cluster
         required: False
         type: bool
     name:
@@ -73,6 +63,16 @@ options:
     zone:
         description:
             - Zone info.
+        required: False
+        type: str
+    alb_id:
+        description:
+            - (Required for new resource) ALB ID
+        required: False
+        type: str
+    cluster:
+        description:
+            - cluster id
         required: False
         type: str
     id:
@@ -106,44 +106,39 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
-    'disable_deployment',
-    'load_balancer_hostname',
     'state_',
     'status',
-    'alb_id',
     'alb_type',
+    'load_balancer_hostname',
     'enable',
+    'disable_deployment',
     'name',
     'resize',
     'zone',
+    'alb_id',
+    'cluster',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
-    disable_deployment=dict(
-        required=False,
-        type='bool'),
-    load_balancer_hostname=dict(
-        required=False,
-        type='str'),
     state_=dict(
         required=False,
         type='str'),
     status=dict(
         required=False,
         type='str'),
-    alb_id=dict(
-        required=False,
-        type='str'),
     alb_type=dict(
         required=False,
         type='str'),
+    load_balancer_hostname=dict(
+        required=False,
+        type='str'),
     enable=dict(
+        required=False,
+        type='bool'),
+    disable_deployment=dict(
         required=False,
         type='bool'),
     name=dict(
@@ -153,6 +148,12 @@ module_args = dict(
         required=False,
         type='bool'),
     zone=dict(
+        required=False,
+        type='str'),
+    alb_id=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
         required=False,
         type='str'),
     id=dict(
@@ -173,7 +174,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -190,17 +190,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_vpc_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

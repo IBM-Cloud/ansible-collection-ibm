@@ -16,65 +16,32 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cdn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    host_name:
+    bucket_name:
         description:
-            - (Required for new resource) Host name
+            - Bucket name
         required: False
         type: str
-    vendor_name:
-        description:
-            - Vendor name
-        required: False
-        type: str
-        default: akamai
     protocol:
         description:
             - Protocol name
         required: False
         type: str
         default: HTTP
-    http_port:
+    https_port:
         description:
-            - HTTP port number
+            - HTTPS port number
         required: False
         type: int
-        default: 80
-    cname:
-        description:
-            - cname info
-        required: False
-        type: str
-    respect_headers:
-        description:
-            - respect headers info
-        required: False
-        type: bool
-        default: True
-    status:
-        description:
-            - Status info of the CDN instance
-        required: False
-        type: str
-    header:
-        description:
-            - Header info
-        required: False
-        type: str
+        default: 443
     certificate_type:
         description:
             - Certificate type
         required: False
         type: str
-    performance_configuration:
-        description:
-            - performance configuration info
-        required: False
-        type: str
-        default: General web delivery
     path:
         description:
             - Path details
@@ -92,17 +59,50 @@ options:
             - (Required for new resource) origin address info
         required: False
         type: str
-    bucket_name:
+    http_port:
         description:
-            - Bucket name
-        required: False
-        type: str
-    https_port:
-        description:
-            - HTTPS port number
+            - HTTP port number
         required: False
         type: int
-        default: 443
+        default: 80
+    header:
+        description:
+            - Header info
+        required: False
+        type: str
+    respect_headers:
+        description:
+            - respect headers info
+        required: False
+        type: bool
+        default: True
+    performance_configuration:
+        description:
+            - performance configuration info
+        required: False
+        type: str
+        default: General web delivery
+    vendor_name:
+        description:
+            - Vendor name
+        required: False
+        type: str
+        default: akamai
+    cname:
+        description:
+            - cname info
+        required: False
+        type: str
+    host_name:
+        description:
+            - (Required for new resource) Host name
+        required: False
+        type: str
+    status:
+        description:
+            - Status info of the CDN instance
+        required: False
+        type: str
     file_extension:
         description:
             - File extension info
@@ -160,63 +160,46 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_name', 'str'),
     ('origin_address', 'str'),
+    ('host_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'host_name',
-    'vendor_name',
+    'bucket_name',
     'protocol',
-    'http_port',
-    'cname',
-    'respect_headers',
-    'status',
-    'header',
+    'https_port',
     'certificate_type',
-    'performance_configuration',
     'path',
     'origin_type',
     'origin_address',
-    'bucket_name',
-    'https_port',
+    'http_port',
+    'header',
+    'respect_headers',
+    'performance_configuration',
+    'vendor_name',
+    'cname',
+    'host_name',
+    'status',
     'file_extension',
     'cache_key_query_rule',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    host_name=dict(
+    bucket_name=dict(
         required=False,
-        type='str'),
-    vendor_name=dict(
-        default='akamai',
         type='str'),
     protocol=dict(
         default='HTTP',
         type='str'),
-    http_port=dict(
-        default=80,
+    https_port=dict(
+        default=443,
         type='int'),
-    cname=dict(
-        required=False,
-        type='str'),
-    respect_headers=dict(
-        default=True,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
-    header=dict(
-        required=False,
-        type='str'),
     certificate_type=dict(
         required=False,
-        type='str'),
-    performance_configuration=dict(
-        default='General web delivery',
         type='str'),
     path=dict(
         default='/*',
@@ -227,12 +210,30 @@ module_args = dict(
     origin_address=dict(
         required=False,
         type='str'),
-    bucket_name=dict(
+    http_port=dict(
+        default=80,
+        type='int'),
+    header=dict(
         required=False,
         type='str'),
-    https_port=dict(
-        default=443,
-        type='int'),
+    respect_headers=dict(
+        default=True,
+        type='bool'),
+    performance_configuration=dict(
+        default='General web delivery',
+        type='str'),
+    vendor_name=dict(
+        default='akamai',
+        type='str'),
+    cname=dict(
+        required=False,
+        type='str'),
+    host_name=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     file_extension=dict(
         required=False,
         type='str'),
@@ -271,7 +272,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -288,17 +288,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cdn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

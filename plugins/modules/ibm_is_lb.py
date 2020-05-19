@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
     type:
         description:
             - Load Balancer type
@@ -36,9 +31,15 @@ options:
             - None
         required: False
         type: str
-    hostname:
+    tags:
         description:
             - None
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_name:
@@ -46,26 +47,14 @@ options:
             - The name of the resource
         required: False
         type: str
-    subnets:
+    resource_group_name:
         description:
-            - (Required for new resource) Load Balancer subnets list
-        required: False
-        type: list
-        elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - None
+            - The resource group name in which resource is provisioned
         required: False
         type: str
-    resource_controller_url:
+    hostname:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - None
         required: False
         type: str
     name:
@@ -90,6 +79,17 @@ options:
         required: False
         type: list
         elements: str
+    subnets:
+        description:
+            - (Required for new resource) Load Balancer subnets list
+        required: False
+        type: list
+        elements: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,6 +113,7 @@ options:
               'IC_GENERATION'.
         default: 2
         required: False
+        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -121,6 +122,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -134,57 +136,51 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_name',
     'type',
     'operating_status',
-    'hostname',
-    'resource_name',
-    'subnets',
     'tags',
-    'resource_group',
     'resource_controller_url',
+    'resource_name',
+    'resource_group_name',
+    'hostname',
     'name',
     'status',
     'public_ips',
     'private_ips',
+    'subnets',
+    'resource_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_name=dict(
-        required=False,
-        type='str'),
     type=dict(
         default='public',
         type='str'),
     operating_status=dict(
         required=False,
         type='str'),
-    hostname=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    hostname=dict(
         required=False,
         type='str'),
     name=dict(
@@ -201,6 +197,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -228,7 +231,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -262,17 +264,17 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_is_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

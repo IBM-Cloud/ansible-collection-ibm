@@ -16,10 +16,21 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    kube_version:
+        description:
+            - kube version of the worker
+        required: False
+        type: str
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
@@ -29,32 +40,6 @@ options:
         description:
             - ID of the worker
         required: True
-        type: str
-    state:
-        description:
-            - State of the worker
-        required: False
-        type: str
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    pool_id:
-        description:
-            - worker pool id
-        required: False
-        type: str
-    pool_name:
-        description:
-            - worker pool name
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
         type: str
     cluster_name_id:
         description:
@@ -66,9 +51,24 @@ options:
             - flavor of the worker
         required: False
         type: str
-    kube_version:
+    resource_group_id:
         description:
-            - kube version of the worker
+            - ID of the resource group.
+        required: False
+        type: str
+    state:
+        description:
+            - State of the worker
+        required: False
+        type: str
+    pool_id:
+        description:
+            - worker pool id
+        required: False
+        type: str
+    pool_name:
+        description:
+            - worker pool name
         required: False
         type: str
     ibmcloud_api_key:
@@ -90,42 +90,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'kube_version',
+    'network_interfaces',
     'resource_controller_url',
     'worker_id',
-    'state',
-    'network_interfaces',
-    'pool_id',
-    'pool_name',
-    'resource_group_id',
     'cluster_name_id',
     'flavor',
-    'kube_version',
+    'resource_group_id',
+    'state',
+    'pool_id',
+    'pool_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    worker_id=dict(
-        required=True,
-        type='str'),
-    state=dict(
+    kube_version=dict(
         required=False,
         type='str'),
     network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
-    pool_id=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
-    pool_name=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
+    worker_id=dict(
+        required=True,
         type='str'),
     cluster_name_id=dict(
         required=True,
@@ -133,7 +125,16 @@ module_args = dict(
     flavor=dict(
         required=False,
         type='str'),
-    kube_version=dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    state=dict(
+        required=False,
+        type='str'),
+    pool_id=dict(
+        required=False,
+        type='str'),
+    pool_name=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -146,24 +147,23 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_vpc_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

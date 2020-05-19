@@ -16,53 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ipv6_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    members:
-        description:
-            - (Required for new resource) The hardware members of this network Gateway
-        required: False
-        type: list
-        elements: dict
-    associated_vlans:
-        description:
-            - The VLAN instances associated with this Network Gateway
-        required: False
-        type: list
-        elements: dict
-    post_install_script_uri:
-        description:
-            - None
-        required: False
-        type: str
     private_ip_address_id:
         description:
             - None
         required: False
         type: int
-    public_ipv4_address:
+    private_vlan_id:
         description:
             - None
         required: False
-        type: str
+        type: int
     public_ip_address_id:
+        description:
+            - None
+        required: False
+        type: int
+    public_ipv6_address_id:
         description:
             - None
         required: False
@@ -83,11 +56,38 @@ options:
         required: False
         type: list
         elements: int
+    post_install_script_uri:
+        description:
+            - None
+        required: False
+        type: str
+    associated_vlans:
+        description:
+            - The VLAN instances associated with this Network Gateway
+        required: False
+        type: list
+        elements: dict
+    members:
+        description:
+            - (Required for new resource) The hardware members of this network Gateway
+        required: False
+        type: list
+        elements: dict
     private_ipv4_address:
         description:
             - None
         required: False
         type: str
+    public_ipv4_address:
+        description:
+            - None
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -134,57 +134,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('members', 'list'),
     ('name', 'str'),
+    ('members', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_vlan_id',
-    'public_ipv6_address_id',
-    'public_vlan_id',
-    'members',
-    'associated_vlans',
-    'post_install_script_uri',
     'private_ip_address_id',
-    'public_ipv4_address',
+    'private_vlan_id',
     'public_ip_address_id',
+    'public_ipv6_address_id',
     'status',
     'name',
     'ssh_key_ids',
+    'post_install_script_uri',
+    'associated_vlans',
+    'members',
     'private_ipv4_address',
+    'public_ipv4_address',
+    'public_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
-    public_ipv6_address_id=dict(
-        required=False,
-        type='int'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    members=dict(
-        required=False,
-        elements='',
-        type='list'),
-    associated_vlans=dict(
-        required=False,
-        elements='',
-        type='list'),
-    post_install_script_uri=dict(
-        required=False,
-        type='str'),
     private_ip_address_id=dict(
         required=False,
         type='int'),
-    public_ipv4_address=dict(
+    private_vlan_id=dict(
         required=False,
-        type='str'),
+        type='int'),
     public_ip_address_id=dict(
+        required=False,
+        type='int'),
+    public_ipv6_address_id=dict(
         required=False,
         type='int'),
     status=dict(
@@ -197,9 +181,26 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    post_install_script_uri=dict(
+        required=False,
+        type='str'),
+    associated_vlans=dict(
+        required=False,
+        elements='',
+        type='list'),
+    members=dict(
+        required=False,
+        elements='',
+        type='list'),
     private_ipv4_address=dict(
         required=False,
         type='str'),
+    public_ipv4_address=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -232,7 +233,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -249,17 +249,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_network_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    Tags for the image
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  status (False, str, None)
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  visibility (False, str, None)
+    None
+
+
+  file (False, str, None)
     None
 
 
@@ -38,15 +50,27 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  tags (False, list, None)
+    Tags for the image
+
+
+  operating_system (False, str, None)
+    (Required for new resource) Image Operating system
+
+
+  resource_group (False, str, None)
+    None
+
+
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  architecture (False, str, None)
+  status (False, str, None)
     None
 
 
-  visibility (False, str, None)
+  size (False, int, None)
     None
 
 
@@ -58,34 +82,6 @@ Parameters
     (Required for new resource) Image name
 
 
-  file (False, str, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  operating_system (False, str, None)
-    (Required for new resource) Image Operating system
-
-
-  format (False, str, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -94,11 +90,11 @@ Parameters
     State of resource
 
 
-  generation (False, any, 2)
+  generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

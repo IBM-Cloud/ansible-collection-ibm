@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  username (False, str, None)
-    user name
-
 
   password (False, str, None)
     password
@@ -56,6 +52,10 @@ Parameters
 
   hardware_instance_id (False, int, None)
     Hardware instance ID
+
+
+  username (False, str, None)
+    user name
 
 
   id (False, str, None)

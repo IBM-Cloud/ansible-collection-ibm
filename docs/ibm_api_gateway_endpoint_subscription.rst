@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  artifact_id (False, str, None)
+    (Required for new resource) Endpoint ID
+
 
   client_id (False, str, None)
     Subscription Id, API key that is used to create subscription
@@ -48,10 +52,6 @@ Parameters
 
   secret_provided (False, bool, None)
     Indicates if client secret is provided to subscription or not
-
-
-  artifact_id (False, str, None)
-    (Required for new resource) Endpoint ID
 
 
   id (False, str, None)

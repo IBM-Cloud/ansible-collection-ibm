@@ -16,25 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_quota' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Resource quota name, for example Trial Quota
-        required: True
-        type: str
-    type:
-        description:
-            - Type of the quota.
-        required: False
-        type: str
-    max_apps:
-        description:
-            - Defines the total app limit.
-        required: False
-        type: int
     max_instances_per_app:
         description:
             - Defines the total instances limit per app.
@@ -58,6 +43,21 @@ options:
     vsi_limit:
         description:
             - Defines the VSI limit.
+        required: False
+        type: int
+    name:
+        description:
+            - Resource quota name, for example Trial Quota
+        required: True
+        type: str
+    type:
+        description:
+            - Type of the quota.
+        required: False
+        type: str
+    max_apps:
+        description:
+            - Defines the total app limit.
         required: False
         type: int
     iaas_classic_username:
@@ -98,28 +98,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'type',
-    'max_apps',
     'max_instances_per_app',
     'max_app_instance_memory',
     'total_app_memory',
     'max_service_instances',
     'vsi_limit',
+    'name',
+    'type',
+    'max_apps',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    max_apps=dict(
-        required=False,
-        type='int'),
     max_instances_per_app=dict(
         required=False,
         type='int'),
@@ -133,6 +125,15 @@ module_args = dict(
         required=False,
         type='int'),
     vsi_limit=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=True,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    max_apps=dict(
         required=False,
         type='int'),
     iaas_classic_username=dict(
@@ -159,24 +160,23 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_resource_quota',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

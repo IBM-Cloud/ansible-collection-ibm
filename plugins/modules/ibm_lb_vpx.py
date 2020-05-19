@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -26,19 +26,24 @@ options:
         required: False
         type: list
         elements: str
-    name:
+    management_ip_address:
         description:
-            - Name
+            - management IP address
         required: False
         type: str
-    private_vlan_id:
-        description:
-            - Private VLAN id
-        required: False
-        type: int
     version:
         description:
             - (Required for new resource) version info
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - Piblic VLAN id
+        required: False
+        type: int
+    plan:
+        description:
+            - (Required for new resource) Plan info
         required: False
         type: str
     ip_count:
@@ -46,16 +51,6 @@ options:
             - (Required for new resource) IP address count
         required: False
         type: int
-    public_subnet:
-        description:
-            - Public subnet
-        required: False
-        type: str
-    management_ip_address:
-        description:
-            - management IP address
-        required: False
-        type: str
     tags:
         description:
             - List of the tags
@@ -67,14 +62,19 @@ options:
             - Type of the VPX
         required: False
         type: str
-    plan:
+    datacenter:
         description:
-            - (Required for new resource) Plan info
+            - (Required for new resource) Datacenter name
         required: False
         type: str
-    public_vlan_id:
+    public_subnet:
         description:
-            - Piblic VLAN id
+            - Public subnet
+        required: False
+        type: str
+    speed:
+        description:
+            - (Required for new resource) Speed value
         required: False
         type: int
     private_subnet:
@@ -82,14 +82,14 @@ options:
             - Private subnet
         required: False
         type: str
-    datacenter:
+    name:
         description:
-            - (Required for new resource) Datacenter name
+            - Name
         required: False
         type: str
-    speed:
+    private_vlan_id:
         description:
-            - (Required for new resource) Speed value
+            - Private VLAN id
         required: False
         type: int
     id:
@@ -139,8 +139,8 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('version', 'str'),
-    ('ip_count', 'int'),
     ('plan', 'str'),
+    ('ip_count', 'int'),
     ('datacenter', 'str'),
     ('speed', 'int'),
 ]
@@ -148,46 +148,44 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vip_pool',
-    'name',
-    'private_vlan_id',
-    'version',
-    'ip_count',
-    'public_subnet',
     'management_ip_address',
+    'version',
+    'public_vlan_id',
+    'plan',
+    'ip_count',
     'tags',
     'type',
-    'plan',
-    'public_vlan_id',
-    'private_subnet',
     'datacenter',
+    'public_subnet',
     'speed',
+    'private_subnet',
+    'name',
+    'private_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     vip_pool=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    management_ip_address=dict(
         required=False,
         type='str'),
-    private_vlan_id=dict(
+    version=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
         required=False,
         type='int'),
-    version=dict(
+    plan=dict(
         required=False,
         type='str'),
     ip_count=dict(
         required=False,
         type='int'),
-    public_subnet=dict(
-        required=False,
-        type='str'),
-    management_ip_address=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -195,19 +193,22 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    plan=dict(
+    datacenter=dict(
         required=False,
         type='str'),
-    public_vlan_id=dict(
+    public_subnet=dict(
+        required=False,
+        type='str'),
+    speed=dict(
         required=False,
         type='int'),
     private_subnet=dict(
         required=False,
         type='str'),
-    datacenter=dict(
+    name=dict(
         required=False,
         type='str'),
-    speed=dict(
+    private_vlan_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -242,7 +243,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -259,17 +259,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_lb_vpx',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

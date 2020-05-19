@@ -16,24 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    cis_id:
+    domain_id:
         description:
-            - (Required for new resource) CIS instance crn
+            - (Required for new resource) Associated CIS domain
         required: False
         type: str
-    min_tls_version:
+    waf:
         description:
-            - Minimum version of TLS required
+            - WAF setting
         required: False
         type: str
-        default: 1.1
-    cname_flattening:
+    ssl:
         description:
-            - cname_flattening setting
+            - SSL/TLS setting
         required: False
         type: str
     certificate_status:
@@ -51,19 +50,20 @@ options:
             - automatic_https_rewrites setting
         required: False
         type: str
-    domain_id:
+    cis_id:
         description:
-            - (Required for new resource) Associated CIS domain
+            - (Required for new resource) CIS instance crn
         required: False
         type: str
-    waf:
+    min_tls_version:
         description:
-            - WAF setting
+            - Minimum version of TLS required
         required: False
         type: str
-    ssl:
+        default: 1.1
+    cname_flattening:
         description:
-            - SSL/TLS setting
+            - cname_flattening setting
         required: False
         type: str
     id:
@@ -112,33 +112,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'min_tls_version',
-    'cname_flattening',
-    'certificate_status',
-    'opportunistic_encryption',
-    'automatic_https_rewrites',
     'domain_id',
     'waf',
     'ssl',
+    'certificate_status',
+    'opportunistic_encryption',
+    'automatic_https_rewrites',
+    'cis_id',
+    'min_tls_version',
+    'cname_flattening',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    domain_id=dict(
         required=False,
         type='str'),
-    min_tls_version=dict(
-        default='1.1',
+    waf=dict(
+        required=False,
         type='str'),
-    cname_flattening=dict(
+    ssl=dict(
         required=False,
         type='str'),
     certificate_status=dict(
@@ -150,13 +151,13 @@ module_args = dict(
     automatic_https_rewrites=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    cis_id=dict(
         required=False,
         type='str'),
-    waf=dict(
-        required=False,
+    min_tls_version=dict(
+        default='1.1',
         type='str'),
-    ssl=dict(
+    cname_flattening=dict(
         required=False,
         type='str'),
     id=dict(
@@ -191,7 +192,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -208,17 +208,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

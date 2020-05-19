@@ -16,23 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    region:
+    cluster:
         description:
-            - The worker pool region
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    machine_type:
-        description:
-            - (Required for new resource) worker nodes machine type
+            - (Required for new resource) Cluster name
         required: False
         type: str
     worker_pool_name:
@@ -40,6 +30,37 @@ options:
             - (Required for new resource) worker pool name
         required: False
         type: str
+    state_:
+        description:
+            - worker pool state
+        required: False
+        type: str
+    labels:
+        description:
+            - list of labels to worker pool
+        required: False
+        type: dict
+        elements: str
+    region:
+        description:
+            - The worker pool region
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
+    machine_type:
+        description:
+            - (Required for new resource) worker nodes machine type
+        required: False
+        type: str
+    size_per_zone:
+        description:
+            - (Required for new resource) Number of nodes per zone
+        required: False
+        type: int
     entitlement:
         description:
             - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
@@ -51,27 +72,6 @@ options:
         required: False
         type: str
         default: shared
-    state_:
-        description:
-            - worker pool state
-        required: False
-        type: str
-    labels:
-        description:
-            - list of labels to worker pool
-        required: False
-        type: dict
-        elements: 
-    cluster:
-        description:
-            - (Required for new resource) Cluster name
-        required: False
-        type: str
-    size_per_zone:
-        description:
-            - (Required for new resource) Number of nodes per zone
-        required: False
-        type: int
     disk_encryption:
         description:
             - worker node disk encrypted if set to true
@@ -84,9 +84,9 @@ options:
         required: False
         type: list
         elements: dict
-    resource_controller_url:
+    resource_group_id:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+            - ID of the resource group.
         required: False
         type: str
     id:
@@ -115,49 +115,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('machine_type', 'str'),
-    ('worker_pool_name', 'str'),
     ('cluster', 'str'),
+    ('worker_pool_name', 'str'),
+    ('machine_type', 'str'),
     ('size_per_zone', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region',
-    'resource_group_id',
-    'machine_type',
+    'cluster',
     'worker_pool_name',
-    'entitlement',
-    'hardware',
     'state_',
     'labels',
-    'cluster',
+    'region',
+    'resource_controller_url',
+    'machine_type',
     'size_per_zone',
+    'entitlement',
+    'hardware',
     'disk_encryption',
     'zones',
-    'resource_controller_url',
+    'resource_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    machine_type=dict(
+    cluster=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
         required=False,
-        type='str'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    hardware=dict(
-        default='shared',
         type='str'),
     state_=dict(
         required=False,
@@ -166,12 +155,24 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    cluster=dict(
+    region=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    machine_type=dict(
         required=False,
         type='str'),
     size_per_zone=dict(
         required=False,
         type='int'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    hardware=dict(
+        default='shared',
+        type='str'),
     disk_encryption=dict(
         default=True,
         type='bool'),
@@ -179,7 +180,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -200,7 +201,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -217,17 +217,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

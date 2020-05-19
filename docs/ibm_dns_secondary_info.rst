@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status_text (False, str, None)
-    None
-
 
   zone_name (True, str, None)
     The name of the secondary
@@ -43,6 +39,10 @@ Parameters
 
 
   status_id (False, int, None)
+    None
+
+
+  status_text (False, str, None)
     None
 
 

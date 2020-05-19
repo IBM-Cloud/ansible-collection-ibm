@@ -16,15 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_service_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    service_plan_guid:
-        description:
-            - The uniquie identifier of the service offering plan type
-        required: False
-        type: str
     name:
         description:
             - Service instance name for example, speech_to_text
@@ -46,6 +41,11 @@ options:
         required: False
         type: list
         elements: dict
+    service_plan_guid:
+        description:
+            - The uniquie identifier of the service offering plan type
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -85,19 +85,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_plan_guid',
     'name',
     'space_guid',
     'credentials',
     'service_keys',
+    'service_plan_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_plan_guid=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),
@@ -111,6 +109,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    service_plan_guid=dict(
+        required=False,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -135,24 +136,23 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_service_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

@@ -16,120 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    webhook:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    wait_time_minutes:
-        description:
-            - None
-        required: False
-        type: int
-    tags:
-        description:
-            - Tags for the resource
-        required: False
-        type: list
-        elements: str
-    worker_pools:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     workers_info:
         description:
             - The IDs of the worker node
         required: False
         type: list
         elements: dict
-    disk_encryption:
+    kube_version:
         description:
-            - disc encryption done, if set to true.
-        required: False
-        type: bool
-        default: True
-    update_all_workers:
-        description:
-            - Updates all the woker nodes if sets to true
-        required: False
-        type: bool
-        default: False
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
+            - Kubernetes version info
         required: False
         type: str
-    billing:
+    private_vlan_id:
         description:
-            - None
-        required: False
-        type: str
-    ingress_hostname:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    public_vlan_id:
-        description:
-            - Public VLAN ID
-        required: False
-        type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    default_pool_size:
-        description:
-            - The size of the default worker pool
-        required: False
-        type: int
-        default: 1
-    org_guid:
-        description:
-            - The bluemix organization guid this cluster belongs to
-        required: False
-        type: str
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    private_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The cluster name
+            - Private VLAN ID
         required: False
         type: str
     is_trusted:
@@ -137,30 +41,124 @@ options:
             - None
         required: False
         type: bool
-    space_guid:
+    resource_group_id:
         description:
-            - The bluemix space guid this cluster belongs to
+            - ID of the resource group.
         required: False
         type: str
-    server_url:
+    wait_time_minutes:
+        description:
+            - None
+        required: False
+        type: int
+    worker_num:
+        description:
+            - Number of worker nodes
+        required: False
+        type: int
+        default: 0
+    update_all_workers:
+        description:
+            - Updates all the woker nodes if sets to true
+        required: False
+        type: bool
+        default: False
+    ingress_hostname:
         description:
             - None
         required: False
         type: str
-    gateway_enabled:
+    org_guid:
         description:
-            - Set true for gateway enabled clusters
+            - The bluemix organization guid this cluster belongs to
         required: False
-        type: bool
-        default: False
-    crn:
+        type: str
+    tags:
         description:
-            - CRN of resource instance
+            - Tags for the resource
+        required: False
+        type: list
+        elements: str
+    datacenter:
+        description:
+            - (Required for new resource) The datacenter where this cluster will be deployed
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The cluster name
         required: False
         type: str
     region:
         description:
             - The cluster region
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - Public VLAN ID
+        required: False
+        type: str
+    public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    public_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
+    billing:
+        description:
+            - None
+        required: False
+        type: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    crn:
+        description:
+            - CRN of resource instance
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    worker_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    private_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    disk_encryption:
+        description:
+            - disc encryption done, if set to true.
+        required: False
+        type: bool
+        default: True
+    hardware:
+        description:
+            - (Required for new resource) Hardware type
         required: False
         type: str
     ingress_secret:
@@ -174,14 +172,57 @@ options:
         required: False
         type: bool
         default: False
-    hardware:
+    subnet_id:
         description:
-            - (Required for new resource) Hardware type
+            - List of subnet IDs
+        required: False
+        type: list
+        elements: str
+    space_guid:
+        description:
+            - The bluemix space guid this cluster belongs to
         required: False
         type: str
-    entitlement:
+    private_service_endpoint_url:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - None
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    default_pool_size:
+        description:
+            - The size of the default worker pool
+        required: False
+        type: int
+        default: 1
+    machine_type:
+        description:
+            - Machine type
+        required: False
+        type: str
+    server_url:
+        description:
+            - None
+        required: False
+        type: str
+    webhook:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     albs:
@@ -190,53 +231,12 @@ options:
         required: False
         type: list
         elements: dict
-    resource_controller_url:
+    gateway_enabled:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+            - Set true for gateway enabled clusters
         required: False
-        type: str
-    kube_version:
-        description:
-            - Kubernetes version info
-        required: False
-        type: str
-    machine_type:
-        description:
-            - Machine type
-        required: False
-        type: str
-    private_vlan_id:
-        description:
-            - Private VLAN ID
-        required: False
-        type: str
-    subnet_id:
-        description:
-            - List of subnet IDs
-        required: False
-        type: list
-        elements: str
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) The datacenter where this cluster will be deployed
-        required: False
-        type: str
-    worker_num:
-        description:
-            - Number of worker nodes
-        required: False
-        type: int
-        default: 0
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -263,142 +263,142 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
     ('name', 'str'),
     ('hardware', 'str'),
-    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'webhook',
-    'wait_time_minutes',
-    'tags',
-    'worker_pools',
     'workers_info',
-    'disk_encryption',
-    'update_all_workers',
-    'resource_group_name',
-    'billing',
-    'ingress_hostname',
-    'resource_group_id',
-    'public_vlan_id',
-    'account_guid',
-    'resource_crn',
-    'default_pool_size',
-    'org_guid',
-    'public_service_endpoint',
-    'private_service_endpoint',
-    'private_service_endpoint_url',
-    'resource_status',
-    'name',
+    'kube_version',
+    'private_vlan_id',
     'is_trusted',
-    'space_guid',
-    'server_url',
-    'gateway_enabled',
-    'crn',
+    'resource_group_id',
+    'wait_time_minutes',
+    'worker_num',
+    'update_all_workers',
+    'ingress_hostname',
+    'org_guid',
+    'tags',
+    'datacenter',
+    'resource_crn',
+    'name',
     'region',
+    'public_vlan_id',
+    'public_service_endpoint',
+    'public_service_endpoint_url',
+    'billing',
+    'entitlement',
+    'crn',
+    'resource_controller_url',
+    'resource_group_name',
+    'worker_pools',
+    'private_service_endpoint',
+    'disk_encryption',
+    'hardware',
     'ingress_secret',
     'no_subnet',
-    'hardware',
-    'entitlement',
-    'albs',
-    'resource_controller_url',
-    'kube_version',
-    'machine_type',
-    'private_vlan_id',
     'subnet_id',
-    'public_service_endpoint_url',
+    'space_guid',
+    'private_service_endpoint_url',
+    'resource_status',
+    'default_pool_size',
+    'machine_type',
+    'server_url',
+    'webhook',
+    'account_guid',
     'resource_name',
-    'datacenter',
-    'worker_num',
+    'albs',
+    'gateway_enabled',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    webhook=dict(
-        required=False,
-        elements='',
-        type='list'),
-    wait_time_minutes=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    worker_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
     workers_info=dict(
         required=False,
         elements='',
         type='list'),
-    disk_encryption=dict(
-        default=True,
-        type='bool'),
-    update_all_workers=dict(
-        default=False,
-        type='bool'),
-    resource_group_name=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    billing=dict(
-        required=False,
-        type='str'),
-    ingress_hostname=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    public_vlan_id=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    default_pool_size=dict(
-        default=1,
-        type='int'),
-    org_guid=dict(
-        required=False,
-        type='str'),
-    public_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    private_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    private_service_endpoint_url=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    private_vlan_id=dict(
         required=False,
         type='str'),
     is_trusted=dict(
         required=False,
         type='bool'),
-    space_guid=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    server_url=dict(
+    wait_time_minutes=dict(
         required=False,
-        type='str'),
-    gateway_enabled=dict(
+        type='int'),
+    worker_num=dict(
+        default=0,
+        type='int'),
+    update_all_workers=dict(
         default=False,
         type='bool'),
-    crn=dict(
+    ingress_hostname=dict(
+        required=False,
+        type='str'),
+    org_guid=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     region=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='str'),
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    public_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    billing=dict(
+        required=False,
+        type='str'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    worker_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    private_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    disk_encryption=dict(
+        default=True,
+        type='bool'),
+    hardware=dict(
         required=False,
         type='str'),
     ingress_secret=dict(
@@ -407,44 +407,45 @@ module_args = dict(
     no_subnet=dict(
         default=False,
         type='bool'),
-    hardware=dict(
+    subnet_id=dict(
+        required=False,
+        elements='',
+        type='list'),
+    space_guid=dict(
         required=False,
         type='str'),
-    entitlement=dict(
+    private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    default_pool_size=dict(
+        default=1,
+        type='int'),
+    machine_type=dict(
+        required=False,
+        type='str'),
+    server_url=dict(
+        required=False,
+        type='str'),
+    webhook=dict(
+        required=False,
+        elements='',
+        type='list'),
+    account_guid=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
         required=False,
         type='str'),
     albs=dict(
         required=False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    machine_type=dict(
-        required=False,
-        type='str'),
-    private_vlan_id=dict(
-        required=False,
-        type='str'),
-    subnet_id=dict(
-        required=False,
-        elements='',
-        type='list'),
-    public_service_endpoint_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    worker_num=dict(
-        default=0,
-        type='int'),
+    gateway_enabled=dict(
+        default=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -463,7 +464,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -480,17 +480,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_cluster',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

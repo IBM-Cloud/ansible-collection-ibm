@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  usip (False, str, False)
-    usip info
-
-
   tags (False, list, None)
     list of tags associated with the resource
 
 
-  vip_id (False, str, None)
-    (Required for new resource) VIP id
-
-
   destination_port (False, int, None)
     (Required for new resource) Destination Port number
+
+
+  name (False, str, None)
+    (Required for new resource) name
+
+
+  destination_ip_address (False, str, None)
+    (Required for new resource) Destination IP Address
 
 
   weight (False, int, None)
@@ -54,12 +54,12 @@ Parameters
     (Required for new resource) Health check info
 
 
-  name (False, str, None)
-    (Required for new resource) name
+  usip (False, str, False)
+    usip info
 
 
-  destination_ip_address (False, str, None)
-    (Required for new resource) Destination IP Address
+  vip_id (False, str, None)
+    (Required for new resource) VIP id
 
 
   id (False, str, None)

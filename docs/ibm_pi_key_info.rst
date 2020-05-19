@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  sshkey (False, str, None)
+    None
+
 
   pi_key_name (True, str, None)
     SSHKey Name to be used for pvminstances
@@ -38,15 +42,11 @@ Parameters
     None
 
 
-  sshkey (False, str, None)
-    None
-
-
-  zone (False, any, None)
+  zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

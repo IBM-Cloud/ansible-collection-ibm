@@ -16,30 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    classic_access:
-        description:
-            - Set to true if classic access needs to enabled to VPC
-        required: False
-        type: bool
-        default: False
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     crn:
         description:
             - The crn of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_status:
@@ -52,25 +35,21 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    address_prefix_management:
+    cse_source_addresses:
         description:
-            - Address Prefix management value
+            - None
         required: False
-        type: str
-        default: auto
+        type: list
+        elements: dict
+    subnets:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     default_network_acl:
         description:
             - Default network ACL
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) VPC name
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
         required: False
         type: str
     default_security_group:
@@ -78,20 +57,15 @@ options:
             - Security group associated with VPC
         required: False
         type: str
-    resource_crn:
+    tags:
         description:
-            - The crn of the resource
-        required: False
-        type: str
-    cse_source_addresses:
-        description:
-            - None
+            - List of tags
         required: False
         type: list
-        elements: dict
-    status:
+        elements: str
+    resource_controller_url:
         description:
-            - VPC status
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_name:
@@ -99,12 +73,38 @@ options:
             - The name of the resource
         required: False
         type: str
-    subnets:
+    classic_access:
         description:
-            - None
+            - Set to true if classic access needs to enabled to VPC
         required: False
-        type: list
-        elements: dict
+        type: bool
+        default: False
+    status:
+        description:
+            - VPC status
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group info
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    address_prefix_management:
+        description:
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    name:
+        description:
+            - (Required for new resource) VPC name
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -128,6 +128,7 @@ options:
               'IC_GENERATION'.
         default: 2
         required: False
+        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -136,6 +137,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -154,38 +156,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'classic_access',
-    'tags',
     'crn',
-    'resource_controller_url',
     'resource_status',
     'resource_group_name',
-    'address_prefix_management',
-    'default_network_acl',
-    'name',
-    'resource_group',
-    'default_security_group',
-    'resource_crn',
     'cse_source_addresses',
-    'status',
-    'resource_name',
     'subnets',
+    'default_network_acl',
+    'default_security_group',
+    'tags',
+    'resource_controller_url',
+    'resource_name',
+    'classic_access',
+    'status',
+    'resource_group',
+    'resource_crn',
+    'address_prefix_management',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    classic_access=dict(
-        default=False,
-        type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     crn=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_status=dict(
@@ -194,38 +187,48 @@ module_args = dict(
     resource_group_name=dict(
         required=False,
         type='str'),
-    address_prefix_management=dict(
-        default='auto',
-        type='str'),
+    cse_source_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     default_network_acl=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
         required=False,
         type='str'),
     default_security_group=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    cse_source_addresses=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    status=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    classic_access=dict(
+        default=False,
+        type='bool'),
+    status=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    address_prefix_management=dict(
+        default='auto',
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -253,7 +256,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -287,17 +289,17 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_is_vpc',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

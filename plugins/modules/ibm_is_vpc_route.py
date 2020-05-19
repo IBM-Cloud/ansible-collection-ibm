@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_route' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC instance ID
+        required: False
+        type: str
     next_hop:
         description:
             - (Required for new resource) VPC route next hop value
@@ -38,16 +48,6 @@ options:
     destination:
         description:
             - (Required for new resource) VPC route destination CIDR value
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC instance ID
         required: False
         type: str
     id:
@@ -73,6 +73,7 @@ options:
               'IC_GENERATION'.
         default: 2
         required: False
+        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -81,6 +82,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -94,26 +96,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('vpc', 'str'),
     ('next_hop', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
     ('destination', 'str'),
-    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'status',
+    'vpc',
     'next_hop',
     'name',
     'zone',
     'destination',
-    'status',
-    'vpc',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    status=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
     next_hop=dict(
         required=False,
         type='str'),
@@ -124,12 +133,6 @@ module_args = dict(
         required=False,
         type='str'),
     destination=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
         required=False,
         type='str'),
     id=dict(
@@ -159,7 +162,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -193,17 +195,17 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_is_vpc_route',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

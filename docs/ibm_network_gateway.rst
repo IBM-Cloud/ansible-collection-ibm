@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,15 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_vlan_id (False, int, None)
+  name (False, str, None)
+    (Required for new resource) The name of the gateway
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  private_ip_address_id (False, int, None)
     None
 
 
   public_ipv6_address_id (False, int, None)
-    None
-
-
-  public_vlan_id (False, int, None)
     None
 
 
@@ -50,7 +54,7 @@ Parameters
     None
 
 
-  private_ip_address_id (False, int, None)
+  private_ipv4_address (False, str, None)
     None
 
 
@@ -58,23 +62,19 @@ Parameters
     None
 
 
+  private_vlan_id (False, int, None)
+    None
+
+
   public_ip_address_id (False, int, None)
     None
 
 
+  public_vlan_id (False, int, None)
+    None
+
+
   status (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) The name of the gateway
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  private_ipv4_address (False, str, None)
     None
 
 

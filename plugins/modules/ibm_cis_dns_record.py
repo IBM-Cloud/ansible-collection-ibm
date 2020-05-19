@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Record type
-        required: False
-        type: str
     content:
         description:
             - DNS record content
@@ -47,6 +37,26 @@ options:
         required: False
         type: bool
         default: False
+    record_id:
+        description:
+            - None
+        required: False
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: False
+        type: str
+    name:
+        description:
+            - DNS record name
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) Record type
+        required: False
+        type: str
     created_on:
         description:
             - None
@@ -67,11 +77,6 @@ options:
             - (Required for new resource) CIS object id
         required: False
         type: str
-    name:
-        description:
-            - DNS record name
-        required: False
-        type: str
     priority:
         description:
             - Priority Value
@@ -83,11 +88,6 @@ options:
         required: False
         type: int
         default: 1
-    record_id:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -141,30 +141,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'type',
     'content',
     'data',
     'proxied',
+    'record_id',
+    'domain_id',
+    'name',
+    'type',
     'created_on',
     'modified_on',
     'proxiable',
     'cis_id',
-    'name',
     'priority',
     'ttl',
-    'record_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     content=dict(
         required=False,
         type='str'),
@@ -175,6 +170,18 @@ module_args = dict(
     proxied=dict(
         default=False,
         type='bool'),
+    record_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     created_on=dict(
         required=False,
         type='str'),
@@ -187,18 +194,12 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     priority=dict(
         required=False,
         type='int'),
     ttl=dict(
         default=1,
         type='int'),
-    record_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +232,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -248,17 +248,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

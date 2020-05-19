@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  hostname (False, str, None)
+    (Required for new resource) The host name of dedicatated host.
+
+
+  domain (False, str, None)
+    (Required for new resource) The domain of dedicatated host.
+
 
   datacenter (False, str, None)
     (Required for new resource) The data center in which the dedicatated host is to be provisioned.
@@ -42,22 +54,6 @@ Parameters
     (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
 
 
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
-
-
-  memory_capacity (False, int, None)
-    The capacity that the dedicated host's memory allocation is restricted to.
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  hostname (False, str, None)
-    (Required for new resource) The host name of dedicatated host.
-
-
   disk_capacity (False, int, None)
     The capacity that the dedicated host's disk allocation is restricted to.
 
@@ -66,8 +62,12 @@ Parameters
     None
 
 
-  domain (False, str, None)
-    (Required for new resource) The domain of dedicatated host.
+  cpu_count (False, int, None)
+    The capacity that the dedicated host's CPU allocation is restricted to.
+
+
+  memory_capacity (False, int, None)
+    The capacity that the dedicated host's memory allocation is restricted to.
 
 
   id (False, str, None)

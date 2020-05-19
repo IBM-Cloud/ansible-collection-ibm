@@ -16,53 +16,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_order' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    key_algorithm:
-        description:
-            - Keyalgorithm info
-        required: False
-        type: str
-    algorithm:
-        description:
-            - Algorithm info
-        required: False
-        type: str
-    begins_on:
-        description:
-            - Cerificate validity from date
-        required: False
-        type: int
-    expires_on:
-        description:
-            - Certificaet expairy date
-        required: False
-        type: int
-    imported:
-        description:
-            - set to true if certificate is imported
-        required: False
-        type: bool
-    name:
-        description:
-            - (Required for new resource) Certificate name
-        required: False
-        type: str
     dns_provider_instance_crn:
         description:
             - DNS provider instance CRN
         required: False
         type: str
-    status:
+    key_algorithm:
         description:
-            - Status  of the certificate
+            - Keyalgorithm info
         required: False
         type: str
-    description:
+    certificate_manager_instance_id:
         description:
-            - Certicate description
+            - (Required for new resource) Certificate manager instance ID
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Certificate name
         required: False
         type: str
     rotate_keys:
@@ -71,39 +46,64 @@ options:
         required: False
         type: bool
         default: False
-    domain_validation_method:
+    begins_on:
         description:
-            - Domain validation methods
+            - Cerificate validity from date
         required: False
-        type: str
-        default: dns - 01
-    certificate_manager_instance_id:
+        type: int
+    imported:
         description:
-            - (Required for new resource) Certificate manager instance ID
+            - set to true if certificate is imported
         required: False
-        type: str
-    issuer:
-        description:
-            - Certificate issuer info
-        required: False
-        type: str
-    has_previous:
-        description:
-            - Has Previous
-        required: False
-        type: str
+        type: bool
     issuance_info:
         description:
             - None
         required: False
         type: dict
         elements: dict
+    issuer:
+        description:
+            - Certificate issuer info
+        required: False
+        type: str
+    algorithm:
+        description:
+            - Algorithm info
+        required: False
+        type: str
+    status:
+        description:
+            - Status  of the certificate
+        required: False
+        type: str
     domains:
         description:
             - (Required for new resource) List of domain names
         required: False
         type: list
         elements: str
+    description:
+        description:
+            - Certicate description
+        required: False
+        type: str
+    domain_validation_method:
+        description:
+            - Domain validation methods
+        required: False
+        type: str
+        default: dns - 01
+    expires_on:
+        description:
+            - Certificaet expairy date
+        required: False
+        type: int
+    has_previous:
+        description:
+            - Has Previous
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -150,84 +150,85 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('certificate_manager_instance_id', 'str'),
+    ('name', 'str'),
     ('domains', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_algorithm',
-    'algorithm',
-    'begins_on',
-    'expires_on',
-    'imported',
-    'name',
     'dns_provider_instance_crn',
-    'status',
-    'description',
-    'rotate_keys',
-    'domain_validation_method',
+    'key_algorithm',
     'certificate_manager_instance_id',
-    'issuer',
-    'has_previous',
+    'name',
+    'rotate_keys',
+    'begins_on',
+    'imported',
     'issuance_info',
+    'issuer',
+    'algorithm',
+    'status',
     'domains',
+    'description',
+    'domain_validation_method',
+    'expires_on',
+    'has_previous',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_algorithm=dict(
-        required=False,
-        type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
-    begins_on=dict(
-        required=False,
-        type='int'),
-    expires_on=dict(
-        required=False,
-        type='int'),
-    imported=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     dns_provider_instance_crn=dict(
         required=False,
         type='str'),
-    status=dict(
+    key_algorithm=dict(
         required=False,
         type='str'),
-    description=dict(
+    certificate_manager_instance_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     rotate_keys=dict(
         default=False,
         type='bool'),
-    domain_validation_method=dict(
-        default='dns - 01',
-        type='str'),
-    certificate_manager_instance_id=dict(
+    begins_on=dict(
         required=False,
-        type='str'),
-    issuer=dict(
+        type='int'),
+    imported=dict(
         required=False,
-        type='str'),
-    has_previous=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     issuance_info=dict(
         required=False,
         elements='',
         type='dict'),
+    issuer=dict(
+        required=False,
+        type='str'),
+    algorithm=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     domains=dict(
         required=False,
         elements='',
         type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    domain_validation_method=dict(
+        default='dns - 01',
+        type='str'),
+    expires_on=dict(
+        required=False,
+        type='int'),
+    has_previous=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -260,7 +261,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -277,17 +277,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_certificate_manager_order',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

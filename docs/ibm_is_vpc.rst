@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,8 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
   classic_access (False, bool, False)
     Set to true if classic access needs to enabled to VPC
+
+
+  status (False, str, None)
+    VPC status
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  subnets (False, list, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource) VPC name
+
+
+  default_security_group (False, str, None)
+    Security group associated with VPC
+
+
+  default_network_acl (False, str, None)
+    Default network ACL
+
+
+  resource_group (False, str, None)
+    Resource group info
 
 
   tags (False, list, None)
@@ -38,8 +70,8 @@ Parameters
     The crn of the resource
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_status (False, str, None)
@@ -50,44 +82,12 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  default_network_acl (False, str, None)
-    Default network ACL
-
-
-  name (False, str, None)
-    (Required for new resource) VPC name
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  default_security_group (False, str, None)
-    Security group associated with VPC
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  cse_source_addresses (False, list, None)
-    None
-
-
-  status (False, str, None)
-    VPC status
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  subnets (False, list, None)
-    None
 
 
   id (False, str, None)
@@ -98,11 +98,11 @@ Parameters
     State of resource
 
 
-  generation (False, any, 2)
+  generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

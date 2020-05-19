@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  virtual_guests (False, list, None)
-    None
-
-
-  subnets (False, list, None)
-    None
-
 
   id (False, int, None)
     None
@@ -47,6 +39,14 @@ Parameters
 
 
   router_hostname (False, str, None)
+    None
+
+
+  virtual_guests (False, list, None)
+    None
+
+
+  subnets (False, list, None)
     None
 
 

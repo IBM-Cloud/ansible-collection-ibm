@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,32 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gpu (False, list, None)
-    None
-
-
-  status (False, str, None)
-    instance status
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
-
-
   profile (False, str, None)
     (Required for new resource) Profile info
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  resource_group (False, str, None)
-    Instance resource group
 
 
   primary_network_interface (False, list, None)
@@ -62,8 +38,16 @@ Parameters
     None
 
 
-  boot_volume (False, list, None)
-    None
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  memory (False, int, None)
+    Instance memory
 
 
   name (False, str, None)
@@ -74,48 +58,64 @@ Parameters
     (Required for new resource) VPC id
 
 
-  tags (False, list, None)
-    list of tags for the instance
+  zone (False, str, None)
+    (Required for new resource) Zone name
+
+
+  status (False, str, None)
+    instance status
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   volume_attachments (False, list, None)
     None
 
 
-  vcpu (False, list, None)
+  boot_volume (False, list, None)
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  gpu (False, list, None)
+    None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   keys (False, list, None)
     (Required for new resource) SSH key Ids for the instance
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  tags (False, list, None)
+    list of tags for the instance
 
 
   image (False, str, None)
     (Required for new resource) image name
 
 
-  memory (False, int, None)
-    Instance memory
+  resource_group (False, str, None)
+    Instance resource group
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  vcpu (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   id (False, str, None)
@@ -126,11 +126,11 @@ Parameters
     State of resource
 
 
-  generation (False, any, 2)
+  generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

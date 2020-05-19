@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  managers (False, list, None)
+    The IBMID of the users who will have manager role in this space, ex - user@example.com
+
+
+  developers (False, list, None)
+    The IBMID of the users who will have developer role in this space, ex - user@example.com
+
 
   space_quota (False, str, None)
     The name of the Space Quota Definition
@@ -44,14 +52,6 @@ Parameters
 
   auditors (False, list, None)
     The IBMID of the users who will have auditor role in this space, ex - user@example.com
-
-
-  managers (False, list, None)
-    The IBMID of the users who will have manager role in this space, ex - user@example.com
-
-
-  developers (False, list, None)
-    The IBMID of the users who will have developer role in this space, ex - user@example.com
 
 
   id (False, str, None)

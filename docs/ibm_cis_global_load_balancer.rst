@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,40 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ttl (False, int, None)
-    TTL value
-
-
-  enabled (False, bool, True)
-    set to true of LB needs to enabled
-
-
-  created_on (False, str, None)
-    Load balancer creation date
-
-
   modified_on (False, str, None)
     Load balancer modified date
-
-
-  domain_id (False, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  fallback_pool_id (False, str, None)
-    (Required for new resource) fallback pool ID
-
-
-  default_pool_ids (False, list, None)
-    (Required for new resource) List of default Pool IDs
-
-
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
-
-
-  session_affinity (False, str, none)
-    Session affinity info
 
 
   cis_id (False, str, None)
@@ -70,8 +38,40 @@ Parameters
     (Required for new resource) name
 
 
+  fallback_pool_id (False, str, None)
+    (Required for new resource) fallback pool ID
+
+
+  default_pool_ids (False, list, None)
+    (Required for new resource) List of default Pool IDs
+
+
+  ttl (False, int, None)
+    TTL value
+
+
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
+
+
+  session_affinity (False, str, none)
+    Session affinity info
+
+
+  domain_id (False, str, None)
+    (Required for new resource) Associated CIS domain
+
+
   description (False, str, None)
     Description for the load balancer instance
+
+
+  enabled (False, bool, True)
+    set to true of LB needs to enabled
+
+
+  created_on (False, str, None)
+    Load balancer creation date
 
 
   id (False, str, None)

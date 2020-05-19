@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,36 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  enabled (False, bool, None)
-    (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
-
-
   minimum_origins (False, int, 1)
     Minimum number of Origins
 
 
-  monitor (False, str, None)
-    Monitor value
-
-
   notification_email (False, str, None)
     Email address configured to recieve the notifications
-
-
-  origins (False, list, None)
-    (Required for new resource) Origins info
-
-
-  check_regions (False, list, None)
-    (Required for new resource) List of regions
-
-
-  description (False, str, None)
-    Description of the CIS Origin Pool
-
-
-  health (False, str, None)
-    Health info
 
 
   created_on (False, str, None)
@@ -70,8 +46,32 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
+  check_regions (False, list, None)
+    (Required for new resource) List of regions
+
+
+  description (False, str, None)
+    Description of the CIS Origin Pool
+
+
+  enabled (False, bool, None)
+    (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+
+
   name (False, str, None)
     (Required for new resource) name
+
+
+  monitor (False, str, None)
+    Monitor value
+
+
+  origins (False, list, None)
+    (Required for new resource) Origins info
+
+
+  health (False, str, None)
+    Health info
 
 
   id (False, str, None)

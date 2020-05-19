@@ -16,39 +16,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    source_service_name:
+        description:
+            - (Required for new resource) The source service name
+        required: False
+        type: str
     target_service_name:
         description:
             - (Required for new resource) The target service name
         required: False
         type: str
-    roles:
+    source_resource_instance_id:
         description:
-            - (Required for new resource) Role names of the policy definition
+            - The source resource instance Id
         required: False
-        type: list
-        elements: str
+        type: str
     target_resource_instance_id:
         description:
             - The target resource instance Id
-        required: False
-        type: str
-    target_resource_type:
-        description:
-            - Resource type of target service
-        required: False
-        type: str
-    source_service_account:
-        description:
-            - Account GUID of source service
-        required: False
-        type: str
-    source_service_name:
-        description:
-            - (Required for new resource) The source service name
         required: False
         type: str
     source_resource_group_id:
@@ -66,14 +55,25 @@ options:
             - Resource type of source service
         required: False
         type: str
+    target_resource_type:
+        description:
+            - Resource type of target service
+        required: False
+        type: str
+    source_service_account:
+        description:
+            - Account GUID of source service
+        required: False
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: False
+        type: list
+        elements: str
     version:
         description:
             - None
-        required: False
-        type: str
-    source_resource_instance_id:
-        description:
-            - The source resource instance Id
         required: False
         type: str
     id:
@@ -122,46 +122,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('source_service_name', 'str'),
     ('target_service_name', 'str'),
     ('roles', 'list'),
-    ('source_service_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_service_name',
-    'roles',
-    'target_resource_instance_id',
-    'target_resource_type',
-    'source_service_account',
     'source_service_name',
+    'target_service_name',
+    'source_resource_instance_id',
+    'target_resource_instance_id',
     'source_resource_group_id',
     'target_resource_group_id',
     'source_resource_type',
+    'target_resource_type',
+    'source_service_account',
+    'roles',
     'version',
-    'source_resource_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    source_service_name=dict(
+        required=False,
+        type='str'),
     target_service_name=dict(
         required=False,
         type='str'),
-    roles=dict(
+    source_resource_instance_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     target_resource_instance_id=dict(
-        required=False,
-        type='str'),
-    target_resource_type=dict(
-        required=False,
-        type='str'),
-    source_service_account=dict(
-        required=False,
-        type='str'),
-    source_service_name=dict(
         required=False,
         type='str'),
     source_resource_group_id=dict(
@@ -173,10 +167,17 @@ module_args = dict(
     source_resource_type=dict(
         required=False,
         type='str'),
-    version=dict(
+    target_resource_type=dict(
         required=False,
         type='str'),
-    source_resource_instance_id=dict(
+    source_service_account=dict(
+        required=False,
+        type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
+    version=dict(
         required=False,
         type='str'),
     id=dict(
@@ -211,7 +212,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -228,17 +228,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

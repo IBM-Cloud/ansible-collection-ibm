@@ -16,15 +16,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    modified_on:
+        description:
+            - Modified date info
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: False
+        type: str
     enabled:
         description:
             - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
         required: False
         type: bool
+    created_on:
+        description:
+            - Creation date info
+        required: False
+        type: str
     minimum_origins:
         description:
             - Minimum number of Origins
@@ -47,6 +62,16 @@ options:
         required: False
         type: list
         elements: dict
+    health:
+        description:
+            - Health info
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
     check_regions:
         description:
             - (Required for new resource) List of regions
@@ -56,31 +81,6 @@ options:
     description:
         description:
             - Description of the CIS Origin Pool
-        required: False
-        type: str
-    health:
-        description:
-            - Health info
-        required: False
-        type: str
-    created_on:
-        description:
-            - Creation date info
-        required: False
-        type: str
-    modified_on:
-        description:
-            - Modified date info
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
         required: False
         type: str
     id:
@@ -129,35 +129,45 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('enabled', 'bool'),
     ('origins', 'list'),
-    ('check_regions', 'list'),
     ('cis_id', 'str'),
-    ('name', 'str'),
+    ('check_regions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'modified_on',
+    'name',
     'enabled',
+    'created_on',
     'minimum_origins',
     'monitor',
     'notification_email',
     'origins',
+    'health',
+    'cis_id',
     'check_regions',
     'description',
-    'health',
-    'created_on',
-    'modified_on',
-    'cis_id',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    modified_on=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
+    created_on=dict(
+        required=False,
+        type='str'),
     minimum_origins=dict(
         default=1,
         type='int'),
@@ -171,26 +181,17 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    check_regions=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
     health=dict(
-        required=False,
-        type='str'),
-    created_on=dict(
-        required=False,
-        type='str'),
-    modified_on=dict(
         required=False,
         type='str'),
     cis_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    check_regions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -225,7 +226,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -242,17 +242,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cis_origin_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

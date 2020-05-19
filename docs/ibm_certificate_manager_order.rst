@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,32 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_algorithm (False, str, None)
-    Keyalgorithm info
+  domains (False, list, None)
+    (Required for new resource) List of domain names
 
 
-  algorithm (False, str, None)
-    Algorithm info
+  domain_validation_method (False, str, dns - 01)
+    Domain validation methods
 
 
-  begins_on (False, int, None)
-    Cerificate validity from date
+  issuer (False, str, None)
+    Certificate issuer info
 
 
-  expires_on (False, int, None)
-    Certificaet expairy date
-
-
-  imported (False, bool, None)
-    set to true if certificate is imported
-
-
-  name (False, str, None)
-    (Required for new resource) Certificate name
-
-
-  dns_provider_instance_crn (False, str, None)
-    DNS provider instance CRN
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource) Certificate manager instance ID
 
 
   status (False, str, None)
@@ -62,20 +50,32 @@ Parameters
     Certicate description
 
 
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
+  dns_provider_instance_crn (False, str, None)
+    DNS provider instance CRN
 
 
-  domain_validation_method (False, str, dns - 01)
-    Domain validation methods
+  algorithm (False, str, None)
+    Algorithm info
 
 
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource) Certificate manager instance ID
+  begins_on (False, int, None)
+    Cerificate validity from date
 
 
-  issuer (False, str, None)
-    Certificate issuer info
+  imported (False, bool, None)
+    set to true if certificate is imported
+
+
+  name (False, str, None)
+    (Required for new resource) Certificate name
+
+
+  key_algorithm (False, str, None)
+    Keyalgorithm info
+
+
+  expires_on (False, int, None)
+    Certificaet expairy date
 
 
   has_previous (False, str, None)
@@ -86,8 +86,8 @@ Parameters
     None
 
 
-  domains (False, list, None)
-    (Required for new resource) List of domain names
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
 
 
   id (False, str, None)

@@ -16,16 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway_connection' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    timeout:
+    ike_policy:
         description:
-            - Timeout for dead peer detection
+            - VPN gateway connection IKE Policy
         required: False
-        type: int
-        default: 120
+        type: str
+    status:
+        description:
+            - VPN gateway connection status
+        required: False
+        type: str
     vpn_gateway:
         description:
             - (Required for new resource) VPN Gateway info
@@ -42,33 +46,24 @@ options:
         required: False
         type: list
         elements: str
-    interval:
-        description:
-            - Interval for dead peer detection interval
-        required: False
-        type: int
-        default: 30
     action:
         description:
             - Action detection for dead peer detection action
         required: False
         type: str
         default: none
-    ipsec_policy:
+    interval:
         description:
-            - IP security policy for vpn gateway connection
+            - Interval for dead peer detection interval
         required: False
-        type: str
-    ike_policy:
+        type: int
+        default: 30
+    timeout:
         description:
-            - VPN gateway connection IKE Policy
+            - Timeout for dead peer detection
         required: False
-        type: str
-    status:
-        description:
-            - VPN gateway connection status
-        required: False
-        type: str
+        type: int
+        default: 120
     name:
         description:
             - (Required for new resource) VPN Gateway connection name
@@ -91,6 +86,11 @@ options:
         required: False
         type: list
         elements: str
+    ipsec_policy:
+        description:
+            - IP security policy for vpn gateway connection
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,6 +114,7 @@ options:
               'IC_GENERATION'.
         default: 2
         required: False
+        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -122,6 +123,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -143,27 +145,31 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'timeout',
+    'ike_policy',
+    'status',
     'vpn_gateway',
     'preshared_key',
     'peer_cidrs',
-    'interval',
     'action',
-    'ipsec_policy',
-    'ike_policy',
-    'status',
+    'interval',
+    'timeout',
     'name',
     'peer_address',
     'admin_state_up',
     'local_cidrs',
+    'ipsec_policy',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    timeout=dict(
-        default=120,
-        type='int'),
+    ike_policy=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     vpn_gateway=dict(
         required=False,
         type='str'),
@@ -174,21 +180,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    interval=dict(
-        default=30,
-        type='int'),
     action=dict(
         default='none',
         type='str'),
-    ipsec_policy=dict(
-        required=False,
-        type='str'),
-    ike_policy=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
+    interval=dict(
+        default=30,
+        type='int'),
+    timeout=dict(
+        default=120,
+        type='int'),
     name=dict(
         required=False,
         type='str'),
@@ -202,6 +202,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    ipsec_policy=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -229,7 +232,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -263,17 +265,17 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_is_vpn_gateway_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

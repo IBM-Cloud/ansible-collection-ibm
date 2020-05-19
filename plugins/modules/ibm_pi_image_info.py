@@ -16,10 +16,20 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    hypervisor:
+        description:
+            - None
+        required: False
+        type: str
+    pi_image_name:
+        description:
+            - Imagename Name to be used for pvminstances
+        required: True
+        type: str
     pi_cloud_instance_id:
         description:
             - None
@@ -45,22 +55,13 @@ options:
             - None
         required: False
         type: str
-    hypervisor:
-        description:
-            - None
-        required: False
-        type: str
-    pi_image_name:
-        description:
-            - Imagename Name to be used for pvminstances
-        required: True
-        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
               environment. This can also be provided via the environment
               variable 'IC_ZONE'.
         required: False
+        type: str
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -69,6 +70,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -82,24 +84,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_image_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'hypervisor',
+    'pi_image_name',
     'pi_cloud_instance_id',
     'state',
     'size',
     'architecture',
     'operatingsystem',
-    'hypervisor',
-    'pi_image_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    hypervisor=dict(
+        required=False,
+        type='str'),
+    pi_image_name=dict(
+        required=True,
+        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
@@ -114,12 +123,6 @@ module_args = dict(
         type='str'),
     operatingsystem=dict(
         required=False,
-        type='str'),
-    hypervisor=dict(
-        required=False,
-        type='str'),
-    pi_image_name=dict(
-        required=True,
         type='str'),
     zone=dict(
         type='str',
@@ -138,24 +141,23 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

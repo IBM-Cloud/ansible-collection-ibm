@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,32 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  crn (False, str, None)
-    The crn of the resource
-
-
-  subnets (False, list, None)
+  classic_access (False, bool, None)
     None
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  status (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
 
 
   name (True, str, None)
@@ -62,6 +38,34 @@ Parameters
     None
 
 
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  subnets (False, list, None)
+    None
+
+
+  default_network_acl (False, str, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  crn (False, str, None)
+    The crn of the resource
+
+
   resource_status (False, str, None)
     The status of the resource
 
@@ -70,23 +74,19 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  cse_source_addresses (False, list, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  default_network_acl (False, str, None)
-    None
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  classic_access (False, bool, None)
-    None
-
-
-  generation (False, any, 2)
+  generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

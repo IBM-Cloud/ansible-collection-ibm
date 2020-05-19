@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    None
-
 
   name (False, str, None)
     (Required for new resource) Name of the serviceID
@@ -44,6 +40,10 @@ Parameters
 
   crn (False, str, None)
     crn of the serviceID
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

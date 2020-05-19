@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,23 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_instance_name (True, str, None)
-    Server Name to be used for pvminstances
-
-
-  type (False, str, None)
-    None
-
-
-  external_ip (False, str, None)
-    None
-
-
   pi_cloud_instance_id (True, str, None)
-    None
-
-
-  pi_network_name (True, str, None)
     None
 
 
@@ -62,11 +46,27 @@ Parameters
     None
 
 
-  zone (False, any, None)
+  type (False, str, None)
+    None
+
+
+  pi_instance_name (True, str, None)
+    Server Name to be used for pvminstances
+
+
+  pi_network_name (True, str, None)
+    None
+
+
+  external_ip (False, str, None)
+    None
+
+
+  zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

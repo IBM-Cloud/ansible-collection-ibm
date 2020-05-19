@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  bind_package_name (False, str, None)
-    Name of binded package.
-
 
   name (True, str, None)
     Name of the package.
@@ -48,6 +44,10 @@ Parameters
 
   parameters (False, str, None)
     All parameters set on package by user and those set by the IBM Cloud Function backend/API.
+
+
+  bind_package_name (False, str, None)
+    Name of binded package.
 
 
   function_namespace (True, any, None)

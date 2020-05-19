@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -25,58 +25,11 @@ options:
             - (Required for new resource) Key protect instance ID
         required: False
         type: str
-    key_name:
-        description:
-            - (Required for new resource) Key name
-        required: False
-        type: str
     encrypted_nonce:
         description:
             - Only for imported root key
         required: False
         type: str
-    crn:
-        description:
-            - Crn of the key
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    standard_key:
-        description:
-            - Satandard key type
-        required: False
-        type: bool
-        default: False
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
-    force_delete:
-        description:
-            - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
     iv_value:
         description:
             - Only for imported root key
@@ -87,11 +40,58 @@ options:
             - The status of the resource
         required: False
         type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
     key_id:
         description:
             - Key ID
         required: False
         type: str
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: False
+        type: str
+    force_delete:
+        description:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
+    crn:
+        description:
+            - Crn of the key
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    standard_key:
+        description:
+            - Satandard key type
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -145,66 +145,67 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'key_protect_id',
-    'key_name',
     'encrypted_nonce',
-    'crn',
-    'resource_group_name',
-    'standard_key',
-    'resource_name',
-    'resource_crn',
-    'resource_controller_url',
-    'payload',
-    'force_delete',
     'iv_value',
     'resource_status',
+    'resource_controller_url',
     'key_id',
+    'payload',
+    'resource_crn',
+    'resource_group_name',
+    'key_name',
+    'force_delete',
+    'crn',
+    'resource_name',
+    'standard_key',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     key_protect_id=dict(
         required=False,
         type='str'),
-    key_name=dict(
-        required=False,
-        type='str'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
-    crn=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    standard_key=dict(
-        default=False,
-        type='bool'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    payload=dict(
-        required=False,
-        type='str'),
-    force_delete=dict(
-        default=False,
-        type='bool'),
     iv_value=dict(
         required=False,
         type='str'),
     resource_status=dict(
         required=False,
         type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
     key_id=dict(
         required=False,
         type='str'),
+    payload=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    key_name=dict(
+        required=False,
+        type='str'),
+    force_delete=dict(
+        default=False,
+        type='bool'),
+    crn=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    standard_key=dict(
+        default=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -237,7 +238,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -254,17 +254,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_kp_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

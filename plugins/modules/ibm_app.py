@@ -16,45 +16,68 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    name:
+    app_version:
         description:
-            - (Required for new resource) The name for the app
+            - Version of the application
         required: False
         type: str
-    space_guid:
+    health_check_type:
         description:
-            - (Required for new resource) Define space guid to which app belongs
+            - Type of health check to perform.
         required: False
         type: str
-    app_path:
+        default: port
+    buildpack:
         description:
-            - (Required for new resource) Define the  path of the zip file of the application.
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
         required: False
         type: str
-    command:
-        description:
-            - The initial command for the app
-        required: False
-        type: str
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
-    health_check_timeout:
-        description:
-            - Timeout in seconds for health checking of an staged app when starting up.
-        required: False
-        type: int
     environment_json:
         description:
             - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
         required: False
         type: dict
+    route_guid:
+        description:
+            - Define the route guids which should be bound to the application.
+        required: False
+        type: list
+        elements: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name for the app
+        required: False
+        type: str
+    instances:
+        description:
+            - The number of instances
+        required: False
+        type: int
+        default: 1
+    disk_quota:
+        description:
+            - The maximum amount of disk available to an instance of an app. In megabytes.
+        required: False
+        type: int
+    space_guid:
+        description:
+            - (Required for new resource) Define space guid to which app belongs
+        required: False
+        type: str
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
     service_instance_guid:
         description:
             - Define the service instance guids that should be bound to this application.
@@ -67,50 +90,27 @@ options:
         required: False
         type: int
         default: 20
-    buildpack:
+    app_path:
         description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+            - (Required for new resource) Define the  path of the zip file of the application.
         required: False
         type: str
-    app_version:
+    command:
         description:
-            - Version of the application
+            - The initial command for the app
         required: False
         type: str
-    memory:
-        description:
-            - The amount of memory each instance should have. In megabytes.
-        required: False
-        type: int
-    instances:
-        description:
-            - The number of instances
-        required: False
-        type: int
-        default: 1
-    disk_quota:
-        description:
-            - The maximum amount of disk available to an instance of an app. In megabytes.
-        required: False
-        type: int
-    route_guid:
-        description:
-            - Define the route guids which should be bound to the application.
-        required: False
-        type: list
-        elements: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    health_check_type:
+    health_check_timeout:
         description:
-            - Type of health check to perform.
+            - Timeout in seconds for health checking of an staged app when starting up.
         required: False
-        type: str
-        default: port
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -164,49 +164,63 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'space_guid',
-    'app_path',
-    'command',
-    'health_check_http_endpoint',
-    'health_check_timeout',
-    'environment_json',
-    'service_instance_guid',
-    'wait_time_minutes',
-    'buildpack',
     'app_version',
-    'memory',
+    'health_check_type',
+    'buildpack',
+    'environment_json',
+    'route_guid',
+    'health_check_http_endpoint',
+    'name',
     'instances',
     'disk_quota',
-    'route_guid',
+    'space_guid',
+    'memory',
+    'service_instance_guid',
+    'wait_time_minutes',
+    'app_path',
+    'command',
     'tags',
-    'health_check_type',
+    'health_check_timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    app_version=dict(
         required=False,
         type='str'),
-    space_guid=dict(
+    health_check_type=dict(
+        default='port',
+        type='str'),
+    buildpack=dict(
         required=False,
         type='str'),
-    app_path=dict(
-        required=False,
-        type='str'),
-    command=dict(
-        required=False,
-        type='str'),
-    health_check_http_endpoint=dict(
-        required=False,
-        type='str'),
-    health_check_timeout=dict(
-        required=False,
-        type='int'),
     environment_json=dict(
         required=False,
         type='dict'),
+    route_guid=dict(
+        required=False,
+        elements='',
+        type='list'),
+    health_check_http_endpoint=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    instances=dict(
+        default=1,
+        type='int'),
+    disk_quota=dict(
+        required=False,
+        type='int'),
+    space_guid=dict(
+        required=False,
+        type='str'),
+    memory=dict(
+        required=False,
+        type='int'),
     service_instance_guid=dict(
         required=False,
         elements='',
@@ -214,32 +228,19 @@ module_args = dict(
     wait_time_minutes=dict(
         default=20,
         type='int'),
-    buildpack=dict(
+    app_path=dict(
         required=False,
         type='str'),
-    app_version=dict(
+    command=dict(
         required=False,
         type='str'),
-    memory=dict(
-        required=False,
-        type='int'),
-    instances=dict(
-        default=1,
-        type='int'),
-    disk_quota=dict(
-        required=False,
-        type='int'),
-    route_guid=dict(
-        required=False,
-        elements='',
-        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    health_check_type=dict(
-        default='port',
-        type='str'),
+    health_check_timeout=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -272,7 +273,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -289,17 +289,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_app',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

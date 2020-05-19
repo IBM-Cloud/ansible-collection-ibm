@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssl_certificate' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -30,9 +30,14 @@ options:
             - (Required for new resource) SSL Private Key
         required: False
         type: str
-    key_size:
+    common_name:
         description:
-            - SSL key size
+            - Common name
+        required: False
+        type: str
+    validity_days:
+        description:
+            - Validity days
         required: False
         type: int
     create_date:
@@ -51,11 +56,6 @@ options:
             - (Required for new resource) SSL Certifcate
         required: False
         type: str
-    common_name:
-        description:
-            - Common name
-        required: False
-        type: str
     organization_name:
         description:
             - Organization name
@@ -66,16 +66,16 @@ options:
             - Validity begins from
         required: False
         type: str
-    validity_days:
-        description:
-            - Validity days
-        required: False
-        type: int
     validity_end:
         description:
             - Validity ends before
         required: False
         type: str
+    key_size:
+        description:
+            - SSL key size
+        required: False
+        type: int
     modify_date:
         description:
             - certificate modificatiob date
@@ -135,19 +135,20 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'intermediate_certificate',
     'private_key',
-    'key_size',
+    'common_name',
+    'validity_days',
     'create_date',
     'tags',
     'certificate',
-    'common_name',
     'organization_name',
     'validity_begin',
-    'validity_days',
     'validity_end',
+    'key_size',
     'modify_date',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     intermediate_certificate=dict(
@@ -156,7 +157,10 @@ module_args = dict(
     private_key=dict(
         required=False,
         type='str'),
-    key_size=dict(
+    common_name=dict(
+        required=False,
+        type='str'),
+    validity_days=dict(
         required=False,
         type='int'),
     create_date=dict(
@@ -169,21 +173,18 @@ module_args = dict(
     certificate=dict(
         required=False,
         type='str'),
-    common_name=dict(
-        required=False,
-        type='str'),
     organization_name=dict(
         required=False,
         type='str'),
     validity_begin=dict(
         required=False,
         type='str'),
-    validity_days=dict(
-        required=False,
-        type='int'),
     validity_end=dict(
         required=False,
         type='str'),
+    key_size=dict(
+        required=False,
+        type='int'),
     modify_date=dict(
         required=False,
         type='str'),
@@ -219,7 +220,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -236,17 +236,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_compute_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

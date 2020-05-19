@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_type (False, str, all)
+  albs (False, list, None)
     None
 
 
@@ -34,8 +34,24 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  crn (False, str, None)
-    CRN of resource instance
+  private_service_endpoint_url (False, str, None)
+    None
+
+
+  is_trusted (False, bool, None)
+    None
+
+
+  worker_pools (False, list, None)
+    None
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
 
 
   cluster_name_id (True, str, None)
@@ -46,80 +62,24 @@ Parameters
     None
 
 
+  vlans (False, list, None)
+    None
+
+
   space_guid (False, str, None)
     The bluemix space guid this cluster belongs to
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  worker_pools (False, list, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  is_trusted (False, bool, None)
-    None
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  albs (False, list, None)
-    None
-
-
-  ingress_hostname (False, str, None)
-    None
-
-
-  ingress_secret (False, str, None)
-    None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  server_url (False, str, None)
-    None
 
 
   region (False, str, None)
     The cluster region
 
 
+  server_url (False, str, None)
+    None
+
+
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  workers (False, list, None)
-    None
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  worker_count (False, int, None)
-    Number of workers
 
 
   resource_crn (False, str, None)
@@ -130,7 +90,47 @@ Parameters
     The status of the resource
 
 
-  vlans (False, list, None)
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  worker_count (False, int, None)
+    Number of workers
+
+
+  workers (False, list, None)
+    None
+
+
+  alb_type (False, str, all)
+    None
+
+
+  public_service_endpoint_url (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  ingress_hostname (False, str, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  public_service_endpoint (False, bool, None)
     None
 
 

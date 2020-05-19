@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
+  used_ip_percent (False, float, None)
     None
 
 
@@ -34,31 +34,11 @@ Parameters
     None
 
 
-  used_ip_count (False, float, None)
-    None
-
-
-  used_ip_percent (False, float, None)
-    None
-
-
-  cidr (False, str, None)
-    None
-
-
-  pi_cloud_instance_id (True, str, None)
-    None
-
-
-  vlan_id (False, int, None)
-    None
-
-
   available_ip_count (False, float, None)
     None
 
 
-  name (False, str, None)
+  used_ip_count (False, float, None)
     None
 
 
@@ -66,11 +46,31 @@ Parameters
     Network Name to be used for pvminstances
 
 
-  zone (False, any, None)
+  pi_cloud_instance_id (True, str, None)
+    None
+
+
+  cidr (False, str, None)
+    None
+
+
+  type (False, str, None)
+    None
+
+
+  vlan_id (False, int, None)
+    None
+
+
+  name (False, str, None)
+    None
+
+
+  zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

@@ -16,13 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    path:
+    expected_codes:
         description:
-            - path
+            - expected_codes
         required: False
         type: str
     type:
@@ -31,39 +31,17 @@ options:
         required: False
         type: str
         default: http
-    method:
-        description:
-            - method
-        required: False
-        type: str
-    retries:
-        description:
-            - retries
-        required: False
-        type: int
-        default: 2
-    interval:
-        description:
-            - interval
-        required: False
-        type: int
-        default: 60
-    expected_body:
-        description:
-            - expected_body
-        required: False
-        type: str
-    expected_codes:
-        description:
-            - expected_codes
-        required: False
-        type: str
-    description:
-        description:
-            - description
-        required: False
-        type: str
     modified_on:
+        description:
+            - None
+        required: False
+        type: str
+    follow_redirects:
+        description:
+            - follow_redirects
+        required: False
+        type: bool
+    created_on:
         description:
             - None
         required: False
@@ -78,28 +56,50 @@ options:
             - (Required for new resource) CIS instance crn
         required: False
         type: str
-    allow_insecure:
+    path:
         description:
-            - allow_insecure
+            - path
         required: False
-        type: bool
-        default: False
+        type: str
+    description:
+        description:
+            - description
+        required: False
+        type: str
+    method:
+        description:
+            - method
+        required: False
+        type: str
+    retries:
+        description:
+            - retries
+        required: False
+        type: int
+        default: 2
+    expected_body:
+        description:
+            - expected_body
+        required: False
+        type: str
     timeout:
         description:
             - timeout
         required: False
         type: int
         default: 5
-    follow_redirects:
+    interval:
         description:
-            - follow_redirects
+            - interval
+        required: False
+        type: int
+        default: 60
+    allow_insecure:
+        description:
+            - allow_insecure
         required: False
         type: bool
-    created_on:
-        description:
-            - None
-        required: False
-        type: str
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -151,51 +151,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'path',
-    'type',
-    'method',
-    'retries',
-    'interval',
-    'expected_body',
     'expected_codes',
-    'description',
+    'type',
     'modified_on',
-    'port',
-    'cis_id',
-    'allow_insecure',
-    'timeout',
     'follow_redirects',
     'created_on',
+    'port',
+    'cis_id',
+    'path',
+    'description',
+    'method',
+    'retries',
+    'expected_body',
+    'timeout',
+    'interval',
+    'allow_insecure',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    path=dict(
+    expected_codes=dict(
         required=False,
         type='str'),
     type=dict(
         default='http',
         type='str'),
-    method=dict(
-        required=False,
-        type='str'),
-    retries=dict(
-        default=2,
-        type='int'),
-    interval=dict(
-        default=60,
-        type='int'),
-    expected_body=dict(
-        required=False,
-        type='str'),
-    expected_codes=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     modified_on=dict(
+        required=False,
+        type='str'),
+    follow_redirects=dict(
+        required=False,
+        type='bool'),
+    created_on=dict(
         required=False,
         type='str'),
     port=dict(
@@ -204,18 +193,30 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    allow_insecure=dict(
-        default=False,
-        type='bool'),
+    path=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    method=dict(
+        required=False,
+        type='str'),
+    retries=dict(
+        default=2,
+        type='int'),
+    expected_body=dict(
+        required=False,
+        type='str'),
     timeout=dict(
         default=5,
         type='int'),
-    follow_redirects=dict(
-        required=False,
+    interval=dict(
+        default=60,
+        type='int'),
+    allow_insecure=dict(
+        default=False,
         type='bool'),
-    created_on=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -248,7 +249,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -265,17 +265,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cis_healthcheck',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
+
+
+  state_ (False, str, None)
+    worker pool state
+
+
+  zones (False, list, None)
+    None
+
 
   region (False, str, None)
     The worker pool region
@@ -34,28 +46,8 @@ Parameters
     ID of the resource group.
 
 
-  machine_type (False, str, None)
-    (Required for new resource) worker nodes machine type
-
-
-  worker_pool_name (False, str, None)
-    (Required for new resource) worker pool name
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  hardware (False, str, shared)
-    Hardware type
-
-
-  state_ (False, str, None)
-    worker pool state
-
-
-  labels (False, dict, None)
-    list of labels to worker pool
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
   cluster (False, str, None)
@@ -66,16 +58,24 @@ Parameters
     (Required for new resource) Number of nodes per zone
 
 
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  zones (False, list, None)
-    None
+  hardware (False, str, shared)
+    Hardware type
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+  labels (False, dict, None)
+    list of labels to worker pool
+
+
+  machine_type (False, str, None)
+    (Required for new resource) worker nodes machine type
+
+
+  worker_pool_name (False, str, None)
+    (Required for new resource) worker pool name
 
 
   id (False, str, None)

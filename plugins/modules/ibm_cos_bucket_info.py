@@ -16,11 +16,21 @@ description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    bucket_type:
+    region_location:
+        description:
+            - None
+        required: False
+        type: str
+    cross_region_location:
+        description:
+            - None
+        required: False
+        type: str
+    bucket_region:
         description:
             - None
         required: True
@@ -30,12 +40,17 @@ options:
             - None
         required: True
         type: str
+    crn:
+        description:
+            - CRN of resource instance
+        required: False
+        type: str
     key_protect:
         description:
             - CRN of the key you want to use data at rest encryption
         required: False
         type: str
-    cross_region_location:
+    single_site_location:
         description:
             - None
         required: False
@@ -60,22 +75,7 @@ options:
             - None
         required: True
         type: str
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
-    single_site_location:
-        description:
-            - None
-        required: False
-        type: str
-    region_location:
-        description:
-            - None
-        required: False
-        type: str
-    bucket_region:
+    bucket_type:
         description:
             - None
         required: True
@@ -113,41 +113,51 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_type', 'str'),
+    ('bucket_region', 'str'),
     ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
-    ('bucket_region', 'str'),
+    ('bucket_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bucket_type',
-    'resource_instance_id',
-    'key_protect',
+    'region_location',
     'cross_region_location',
+    'bucket_region',
+    'resource_instance_id',
+    'crn',
+    'key_protect',
+    'single_site_location',
     'storage_class',
     's3_endpoint_public',
     's3_endpoint_private',
     'bucket_name',
-    'crn',
-    'single_site_location',
-    'region_location',
-    'bucket_region',
+    'bucket_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bucket_type=dict(
+    region_location=dict(
+        required=False,
+        type='str'),
+    cross_region_location=dict(
+        required=False,
+        type='str'),
+    bucket_region=dict(
         required=True,
         type='str'),
     resource_instance_id=dict(
         required=True,
         type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
     key_protect=dict(
         required=False,
         type='str'),
-    cross_region_location=dict(
+    single_site_location=dict(
         required=False,
         type='str'),
     storage_class=dict(
@@ -162,16 +172,7 @@ module_args = dict(
     bucket_name=dict(
         required=True,
         type='str'),
-    crn=dict(
-        required=False,
-        type='str'),
-    single_site_location=dict(
-        required=False,
-        type='str'),
-    region_location=dict(
-        required=False,
-        type='str'),
-    bucket_region=dict(
+    bucket_type=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -198,24 +199,23 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

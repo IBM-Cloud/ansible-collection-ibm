@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_server_instance_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    lbaas_id:
-        description:
-            - (Required for new resource) The UUID of a load balancer
-        required: False
-        type: str
-    uuid:
-        description:
-            - The UUID of a load balancer member
-        required: False
-        type: str
     private_ip_address:
         description:
             - (Required for new resource) The Private IP address of a load balancer member.
@@ -40,6 +30,16 @@ options:
             - The weight of a load balancer member.
         required: False
         type: int
+    lbaas_id:
+        description:
+            - (Required for new resource) The UUID of a load balancer
+        required: False
+        type: str
+    uuid:
+        description:
+            - The UUID of a load balancer member
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -86,33 +86,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lbaas_id', 'str'),
     ('private_ip_address', 'str'),
+    ('lbaas_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lbaas_id',
-    'uuid',
     'private_ip_address',
     'weight',
+    'lbaas_id',
+    'uuid',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lbaas_id=dict(
-        required=False,
-        type='str'),
-    uuid=dict(
-        required=False,
-        type='str'),
     private_ip_address=dict(
         required=False,
         type='str'),
     weight=dict(
         required=False,
         type='int'),
+    lbaas_id=dict(
+        required=False,
+        type='str'),
+    uuid=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -145,7 +146,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -162,17 +162,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_lbaas_server_instance_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

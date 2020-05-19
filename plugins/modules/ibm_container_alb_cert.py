@@ -16,38 +16,33 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN id
-        required: False
-        type: str
-    secret_name:
-        description:
-            - (Required for new resource) Secret name
-        required: False
-        type: str
     issuer_name:
         description:
             - certificate issuer name
         required: False
         type: str
-    cloud_cert_instance_id:
+    cluster_crn:
         description:
-            - cloud cert instance ID
+            - cluster CRN
         required: False
         type: str
-    region:
+    cert_crn:
         description:
-            - region name
+            - (Required for new resource) Certificate CRN id
         required: False
         type: str
     cluster_id:
         description:
             - (Required for new resource) Cluster ID
+        required: False
+        type: str
+    secret_name:
+        description:
+            - (Required for new resource) Secret name
         required: False
         type: str
     domain_name:
@@ -60,9 +55,14 @@ options:
             - Certificate expaire on date
         required: False
         type: str
-    cluster_crn:
+    cloud_cert_instance_id:
         description:
-            - cluster CRN
+            - cloud cert instance ID
+        required: False
+        type: str
+    region:
+        description:
+            - region name
         required: False
         type: str
     id:
@@ -92,42 +92,40 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cert_crn', 'str'),
-    ('secret_name', 'str'),
     ('cluster_id', 'str'),
+    ('secret_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cert_crn',
-    'secret_name',
     'issuer_name',
-    'cloud_cert_instance_id',
-    'region',
+    'cluster_crn',
+    'cert_crn',
     'cluster_id',
+    'secret_name',
     'domain_name',
     'expires_on',
-    'cluster_crn',
+    'cloud_cert_instance_id',
+    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cert_crn=dict(
-        required=False,
-        type='str'),
-    secret_name=dict(
-        required=False,
-        type='str'),
     issuer_name=dict(
         required=False,
         type='str'),
-    cloud_cert_instance_id=dict(
+    cluster_crn=dict(
         required=False,
         type='str'),
-    region=dict(
+    cert_crn=dict(
         required=False,
         type='str'),
     cluster_id=dict(
+        required=False,
+        type='str'),
+    secret_name=dict(
         required=False,
         type='str'),
     domain_name=dict(
@@ -136,7 +134,10 @@ module_args = dict(
     expires_on=dict(
         required=False,
         type='str'),
-    cluster_crn=dict(
+    cloud_cert_instance_id=dict(
+        required=False,
+        type='str'),
+    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -157,7 +158,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -174,17 +174,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

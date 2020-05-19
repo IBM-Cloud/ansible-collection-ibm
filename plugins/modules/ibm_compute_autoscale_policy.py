@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
+    scale_amount:
+        description:
+            - (Required for new resource) Scale amount
+        required: False
+        type: int
+    cooldown:
+        description:
+            - cooldown value
+        required: False
+        type: int
     scale_group_id:
         description:
             - (Required for new resource) scale group ID
@@ -47,16 +57,6 @@ options:
             - (Required for new resource) scale type
         required: False
         type: str
-    scale_amount:
-        description:
-            - (Required for new resource) Scale amount
-        required: False
-        type: int
-    cooldown:
-        description:
-            - cooldown value
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,26 +103,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('scale_amount', 'int'),
     ('scale_group_id', 'int'),
     ('name', 'str'),
     ('scale_type', 'str'),
-    ('scale_amount', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'scale_amount',
+    'cooldown',
     'scale_group_id',
     'triggers',
     'tags',
     'name',
     'scale_type',
-    'scale_amount',
-    'cooldown',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    scale_amount=dict(
+        required=False,
+        type='int'),
+    cooldown=dict(
+        required=False,
+        type='int'),
     scale_group_id=dict(
         required=False,
         type='int'),
@@ -140,12 +147,6 @@ module_args = dict(
     scale_type=dict(
         required=False,
         type='str'),
-    scale_amount=dict(
-        required=False,
-        type='int'),
-    cooldown=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -178,7 +179,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -195,17 +195,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_compute_autoscale_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

@@ -50,8 +50,8 @@
     - name: Set VM image name/id dictionary fact
       set_fact:
         image_dict: "{{ images_list.resource.image_info |
-                        items2dict(key_name='image_name',
-                        value_name='image_id') }}"
+                        items2dict(key_name='name',
+                        value_name='id') }}"
 
     - name: Check for existing Virtual Server Instance
       ibm_pi_instance_info:
@@ -98,11 +98,11 @@
 
     - name: Print Public IP Address
       debug:
-        var: pi_instance.addresses[0].externalip
+        var: pi_instance.addresses[0].external_ip
 
     - name: Add VSI to Ansible inventory
       add_host:
-        name: "{{ pi_instance.addresses[0].externalip }}"
+        name: "{{ pi_instance.addresses[0].external_ip }}"
         ansible_user: root
         groups: new_vsi
         ansible_ssh_extra_args: -o StrictHostKeyChecking=no

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -25,20 +25,21 @@ options:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
-    wait_time_minutes:
+    ssl_ciphers:
         description:
             - None
         required: False
-        type: int
-        default: 90
-    resource_name:
+        type: list
+        elements: str
+    health_monitors:
         description:
-            - The name of the resource
+            - None
         required: False
-        type: str
-    vip:
+        type: list
+        elements: dict
+    resource_controller_url:
         description:
-            - The virtual ip address of this load balancer
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     type:
@@ -47,20 +48,20 @@ options:
         required: False
         type: str
         default: PUBLIC
-    health_monitors:
+    subnets:
         description:
-            - None
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
         required: False
         type: list
-        elements: dict
-    description:
+        elements: int
+    vip:
         description:
-            - Description of a load balancer.
+            - The virtual ip address of this load balancer
         required: False
         type: str
-    datacenter:
+    resource_status:
         description:
-            - None
+            - The status of the resource
         required: False
         type: str
     status:
@@ -74,33 +75,32 @@ options:
         required: False
         type: list
         elements: dict
-    ssl_ciphers:
+    wait_time_minutes:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: int
+        default: 90
+    description:
+        description:
+            - Description of a load balancer.
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) The load balancer's name.
         required: False
         type: str
-    resource_controller_url:
+    datacenter:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - None
         required: False
         type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    subnets:
-        description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: False
-        type: list
-        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -147,55 +147,58 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnets', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'use_system_public_ip_pool',
-    'wait_time_minutes',
-    'resource_name',
-    'vip',
-    'type',
+    'ssl_ciphers',
     'health_monitors',
-    'description',
-    'datacenter',
+    'resource_controller_url',
+    'type',
+    'subnets',
+    'vip',
+    'resource_status',
     'status',
     'protocols',
-    'ssl_ciphers',
+    'wait_time_minutes',
+    'description',
+    'resource_name',
     'name',
-    'resource_controller_url',
-    'resource_status',
-    'subnets',
+    'datacenter',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
-    wait_time_minutes=dict(
-        default=90,
-        type='int'),
-    resource_name=dict(
+    ssl_ciphers=dict(
         required=False,
-        type='str'),
-    vip=dict(
+        elements='',
+        type='list'),
+    health_monitors=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     type=dict(
         default='PUBLIC',
         type='str'),
-    health_monitors=dict(
+    subnets=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    vip=dict(
         required=False,
         type='str'),
-    datacenter=dict(
+    resource_status=dict(
         required=False,
         type='str'),
     status=dict(
@@ -205,23 +208,21 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    ssl_ciphers=dict(
+    wait_time_minutes=dict(
+        default=90,
+        type='int'),
+    description=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    datacenter=dict(
         required=False,
         type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +255,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -271,17 +271,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_lbaas',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

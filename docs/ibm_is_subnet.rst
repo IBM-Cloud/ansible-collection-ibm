@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
@@ -34,43 +42,35 @@ Parameters
     IPV4 subnet - CIDR block
 
 
-  total_ipv4_address_count (False, int, None)
+  available_ipv4_address_count (False, str, None)
     None
-
-
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
-
-
-  vpc (False, str, None)
-    (Required for new resource) VPC instance ID
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  ip_version (False, str, ipv4)
-    Subnet IP version
-
-
-  name (False, str, None)
-    (Required for new resource) Subnet name
 
 
   network_acl (False, str, None)
     None
 
 
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  ip_version (False, str, ipv4)
+    Subnet IP version
+
+
+  vpc (False, str, None)
+    (Required for new resource) VPC instance ID
+
+
   zone (False, str, None)
     (Required for new resource) Subnet zone info
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
   ipv6_cidr_block (False, str, None)
-    None
-
-
-  available_ipv4_address_count (False, str, None)
     None
 
 
@@ -78,20 +78,20 @@ Parameters
     None
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  name (False, str, None)
+    (Required for new resource) Subnet name
 
 
   resource_group (False, str, None)
     None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)
@@ -102,11 +102,11 @@ Parameters
     State of resource
 
 
-  generation (False, any, 2)
+  generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

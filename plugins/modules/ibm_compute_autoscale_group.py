@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
-    virtual_server_id:
-        description:
-            - virtual server ID
-        required: False
-        type: int
-    port:
-        description:
-            - Port number
-        required: False
-        type: int
     network_vlan_ids:
         description:
             - List of network VLAN ids
@@ -42,19 +32,14 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) Name
-        required: False
-        type: str
-    minimum_member_count:
-        description:
-            - (Required for new resource) Minimum member count
-        required: False
-        type: int
     cooldown:
         description:
             - (Required for new resource) Cooldown value
+        required: False
+        type: int
+    port:
+        description:
+            - Port number
         required: False
         type: int
     health_check:
@@ -63,17 +48,6 @@ options:
         required: False
         type: dict
         elements: dict
-    virtual_guest_member_template:
-        description:
-            - (Required for new resource) Virtual guest member template
-        required: False
-        type: list
-        elements: dict
-    regional_group:
-        description:
-            - (Required for new resource) regional group
-        required: False
-        type: str
     maximum_member_count:
         description:
             - (Required for new resource) Maximum member count
@@ -84,6 +58,32 @@ options:
             - (Required for new resource) Termination policy
         required: False
         type: str
+    virtual_server_id:
+        description:
+            - virtual server ID
+        required: False
+        type: int
+    virtual_guest_member_template:
+        description:
+            - (Required for new resource) Virtual guest member template
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) Name
+        required: False
+        type: str
+    regional_group:
+        description:
+            - (Required for new resource) regional group
+        required: False
+        type: str
+    minimum_member_count:
+        description:
+            - (Required for new resource) Minimum member count
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -130,40 +130,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('minimum_member_count', 'int'),
     ('cooldown', 'int'),
-    ('virtual_guest_member_template', 'list'),
-    ('regional_group', 'str'),
     ('maximum_member_count', 'int'),
     ('termination_policy', 'str'),
+    ('virtual_guest_member_template', 'list'),
+    ('name', 'str'),
+    ('regional_group', 'str'),
+    ('minimum_member_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'virtual_server_id',
-    'port',
     'network_vlan_ids',
     'tags',
-    'name',
-    'minimum_member_count',
     'cooldown',
+    'port',
     'health_check',
-    'virtual_guest_member_template',
-    'regional_group',
     'maximum_member_count',
     'termination_policy',
+    'virtual_server_id',
+    'virtual_guest_member_template',
+    'name',
+    'regional_group',
+    'minimum_member_count',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
     network_vlan_ids=dict(
         required=False,
         elements='',
@@ -172,32 +167,38 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    minimum_member_count=dict(
+    cooldown=dict(
         required=False,
         type='int'),
-    cooldown=dict(
+    port=dict(
         required=False,
         type='int'),
     health_check=dict(
         required=False,
         elements='',
         type='dict'),
-    virtual_guest_member_template=dict(
-        required=False,
-        elements='',
-        type='list'),
-    regional_group=dict(
-        required=False,
-        type='str'),
     maximum_member_count=dict(
         required=False,
         type='int'),
     termination_policy=dict(
         required=False,
         type='str'),
+    virtual_server_id=dict(
+        required=False,
+        type='int'),
+    virtual_guest_member_template=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    regional_group=dict(
+        required=False,
+        type='str'),
+    minimum_member_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -230,7 +231,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -247,17 +247,17 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_compute_autoscale_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.2
+    - IBM-Cloud terraform-provider-ibm v1.5.3
     - Terraform v0.12.20
 
 options:
@@ -30,14 +30,15 @@ options:
             - (Required for new resource) Listener ID
         required: False
         type: str
-    action:
+    rules:
         description:
-            - (Required for new resource) Policy Action
+            - Policy Rules
         required: False
-        type: str
-    policy_id:
+        type: list
+        elements: dict
+    target_id:
         description:
-            - Listener Policy ID
+            - Listener Policy Target ID
         required: False
         type: str
     target_http_status_code:
@@ -50,6 +51,11 @@ options:
             - Listner Policy status
         required: False
         type: str
+    action:
+        description:
+            - (Required for new resource) Policy Action
+        required: False
+        type: str
     priority:
         description:
             - (Required for new resource) Listener Policy Priority
@@ -60,15 +66,9 @@ options:
             - Policy name
         required: False
         type: str
-    rules:
+    policy_id:
         description:
-            - Policy Rules
-        required: False
-        type: list
-        elements: dict
-    target_id:
-        description:
-            - Listener Policy Target ID
+            - Listener Policy ID
         required: False
         type: str
     target_url:
@@ -99,6 +99,7 @@ options:
               'IC_GENERATION'.
         default: 2
         required: False
+        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -107,6 +108,7 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -130,18 +132,19 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'lb',
     'listener',
-    'action',
-    'policy_id',
-    'target_http_status_code',
-    'provisioning_status',
-    'priority',
-    'name',
     'rules',
     'target_id',
+    'target_http_status_code',
+    'provisioning_status',
+    'action',
+    'priority',
+    'name',
+    'policy_id',
     'target_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
+from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     lb=dict(
@@ -150,10 +153,11 @@ module_args = dict(
     listener=dict(
         required=False,
         type='str'),
-    action=dict(
+    rules=dict(
         required=False,
-        type='str'),
-    policy_id=dict(
+        elements='',
+        type='list'),
+    target_id=dict(
         required=False,
         type='str'),
     target_http_status_code=dict(
@@ -162,17 +166,16 @@ module_args = dict(
     provisioning_status=dict(
         required=False,
         type='str'),
+    action=dict(
+        required=False,
+        type='str'),
     priority=dict(
         required=False,
         type='int'),
     name=dict(
         required=False,
         type='str'),
-    rules=dict(
-        required=False,
-        elements='',
-        type='list'),
-    target_id=dict(
+    policy_id=dict(
         required=False,
         type='str'),
     target_url=dict(
@@ -205,7 +208,6 @@ module_args = dict(
 
 def run_module():
     from ansible.module_utils.basic import AnsibleModule
-    import ansible.module_utils.ibmcloud as ibmcloud
 
     module = AnsibleModule(
         argument_spec=module_args,
@@ -239,17 +241,17 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud.ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_is_lb_listener_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.2',
+        ibm_provider_version='1.5.3',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
     if result['rc'] > 0:
         module.fail_json(
-            msg=ibmcloud.Terraform.parse_stderr(result['stderr']), **result)
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
 

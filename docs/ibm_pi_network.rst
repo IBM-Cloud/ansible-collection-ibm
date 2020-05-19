@@ -18,29 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  network_id (False, str, None)
-    PI network ID
-
-
-  vlan_id (False, float, None)
-    VLAN Id value
-
-
-  pi_network_type (False, str, None)
-    (Required for new resource) PI network type
-
-
-  pi_network_name (False, str, None)
-    (Required for new resource) PI network name
-
 
   pi_dns (False, list, None)
     List of PI network DNS name
@@ -58,6 +42,22 @@ Parameters
     (Required for new resource) PI cloud instance ID
 
 
+  network_id (False, str, None)
+    PI network ID
+
+
+  vlan_id (False, float, None)
+    VLAN Id value
+
+
+  pi_network_type (False, str, None)
+    (Required for new resource) PI network type
+
+
+  pi_network_name (False, str, None)
+    (Required for new resource) PI network name
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
@@ -66,11 +66,11 @@ Parameters
     State of resource
 
 
-  zone (False, any, None)
+  zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 
 
-  region (False, any, us-south)
+  region (False, str, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 

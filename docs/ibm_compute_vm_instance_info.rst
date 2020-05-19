@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.2
+- IBM-Cloud terraform-provider-ibm v1.5.3
 - Terraform v0.12.20
 
 
@@ -26,28 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hostname (True, str, None)
-    The hostname of the virtual guest
+  public_interface_id (False, int, None)
+    None
 
 
-  status (False, str, None)
-    The VSI status
+  private_interface_id (False, int, None)
+    None
+
+
+  ipv4_address_private (False, str, None)
+    None
+
+
+  ipv6_address_id (False, int, None)
+    None
 
 
   secondary_ip_count (False, int, None)
     None
 
 
-  cores (False, int, None)
-    Number of cpu cores
+  hostname (True, str, None)
+    The hostname of the virtual guest
 
 
-  last_known_power_state (False, str, None)
-    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
-
-
-  private_interface_id (False, int, None)
-    None
+  datacenter (False, str, None)
+    Datacenter in which the virtual guest is deployed
 
 
   most_recent (False, bool, False)
@@ -58,7 +62,19 @@ Parameters
     None
 
 
-  ip_address_id (False, int, None)
+  public_ipv6_subnet_id (False, str, None)
+    None
+
+
+  cores (False, int, None)
+    Number of cpu cores
+
+
+  power_state (False, str, None)
+    The current power state of a virtual guest.
+
+
+  public_subnet_id (False, int, None)
     None
 
 
@@ -70,35 +86,19 @@ Parameters
     The domain of the virtual guest
 
 
-  public_interface_id (False, int, None)
-    None
+  status (False, str, None)
+    The VSI status
 
 
-  public_subnet_id (False, int, None)
-    None
+  last_known_power_state (False, str, None)
+    The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
 
 
   ipv4_address (False, str, None)
     None
 
 
-  public_ipv6_subnet_id (False, str, None)
-    None
-
-
-  secondary_ip_addresses (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    Datacenter in which the virtual guest is deployed
-
-
-  power_state (False, str, None)
-    The current power state of a virtual guest.
-
-
-  ipv4_address_private (False, str, None)
+  ip_address_id (False, int, None)
     None
 
 
@@ -110,7 +110,7 @@ Parameters
     None
 
 
-  ipv6_address_id (False, int, None)
+  secondary_ip_addresses (False, list, None)
     None
 
 
