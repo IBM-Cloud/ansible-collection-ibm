@@ -3,7 +3,7 @@
 Ansible modules collection for IBM cloud.
 
 ## Getting Started
-Below steps are follwed to install ansible collections for the IBM Cloud resources. All the resources are documented under the [Docs] directory.
+Below steps are followed to install ansible collections for the IBM Cloud resources. All the resources are documented under the [Docs] directory.
 
 ## Prerequisites
 
