@@ -1,0 +1,16 @@
+- name: appid instance creation example
+  hosts: localhost
+  collections:
+    - ibmcloud.ibmcollection
+  vars:
+    appid_name: test-instance2
+    service: appid
+    plan: lite
+    location: us-south
+  tasks:
+    - name: Create a AppID service Instance
+      state: available
+      appid_instance_name: '{{ appid_name }}'
+      service_details: '{{ service }}'
+      plan_details: '{{ plan }}'
+      location_details: '{{ location }}'
