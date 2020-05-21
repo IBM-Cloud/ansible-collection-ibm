@@ -16,32 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cdn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    bucket_name:
-        description:
-            - Bucket name
-        required: False
-        type: str
-    protocol:
-        description:
-            - Protocol name
-        required: False
-        type: str
-        default: HTTP
-    https_port:
-        description:
-            - HTTPS port number
-        required: False
-        type: int
-        default: 443
-    certificate_type:
-        description:
-            - Certificate type
-        required: False
-        type: str
     path:
         description:
             - Path details
@@ -54,20 +32,68 @@ options:
         required: False
         type: str
         default: HOST_SERVER
+    protocol:
+        description:
+            - Protocol name
+        required: False
+        type: str
+        default: HTTP
+    header:
+        description:
+            - Header info
+        required: False
+        type: str
+    certificate_type:
+        description:
+            - Certificate type
+        required: False
+        type: str
+    file_extension:
+        description:
+            - File extension info
+        required: False
+        type: str
+    host_name:
+        description:
+            - (Required for new resource) Host name
+        required: False
+        type: str
     origin_address:
         description:
             - (Required for new resource) origin address info
         required: False
         type: str
+    bucket_name:
+        description:
+            - Bucket name
+        required: False
+        type: str
+    status:
+        description:
+            - Status info of the CDN instance
+        required: False
+        type: str
+    performance_configuration:
+        description:
+            - performance configuration info
+        required: False
+        type: str
+        default: General web delivery
     http_port:
         description:
             - HTTP port number
         required: False
         type: int
         default: 80
-    header:
+    https_port:
         description:
-            - Header info
+            - HTTPS port number
+        required: False
+        type: int
+        default: 443
+    cname:
+        description:
+            - cname info
         required: False
         type: str
     respect_headers:
@@ -76,38 +102,12 @@ options:
         required: False
         type: bool
         default: True
-    performance_configuration:
-        description:
-            - performance configuration info
-        required: False
-        type: str
-        default: General web delivery
     vendor_name:
         description:
             - Vendor name
         required: False
         type: str
         default: akamai
-    cname:
-        description:
-            - cname info
-        required: False
-        type: str
-    host_name:
-        description:
-            - (Required for new resource) Host name
-        required: False
-        type: str
-    status:
-        description:
-            - Status info of the CDN instance
-        required: False
-        type: str
-    file_extension:
-        description:
-            - File extension info
-        required: False
-        type: str
     cache_key_query_rule:
         description:
             - query rule info
@@ -160,28 +160,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('origin_address', 'str'),
     ('host_name', 'str'),
+    ('origin_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bucket_name',
-    'protocol',
-    'https_port',
-    'certificate_type',
     'path',
     'origin_type',
-    'origin_address',
-    'http_port',
+    'protocol',
     'header',
-    'respect_headers',
-    'performance_configuration',
-    'vendor_name',
-    'cname',
-    'host_name',
-    'status',
+    'certificate_type',
     'file_extension',
+    'host_name',
+    'origin_address',
+    'bucket_name',
+    'status',
+    'performance_configuration',
+    'http_port',
+    'https_port',
+    'cname',
+    'respect_headers',
+    'vendor_name',
     'cache_key_query_rule',
 ]
 
@@ -189,53 +189,53 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bucket_name=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        default='HTTP',
-        type='str'),
-    https_port=dict(
-        default=443,
-        type='int'),
-    certificate_type=dict(
-        required=False,
-        type='str'),
     path=dict(
         default='/*',
         type='str'),
     origin_type=dict(
         default='HOST_SERVER',
         type='str'),
-    origin_address=dict(
-        required=False,
+    protocol=dict(
+        default='HTTP',
         type='str'),
-    http_port=dict(
-        default=80,
-        type='int'),
     header=dict(
         required=False,
         type='str'),
-    respect_headers=dict(
-        default=True,
-        type='bool'),
-    performance_configuration=dict(
-        default='General web delivery',
+    certificate_type=dict(
+        required=False,
         type='str'),
-    vendor_name=dict(
-        default='akamai',
-        type='str'),
-    cname=dict(
+    file_extension=dict(
         required=False,
         type='str'),
     host_name=dict(
         required=False,
         type='str'),
+    origin_address=dict(
+        required=False,
+        type='str'),
+    bucket_name=dict(
+        required=False,
+        type='str'),
     status=dict(
         required=False,
         type='str'),
-    file_extension=dict(
+    performance_configuration=dict(
+        default='General web delivery',
+        type='str'),
+    http_port=dict(
+        default=80,
+        type='int'),
+    https_port=dict(
+        default=443,
+        type='int'),
+    cname=dict(
         required=False,
+        type='str'),
+    respect_headers=dict(
+        default=True,
+        type='bool'),
+    vendor_name=dict(
+        default='akamai',
         type='str'),
     cache_key_query_rule=dict(
         default='include-all',
@@ -292,7 +292,7 @@ def run_module():
         resource_type='ibm_cdn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,28 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    size:
+    resource_crn:
         description:
-            - None
-        required: False
-        type: int
-    visibility:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - The crn of the resource
         required: False
         type: str
     href:
@@ -50,9 +35,9 @@ options:
             - None
         required: False
         type: str
-    resource_group_name:
+    resource_controller_url:
         description:
-            - The resource group name in which resource is provisioned
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_status:
@@ -60,9 +45,30 @@ options:
             - The status of the resource
         required: False
         type: str
+    visibility:
+        description:
+            - None
+        required: False
+        type: str
+    size:
+        description:
+            - None
+        required: False
+        type: int
+    tags:
+        description:
+            - Tags for the image
+        required: False
+        type: list
+        elements: str
     operating_system:
         description:
             - (Required for new resource) Image Operating system
+        required: False
+        type: str
+    resource_group:
+        description:
+            - None
         required: False
         type: str
     resource_name:
@@ -70,9 +76,9 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_crn:
+    resource_group_name:
         description:
-            - The crn of the resource
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     name:
@@ -80,12 +86,6 @@ options:
             - (Required for new resource) Image name
         required: False
         type: str
-    tags:
-        description:
-            - Tags for the image
-        required: False
-        type: list
-        elements: str
     status:
         description:
             - None
@@ -144,19 +144,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'size',
-    'visibility',
-    'resource_group',
-    'resource_controller_url',
+    'resource_crn',
     'href',
     'file',
-    'resource_group_name',
+    'resource_controller_url',
     'resource_status',
-    'operating_system',
-    'resource_name',
-    'resource_crn',
-    'name',
+    'visibility',
+    'size',
     'tags',
+    'operating_system',
+    'resource_group',
+    'resource_name',
+    'resource_group_name',
+    'name',
     'status',
 ]
 
@@ -164,16 +164,7 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    size=dict(
-        required=False,
-        type='int'),
-    visibility=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     href=dict(
@@ -182,28 +173,37 @@ module_args = dict(
     file=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_status=dict(
         required=False,
         type='str'),
+    visibility=dict(
+        required=False,
+        type='str'),
+    size=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     operating_system=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     status=dict(
         required=False,
         type='str'),
@@ -271,7 +271,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

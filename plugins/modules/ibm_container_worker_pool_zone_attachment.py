@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
@@ -35,6 +35,11 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    region:
+        description:
+            - The zone region
+        required: False
+        type: str
     worker_count:
         description:
             - None
@@ -46,11 +51,6 @@ options:
         required: False
         type: bool
         default: True
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: False
-        type: str
     cluster:
         description:
             - (Required for new resource) cluster name or ID
@@ -61,9 +61,9 @@ options:
             - (Required for new resource) Workerpool name
         required: False
         type: str
-    region:
+    zone:
         description:
-            - The zone region
+            - (Required for new resource) Zone name
         required: False
         type: str
     id:
@@ -92,9 +92,9 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('cluster', 'str'),
     ('worker_pool', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -102,12 +102,12 @@ TL_ALL_PARAMETERS = [
     'private_vlan_id',
     'public_vlan_id',
     'resource_group_id',
+    'region',
     'worker_count',
     'wait_till_albs',
-    'zone',
     'cluster',
     'worker_pool',
-    'region',
+    'zone',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -123,22 +123,22 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
+    region=dict(
+        required=False,
+        type='str'),
     worker_count=dict(
         required=False,
         type='int'),
     wait_till_albs=dict(
         default=True,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
     worker_pool=dict(
         required=False,
         type='str'),
-    region=dict(
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -179,7 +179,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

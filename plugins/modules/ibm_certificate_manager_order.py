@@ -16,13 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_order' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    dns_provider_instance_crn:
+    name:
         description:
-            - DNS provider instance CRN
+            - (Required for new resource) Certificate name
+        required: False
+        type: str
+    description:
+        description:
+            - Certicate description
         required: False
         type: str
     key_algorithm:
@@ -30,41 +35,25 @@ options:
             - Keyalgorithm info
         required: False
         type: str
-    certificate_manager_instance_id:
+    expires_on:
         description:
-            - (Required for new resource) Certificate manager instance ID
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Certificate name
-        required: False
-        type: str
-    rotate_keys:
-        description:
-            - Keys are sorated if set to true
-        required: False
-        type: bool
-        default: False
-    begins_on:
-        description:
-            - Cerificate validity from date
+            - Certificaet expairy date
         required: False
         type: int
-    imported:
+    has_previous:
         description:
-            - set to true if certificate is imported
+            - Has Previous
         required: False
-        type: bool
+        type: str
     issuance_info:
         description:
             - None
         required: False
         type: dict
         elements: dict
-    issuer:
+    certificate_manager_instance_id:
         description:
-            - Certificate issuer info
+            - (Required for new resource) Certificate manager instance ID
         required: False
         type: str
     algorithm:
@@ -72,6 +61,21 @@ options:
             - Algorithm info
         required: False
         type: str
+    begins_on:
+        description:
+            - Cerificate validity from date
+        required: False
+        type: int
+    issuer:
+        description:
+            - Certificate issuer info
+        required: False
+        type: str
+    imported:
+        description:
+            - set to true if certificate is imported
+        required: False
+        type: bool
     status:
         description:
             - Status  of the certificate
@@ -83,25 +87,21 @@ options:
         required: False
         type: list
         elements: str
-    description:
+    rotate_keys:
         description:
-            - Certicate description
+            - Keys are sorated if set to true
         required: False
-        type: str
+        type: bool
+        default: False
     domain_validation_method:
         description:
             - Domain validation methods
         required: False
         type: str
         default: dns - 01
-    expires_on:
+    dns_provider_instance_crn:
         description:
-            - Certificaet expairy date
-        required: False
-        type: int
-    has_previous:
-        description:
-            - Has Previous
+            - DNS provider instance CRN
         required: False
         type: str
     id:
@@ -150,66 +150,69 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate_manager_instance_id', 'str'),
     ('name', 'str'),
+    ('certificate_manager_instance_id', 'str'),
     ('domains', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dns_provider_instance_crn',
-    'key_algorithm',
-    'certificate_manager_instance_id',
     'name',
-    'rotate_keys',
-    'begins_on',
-    'imported',
-    'issuance_info',
-    'issuer',
-    'algorithm',
-    'status',
-    'domains',
     'description',
-    'domain_validation_method',
+    'key_algorithm',
     'expires_on',
     'has_previous',
+    'issuance_info',
+    'certificate_manager_instance_id',
+    'algorithm',
+    'begins_on',
+    'issuer',
+    'imported',
+    'status',
+    'domains',
+    'rotate_keys',
+    'domain_validation_method',
+    'dns_provider_instance_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dns_provider_instance_crn=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     key_algorithm=dict(
         required=False,
         type='str'),
-    certificate_manager_instance_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    rotate_keys=dict(
-        default=False,
-        type='bool'),
-    begins_on=dict(
+    expires_on=dict(
         required=False,
         type='int'),
-    imported=dict(
+    has_previous=dict(
         required=False,
-        type='bool'),
+        type='str'),
     issuance_info=dict(
         required=False,
         elements='',
         type='dict'),
-    issuer=dict(
+    certificate_manager_instance_id=dict(
         required=False,
         type='str'),
     algorithm=dict(
         required=False,
         type='str'),
+    begins_on=dict(
+        required=False,
+        type='int'),
+    issuer=dict(
+        required=False,
+        type='str'),
+    imported=dict(
+        required=False,
+        type='bool'),
     status=dict(
         required=False,
         type='str'),
@@ -217,16 +220,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
+    rotate_keys=dict(
+        default=False,
+        type='bool'),
     domain_validation_method=dict(
         default='dns - 01',
         type='str'),
-    expires_on=dict(
-        required=False,
-        type='int'),
-    has_previous=dict(
+    dns_provider_instance_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -281,7 +281,7 @@ def run_module():
         resource_type='ibm_certificate_manager_order',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

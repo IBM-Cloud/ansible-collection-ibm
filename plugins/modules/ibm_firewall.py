@@ -16,10 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    public_vlan_id:
+        description:
+            - (Required for new resource) Public VLAN ID
+        required: False
+        type: int
+    tags:
+        description:
+            - List of tags for the firewall
+        required: False
+        type: list
+        elements: str
+    location:
+        description:
+            - Location info
+        required: False
+        type: str
     primary_ip:
         description:
             - Primary IP address
@@ -47,22 +63,6 @@ options:
         required: False
         type: bool
         default: False
-    public_vlan_id:
-        description:
-            - (Required for new resource) Public VLAN ID
-        required: False
-        type: int
-    tags:
-        description:
-            - List of tags for the firewall
-        required: False
-        type: list
-        elements: str
-    location:
-        description:
-            - Location info
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,20 +114,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'public_vlan_id',
+    'tags',
+    'location',
     'primary_ip',
     'username',
     'password',
     'firewall_type',
     'ha_enabled',
-    'public_vlan_id',
-    'tags',
-    'location',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    location=dict(
+        required=False,
+        type='str'),
     primary_ip=dict(
         required=False,
         type='str'),
@@ -143,16 +153,6 @@ module_args = dict(
     ha_enabled=dict(
         default=False,
         type='bool'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    location=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

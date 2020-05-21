@@ -16,53 +16,62 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    type:
         description:
-            - (Required for new resource) Datacenter name
+            - (Required for new resource) Storage type
         required: False
         type: str
-    iops:
+    volumename:
         description:
-            - (Required for new resource) iops rate
+            - Storage volume name
         required: False
-        type: float
+        type: str
     allowed_virtual_guest_ids:
         description:
             - Virtual guest ID
         required: False
         type: list
         elements: int
-    allowed_subnets:
+    mountpoint:
         description:
-            - Allowed network subnets
+            - Storage mount point
         required: False
-        type: list
-        elements: str
-    allowed_ip_addresses:
+        type: str
+    resource_name:
         description:
-            - Allowed range of IP addresses
+            - The name of the resource
         required: False
-        type: list
-        elements: str
+        type: str
     resource_status:
         description:
             - The status of the resource
         required: False
         type: str
-    type:
+    capacity:
         description:
-            - (Required for new resource) Storage type
+            - (Required for new resource) Storage capacity
         required: False
-        type: str
+        type: int
+    iops:
+        description:
+            - (Required for new resource) iops rate
+        required: False
+        type: float
     hostname:
         description:
             - Hostname
         required: False
         type: str
+    tags:
+        description:
+            - Tags set for the storage volume
+        required: False
+        type: list
+        elements: str
     snapshot_capacity:
         description:
             - Snapshot capacity
@@ -74,12 +83,17 @@ options:
         required: False
         type: list
         elements: int
-    tags:
+    allowed_ip_addresses:
         description:
-            - Tags set for the storage volume
+            - Allowed range of IP addresses
         required: False
         type: list
         elements: str
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
     hourly_billing:
         description:
             - Hourly based billing type
@@ -91,37 +105,23 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    volumename:
+    datacenter:
         description:
-            - Storage volume name
+            - (Required for new resource) Datacenter name
         required: False
         type: str
-    notes:
+    allowed_subnets:
         description:
-            - Notes
+            - Allowed network subnets
         required: False
-        type: str
-    capacity:
-        description:
-            - (Required for new resource) Storage capacity
-        required: False
-        type: int
+        type: list
+        elements: str
     snapshot_schedule:
         description:
             - None
         required: False
         type: list
         elements: dict
-    mountpoint:
-        description:
-            - Storage mount point
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -168,93 +168,46 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
-    ('iops', 'float'),
     ('type', 'str'),
     ('capacity', 'int'),
+    ('iops', 'float'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'iops',
-    'allowed_virtual_guest_ids',
-    'allowed_subnets',
-    'allowed_ip_addresses',
-    'resource_status',
     'type',
-    'hostname',
-    'snapshot_capacity',
-    'allowed_hardware_ids',
-    'tags',
-    'hourly_billing',
-    'resource_controller_url',
     'volumename',
-    'notes',
-    'capacity',
-    'snapshot_schedule',
+    'allowed_virtual_guest_ids',
     'mountpoint',
     'resource_name',
+    'resource_status',
+    'capacity',
+    'iops',
+    'hostname',
+    'tags',
+    'snapshot_capacity',
+    'allowed_hardware_ids',
+    'allowed_ip_addresses',
+    'notes',
+    'hourly_billing',
+    'resource_controller_url',
+    'datacenter',
+    'allowed_subnets',
+    'snapshot_schedule',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
-        required=False,
-        type='str'),
-    iops=dict(
-        required=False,
-        type='float'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_ip_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_status=dict(
-        required=False,
-        type='str'),
     type=dict(
-        required=False,
-        type='str'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    snapshot_capacity=dict(
-        required=False,
-        type='int'),
-    allowed_hardware_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    hourly_billing=dict(
-        default=False,
-        type='bool'),
-    resource_controller_url=dict(
         required=False,
         type='str'),
     volumename=dict(
         required=False,
         type='str'),
-    notes=dict(
-        required=False,
-        type='str'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    snapshot_schedule=dict(
+    allowed_virtual_guest_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -264,6 +217,53 @@ module_args = dict(
     resource_name=dict(
         required=False,
         type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    iops=dict(
+        required=False,
+        type='float'),
+    hostname=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    snapshot_capacity=dict(
+        required=False,
+        type='int'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allowed_ip_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    notes=dict(
+        required=False,
+        type='str'),
+    hourly_billing=dict(
+        default=False,
+        type='bool'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    allowed_subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    snapshot_schedule=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -316,7 +316,7 @@ def run_module():
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

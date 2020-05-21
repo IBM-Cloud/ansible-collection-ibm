@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_public_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    ip_address:
+        description:
+            - IP Address
+        required: False
+        type: str
     routes_to:
         description:
             - (Required for new resource) Route info
@@ -34,11 +39,6 @@ options:
     notes:
         description:
             - Additional notes
-        required: False
-        type: str
-    ip_address:
-        description:
-            - IP Address
         required: False
         type: str
     id:
@@ -92,16 +92,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'ip_address',
     'routes_to',
     'tags',
     'notes',
-    'ip_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    ip_address=dict(
+        required=False,
+        type='str'),
     routes_to=dict(
         required=False,
         type='str'),
@@ -110,9 +113,6 @@ module_args = dict(
         elements='',
         type='list'),
     notes=dict(
-        required=False,
-        type='str'),
-    ip_address=dict(
         required=False,
         type='str'),
     id=dict(
@@ -167,7 +167,7 @@ def run_module():
         resource_type='ibm_network_public_ip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

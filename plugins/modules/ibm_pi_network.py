@@ -16,10 +16,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    pi_network_name:
+        description:
+            - (Required for new resource) PI network name
+        required: False
+        type: str
+    pi_dns:
+        description:
+            - List of PI network DNS name
+        required: False
+        type: list
+        elements: str
     pi_cidr:
         description:
             - PI network CIDR
@@ -50,17 +61,6 @@ options:
             - (Required for new resource) PI network type
         required: False
         type: str
-    pi_network_name:
-        description:
-            - (Required for new resource) PI network name
-        required: False
-        type: str
-    pi_dns:
-        description:
-            - List of PI network DNS name
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,27 +103,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_network_type', 'str'),
-    ('pi_network_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_network_name',
+    'pi_dns',
     'pi_cidr',
     'pi_gateway',
     'pi_cloud_instance_id',
     'network_id',
     'vlan_id',
     'pi_network_type',
-    'pi_network_name',
-    'pi_dns',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_network_name=dict(
+        required=False,
+        type='str'),
+    pi_dns=dict(
+        required=False,
+        elements='',
+        type='list'),
     pi_cidr=dict(
         required=False,
         type='str'),
@@ -142,13 +149,6 @@ module_args = dict(
     pi_network_type=dict(
         required=False,
         type='str'),
-    pi_network_name=dict(
-        required=False,
-        type='str'),
-    pi_dns=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -194,7 +194,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
