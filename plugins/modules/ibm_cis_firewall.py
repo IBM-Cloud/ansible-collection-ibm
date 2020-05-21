@@ -16,10 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    lockdown:
+        description:
+            - Lockdown json Data
+        required: False
+        type: list
+        elements: dict
     cis_id:
         description:
             - (Required for new resource) CIS object id
@@ -35,12 +41,6 @@ options:
             - (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
         required: False
         type: str
-    lockdown:
-        description:
-            - Lockdown json Data
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,16 +94,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'lockdown',
     'cis_id',
     'domain_id',
     'firewall_type',
-    'lockdown',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    lockdown=dict(
+        required=False,
+        elements='',
+        type='list'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -113,10 +117,6 @@ module_args = dict(
     firewall_type=dict(
         required=False,
         type='str'),
-    lockdown=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

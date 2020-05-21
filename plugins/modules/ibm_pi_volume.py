@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    volume_status:
-        description:
-            - Volume status
-        required: False
-        type: str
     volume_id:
         description:
             - Volume ID
@@ -53,6 +48,11 @@ options:
     pi_cloud_instance_id:
         description:
             - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: False
+        type: str
+    volume_status:
+        description:
+            - Volume status
         required: False
         type: str
     id:
@@ -105,22 +105,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'volume_status',
     'volume_id',
     'pi_volume_name',
     'pi_volume_shareable',
     'pi_volume_size',
     'pi_volume_type',
     'pi_cloud_instance_id',
+    'volume_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    volume_status=dict(
-        required=False,
-        type='str'),
     volume_id=dict(
         required=False,
         type='str'),
@@ -137,6 +134,9 @@ module_args = dict(
         required=False,
         type='str'),
     pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    volume_status=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

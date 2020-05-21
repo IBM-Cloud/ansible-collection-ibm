@@ -16,10 +16,15 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
     resource_crn:
         description:
             - The crn of the resource
@@ -53,11 +58,6 @@ options:
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
         required: False
         type: str
     generation:
@@ -98,6 +98,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_name',
     'resource_crn',
     'resource_group_name',
     'name',
@@ -105,13 +106,15 @@ TL_ALL_PARAMETERS = [
     'fingerprint',
     'length',
     'resource_controller_url',
-    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_name=dict(
+        required=False,
+        type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
@@ -131,9 +134,6 @@ module_args = dict(
         required=False,
         type='int'),
     resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -182,7 +182,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

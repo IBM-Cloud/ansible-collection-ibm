@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,12 @@ options:
             - (Required for new resource) The target service name
         required: False
         type: str
-    source_resource_instance_id:
+    roles:
         description:
-            - The source resource instance Id
+            - (Required for new resource) Role names of the policy definition
         required: False
-        type: str
+        type: list
+        elements: str
     target_resource_instance_id:
         description:
             - The target resource instance Id
@@ -43,6 +44,16 @@ options:
     source_resource_group_id:
         description:
             - The source resource group Id
+        required: False
+        type: str
+    source_service_account:
+        description:
+            - Account GUID of source service
+        required: False
+        type: str
+    source_resource_instance_id:
+        description:
+            - The source resource instance Id
         required: False
         type: str
     target_resource_group_id:
@@ -60,17 +71,6 @@ options:
             - Resource type of target service
         required: False
         type: str
-    source_service_account:
-        description:
-            - Account GUID of source service
-        required: False
-        type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: False
-        type: list
-        elements: str
     version:
         description:
             - None
@@ -131,14 +131,14 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'source_service_name',
     'target_service_name',
-    'source_resource_instance_id',
+    'roles',
     'target_resource_instance_id',
     'source_resource_group_id',
+    'source_service_account',
+    'source_resource_instance_id',
     'target_resource_group_id',
     'source_resource_type',
     'target_resource_type',
-    'source_service_account',
-    'roles',
     'version',
 ]
 
@@ -152,13 +152,20 @@ module_args = dict(
     target_service_name=dict(
         required=False,
         type='str'),
-    source_resource_instance_id=dict(
+    roles=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     target_resource_instance_id=dict(
         required=False,
         type='str'),
     source_resource_group_id=dict(
+        required=False,
+        type='str'),
+    source_service_account=dict(
+        required=False,
+        type='str'),
+    source_resource_instance_id=dict(
         required=False,
         type='str'),
     target_resource_group_id=dict(
@@ -170,13 +177,6 @@ module_args = dict(
     target_resource_type=dict(
         required=False,
         type='str'),
-    source_service_account=dict(
-        required=False,
-        type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     version=dict(
         required=False,
         type='str'),
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

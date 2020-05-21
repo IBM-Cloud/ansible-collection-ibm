@@ -16,18 +16,43 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    status:
+        description:
+            - Floating IP status
+        required: False
+        type: str
+    zone:
+        description:
+            - Zone name
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
     resource_status:
         description:
             - The status of the resource
         required: False
         type: str
-    address:
+    resource_group_name:
         description:
-            - Floating IP address
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     name:
@@ -51,34 +76,9 @@ options:
         required: False
         type: list
         elements: str
-    resource_name:
+    address:
         description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    status:
-        description:
-            - Floating IP status
-        required: False
-        type: str
-    zone:
-        description:
-            - Zone name
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
+            - Floating IP address
         required: False
         type: str
     id:
@@ -132,28 +132,43 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'status',
+    'zone',
+    'resource_controller_url',
+    'resource_name',
+    'resource_crn',
     'resource_status',
-    'address',
+    'resource_group_name',
     'name',
     'target',
     'resource_group',
     'tags',
-    'resource_name',
-    'resource_crn',
-    'status',
-    'zone',
-    'resource_controller_url',
-    'resource_group_name',
+    'address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    status=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
     resource_status=dict(
         required=False,
         type='str'),
-    address=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
     name=dict(
@@ -169,22 +184,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
+    address=dict(
         required=False,
         type='str'),
     id=dict(
@@ -251,7 +251,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

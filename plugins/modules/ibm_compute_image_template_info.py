@@ -16,20 +16,20 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_image_template' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    id:
-        description:
-            - The internal id of the image template
-        required: False
-        type: int
     name:
         description:
             - The name of this image template
         required: True
         type: str
+    id:
+        description:
+            - The internal id of the image template
+        required: False
+        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -75,12 +75,12 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    id=dict(
-        required=False,
-        type='int'),
     name=dict(
         required=True,
         type='str'),
+    id=dict(
+        required=False,
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -115,7 +115,7 @@ def run_module():
         resource_type='ibm_compute_image_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

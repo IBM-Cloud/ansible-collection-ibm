@@ -16,37 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
-    vcpu:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    status:
-        description:
-            - instance status
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    tags:
-        description:
-            - list of tags for the instance
-        required: False
-        type: list
-        elements: str
     network_interfaces:
         description:
             - None
@@ -63,15 +36,19 @@ options:
             - Instance resource group
         required: False
         type: str
-    gpu:
+    status:
         description:
-            - None
+            - instance status
         required: False
-        type: list
-        elements: dict
-    resource_crn:
+        type: str
+    resource_status:
         description:
-            - The crn of the resource
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     profile:
@@ -79,16 +56,56 @@ options:
             - (Required for new resource) Profile info
         required: False
         type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: False
-        type: str
     zone:
         description:
             - (Required for new resource) Zone name
         required: False
         type: str
+    tags:
+        description:
+            - list of tags for the instance
+        required: False
+        type: list
+        elements: str
+    volumes:
+        description:
+            - List of volumes
+        required: False
+        type: list
+        elements: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: False
+        type: str
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: False
+        type: list
+        elements: dict
+    vcpu:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    gpu:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    memory:
+        description:
+            - Instance memory
+        required: False
+        type: int
     keys:
         description:
             - (Required for new resource) SSH key Ids for the instance
@@ -101,21 +118,6 @@ options:
         required: False
         type: list
         elements: dict
-    memory:
-        description:
-            - Instance memory
-        required: False
-        type: int
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Instance name
-        required: False
-        type: str
     image:
         description:
             - (Required for new resource) image name
@@ -127,23 +129,21 @@ options:
         required: False
         type: list
         elements: dict
-    volumes:
-        description:
-            - List of volumes
-        required: False
-        type: list
-        elements: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    primary_network_interface:
+    resource_name:
         description:
-            - (Required for new resource) Primary Network interface info
+            - The name of the resource
         required: False
-        type: list
-        elements: dict
+        type: str
+    name:
+        description:
+            - (Required for new resource) Instance name
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -191,62 +191,45 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('profile', 'str'),
-    ('vpc', 'str'),
     ('zone', 'str'),
-    ('keys', 'list'),
-    ('name', 'str'),
-    ('image', 'str'),
+    ('vpc', 'str'),
     ('primary_network_interface', 'list'),
+    ('keys', 'list'),
+    ('image', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vcpu',
-    'status',
-    'resource_name',
-    'resource_status',
-    'tags',
     'network_interfaces',
     'user_data',
     'resource_group',
-    'gpu',
-    'resource_crn',
+    'status',
+    'resource_status',
+    'resource_group_name',
     'profile',
-    'vpc',
     'zone',
+    'tags',
+    'volumes',
+    'resource_crn',
+    'vpc',
+    'primary_network_interface',
+    'vcpu',
+    'gpu',
+    'memory',
     'keys',
     'volume_attachments',
-    'memory',
-    'resource_group_name',
-    'name',
     'image',
     'boot_volume',
-    'volumes',
     'resource_controller_url',
-    'primary_network_interface',
+    'resource_name',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vcpu=dict(
-        required=False,
-        elements='',
-        type='list'),
-    status=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     network_interfaces=dict(
         required=False,
         elements='',
@@ -257,22 +240,50 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    gpu=dict(
+    status=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    volumes=dict(
         required=False,
         elements='',
         type='list'),
     resource_crn=dict(
         required=False,
         type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
     vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
+    primary_network_interface=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
+    vcpu=dict(
+        required=False,
+        elements='',
+        type='list'),
+    gpu=dict(
+        required=False,
+        elements='',
+        type='list'),
+    memory=dict(
+        required=False,
+        type='int'),
     keys=dict(
         required=False,
         elements='',
@@ -281,15 +292,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    memory=dict(
-        required=False,
-        type='int'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     image=dict(
         required=False,
         type='str'),
@@ -297,17 +299,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_controller_url=dict(
         required=False,
         type='str'),
-    primary_network_interface=dict(
+    resource_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -372,7 +372,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
+    display_name:
+        description:
+            - (Required for new resource) Display Name of the Custom Role
+        required: False
+        type: str
     service:
         description:
             - (Required for new resource) The Service Name
@@ -31,19 +36,14 @@ options:
         required: False
         type: list
         elements: str
-    resource_name:
+    crn:
         description:
-            - The name of the resource
+            - crn of the Custom Role
         required: False
         type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    display_name:
-        description:
-            - (Required for new resource) Display Name of the Custom Role
         required: False
         type: str
     name:
@@ -56,9 +56,9 @@ options:
             - The description of the role
         required: False
         type: str
-    crn:
+    resource_name:
         description:
-            - crn of the Custom Role
+            - The name of the resource
         required: False
         type: str
     resource_crn:
@@ -112,22 +112,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('display_name', 'str'),
     ('service', 'str'),
     ('actions', 'list'),
-    ('display_name', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'display_name',
     'service',
     'actions',
-    'resource_name',
+    'crn',
     'resource_controller_url',
-    'display_name',
     'name',
     'description',
-    'crn',
+    'resource_name',
     'resource_crn',
 ]
 
@@ -135,6 +135,9 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    display_name=dict(
+        required=False,
+        type='str'),
     service=dict(
         required=False,
         type='str'),
@@ -142,13 +145,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_name=dict(
+    crn=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
-        required=False,
-        type='str'),
-    display_name=dict(
         required=False,
         type='str'),
     name=dict(
@@ -157,7 +157,7 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    crn=dict(
+    resource_name=dict(
         required=False,
         type='str'),
     resource_crn=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_iam_custom_role',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

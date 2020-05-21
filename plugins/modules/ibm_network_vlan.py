@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.5.3
+    - IBM-Cloud terraform-provider-ibm v1.6.0
     - Terraform v0.12.20
 
 options:
@@ -25,24 +25,25 @@ options:
             - (Required for new resource) VLAN type
         required: False
         type: str
-    name:
+    router_hostname:
         description:
-            - VLAN name
+            - router host name
         required: False
         type: str
-    vlan_number:
-        description:
-            - VLAN number
-        required: False
-        type: int
     child_resource_count:
         description:
             - Child resource count
         required: False
         type: int
-    resource_name:
+    tags:
         description:
-            - The name of the resource
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     datacenter:
@@ -50,11 +51,11 @@ options:
             - (Required for new resource) Datacenter name
         required: False
         type: str
-    router_hostname:
+    vlan_number:
         description:
-            - router host name
+            - VLAN number
         required: False
-        type: str
+        type: int
     softlayer_managed:
         description:
             - Zzset to true if VLAN is managed by softlayer
@@ -66,15 +67,14 @@ options:
         required: False
         type: list
         elements: dict
-    tags:
+    resource_name:
         description:
-            - List of tags
+            - The name of the resource
         required: False
-        type: list
-        elements: str
-    resource_controller_url:
+        type: str
+    name:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - VLAN name
         required: False
         type: str
     id:
@@ -130,16 +130,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'name',
-    'vlan_number',
-    'child_resource_count',
-    'resource_name',
-    'datacenter',
     'router_hostname',
-    'softlayer_managed',
-    'subnets',
+    'child_resource_count',
     'tags',
     'resource_controller_url',
+    'datacenter',
+    'vlan_number',
+    'softlayer_managed',
+    'subnets',
+    'resource_name',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -149,24 +149,25 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    name=dict(
+    router_hostname=dict(
         required=False,
         type='str'),
-    vlan_number=dict(
-        required=False,
-        type='int'),
     child_resource_count=dict(
         required=False,
         type='int'),
-    resource_name=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     datacenter=dict(
         required=False,
         type='str'),
-    router_hostname=dict(
+    vlan_number=dict(
         required=False,
-        type='str'),
+        type='int'),
     softlayer_managed=dict(
         required=False,
         type='bool'),
@@ -174,11 +175,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    resource_name=dict(
         required=False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.5.3',
+        ibm_provider_version='1.6.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
