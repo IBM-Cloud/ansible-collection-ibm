@@ -75,11 +75,9 @@
         pi_processors: "{{ processors }}"
         pi_instance_name: "{{ pi_name }}"
         pi_proc_type: "{{ proc_type }}"
-        pi_migratable: True
         pi_image_id: "{{ image_dict[pi_image] }}"
         pi_volume_ids: []
         pi_network_ids: ['249859ed-2ff2-4534-8862-f2c2cc8eeda9']
-        pi_public_network: True
         pi_key_pair_name: "{{ pi_ssh_key.pi_key_name }}"
         pi_sys_type: "{{ sys_type }}"
         pi_replication_policy: none
