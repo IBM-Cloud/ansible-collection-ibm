@@ -1,0 +1,16 @@
+---
+- name: Create APPID instance.
+  hosts: localhost
+  vars:
+    instance_name: "test_instance2"
+    plan_type: "lite"
+    location_info: "us-south" 
+  collections:
+   - ibmcloud.ibmcollection
+  tasks:
+    - name: Create a APPID instance
+      ibm_resource_instance:
+        name: "{{ instance_name }}"
+        service: "appid"
+        plan: "{{ plan_type }}"
+        location: "{{ location_info }}"
