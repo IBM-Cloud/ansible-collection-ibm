@@ -16,10 +16,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    access_group_id:
+        description:
+            - (Required for new resource) ID of access group
+        required: False
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: False
+        type: list
+        elements: str
     resources:
         description:
             - None
@@ -43,17 +54,6 @@ options:
             - None
         required: False
         type: str
-    access_group_id:
-        description:
-            - (Required for new resource) ID of access group
-        required: False
-        type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,18 +106,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'access_group_id',
+    'roles',
     'resources',
     'account_management',
     'tags',
     'version',
-    'access_group_id',
-    'roles',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    access_group_id=dict(
+        required=False,
+        type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     resources=dict(
         required=False,
         elements='',
@@ -132,13 +139,6 @@ module_args = dict(
     version=dict(
         required=False,
         type='str'),
-    access_group_id=dict(
-        required=False,
-        type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

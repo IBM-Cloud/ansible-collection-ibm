@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    region:
+        description:
+            - None
+        required: False
+        type: str
     enable:
         description:
             - set to true if ALB needs to be enabled
@@ -30,21 +35,6 @@ options:
             - Set to true if ALB needs to be disabled
         required: False
         type: bool
-    region:
-        description:
-            - None
-        required: False
-        type: str
-    alb_id:
-        description:
-            - (Required for new resource) ALB ID
-        required: False
-        type: str
-    alb_type:
-        description:
-            - ALB type
-        required: False
-        type: str
     cluster:
         description:
             - Cluster id
@@ -63,6 +53,16 @@ options:
     zone:
         description:
             - ALB zone
+        required: False
+        type: str
+    alb_id:
+        description:
+            - (Required for new resource) ALB ID
+        required: False
+        type: str
+    alb_type:
+        description:
+            - ALB type
         required: False
         type: str
     id:
@@ -96,36 +96,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'region',
     'enable',
     'disable_deployment',
-    'region',
-    'alb_id',
-    'alb_type',
     'cluster',
     'user_ip',
     'name',
     'zone',
+    'alb_id',
+    'alb_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    region=dict(
+        required=False,
+        type='str'),
     enable=dict(
         required=False,
         type='bool'),
     disable_deployment=dict(
         required=False,
         type='bool'),
-    region=dict(
-        required=False,
-        type='str'),
-    alb_id=dict(
-        required=False,
-        type='str'),
-    alb_type=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -136,6 +130,12 @@ module_args = dict(
         required=False,
         type='str'),
     zone=dict(
+        required=False,
+        type='str'),
+    alb_id=dict(
+        required=False,
+        type='str'),
+    alb_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

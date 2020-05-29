@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
@@ -40,20 +40,20 @@ options:
             - Resource group info
         required: False
         type: str
-    key_lifetime:
+    vpn_connections:
         description:
-            - IPSEC key lifetime
+            - None
         required: False
-        type: int
-        default: 3600
-    encapsulation_mode:
-        description:
-            - IPSEC encapsulation mode
-        required: False
-        type: str
+        type: list
+        elements: dict
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     name:
@@ -61,25 +61,9 @@ options:
             - (Required for new resource) IPSEC name
         required: False
         type: str
-    resource_group_name:
+    encapsulation_mode:
         description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    vpn_connections:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_name:
-        description:
-            - The name of the resource
+            - IPSEC encapsulation mode
         required: False
         type: str
     transform_protocol:
@@ -87,6 +71,22 @@ options:
             - IPSEC transform protocol
         required: False
         type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    key_lifetime:
+        description:
+            - IPSEC key lifetime
+        required: False
+        type: int
+        default: 3600
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -145,15 +145,15 @@ TL_ALL_PARAMETERS = [
     'encryption_algorithm',
     'pfs',
     'resource_group',
-    'key_lifetime',
-    'encapsulation_mode',
-    'resource_controller_url',
-    'name',
-    'resource_group_name',
-    'resource_crn',
     'vpn_connections',
+    'resource_controller_url',
     'resource_name',
+    'name',
+    'encapsulation_mode',
     'transform_protocol',
+    'resource_crn',
+    'resource_group_name',
+    'key_lifetime',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -172,34 +172,34 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    key_lifetime=dict(
-        default=3600,
-        type='int'),
-    encapsulation_mode=dict(
+    vpn_connections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    resource_name=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    vpn_connections=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_name=dict(
+    encapsulation_mode=dict(
         required=False,
         type='str'),
     transform_protocol=dict(
         required=False,
         type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    key_lifetime=dict(
+        default=3600,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -264,7 +264,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

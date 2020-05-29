@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    volume_id:
-        description:
-            - Volume ID
-        required: False
-        type: str
-    pi_volume_name:
-        description:
-            - (Required for new resource) Volume Name to create
-        required: False
-        type: str
     pi_volume_shareable:
         description:
             - Flag to indicate if the volume can be shared across multiple instances?
@@ -53,6 +43,16 @@ options:
     volume_status:
         description:
             - Volume status
+        required: False
+        type: str
+    volume_id:
+        description:
+            - Volume ID
+        required: False
+        type: str
+    pi_volume_name:
+        description:
+            - (Required for new resource) Volume Name to create
         required: False
         type: str
     id:
@@ -97,33 +97,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_volume_name', 'str'),
     ('pi_volume_size', 'float'),
     ('pi_volume_type', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_volume_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'volume_id',
-    'pi_volume_name',
     'pi_volume_shareable',
     'pi_volume_size',
     'pi_volume_type',
     'pi_cloud_instance_id',
     'volume_status',
+    'volume_id',
+    'pi_volume_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    volume_id=dict(
-        required=False,
-        type='str'),
-    pi_volume_name=dict(
-        required=False,
-        type='str'),
     pi_volume_shareable=dict(
         required=False,
         type='bool'),
@@ -137,6 +131,12 @@ module_args = dict(
         required=False,
         type='str'),
     volume_status=dict(
+        required=False,
+        type='str'),
+    volume_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

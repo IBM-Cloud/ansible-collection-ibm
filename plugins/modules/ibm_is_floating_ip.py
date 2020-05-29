@@ -16,18 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    status:
+    resource_group:
         description:
-            - Floating IP status
-        required: False
-        type: str
-    zone:
-        description:
-            - Zone name
+            - Resource group info
         required: False
         type: str
     resource_controller_url:
@@ -55,19 +50,29 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
+    address:
+        description:
+            - Floating IP address
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Name of the floating IP
         required: False
         type: str
+    status:
+        description:
+            - Floating IP status
+        required: False
+        type: str
+    zone:
+        description:
+            - Zone name
+        required: False
+        type: str
     target:
         description:
             - Target info
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
         required: False
         type: str
     tags:
@@ -76,11 +81,6 @@ options:
         required: False
         type: list
         elements: str
-    address:
-        description:
-            - Floating IP address
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,28 +132,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'zone',
+    'resource_group',
     'resource_controller_url',
     'resource_name',
     'resource_crn',
     'resource_status',
     'resource_group_name',
-    'name',
-    'target',
-    'resource_group',
-    'tags',
     'address',
+    'name',
+    'status',
+    'zone',
+    'target',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    zone=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
@@ -171,22 +168,25 @@ module_args = dict(
     resource_group_name=dict(
         required=False,
         type='str'),
+    address=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    target=dict(
+    status=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    zone=dict(
+        required=False,
+        type='str'),
+    target=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    address=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -251,7 +251,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

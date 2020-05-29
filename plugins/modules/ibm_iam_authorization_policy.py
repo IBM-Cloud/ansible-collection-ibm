@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    source_service_name:
-        description:
-            - (Required for new resource) The source service name
-        required: False
-        type: str
     target_service_name:
         description:
             - (Required for new resource) The target service name
@@ -36,6 +31,16 @@ options:
         required: False
         type: list
         elements: str
+    source_service_name:
+        description:
+            - (Required for new resource) The source service name
+        required: False
+        type: str
+    source_resource_instance_id:
+        description:
+            - The source resource instance Id
+        required: False
+        type: str
     target_resource_instance_id:
         description:
             - The target resource instance Id
@@ -44,16 +49,6 @@ options:
     source_resource_group_id:
         description:
             - The source resource group Id
-        required: False
-        type: str
-    source_service_account:
-        description:
-            - Account GUID of source service
-        required: False
-        type: str
-    source_resource_instance_id:
-        description:
-            - The source resource instance Id
         required: False
         type: str
     target_resource_group_id:
@@ -69,6 +64,11 @@ options:
     target_resource_type:
         description:
             - Resource type of target service
+        required: False
+        type: str
+    source_service_account:
+        description:
+            - Account GUID of source service
         required: False
         type: str
     version:
@@ -122,23 +122,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('source_service_name', 'str'),
     ('target_service_name', 'str'),
     ('roles', 'list'),
+    ('source_service_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_service_name',
     'target_service_name',
     'roles',
+    'source_service_name',
+    'source_resource_instance_id',
     'target_resource_instance_id',
     'source_resource_group_id',
-    'source_service_account',
-    'source_resource_instance_id',
     'target_resource_group_id',
     'source_resource_type',
     'target_resource_type',
+    'source_service_account',
     'version',
 ]
 
@@ -146,9 +146,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_service_name=dict(
-        required=False,
-        type='str'),
     target_service_name=dict(
         required=False,
         type='str'),
@@ -156,16 +153,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    source_service_name=dict(
+        required=False,
+        type='str'),
+    source_resource_instance_id=dict(
+        required=False,
+        type='str'),
     target_resource_instance_id=dict(
         required=False,
         type='str'),
     source_resource_group_id=dict(
-        required=False,
-        type='str'),
-    source_service_account=dict(
-        required=False,
-        type='str'),
-    source_resource_instance_id=dict(
         required=False,
         type='str'),
     target_resource_group_id=dict(
@@ -175,6 +172,9 @@ module_args = dict(
         required=False,
         type='str'),
     target_resource_type=dict(
+        required=False,
+        type='str'),
+    source_service_account=dict(
         required=False,
         type='str'),
     version=dict(
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

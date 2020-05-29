@@ -16,16 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_dns_permitted_networks' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    dns_permitted_networks:
-        description:
-            - Collection of permitted networks
-        required: False
-        type: list
-        elements: dict
     instance_id:
         description:
             - Instance ID
@@ -36,6 +30,12 @@ options:
             - Zone ID
         required: True
         type: str
+    dns_permitted_networks:
+        description:
+            - Collection of permitted networks
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -75,25 +75,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dns_permitted_networks',
     'instance_id',
     'zone_id',
+    'dns_permitted_networks',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dns_permitted_networks=dict(
-        required=False,
-        elements='',
-        type='list'),
     instance_id=dict(
         required=True,
         type='str'),
     zone_id=dict(
         required=True,
         type='str'),
+    dns_permitted_networks=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -128,7 +128,7 @@ def run_module():
         resource_type='ibm_dns_permitted_networks',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    provisioning_status:
+        description:
+            - Load balancer Pool member provisioning status
+        required: False
+        type: str
+    health:
+        description:
+            - LB Pool member health
+        required: False
+        type: str
+    href:
+        description:
+            - LB pool member Href value
+        required: False
+        type: str
     pool:
         description:
             - (Required for new resource) Loadblancer Poold ID
@@ -45,21 +60,6 @@ options:
             - Load balcner pool member weight
         required: False
         type: int
-    provisioning_status:
-        description:
-            - Load balancer Pool member provisioning status
-        required: False
-        type: str
-    health:
-        description:
-            - LB Pool member health
-        required: False
-        type: str
-    href:
-        description:
-            - LB pool member Href value
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,20 +114,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'provisioning_status',
+    'health',
+    'href',
     'pool',
     'lb',
     'port',
     'target_address',
     'weight',
-    'provisioning_status',
-    'health',
-    'href',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    provisioning_status=dict(
+        required=False,
+        type='str'),
+    health=dict(
+        required=False,
+        type='str'),
+    href=dict(
+        required=False,
+        type='str'),
     pool=dict(
         required=False,
         type='str'),
@@ -143,15 +152,6 @@ module_args = dict(
     weight=dict(
         required=False,
         type='int'),
-    provisioning_status=dict(
-        required=False,
-        type='str'),
-    health=dict(
-        required=False,
-        type='str'),
-    href=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

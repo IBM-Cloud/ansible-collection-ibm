@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
@@ -25,9 +25,35 @@ options:
             - (Required for new resource) SSH Key name
         required: False
         type: str
+    public_key:
+        description:
+            - (Required for new resource) SSH Public key data
+        required: False
+        type: str
     type:
         description:
             - Key type
+        required: False
+        type: str
+    length:
+        description:
+            - SSH key Length
+        required: False
+        type: int
+    tags:
+        description:
+            - List of tags for SSH key
+        required: False
+        type: list
+        elements: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     fingerprint:
@@ -50,32 +76,6 @@ options:
             - The name of the resource
         required: False
         type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    public_key:
-        description:
-            - (Required for new resource) SSH Public key data
-        required: False
-        type: str
-    length:
-        description:
-            - SSH key Length
-        required: False
-        type: int
-    tags:
-        description:
-            - List of tags for SSH key
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,16 +129,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'public_key',
     'type',
+    'length',
+    'tags',
+    'resource_crn',
+    'resource_group_name',
     'fingerprint',
     'resource_group',
     'resource_controller_url',
     'resource_name',
-    'resource_crn',
-    'resource_group_name',
-    'public_key',
-    'length',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -148,7 +148,23 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    public_key=dict(
+        required=False,
+        type='str'),
     type=dict(
+        required=False,
+        type='str'),
+    length=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     fingerprint=dict(
@@ -163,22 +179,6 @@ module_args = dict(
     resource_name=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    public_key=dict(
-        required=False,
-        type='str'),
-    length=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -243,7 +243,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    public_vlan_id:
+        description:
+            - Public VLAN id
+        required: False
+        type: int
+    private_vlan_id:
+        description:
+            - Private VLAN id
+        required: False
+        type: int
     public_ip:
         description:
             - Public IP Address
@@ -30,14 +40,9 @@ options:
             - Public IPV6 IP
         required: False
         type: str
-    private_ip:
+    password:
         description:
-            - Private IP Address
-        required: False
-        type: str
-    username:
-        description:
-            - User name
+            - Password
         required: False
         type: str
     pod:
@@ -50,19 +55,14 @@ options:
             - (Required for new resource) name
         required: False
         type: str
-    public_vlan_id:
+    private_ip:
         description:
-            - Public VLAN id
-        required: False
-        type: int
-    firewall_type:
-        description:
-            - (Required for new resource) Firewall type
+            - Private IP Address
         required: False
         type: str
-    password:
+    username:
         description:
-            - Password
+            - User name
         required: False
         type: str
     addon_configuration:
@@ -76,11 +76,11 @@ options:
             - (Required for new resource) Datacenter name
         required: False
         type: str
-    private_vlan_id:
+    firewall_type:
         description:
-            - Private VLAN id
+            - (Required for new resource) Firewall type
         required: False
-        type: int
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,40 +129,43 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('pod', 'str'),
     ('name', 'str'),
-    ('firewall_type', 'str'),
     ('datacenter', 'str'),
+    ('firewall_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'public_vlan_id',
+    'private_vlan_id',
     'public_ip',
     'public_ipv6',
-    'private_ip',
-    'username',
+    'password',
     'pod',
     'name',
-    'public_vlan_id',
-    'firewall_type',
-    'password',
+    'private_ip',
+    'username',
     'addon_configuration',
     'datacenter',
-    'private_vlan_id',
+    'firewall_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
+    private_vlan_id=dict(
+        required=False,
+        type='int'),
     public_ip=dict(
         required=False,
         type='str'),
     public_ipv6=dict(
         required=False,
         type='str'),
-    private_ip=dict(
-        required=False,
-        type='str'),
-    username=dict(
+    password=dict(
         required=False,
         type='str'),
     pod=dict(
@@ -171,13 +174,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    firewall_type=dict(
+    private_ip=dict(
         required=False,
         type='str'),
-    password=dict(
+    username=dict(
         required=False,
         type='str'),
     addon_configuration=dict(
@@ -187,9 +187,9 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
-    private_vlan_id=dict(
+    firewall_type=dict(
         required=False,
-        type='int'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_public_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_pi_public_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

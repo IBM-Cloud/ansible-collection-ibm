@@ -16,13 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    private_vlan_id:
+    worker_pool:
         description:
-            - None
+            - (Required for new resource) Workerpool name
         required: False
         type: str
     public_vlan_id:
@@ -40,32 +40,32 @@ options:
             - The zone region
         required: False
         type: str
-    worker_count:
-        description:
-            - None
-        required: False
-        type: int
     wait_till_albs:
         description:
             - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
         required: False
         type: bool
         default: True
-    cluster:
-        description:
-            - (Required for new resource) cluster name or ID
-        required: False
-        type: str
-    worker_pool:
-        description:
-            - (Required for new resource) Workerpool name
-        required: False
-        type: str
     zone:
         description:
             - (Required for new resource) Zone name
         required: False
         type: str
+    cluster:
+        description:
+            - (Required for new resource) cluster name or ID
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
+    worker_count:
+        description:
+            - None
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,29 +92,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('worker_pool', 'str'),
     ('zone', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_vlan_id',
+    'worker_pool',
     'public_vlan_id',
     'resource_group_id',
     'region',
-    'worker_count',
     'wait_till_albs',
-    'cluster',
-    'worker_pool',
     'zone',
+    'cluster',
+    'private_vlan_id',
+    'worker_count',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_vlan_id=dict(
+    worker_pool=dict(
         required=False,
         type='str'),
     public_vlan_id=dict(
@@ -126,21 +126,21 @@ module_args = dict(
     region=dict(
         required=False,
         type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
     wait_till_albs=dict(
         default=True,
         type='bool'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    worker_pool=dict(
-        required=False,
-        type='str'),
     zone=dict(
         required=False,
         type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='str'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -179,7 +179,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

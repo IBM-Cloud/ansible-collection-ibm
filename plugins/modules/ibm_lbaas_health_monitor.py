@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_health_monitor' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    timeout:
-        description:
-            - Timeout in seconds
-        required: False
-        type: int
-        default: 2
     url_path:
         description:
             - URL Path
@@ -61,6 +55,12 @@ options:
     max_retries:
         description:
             - Maximum retry counts
+        required: False
+        type: int
+        default: 2
+    timeout:
+        description:
+            - Timeout in seconds
         required: False
         type: int
         default: 2
@@ -118,7 +118,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'timeout',
     'url_path',
     'monitor_id',
     'lbaas_id',
@@ -126,15 +125,13 @@ TL_ALL_PARAMETERS = [
     'port',
     'interval',
     'max_retries',
+    'timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    timeout=dict(
-        default=2,
-        type='int'),
     url_path=dict(
         default='/',
         type='str'),
@@ -154,6 +151,9 @@ module_args = dict(
         default=5,
         type='int'),
     max_retries=dict(
+        default=2,
+        type='int'),
+    timeout=dict(
         default=2,
         type='int'),
     id=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_lbaas_health_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

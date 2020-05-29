@@ -16,26 +16,21 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    state:
+    shareable:
         description:
             - None
         required: False
-        type: str
-    size:
+        type: bool
+    bootable:
         description:
             - None
         required: False
-        type: int
+        type: bool
     creation_date:
-        description:
-            - None
-        required: False
-        type: str
-    disk_type:
         description:
             - None
         required: False
@@ -50,21 +45,26 @@ options:
             - None
         required: True
         type: str
-    shareable:
+    size:
         description:
             - None
         required: False
-        type: bool
+        type: int
+    state:
+        description:
+            - None
+        required: False
+        type: str
     name:
         description:
             - None
         required: False
         type: str
-    bootable:
+    disk_type:
         description:
             - None
         required: False
-        type: bool
+        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -100,31 +100,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'state',
-    'size',
+    'shareable',
+    'bootable',
     'creation_date',
-    'disk_type',
     'pi_volume_name',
     'pi_cloud_instance_id',
-    'shareable',
+    'size',
+    'state',
     'name',
-    'bootable',
+    'disk_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    state=dict(
+    shareable=dict(
         required=False,
-        type='str'),
-    size=dict(
+        type='bool'),
+    bootable=dict(
         required=False,
-        type='int'),
+        type='bool'),
     creation_date=dict(
-        required=False,
-        type='str'),
-    disk_type=dict(
         required=False,
         type='str'),
     pi_volume_name=dict(
@@ -133,15 +130,18 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    shareable=dict(
+    size=dict(
         required=False,
-        type='bool'),
+        type='int'),
+    state=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    bootable=dict(
+    disk_type=dict(
         required=False,
-        type='bool'),
+        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

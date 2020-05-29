@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_package' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name of package.
-        required: False
-        type: str
     publish:
         description:
             - Package visibilty.
@@ -61,6 +56,11 @@ options:
     bind_package_name:
         description:
             - Name of package to be binded.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of package.
         required: False
         type: str
     id:
@@ -100,7 +100,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'publish',
     'version',
     'user_defined_annotations',
@@ -108,15 +107,13 @@ TL_ALL_PARAMETERS = [
     'annotations',
     'parameters',
     'bind_package_name',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     publish=dict(
         default=False,
         type='bool'),
@@ -136,6 +133,9 @@ module_args = dict(
         required=False,
         type='str'),
     bind_package_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -180,7 +180,7 @@ def run_module():
         resource_type='ibm_function_package',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

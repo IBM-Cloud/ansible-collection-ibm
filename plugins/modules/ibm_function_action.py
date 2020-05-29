@@ -16,38 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_action' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    user_defined_annotations:
-        description:
-            - Annotation values in KEY VALUE format.
-        required: False
-        type: str
-        default: []
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-        required: False
-        type: str
-        default: []
-    annotations:
-        description:
-            - All annotations set on action by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of action.
         required: False
         type: str
-    limits:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     exec:
         description:
             - (Required for new resource) Execution info
@@ -67,6 +44,29 @@ options:
     parameters:
         description:
             - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    limits:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    user_defined_annotations:
+        description:
+            - Annotation values in KEY VALUE format.
+        required: False
+        type: str
+        default: []
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+        required: False
+        type: str
+        default: []
+    annotations:
+        description:
+            - All annotations set on action by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
     id:
@@ -107,37 +107,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_defined_annotations',
-    'user_defined_parameters',
-    'annotations',
     'name',
-    'limits',
     'exec',
     'publish',
     'version',
     'parameters',
+    'limits',
+    'user_defined_annotations',
+    'user_defined_parameters',
+    'annotations',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_defined_annotations=dict(
-        default='[]',
-        type='str'),
-    user_defined_parameters=dict(
-        default='[]',
-        type='str'),
-    annotations=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    limits=dict(
-        required=False,
-        elements='',
-        type='list'),
     exec=dict(
         required=False,
         elements='',
@@ -149,6 +136,19 @@ module_args = dict(
         required=False,
         type='str'),
     parameters=dict(
+        required=False,
+        type='str'),
+    limits=dict(
+        required=False,
+        elements='',
+        type='list'),
+    user_defined_annotations=dict(
+        default='[]',
+        type='str'),
+    user_defined_parameters=dict(
+        default='[]',
+        type='str'),
+    annotations=dict(
         required=False,
         type='str'),
     id=dict(
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_function_action',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

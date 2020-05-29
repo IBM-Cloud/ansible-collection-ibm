@@ -16,10 +16,22 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_org' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    users:
+        description:
+            - The IBMID of the users who will have user role in this org, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - (Required for new resource) Org name, for example myorg@domain
@@ -45,18 +57,6 @@ options:
     auditors:
         description:
             - The IBMID of the users who will have auditor role in this org, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    users:
-        description:
-            - The IBMID of the users who will have user role in this org, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    tags:
-        description:
-            - None
         required: False
         type: list
         elements: str
@@ -111,19 +111,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'users',
+    'tags',
     'name',
     'org_quota_definition_guid',
     'billing_managers',
     'managers',
     'auditors',
-    'users',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    users=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -139,14 +147,6 @@ module_args = dict(
         elements='',
         type='list'),
     auditors=dict(
-        required=False,
-        elements='',
-        type='list'),
-    users=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_org',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

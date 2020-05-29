@@ -16,43 +16,43 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) subnet type
-        required: False
-        type: str
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
-    tags:
-        description:
-            - tags set for the resource
-        required: False
-        type: list
-        elements: str
     private:
         description:
             - private subnet
         required: False
         type: bool
         default: False
+    type:
+        description:
+            - (Required for new resource) subnet type
+        required: False
+        type: str
+    capacity:
+        description:
+            - (Required for new resource) number of ip addresses in the subnet
+        required: False
+        type: int
+    tags:
+        description:
+            - tags set for the resource
+        required: False
+        type: list
+        elements: str
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
     ip_version:
         description:
             - ip version
         required: False
         type: int
         default: 4
-    capacity:
-        description:
-            - (Required for new resource) number of ip addresses in the subnet
-        required: False
-        type: int
     vlan_id:
         description:
             - VLAN ID for the subnet
@@ -120,12 +120,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'notes',
-    'tags',
     'private',
-    'ip_version',
+    'type',
     'capacity',
+    'tags',
+    'notes',
+    'ip_version',
     'vlan_id',
     'endpoint_ip',
     'subnet_cidr',
@@ -135,24 +135,24 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    private=dict(
+        default=False,
+        type='bool'),
     type=dict(
         required=False,
         type='str'),
-    notes=dict(
+    capacity=dict(
         required=False,
-        type='str'),
+        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    private=dict(
-        default=False,
-        type='bool'),
+    notes=dict(
+        required=False,
+        type='str'),
     ip_version=dict(
         default=4,
-        type='int'),
-    capacity=dict(
-        required=False,
         type='int'),
     vlan_id=dict(
         required=False,
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

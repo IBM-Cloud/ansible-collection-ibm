@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    destination_port:
+        description:
+            - (Required for new resource) Destination Port number
+        required: False
+        type: int
     connection_limit:
         description:
             - (Required for new resource) Number of connections limit
@@ -45,11 +50,6 @@ options:
             - (Required for new resource) Destination IP Address
         required: False
         type: str
-    destination_port:
-        description:
-            - (Required for new resource) Destination Port number
-        required: False
-        type: int
     weight:
         description:
             - (Required for new resource) Weight value
@@ -113,23 +113,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('destination_port', 'int'),
     ('connection_limit', 'int'),
     ('health_check', 'str'),
     ('vip_id', 'str'),
     ('name', 'str'),
     ('destination_ip_address', 'str'),
-    ('destination_port', 'int'),
     ('weight', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'destination_port',
     'connection_limit',
     'health_check',
     'vip_id',
     'name',
     'destination_ip_address',
-    'destination_port',
     'weight',
     'usip',
     'tags',
@@ -139,6 +139,9 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    destination_port=dict(
+        required=False,
+        type='int'),
     connection_limit=dict(
         required=False,
         type='int'),
@@ -154,9 +157,6 @@ module_args = dict(
     destination_ip_address=dict(
         required=False,
         type='str'),
-    destination_port=dict(
-        required=False,
-        type='int'),
     weight=dict(
         required=False,
         type='int'),
@@ -219,7 +219,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

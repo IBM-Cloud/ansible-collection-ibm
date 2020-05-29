@@ -7,78 +7,35 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_cis_domain_settings
-short_description: Configure IBM Cloud 'ibm_cis_domain_settings' resource
+module: ibm_cis_rate_limit_info
+short_description: Retrieve IBM Cloud 'ibm_cis_rate_limit' resource
 
 version_added: "2.8"
 
 description:
-    - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
+    - Retrieve an IBM Cloud 'ibm_cis_rate_limit' resource
 
 requirements:
     - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    waf:
-        description:
-            - WAF setting
-        required: False
-        type: str
-    certificate_status:
-        description:
-            - Certificate status
-        required: False
-        type: str
-    min_tls_version:
-        description:
-            - Minimum version of TLS required
-        required: False
-        type: str
-        default: 1.1
-    cname_flattening:
-        description:
-            - cname_flattening setting
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: False
-        type: str
     domain_id:
         description:
-            - (Required for new resource) Associated CIS domain
-        required: False
+            - None
+        required: True
         type: str
-    ssl:
+    rate_limit:
         description:
-            - SSL/TLS setting
+            - None
         required: False
+        type: list
+        elements: dict
+    cis_id:
+        description:
+            - None
+        required: True
         type: str
-    opportunistic_encryption:
-        description:
-            - opportunistic_encryption setting
-        required: False
-        type: str
-    automatic_https_rewrites:
-        description:
-            - automatic_https_rewrites setting
-        required: False
-        type: str
-    id:
-        description:
-            - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
-        required: False
-        type: str
-    state:
-        description:
-            - State of resource
-        choices:
-            - available
-            - absent
-        default: available
-        required: False
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -112,62 +69,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'waf',
-    'certificate_status',
-    'min_tls_version',
-    'cname_flattening',
-    'cis_id',
     'domain_id',
-    'ssl',
-    'opportunistic_encryption',
-    'automatic_https_rewrites',
+    'rate_limit',
+    'cis_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    waf=dict(
-        required=False,
-        type='str'),
-    certificate_status=dict(
-        required=False,
-        type='str'),
-    min_tls_version=dict(
-        default='1.1',
-        type='str'),
-    cname_flattening=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     domain_id=dict(
-        required=False,
+        required=True,
         type='str'),
-    ssl=dict(
+    rate_limit=dict(
         required=False,
+        elements='',
+        type='list'),
+    cis_id=dict(
+        required=True,
         type='str'),
-    opportunistic_encryption=dict(
-        required=False,
-        type='str'),
-    automatic_https_rewrites=dict(
-        required=False,
-        type='str'),
-    id=dict(
-        required=False,
-        type='str'),
-    state=dict(
-        type='str',
-        required=False,
-        default='available',
-        choices=(['available', 'absent'])),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -198,19 +124,9 @@ def run_module():
         supports_check_mode=False
     )
 
-    # New resource required arguments checks
-    missing_args = []
-    if module.params['id'] is None:
-        for arg, _ in TL_REQUIRED_PARAMETERS:
-            if module.params[arg] is None:
-                missing_args.append(arg)
-        if missing_args:
-            module.fail_json(msg=(
-                "missing required arguments: " + ", ".join(missing_args)))
-
     result = ibmcloud_terraform(
-        resource_type='ibm_cis_domain_settings',
-        tf_type='resource',
+        resource_type='ibm_cis_rate_limit',
+        tf_type='data',
         parameters=module.params,
         ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,

@@ -16,13 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    target_id:
+    target_url:
         description:
-            - Listener Policy Target ID
+            - Policy Target URL
+        required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Load Balancer Listener Policy
         required: False
         type: str
     action:
@@ -33,16 +38,6 @@ options:
     policy_id:
         description:
             - Listener Policy ID
-        required: False
-        type: str
-    priority:
-        description:
-            - (Required for new resource) Listener Policy Priority
-        required: False
-        type: int
-    name:
-        description:
-            - Policy name
         required: False
         type: str
     rules:
@@ -56,24 +51,29 @@ options:
             - Listener Policy target HTTPS Status code.
         required: False
         type: int
-    target_url:
+    listener:
         description:
-            - Policy Target URL
+            - (Required for new resource) Listener ID
+        required: False
+        type: str
+    priority:
+        description:
+            - (Required for new resource) Listener Policy Priority
+        required: False
+        type: int
+    name:
+        description:
+            - Policy name
+        required: False
+        type: str
+    target_id:
+        description:
+            - Listener Policy Target ID
         required: False
         type: str
     provisioning_status:
         description:
             - Listner Policy status
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Load Balancer Listener Policy
-        required: False
-        type: str
-    listener:
-        description:
-            - (Required for new resource) Listener ID
         required: False
         type: str
     id:
@@ -122,44 +122,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('priority', 'int'),
     ('lb', 'str'),
+    ('action', 'str'),
     ('listener', 'str'),
+    ('priority', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_id',
+    'target_url',
+    'lb',
     'action',
     'policy_id',
-    'priority',
-    'name',
     'rules',
     'target_http_status_code',
-    'target_url',
-    'provisioning_status',
-    'lb',
     'listener',
+    'priority',
+    'name',
+    'target_id',
+    'provisioning_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_id=dict(
+    target_url=dict(
+        required=False,
+        type='str'),
+    lb=dict(
         required=False,
         type='str'),
     action=dict(
         required=False,
         type='str'),
     policy_id=dict(
-        required=False,
-        type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
-    name=dict(
         required=False,
         type='str'),
     rules=dict(
@@ -169,16 +166,19 @@ module_args = dict(
     target_http_status_code=dict(
         required=False,
         type='int'),
-    target_url=dict(
+    listener=dict(
+        required=False,
+        type='str'),
+    priority=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    target_id=dict(
         required=False,
         type='str'),
     provisioning_status=dict(
-        required=False,
-        type='str'),
-    lb=dict(
-        required=False,
-        type='str'),
-    listener=dict(
         required=False,
         type='str'),
     id=dict(
@@ -245,7 +245,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

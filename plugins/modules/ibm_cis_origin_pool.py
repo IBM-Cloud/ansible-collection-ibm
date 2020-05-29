@@ -16,21 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    origins:
+        description:
+            - (Required for new resource) Origins info
+        required: False
+        type: list
+        elements: dict
+    created_on:
+        description:
+            - Creation date info
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) name
         required: False
         type: str
-    check_regions:
-        description:
-            - (Required for new resource) List of regions
-        required: False
-        type: list
-        elements: str
     enabled:
         description:
             - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
@@ -46,20 +56,9 @@ options:
             - Email address configured to recieve the notifications
         required: False
         type: str
-    origins:
-        description:
-            - (Required for new resource) Origins info
-        required: False
-        type: list
-        elements: dict
     health:
         description:
             - Health info
-        required: False
-        type: str
-    created_on:
-        description:
-            - Creation date info
         required: False
         type: str
     modified_on:
@@ -67,11 +66,12 @@ options:
             - Modified date info
         required: False
         type: str
-    cis_id:
+    check_regions:
         description:
-            - (Required for new resource) CIS instance crn
+            - (Required for new resource) List of regions
         required: False
-        type: str
+        type: list
+        elements: str
     description:
         description:
             - Description of the CIS Origin Pool
@@ -129,25 +129,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('check_regions', 'list'),
-    ('enabled', 'bool'),
     ('origins', 'list'),
     ('cis_id', 'str'),
+    ('name', 'str'),
+    ('enabled', 'bool'),
+    ('check_regions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'origins',
+    'created_on',
+    'cis_id',
     'name',
-    'check_regions',
     'enabled',
     'monitor',
     'notification_email',
-    'origins',
     'health',
-    'created_on',
     'modified_on',
-    'cis_id',
+    'check_regions',
     'description',
     'minimum_origins',
 ]
@@ -156,13 +156,19 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    check_regions=dict(
+    origins=dict(
         required=False,
         elements='',
         type='list'),
+    created_on=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
@@ -172,22 +178,16 @@ module_args = dict(
     notification_email=dict(
         required=False,
         type='str'),
-    origins=dict(
-        required=False,
-        elements='',
-        type='list'),
     health=dict(
-        required=False,
-        type='str'),
-    created_on=dict(
         required=False,
         type='str'),
     modified_on=dict(
         required=False,
         type='str'),
-    cis_id=dict(
+    check_regions=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     description=dict(
         required=False,
         type='str'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_cis_origin_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
@@ -26,12 +26,11 @@ options:
         required: False
         type: str
         default: shared
-    disk_encryption:
+    state_:
         description:
-            - worker node disk encrypted if set to true
+            - worker pool state
         required: False
-        type: bool
-        default: True
+        type: str
     zones:
         description:
             - None
@@ -49,14 +48,14 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    cluster:
+        description:
+            - (Required for new resource) Cluster name
+        required: False
+        type: str
     machine_type:
         description:
             - (Required for new resource) worker nodes machine type
-        required: False
-        type: str
-    worker_pool_name:
-        description:
-            - (Required for new resource) worker pool name
         required: False
         type: str
     entitlement:
@@ -74,9 +73,9 @@ options:
             - The worker pool region
         required: False
         type: str
-    cluster:
+    worker_pool_name:
         description:
-            - (Required for new resource) Cluster name
+            - (Required for new resource) worker pool name
         required: False
         type: str
     size_per_zone:
@@ -84,11 +83,12 @@ options:
             - (Required for new resource) Number of nodes per zone
         required: False
         type: int
-    state_:
+    disk_encryption:
         description:
-            - worker pool state
+            - worker node disk encrypted if set to true
         required: False
-        type: str
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,27 +115,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cluster', 'str'),
     ('machine_type', 'str'),
     ('worker_pool_name', 'str'),
-    ('cluster', 'str'),
     ('size_per_zone', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'hardware',
-    'disk_encryption',
+    'state_',
     'zones',
     'labels',
     'resource_group_id',
+    'cluster',
     'machine_type',
-    'worker_pool_name',
     'entitlement',
     'resource_controller_url',
     'region',
-    'cluster',
+    'worker_pool_name',
     'size_per_zone',
-    'state_',
+    'disk_encryption',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -145,9 +145,9 @@ module_args = dict(
     hardware=dict(
         default='shared',
         type='str'),
-    disk_encryption=dict(
-        default=True,
-        type='bool'),
+    state_=dict(
+        required=False,
+        type='str'),
     zones=dict(
         required=False,
         elements='',
@@ -159,10 +159,10 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    machine_type=dict(
+    cluster=dict(
         required=False,
         type='str'),
-    worker_pool_name=dict(
+    machine_type=dict(
         required=False,
         type='str'),
     entitlement=dict(
@@ -174,15 +174,15 @@ module_args = dict(
     region=dict(
         required=False,
         type='str'),
-    cluster=dict(
+    worker_pool_name=dict(
         required=False,
         type='str'),
     size_per_zone=dict(
         required=False,
         type='int'),
-    state_=dict(
-        required=False,
-        type='str'),
+    disk_encryption=dict(
+        default=True,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

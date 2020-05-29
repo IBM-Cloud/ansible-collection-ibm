@@ -16,25 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_operations' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    pi_operation:
-        description:
-            - (Required for new resource) PI instance operation type
-        required: False
-        type: str
-    pi_progress:
-        description:
-            - Progress of the operation
-        required: False
-        type: float
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI Cloud instnce id
-        required: False
-        type: str
     pi_status:
         description:
             - PI instance operation status
@@ -54,6 +39,21 @@ options:
     pi_health_status:
         description:
             - PI instance health status
+        required: False
+        type: str
+    pi_operation:
+        description:
+            - (Required for new resource) PI instance operation type
+        required: False
+        type: str
+    pi_progress:
+        description:
+            - Progress of the operation
+        required: False
+        type: float
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI Cloud instnce id
         required: False
         type: str
     id:
@@ -98,35 +98,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_instance_name', 'str'),
     ('pi_operation', 'str'),
     ('pi_cloud_instance_id', 'str'),
-    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_operation',
-    'pi_progress',
-    'pi_cloud_instance_id',
     'pi_status',
     'pi_instance_name',
     'addresses',
     'pi_health_status',
+    'pi_operation',
+    'pi_progress',
+    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_operation=dict(
-        required=False,
-        type='str'),
-    pi_progress=dict(
-        required=False,
-        type='float'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     pi_status=dict(
         required=False,
         type='str'),
@@ -138,6 +129,15 @@ module_args = dict(
         elements='',
         type='list'),
     pi_health_status=dict(
+        required=False,
+        type='str'),
+    pi_operation=dict(
+        required=False,
+        type='str'),
+    pi_progress=dict(
+        required=False,
+        type='float'),
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -185,7 +185,7 @@ def run_module():
         resource_type='ibm_pi_operations',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

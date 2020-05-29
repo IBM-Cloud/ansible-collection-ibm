@@ -16,35 +16,24 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
-    download:
+    token:
         description:
-            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+            - None
         required: False
-        type: bool
-        default: True
-    config_file_path:
+        type: str
+    account_guid:
         description:
-            - The absolute path to the kubernetes config yml file
+            - The bluemix account guid this cluster belongs to
         required: False
         type: str
     admin_key:
         description:
             - None
         required: False
-        type: str
-    region:
-        description:
-            - The cluster region
-        required: False
-        type: str
-    cluster_name_id:
-        description:
-            - The name/id of the cluster
-        required: True
         type: str
     admin_certificate:
         description:
@@ -56,14 +45,9 @@ options:
             - None
         required: False
         type: str
-    token:
+    host:
         description:
             - None
-        required: False
-        type: str
-    org_guid:
-        description:
-            - The bluemix organization guid this cluster belongs to
         required: False
         type: str
     space_guid:
@@ -71,31 +55,15 @@ options:
             - The bluemix space guid this cluster belongs to
         required: False
         type: str
-    resource_group_id:
+    download:
         description:
-            - ID of the resource group.
-        required: False
-        type: str
-    admin:
-        description:
-            - If set to true will download the config for admin
+            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
         required: False
         type: bool
-        default: False
-    network:
+        default: True
+    config_file_path:
         description:
-            - If set to true will download the Calico network config with the Admin config
-        required: False
-        type: bool
-        default: False
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    config_dir:
-        description:
-            - The directory where the cluster config to be downloaded. Default is home directory
+            - The absolute path to the kubernetes config yml file
         required: False
         type: str
     calico_config_file_path:
@@ -103,9 +71,41 @@ options:
             - The absolute path to the calico network config file
         required: False
         type: str
-    host:
+    region:
         description:
-            - None
+            - The cluster region
+        required: False
+        type: str
+    network:
+        description:
+            - If set to true will download the Calico network config with the Admin config
+        required: False
+        type: bool
+        default: False
+    admin:
+        description:
+            - If set to true will download the config for admin
+        required: False
+        type: bool
+        default: False
+    org_guid:
+        description:
+            - The bluemix organization guid this cluster belongs to
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    cluster_name_id:
+        description:
+            - The name/id of the cluster
+        required: True
+        type: str
+    config_dir:
+        description:
+            - The directory where the cluster config to be downloaded. Default is home directory
         required: False
         type: str
     ibmcloud_api_key:
@@ -126,43 +126,37 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'download',
-    'config_file_path',
+    'token',
+    'account_guid',
     'admin_key',
-    'region',
-    'cluster_name_id',
     'admin_certificate',
     'ca_certificate',
-    'token',
-    'org_guid',
-    'space_guid',
-    'resource_group_id',
-    'admin',
-    'network',
-    'account_guid',
-    'config_dir',
-    'calico_config_file_path',
     'host',
+    'space_guid',
+    'download',
+    'config_file_path',
+    'calico_config_file_path',
+    'region',
+    'network',
+    'admin',
+    'org_guid',
+    'resource_group_id',
+    'cluster_name_id',
+    'config_dir',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    download=dict(
-        default=True,
-        type='bool'),
-    config_file_path=dict(
+    token=dict(
+        required=False,
+        type='str'),
+    account_guid=dict(
         required=False,
         type='str'),
     admin_key=dict(
         required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
-    cluster_name_id=dict(
-        required=True,
         type='str'),
     admin_certificate=dict(
         required=False,
@@ -170,34 +164,40 @@ module_args = dict(
     ca_certificate=dict(
         required=False,
         type='str'),
-    token=dict(
-        required=False,
-        type='str'),
-    org_guid=dict(
+    host=dict(
         required=False,
         type='str'),
     space_guid=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    admin=dict(
-        default=False,
+    download=dict(
+        default=True,
         type='bool'),
-    network=dict(
-        default=False,
-        type='bool'),
-    account_guid=dict(
-        required=False,
-        type='str'),
-    config_dir=dict(
+    config_file_path=dict(
         required=False,
         type='str'),
     calico_config_file_path=dict(
         required=False,
         type='str'),
-    host=dict(
+    region=dict(
+        required=False,
+        type='str'),
+    network=dict(
+        default=False,
+        type='bool'),
+    admin=dict(
+        default=False,
+        type='bool'),
+    org_guid=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
+    config_dir=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_container_cluster_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
@@ -25,17 +25,16 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: False
         type: int
-    routing_type:
+    allocation:
         description:
-            - (Required for new resource) Routing type
+            - (Required for new resource) Allocation type
         required: False
-        type: str
-    tags:
+        type: int
+    port:
         description:
-            - List of tags
+            - (Required for new resource) Port number
         required: False
-        type: list
-        elements: str
+        type: int
     virtual_server_id:
         description:
             - Virtual server ID
@@ -51,21 +50,22 @@ options:
             - (Required for new resource) Routing method
         required: False
         type: str
+    routing_type:
+        description:
+            - (Required for new resource) Routing type
+        required: False
+        type: str
     timeout:
         description:
             - Timeout value
         required: False
         type: int
-    allocation:
+    tags:
         description:
-            - (Required for new resource) Allocation type
+            - List of tags
         required: False
-        type: int
-    port:
-        description:
-            - (Required for new resource) Port number
-        required: False
-        type: int
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,23 +113,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('load_balancer_id', 'int'),
-    ('routing_type', 'str'),
-    ('routing_method', 'str'),
     ('allocation', 'int'),
     ('port', 'int'),
+    ('routing_method', 'str'),
+    ('routing_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'load_balancer_id',
-    'routing_type',
-    'tags',
+    'allocation',
+    'port',
     'virtual_server_id',
     'service_group_id',
     'routing_method',
+    'routing_type',
     'timeout',
-    'allocation',
-    'port',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -139,13 +139,12 @@ module_args = dict(
     load_balancer_id=dict(
         required=False,
         type='int'),
-    routing_type=dict(
+    allocation=dict(
         required=False,
-        type='str'),
-    tags=dict(
+        type='int'),
+    port=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
     virtual_server_id=dict(
         required=False,
         type='int'),
@@ -155,15 +154,16 @@ module_args = dict(
     routing_method=dict(
         required=False,
         type='str'),
+    routing_type=dict(
+        required=False,
+        type='str'),
     timeout=dict(
         required=False,
         type='int'),
-    allocation=dict(
+    tags=dict(
         required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

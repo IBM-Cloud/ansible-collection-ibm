@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.6.0
+    - IBM-Cloud terraform-provider-ibm v1.7.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) The name of the custom Role
+        required: False
+        type: str
+    description:
+        description:
+            - The description of the role
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
     display_name:
         description:
             - (Required for new resource) Display Name of the Custom Role
@@ -41,29 +56,14 @@ options:
             - crn of the Custom Role
         required: False
         type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The name of the custom Role
-        required: False
-        type: str
-    description:
-        description:
-            - The description of the role
-        required: False
-        type: str
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    resource_crn:
+    resource_controller_url:
         description:
-            - The crn of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
         type: str
     id:
@@ -112,29 +112,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('display_name', 'str'),
     ('service', 'str'),
     ('actions', 'list'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'description',
+    'resource_crn',
     'display_name',
     'service',
     'actions',
     'crn',
-    'resource_controller_url',
-    'name',
-    'description',
     'resource_name',
-    'resource_crn',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
     display_name=dict(
         required=False,
         type='str'),
@@ -148,19 +157,10 @@ module_args = dict(
     crn=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
     id=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_iam_custom_role',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.6.0',
+        ibm_provider_version='1.7.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
