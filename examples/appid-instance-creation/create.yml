@@ -1,0 +1,15 @@
+---
+- name: Create APPID instance.
+  hosts: localhost
+  collections:
+   - ibmcloud.ibmcollection
+  tasks:
+    - name: Read the variables from var file
+      include_vars:
+        file: vars.yml
+    - name: Create a APPID instance
+      ibm_resource_instance:
+        name: "{{ instance_name }}"
+        service: "appid"
+        plan: "{{ plan_type }}"
+        location: "{{ location_info }}"

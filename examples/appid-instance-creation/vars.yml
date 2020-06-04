@@ -1,0 +1,4 @@
+---
+instance_name: test-instance
+location_info: us-south
+plan_type: lite
