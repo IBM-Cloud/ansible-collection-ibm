@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    default:
+        description:
+            - Specifies whether its default resource group or not
+        required: False
+        type: bool
     state_:
         description:
             - State of the resource group
@@ -36,11 +41,6 @@ options:
             - (Required for new resource) The name of the resource group
         required: False
         type: str
-    default:
-        description:
-            - Specifies whether its default resource group or not
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,16 +92,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'default',
     'state_',
     'tags',
     'name',
-    'default',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    default=dict(
+        required=False,
+        type='bool'),
     state_=dict(
         required=False,
         type='str'),
@@ -112,9 +115,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    default=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -167,7 +167,7 @@ def run_module():
         resource_type='ibm_resource_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

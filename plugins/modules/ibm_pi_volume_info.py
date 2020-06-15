@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
@@ -25,12 +25,7 @@ options:
             - None
         required: False
         type: bool
-    bootable:
-        description:
-            - None
-        required: False
-        type: bool
-    creation_date:
+    name:
         description:
             - None
         required: False
@@ -45,17 +40,22 @@ options:
             - None
         required: True
         type: str
-    size:
-        description:
-            - None
-        required: False
-        type: int
     state:
         description:
             - None
         required: False
         type: str
-    name:
+    size:
+        description:
+            - None
+        required: False
+        type: int
+    bootable:
+        description:
+            - None
+        required: False
+        type: bool
+    creation_date:
         description:
             - None
         required: False
@@ -101,13 +101,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'shareable',
-    'bootable',
-    'creation_date',
+    'name',
     'pi_volume_name',
     'pi_cloud_instance_id',
-    'size',
     'state',
-    'name',
+    'size',
+    'bootable',
+    'creation_date',
     'disk_type',
 ]
 
@@ -118,10 +118,7 @@ module_args = dict(
     shareable=dict(
         required=False,
         type='bool'),
-    bootable=dict(
-        required=False,
-        type='bool'),
-    creation_date=dict(
+    name=dict(
         required=False,
         type='str'),
     pi_volume_name=dict(
@@ -130,13 +127,16 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    size=dict(
-        required=False,
-        type='int'),
     state=dict(
         required=False,
         type='str'),
-    name=dict(
+    size=dict(
+        required=False,
+        type='int'),
+    bootable=dict(
+        required=False,
+        type='bool'),
+    creation_date=dict(
         required=False,
         type='str'),
     disk_type=dict(
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

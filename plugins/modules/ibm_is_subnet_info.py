@@ -16,10 +16,60 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_subnet' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    network_acl:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    zone:
+        description:
+            - None
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    ipv4_cidr_block:
+        description:
+            - None
+        required: False
+        type: str
+    ipv6_cidr_block:
+        description:
+            - None
+        required: False
+        type: str
+    available_ipv4_address_count:
+        description:
+            - None
+        required: False
+        type: str
+    name:
+        description:
+            - None
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    total_ipv4_address_count:
+        description:
+            - None
+        required: False
+        type: int
     public_gateway:
         description:
             - None
@@ -40,69 +90,24 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    ip_version:
-        description:
-            - None
-        required: False
-        type: int
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    available_ipv4_address_count:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
     identifier:
         description:
             - None
         required: True
         type: str
-    ipv6_cidr_block:
+    ip_version:
         description:
             - None
         required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    ipv4_cidr_block:
+        type: int
+    resource_group:
         description:
             - None
-        required: False
-        type: str
-    network_acl:
-        description:
-            - None
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
         required: False
         type: str
     resource_status:
         description:
             - The status of the resource
-        required: False
-        type: str
-    total_ipv4_address_count:
-        description:
-            - None
-        required: False
-        type: int
-    zone:
-        description:
-            - None
         required: False
         type: str
     generation:
@@ -143,29 +148,60 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'network_acl',
+    'status',
+    'zone',
+    'resource_name',
+    'ipv4_cidr_block',
+    'ipv6_cidr_block',
+    'available_ipv4_address_count',
+    'name',
+    'resource_crn',
+    'total_ipv4_address_count',
     'public_gateway',
     'vpc',
     'resource_controller_url',
     'resource_group_name',
-    'ip_version',
-    'name',
-    'available_ipv4_address_count',
-    'status',
     'identifier',
-    'ipv6_cidr_block',
-    'resource_name',
-    'ipv4_cidr_block',
-    'network_acl',
-    'resource_crn',
+    'ip_version',
+    'resource_group',
     'resource_status',
-    'total_ipv4_address_count',
-    'zone',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    network_acl=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    ipv4_cidr_block=dict(
+        required=False,
+        type='str'),
+    ipv6_cidr_block=dict(
+        required=False,
+        type='str'),
+    available_ipv4_address_count=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    total_ipv4_address_count=dict(
+        required=False,
+        type='int'),
     public_gateway=dict(
         required=False,
         type='str'),
@@ -178,43 +214,16 @@ module_args = dict(
     resource_group_name=dict(
         required=False,
         type='str'),
-    ip_version=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    available_ipv4_address_count=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
     identifier=dict(
         required=True,
         type='str'),
-    ipv6_cidr_block=dict(
+    ip_version=dict(
         required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    ipv4_cidr_block=dict(
-        required=False,
-        type='str'),
-    network_acl=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
+        type='int'),
+    resource_group=dict(
         required=False,
         type='str'),
     resource_status=dict(
-        required=False,
-        type='str'),
-    total_ipv4_address_count=dict(
-        required=False,
-        type='int'),
-    zone=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -263,7 +272,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

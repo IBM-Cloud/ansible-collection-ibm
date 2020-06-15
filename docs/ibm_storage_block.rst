@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  hourly_billing (False, bool, False)
-    Billing done hourly, if set to true
-
 
   type (False, str, None)
     (Required for new resource) Storage block type
@@ -50,32 +42,12 @@ Parameters
     None
 
 
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
-
-
   allowed_hardware_ids (False, list, None)
     List of allowe hardware IDs
 
 
-  tags (False, list, None)
-    List of tags associated with the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  hostname (False, str, None)
-    Hostname
+  datacenter (False, str, None)
+    (Required for new resource) Datacenter name
 
 
   os_format_type (False, str, None)
@@ -86,8 +58,40 @@ Parameters
     List of allowed virtual guest IDs
 
 
+  tags (False, list, None)
+    List of tags associated with the resource
+
+
+  target_address (False, list, None)
+    List of target Addresses
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
   notes (False, str, None)
     Additional note info
+
+
+  hourly_billing (False, bool, False)
+    Billing done hourly, if set to true
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  volumename (False, str, None)
+    Volume name
+
+
+  hostname (False, str, None)
+    Hostname
+
+
+  allowed_hardware_info (False, list, None)
+    None
 
 
   allowed_ip_addresses (False, list, None)
@@ -98,12 +102,8 @@ Parameters
     None
 
 
-  target_address (False, list, None)
-    List of target Addresses
-
-
-  volumename (False, str, None)
-    Volume name
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

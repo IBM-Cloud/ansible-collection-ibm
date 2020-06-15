@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (False, str, None)
-    (Required for new resource) DNS record data
-
-
-  host (False, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
   type (False, str, None)
     (Required for new resource) DNS record type
 
 
-  protocol (False, str, None)
-    protocol info
+  retry (False, int, None)
+    Retry count
 
 
-  expire (False, int, None)
-    DNS record expiry info
+  ttl (False, int, None)
+    (Required for new resource) TTL configuration
 
 
-  refresh (False, int, None)
-    refresh rate
+  port (False, int, None)
+    port number
 
 
-  service (False, str, None)
-    service info
+  priority (False, int, 0)
+    priority info
 
 
   weight (False, int, 0)
@@ -74,24 +58,40 @@ Parameters
     Responsible person for DNS record
 
 
-  retry (False, int, None)
-    Retry count
+  expire (False, int, None)
+    DNS record expiry info
 
 
-  port (False, int, None)
-    port number
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
-  priority (False, int, 0)
-    priority info
+  service (False, str, None)
+    service info
 
 
   domain_id (False, int, None)
     (Required for new resource) Domain ID of dns record instance
 
 
-  ttl (False, int, None)
-    (Required for new resource) TTL configuration
+  host (False, str, None)
+    (Required for new resource) Hostname
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  data (False, str, None)
+    (Required for new resource) DNS record data
 
 
   id (False, str, None)

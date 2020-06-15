@@ -16,18 +16,103 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_cluster' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    cluster_name_id:
+        description:
+            - Name or id of the cluster
+        required: True
+        type: str
+    alb_type:
+        description:
+            - None
+        required: False
+        type: str
+        default: all
+    ingress_hostname:
+        description:
+            - None
+        required: False
+        type: str
     private_service_endpoint_url:
         description:
             - None
         required: False
         type: str
-    org_guid:
+    workers:
         description:
-            - The bluemix organization guid this cluster belongs to
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    is_trusted:
+        description:
+            - None
+        required: False
+        type: bool
+    albs:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    ingress_secret:
+        description:
+            - None
+        required: False
+        type: str
+    public_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    worker_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    vlans:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
+    region:
+        description:
+            - The cluster region
+        required: False
+        type: str
+    private_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    space_guid:
+        description:
+            - The bluemix space guid this cluster belongs to
         required: False
         type: str
     resource_group_id:
@@ -40,78 +125,35 @@ options:
             - None
         required: False
         type: bool
-    private_service_endpoint:
+    crn:
         description:
-            - None
-        required: False
-        type: bool
-    server_url:
-        description:
-            - None
+            - CRN of resource instance
         required: False
         type: str
-    cluster_name_id:
-        description:
-            - Name or id of the cluster
-        required: True
-        type: str
-    is_trusted:
-        description:
-            - None
-        required: False
-        type: bool
     bounded_services:
         description:
             - None
         required: False
         type: list
         elements: dict
-    vlans:
+    resource_crn:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    ingress_secret:
-        description:
-            - None
+            - The crn of the resource
         required: False
         type: str
-    space_guid:
+    resource_controller_url:
         description:
-            - The bluemix space guid this cluster belongs to
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
         required: False
         type: str
-    region:
+    org_guid:
         description:
-            - The cluster region
+            - The bluemix organization guid this cluster belongs to
         required: False
         type: str
-    workers:
+    server_url:
         description:
             - None
-        required: False
-        type: list
-        elements: str
-    worker_pools:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    ingress_hostname:
-        description:
-            - None
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
         required: False
         type: str
     worker_count:
@@ -119,48 +161,6 @@ options:
             - Number of workers
         required: False
         type: int
-    albs:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    alb_type:
-        description:
-            - None
-        required: False
-        type: str
-        default: all
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -179,43 +179,95 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_status',
+    'cluster_name_id',
+    'alb_type',
+    'ingress_hostname',
     'private_service_endpoint_url',
-    'org_guid',
+    'workers',
+    'resource_group_name',
+    'is_trusted',
+    'albs',
+    'ingress_secret',
+    'public_service_endpoint_url',
+    'resource_name',
+    'worker_pools',
+    'vlans',
+    'account_guid',
+    'region',
+    'private_service_endpoint',
+    'space_guid',
     'resource_group_id',
     'public_service_endpoint',
-    'private_service_endpoint',
-    'server_url',
-    'cluster_name_id',
-    'is_trusted',
-    'bounded_services',
-    'vlans',
-    'ingress_secret',
-    'space_guid',
-    'region',
-    'workers',
-    'worker_pools',
-    'ingress_hostname',
-    'resource_status',
-    'account_guid',
-    'worker_count',
-    'albs',
     'crn',
+    'bounded_services',
     'resource_crn',
-    'alb_type',
     'resource_controller_url',
-    'resource_name',
-    'resource_group_name',
-    'public_service_endpoint_url',
+    'org_guid',
+    'server_url',
+    'worker_count',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_status=dict(
+        required=False,
+        type='str'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
+    alb_type=dict(
+        default='all',
+        type='str'),
+    ingress_hostname=dict(
+        required=False,
+        type='str'),
     private_service_endpoint_url=dict(
         required=False,
         type='str'),
-    org_guid=dict(
+    workers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    is_trusted=dict(
+        required=False,
+        type='bool'),
+    albs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ingress_secret=dict(
+        required=False,
+        type='str'),
+    public_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    worker_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vlans=dict(
+        required=False,
+        elements='',
+        type='list'),
+    account_guid=dict(
+        required=False,
+        type='str'),
+    region=dict(
+        required=False,
+        type='str'),
+    private_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    space_guid=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -224,80 +276,28 @@ module_args = dict(
     public_service_endpoint=dict(
         required=False,
         type='bool'),
-    private_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    server_url=dict(
+    crn=dict(
         required=False,
         type='str'),
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
-    is_trusted=dict(
-        required=False,
-        type='bool'),
     bounded_services=dict(
         required=False,
         elements='',
         type='list'),
-    vlans=dict(
-        required=False,
-        elements='',
-        type='list'),
-    ingress_secret=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
-    space_guid=dict(
+    resource_controller_url=dict(
         required=False,
         type='str'),
-    region=dict(
+    org_guid=dict(
         required=False,
         type='str'),
-    workers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    worker_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
-    ingress_hostname=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
+    server_url=dict(
         required=False,
         type='str'),
     worker_count=dict(
         required=False,
         type='int'),
-    albs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    crn=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    alb_type=dict(
-        default='all',
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    public_service_endpoint_url=dict(
-        required=False,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -318,7 +318,7 @@ def run_module():
         resource_type='ibm_container_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

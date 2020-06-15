@@ -16,28 +16,33 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    region:
+    alb_id:
         description:
-            - None
+            - (Required for new resource) ALB ID
         required: False
         type: str
-    enable:
+    cluster:
         description:
-            - set to true if ALB needs to be enabled
+            - Cluster id
         required: False
-        type: bool
+        type: str
     disable_deployment:
         description:
             - Set to true if ALB needs to be disabled
         required: False
         type: bool
-    cluster:
+    name:
         description:
-            - Cluster id
+            - ALB name
+        required: False
+        type: str
+    alb_type:
+        description:
+            - ALB type
         required: False
         type: str
     user_ip:
@@ -45,24 +50,19 @@ options:
             - IP assigned by the user
         required: False
         type: str
-    name:
+    enable:
         description:
-            - ALB name
+            - set to true if ALB needs to be enabled
         required: False
-        type: str
+        type: bool
     zone:
         description:
             - ALB zone
         required: False
         type: str
-    alb_id:
+    region:
         description:
-            - (Required for new resource) ALB ID
-        required: False
-        type: str
-    alb_type:
-        description:
-            - ALB type
+            - None
         required: False
         type: str
     id:
@@ -96,46 +96,46 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region',
-    'enable',
-    'disable_deployment',
-    'cluster',
-    'user_ip',
-    'name',
-    'zone',
     'alb_id',
+    'cluster',
+    'disable_deployment',
+    'name',
     'alb_type',
+    'user_ip',
+    'enable',
+    'zone',
+    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
+    alb_id=dict(
         required=False,
         type='str'),
-    enable=dict(
+    cluster=dict(
         required=False,
-        type='bool'),
+        type='str'),
     disable_deployment=dict(
         required=False,
         type='bool'),
-    cluster=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    alb_type=dict(
         required=False,
         type='str'),
     user_ip=dict(
         required=False,
         type='str'),
-    name=dict(
+    enable=dict(
         required=False,
-        type='str'),
+        type='bool'),
     zone=dict(
         required=False,
         type='str'),
-    alb_id=dict(
-        required=False,
-        type='str'),
-    alb_type=dict(
+    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

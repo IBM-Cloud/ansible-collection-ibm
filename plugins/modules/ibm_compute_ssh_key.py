@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    label:
-        description:
-            - (Required for new resource) SSH Key label
-        required: False
-        type: str
     public_key:
         description:
             - (Required for new resource) Plublic Key info
@@ -46,6 +41,11 @@ options:
         required: False
         type: list
         elements: str
+    label:
+        description:
+            - (Required for new resource) SSH Key label
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,26 +92,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('label', 'str'),
     ('public_key', 'str'),
+    ('label', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'label',
     'public_key',
     'fingerprint',
     'notes',
     'tags',
+    'label',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    label=dict(
-        required=False,
-        type='str'),
     public_key=dict(
         required=False,
         type='str'),
@@ -125,6 +122,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    label=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -177,7 +177,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

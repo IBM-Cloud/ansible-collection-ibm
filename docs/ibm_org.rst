@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
 
   name (False, str, None)
     (Required for new resource) Org name, for example myorg@domain
@@ -48,10 +52,6 @@ Parameters
 
   users (False, list, None)
     The IBMID of the users who will have user role in this org, ex - user@example.com
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

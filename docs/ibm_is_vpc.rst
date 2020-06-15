@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,68 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  classic_access (False, bool, False)
-    Set to true if classic access needs to enabled to VPC
-
-
-  status (False, str, None)
-    VPC status
-
-
-  cse_source_addresses (False, list, None)
-    None
-
-
-  subnets (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) VPC name
-
-
-  default_security_group (False, str, None)
-    Security group associated with VPC
-
-
-  default_network_acl (False, str, None)
-    Default network ACL
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  tags (False, list, None)
-    List of tags
-
-
-  crn (False, str, None)
-    The crn of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  classic_access (False, bool, False)
+    Set to true if classic access needs to enabled to VPC
+
+
+  default_security_group (False, str, None)
+    Security group associated with VPC
+
+
+  crn (False, str, None)
+    The crn of the resource
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  name (False, str, None)
+    (Required for new resource) VPC name
+
+
+  status (False, str, None)
+    VPC status
+
+
+  tags (False, list, None)
+    List of tags
+
+
   resource_status (False, str, None)
     The status of the resource
 
 
+  cse_source_addresses (False, list, None)
+    None
+
+
+  default_network_acl (False, str, None)
+    Default network ACL
+
+
+  subnets (False, list, None)
+    None
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   id (False, str, None)

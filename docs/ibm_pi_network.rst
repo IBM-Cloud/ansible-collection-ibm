@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_network_type (False, str, None)
+    (Required for new resource) PI network type
+
+
+  pi_network_name (False, str, None)
+    (Required for new resource) PI network name
+
 
   pi_dns (False, list, None)
     List of PI network DNS name
@@ -48,14 +56,6 @@ Parameters
 
   vlan_id (False, float, None)
     VLAN Id value
-
-
-  pi_network_type (False, str, None)
-    (Required for new resource) PI network type
-
-
-  pi_network_name (False, str, None)
-    (Required for new resource) PI network name
 
 
   id (False, str, None)

@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hardware_firewall_shared' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    hardware_instance_id:
+        description:
+            - Hardware instance ID
+        required: False
+        type: int
     billing_item_id:
         description:
             - Billing Item ID
@@ -33,11 +38,6 @@ options:
     virtual_instance_id:
         description:
             - Virtual instance ID
-        required: False
-        type: int
-    hardware_instance_id:
-        description:
-            - Hardware instance ID
         required: False
         type: int
     id:
@@ -91,16 +91,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'hardware_instance_id',
     'billing_item_id',
     'firewall_type',
     'virtual_instance_id',
-    'hardware_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    hardware_instance_id=dict(
+        required=False,
+        type='int'),
     billing_item_id=dict(
         required=False,
         type='int'),
@@ -108,9 +111,6 @@ module_args = dict(
         required=False,
         type='str'),
     virtual_instance_id=dict(
-        required=False,
-        type='int'),
-    hardware_instance_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -165,7 +165,7 @@ def run_module():
         resource_type='ibm_hardware_firewall_shared',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

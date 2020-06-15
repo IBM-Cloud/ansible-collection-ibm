@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_health_status (False, str, None)
-    PI instance health status
-
-
-  pi_operation (False, str, None)
-    (Required for new resource) PI instance operation type
-
 
   pi_progress (False, float, None)
     Progress of the operation
@@ -52,6 +44,14 @@ Parameters
 
   addresses (False, list, None)
     None
+
+
+  pi_health_status (False, str, None)
+    PI instance health status
+
+
+  pi_operation (False, str, None)
+    (Required for new resource) PI instance operation type
 
 
   id (False, str, None)

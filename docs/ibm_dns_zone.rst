@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  instance_id (False, str, None)
+    (Required for new resource) Instance ID
+
+
+  zone_id (False, str, None)
+    Zone ID
+
+
+  name (False, str, None)
+    (Required for new resource) Zone name
+
 
   description (False, str, None)
     Zone description
@@ -44,18 +56,6 @@ Parameters
 
   modified_on (False, str, None)
     Modification date
-
-
-  instance_id (False, str, None)
-    (Required for new resource) Instance ID
-
-
-  zone_id (False, str, None)
-    Zone ID
-
-
-  name (False, str, None)
-    (Required for new resource) Zone name
 
 
   id (False, str, None)

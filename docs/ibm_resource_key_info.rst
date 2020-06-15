@@ -18,29 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status (False, str, None)
-    Status of resource key
-
-
-  credentials (False, dict, None)
-    Credentials asociated with the key
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
-
-
-  crn (False, str, None)
-    crn of resource key
-
 
   name (True, str, None)
     The name of the resource key
@@ -56,6 +40,22 @@ Parameters
 
   role (False, str, None)
     User role
+
+
+  status (False, str, None)
+    Status of resource key
+
+
+  credentials (False, dict, None)
+    Credentials asociated with the key
+
+
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
+
+
+  crn (False, str, None)
+    crn of resource key
 
 
   iaas_classic_username (False, any, None)

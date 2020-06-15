@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,19 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  workers_info (False, list, None)
-    The IDs of the worker node
+  public_service_endpoint_url (False, str, None)
+    None
 
 
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
+  worker_num (False, int, 0)
+    Number of worker nodes
 
 
-  hardware (False, str, None)
-    (Required for new resource) Hardware type
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
-  is_trusted (False, bool, None)
+  public_service_endpoint (False, bool, None)
     None
 
 
@@ -46,100 +46,52 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  tags (False, list, None)
-    Tags for the resource
-
-
-  private_service_endpoint_url (False, str, None)
+  private_service_endpoint (False, bool, None)
     None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  region (False, str, None)
-    The cluster region
-
-
-  worker_num (False, int, 0)
-    Number of worker nodes
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   ingress_hostname (False, str, None)
     None
 
 
-  server_url (False, str, None)
-    None
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   worker_pools (False, list, None)
     None
 
 
-  datacenter (False, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  albs (False, list, None)
+  is_trusted (False, bool, None)
     None
 
 
-  kube_version (False, str, None)
-    Kubernetes version info
+  tags (False, list, None)
+    Tags for the resource
 
 
-  private_vlan_id (False, str, None)
-    Private VLAN ID
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  server_url (False, str, None)
+    None
 
 
   webhook (False, list, None)
@@ -150,23 +102,55 @@ Parameters
     None
 
 
+  region (False, str, None)
+    The cluster region
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  machine_type (False, str, None)
+    Machine type
+
+
   resource_status (False, str, None)
     The status of the resource
 
 
-  public_vlan_id (False, str, None)
-    Public VLAN ID
+  hardware (False, str, None)
+    (Required for new resource) Hardware type
 
 
-  ingress_secret (False, str, None)
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  datacenter (False, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
+
+
+  albs (False, list, None)
     None
 
 
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
+  private_service_endpoint_url (False, str, None)
     None
 
 
@@ -174,20 +158,36 @@ Parameters
     CRN of resource instance
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  billing (False, str, None)
+    None
 
 
   name (False, str, None)
     (Required for new resource) The cluster name
 
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  billing (False, str, None)
-    None
+  workers_info (False, list, None)
+    The IDs of the worker node
 
 
   id (False, str, None)

@@ -16,40 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    used_ip_percent:
-        description:
-            - None
-        required: False
-        type: float
-    pi_network_name:
-        description:
-            - Network Name to be used for pvminstances
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
-    type:
-        description:
-            - None
-        required: False
-        type: str
     gateway:
         description:
             - None
         required: False
         type: str
-    used_ip_count:
+    available_ip_count:
         description:
             - None
         required: False
         type: float
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
     cidr:
         description:
             - None
@@ -60,7 +45,7 @@ options:
             - None
         required: False
         type: int
-    available_ip_count:
+    used_ip_percent:
         description:
             - None
         required: False
@@ -70,6 +55,21 @@ options:
             - None
         required: False
         type: str
+    pi_network_name:
+        description:
+            - Network Name to be used for pvminstances
+        required: True
+        type: str
+    type:
+        description:
+            - None
+        required: False
+        type: str
+    used_ip_count:
+        description:
+            - None
+        required: False
+        type: float
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -99,58 +99,58 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_network_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'used_ip_percent',
-    'pi_network_name',
-    'pi_cloud_instance_id',
-    'type',
     'gateway',
-    'used_ip_count',
+    'available_ip_count',
+    'pi_cloud_instance_id',
     'cidr',
     'vlan_id',
-    'available_ip_count',
+    'used_ip_percent',
     'name',
+    'pi_network_name',
+    'type',
+    'used_ip_count',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    used_ip_percent=dict(
-        required=False,
-        type='float'),
-    pi_network_name=dict(
-        required=True,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     gateway=dict(
         required=False,
         type='str'),
-    used_ip_count=dict(
+    available_ip_count=dict(
         required=False,
         type='float'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
     cidr=dict(
         required=False,
         type='str'),
     vlan_id=dict(
         required=False,
         type='int'),
-    available_ip_count=dict(
+    used_ip_percent=dict(
         required=False,
         type='float'),
     name=dict(
         required=False,
         type='str'),
+    pi_network_name=dict(
+        required=True,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    used_ip_count=dict(
+        required=False,
+        type='float'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -178,7 +178,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

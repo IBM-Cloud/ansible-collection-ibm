@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
@@ -28,11 +28,6 @@ options:
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption algorithm
-        required: False
-        type: str
-    pfs:
-        description:
-            - (Required for new resource) PFS info
         required: False
         type: str
     resource_group:
@@ -56,11 +51,27 @@ options:
             - The name of the resource
         required: False
         type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) IPSEC name
         required: False
         type: str
+    pfs:
+        description:
+            - (Required for new resource) PFS info
+        required: False
+        type: str
+    key_lifetime:
+        description:
+            - IPSEC key lifetime
+        required: False
+        type: int
+        default: 3600
     encapsulation_mode:
         description:
             - IPSEC encapsulation mode
@@ -71,22 +82,11 @@ options:
             - IPSEC transform protocol
         required: False
         type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    key_lifetime:
-        description:
-            - IPSEC key lifetime
-        required: False
-        type: int
-        default: 3600
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,25 +135,25 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
-    ('pfs', 'str'),
     ('name', 'str'),
+    ('pfs', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'authentication_algorithm',
     'encryption_algorithm',
-    'pfs',
     'resource_group',
     'vpn_connections',
     'resource_controller_url',
     'resource_name',
+    'resource_crn',
     'name',
+    'pfs',
+    'key_lifetime',
     'encapsulation_mode',
     'transform_protocol',
-    'resource_crn',
     'resource_group_name',
-    'key_lifetime',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -164,9 +164,6 @@ module_args = dict(
         required=False,
         type='str'),
     encryption_algorithm=dict(
-        required=False,
-        type='str'),
-    pfs=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -182,24 +179,27 @@ module_args = dict(
     resource_name=dict(
         required=False,
         type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
+    pfs=dict(
+        required=False,
+        type='str'),
+    key_lifetime=dict(
+        default=3600,
+        type='int'),
     encapsulation_mode=dict(
         required=False,
         type='str'),
     transform_protocol=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
     resource_group_name=dict(
         required=False,
         type='str'),
-    key_lifetime=dict(
-        default=3600,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -264,7 +264,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

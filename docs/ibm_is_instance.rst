@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,64 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (False, str, None)
-    (Required for new resource) Profile info
-
-
-  primary_network_interface (False, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  memory (False, int, None)
-    Instance memory
-
-
-  name (False, str, None)
-    (Required for new resource) Instance name
-
-
-  vpc (False, str, None)
-    (Required for new resource) VPC id
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
-
-
-  status (False, str, None)
-    instance status
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  volume_attachments (False, list, None)
-    None
-
-
-  boot_volume (False, list, None)
-    None
-
-
   gpu (False, list, None)
     None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   keys (False, list, None)
@@ -94,8 +38,20 @@ Parameters
     list of tags for the instance
 
 
+  volume_attachments (False, list, None)
+    None
+
+
+  primary_network_interface (False, list, None)
+    (Required for new resource) Primary Network interface info
+
+
   image (False, str, None)
     (Required for new resource) image name
+
+
+  boot_volume (False, list, None)
+    None
 
 
   resource_group (False, str, None)
@@ -106,6 +62,46 @@ Parameters
     None
 
 
+  zone (False, str, None)
+    (Required for new resource) Zone name
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  memory (False, int, None)
+    Instance memory
+
+
+  vpc (False, str, None)
+    (Required for new resource) VPC id
+
+
+  profile (False, str, None)
+    (Required for new resource) Profile info
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  status (False, str, None)
+    instance status
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource) Instance name
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
@@ -114,8 +110,12 @@ Parameters
     The name of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  network_interfaces (False, list, None)
+    None
 
 
   id (False, str, None)

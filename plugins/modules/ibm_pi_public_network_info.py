@@ -16,15 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_pi_public_network' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    pi_network_name:
-        description:
-            - Network Name to be used for pvminstances
-        required: False
-        type: str
     pi_cloud_instance_id:
         description:
             - None
@@ -50,6 +45,11 @@ options:
             - None
         required: False
         type: int
+    pi_network_name:
+        description:
+            - Network Name to be used for pvminstances
+        required: False
+        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -84,21 +84,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_network_name',
     'pi_cloud_instance_id',
     'network_id',
     'name',
     'type',
     'vlan_id',
+    'pi_network_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_network_name=dict(
-        required=False,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
@@ -114,6 +111,9 @@ module_args = dict(
     vlan_id=dict(
         required=False,
         type='int'),
+    pi_network_name=dict(
+        required=False,
+        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_pi_public_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

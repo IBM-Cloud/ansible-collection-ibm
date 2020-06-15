@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    s3_endpoint_public:
-        description:
-            - Public endpoint for the COS bucket
-        required: False
-        type: str
-    bucket_name:
-        description:
-            - (Required for new resource) COS Bucket name
-        required: False
-        type: str
     resource_instance_id:
         description:
             - (Required for new resource) resource instance ID
@@ -40,21 +30,6 @@ options:
             - CRN of resource instance
         required: False
         type: str
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
-    cross_region_location:
-        description:
-            - Cros region location info
-        required: False
-        type: str
-    single_site_location:
-        description:
-            - single site location info
-        required: False
-        type: str
     region_location:
         description:
             - Region Location info.
@@ -63,6 +38,31 @@ options:
     storage_class:
         description:
             - (Required for new resource) Storage class info
+        required: False
+        type: str
+    s3_endpoint_public:
+        description:
+            - Public endpoint for the COS bucket
+        required: False
+        type: str
+    bucket_name:
+        description:
+            - (Required for new resource) COS Bucket name
+        required: False
+        type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    single_site_location:
+        description:
+            - single site location info
+        required: False
+        type: str
+    cross_region_location:
+        description:
+            - Cros region location info
         required: False
         type: str
     s3_endpoint_private:
@@ -116,22 +116,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
     ('storage_class', 'str'),
+    ('bucket_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    's3_endpoint_public',
-    'bucket_name',
     'resource_instance_id',
     'crn',
-    'key_protect',
-    'cross_region_location',
-    'single_site_location',
     'region_location',
     'storage_class',
+    's3_endpoint_public',
+    'bucket_name',
+    'key_protect',
+    'single_site_location',
+    'cross_region_location',
     's3_endpoint_private',
 ]
 
@@ -139,31 +139,31 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    s3_endpoint_public=dict(
-        required=False,
-        type='str'),
-    bucket_name=dict(
-        required=False,
-        type='str'),
     resource_instance_id=dict(
         required=False,
         type='str'),
     crn=dict(
         required=False,
         type='str'),
-    key_protect=dict(
+    region_location=dict(
         required=False,
         type='str'),
-    cross_region_location=dict(
+    storage_class=dict(
+        required=False,
+        type='str'),
+    s3_endpoint_public=dict(
+        required=False,
+        type='str'),
+    bucket_name=dict(
+        required=False,
+        type='str'),
+    key_protect=dict(
         required=False,
         type='str'),
     single_site_location=dict(
         required=False,
         type='str'),
-    region_location=dict(
-        required=False,
-        type='str'),
-    storage_class=dict(
+    cross_region_location=dict(
         required=False,
         type='str'),
     s3_endpoint_private=dict(
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

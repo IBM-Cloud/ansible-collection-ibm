@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,112 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cname_flattening (False, str, None)
-    cname_flattening setting
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
 
 
-  domain_id (False, str, None)
-    (Required for new resource) Associated CIS domain
+  websockets (False, str, None)
+    websockets setting
 
 
-  certificate_status (False, str, None)
-    Certificate status
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
+  browser_check (False, str, None)
+    browser_check setting
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
 
 
   cis_id (False, str, None)
     (Required for new resource) CIS instance crn
 
 
-  waf (False, str, None)
-    WAF setting
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  domain_id (False, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
 
 
   ssl (False, str, None)
     SSL/TLS setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  certificate_status (False, str, None)
+    Certificate status
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
 
 
   id (False, str, None)

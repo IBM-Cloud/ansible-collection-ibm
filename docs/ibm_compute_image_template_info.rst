@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    The name of this image template
-
-
   id (False, int, None)
     The internal id of the image template
+
+
+  name (True, str, None)
+    The name of this image template
 
 
   iaas_classic_username (False, any, None)

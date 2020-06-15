@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  modified_on (False, str, None)
+    Network Modification date
+
 
   state_ (False, str, None)
     Network status
@@ -52,10 +56,6 @@ Parameters
 
   created_on (False, str, None)
     Network creation date
-
-
-  modified_on (False, str, None)
-    Network Modification date
 
 
   id (False, str, None)

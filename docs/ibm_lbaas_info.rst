@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vip (False, str, None)
-    None
-
-
-  server_instances_up (False, int, None)
-    None
-
 
   status (False, str, None)
     None
@@ -42,19 +34,23 @@ Parameters
     None
 
 
-  health_monitors (False, list, None)
-    None
-
-
-  server_instances (False, list, None)
-    None
-
-
   use_system_public_ip_pool (False, bool, None)
     None
 
 
   name (True, str, None)
+    None
+
+
+  active_connections (False, int, None)
+    None
+
+
+  protocols (False, list, None)
+    None
+
+
+  server_instances (False, list, None)
     None
 
 
@@ -70,15 +66,19 @@ Parameters
     None
 
 
-  active_connections (False, int, None)
-    None
-
-
   ssl_ciphers (False, list, None)
     None
 
 
-  protocols (False, list, None)
+  vip (False, str, None)
+    None
+
+
+  server_instances_up (False, int, None)
+    None
+
+
+  health_monitors (False, list, None)
     None
 
 

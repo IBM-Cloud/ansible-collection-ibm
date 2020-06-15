@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_cloud_instance_id (True, str, None)
-    None
-
 
   state (False, str, None)
     None
@@ -52,6 +48,10 @@ Parameters
 
   pi_image_name (True, str, None)
     Imagename Name to be used for pvminstances
+
+
+  pi_cloud_instance_id (True, str, None)
+    None
 
 
   zone (False, str, None)

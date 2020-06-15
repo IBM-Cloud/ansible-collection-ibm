@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -38,12 +38,8 @@ Parameters
     (Required for new resource) name
 
 
-  fallback_pool_id (False, str, None)
-    (Required for new resource) fallback pool ID
-
-
-  default_pool_ids (False, list, None)
-    (Required for new resource) List of default Pool IDs
+  description (False, str, None)
+    Description for the load balancer instance
 
 
   ttl (False, int, None)
@@ -62,8 +58,12 @@ Parameters
     (Required for new resource) Associated CIS domain
 
 
-  description (False, str, None)
-    Description for the load balancer instance
+  fallback_pool_id (False, str, None)
+    (Required for new resource) fallback pool ID
+
+
+  default_pool_ids (False, list, None)
+    (Required for new resource) List of default Pool IDs
 
 
   enabled (False, bool, True)

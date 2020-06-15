@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_gateway_vlan_association' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    gateway_id:
+        description:
+            - (Required for new resource) Gateway instance ID
+        required: False
+        type: int
     network_vlan_id:
         description:
             - (Required for new resource) The Identifier of the VLAN to be associated
@@ -31,11 +36,6 @@ options:
         required: False
         type: bool
         default: True
-    gateway_id:
-        description:
-            - (Required for new resource) Gateway instance ID
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -82,30 +82,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('network_vlan_id', 'int'),
     ('gateway_id', 'int'),
+    ('network_vlan_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'gateway_id',
     'network_vlan_id',
     'bypass',
-    'gateway_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    gateway_id=dict(
+        required=False,
+        type='int'),
     network_vlan_id=dict(
         required=False,
         type='int'),
     bypass=dict(
         default=True,
         type='bool'),
-    gateway_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -158,7 +158,7 @@ def run_module():
         resource_type='ibm_network_gateway_vlan_association',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

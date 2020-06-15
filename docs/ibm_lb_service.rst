@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (False, int, None)
+    (Required for new resource) Port number
+
+
+  enabled (False, bool, None)
+    (Required for new resource) Boolean value true, if enabled else false
+
+
+  health_check_type (False, str, None)
+    (Required for new resource) health check type
+
 
   weight (False, int, None)
     (Required for new resource) Weight value
@@ -40,18 +52,6 @@ Parameters
 
   ip_address_id (False, int, None)
     (Required for new resource) IP Address ID
-
-
-  port (False, int, None)
-    (Required for new resource) Port number
-
-
-  enabled (False, bool, None)
-    (Required for new resource) Boolean value true, if enabled else false
-
-
-  health_check_type (False, str, None)
-    (Required for new resource) health check type
 
 
   id (False, str, None)

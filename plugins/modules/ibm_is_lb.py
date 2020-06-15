@@ -16,26 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    private_ips:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
     operating_status:
         description:
             - None
@@ -47,31 +31,20 @@ options:
         required: False
         type: list
         elements: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    subnets:
-        description:
-            - (Required for new resource) Load Balancer subnets list
-        required: False
-        type: list
-        elements: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    hostname:
+    resource_group:
         description:
             - None
         required: False
         type: str
-    resource_controller_url:
+    hostname:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - None
         required: False
         type: str
     resource_name:
@@ -84,12 +57,39 @@ options:
             - (Required for new resource) Load Balancer name
         required: False
         type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    subnets:
+        description:
+            - (Required for new resource) Load Balancer subnets list
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
     type:
         description:
             - Load Balancer type
         required: False
         type: str
         default: public
+    private_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -136,41 +136,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_ips',
-    'resource_group',
-    'resource_group_name',
     'operating_status',
     'public_ips',
-    'status',
-    'subnets',
     'tags',
+    'resource_group',
     'hostname',
-    'resource_controller_url',
     'resource_name',
     'name',
+    'status',
+    'resource_group_name',
+    'subnets',
+    'resource_controller_url',
     'type',
+    'private_ips',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_ips=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
     operating_status=dict(
         required=False,
         type='str'),
@@ -178,21 +168,14 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    status=dict(
-        required=False,
-        type='str'),
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    hostname=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    hostname=dict(
         required=False,
         type='str'),
     resource_name=dict(
@@ -201,9 +184,26 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
     type=dict(
         default='public',
         type='str'),
+    private_ips=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -268,7 +268,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  cluster (False, str, None)
+    (Required for new resource) cluster name or ID
 
 
   region (False, str, None)
@@ -38,12 +38,8 @@ Parameters
     None
 
 
-  public_vlan_id (False, str, None)
-    None
-
-
-  cluster (False, str, None)
-    (Required for new resource) cluster name or ID
+  zone (False, str, None)
+    (Required for new resource) Zone name
 
 
   worker_pool (False, str, None)
@@ -54,12 +50,16 @@ Parameters
     None
 
 
+  public_vlan_id (False, str, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   wait_till_albs (False, bool, True)
     wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,20 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
-
-
   state_ (False, str, None)
     worker pool state
 
 
-  zones (False, list, None)
-    None
-
-
-  region (False, str, None)
-    The worker pool region
+  labels (False, dict, None)
+    list of labels to worker pool
 
 
   resource_group_id (False, str, None)
@@ -50,12 +42,8 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
-  cluster (False, str, None)
-    (Required for new resource) Cluster name
-
-
-  size_per_zone (False, int, None)
-    (Required for new resource) Number of nodes per zone
+  machine_type (False, str, None)
+    (Required for new resource) worker nodes machine type
 
 
   entitlement (False, str, None)
@@ -66,16 +54,28 @@ Parameters
     Hardware type
 
 
-  labels (False, dict, None)
-    list of labels to worker pool
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
 
 
-  machine_type (False, str, None)
-    (Required for new resource) worker nodes machine type
+  region (False, str, None)
+    The worker pool region
+
+
+  cluster (False, str, None)
+    (Required for new resource) Cluster name
 
 
   worker_pool_name (False, str, None)
     (Required for new resource) worker pool name
+
+
+  size_per_zone (False, int, None)
+    (Required for new resource) Number of nodes per zone
+
+
+  zones (False, list, None)
+    None
 
 
   id (False, str, None)

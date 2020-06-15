@@ -16,16 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    type:
+    shared:
         description:
-            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+            - The Shared status of an endpoint
+        required: False
+        type: bool
+    provider_id:
+        description:
+            - Provider ID of an endpoint allowable values user-defined and whisk
         required: False
         type: str
-        default: unshare
+        default: user-defined
+    endpoint_id:
+        description:
+            - Endpoint ID
+        required: False
+        type: str
     service_instance_crn:
         description:
             - (Required for new resource) Api Gateway Service Instance Crn
@@ -47,33 +57,23 @@ options:
         required: False
         type: list
         elements: str
-    base_path:
-        description:
-            - Base path of an endpoint
-        required: False
-        type: str
-    provider_id:
-        description:
-            - Provider ID of an endpoint allowable values user-defined and whisk
-        required: False
-        type: str
-        default: user-defined
     managed:
         description:
             - Managed indicates if endpoint is online or offline.
         required: False
         type: bool
         default: False
-    shared:
+    base_path:
         description:
-            - The Shared status of an endpoint
-        required: False
-        type: bool
-    endpoint_id:
-        description:
-            - Endpoint ID
+            - Base path of an endpoint
         required: False
         type: str
+    type:
+        description:
+            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+        required: False
+        type: str
+        default: unshare
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,24 +127,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
+    'shared',
+    'provider_id',
+    'endpoint_id',
     'service_instance_crn',
     'open_api_doc_name',
     'name',
     'routes',
-    'base_path',
-    'provider_id',
     'managed',
-    'shared',
-    'endpoint_id',
+    'base_path',
+    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        default='unshare',
+    shared=dict(
+        required=False,
+        type='bool'),
+    provider_id=dict(
+        default='user-defined',
+        type='str'),
+    endpoint_id=dict(
+        required=False,
         type='str'),
     service_instance_crn=dict(
         required=False,
@@ -159,20 +165,14 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    base_path=dict(
-        required=False,
-        type='str'),
-    provider_id=dict(
-        default='user-defined',
-        type='str'),
     managed=dict(
         default=False,
         type='bool'),
-    shared=dict(
+    base_path=dict(
         required=False,
-        type='bool'),
-    endpoint_id=dict(
-        required=False,
+        type='str'),
+    type=dict(
+        default='unshare',
         type='str'),
     id=dict(
         required=False,
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

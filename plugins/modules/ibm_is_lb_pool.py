@@ -16,18 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
+    health_timeout:
+        description:
+            - (Required for new resource) Load Balancer health timeout interval
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) Load Balancer Pool name
+        required: False
+        type: str
     protocol:
         description:
             - (Required for new resource) Load Balancer Protocol
-        required: False
-        type: str
-    health_type:
-        description:
-            - (Required for new resource) Load Balancer health type
         required: False
         type: str
     health_retries:
@@ -35,9 +40,9 @@ options:
             - (Required for new resource) Load Balancer health retry count
         required: False
         type: int
-    health_timeout:
+    health_monitor_port:
         description:
-            - (Required for new resource) Load Balancer health timeout interval
+            - None
         required: False
         type: int
     session_persistence_cookie_name:
@@ -45,14 +50,24 @@ options:
             - Load Balancer Pool session persisence cookie name
         required: False
         type: str
-    pool_id:
+    lb:
+        description:
+            - (Required for new resource) Load Balancer ID
+        required: False
+        type: str
+    health_type:
+        description:
+            - (Required for new resource) Load Balancer health type
+        required: False
+        type: str
+    health_monitor_url:
         description:
             - None
         required: False
         type: str
-    name:
+    pool_id:
         description:
-            - (Required for new resource) Load Balancer Pool name
+            - None
         required: False
         type: str
     algorithm:
@@ -65,26 +80,11 @@ options:
             - (Required for new resource) Load Blancer health delay time period
         required: False
         type: int
-    health_monitor_url:
-        description:
-            - None
-        required: False
-        type: str
     session_persistence_type:
         description:
             - Load Balancer Pool session persisence type.
         required: False
         type: str
-    lb:
-        description:
-            - (Required for new resource) Load Balancer ID
-        required: False
-        type: str
-    health_monitor_port:
-        description:
-            - None
-        required: False
-        type: int
     provisioning_status:
         description:
             - None
@@ -136,31 +136,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
-    ('health_type', 'str'),
-    ('health_retries', 'int'),
     ('health_timeout', 'int'),
     ('name', 'str'),
+    ('protocol', 'str'),
+    ('health_retries', 'int'),
+    ('lb', 'str'),
+    ('health_type', 'str'),
     ('algorithm', 'str'),
     ('health_delay', 'int'),
-    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'protocol',
-    'health_type',
-    'health_retries',
     'health_timeout',
-    'session_persistence_cookie_name',
-    'pool_id',
     'name',
+    'protocol',
+    'health_retries',
+    'health_monitor_port',
+    'session_persistence_cookie_name',
+    'lb',
+    'health_type',
+    'health_monitor_url',
+    'pool_id',
     'algorithm',
     'health_delay',
-    'health_monitor_url',
     'session_persistence_type',
-    'lb',
-    'health_monitor_port',
     'provisioning_status',
 ]
 
@@ -168,25 +168,34 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    protocol=dict(
+    health_timeout=dict(
+        required=False,
+        type='int'),
+    name=dict(
         required=False,
         type='str'),
-    health_type=dict(
+    protocol=dict(
         required=False,
         type='str'),
     health_retries=dict(
         required=False,
         type='int'),
-    health_timeout=dict(
+    health_monitor_port=dict(
         required=False,
         type='int'),
     session_persistence_cookie_name=dict(
         required=False,
         type='str'),
-    pool_id=dict(
+    lb=dict(
         required=False,
         type='str'),
-    name=dict(
+    health_type=dict(
+        required=False,
+        type='str'),
+    health_monitor_url=dict(
+        required=False,
+        type='str'),
+    pool_id=dict(
         required=False,
         type='str'),
     algorithm=dict(
@@ -195,18 +204,9 @@ module_args = dict(
     health_delay=dict(
         required=False,
         type='int'),
-    health_monitor_url=dict(
-        required=False,
-        type='str'),
     session_persistence_type=dict(
         required=False,
         type='str'),
-    lb=dict(
-        required=False,
-        type='str'),
-    health_monitor_port=dict(
-        required=False,
-        type='int'),
     provisioning_status=dict(
         required=False,
         type='str'),
@@ -274,7 +274,7 @@ def run_module():
         resource_type='ibm_is_lb_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

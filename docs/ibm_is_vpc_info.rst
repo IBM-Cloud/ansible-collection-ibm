@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,7 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  classic_access (False, bool, None)
+  status (False, str, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  default_network_acl (False, str, None)
     None
 
 
@@ -34,7 +42,7 @@ Parameters
     None
 
 
-  resource_group (False, str, None)
+  tags (False, list, None)
     None
 
 
@@ -42,27 +50,7 @@ Parameters
     The name of the resource
 
 
-  cse_source_addresses (False, list, None)
-    None
-
-
-  subnets (False, list, None)
-    None
-
-
-  default_network_acl (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  crn (False, str, None)
+  resource_crn (False, str, None)
     The crn of the resource
 
 
@@ -70,16 +58,32 @@ Parameters
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  subnets (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    The crn of the resource
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  cse_source_addresses (False, list, None)
+    None
+
+
+  classic_access (False, bool, None)
+    None
+
+
+  default_security_group (False, str, None)
+    Security group associated with VPC
 
 
   generation (False, int, 2)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,12 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, PUBLIC)
-    Specifies if a load balancer is public or private
-
-
-  datacenter (False, str, None)
-    None
+  subnets (False, list, None)
+    (Required for new resource) The subnet where this Load Balancer will be provisioned.
 
 
   ssl_ciphers (False, list, None)
@@ -42,36 +38,32 @@ Parameters
     None
 
 
-  name (False, str, None)
-    (Required for new resource) The load balancer's name.
+  type (False, str, PUBLIC)
+    Specifies if a load balancer is public or private
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  datacenter (False, str, None)
+    None
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  description (False, str, None)
-    Description of a load balancer.
-
-
-  status (False, str, None)
-    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
-
-
-  vip (False, str, None)
-    The virtual ip address of this load balancer
+  health_monitors (False, list, None)
+    None
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  subnets (False, list, None)
-    (Required for new resource) The subnet where this Load Balancer will be provisioned.
+  name (False, str, None)
+    (Required for new resource) The load balancer's name.
+
+
+  description (False, str, None)
+    Description of a load balancer.
 
 
   use_system_public_ip_pool (False, bool, None)
@@ -82,8 +74,16 @@ Parameters
     Protocols to be assigned to this load balancer.
 
 
-  health_monitors (False, list, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  status (False, str, None)
+    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+
+
+  vip (False, str, None)
+    The virtual ip address of this load balancer
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,52 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
-
-  capacity (False, int, None)
-    (Required for new resource) Storage capacity
+  type (False, str, None)
+    (Required for new resource) Storage type
 
 
   hostname (False, str, None)
     Hostname
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
-  hourly_billing (False, bool, False)
-    Hourly based billing type
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
-  notes (False, str, None)
-    Notes
-
-
-  iops (False, float, None)
-    (Required for new resource) iops rate
-
-
-  snapshot_schedule (False, list, None)
-    None
 
 
   mountpoint (False, str, None)
@@ -82,12 +42,24 @@ Parameters
     Tags set for the storage volume
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  hourly_billing (False, bool, False)
+    Hourly based billing type
 
 
-  type (False, str, None)
-    (Required for new resource) Storage type
+  snapshot_schedule (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    (Required for new resource) Datacenter name
+
+
+  capacity (False, int, None)
+    (Required for new resource) Storage capacity
+
+
+  iops (False, float, None)
+    (Required for new resource) iops rate
 
 
   volumename (False, str, None)
@@ -98,8 +70,36 @@ Parameters
     Allowed network subnets
 
 
+  notes (False, str, None)
+    Notes
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
+
+
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
+
+
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

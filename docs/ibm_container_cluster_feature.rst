@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cluster (False, str, None)
+    (Required for new resource) Cluster name of ID
+
+
   public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
     None
 
 
@@ -42,20 +42,20 @@ Parameters
     Boolean value true of API server to be refreshed in K8S cluster
 
 
-  cluster (False, str, None)
-    (Required for new resource) Cluster name of ID
-
-
   reload_workers (False, bool, True)
     Boolean value set true if worker nodes to be reloaded
 
 
-  private_service_endpoint_url (False, str, None)
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  private_service_endpoint (False, bool, None)
     None
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  private_service_endpoint_url (False, str, None)
+    None
 
 
   id (False, str, None)

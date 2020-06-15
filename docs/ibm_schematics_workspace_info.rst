@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,47 +26,39 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    The description of workspace
-
-
-  catalog_ref (False, dict, None)
-    Catalog references
+  types (False, list, None)
+    None
 
 
   template_id (False, list, None)
     The id of templates
 
 
-  status (False, str, None)
-    The status of workspace
+  resource_group (False, str, None)
+    The resource group of workspace
 
 
-  types (False, list, None)
-    None
+  catalog_ref (False, dict, None)
+    Catalog references
 
 
-  is_frozen (False, bool, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
 
 
   workspace_id (True, str, None)
     The id of workspace
 
 
-  name (False, str, None)
-    The name of workspace
+  status (False, str, None)
+    The status of workspace
 
 
-  resource_group (False, str, None)
-    The resource group of workspace
-
-
-  is_locked (False, bool, None)
+  is_frozen (False, bool, None)
     None
 
 
-  tags (False, list, None)
+  is_locked (False, bool, None)
     None
 
 
@@ -74,12 +66,20 @@ Parameters
     The location of workspace
 
 
+  description (False, str, None)
+    The description of workspace
+
+
+  name (False, str, None)
+    The name of workspace
+
+
   crn (False, str, None)
     cloud resource name of the workspace
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
+  tags (False, list, None)
+    None
 
 
   iaas_classic_username (False, any, None)

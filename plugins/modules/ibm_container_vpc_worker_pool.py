@@ -16,13 +16,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    labels:
         description:
-            - ID of the resource group.
+            - Labels
+        required: False
+        type: dict
+        elements: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
         type: str
     vpc_id:
@@ -35,11 +41,6 @@ options:
             - (Required for new resource) The number of workers
         required: False
         type: int
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name
@@ -61,12 +62,11 @@ options:
         required: False
         type: list
         elements: dict
-    labels:
+    resource_group_id:
         description:
-            - Labels
+            - ID of the resource group.
         required: False
-        type: dict
-        elements: str
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,22 +103,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
+    'labels',
+    'entitlement',
     'vpc_id',
     'worker_count',
-    'entitlement',
     'cluster',
     'flavor',
     'worker_pool_name',
     'zones',
-    'labels',
+    'resource_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    entitlement=dict(
         required=False,
         type='str'),
     vpc_id=dict(
@@ -127,9 +131,6 @@ module_args = dict(
     worker_count=dict(
         required=False,
         type='int'),
-    entitlement=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -143,10 +144,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    labels=dict(
+    resource_group_id=dict(
         required=False,
-        elements='',
-        type='dict'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -185,7 +185,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

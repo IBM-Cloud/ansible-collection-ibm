@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  publish (False, bool, False)
-    Package visibilty.
-
-
-  version (False, str, None)
-    Semantic version of the item.
-
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
@@ -56,6 +48,14 @@ Parameters
 
   name (False, str, None)
     (Required for new resource) Name of package.
+
+
+  publish (False, bool, False)
+    Package visibilty.
+
+
+  version (False, str, None)
+    Semantic version of the item.
 
 
   id (False, str, None)

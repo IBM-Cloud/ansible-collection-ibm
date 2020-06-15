@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  status (False, str, None)
-    Status of resource instance
-
-
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  guid (False, str, None)
-    Unique identifier of resource instance
+  name (False, str, None)
+    (Required for new resource) A name for the resource instance
+
+
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
 
 
   location (False, str, None)
@@ -70,16 +46,40 @@ Parameters
     Arbitrary parameters to pass. Must be a JSON object
 
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  tags (False, list, None)
+    None
+
+
   resource_name (False, str, None)
     The name of the resource
 
 
-  name (False, str, None)
-    (Required for new resource) A name for the resource instance
+  resource_status (False, str, None)
+    The status of the resource
 
 
   service (False, str, None)
     The name of the Cloud Internet Services offering
+
+
+  guid (False, str, None)
+    Unique identifier of resource instance
+
+
+  status (False, str, None)
+    Status of resource instance
 
 
   id (False, str, None)

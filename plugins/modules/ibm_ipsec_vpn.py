@@ -16,20 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    service_subnet_id:
         description:
-            - (Required for new resource) Datacenter name
+            - Service subnet ID value
         required: False
-        type: str
+        type: int
     internal_peer_ip_address:
         description:
             - None
         required: False
         type: str
+    phase_one:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     address_translation:
         description:
             - None
@@ -41,39 +47,33 @@ options:
             - Preshared Key data
         required: False
         type: str
+    customer_peer_ip:
+        description:
+            - Customer Peer IP Address
+        required: False
+        type: str
     remote_subnet:
         description:
             - None
         required: False
         type: list
         elements: dict
-    service_subnet_id:
+    datacenter:
         description:
-            - Service subnet ID value
+            - (Required for new resource) Datacenter name
         required: False
-        type: int
+        type: str
     name:
         description:
             - None
         required: False
         type: str
-    phase_one:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     phase_two:
         description:
             - None
         required: False
         type: list
         elements: dict
-    customer_peer_ip:
-        description:
-            - Customer Peer IP Address
-        required: False
-        type: str
     internal_subnet_id:
         description:
             - Internal subnet ID value
@@ -135,16 +135,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
+    'service_subnet_id',
     'internal_peer_ip_address',
+    'phase_one',
     'address_translation',
     'preshared_key',
-    'remote_subnet',
-    'service_subnet_id',
-    'name',
-    'phase_one',
-    'phase_two',
     'customer_peer_ip',
+    'remote_subnet',
+    'datacenter',
+    'name',
+    'phase_two',
     'internal_subnet_id',
     'remote_subnet_id',
 ]
@@ -153,12 +153,16 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    service_subnet_id=dict(
         required=False,
-        type='str'),
+        type='int'),
     internal_peer_ip_address=dict(
         required=False,
         type='str'),
+    phase_one=dict(
+        required=False,
+        elements='',
+        type='list'),
     address_translation=dict(
         required=False,
         elements='',
@@ -166,27 +170,23 @@ module_args = dict(
     preshared_key=dict(
         required=False,
         type='str'),
+    customer_peer_ip=dict(
+        required=False,
+        type='str'),
     remote_subnet=dict(
         required=False,
         elements='',
         type='list'),
-    service_subnet_id=dict(
+    datacenter=dict(
         required=False,
-        type='int'),
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    phase_one=dict(
-        required=False,
-        elements='',
-        type='list'),
     phase_two=dict(
         required=False,
         elements='',
         type='list'),
-    customer_peer_ip=dict(
-        required=False,
-        type='str'),
     internal_subnet_id=dict(
         required=False,
         type='int'),
@@ -245,7 +245,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

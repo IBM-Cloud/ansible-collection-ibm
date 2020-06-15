@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  managers (False, list, None)
-    The IBMID of the users who  have manager role in this space, ex - user@example.com
-
 
   developers (False, list, None)
     The IBMID of the users who  have developer role in this space, ex - user@example.com
@@ -44,6 +40,10 @@ Parameters
 
   auditors (False, list, None)
     The IBMID of the users who  have auditor role in this space, ex - user@example.com
+
+
+  managers (False, list, None)
+    The IBMID of the users who  have manager role in this space, ex - user@example.com
 
 
   iaas_classic_username (False, any, None)

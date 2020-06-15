@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_health_monitor' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
-    url_path:
-        description:
-            - URL Path
-        required: False
-        type: str
-        default: /
     monitor_id:
         description:
             - (Required for new resource) Monitor ID
@@ -64,6 +58,12 @@ options:
         required: False
         type: int
         default: 2
+    url_path:
+        description:
+            - URL Path
+        required: False
+        type: str
+        default: /
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,7 +118,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'url_path',
     'monitor_id',
     'lbaas_id',
     'protocol',
@@ -126,15 +125,13 @@ TL_ALL_PARAMETERS = [
     'interval',
     'max_retries',
     'timeout',
+    'url_path',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    url_path=dict(
-        default='/',
-        type='str'),
     monitor_id=dict(
         required=False,
         type='str'),
@@ -156,6 +153,9 @@ module_args = dict(
     timeout=dict(
         default=2,
         type='int'),
+    url_path=dict(
+        default='/',
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_lbaas_health_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

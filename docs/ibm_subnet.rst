@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vlan_id (False, int, None)
-    VLAN ID for the subnet
-
-
-  endpoint_ip (False, str, None)
-    endpoint IP
-
 
   notes (False, str, None)
     Notes
@@ -42,12 +34,12 @@ Parameters
     tags set for the resource
 
 
+  private (False, bool, False)
+    private subnet
+
+
   ip_version (False, int, 4)
     ip version
-
-
-  type (False, str, None)
-    (Required for new resource) subnet type
 
 
   capacity (False, int, None)
@@ -58,8 +50,16 @@ Parameters
     CIDR notation for the subnet
 
 
-  private (False, bool, False)
-    private subnet
+  type (False, str, None)
+    (Required for new resource) subnet type
+
+
+  vlan_id (False, int, None)
+    VLAN ID for the subnet
+
+
+  endpoint_ip (False, str, None)
+    endpoint IP
 
 
   id (False, str, None)

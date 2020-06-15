@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,35 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hourly_billing (False, bool, True)
+  file_storage_ids (False, list, None)
     None
 
 
-  datacenter (False, str, None)
-    None
-
-
-  public_subnet_id (False, int, None)
-    None
-
-
-  ip_address_id_private (False, int, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  disks (False, list, None)
+  domain (False, str, None)
     None
 
 
@@ -62,7 +38,195 @@ Parameters
     None
 
 
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  public_subnet_id (False, int, None)
+    None
+
+
+  ip_address_id (False, int, None)
+    None
+
+
+  ipv6_address (False, str, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  private_interface_id (False, int, None)
+    None
+
+
+  public_ipv6_subnet (False, str, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
   dedicated_host_name (False, str, None)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  evault (False, int, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  ipv6_address_id (False, int, None)
+    None
+
+
+  secondary_ip_addresses (False, list, None)
+    None
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  public_ipv6_subnet_id (False, str, None)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  image_id (False, int, None)
+    None
+
+
+  transient (False, bool, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  private_subnet_id (False, int, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  ip_address_id_private (False, int, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  private_security_group_ids (False, list, None)
+    None
+
+
+  ipv4_address_private (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  ipv4_address (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
     None
 
 
@@ -74,87 +238,11 @@ Parameters
     None
 
 
-  ssh_key_ids (False, list, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  private_interface_id (False, int, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  public_security_group_ids (False, list, None)
-    None
-
-
-  secondary_ip_addresses (False, list, None)
-    None
-
-
   public_interface_id (False, int, None)
     None
 
 
-  local_disk (False, bool, True)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  memory (False, int, None)
-    None
-
-
-  private_subnet_id (False, int, None)
-    None
-
-
-  ipv6_address (False, str, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  public_vlan_id (False, int, None)
+  disks (False, list, None)
     None
 
 
@@ -162,95 +250,7 @@ Parameters
     None
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  ipv6_address_id (False, int, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  public_ipv6_subnet (False, str, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  ipv4_address_private (False, str, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
-  public_ipv6_subnet_id (False, str, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  ipv4_address (False, str, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  ip_address_id (False, int, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  transient (False, bool, None)
+  tags (False, list, None)
     None
 
 

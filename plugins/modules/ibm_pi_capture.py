@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_capture' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.0
+    - IBM-Cloud terraform-provider-ibm v1.7.1
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,6 @@ options:
             - (Required for new resource) Name of the capture to create. Note : this must be unique
         required: False
         type: str
-    pi_capture_destination:
-        description:
-            - (Required for new resource) Name of destination to store the image capture to
-        required: False
-        type: str
     pi_capture_volume_ids:
         description:
             - List of volume names that need to be passed in the input
@@ -43,6 +38,11 @@ options:
     pi_cloud_instance_id:
         description:
             - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: False
+        type: str
+    pi_capture_destination:
+        description:
+            - (Required for new resource) Name of destination to store the image capture to
         required: False
         type: str
     pi_capture_cloud_storage_region:
@@ -109,17 +109,17 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('pi_instance_name', 'str'),
     ('pi_capture_name', 'str'),
-    ('pi_capture_destination', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_capture_destination', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
     'pi_capture_name',
-    'pi_capture_destination',
     'pi_capture_volume_ids',
     'pi_cloud_instance_id',
+    'pi_capture_destination',
     'pi_capture_cloud_storage_region',
     'pi_capture_cloud_storage_access_key',
     'pi_capture_cloud_storage_secret_key',
@@ -136,13 +136,13 @@ module_args = dict(
     pi_capture_name=dict(
         required=False,
         type='str'),
-    pi_capture_destination=dict(
-        required=False,
-        type='str'),
     pi_capture_volume_ids=dict(
         required=False,
         type='str'),
     pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_capture_destination=dict(
         required=False,
         type='str'),
     pi_capture_cloud_storage_region=dict(
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_pi_capture',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.0',
+        ibm_provider_version='1.7.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

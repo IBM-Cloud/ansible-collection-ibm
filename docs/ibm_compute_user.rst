@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,60 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  last_name (False, str, None)
-    (Required for new resource) Last name of the user
-
-
-  city (False, str, None)
-    (Required for new resource) City name
-
-
-  state_ (False, str, None)
-    (Required for new resource) Satate name
-
-
-  permissions (False, list, None)
-    set of persmissions assigned for the user
-
-
-  company_name (False, str, None)
-    (Required for new resource) comapany name
-
-
-  address2 (False, str, None)
-    Address info of the user
-
-
   has_api_key (False, bool, False)
     API Key info of the user
-
-
-  username (False, str, None)
-    user name
-
-
-  email (False, str, None)
-    (Required for new resource) email address of the user
-
-
-  timezone (False, str, None)
-    (Required for new resource) time zone info
 
 
   api_key (False, str, None)
     API key for the user
 
 
-  ibm_id (False, str, None)
-    IBM ID of the  user
-
-
-  first_name (False, str, None)
-    (Required for new resource) First name of the user
-
-
-  address1 (False, str, None)
-    (Required for new resource) Address info of the user
+  email (False, str, None)
+    (Required for new resource) email address of the user
 
 
   country (False, str, None)
@@ -90,12 +46,56 @@ Parameters
     user status info
 
 
+  company_name (False, str, None)
+    (Required for new resource) comapany name
+
+
+  state_ (False, str, None)
+    (Required for new resource) Satate name
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
   password (False, str, None)
     password for the user
 
 
+  ibm_id (False, str, None)
+    IBM ID of the  user
+
+
+  username (False, str, None)
+    user name
+
+
+  last_name (False, str, None)
+    (Required for new resource) Last name of the user
+
+
+  address2 (False, str, None)
+    Address info of the user
+
+
+  timezone (False, str, None)
+    (Required for new resource) time zone info
+
+
   tags (False, list, None)
     Tags set for the resources
+
+
+  first_name (False, str, None)
+    (Required for new resource) First name of the user
+
+
+  address1 (False, str, None)
+    (Required for new resource) Address info of the user
+
+
+  city (False, str, None)
+    (Required for new resource) City name
 
 
   id (False, str, None)

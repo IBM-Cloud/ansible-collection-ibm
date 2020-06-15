@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  password (False, str, None)
-    password
-
-
-  service_resource_name (False, str, None)
-    service resource name
-
 
   tags (False, list, None)
     Tags set for the resource
@@ -56,6 +48,14 @@ Parameters
 
   username (False, str, None)
     user name
+
+
+  password (False, str, None)
+    password
+
+
+  service_resource_name (False, str, None)
+    service resource name
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
-  pool_id (False, str, None)
-    None
-
-
-  lb (False, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_monitor_url (False, str, None)
-    None
-
-
-  health_monitor_port (False, int, None)
-    None
-
-
   health_timeout (False, int, None)
     (Required for new resource) Load Balancer health timeout interval
 
 
-  session_persistence_cookie_name (False, str, None)
-    Load Balancer Pool session persisence cookie name
-
-
-  provisioning_status (False, str, None)
-    None
-
-
-  algorithm (False, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
+  name (False, str, None)
+    (Required for new resource) Load Balancer Pool name
 
 
   protocol (False, str, None)
@@ -70,16 +42,44 @@ Parameters
     (Required for new resource) Load Balancer health retry count
 
 
-  name (False, str, None)
-    (Required for new resource) Load Balancer Pool name
+  health_monitor_port (False, int, None)
+    None
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
+
+
+  lb (False, str, None)
+    (Required for new resource) Load Balancer ID
+
+
+  health_type (False, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  health_monitor_url (False, str, None)
+    None
+
+
+  pool_id (False, str, None)
+    None
+
+
+  algorithm (False, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
 
 
   health_delay (False, int, None)
     (Required for new resource) Load Blancer health delay time period
 
 
-  health_type (False, str, None)
-    (Required for new resource) Load Balancer health type
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  provisioning_status (False, str, None)
+    None
 
 
   id (False, str, None)

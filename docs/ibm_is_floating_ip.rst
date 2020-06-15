@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.5.3
+- IBM-Cloud terraform-provider-ibm v1.7.1
 - Terraform v0.12.20
 
 
@@ -26,32 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (False, str, None)
-    Zone name
+  status (False, str, None)
+    Floating IP status
 
 
   target (False, str, None)
     Target info
-
-
-  tags (False, list, None)
-    Floating IP tags
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  address (False, str, None)
-    Floating IP address
-
-
-  name (False, str, None)
-    (Required for new resource) Name of the floating IP
-
-
-  status (False, str, None)
-    Floating IP status
 
 
   resource_group (False, str, None)
@@ -62,8 +42,20 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  resource_name (False, str, None)
+    The name of the resource
+
+
   resource_crn (False, str, None)
     The crn of the resource
+
+
+  address (False, str, None)
+    Floating IP address
+
+
+  name (False, str, None)
+    (Required for new resource) Name of the floating IP
 
 
   resource_status (False, str, None)
@@ -72,6 +64,14 @@ Parameters
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
+
+
+  zone (False, str, None)
+    Zone name
+
+
+  tags (False, list, None)
+    Floating IP tags
 
 
   id (False, str, None)
