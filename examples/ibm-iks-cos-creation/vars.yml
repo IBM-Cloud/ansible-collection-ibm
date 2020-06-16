@@ -1,0 +1,12 @@
+---
+datacenter: fra04
+machine_type: b3c.4x16
+hardware: shared
+default_pool_size: 1
+private_vlan_id: 2207
+public_vlan_id: 852
+cluster_name: ansible_iks
+kube_version: 1.17
+instance_name: "instance1"
+plan_type: "standard"
+location_info: "global"

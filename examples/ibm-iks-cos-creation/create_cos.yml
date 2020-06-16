@@ -1,0 +1,42 @@
+---
+- name: Create COS instance and create cos bucket.
+  hosts: localhost
+  collections:
+   - ibmcloud.ibmcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+    - name: Get the cluster info
+      ibm_container_cluster_info:
+        cluster_name_id: "{{ cluster_name }}"
+      register: cluster_output
+    - name: Save cluster ID info in fact
+      set_fact:
+        cacheable: True
+        cluster: "{{ cluster_output.resource }}"
+      when: cluster_output.rc == 0
+    - name: Create a COS instance
+      ibm_resource_instance:
+        name: "{{ instance_name }}"
+        service: "cloud-object-storage"
+        plan: "{{ plan_type }}"
+        location: "{{ location_info }}"
+      register: cos_instance_output
+    - name: Save instance id as fact
+      set_fact:
+        cacheable: True
+        cos_instance: "{{ cos_instance_output.resource }}"
+      when: cos_instance_output.rc == 0
+    - name: Bind cos instance to cluster
+      ibm_container_bind_service:
+        cluster_name_id: "{{ cluster.id }}"
+        service_instance_name: "{{ cos_instance.guid }}"
+        namespace_id: "default"
+        role: "Writer"
+    - name: create cos bucket
+      ibm_cos_bucket:
+        bucket_name: "testbucket-ad06"
+        resource_instance_id: "{{ cos_instance.id }}"
+        storage_class: "standard"
+        region_location: "eu-de"

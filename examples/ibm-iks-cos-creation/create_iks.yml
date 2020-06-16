@@ -1,0 +1,31 @@
+---
+- name: IBM IKS Classic ROKS.
+  hosts: localhost
+  collections:
+   - ibmcloud.ibmcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+    - name: IBM container cluster details
+      ibm_container_cluster:
+        name: "{{ cluster_name }}"
+        datacenter: "{{ datacenter }}"
+        machine_type: "{{ machine_type }}"
+        hardware: "{{ hardware }}"
+        worker_num: 2
+        default_pool_size: "{{ default_pool_size }}"
+        private_vlan_id: "{{ private_vlan_id }}"
+        public_vlan_id: "{{ public_vlan_id }}"
+        kube_version: "{{ kube_version }}"
+    - name: Get the cluster config info
+      ibm_container_cluster_config_info:
+        cluster_name_id: "{{ cluster_name }}"
+      register: cluster_output
+    - name: Save cluster ID info in fact
+      set_fact:
+        cacheable: True
+        cluster: "{{ cluster_output.resource }}"
+      when: cluster_output.rc == 0
+- name: Include a play after another play
+  import_playbook: create_cos.yml
