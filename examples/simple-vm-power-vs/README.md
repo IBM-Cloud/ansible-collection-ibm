@@ -10,6 +10,7 @@ The following infrastructure resources will be created (Ansible modules in
 parentheses):
 
 * SSH Key (ibm_pi_key)
+* Network (ibm_pi_network)
 * Virtual Server Instance (ibm_pi_instance)
 
 ## Configuration Parameters
