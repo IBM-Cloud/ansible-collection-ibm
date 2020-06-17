@@ -53,6 +53,35 @@
                         items2dict(key_name='name',
                         value_name='id') }}"
 
+    - name: Check for existing network
+      ibm_pi_network_info:
+        pi_network_name: "{{ pi_name }}-network"
+        pi_cloud_instance_id: "{{ pi_cloud_instance_id }}"
+      failed_when:
+        - pi_network_existing_output.rc != 0
+        - '"unable to get network" not in pi_network_existing_output.stderr'
+      register: pi_network_existing_output
+
+    - name: Save existing network as fact
+      set_fact:
+        cacheable: True
+        pi_network: "{{ pi_network_existing_output.resource }}"
+      when: pi_network_existing_output.resource.id is defined
+
+    - name: Add new network
+      ibm_pi_network:
+        pi_network_name: "{{ pi_name }}-network"
+        pi_network_type: "pub-vlan"
+        pi_cloud_instance_id: "{{ pi_cloud_instance_id }}"
+      register: pi_network_create_output
+      when: pi_network_existing_output.resource.id is not defined
+
+    - name: Save new network as fact
+      set_fact:
+        cacheable: True
+        pi_network: "{{ pi_network_create_output.resource }}"
+      when: pi_network_existing_output.resource.id is not defined
+
     - name: Check for existing Virtual Server Instance
       ibm_pi_instance_info:
         pi_instance_name: "{{ pi_name }}"
@@ -77,7 +106,8 @@
         pi_proc_type: "{{ proc_type }}"
         pi_image_id: "{{ image_dict[pi_image] }}"
         pi_volume_ids: []
-        pi_network_ids: ['249859ed-2ff2-4534-8862-f2c2cc8eeda9']
+        pi_network_ids:
+          - "{{ pi_network.id }}"
         pi_key_pair_name: "{{ pi_ssh_key.pi_key_name }}"
         pi_sys_type: "{{ sys_type }}"
         pi_replication_policy: none
