@@ -13,4 +13,4 @@
 
     - debug:
         var: images_list.resource.image_info |
-             items2dict(key_name='image_name', value_name='image_id')
+             items2dict(key_name='name', value_name='id')
