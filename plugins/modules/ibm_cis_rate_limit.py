@@ -16,15 +16,42 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_rate_limit' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: False
+        type: str
     threshold:
         description:
             - (Required for new resource) Rate Limiting Threshold
         required: False
         type: int
+    correlate:
+        description:
+            - Ratelimiting Correlate
+        required: False
+        type: list
+        elements: dict
+    action:
+        description:
+            - (Required for new resource) Rate Limiting Action
+        required: False
+        type: list
+        elements: dict
+    rule_id:
+        description:
+            - Rate Limit rule Id
+        required: False
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) CIS Domain ID
+        required: False
+        type: str
     disabled:
         description:
             - Whether this rate limiting rule is currently disabled.
@@ -47,39 +74,12 @@ options:
             - (Required for new resource) Rate Limiting Period
         required: False
         type: int
-    correlate:
-        description:
-            - Ratelimiting Correlate
-        required: False
-        type: list
-        elements: dict
-    action:
-        description:
-            - (Required for new resource) Rate Limiting Action
-        required: False
-        type: list
-        elements: dict
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) CIS Domain ID
-        required: False
-        type: str
     match:
         description:
             - Rate Limiting Match
         required: False
         type: list
         elements: dict
-    rule_id:
-        description:
-            - Rate Limit rule Id
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -126,35 +126,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('threshold', 'int'),
-    ('period', 'int'),
-    ('action', 'list'),
     ('cis_id', 'str'),
+    ('threshold', 'int'),
+    ('action', 'list'),
     ('domain_id', 'str'),
+    ('period', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cis_id',
     'threshold',
+    'correlate',
+    'action',
+    'rule_id',
+    'domain_id',
     'disabled',
     'description',
     'bypass',
     'period',
-    'correlate',
-    'action',
-    'cis_id',
-    'domain_id',
     'match',
-    'rule_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
     threshold=dict(
         required=False,
         type='int'),
+    correlate=dict(
+        required=False,
+        elements='',
+        type='list'),
+    action=dict(
+        required=False,
+        elements='',
+        type='list'),
+    rule_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
     disabled=dict(
         default=False,
         type='bool'),
@@ -168,27 +185,10 @@ module_args = dict(
     period=dict(
         required=False,
         type='int'),
-    correlate=dict(
-        required=False,
-        elements='',
-        type='list'),
-    action=dict(
-        required=False,
-        elements='',
-        type='list'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     match=dict(
         required=False,
         elements='',
         type='list'),
-    rule_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_cis_rate_limit',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

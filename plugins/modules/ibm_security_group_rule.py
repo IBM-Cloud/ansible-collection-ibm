@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    direction:
+        description:
+            - (Required for new resource) Direction of rule: ingress or egress
+        required: False
+        type: str
     ether_type:
         description:
             - IP version IPv4 or IPv6
@@ -56,11 +61,6 @@ options:
             - (Required for new resource) Security group ID
         required: False
         type: int
-    direction:
-        description:
-            - (Required for new resource) Direction of rule: ingress or egress
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,12 +107,13 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('security_group_id', 'int'),
     ('direction', 'str'),
+    ('security_group_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'direction',
     'ether_type',
     'port_range_min',
     'port_range_max',
@@ -120,13 +121,15 @@ TL_ALL_PARAMETERS = [
     'remote_ip',
     'protocol',
     'security_group_id',
-    'direction',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    direction=dict(
+        required=False,
+        type='str'),
     ether_type=dict(
         default='IPv4',
         type='str'),
@@ -148,9 +151,6 @@ module_args = dict(
     security_group_id=dict(
         required=False,
         type='int'),
-    direction=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

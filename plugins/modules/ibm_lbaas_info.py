@@ -16,30 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_lbaas' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    description:
+        description:
+            - None
+        required: False
+        type: str
     status:
         description:
             - None
         required: False
         type: str
-    server_instances_down:
+    server_instances_up:
         description:
             - None
         required: False
         type: int
-    use_system_public_ip_pool:
-        description:
-            - None
-        required: False
-        type: bool
-    name:
-        description:
-            - None
-        required: True
-        type: str
     active_connections:
         description:
             - None
@@ -51,43 +46,48 @@ options:
         required: False
         type: list
         elements: dict
-    server_instances:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    description:
-        description:
-            - None
-        required: False
-        type: str
-    type:
-        description:
-            - None
-        required: False
-        type: str
     datacenter:
         description:
             - None
         required: False
         type: str
+    server_instances_down:
+        description:
+            - None
+        required: False
+        type: int
+    vip:
+        description:
+            - None
+        required: False
+        type: str
+    use_system_public_ip_pool:
+        description:
+            - None
+        required: False
+        type: bool
     ssl_ciphers:
         description:
             - None
         required: False
         type: list
         elements: str
-    vip:
+    server_instances:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - None
+        required: True
+        type: str
+    type:
         description:
             - None
         required: False
         type: str
-    server_instances_up:
-        description:
-            - None
-        required: False
-        type: int
     health_monitors:
         description:
             - None
@@ -132,38 +132,35 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'description',
     'status',
-    'server_instances_down',
-    'use_system_public_ip_pool',
-    'name',
+    'server_instances_up',
     'active_connections',
     'protocols',
-    'server_instances',
-    'description',
-    'type',
     'datacenter',
-    'ssl_ciphers',
+    'server_instances_down',
     'vip',
-    'server_instances_up',
+    'use_system_public_ip_pool',
+    'ssl_ciphers',
+    'server_instances',
+    'name',
+    'type',
     'health_monitors',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    description=dict(
+        required=False,
+        type='str'),
     status=dict(
         required=False,
         type='str'),
-    server_instances_down=dict(
+    server_instances_up=dict(
         required=False,
         type='int'),
-    use_system_public_ip_pool=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=True,
-        type='str'),
     active_connections=dict(
         required=False,
         type='int'),
@@ -171,29 +168,32 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    server_instances=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     datacenter=dict(
         required=False,
         type='str'),
+    server_instances_down=dict(
+        required=False,
+        type='int'),
+    vip=dict(
+        required=False,
+        type='str'),
+    use_system_public_ip_pool=dict(
+        required=False,
+        type='bool'),
     ssl_ciphers=dict(
         required=False,
         elements='',
         type='list'),
-    vip=dict(
+    server_instances=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=True,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
-    server_instances_up=dict(
-        required=False,
-        type='int'),
     health_monitors=dict(
         required=False,
         elements='',
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  shared (False, bool, None)
-    The Shared status of an endpoint
+  managed (False, bool, False)
+    Managed indicates if endpoint is online or offline.
+
+
+  base_path (False, str, None)
+    Base path of an endpoint
 
 
   provider_id (False, str, user-defined)
@@ -42,28 +46,24 @@ Parameters
     (Required for new resource) Api Gateway Service Instance Crn
 
 
+  routes (False, list, None)
+    Invokable routes for an endpoint
+
+
+  shared (False, bool, None)
+    The Shared status of an endpoint
+
+
+  type (False, str, unshare)
+    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+
+
   open_api_doc_name (False, str, None)
     (Required for new resource) Json File path
 
 
   name (False, str, None)
     (Required for new resource) Endpoint name
-
-
-  routes (False, list, None)
-    Invokable routes for an endpoint
-
-
-  managed (False, bool, False)
-    Managed indicates if endpoint is online or offline.
-
-
-  base_path (False, str, None)
-    Base path of an endpoint
-
-
-  type (False, str, unshare)
-    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
   id (False, str, None)

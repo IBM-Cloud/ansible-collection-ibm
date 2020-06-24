@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  notes (False, str, None)
-    A small note about a ssh key to use at your discretion
-
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created key is used. If false, an error is returned
@@ -44,6 +40,10 @@ Parameters
 
   fingerprint (False, str, None)
     A sequence of bytes to authenticate or lookup a longer ssh key
+
+
+  notes (False, str, None)
+    A small note about a ssh key to use at your discretion
 
 
   iaas_classic_username (False, any, None)

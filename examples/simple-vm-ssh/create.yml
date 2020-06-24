@@ -2,7 +2,7 @@
 - name: Create IBM Cloud VPC VSI
   hosts: localhost
   collections:
-   - ibmcloud.ibmcollection
+   - ibm.cloudcollection
   vars:
     name_prefix: ansible-demo
     vsi_image: ibm-ubuntu-18-04-64-ppc64le-minimal-for-vsi

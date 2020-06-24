@@ -2,7 +2,7 @@
 - name: Create APPID instance.
   hosts: localhost
   collections:
-   - ibmcloud.ibmcollection
+   - ibm.cloudcollection
   tasks:
     - name: Read the variables from var file
       include_vars:

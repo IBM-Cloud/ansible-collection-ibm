@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) IKE name
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource) Authentication algorithm type
-
-
-  href (False, str, None)
-    IKE href value
+  vpn_connections (False, list, None)
+    None
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  negotiation_mode (False, str, None)
-    IKE negotiation mode
-
-
-  vpn_connections (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   encryption_algorithm (False, str, None)
@@ -62,20 +46,36 @@ Parameters
     (Required for new resource) IKE DH group
 
 
-  resource_group (False, str, None)
-    IKE resource group ID
+  ike_version (False, int, None)
+    IKE version
 
 
   key_lifetime (False, int, 28800)
     IKE Key lifetime
 
 
-  ike_version (False, int, None)
-    IKE version
+  negotiation_mode (False, str, None)
+    IKE negotiation mode
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  href (False, str, None)
+    IKE href value
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  name (False, str, None)
+    (Required for new resource) IKE name
+
+
+  authentication_algorithm (False, str, None)
+    (Required for new resource) Authentication algorithm type
+
+
+  resource_group (False, str, None)
+    IKE resource group ID
 
 
   id (False, str, None)

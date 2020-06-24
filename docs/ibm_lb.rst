@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -42,6 +42,14 @@ Parameters
     None
 
 
+  dedicated (False, bool, False)
+    Boolena value true if Load balncer is dedicated type
+
+
+  ssl_enabled (False, bool, None)
+    None
+
+
   ssl_offload (False, bool, False)
     boolean value true if SSL offload is enabled
 
@@ -51,14 +59,6 @@ Parameters
 
 
   subnet_id (False, int, None)
-    None
-
-
-  dedicated (False, bool, False)
-    Boolena value true if Load balncer is dedicated type
-
-
-  ssl_enabled (False, bool, None)
     None
 
 

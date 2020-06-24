@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,100 +26,92 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  always_use_https (False, str, None)
-    always_use_https setting
-
-
   hotlink_protection (False, str, None)
     hotlink_protection setting
-
-
-  websockets (False, str, None)
-    websockets setting
-
-
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
-
-
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
-
-
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
 
 
   image_size_optimization (False, str, None)
     image_size_optimization setting
 
 
-  response_buffering (False, str, None)
-    response_buffering setting
-
-
-  domain_id (False, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
   ssl (False, str, None)
     SSL/TLS setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  http2 (False, str, None)
-    http2 setting
-
-
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
+  waf (False, str, None)
+    WAF setting
 
 
   brotli (False, str, None)
     brotli setting
 
 
-  waf (False, str, None)
-    WAF setting
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  domain_id (False, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  cis_id (False, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
 
 
   certificate_status (False, str, None)
@@ -130,8 +122,16 @@ Parameters
     automatic_https_rewrites setting
 
 
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
 
 
   id (False, str, None)

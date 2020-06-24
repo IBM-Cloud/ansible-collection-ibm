@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    List of tags
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  type (False, str, None)
-    (Required for new resource) VLAN type
-
 
   name (False, str, None)
     VLAN name
@@ -50,20 +38,32 @@ Parameters
     VLAN number
 
 
-  softlayer_managed (False, bool, None)
-    Zzset to true if VLAN is managed by softlayer
+  child_resource_count (False, int, None)
+    Child resource count
 
 
-  subnets (False, list, None)
-    None
+  tags (False, list, None)
+    List of tags
 
 
   datacenter (False, str, None)
     (Required for new resource) Datacenter name
 
 
-  child_resource_count (False, int, None)
-    Child resource count
+  type (False, str, None)
+    (Required for new resource) VLAN type
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  softlayer_managed (False, bool, None)
+    Zzset to true if VLAN is managed by softlayer
+
+
+  subnets (False, list, None)
+    None
 
 
   resource_controller_url (False, str, None)

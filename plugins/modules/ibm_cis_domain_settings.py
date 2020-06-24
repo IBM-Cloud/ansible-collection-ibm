@@ -16,68 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain_settings' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    always_use_https:
-        description:
-            - always_use_https setting
-        required: False
-        type: str
     hotlink_protection:
         description:
             - hotlink_protection setting
-        required: False
-        type: str
-    websockets:
-        description:
-            - websockets setting
-        required: False
-        type: str
-    script_load_optimization:
-        description:
-            - script_load_optimization setting
-        required: False
-        type: str
-    browser_check:
-        description:
-            - browser_check setting
-        required: False
-        type: str
-    image_load_optimization:
-        description:
-            - image_load_optimization setting
-        required: False
-        type: str
-    pseudo_ipv4:
-        description:
-            - pseudo_ipv4 setting
-        required: False
-        type: str
-    tls_client_auth:
-        description:
-            - tls_client_auth setting
-        required: False
-        type: str
-    true_client_ip_header:
-        description:
-            - true_client_ip_header setting
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: False
-        type: str
-    opportunistic_encryption:
-        description:
-            - opportunistic_encryption setting
-        required: False
-        type: str
-    cname_flattening:
-        description:
-            - cname_flattening setting
         required: False
         type: str
     image_size_optimization:
@@ -85,9 +30,29 @@ options:
             - image_size_optimization setting
         required: False
         type: str
+    ssl:
+        description:
+            - SSL/TLS setting
+        required: False
+        type: str
+    waf:
+        description:
+            - WAF setting
+        required: False
+        type: str
+    brotli:
+        description:
+            - brotli setting
+        required: False
+        type: str
     response_buffering:
         description:
             - response_buffering setting
+        required: False
+        type: str
+    true_client_ip_header:
+        description:
+            - true_client_ip_header setting
         required: False
         type: str
     domain_id:
@@ -95,9 +60,9 @@ options:
             - (Required for new resource) Associated CIS domain
         required: False
         type: str
-    ipv6:
+    opportunistic_encryption:
         description:
-            - ipv6 setting
+            - opportunistic_encryption setting
         required: False
         type: str
     ip_geolocation:
@@ -105,14 +70,49 @@ options:
             - ip_geolocation setting
         required: False
         type: str
-    prefetch_preload:
+    pseudo_ipv4:
         description:
-            - prefetch_preload setting
+            - pseudo_ipv4 setting
         required: False
         type: str
-    ssl:
+    websockets:
         description:
-            - SSL/TLS setting
+            - websockets setting
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: False
+        type: str
+    ipv6:
+        description:
+            - ipv6 setting
+        required: False
+        type: str
+    browser_check:
+        description:
+            - browser_check setting
+        required: False
+        type: str
+    http2:
+        description:
+            - http2 setting
+        required: False
+        type: str
+    image_load_optimization:
+        description:
+            - image_load_optimization setting
+        required: False
+        type: str
+    tls_client_auth:
+        description:
+            - tls_client_auth setting
+        required: False
+        type: str
+    server_side_exclude:
+        description:
+            - server_side_exclude setting
         required: False
         type: str
     min_tls_version:
@@ -121,24 +121,14 @@ options:
         required: False
         type: str
         default: 1.1
-    http2:
+    origin_error_page_pass_thru:
         description:
-            - http2 setting
+            - origin_error_page_pass_thru setting
         required: False
         type: str
-    server_side_exclude:
+    prefetch_preload:
         description:
-            - server_side_exclude setting
-        required: False
-        type: str
-    brotli:
-        description:
-            - brotli setting
-        required: False
-        type: str
-    waf:
-        description:
-            - WAF setting
+            - prefetch_preload setting
         required: False
         type: str
     certificate_status:
@@ -151,9 +141,19 @@ options:
             - automatic_https_rewrites setting
         required: False
         type: str
-    origin_error_page_pass_thru:
+    always_use_https:
         description:
-            - origin_error_page_pass_thru setting
+            - always_use_https setting
+        required: False
+        type: str
+    script_load_optimization:
+        description:
+            - script_load_optimization setting
+        required: False
+        type: str
+    cname_flattening:
+        description:
+            - cname_flattening setting
         required: False
         type: str
     id:
@@ -202,115 +202,109 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'always_use_https',
     'hotlink_protection',
-    'websockets',
-    'script_load_optimization',
-    'browser_check',
-    'image_load_optimization',
-    'pseudo_ipv4',
-    'tls_client_auth',
-    'true_client_ip_header',
-    'cis_id',
-    'opportunistic_encryption',
-    'cname_flattening',
     'image_size_optimization',
-    'response_buffering',
-    'domain_id',
-    'ipv6',
-    'ip_geolocation',
-    'prefetch_preload',
     'ssl',
-    'min_tls_version',
-    'http2',
-    'server_side_exclude',
-    'brotli',
     'waf',
+    'brotli',
+    'response_buffering',
+    'true_client_ip_header',
+    'domain_id',
+    'opportunistic_encryption',
+    'ip_geolocation',
+    'pseudo_ipv4',
+    'websockets',
+    'cis_id',
+    'ipv6',
+    'browser_check',
+    'http2',
+    'image_load_optimization',
+    'tls_client_auth',
+    'server_side_exclude',
+    'min_tls_version',
+    'origin_error_page_pass_thru',
+    'prefetch_preload',
     'certificate_status',
     'automatic_https_rewrites',
-    'origin_error_page_pass_thru',
+    'always_use_https',
+    'script_load_optimization',
+    'cname_flattening',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    always_use_https=dict(
-        required=False,
-        type='str'),
     hotlink_protection=dict(
-        required=False,
-        type='str'),
-    websockets=dict(
-        required=False,
-        type='str'),
-    script_load_optimization=dict(
-        required=False,
-        type='str'),
-    browser_check=dict(
-        required=False,
-        type='str'),
-    image_load_optimization=dict(
-        required=False,
-        type='str'),
-    pseudo_ipv4=dict(
-        required=False,
-        type='str'),
-    tls_client_auth=dict(
-        required=False,
-        type='str'),
-    true_client_ip_header=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    opportunistic_encryption=dict(
-        required=False,
-        type='str'),
-    cname_flattening=dict(
         required=False,
         type='str'),
     image_size_optimization=dict(
         required=False,
         type='str'),
-    response_buffering=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    ipv6=dict(
-        required=False,
-        type='str'),
-    ip_geolocation=dict(
-        required=False,
-        type='str'),
-    prefetch_preload=dict(
-        required=False,
-        type='str'),
     ssl=dict(
         required=False,
         type='str'),
-    min_tls_version=dict(
-        default='1.1',
-        type='str'),
-    http2=dict(
-        required=False,
-        type='str'),
-    server_side_exclude=dict(
+    waf=dict(
         required=False,
         type='str'),
     brotli=dict(
         required=False,
         type='str'),
-    waf=dict(
+    response_buffering=dict(
+        required=False,
+        type='str'),
+    true_client_ip_header=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    opportunistic_encryption=dict(
+        required=False,
+        type='str'),
+    ip_geolocation=dict(
+        required=False,
+        type='str'),
+    pseudo_ipv4=dict(
+        required=False,
+        type='str'),
+    websockets=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    ipv6=dict(
+        required=False,
+        type='str'),
+    browser_check=dict(
+        required=False,
+        type='str'),
+    http2=dict(
+        required=False,
+        type='str'),
+    image_load_optimization=dict(
+        required=False,
+        type='str'),
+    tls_client_auth=dict(
+        required=False,
+        type='str'),
+    server_side_exclude=dict(
+        required=False,
+        type='str'),
+    min_tls_version=dict(
+        default='1.1',
+        type='str'),
+    origin_error_page_pass_thru=dict(
+        required=False,
+        type='str'),
+    prefetch_preload=dict(
         required=False,
         type='str'),
     certificate_status=dict(
@@ -319,7 +313,13 @@ module_args = dict(
     automatic_https_rewrites=dict(
         required=False,
         type='str'),
-    origin_error_page_pass_thru=dict(
+    always_use_https=dict(
+        required=False,
+        type='str'),
+    script_load_optimization=dict(
+        required=False,
+        type='str'),
+    cname_flattening=dict(
         required=False,
         type='str'),
     id=dict(
@@ -374,7 +374,7 @@ def run_module():
         resource_type='ibm_cis_domain_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

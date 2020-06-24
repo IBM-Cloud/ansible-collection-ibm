@@ -16,16 +16,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    service_subnet_id:
+    datacenter:
         description:
-            - Service subnet ID value
+            - (Required for new resource) Datacenter name
         required: False
-        type: int
+        type: str
     internal_peer_ip_address:
+        description:
+            - None
+        required: False
+        type: str
+    name:
         description:
             - None
         required: False
@@ -36,6 +41,23 @@ options:
         required: False
         type: list
         elements: dict
+    phase_two:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    remote_subnet:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    service_subnet_id:
+        description:
+            - Service subnet ID value
+        required: False
+        type: int
     address_translation:
         description:
             - None
@@ -52,28 +74,6 @@ options:
             - Customer Peer IP Address
         required: False
         type: str
-    remote_subnet:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    phase_two:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     internal_subnet_id:
         description:
             - Internal subnet ID value
@@ -135,34 +135,48 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_subnet_id',
+    'datacenter',
     'internal_peer_ip_address',
+    'name',
     'phase_one',
+    'phase_two',
+    'remote_subnet',
+    'service_subnet_id',
     'address_translation',
     'preshared_key',
     'customer_peer_ip',
-    'remote_subnet',
-    'datacenter',
-    'name',
-    'phase_two',
     'internal_subnet_id',
     'remote_subnet_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_subnet_id=dict(
+    datacenter=dict(
         required=False,
-        type='int'),
+        type='str'),
     internal_peer_ip_address=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     phase_one=dict(
         required=False,
         elements='',
         type='list'),
+    phase_two=dict(
+        required=False,
+        elements='',
+        type='list'),
+    remote_subnet=dict(
+        required=False,
+        elements='',
+        type='list'),
+    service_subnet_id=dict(
+        required=False,
+        type='int'),
     address_translation=dict(
         required=False,
         elements='',
@@ -173,20 +187,6 @@ module_args = dict(
     customer_peer_ip=dict(
         required=False,
         type='str'),
-    remote_subnet=dict(
-        required=False,
-        elements='',
-        type='list'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    phase_two=dict(
-        required=False,
-        elements='',
-        type='list'),
     internal_subnet_id=dict(
         required=False,
         type='int'),
@@ -245,7 +245,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

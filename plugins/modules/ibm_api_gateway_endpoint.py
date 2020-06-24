@@ -16,15 +16,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    shared:
+    managed:
         description:
-            - The Shared status of an endpoint
+            - Managed indicates if endpoint is online or offline.
         required: False
         type: bool
+        default: False
+    base_path:
+        description:
+            - Base path of an endpoint
+        required: False
+        type: str
     provider_id:
         description:
             - Provider ID of an endpoint allowable values user-defined and whisk
@@ -41,6 +47,23 @@ options:
             - (Required for new resource) Api Gateway Service Instance Crn
         required: False
         type: str
+    routes:
+        description:
+            - Invokable routes for an endpoint
+        required: False
+        type: list
+        elements: str
+    shared:
+        description:
+            - The Shared status of an endpoint
+        required: False
+        type: bool
+    type:
+        description:
+            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+        required: False
+        type: str
+        default: unshare
     open_api_doc_name:
         description:
             - (Required for new resource) Json File path
@@ -51,29 +74,6 @@ options:
             - (Required for new resource) Endpoint name
         required: False
         type: str
-    routes:
-        description:
-            - Invokable routes for an endpoint
-        required: False
-        type: list
-        elements: str
-    managed:
-        description:
-            - Managed indicates if endpoint is online or offline.
-        required: False
-        type: bool
-        default: False
-    base_path:
-        description:
-            - Base path of an endpoint
-        required: False
-        type: str
-    type:
-        description:
-            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
-        required: False
-        type: str
-        default: unshare
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,25 +127,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shared',
+    'managed',
+    'base_path',
     'provider_id',
     'endpoint_id',
     'service_instance_crn',
+    'routes',
+    'shared',
+    'type',
     'open_api_doc_name',
     'name',
-    'routes',
-    'managed',
-    'base_path',
-    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shared=dict(
-        required=False,
+    managed=dict(
+        default=False,
         type='bool'),
+    base_path=dict(
+        required=False,
+        type='str'),
     provider_id=dict(
         default='user-defined',
         type='str'),
@@ -155,24 +158,21 @@ module_args = dict(
     service_instance_crn=dict(
         required=False,
         type='str'),
+    routes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    shared=dict(
+        required=False,
+        type='bool'),
+    type=dict(
+        default='unshare',
+        type='str'),
     open_api_doc_name=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
-        type='str'),
-    routes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    managed=dict(
-        default=False,
-        type='bool'),
-    base_path=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        default='unshare',
         type='str'),
     id=dict(
         required=False,
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

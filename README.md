@@ -21,7 +21,7 @@ Below steps are follwed to install ansible collections for the IBM Cloud resourc
 1. Download and Install collection
 
     ```
-    ansible-galaxy collection install ibmcloud.ibmcollection
+    ansible-galaxy collection install ibm.cloudcollection
     ```
 
 ### Example Projects
@@ -29,6 +29,10 @@ Below steps are follwed to install ansible collections for the IBM Cloud resourc
 1. [VPC Virtual Server Instance](https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/examples/simple-vm-ssh)
 
 2. [Power Virtual Server Instance](https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/examples/simple-vm-power-vs)
+
+3. [IAM User Invite](https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/examples/iam-user-invite)
+
+4. [APP ID instance creation](https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/examples/appid-instance-creation)
 
 
 [IBM Cloud Terraform Provider]: https://github.com/IBM-Cloud/terraform-provider-ibm

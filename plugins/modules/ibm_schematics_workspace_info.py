@@ -16,25 +16,40 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    types:
+    tags:
         description:
             - None
         required: False
         type: list
         elements: str
+    location:
+        description:
+            - The location of workspace
+        required: False
+        type: str
+    crn:
+        description:
+            - cloud resource name of the workspace
+        required: False
+        type: str
     template_id:
         description:
             - The id of templates
         required: False
         type: list
         elements: str
-    resource_group:
+    is_frozen:
         description:
-            - The resource group of workspace
+            - None
+        required: False
+        type: bool
+    description:
+        description:
+            - The description of workspace
         required: False
         type: str
     catalog_ref:
@@ -43,6 +58,16 @@ options:
         required: False
         type: dict
         elements: dict
+    name:
+        description:
+            - The name of workspace
+        required: False
+        type: str
+    resource_group:
+        description:
+            - The resource group of workspace
+        required: False
+        type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
@@ -58,42 +83,17 @@ options:
             - The status of workspace
         required: False
         type: str
-    is_frozen:
-        description:
-            - None
-        required: False
-        type: bool
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
-    location:
-        description:
-            - The location of workspace
-        required: False
-        type: str
-    description:
-        description:
-            - The description of workspace
-        required: False
-        type: str
-    name:
-        description:
-            - The name of workspace
-        required: False
-        type: str
-    crn:
-        description:
-            - cloud resource name of the workspace
-        required: False
-        type: str
-    tags:
+    types:
         description:
             - None
         required: False
         type: list
         elements: str
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -132,41 +132,56 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'types',
+    'tags',
+    'location',
+    'crn',
     'template_id',
-    'resource_group',
+    'is_frozen',
+    'description',
     'catalog_ref',
+    'name',
+    'resource_group',
     'resource_controller_url',
     'workspace_id',
     'status',
-    'is_frozen',
+    'types',
     'is_locked',
-    'location',
-    'description',
-    'name',
-    'crn',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    types=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
+    location=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
     template_id=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    is_frozen=dict(
+        required=False,
+        type='bool'),
+    description=dict(
         required=False,
         type='str'),
     catalog_ref=dict(
         required=False,
         elements='',
         type='dict'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
@@ -176,28 +191,13 @@ module_args = dict(
     status=dict(
         required=False,
         type='str'),
-    is_frozen=dict(
-        required=False,
-        type='bool'),
-    is_locked=dict(
-        required=False,
-        type='bool'),
-    location=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    crn=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    types=dict(
         required=False,
         elements='',
         type='list'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

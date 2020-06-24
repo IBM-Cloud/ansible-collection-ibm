@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name_servers (False, list, None)
+    Custom name servers for the domain registration
+
+
   id (False, int, None)
     A domain registration record's internal identifier
 
 
   name (True, str, None)
     The name of the domain registration
-
-
-  name_servers (False, list, None)
-    Custom name servers for the domain registration
 
 
   iaas_classic_username (False, any, None)

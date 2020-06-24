@@ -16,23 +16,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Volume name
+        required: False
+        type: str
     encryption_key:
         description:
             - Volume encryption key info
         required: False
         type: str
-    iops:
+    resource_status:
         description:
-            - IOPS value for the Volume
+            - The status of the resource
         required: False
-        type: int
-    status:
+        type: str
+    zone:
         description:
-            - Volume status
+            - (Required for new resource) Zone name
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     tags:
@@ -46,29 +61,9 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    resource_group_name:
+    resource_crn:
         description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Volume name
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group name
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
+            - The crn of the resource
         required: False
         type: str
     profile:
@@ -82,21 +77,26 @@ options:
         required: False
         type: int
         default: 100
+    resource_group:
+        description:
+            - Resource group name
+        required: False
+        type: str
     crn:
         description:
             - CRN value for the volume instance
         required: False
         type: str
-    resource_name:
+    status:
         description:
-            - The name of the resource
+            - Volume status
         required: False
         type: str
-    resource_crn:
+    iops:
         description:
-            - The crn of the resource
+            - IOPS value for the Volume
         required: False
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -150,34 +150,43 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'encryption_key',
-    'iops',
-    'status',
+    'resource_status',
+    'zone',
+    'resource_name',
+    'resource_group_name',
     'tags',
     'resource_controller_url',
-    'resource_group_name',
-    'name',
-    'zone',
-    'resource_group',
-    'resource_status',
+    'resource_crn',
     'profile',
     'capacity',
+    'resource_group',
     'crn',
-    'resource_name',
-    'resource_crn',
+    'status',
+    'iops',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     encryption_key=dict(
         required=False,
         type='str'),
-    iops=dict(
+    resource_status=dict(
         required=False,
-        type='int'),
-    status=dict(
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -187,19 +196,7 @@ module_args = dict(
     resource_controller_url=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     profile=dict(
@@ -208,15 +205,18 @@ module_args = dict(
     capacity=dict(
         default=100,
         type='int'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     crn=dict(
         required=False,
         type='str'),
-    resource_name=dict(
+    status=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    iops=dict(
         required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -281,7 +281,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

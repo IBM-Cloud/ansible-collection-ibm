@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  type (False, str, vpc)
+    Network Type
+
+
+  vpc_crn (False, str, None)
+    (Required for new resource) VPC CRN id
+
+
+  created_on (False, str, None)
+    Network creation date
+
 
   modified_on (False, str, None)
     Network Modification date
@@ -44,18 +56,6 @@ Parameters
 
   zone_id (False, str, None)
     (Required for new resource) Zone Id
-
-
-  type (False, str, vpc)
-    Network Type
-
-
-  vpc_crn (False, str, None)
-    (Required for new resource) VPC CRN id
-
-
-  created_on (False, str, None)
-    Network creation date
 
 
   id (False, str, None)

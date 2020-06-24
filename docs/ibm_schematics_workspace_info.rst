@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  types (False, list, None)
+  tags (False, list, None)
     None
+
+
+  location (False, str, None)
+    The location of workspace
+
+
+  crn (False, str, None)
+    cloud resource name of the workspace
 
 
   template_id (False, list, None)
     The id of templates
 
 
-  resource_group (False, str, None)
-    The resource group of workspace
+  is_frozen (False, bool, None)
+    None
+
+
+  description (False, str, None)
+    The description of workspace
 
 
   catalog_ref (False, dict, None)
     Catalog references
+
+
+  name (False, str, None)
+    The name of workspace
+
+
+  resource_group (False, str, None)
+    The resource group of workspace
 
 
   resource_controller_url (False, str, None)
@@ -54,31 +74,11 @@ Parameters
     The status of workspace
 
 
-  is_frozen (False, bool, None)
+  types (False, list, None)
     None
 
 
   is_locked (False, bool, None)
-    None
-
-
-  location (False, str, None)
-    The location of workspace
-
-
-  description (False, str, None)
-    The description of workspace
-
-
-  name (False, str, None)
-    The name of workspace
-
-
-  crn (False, str, None)
-    cloud resource name of the workspace
-
-
-  tags (False, list, None)
     None
 
 

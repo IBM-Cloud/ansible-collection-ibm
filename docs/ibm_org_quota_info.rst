@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  non_basic_services_allowed (False, bool, None)
+    Define non basic services are allowed for organization.
+
+
+  total_routes (False, int, None)
+    Defines the total route for organization.
+
 
   instance_memory_limit (False, int, None)
     Defines the  total instance memory limit for organization.
@@ -38,12 +46,8 @@ Parameters
     Defines the total app instance limit for organization.
 
 
-  total_private_domains (False, int, None)
-    Defines the total private domain limit for organization.v
-
-
-  app_tasks_limit (False, int, None)
-    Defines the total app task limit for organization.
+  total_reserved_route_ports (False, int, None)
+    Defines the number of reserved route ports for organization.
 
 
   name (True, str, None)
@@ -58,20 +62,16 @@ Parameters
     Defines the total memory limit for organization.
 
 
+  total_private_domains (False, int, None)
+    Defines the total private domain limit for organization.v
+
+
+  app_tasks_limit (False, int, None)
+    Defines the total app task limit for organization.
+
+
   total_service_keys (False, int, None)
     Defines the total service keys for organization.
-
-
-  total_reserved_route_ports (False, int, None)
-    Defines the number of reserved route ports for organization.
-
-
-  non_basic_services_allowed (False, bool, None)
-    Define non basic services are allowed for organization.
-
-
-  total_routes (False, int, None)
-    Defines the total route for organization.
 
 
   iaas_classic_username (False, any, None)

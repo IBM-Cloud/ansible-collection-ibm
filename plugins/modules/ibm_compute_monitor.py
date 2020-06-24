@@ -16,27 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_monitor' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    wait_cycles:
-        description:
-            - wait cycles count
-        required: False
-        type: int
-    notified_users:
-        description:
-            - List of users notified
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     guest_id:
         description:
             - (Required for new resource) Guest ID
@@ -57,6 +40,23 @@ options:
             - (Required for new resource) Response action ID
         required: False
         type: int
+    wait_cycles:
+        description:
+            - wait cycles count
+        required: False
+        type: int
+    notified_users:
+        description:
+            - List of users notified
+        required: False
+        type: list
+        elements: int
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,30 +110,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'wait_cycles',
-    'notified_users',
-    'tags',
     'guest_id',
     'ip_address',
     'query_type_id',
     'response_action_id',
+    'wait_cycles',
+    'notified_users',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    wait_cycles=dict(
-        required=False,
-        type='int'),
-    notified_users=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     guest_id=dict(
         required=False,
         type='int'),
@@ -146,6 +135,17 @@ module_args = dict(
     response_action_id=dict(
         required=False,
         type='int'),
+    wait_cycles=dict(
+        required=False,
+        type='int'),
+    notified_users=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_compute_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -44,6 +44,10 @@ Parameters
 
   output_values (False, dict, None)
     None
+
+
+  output_json (False, str, None)
+    The json output in string
 
 
   iaas_classic_username (False, any, None)

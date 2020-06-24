@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  worker_pool_name (False, str, None)
+    (Required for new resource) worker pool name
+
+
+  size_per_zone (False, int, None)
+    (Required for new resource) Number of nodes per zone
+
+
   state_ (False, str, None)
     worker pool state
+
+
+  zones (False, list, None)
+    None
 
 
   labels (False, dict, None)
     list of labels to worker pool
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
+  cluster (False, str, None)
+    (Required for new resource) Cluster name
+
+
   machine_type (False, str, None)
     (Required for new resource) worker nodes machine type
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  hardware (False, str, shared)
-    Hardware type
 
 
   disk_encryption (False, bool, True)
@@ -62,20 +66,16 @@ Parameters
     The worker pool region
 
 
-  cluster (False, str, None)
-    (Required for new resource) Cluster name
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  worker_pool_name (False, str, None)
-    (Required for new resource) worker pool name
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  size_per_zone (False, int, None)
-    (Required for new resource) Number of nodes per zone
-
-
-  zones (False, list, None)
-    None
+  hardware (False, str, shared)
+    Hardware type
 
 
   id (False, str, None)

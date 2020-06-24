@@ -16,26 +16,11 @@ description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_worker' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    state:
-        description:
-            - State of the worker
-        required: False
-        type: str
-    private_vlan:
-        description:
-            - None
-        required: False
-        type: str
-    private_ip:
+    public_vlan:
         description:
             - None
         required: False
@@ -45,9 +30,14 @@ options:
             - None
         required: False
         type: str
-    org_guid:
+    account_guid:
         description:
-            - The bluemix organization guid this cluster belongs to
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
+    region:
+        description:
+            - The cluster region
         required: False
         type: str
     resource_group_id:
@@ -65,24 +55,34 @@ options:
             - ID of the worker
         required: True
         type: str
+    state:
+        description:
+            - State of the worker
+        required: False
+        type: str
     status:
         description:
             - Status of the worker
         required: False
         type: str
-    public_vlan:
+    private_vlan:
         description:
             - None
+        required: False
+        type: str
+    private_ip:
+        description:
+            - None
+        required: False
+        type: str
+    org_guid:
+        description:
+            - The bluemix organization guid this cluster belongs to
         required: False
         type: str
     space_guid:
         description:
             - The bluemix space guid this cluster belongs to
-        required: False
-        type: str
-    region:
-        description:
-            - The cluster region
         required: False
         type: str
     ibmcloud_api_key:
@@ -103,41 +103,35 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_guid',
-    'state',
-    'private_vlan',
-    'private_ip',
+    'public_vlan',
     'public_ip',
-    'org_guid',
+    'account_guid',
+    'region',
     'resource_group_id',
     'resource_controller_url',
     'worker_id',
+    'state',
     'status',
-    'public_vlan',
+    'private_vlan',
+    'private_ip',
+    'org_guid',
     'space_guid',
-    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_guid=dict(
-        required=False,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    private_vlan=dict(
-        required=False,
-        type='str'),
-    private_ip=dict(
+    public_vlan=dict(
         required=False,
         type='str'),
     public_ip=dict(
         required=False,
         type='str'),
-    org_guid=dict(
+    account_guid=dict(
+        required=False,
+        type='str'),
+    region=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -149,16 +143,22 @@ module_args = dict(
     worker_id=dict(
         required=True,
         type='str'),
+    state=dict(
+        required=False,
+        type='str'),
     status=dict(
         required=False,
         type='str'),
-    public_vlan=dict(
+    private_vlan=dict(
+        required=False,
+        type='str'),
+    private_ip=dict(
+        required=False,
+        type='str'),
+    org_guid=dict(
         required=False,
         type='str'),
     space_guid=dict(
-        required=False,
-        type='str'),
-    region=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -181,7 +181,7 @@ def run_module():
         resource_type='ibm_container_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

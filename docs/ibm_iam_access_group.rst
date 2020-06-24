@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  version (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) Name of the access group
-
-
   description (False, str, None)
     Description of the access group
 
 
   tags (False, list, None)
     None
+
+
+  version (False, str, None)
+    None
+
+
+  name (False, str, None)
+    (Required for new resource) Name of the access group
 
 
   id (False, str, None)

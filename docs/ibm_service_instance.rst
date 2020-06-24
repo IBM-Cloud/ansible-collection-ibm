@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,28 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) A name for the service instance
-
-
   service_keys (False, list, None)
     The service keys asociated with the service instance
-
-
-  plan (False, str, None)
-    (Required for new resource) The plan type of the service
 
 
   parameters (False, dict, None)
     Arbitrary parameters to pass along to the service broker. Must be a JSON object
 
 
-  tags (False, list, None)
-    None
+  plan (False, str, None)
+    (Required for new resource) The plan type of the service
 
 
-  wait_time_minutes (False, int, 10)
-    Define timeout to wait for the service instances to succeeded/deleted etc.
+  name (False, str, None)
+    (Required for new resource) A name for the service instance
 
 
   space_guid (False, str, None)
@@ -64,6 +56,14 @@ Parameters
 
   service_plan_guid (False, str, None)
     The uniquie identifier of the service offering plan type
+
+
+  tags (False, list, None)
+    None
+
+
+  wait_time_minutes (False, int, 10)
+    Define timeout to wait for the service instances to succeeded/deleted etc.
 
 
   id (False, str, None)

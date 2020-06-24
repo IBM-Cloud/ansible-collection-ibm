@@ -60,8 +60,6 @@ The following parameters can be set by the user:
 
     Note: This is used of multizone supported power instances.
 
-5. Update the ibmcollection path in `ansible.cfg` if collections are installed in non default path
-
 ### Create
 
 1. To create all resources and test public SSH connection to the VM, run the

@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_schematics_output' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
@@ -45,6 +45,11 @@ options:
             - None
         required: False
         type: dict
+    output_json:
+        description:
+            - The json output in string
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -89,10 +94,11 @@ TL_ALL_PARAMETERS = [
     'template_id',
     'type',
     'output_values',
+    'output_json',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     resource_controller_url=dict(
@@ -110,6 +116,9 @@ module_args = dict(
     output_values=dict(
         required=False,
         type='dict'),
+    output_json=dict(
+        required=False,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -144,7 +153,7 @@ def run_module():
         resource_type='ibm_schematics_output',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

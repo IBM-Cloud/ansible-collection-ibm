@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -30,15 +30,7 @@ Parameters
     Boolean value true if Public service endpoint to be disabled
 
 
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) The cluster name
-
-
-  master_url (False, str, None)
+  state_ (False, str, None)
     None
 
 
@@ -46,75 +38,31 @@ Parameters
     None
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  flavor (False, str, None)
+    (Required for new resource) Cluster nodes flavour
 
 
   vpc_id (False, str, None)
     (Required for new resource) The vpc id where the cluster is
 
 
-  kube_version (False, str, None)
-    Kubernetes version
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
-  ingress_secret (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
 
 
   worker_count (False, int, 1)
     Number of worker nodes in the cluster
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  state_ (False, str, None)
-    None
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  tags (False, list, None)
-    List of tags for the resources
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  flavor (False, str, None)
-    (Required for new resource) Cluster nodes flavour
-
-
-  zones (False, list, None)
-    (Required for new resource) Zone info
-
-
-  albs (False, list, None)
+  public_service_endpoint_url (False, str, None)
     None
 
 
@@ -122,15 +70,71 @@ Parameters
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  name (False, str, None)
+    (Required for new resource) The cluster name
+
+
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  master_status (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  kube_version (False, str, None)
+    Kubernetes version
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  master_status (False, str, None)
+  zones (False, list, None)
+    (Required for new resource) Zone info
+
+
+  ingress_secret (False, str, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  master_url (False, str, None)
+    None
+
+
+  albs (False, list, None)
     None
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (False, str, None)
+    (Required for new resource) VPC name
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  default_network_acl (False, str, None)
+    Default network ACL
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  crn (False, str, None)
+    The crn of the resource
+
+
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  cse_source_addresses (False, list, None)
+    None
 
 
   resource_group (False, str, None)
     Resource group info
+
+
+  status (False, str, None)
+    VPC status
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  subnets (False, list, None)
+    None
 
 
   classic_access (False, bool, False)
@@ -50,44 +78,16 @@ Parameters
     Security group associated with VPC
 
 
-  crn (False, str, None)
+  resource_crn (False, str, None)
     The crn of the resource
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  name (False, str, None)
-    (Required for new resource) VPC name
-
-
-  status (False, str, None)
-    VPC status
-
-
-  tags (False, list, None)
-    List of tags
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  cse_source_addresses (False, list, None)
-    None
-
-
-  default_network_acl (False, str, None)
-    Default network ACL
-
-
-  subnets (False, list, None)
-    None
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_image' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: False
+        type: str
     image_id:
         description:
             - Image ID
@@ -33,11 +38,6 @@ options:
     pi_image_id:
         description:
             - (Required for new resource) Instance image name
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
         required: False
         type: str
     id:
@@ -82,23 +82,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_image_name', 'str'),
     ('pi_image_id', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_cloud_instance_id',
     'image_id',
     'pi_image_name',
     'pi_image_id',
-    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     image_id=dict(
         required=False,
         type='str'),
@@ -106,9 +109,6 @@ module_args = dict(
         required=False,
         type='str'),
     pi_image_id=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -156,7 +156,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

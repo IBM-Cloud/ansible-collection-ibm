@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,72 +26,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
-    (Required for new resource) DNS record type
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   retry (False, int, None)
     Retry count
 
 
-  ttl (False, int, None)
-    (Required for new resource) TTL configuration
-
-
-  port (False, int, None)
-    port number
-
-
   priority (False, int, 0)
     priority info
-
-
-  weight (False, int, 0)
-    weight info
 
 
   tags (False, list, None)
     tags set for the resource
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
   mx_priority (False, int, 0)
     Maximum priority
-
-
-  service (False, str, None)
-    service info
-
-
-  domain_id (False, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  host (False, str, None)
-    (Required for new resource) Hostname
 
 
   refresh (False, int, None)
     refresh rate
 
 
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
+  ttl (False, int, None)
+    (Required for new resource) TTL configuration
 
 
-  protocol (False, str, None)
-    protocol info
+  service (False, str, None)
+    service info
+
+
+  port (False, int, None)
+    port number
 
 
   data (False, str, None)
     (Required for new resource) DNS record data
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  host (False, str, None)
+    (Required for new resource) Hostname
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  domain_id (False, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  type (False, str, None)
+    (Required for new resource) DNS record type
+
+
+  protocol (False, str, None)
+    protocol info
 
 
   id (False, str, None)

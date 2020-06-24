@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group (False, str, None)
-    Resource group ID for the network ACL
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
 
   resource_crn (False, str, None)
     The crn of the resource
@@ -56,6 +44,18 @@ Parameters
 
   vpc (False, str, None)
     Network ACL VPC name
+
+
+  resource_group (False, str, None)
+    Resource group ID for the network ACL
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

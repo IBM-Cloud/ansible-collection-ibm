@@ -2,7 +2,7 @@
 - name: List VPC Images and Instance Profiles
   hosts: localhost
   collections:
-   - ibmcloud.ibmcollection
+   - ibm.cloudcollection
 
   tasks:
     - ibm_is_images_info:

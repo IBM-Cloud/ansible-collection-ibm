@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domains (False, list, None)
-    (Required for new resource) List of domain names
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
+
+
+  certificate_manager_instance_id (False, str, None)
+    (Required for new resource) Certificate manager instance ID
 
 
   dns_provider_instance_crn (False, str, None)
     DNS provider instance CRN
 
 
-  issuer (False, str, None)
-    Certificate issuer info
-
-
-  key_algorithm (False, str, rsaEncryption 2048 bit)
-    Keyalgorithm info
+  algorithm (False, str, None)
+    Algorithm info
 
 
   begins_on (False, int, None)
@@ -50,8 +50,8 @@ Parameters
     Certificaet expairy date
 
 
-  certificate_manager_instance_id (False, str, None)
-    (Required for new resource) Certificate manager instance ID
+  imported (False, bool, None)
+    set to true if certificate is imported
 
 
   status (False, str, None)
@@ -62,32 +62,32 @@ Parameters
     Has Previous
 
 
-  imported (False, bool, None)
-    set to true if certificate is imported
-
-
-  issuance_info (False, dict, None)
-    None
-
-
-  algorithm (False, str, None)
-    Algorithm info
-
-
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
+  domains (False, list, None)
+    (Required for new resource) List of domain names
 
 
   description (False, str, None)
     Certicate description
 
 
-  domain_validation_method (False, str, dns-01)
-    Domain validation methods
+  issuer (False, str, None)
+    Certificate issuer info
+
+
+  key_algorithm (False, str, rsaEncryption 2048 bit)
+    Keyalgorithm info
 
 
   name (False, str, None)
     (Required for new resource) Certificate name
+
+
+  issuance_info (False, dict, None)
+    None
+
+
+  domain_validation_method (False, str, dns-01)
+    Domain validation methods
 
 
   id (False, str, None)

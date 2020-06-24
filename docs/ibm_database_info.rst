@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,43 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (False, str, None)
-    Unique identifier of resource instance
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  tags (False, list, None)
-    None
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  connectionstrings (False, list, None)
-    None
+  name (True, str, None)
+    Resource instance name for example, my Database instance
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
+  plan (False, str, None)
+    The plan type of the Database instance
 
 
   whitelist (False, list, None)
-    None
-
-
-  groups (False, list, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  users (False, list, None)
     None
 
 
@@ -74,28 +54,32 @@ Parameters
     The location or the region in which the Database instance exists
 
 
-  plan (False, str, None)
-    The plan type of the Database instance
+  guid (False, str, None)
+    Unique identifier of resource instance
 
 
-  status (False, str, None)
-    The resource instance status
+  tags (False, list, None)
+    None
 
 
-  adminpassword (False, str, None)
-    The admin user id for the instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
+  users (False, list, None)
+    None
 
 
   members_disk_allocation_mb (False, int, None)
     Disk allocation required for cluster
 
 
-  name (True, str, None)
-    Resource instance name for example, my Database instance
+  groups (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   service (False, str, None)
@@ -106,12 +90,28 @@ Parameters
     The admin user id for the instance
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  adminpassword (False, str, None)
+    The admin user id for the instance
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  status (False, str, None)
+    The resource instance status
+
+
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  connectionstrings (False, list, None)
+    None
 
 
   iaas_classic_username (False, any, None)

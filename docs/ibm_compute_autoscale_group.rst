@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    (Required for new resource) Name
-
-
   regional_group (False, str, None)
     (Required for new resource) regional group
-
-
-  minimum_member_count (False, int, None)
-    (Required for new resource) Minimum member count
-
-
-  maximum_member_count (False, int, None)
-    (Required for new resource) Maximum member count
-
-
-  port (False, int, None)
-    Port number
-
-
-  virtual_guest_member_template (False, list, None)
-    (Required for new resource) Virtual guest member template
-
-
-  network_vlan_ids (False, list, None)
-    List of network VLAN ids
 
 
   cooldown (False, int, None)
     (Required for new resource) Cooldown value
 
 
+  virtual_server_id (False, int, None)
+    virtual server ID
+
+
+  network_vlan_ids (False, list, None)
+    List of network VLAN ids
+
+
+  name (False, str, None)
+    (Required for new resource) Name
+
+
+  maximum_member_count (False, int, None)
+    (Required for new resource) Maximum member count
+
+
   termination_policy (False, str, None)
     (Required for new resource) Termination policy
 
 
-  virtual_server_id (False, int, None)
-    virtual server ID
+  port (False, int, None)
+    Port number
 
 
   health_check (False, dict, None)
     None
 
 
+  virtual_guest_member_template (False, list, None)
+    (Required for new resource) Virtual guest member template
+
+
   tags (False, list, None)
     List of tags
+
+
+  minimum_member_count (False, int, None)
+    (Required for new resource) Minimum member count
 
 
   id (False, str, None)

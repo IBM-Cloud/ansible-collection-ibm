@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  master_ip_address (False, str, None)
+    (Required for new resource) Master IP Address
+
+
+  transfer_frequency (False, int, None)
+    (Required for new resource) Transfer frequency value
+
 
   zone_name (False, str, None)
     (Required for new resource) Zone name
@@ -40,14 +48,6 @@ Parameters
 
   tags (False, list, None)
     List of tags
-
-
-  master_ip_address (False, str, None)
-    (Required for new resource) Master IP Address
-
-
-  transfer_frequency (False, int, None)
-    (Required for new resource) Transfer frequency value
 
 
   id (False, str, None)

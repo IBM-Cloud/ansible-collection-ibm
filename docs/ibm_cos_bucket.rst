@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  bucket_name (False, str, None)
+    (Required for new resource) COS Bucket name
+
+
   resource_instance_id (False, str, None)
     (Required for new resource) resource instance ID
 
 
   crn (False, str, None)
     CRN of resource instance
-
-
-  region_location (False, str, None)
-    Region Location info.
 
 
   storage_class (False, str, None)
@@ -46,8 +46,12 @@ Parameters
     Public endpoint for the COS bucket
 
 
-  bucket_name (False, str, None)
-    (Required for new resource) COS Bucket name
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
   key_protect (False, str, None)
@@ -58,12 +62,20 @@ Parameters
     single site location info
 
 
+  region_location (False, str, None)
+    Region Location info.
+
+
   cross_region_location (False, str, None)
     Cros region location info
 
 
   s3_endpoint_private (False, str, None)
     Private endpoint for the COS bucket
+
+
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
 
 
   id (False, str, None)

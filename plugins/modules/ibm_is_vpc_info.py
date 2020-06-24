@@ -16,29 +16,19 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_vpc' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    status:
+    resource_name:
         description:
-            - None
+            - The name of the resource
         required: False
         type: str
-    resource_group_name:
+    default_security_group:
         description:
-            - The resource group name in which resource is provisioned
+            - Security group associated with VPC
         required: False
-        type: str
-    default_network_acl:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: True
         type: str
     tags:
         description:
@@ -46,19 +36,34 @@ options:
         required: False
         type: list
         elements: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
     resource_crn:
         description:
             - The crn of the resource
         required: False
         type: str
+    classic_access:
+        description:
+            - None
+        required: False
+        type: bool
+    name:
+        description:
+            - None
+        required: True
+        type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
     resource_status:
         description:
             - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     subnets:
@@ -67,7 +72,12 @@ options:
         required: False
         type: list
         elements: dict
-    resource_group:
+    default_network_acl:
+        description:
+            - None
+        required: False
+        type: str
+    status:
         description:
             - None
         required: False
@@ -88,16 +98,6 @@ options:
         required: False
         type: list
         elements: dict
-    classic_access:
-        description:
-            - None
-        required: False
-        type: bool
-    default_security_group:
-        description:
-            - Security group associated with VPC
-        required: False
-        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -136,57 +136,63 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'resource_group_name',
-    'default_network_acl',
-    'name',
-    'tags',
     'resource_name',
+    'default_security_group',
+    'tags',
     'resource_crn',
-    'resource_status',
-    'subnets',
+    'classic_access',
+    'name',
     'resource_group',
+    'resource_status',
+    'resource_group_name',
+    'subnets',
+    'default_network_acl',
+    'status',
     'crn',
     'resource_controller_url',
     'cse_source_addresses',
-    'classic_access',
-    'default_security_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
+    resource_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    default_security_group=dict(
         required=False,
-        type='str'),
-    default_network_acl=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_name=dict(
-        required=False,
-        type='str'),
     resource_crn=dict(
         required=False,
         type='str'),
+    classic_access=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=True,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     subnets=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    default_network_acl=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     crn=dict(
@@ -199,12 +205,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    classic_access=dict(
-        required=False,
-        type='bool'),
-    default_security_group=dict(
-        required=False,
-        type='str'),
     generation=dict(
         type='int',
         required=False,
@@ -251,7 +251,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

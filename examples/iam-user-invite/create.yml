@@ -5,7 +5,7 @@
   include_vars:
     file: vars.yml
   collections:
-   - ibmcloud.ibmcollection
+   - ibm.cloudcollection
   tasks:
     - name: space data details
       ibm_space_info:

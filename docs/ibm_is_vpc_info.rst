@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,15 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  default_security_group (False, str, None)
+    Security group associated with VPC
+
+
+  tags (False, list, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  default_network_acl (False, str, None)
+  classic_access (False, bool, None)
     None
 
 
@@ -42,27 +50,27 @@ Parameters
     None
 
 
-  tags (False, list, None)
+  resource_group (False, str, None)
     None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   subnets (False, list, None)
     None
 
 
-  resource_group (False, str, None)
+  default_network_acl (False, str, None)
+    None
+
+
+  status (False, str, None)
     None
 
 
@@ -76,14 +84,6 @@ Parameters
 
   cse_source_addresses (False, list, None)
     None
-
-
-  classic_access (False, bool, None)
-    None
-
-
-  default_security_group (False, str, None)
-    Security group associated with VPC
 
 
   generation (False, int, 2)

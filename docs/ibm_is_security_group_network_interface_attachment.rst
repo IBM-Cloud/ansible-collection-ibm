@@ -18,21 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  network_interface (False, str, None)
-    (Required for new resource) security group network interface attachment NIC ID
-
-
-  name (False, str, None)
-    security group network interface attachment name
-
 
   instance_network_interface (False, str, None)
     security group network interface attachment network interface ID
@@ -46,20 +38,28 @@ Parameters
     security group network interface attachment secondary address
 
 
-  status (False, str, None)
-    security group network interface attachment status
+  floating_ips (False, list, None)
+    None
 
 
   security_groups (False, list, None)
     None
 
 
-  security_group (False, str, None)
-    (Required for new resource) security group network interface attachment group ID
+  name (False, str, None)
+    security group network interface attachment name
+
+
+  network_interface (False, str, None)
+    (Required for new resource) security group network interface attachment NIC ID
 
 
   port_speed (False, int, None)
     security group network interface attachment port speed
+
+
+  status (False, str, None)
+    security group network interface attachment status
 
 
   subnet (False, str, None)
@@ -70,8 +70,8 @@ Parameters
     security group network interface attachment type
 
 
-  floating_ips (False, list, None)
-    None
+  security_group (False, str, None)
+    (Required for new resource) security group network interface attachment group ID
 
 
   id (False, str, None)

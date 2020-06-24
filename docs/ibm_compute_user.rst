@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  has_api_key (False, bool, False)
-    API Key info of the user
+  ibm_id (False, str, None)
+    IBM ID of the  user
+
+
+  first_name (False, str, None)
+    (Required for new resource) First name of the user
+
+
+  city (False, str, None)
+    (Required for new resource) City name
+
+
+  user_status (False, str, ACTIVE)
+    user status info
+
+
+  password (False, str, None)
+    password for the user
 
 
   api_key (False, str, None)
@@ -42,8 +58,28 @@ Parameters
     (Required for new resource) Country name
 
 
-  user_status (False, str, ACTIVE)
-    user status info
+  timezone (False, str, None)
+    (Required for new resource) time zone info
+
+
+  username (False, str, None)
+    user name
+
+
+  address1 (False, str, None)
+    (Required for new resource) Address info of the user
+
+
+  address2 (False, str, None)
+    Address info of the user
+
+
+  has_api_key (False, bool, False)
+    API Key info of the user
+
+
+  last_name (False, str, None)
+    (Required for new resource) Last name of the user
 
 
   company_name (False, str, None)
@@ -58,44 +94,8 @@ Parameters
     set of persmissions assigned for the user
 
 
-  password (False, str, None)
-    password for the user
-
-
-  ibm_id (False, str, None)
-    IBM ID of the  user
-
-
-  username (False, str, None)
-    user name
-
-
-  last_name (False, str, None)
-    (Required for new resource) Last name of the user
-
-
-  address2 (False, str, None)
-    Address info of the user
-
-
-  timezone (False, str, None)
-    (Required for new resource) time zone info
-
-
   tags (False, list, None)
     Tags set for the resources
-
-
-  first_name (False, str, None)
-    (Required for new resource) First name of the user
-
-
-  address1 (False, str, None)
-    (Required for new resource) Address info of the user
-
-
-  city (False, str, None)
-    (Required for new resource) City name
 
 
   id (False, str, None)

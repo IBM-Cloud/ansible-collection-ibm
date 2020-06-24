@@ -16,15 +16,10 @@ description:
     - Retrieve an IBM Cloud 'ibm_compute_ssh_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    notes:
-        description:
-            - A small note about a ssh key to use at your discretion
-        required: False
-        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created key is used. If false, an error is returned
@@ -44,6 +39,11 @@ options:
     fingerprint:
         description:
             - A sequence of bytes to authenticate or lookup a longer ssh key
+        required: False
+        type: str
+    notes:
+        description:
+            - A small note about a ssh key to use at your discretion
         required: False
         type: str
     iaas_classic_username:
@@ -84,20 +84,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notes',
     'most_recent',
     'label',
     'public_key',
     'fingerprint',
+    'notes',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notes=dict(
-        required=False,
-        type='str'),
     most_recent=dict(
         default=False,
         type='bool'),
@@ -108,6 +105,9 @@ module_args = dict(
         required=False,
         type='str'),
     fingerprint=dict(
+        required=False,
+        type='str'),
+    notes=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

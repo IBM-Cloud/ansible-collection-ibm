@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  username (False, str, None)
+    User name
+
+
+  password (False, str, None)
+    Password for the given User
+
 
   firewall_type (False, str, HARDWARE_FIREWALL_DEDICATED)
     Firewall type
@@ -48,14 +56,6 @@ Parameters
 
   primary_ip (False, str, None)
     Primary IP address
-
-
-  username (False, str, None)
-    User name
-
-
-  password (False, str, None)
-    Password for the given User
 
 
   id (False, str, None)

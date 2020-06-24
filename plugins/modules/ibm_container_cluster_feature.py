@@ -16,16 +16,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
+    public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    reload_workers:
+        description:
+            - Boolean value set true if worker nodes to be reloaded
+        required: False
+        type: bool
+        default: True
+    private_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name of ID
         required: False
         type: str
-    public_service_endpoint:
+    private_service_endpoint:
         description:
             - None
         required: False
@@ -41,27 +62,6 @@ options:
         required: False
         type: bool
         default: True
-    reload_workers:
-        description:
-            - Boolean value set true if worker nodes to be reloaded
-        required: False
-        type: bool
-        default: True
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    private_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,24 +93,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'public_service_endpoint',
+    'resource_group_id',
+    'reload_workers',
+    'private_service_endpoint_url',
+    'cluster',
+    'private_service_endpoint',
     'public_service_endpoint_url',
     'refresh_api_servers',
-    'reload_workers',
-    'resource_group_id',
-    'private_service_endpoint',
-    'private_service_endpoint_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    reload_workers=dict(
+        default=True,
+        type='bool'),
+    private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
     cluster=dict(
         required=False,
         type='str'),
-    public_service_endpoint=dict(
+    private_service_endpoint=dict(
         required=False,
         type='bool'),
     public_service_endpoint_url=dict(
@@ -119,18 +131,6 @@ module_args = dict(
     refresh_api_servers=dict(
         default=True,
         type='bool'),
-    reload_workers=dict(
-        default=True,
-        type='bool'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    private_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    private_service_endpoint_url=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

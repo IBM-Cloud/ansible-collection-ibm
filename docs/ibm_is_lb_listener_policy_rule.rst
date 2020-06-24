@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  policy (False, str, None)
-    (Required for new resource) Listener Policy ID
+  lb (False, str, None)
+    (Required for new resource) Loadbalancer ID
 
 
   condition (False, str, None)
     (Required for new resource) Condition info of the rule.
-
-
-  value (False, str, None)
-    (Required for new resource) policy rule value info
-
-
-  field (False, str, None)
-    None
 
 
   rule (False, str, None)
@@ -50,16 +42,24 @@ Parameters
     None
 
 
-  lb (False, str, None)
-    (Required for new resource) Loadbalancer ID
-
-
   listener (False, str, None)
     (Required for new resource) Listener ID.
 
 
+  policy (False, str, None)
+    (Required for new resource) Listener Policy ID
+
+
   type (False, str, None)
     (Required for new resource) Policy rule type.
+
+
+  value (False, str, None)
+    (Required for new resource) policy rule value info
+
+
+  field (False, str, None)
+    None
 
 
   id (False, str, None)

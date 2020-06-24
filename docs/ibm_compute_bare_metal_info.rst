@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.7.1
+- IBM-Cloud terraform-provider-ibm v1.8.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipv6_address_id (False, int, None)
-    None
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
-
-
   datacenter (False, str, None)
     Datacenter in which the bare metal is deployed
 
 
-  public_subnet (False, int, None)
-    The public subnet used for the public network interface of the server.
+  memory (False, int, None)
+    The amount of memory in gigabytes, for the server.
+
+
+  redundant_network (False, bool, None)
+    When the value is `true`, two physical network interfaces are provided with a bonding configuration.
+
+
+  public_vlan_id (False, int, None)
+    The public VLAN used for the public network interface of the server.
+
+
+  ipv6_enabled (False, bool, None)
+    Indicates whether the public IPv6 address enabled or not
+
+
+  global_identifier (False, str, None)
+    The unique global identifier of the bare metal server
+
+
+  public_ipv4_address (False, str, None)
+    The public IPv4 address of the bare metal server.
+
+
+  private_vlan_id (False, int, None)
+    The private VLAN used for the private network interface of the server.
+
+
+  private_network_only (False, bool, None)
+    Specifies whether the server only has access to the private network.
+
+
+  secondary_ip_addresses (False, list, None)
+    The public secondary IPv4 addresses of the bare metal server.
+
+
+  hostname (False, str, None)
+    The hostname of the bare metal server
+
+
+  network_speed (False, int, None)
+    The connection speed, expressed in Mbps,  for the server network components.
+
+
+  unbonded_network (False, bool, None)
+    When the value is `true`, two physical network interfaces are provided without a bonding configuration.
+
+
+  ipv6_address (False, str, None)
+    The public IPv6 address of the bare metal server
+
+
+  public_bandwidth (False, int, None)
+    The amount of public network traffic, allowed per month.
+
+
+  user_metadata (False, str, None)
+    Arbitrary data available to the computing server.
 
 
   notes (False, str, None)
@@ -58,100 +106,52 @@ Parameters
     File storage to which this computing server have access.
 
 
-  tags (False, list, None)
-    Tags associated with this bare metal server.
-
-
-  secondary_ip_addresses (False, list, None)
-    The public secondary IPv4 addresses of the bare metal server.
-
-
   domain (False, str, None)
     The domain of the bare metal server
-
-
-  network_speed (False, int, None)
-    The connection speed, expressed in Mbps,  for the server network components.
-
-
-  public_vlan_id (False, int, None)
-    The public VLAN used for the public network interface of the server.
-
-
-  global_identifier (False, str, None)
-    The unique global identifier of the bare metal server
-
-
-  public_ipv4_address (False, str, None)
-    The public IPv4 address of the bare metal server.
-
-
-  private_ipv4_address_id (False, int, None)
-    None
-
-
-  hourly_billing (False, bool, None)
-    The billing type of the server.
-
-
-  redundant_power_supply (False, bool, None)
-    When the value is `true`, it indicates additional power supply is provided.
-
-
-  ipv6_enabled (False, bool, None)
-    Indicates whether the public IPv6 address enabled or not
-
-
-  private_network_only (False, bool, None)
-    Specifies whether the server only has access to the private network.
-
-
-  secondary_ip_count (False, int, None)
-    The number of secondary IPv4 addresses of the bare metal server.
-
-
-  user_metadata (False, str, None)
-    Arbitrary data available to the computing server.
-
-
-  ipv6_address (False, str, None)
-    The public IPv6 address of the bare metal server
-
-
-  unbonded_network (False, bool, None)
-    When the value is `true`, two physical network interfaces are provided without a bonding configuration.
-
-
-  hostname (False, str, None)
-    The hostname of the bare metal server
-
-
-  public_bandwidth (False, int, None)
-    The amount of public network traffic, allowed per month.
 
 
   public_ipv4_address_id (False, int, None)
     None
 
 
-  private_vlan_id (False, int, None)
-    The private VLAN used for the private network interface of the server.
-
-
-  memory (False, int, None)
-    The amount of memory in gigabytes, for the server.
-
-
-  redundant_network (False, bool, None)
-    When the value is `true`, two physical network interfaces are provided with a bonding configuration.
-
-
   private_ipv4_address (False, str, None)
     The private IPv4 address of the bare metal server.
 
 
+  hourly_billing (False, bool, None)
+    The billing type of the server.
+
+
+  tags (False, list, None)
+    Tags associated with this bare metal server.
+
+
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
+
+
+  private_ipv4_address_id (False, int, None)
+    None
+
+
+  public_subnet (False, int, None)
+    The public subnet used for the public network interface of the server.
+
+
   private_subnet (False, int, None)
     The private subnet used for the private network interface of the server.
+
+
+  redundant_power_supply (False, bool, None)
+    When the value is `true`, it indicates additional power supply is provided.
+
+
+  ipv6_address_id (False, int, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    The number of secondary IPv4 addresses of the bare metal server.
 
 
   iaas_classic_username (False, any, None)

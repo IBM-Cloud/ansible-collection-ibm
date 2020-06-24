@@ -16,28 +16,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.7.1
+    - IBM-Cloud terraform-provider-ibm v1.8.0
     - Terraform v0.12.20
 
 options:
-    begins_on:
+    certificate_manager_instance_id:
         description:
-            - Certificate validity start date
+            - (Required for new resource) Instance ID of the certificate manager resource
         required: False
-        type: int
+        type: str
+    issuer:
+        description:
+            - certificate issuer info
+        required: False
+        type: str
     expires_on:
         description:
             - certificate expiry date
         required: False
         type: int
-    imported:
+    algorithm:
         description:
             - None
-        required: False
-        type: bool
-    certificate_manager_instance_id:
-        description:
-            - (Required for new resource) Instance ID of the certificate manager resource
         required: False
         type: str
     name:
@@ -56,22 +56,22 @@ options:
             - Description of the certificate instance
         required: False
         type: str
-    issuer:
+    begins_on:
         description:
-            - certificate issuer info
+            - Certificate validity start date
+        required: False
+        type: int
+    imported:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
+        description:
+            - None
         required: False
         type: str
     has_previous:
-        description:
-            - None
-        required: False
-        type: str
-    algorithm:
-        description:
-            - None
-        required: False
-        type: str
-    status:
         description:
             - None
         required: False
@@ -134,34 +134,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'begins_on',
-    'expires_on',
-    'imported',
     'certificate_manager_instance_id',
+    'issuer',
+    'expires_on',
+    'algorithm',
     'name',
     'data',
     'description',
-    'issuer',
-    'has_previous',
-    'algorithm',
+    'begins_on',
+    'imported',
     'status',
+    'has_previous',
     'key_algorithm',
 ]
 
 # define available arguments/parameters a user can pass to the module
-from ansible_collections.ibmcloud.ibmcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    begins_on=dict(
+    certificate_manager_instance_id=dict(
         required=False,
-        type='int'),
+        type='str'),
+    issuer=dict(
+        required=False,
+        type='str'),
     expires_on=dict(
         required=False,
         type='int'),
-    imported=dict(
-        required=False,
-        type='bool'),
-    certificate_manager_instance_id=dict(
+    algorithm=dict(
         required=False,
         type='str'),
     name=dict(
@@ -174,16 +174,16 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    issuer=dict(
+    begins_on=dict(
+        required=False,
+        type='int'),
+    imported=dict(
+        required=False,
+        type='bool'),
+    status=dict(
         required=False,
         type='str'),
     has_previous=dict(
-        required=False,
-        type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
-    status=dict(
         required=False,
         type='str'),
     key_algorithm=dict(
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_certificate_manager_import',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.7.1',
+        ibm_provider_version='1.8.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
