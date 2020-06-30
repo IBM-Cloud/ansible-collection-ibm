@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,40 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  description (False, str, None)
-    The description of the role
-
-
-  actions (False, list, None)
+  actions (True, list, None)
     (Required for new resource) The actions of the role
-
-
-  crn (False, str, None)
-    crn of the Custom Role
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  display_name (False, str, None)
-    (Required for new resource) Display Name of the Custom Role
-
-
-  name (False, str, None)
-    (Required for new resource) The name of the custom Role
-
-
-  service (False, str, None)
-    (Required for new resource) The Service Name
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  service (True, str, None)
+    (Required for new resource) The Service Name
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the custom Role
+
+
+  description (False, str, None)
+    The description of the role
+
+
+  crn (False, str, None)
+    crn of the Custom Role
+
+
+  display_name (True, str, None)
+    (Required for new resource) Display Name of the Custom Role
 
 
   id (False, str, None)

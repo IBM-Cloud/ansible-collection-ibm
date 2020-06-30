@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    Name of Trigger.
-
 
   publish (False, bool, None)
     Trigger Visibility.
@@ -44,6 +40,10 @@ Parameters
 
   parameters (False, str, None)
     All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+
+
+  name (True, str, None)
+    Name of Trigger.
 
 
   function_namespace (True, any, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,15 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
+  version (False, str, None)
+    Semantic version of the item.
+
+
+  name (True, str, None)
     (Required for new resource) Name of rule.
 
 
-  trigger_name (False, str, None)
+  trigger_name (True, str, None)
     (Required for new resource) Name of trigger.
 
 
-  action_name (False, str, None)
+  action_name (True, str, None)
     (Required for new resource) Name of action.
 
 
@@ -44,10 +48,6 @@ Parameters
 
   publish (False, bool, None)
     Rule visbility.
-
-
-  version (False, str, None)
-    Semantic version of the item.
 
 
   id (False, str, None)

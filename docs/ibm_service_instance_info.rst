@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    Service instance name for example, speech_to_text
+
+
+  space_guid (True, str, None)
+    The guid of the space in which the instance is present
+
 
   credentials (False, dict, None)
     The service broker-provided credentials to use this service.
@@ -36,14 +44,6 @@ Parameters
 
   service_plan_guid (False, str, None)
     The uniquie identifier of the service offering plan type
-
-
-  name (True, str, None)
-    Service instance name for example, speech_to_text
-
-
-  space_guid (True, str, None)
-    The guid of the space in which the instance is present
 
 
   iaas_classic_username (False, any, None)

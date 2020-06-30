@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,12 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_pool_name (False, str, None)
-    (Required for new resource) worker pool name
-
-
-  size_per_zone (False, int, None)
-    (Required for new resource) Number of nodes per zone
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
 
 
   state_ (False, str, None)
@@ -42,40 +38,44 @@ Parameters
     None
 
 
-  labels (False, dict, None)
-    list of labels to worker pool
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  cluster (False, str, None)
-    (Required for new resource) Cluster name
-
-
-  machine_type (False, str, None)
-    (Required for new resource) worker nodes machine type
-
-
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
-
-
   region (False, str, None)
     The worker pool region
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  size_per_zone (True, int, None)
+    (Required for new resource) Number of nodes per zone
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
+
+
   hardware (False, str, shared)
     Hardware type
+
+
+  labels (False, dict, None)
+    list of labels to worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
 
 
   id (False, str, None)

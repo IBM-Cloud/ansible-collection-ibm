@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  security_group_id (False, int, None)
+  soft_reboot (False, bool, True)
+    Boolean value set to true, if soft reboot needs to be done.
+
+
+  security_group_id (True, int, None)
     (Required for new resource) Security group ID
 
 
-  network_interface_id (False, int, None)
+  network_interface_id (True, int, None)
     (Required for new resource) Network interface ID
-
-
-  soft_reboot (False, bool, True)
-    Boolean value set to true, if soft reboot needs to be done.
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,43 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  available_ipv4_address_count (False, str, None)
-    None
-
-
-  public_gateway (False, str, None)
-    None
-
-
-  vpc (False, str, None)
-    None
-
-
-  zone (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  ipv4_cidr_block (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  name (False, str, None)
-    None
-
-
-  ipv6_cidr_block (False, str, None)
+  total_ipv4_address_count (False, int, None)
     None
 
 
@@ -70,8 +34,48 @@ Parameters
     None
 
 
+  status (False, str, None)
+    None
+
+
+  vpc (False, str, None)
+    None
+
+
   resource_name (False, str, None)
     The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  ipv4_cidr_block (False, str, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  public_gateway (False, str, None)
+    None
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_crn (False, str, None)
@@ -82,19 +86,15 @@ Parameters
     None
 
 
-  network_acl (False, str, None)
+  ipv6_cidr_block (False, str, None)
     None
 
 
-  resource_group (False, str, None)
+  name (False, str, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  total_ipv4_address_count (False, int, None)
+  zone (False, str, None)
     None
 
 

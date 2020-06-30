@@ -16,19 +16,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_reverse_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     ipaddress:
         description:
             - (Required for new resource) IP Address
-        required: False
+        required: True
         type: str
     hostname:
         description:
             - (Required for new resource) Host name
-        required: False
+        required: True
         type: str
     ttl:
         description:
@@ -97,16 +97,16 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     ipaddress=dict(
-        required=False,
+        required='True',
         type='str'),
     hostname=dict(
-        required=False,
+        required='True',
         type='str'),
     ttl=dict(
-        required=False,
+        required='False',
         type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -157,7 +157,7 @@ def run_module():
         resource_type='ibm_dns_reverse_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

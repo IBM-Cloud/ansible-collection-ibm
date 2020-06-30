@@ -16,28 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssl_certificate' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    certificate:
+    create_date:
         description:
-            - (Required for new resource) SSL Certifcate
-        required: False
-        type: str
-    private_key:
-        description:
-            - (Required for new resource) SSL Private Key
-        required: False
-        type: str
-    common_name:
-        description:
-            - Common name
-        required: False
-        type: str
-    validity_begin:
-        description:
-            - Validity begins from
+            - certificate creation date
         required: False
         type: str
     modify_date:
@@ -45,27 +30,26 @@ options:
             - certificate modificatiob date
         required: False
         type: str
-    tags:
-        description:
-            - Tags set for resource
-        required: False
-        type: list
-        elements: str
     intermediate_certificate:
         description:
             - Intermediate certificate value
         required: False
+        type: str
+    private_key:
+        description:
+            - (Required for new resource) SSL Private Key
+        required: True
         type: str
     organization_name:
         description:
             - Organization name
         required: False
         type: str
-    validity_days:
+    validity_begin:
         description:
-            - Validity days
+            - Validity begins from
         required: False
-        type: int
+        type: str
     validity_end:
         description:
             - Validity ends before
@@ -76,11 +60,27 @@ options:
             - SSL key size
         required: False
         type: int
-    create_date:
+    certificate:
         description:
-            - certificate creation date
+            - (Required for new resource) SSL Certifcate
+        required: True
+        type: str
+    common_name:
+        description:
+            - Common name
         required: False
         type: str
+    validity_days:
+        description:
+            - Validity days
+        required: False
+        type: int
+    tags:
+        description:
+            - Tags set for resource
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,69 +127,69 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate', 'str'),
     ('private_key', 'str'),
+    ('certificate', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate',
-    'private_key',
-    'common_name',
-    'validity_begin',
+    'create_date',
     'modify_date',
-    'tags',
     'intermediate_certificate',
+    'private_key',
     'organization_name',
-    'validity_days',
+    'validity_begin',
     'validity_end',
     'key_size',
-    'create_date',
+    'certificate',
+    'common_name',
+    'validity_days',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate=dict(
-        required=False,
-        type='str'),
-    private_key=dict(
-        required=False,
-        type='str'),
-    common_name=dict(
-        required=False,
-        type='str'),
-    validity_begin=dict(
-        required=False,
+    create_date=dict(
+        required='False',
         type='str'),
     modify_date=dict(
-        required=False,
+        required='False',
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     intermediate_certificate=dict(
-        required=False,
+        required='False',
+        type='str'),
+    private_key=dict(
+        required='True',
         type='str'),
     organization_name=dict(
-        required=False,
+        required='False',
         type='str'),
-    validity_days=dict(
-        required=False,
-        type='int'),
+    validity_begin=dict(
+        required='False',
+        type='str'),
     validity_end=dict(
-        required=False,
+        required='False',
         type='str'),
     key_size=dict(
-        required=False,
+        required='False',
         type='int'),
-    create_date=dict(
-        required=False,
+    certificate=dict(
+        required='True',
         type='str'),
+    common_name=dict(
+        required='False',
+        type='str'),
+    validity_days=dict(
+        required='False',
+        type='int'),
+    tags=dict(
+        required='False',
+        elements='',
+        type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_compute_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

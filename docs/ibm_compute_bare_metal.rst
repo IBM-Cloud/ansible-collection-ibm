@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,107 +26,39 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  tags (False, list, None)
+  private_subnet (False, str, None)
     None
 
 
-  private_network_only (False, bool, False)
-    only private network configured if is true
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
 
 
-  redundant_power_supply (False, bool, None)
-    None
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  public_ipv4_address (False, str, None)
-    None
-
-
-  domain (False, str, None)
-    (Required for new resource) Domain name
-
-
-  redundant_network (False, bool, False)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
 
 
   block_storage_ids (False, list, None)
     None
 
 
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
   os_reference_code (False, str, None)
     OS refernece code value
 
 
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  software_guard_extensions (False, bool, False)
+  process_key_name (False, str, None)
     None
 
 
-  gpu_key_name (False, str, None)
-    None
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
 
 
-  public_subnet (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    Optional notes info
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  image_template_id (False, int, None)
-    OS image template ID
-
-
-  memory (False, int, None)
-    None
-
-
-  ipv6_address_id (False, int, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  private_subnet (False, str, None)
+  public_ipv4_address (False, str, None)
     None
 
 
@@ -134,16 +66,8 @@ Parameters
     None
 
 
-  hostname (False, str, None)
-    Host name
-
-
-  datacenter (False, str, None)
+  post_install_script_uri (False, str, None)
     None
-
-
-  network_speed (False, int, 100)
-    Network speed in MBPS
 
 
   package_key_name (False, str, None)
@@ -158,31 +82,55 @@ Parameters
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  ipv6_address (False, str, None)
-    None
+  notes (False, str, None)
+    Optional notes info
 
 
   gpu_secondary_key_name (False, str, None)
     None
 
 
-  public_bandwidth (False, int, None)
+  redundant_network (False, bool, False)
     None
 
 
-  public_vlan_id (False, int, None)
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  secondary_ip_addresses (False, list, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  os_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  public_subnet (False, str, None)
     None
 
 
@@ -190,11 +138,39 @@ Parameters
     None
 
 
-  private_ipv4_address (False, str, None)
+  ipv6_address (False, str, None)
     None
 
 
-  process_key_name (False, str, None)
+  ipv6_address_id (False, int, None)
+    None
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  datacenter (False, str, None)
+    None
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  public_bandwidth (False, int, None)
+    None
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  redundant_power_supply (False, bool, None)
     None
 
 
@@ -202,11 +178,23 @@ Parameters
     None
 
 
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
+  tags (False, list, None)
+    None
 
 
-  secondary_ip_addresses (False, list, None)
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  network_speed (False, int, 100)
+    Network speed in MBPS
+
+
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
+  private_ipv4_address (False, str, None)
     None
 
 
@@ -214,8 +202,20 @@ Parameters
     The unique global identifier of the bare metal server
 
 
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
 
 
   id (False, str, None)

@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_org' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     name:
         description:
             - (Required for new resource) Org name, for example myorg@domain
-        required: False
+        required: True
         type: str
     org_quota_definition_guid:
         description:
@@ -125,33 +125,33 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     org_quota_definition_guid=dict(
-        required=False,
+        required='False',
         type='str'),
     billing_managers=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     managers=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     auditors=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     users=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_org',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

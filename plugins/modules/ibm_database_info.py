@@ -16,13 +16,19 @@ description:
     - Retrieve an IBM Cloud 'ibm_database' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    resource_group_name:
+    groups:
         description:
-            - The resource group name in which resource is provisioned
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     resource_controller_url:
@@ -30,35 +36,14 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
         type: str
-    name:
+    resource_group_id:
         description:
-            - Resource instance name for example, my Database instance
-        required: True
-        type: str
-    plan:
-        description:
-            - The plan type of the Database instance
+            - The id of the resource group in which the Database instance is present
         required: False
         type: str
-    whitelist:
+    service:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    location:
-        description:
-            - The location or the region in which the Database instance exists
-        required: False
-        type: str
-    guid:
-        description:
-            - Unique identifier of resource instance
+            - The name of the Cloud Internet database service
         required: False
         type: str
     tags:
@@ -67,41 +52,47 @@ options:
         required: False
         type: list
         elements: str
+    connectionstrings:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    guid:
+        description:
+            - Unique identifier of resource instance
+        required: False
+        type: str
+    members_disk_allocation_mb:
+        description:
+            - Disk allocation required for cluster
+        required: False
+        type: int
+    members_memory_allocation_mb:
+        description:
+            - Memory allocation required for cluster
+        required: False
+        type: int
     users:
         description:
             - None
         required: False
         type: list
         elements: dict
-    members_disk_allocation_mb:
-        description:
-            - Disk allocation required for cluster
-        required: False
-        type: int
-    groups:
+    whitelist:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_crn:
+    location:
         description:
-            - The crn of the resource
+            - The location or the region in which the Database instance exists
         required: False
         type: str
-    resource_status:
+    plan:
         description:
-            - The status of the resource
-        required: False
-        type: str
-    service:
-        description:
-            - The name of the Cloud Internet database service
-        required: False
-        type: str
-    adminuser:
-        description:
-            - The admin user id for the instance
+            - The plan type of the Database instance
         required: False
         type: str
     adminpassword:
@@ -109,32 +100,41 @@ options:
             - The admin user id for the instance
         required: False
         type: str
-    members_memory_allocation_mb:
+    version:
         description:
-            - Memory allocation required for cluster
+            - The database version to provision if specified
         required: False
-        type: int
-    resource_group_id:
+        type: str
+    resource_crn:
         description:
-            - The id of the resource group in which the Database instance is present
+            - The crn of the resource
         required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    name:
+        description:
+            - Resource instance name for example, my Database instance
+        required: True
         type: str
     status:
         description:
             - The resource instance status
         required: False
         type: str
-    version:
+    adminuser:
         description:
-            - The database version to provision if specified
+            - The admin user id for the instance
         required: False
         type: str
-    connectionstrings:
+    resource_name:
         description:
-            - None
+            - The name of the resource
         required: False
-        type: list
-        elements: dict
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -173,105 +173,105 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_name',
-    'resource_controller_url',
-    'name',
-    'plan',
-    'whitelist',
-    'resource_name',
-    'location',
-    'guid',
-    'tags',
-    'users',
-    'members_disk_allocation_mb',
     'groups',
-    'resource_crn',
     'resource_status',
-    'service',
-    'adminuser',
-    'adminpassword',
-    'members_memory_allocation_mb',
+    'resource_controller_url',
     'resource_group_id',
-    'status',
-    'version',
+    'service',
+    'tags',
     'connectionstrings',
+    'guid',
+    'members_disk_allocation_mb',
+    'members_memory_allocation_mb',
+    'users',
+    'whitelist',
+    'location',
+    'plan',
+    'adminpassword',
+    'version',
+    'resource_crn',
+    'resource_group_name',
+    'name',
+    'status',
+    'adminuser',
+    'resource_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_name=dict(
+    groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_status=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=True,
-        type='str'),
-    plan=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    whitelist=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    guid=dict(
+    service=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    connectionstrings=dict(
+        required=False,
+        elements='',
+        type='list'),
+    guid=dict(
+        required=False,
+        type='str'),
+    members_disk_allocation_mb=dict(
+        required=False,
+        type='int'),
+    members_memory_allocation_mb=dict(
+        required=False,
+        type='int'),
     users=dict(
         required=False,
         elements='',
         type='list'),
-    members_disk_allocation_mb=dict(
-        required=False,
-        type='int'),
-    groups=dict(
+    whitelist=dict(
         required=False,
         elements='',
         type='list'),
-    resource_crn=dict(
+    location=dict(
         required=False,
         type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    adminuser=dict(
+    plan=dict(
         required=False,
         type='str'),
     adminpassword=dict(
         required=False,
         type='str'),
-    members_memory_allocation_mb=dict(
+    version=dict(
         required=False,
-        type='int'),
-    resource_group_id=dict(
+        type='str'),
+    resource_crn=dict(
         required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=True,
         type='str'),
     status=dict(
         required=False,
         type='str'),
-    version=dict(
+    adminuser=dict(
         required=False,
         type='str'),
-    connectionstrings=dict(
+    resource_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -306,7 +306,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

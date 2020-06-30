@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,15 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (False, str, None)
+  datacenter (True, str, None)
     (Required for new resource) Dataceneter name
 
 
-  pod (False, str, None)
+  pod (True, str, None)
     (Required for new resource) Pod name
 
 
-  name (False, str, None)
+  name (True, str, None)
     (Required for new resource) Name
 
 

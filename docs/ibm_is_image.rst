@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
   tags (False, list, None)
     Tags for the image
+
+
+  size (False, int, None)
+    None
 
 
   visibility (False, str, None)
@@ -38,48 +54,32 @@ Parameters
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  resource_group (False, str, None)
+    None
 
 
-  name (False, str, None)
+  href (True, str, None)
+    (Required for new resource) Image Href value
+
+
+  name (True, str, None)
     (Required for new resource) Image name
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   status (False, str, None)
     None
 
 
-  size (False, int, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
   resource_name (False, str, None)
     The name of the resource
 
 
+  operating_system (True, str, None)
+    (Required for new resource) Image Operating system
+
+
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
-
-
-  href (False, str, None)
-    (Required for new resource) Image Href value
-
-
-  operating_system (False, str, None)
-    (Required for new resource) Image Operating system
 
 
   id (False, str, None)

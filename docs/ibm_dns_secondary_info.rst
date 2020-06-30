@@ -18,17 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  zone_name (True, str, None)
-    The name of the secondary
-
 
   master_ip_address (False, str, None)
     None
@@ -44,6 +40,10 @@ Parameters
 
   status_text (False, str, None)
     None
+
+
+  zone_name (True, str, None)
+    The name of the secondary
 
 
   iaas_classic_username (False, any, None)

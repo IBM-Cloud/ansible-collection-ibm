@@ -16,19 +16,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_firewall_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     firewall_id:
         description:
             - (Required for new resource) Firewall ID
-        required: False
+        required: True
         type: int
     rules:
         description:
             - (Required for new resource) Policy rules info
-        required: False
+        required: True
         type: list
         elements: dict
     tags:
@@ -99,18 +99,18 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     firewall_id=dict(
-        required=False,
+        required='True',
         type='int'),
     rules=dict(
-        required=False,
+        required='True',
         elements='',
         type='list'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -161,7 +161,7 @@ def run_module():
         resource_type='ibm_firewall_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

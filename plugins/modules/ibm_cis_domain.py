@@ -16,10 +16,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id
+        required: True
+        type: str
+    domain:
+        description:
+            - (Required for new resource) CISzone - Domain
+        required: True
+        type: str
+    paused:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
+        description:
+            - None
+        required: False
+        type: str
     name_servers:
         description:
             - None
@@ -32,26 +52,6 @@ options:
         required: False
         type: list
         elements: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: False
-        type: str
-    domain:
-        description:
-            - (Required for new resource) CISzone - Domain
-        required: False
-        type: str
-    paused:
-        description:
-            - None
-        required: False
-        type: bool
-    status:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,40 +104,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name_servers',
-    'original_name_servers',
     'cis_id',
     'domain',
     'paused',
     'status',
+    'name_servers',
+    'original_name_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required='True',
+        type='str'),
+    domain=dict(
+        required='True',
+        type='str'),
+    paused=dict(
+        required='False',
+        type='bool'),
+    status=dict(
+        required='False',
+        type='str'),
     name_servers=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     original_name_servers=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain=dict(
-        required=False,
-        type='str'),
-    paused=dict(
-        required=False,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -188,7 +188,7 @@ def run_module():
         resource_type='ibm_cis_domain',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

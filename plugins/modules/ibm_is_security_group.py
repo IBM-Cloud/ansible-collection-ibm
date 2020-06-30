@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    rules:
-        description:
-            - Security Rules
-        required: False
-        type: list
-        elements: dict
     resource_group:
         description:
             - Resource Group ID
@@ -59,8 +53,14 @@ options:
     vpc:
         description:
             - (Required for new resource) Security group's resource group id
-        required: False
+        required: True
         type: str
+    rules:
+        description:
+            - Security Rules
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,7 +112,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'rules',
     'resource_group',
     'resource_controller_url',
     'resource_name',
@@ -120,39 +119,40 @@ TL_ALL_PARAMETERS = [
     'resource_group_name',
     'name',
     'vpc',
+    'rules',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    rules=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group=dict(
-        required=False,
+        required='False',
         type='str'),
     resource_controller_url=dict(
-        required=False,
+        required='False',
         type='str'),
     resource_name=dict(
-        required=False,
+        required='False',
         type='str'),
     resource_crn=dict(
-        required=False,
+        required='False',
         type='str'),
     resource_group_name=dict(
-        required=False,
+        required='False',
         type='str'),
     name=dict(
-        required=False,
+        required='False',
         type='str'),
     vpc=dict(
-        required=False,
+        required='True',
         type='str'),
+    rules=dict(
+        required='False',
+        elements='',
+        type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_security_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

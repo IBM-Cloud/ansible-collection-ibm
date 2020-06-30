@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,60 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_vlan_id (False, int, None)
-    Piblic VLAN id
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  vip_pool (False, list, None)
-    List of VIP ids
-
-
-  management_ip_address (False, str, None)
-    management IP address
-
-
-  tags (False, list, None)
-    List of the tags
-
-
-  version (False, str, None)
-    (Required for new resource) version info
-
-
-  plan (False, str, None)
+  plan (True, str, None)
     (Required for new resource) Plan info
-
-
-  ip_count (False, int, None)
-    (Required for new resource) IP address count
-
-
-  name (False, str, None)
-    Name
-
-
-  type (False, str, None)
-    Type of the VPX
-
-
-  public_subnet (False, str, None)
-    Public subnet
-
-
-  private_vlan_id (False, int, None)
-    Private VLAN id
 
 
   private_subnet (False, str, None)
     Private subnet
 
 
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
+  tags (False, list, None)
+    List of the tags
 
 
-  speed (False, int, None)
+  type (False, str, None)
+    Type of the VPX
+
+
+  ip_count (True, int, None)
+    (Required for new resource) IP address count
+
+
+  private_vlan_id (False, int, None)
+    Private VLAN id
+
+
+  management_ip_address (False, str, None)
+    management IP address
+
+
+  name (False, str, None)
+    Name
+
+
+  version (True, str, None)
+    (Required for new resource) version info
+
+
+  public_vlan_id (False, int, None)
+    Piblic VLAN id
+
+
+  public_subnet (False, str, None)
+    Public subnet
+
+
+  speed (True, int, None)
     (Required for new resource) Speed value
+
+
+  vip_pool (False, list, None)
+    List of VIP ids
 
 
   id (False, str, None)

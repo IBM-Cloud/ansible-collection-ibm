@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,60 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  encrypted_nonce (False, str, None)
-    Only for imported root key
-
-
-  iv_value (False, str, None)
-    Only for imported root key
+  standard_key (False, bool, False)
+    Standard key type
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  key_protect_id (False, str, None)
-    (Required for new resource) Key protect instance ID
-
-
-  crn (False, str, None)
-    Crn of the key
-
-
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  key_id (False, str, None)
-    Key ID
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  key_name (False, str, None)
-    (Required for new resource) Key name
-
-
-  standard_key (False, bool, False)
-    Satandard key type
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  key_protect_id (True, str, None)
+    (Required for new resource) Key protect instance ID
 
 
   payload (False, str, None)
     None
 
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  crn (False, str, None)
+    Crn of the key
 
 
   resource_crn (False, str, None)
     The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  key_id (False, str, None)
+    Key ID
+
+
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  encrypted_nonce (False, str, None)
+    Only for imported root key
+
+
+  iv_value (False, str, None)
+    Only for imported root key
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -34,11 +34,11 @@ Parameters
     The host portion of the route. Required for shared-domains.
 
 
-  space_guid (False, str, None)
+  space_guid (True, str, None)
     (Required for new resource) The guid of the associated space
 
 
-  domain_guid (False, str, None)
+  domain_guid (True, str, None)
     (Required for new resource) The guid of the associated domain
 
 

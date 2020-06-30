@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  password (False, str, None)
+    Password
+
+
+  addon_configuration (False, list, None)
+    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  pod (True, str, None)
+    (Required for new resource) POD name
+
+
+  name (True, str, None)
+    (Required for new resource) name
+
+
+  firewall_type (True, str, None)
+    (Required for new resource) Firewall type
+
+
+  public_ip (False, str, None)
+    Public IP Address
+
+
   public_ipv6 (False, str, None)
     Public IPV6 IP
-
-
-  username (False, str, None)
-    User name
-
-
-  name (False, str, None)
-    (Required for new resource) name
 
 
   public_vlan_id (False, int, None)
@@ -46,32 +66,12 @@ Parameters
     Private VLAN id
 
 
-  firewall_type (False, str, None)
-    (Required for new resource) Firewall type
-
-
-  public_ip (False, str, None)
-    Public IP Address
-
-
   private_ip (False, str, None)
     Private IP Address
 
 
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
-
-  pod (False, str, None)
-    (Required for new resource) POD name
-
-
-  password (False, str, None)
-    Password
-
-
-  addon_configuration (False, list, None)
-    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+  username (False, str, None)
+    User name
 
 
   id (False, str, None)

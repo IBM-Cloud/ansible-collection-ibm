@@ -16,21 +16,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     connections:
         description:
             - (Required for new resource) Connections value
-        required: False
+        required: True
         type: int
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name info
+        required: True
+        type: str
     ha_enabled:
         description:
             - true if High availability is enabled
         required: False
         type: bool
         default: False
+    tags:
+        description:
+            - Tags associated with resource
+        required: False
+        type: list
+        elements: str
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
     security_certificate_id:
         description:
             - Security certificate ID
@@ -41,6 +57,11 @@ options:
             - None
         required: False
         type: str
+    subnet_id:
+        description:
+            - None
+        required: False
+        type: int
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
@@ -58,27 +79,6 @@ options:
         required: False
         type: bool
         default: False
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name info
-        required: False
-        type: str
-    subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    tags:
-        description:
-            - Tags associated with resource
-        required: False
-        type: list
-        elements: str
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,16 +132,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'connections',
+    'datacenter',
     'ha_enabled',
+    'tags',
+    'hostname',
     'security_certificate_id',
     'ip_address',
+    'subnet_id',
     'dedicated',
     'ssl_enabled',
     'ssl_offload',
-    'datacenter',
-    'subnet_id',
-    'tags',
-    'hostname',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -149,41 +149,41 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     connections=dict(
-        required=False,
+        required='True',
         type='int'),
+    datacenter=dict(
+        required='True',
+        type='str'),
     ha_enabled=dict(
         default=False,
         type='bool'),
+    tags=dict(
+        required='False',
+        elements='',
+        type='list'),
+    hostname=dict(
+        required='False',
+        type='str'),
     security_certificate_id=dict(
-        required=False,
+        required='False',
         type='int'),
     ip_address=dict(
-        required=False,
+        required='False',
         type='str'),
+    subnet_id=dict(
+        required='False',
+        type='int'),
     dedicated=dict(
         default=False,
         type='bool'),
     ssl_enabled=dict(
-        required=False,
+        required='False',
         type='bool'),
     ssl_offload=dict(
         default=False,
         type='bool'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    subnet_id=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    hostname=dict(
-        required=False,
-        type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

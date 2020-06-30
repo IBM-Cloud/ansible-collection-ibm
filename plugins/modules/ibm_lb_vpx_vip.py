@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) Type
-        required: False
-        type: str
-    virtual_ip_address:
-        description:
-            - (Required for new resource) Virtual IP address
-        required: False
-        type: str
     tags:
         description:
             - List of tags
@@ -39,13 +29,28 @@ options:
     nad_controller_id:
         description:
             - (Required for new resource) NAD controller ID
-        required: False
+        required: True
         type: int
     load_balancing_method:
         description:
             - (Required for new resource) Load balancing method
-        required: False
+        required: True
         type: str
+    virtual_ip_address:
+        description:
+            - (Required for new resource) Virtual IP address
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Type
+        required: True
+        type: str
+    security_certificate_id:
+        description:
+            - security certificate ID
+        required: False
+        type: int
     persistence:
         description:
             - Persistance value
@@ -54,17 +59,12 @@ options:
     name:
         description:
             - (Required for new resource) Name
-        required: False
+        required: True
         type: str
     source_port:
         description:
             - (Required for new resource) Source Port number
-        required: False
-        type: int
-    security_certificate_id:
-        description:
-            - security certificate ID
-        required: False
+        required: True
         type: int
     id:
         description:
@@ -112,61 +112,61 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
-    ('virtual_ip_address', 'str'),
     ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
+    ('virtual_ip_address', 'str'),
+    ('type', 'str'),
     ('name', 'str'),
     ('source_port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'virtual_ip_address',
     'tags',
     'nad_controller_id',
     'load_balancing_method',
+    'virtual_ip_address',
+    'type',
+    'security_certificate_id',
     'persistence',
     'name',
     'source_port',
-    'security_certificate_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
-    virtual_ip_address=dict(
-        required=False,
-        type='str'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     nad_controller_id=dict(
-        required=False,
+        required='True',
         type='int'),
     load_balancing_method=dict(
-        required=False,
+        required='True',
         type='str'),
+    virtual_ip_address=dict(
+        required='True',
+        type='str'),
+    type=dict(
+        required='True',
+        type='str'),
+    security_certificate_id=dict(
+        required='False',
+        type='int'),
     persistence=dict(
-        required=False,
+        required='False',
         type='str'),
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     source_port=dict(
-        required=False,
-        type='int'),
-    security_certificate_id=dict(
-        required=False,
+        required='True',
         type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

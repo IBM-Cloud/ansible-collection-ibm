@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    Instance ID
-
-
   zone_id (True, str, None)
     Zone Id
 
 
   dns_resource_records (False, list, None)
     Collection of dns resource records
+
+
+  instance_id (True, str, None)
+    Instance ID
 
 
   iaas_classic_username (False, any, None)

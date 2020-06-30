@@ -16,24 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_placement_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     datacenter:
         description:
             - (Required for new resource) Dataceneter name
-        required: False
+        required: True
         type: str
     pod:
         description:
             - (Required for new resource) Pod name
-        required: False
+        required: True
         type: str
     name:
         description:
             - (Required for new resource) Name
-        required: False
+        required: True
         type: str
     rule:
         description:
@@ -112,23 +112,23 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     datacenter=dict(
-        required=False,
+        required='True',
         type='str'),
     pod=dict(
-        required=False,
+        required='True',
         type='str'),
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     rule=dict(
         default='SPREAD',
         type='str'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -179,7 +179,7 @@ def run_module():
         resource_type='ibm_compute_placement_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

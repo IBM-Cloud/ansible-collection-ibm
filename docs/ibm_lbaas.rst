@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,55 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (False, str, None)
-    None
-
-
   resource_name (False, str, None)
     The name of the resource
-
-
-  ssl_ciphers (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   description (False, str, None)
     Description of a load balancer.
 
 
-  use_system_public_ip_pool (False, bool, None)
-    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
-
-
-  protocols (False, list, None)
-    Protocols to be assigned to this load balancer.
-
-
-  vip (False, str, None)
-    The virtual ip address of this load balancer
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  health_monitors (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) The load balancer's name.
-
-
-  type (False, str, PUBLIC)
-    Specifies if a load balancer is public or private
-
-
-  subnets (False, list, None)
+  subnets (True, list, None)
     (Required for new resource) The subnet where this Load Balancer will be provisioned.
 
 
@@ -82,8 +42,48 @@ Parameters
     The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
 
 
+  datacenter (False, str, None)
+    None
+
+
+  use_system_public_ip_pool (False, bool, None)
+    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  protocols (False, list, None)
+    Protocols to be assigned to this load balancer.
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
   resource_status (False, str, None)
     The status of the resource
+
+
+  name (True, str, None)
+    (Required for new resource) The load balancer's name.
+
+
+  type (False, str, PUBLIC)
+    Specifies if a load balancer is public or private
+
+
+  vip (False, str, None)
+    The virtual ip address of this load balancer
+
+
+  ssl_ciphers (False, list, None)
+    None
+
+
+  health_monitors (False, list, None)
+    None
 
 
   id (False, str, None)

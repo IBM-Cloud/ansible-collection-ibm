@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     direction:
         description:
             - (Required for new resource) Direction of rule: ingress or egress
-        required: False
+        required: True
         type: str
     ether_type:
         description:
@@ -59,7 +59,7 @@ options:
     security_group_id:
         description:
             - (Required for new resource) Security group ID
-        required: False
+        required: True
         type: int
     id:
         description:
@@ -128,31 +128,31 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     direction=dict(
-        required=False,
+        required='True',
         type='str'),
     ether_type=dict(
         default='IPv4',
         type='str'),
     port_range_min=dict(
-        required=False,
+        required='False',
         type='int'),
     port_range_max=dict(
-        required=False,
+        required='False',
         type='int'),
     remote_group_id=dict(
-        required=False,
+        required='False',
         type='int'),
     remote_ip=dict(
-        required=False,
+        required='False',
         type='str'),
     protocol=dict(
-        required=False,
+        required='False',
         type='str'),
     security_group_id=dict(
-        required=False,
+        required='True',
         type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

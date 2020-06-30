@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     pi_cloud_instance_id:
         description:
             - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: False
+        required: True
         type: str
     volume_status:
         description:
@@ -38,7 +38,7 @@ options:
     pi_volume_name:
         description:
             - (Required for new resource) Volume Name to create
-        required: False
+        required: True
         type: str
     pi_volume_shareable:
         description:
@@ -48,12 +48,12 @@ options:
     pi_volume_size:
         description:
             - (Required for new resource) Size of the volume in GB
-        required: False
+        required: True
         type: float
     pi_volume_type:
         description:
             - (Required for new resource) Volume type
-        required: False
+        required: True
         type: str
     id:
         description:
@@ -119,28 +119,28 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     pi_cloud_instance_id=dict(
-        required=False,
+        required='True',
         type='str'),
     volume_status=dict(
-        required=False,
+        required='False',
         type='str'),
     volume_id=dict(
-        required=False,
+        required='False',
         type='str'),
     pi_volume_name=dict(
-        required=False,
+        required='True',
         type='str'),
     pi_volume_shareable=dict(
-        required=False,
+        required='False',
         type='bool'),
     pi_volume_size=dict(
-        required=False,
+        required='True',
         type='float'),
     pi_volume_type=dict(
-        required=False,
+        required='True',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

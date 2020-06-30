@@ -16,25 +16,46 @@ description:
     - Retrieve an IBM Cloud 'ibm_app' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    memory:
+    buildpack:
         description:
-            - The amount of memory each instance should have. In megabytes.
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
         required: False
-        type: int
-    disk_quota:
+        type: str
+    service_instance_guid:
         description:
-            - The maximum amount of disk available to an instance of an app. In megabytes.
+            - Define the service instance guids that should be bound to this application.
         required: False
-        type: int
+        type: list
+        elements: str
+    health_check_type:
+        description:
+            - Type of health check to perform.
+        required: False
+        type: str
     package_state:
         description:
             - The state of the application package whether staged, pending etc
         required: False
         type: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    space_guid:
+        description:
+            - Define space guid to which app belongs
+        required: True
+        type: str
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
     instances:
         description:
             - The number of instances
@@ -45,53 +66,32 @@ options:
             - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
         required: False
         type: dict
-    service_instance_guid:
-        description:
-            - Define the service instance guids that should be bound to this application.
-        required: False
-        type: list
-        elements: str
-    space_guid:
-        description:
-            - Define space guid to which app belongs
-        required: True
-        type: str
-    buildpack:
-        description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
-        required: False
-        type: str
     name:
         description:
             - The name for the app
         required: True
         type: str
+    disk_quota:
+        description:
+            - The maximum amount of disk available to an instance of an app. In megabytes.
+        required: False
+        type: int
     route_guid:
         description:
             - Define the route guids which should be bound to the application.
         required: False
         type: list
         elements: str
-    state:
-        description:
-            - The state of the application
-        required: False
-        type: str
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
-    health_check_type:
-        description:
-            - Type of health check to perform.
-        required: False
-        type: str
     health_check_timeout:
         description:
             - Timeout in seconds for health checking of an staged app when starting up.
         required: False
         type: int
+    state:
+        description:
+            - The state of the application
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -131,70 +131,70 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'memory',
-    'disk_quota',
+    'buildpack',
+    'service_instance_guid',
+    'health_check_type',
     'package_state',
+    'health_check_http_endpoint',
+    'space_guid',
+    'memory',
     'instances',
     'environment_json',
-    'service_instance_guid',
-    'space_guid',
-    'buildpack',
     'name',
+    'disk_quota',
     'route_guid',
-    'state',
-    'health_check_http_endpoint',
-    'health_check_type',
     'health_check_timeout',
+    'state',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    memory=dict(
+    buildpack=dict(
         required=False,
-        type='int'),
-    disk_quota=dict(
+        type='str'),
+    service_instance_guid=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
+    health_check_type=dict(
+        required=False,
+        type='str'),
     package_state=dict(
         required=False,
         type='str'),
+    health_check_http_endpoint=dict(
+        required=False,
+        type='str'),
+    space_guid=dict(
+        required=True,
+        type='str'),
+    memory=dict(
+        required=False,
+        type='int'),
     instances=dict(
         required=False,
         type='int'),
     environment_json=dict(
         required=False,
         type='dict'),
-    service_instance_guid=dict(
-        required=False,
-        elements='',
-        type='list'),
-    space_guid=dict(
-        required=True,
-        type='str'),
-    buildpack=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),
+    disk_quota=dict(
+        required=False,
+        type='int'),
     route_guid=dict(
         required=False,
         elements='',
         type='list'),
-    state=dict(
-        required=False,
-        type='str'),
-    health_check_http_endpoint=dict(
-        required=False,
-        type='str'),
-    health_check_type=dict(
-        required=False,
-        type='str'),
     health_check_timeout=dict(
         required=False,
         type='int'),
+    state=dict(
+        required=False,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

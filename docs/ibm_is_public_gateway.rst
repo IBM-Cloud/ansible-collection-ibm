@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,20 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    Public gateway instance status
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  name (True, str, None)
+    (Required for new resource) Name of the Public gateway instance
 
 
   floating_ip (False, dict, None)
@@ -50,14 +42,6 @@ Parameters
     Public gateway resource group info
 
 
-  vpc (False, str, None)
-    (Required for new resource) Public gateway VPC info
-
-
-  zone (False, str, None)
-    (Required for new resource) Public gateway zone info
-
-
   tags (False, list, None)
     Service tags for the public gateway instance
 
@@ -66,12 +50,28 @@ Parameters
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  name (False, str, None)
-    (Required for new resource) Name of the Public gateway instance
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  status (False, str, None)
+    Public gateway instance status
+
+
+  vpc (True, str, None)
+    (Required for new resource) Public gateway VPC info
+
+
+  zone (True, str, None)
+    (Required for new resource) Public gateway zone info
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,64 +26,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  modified_on (False, str, None)
-    None
-
-
-  cis_id (False, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  type (False, str, http)
-    type
-
-
-  interval (False, int, 60)
-    interval
+  method (False, str, None)
+    method
 
 
   created_on (False, str, None)
     None
 
 
-  timeout (False, int, 5)
-    timeout
-
-
-  port (False, int, None)
-    None
-
-
-  path (False, str, None)
-    path
-
-
   expected_codes (False, str, None)
     expected_codes
-
-
-  method (False, str, None)
-    method
-
-
-  follow_redirects (False, bool, None)
-    follow_redirects
-
-
-  expected_body (False, str, None)
-    expected_body
 
 
   description (False, str, None)
     description
 
 
-  retries (False, int, 2)
-    retries
+  interval (False, int, 60)
+    interval
+
+
+  follow_redirects (False, bool, None)
+    follow_redirects
+
+
+  port (False, int, None)
+    None
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  path (False, str, None)
+    path
+
+
+  expected_body (False, str, None)
+    expected_body
+
+
+  type (False, str, http)
+    type
+
+
+  timeout (False, int, 5)
+    timeout
 
 
   allow_insecure (False, bool, False)
     allow_insecure
+
+
+  retries (False, int, 2)
+    retries
+
+
+  modified_on (False, str, None)
+    None
 
 
   id (False, str, None)

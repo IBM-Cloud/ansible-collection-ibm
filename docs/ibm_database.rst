@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,24 +26,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
   adminuser (False, str, None)
     The admin user id for the instance
 
 
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  whitelist (False, list, None)
+    None
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  plan (False, str, None)
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
+
+
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  plan (True, str, None)
     (Required for new resource) The plan type of the Database instance
+
+
+  remote_leader_id (False, str, None)
+    The CRN of leader database
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  tags (False, list, None)
+    None
+
+
+  groups (False, list, None)
+    None
 
 
   guid (False, str, None)
@@ -54,23 +94,15 @@ Parameters
     The admin user password for the instance
 
 
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
   key_protect_instance (False, str, None)
     The CRN of Key protect instance
 
 
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
 
 
-  groups (False, list, None)
-    None
-
-
-  service (False, str, None)
+  service (True, str, None)
     (Required for new resource) The name of the Cloud Internet database service
 
 
@@ -78,72 +110,40 @@ Parameters
     The database version to provision if specified
 
 
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  remote_leader_id (False, str, None)
-    The CRN of leader database
-
-
-  name (False, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
 
 
   backup_id (False, str, None)
     The CRN of backup source database
 
 
-  users (False, list, None)
-    None
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
-
-
   connectionstrings (False, list, None)
     None
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  location (False, str, None)
+  location (True, str, None)
     (Required for new resource) The location or the region in which Database instance exists
-
-
-  tags (False, list, None)
-    None
-
-
-  whitelist (False, list, None)
-    None
 
 
   status (False, str, None)
     The resource instance status
+
+
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
+
+
+  users (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_policy' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
@@ -46,12 +46,12 @@ options:
     access_group_id:
         description:
             - (Required for new resource) ID of access group
-        required: False
+        required: True
         type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
-        required: False
+        required: True
         type: list
         elements: str
     id:
@@ -119,28 +119,28 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     resources=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     account_management=dict(
         default=False,
         type='bool'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     version=dict(
-        required=False,
+        required='False',
         type='str'),
     access_group_id=dict(
-        required=False,
+        required='True',
         type='str'),
     roles=dict(
-        required=False,
+        required='True',
         elements='',
         type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

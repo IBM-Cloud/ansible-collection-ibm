@@ -16,26 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_interface_sg_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    security_group_id:
-        description:
-            - (Required for new resource) Security group ID
-        required: False
-        type: int
-    network_interface_id:
-        description:
-            - (Required for new resource) Network interface ID
-        required: False
-        type: int
     soft_reboot:
         description:
             - Boolean value set to true, if soft reboot needs to be done.
         required: False
         type: bool
         default: True
+    security_group_id:
+        description:
+            - (Required for new resource) Security group ID
+        required: True
+        type: int
+    network_interface_id:
+        description:
+            - (Required for new resource) Network interface ID
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,26 +88,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'soft_reboot',
     'security_group_id',
     'network_interface_id',
-    'soft_reboot',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    security_group_id=dict(
-        required=False,
-        type='int'),
-    network_interface_id=dict(
-        required=False,
-        type='int'),
     soft_reboot=dict(
         default=True,
         type='bool'),
+    security_group_id=dict(
+        required='True',
+        type='int'),
+    network_interface_id=dict(
+        required='True',
+        type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -158,7 +158,7 @@ def run_module():
         resource_type='ibm_network_interface_sg_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

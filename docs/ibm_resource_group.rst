@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  default (False, bool, None)
+    Specifies whether its default resource group or not
+
 
   state_ (False, str, None)
     State of the resource group
@@ -34,12 +38,8 @@ Parameters
     None
 
 
-  name (False, str, None)
+  name (True, str, None)
     (Required for new resource) The name of the resource group
-
-
-  default (False, bool, None)
-    Specifies whether its default resource group or not
 
 
   id (False, str, None)

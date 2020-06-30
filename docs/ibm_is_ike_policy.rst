@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,28 +26,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpn_connections (False, list, None)
-    None
+  dh_group (True, int, None)
+    (Required for new resource) IKE DH group
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_group (False, str, None)
+    IKE resource group ID
+
+
+  ike_version (False, int, None)
+    IKE version
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  encryption_algorithm (False, str, None)
+  href (False, str, None)
+    IKE href value
+
+
+  vpn_connections (False, list, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  name (True, str, None)
+    (Required for new resource) IKE name
+
+
+  authentication_algorithm (True, str, None)
+    (Required for new resource) Authentication algorithm type
+
+
+  encryption_algorithm (True, str, None)
     (Required for new resource) Encryption alogorithm type
-
-
-  dh_group (False, int, None)
-    (Required for new resource) IKE DH group
-
-
-  ike_version (False, int, None)
-    IKE version
 
 
   key_lifetime (False, int, 28800)
@@ -58,24 +74,8 @@ Parameters
     IKE negotiation mode
 
 
-  href (False, str, None)
-    IKE href value
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  name (False, str, None)
-    (Required for new resource) IKE name
-
-
-  authentication_algorithm (False, str, None)
-    (Required for new resource) Authentication algorithm type
-
-
-  resource_group (False, str, None)
-    IKE resource group ID
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

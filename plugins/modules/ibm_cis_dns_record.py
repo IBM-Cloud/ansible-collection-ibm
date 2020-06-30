@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    domain_id:
+    type:
         description:
-            - (Required for new resource) Associated CIS domain
-        required: False
+            - (Required for new resource) Record type
+        required: True
         type: str
     content:
         description:
@@ -36,6 +36,21 @@ options:
         required: False
         type: dict
         elements: dict
+    record_id:
+        description:
+            - None
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id
+        required: True
+        type: str
+    name:
+        description:
+            - DNS record name
+        required: False
+        type: str
     priority:
         description:
             - Priority Value
@@ -53,31 +68,6 @@ options:
         required: False
         type: int
         default: 1
-    proxiable:
-        description:
-            - None
-        required: False
-        type: bool
-    record_id:
-        description:
-            - None
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: False
-        type: str
-    name:
-        description:
-            - DNS record name
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Record type
-        required: False
-        type: str
     created_on:
         description:
             - None
@@ -87,6 +77,16 @@ options:
         description:
             - None
         required: False
+        type: str
+    proxiable:
+        description:
+            - None
+        required: False
+        type: bool
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
         type: str
     id:
         description:
@@ -134,44 +134,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
-    ('cis_id', 'str'),
     ('type', 'str'),
+    ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
+    'type',
     'content',
     'data',
-    'priority',
-    'proxied',
-    'ttl',
-    'proxiable',
     'record_id',
     'cis_id',
     'name',
-    'type',
+    'priority',
+    'proxied',
+    'ttl',
     'created_on',
     'modified_on',
+    'proxiable',
+    'domain_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
-        required=False,
+    type=dict(
+        required='True',
         type='str'),
     content=dict(
-        required=False,
+        required='False',
         type='str'),
     data=dict(
-        required=False,
+        required='False',
         elements='',
         type='dict'),
+    record_id=dict(
+        required='False',
+        type='str'),
+    cis_id=dict(
+        required='True',
+        type='str'),
+    name=dict(
+        required='False',
+        type='str'),
     priority=dict(
-        required=False,
+        required='False',
         type='int'),
     proxied=dict(
         default=False,
@@ -179,29 +188,20 @@ module_args = dict(
     ttl=dict(
         default=1,
         type='int'),
-    proxiable=dict(
-        required=False,
-        type='bool'),
-    record_id=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     created_on=dict(
-        required=False,
+        required='False',
         type='str'),
     modified_on=dict(
-        required=False,
+        required='False',
+        type='str'),
+    proxiable=dict(
+        required='False',
+        type='bool'),
+    domain_id=dict(
+        required='True',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

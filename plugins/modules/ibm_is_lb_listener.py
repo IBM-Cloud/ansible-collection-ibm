@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
@@ -28,17 +28,17 @@ options:
     lb:
         description:
             - (Required for new resource) Loadbalancer listener ID
-        required: False
+        required: True
         type: str
     port:
         description:
             - (Required for new resource) Loadbalancer listener port
-        required: False
+        required: True
         type: int
     protocol:
         description:
             - (Required for new resource) Loadbalancer protocol
-        required: False
+        required: True
         type: str
     certificate_instance:
         description:
@@ -128,31 +128,31 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     listener_id=dict(
-        required=False,
+        required='False',
         type='str'),
     lb=dict(
-        required=False,
+        required='True',
         type='str'),
     port=dict(
-        required=False,
+        required='True',
         type='int'),
     protocol=dict(
-        required=False,
+        required='True',
         type='str'),
     certificate_instance=dict(
-        required=False,
+        required='False',
         type='str'),
     connection_limit=dict(
-        required=False,
+        required='False',
         type='int'),
     default_pool=dict(
-        required=False,
+        required='False',
         type='str'),
     status=dict(
-        required=False,
+        required='False',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

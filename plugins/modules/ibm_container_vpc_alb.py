@@ -16,30 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    resize:
-        description:
-            - boolean value to resize the albs
-        required: False
-        type: bool
-    status:
-        description:
-            - Status of the ALB
-        required: False
-        type: str
-    alb_id:
-        description:
-            - (Required for new resource) ALB ID
-        required: False
-        type: str
-    alb_type:
-        description:
-            - Type of the ALB
-        required: False
-        type: str
     cluster:
         description:
             - cluster id
@@ -50,9 +30,34 @@ options:
             - Disable the ALB instance in the cluster
         required: False
         type: bool
-    name:
+    load_balancer_hostname:
         description:
-            - ALB name
+            - Load balancer host name
+        required: False
+        type: str
+    resize:
+        description:
+            - boolean value to resize the albs
+        required: False
+        type: bool
+    state_:
+        description:
+            - ALB state
+        required: False
+        type: str
+    status:
+        description:
+            - Status of the ALB
+        required: False
+        type: str
+    alb_id:
+        description:
+            - (Required for new resource) ALB ID
+        required: True
+        type: str
+    alb_type:
+        description:
+            - Type of the ALB
         required: False
         type: str
     enable:
@@ -60,14 +65,9 @@ options:
             - Enable the ALB instance in the cluster
         required: False
         type: bool
-    load_balancer_hostname:
+    name:
         description:
-            - Load balancer host name
-        required: False
-        type: str
-    state_:
-        description:
-            - ALB state
+            - ALB name
         required: False
         type: str
     zone:
@@ -106,16 +106,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cluster',
+    'disable_deployment',
+    'load_balancer_hostname',
     'resize',
+    'state_',
     'status',
     'alb_id',
     'alb_type',
-    'cluster',
-    'disable_deployment',
-    'name',
     'enable',
-    'load_balancer_hostname',
-    'state_',
+    'name',
     'zone',
 ]
 
@@ -123,41 +123,41 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resize=dict(
-        required=False,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
-    alb_id=dict(
-        required=False,
-        type='str'),
-    alb_type=dict(
-        required=False,
-        type='str'),
     cluster=dict(
-        required=False,
+        required='False',
         type='str'),
     disable_deployment=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    enable=dict(
-        required=False,
+        required='False',
         type='bool'),
     load_balancer_hostname=dict(
-        required=False,
+        required='False',
         type='str'),
+    resize=dict(
+        required='False',
+        type='bool'),
     state_=dict(
-        required=False,
+        required='False',
+        type='str'),
+    status=dict(
+        required='False',
+        type='str'),
+    alb_id=dict(
+        required='True',
+        type='str'),
+    alb_type=dict(
+        required='False',
+        type='str'),
+    enable=dict(
+        required='False',
+        type='bool'),
+    name=dict(
+        required='False',
         type='str'),
     zone=dict(
-        required=False,
+        required='False',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -194,7 +194,7 @@ def run_module():
         resource_type='ibm_container_vpc_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

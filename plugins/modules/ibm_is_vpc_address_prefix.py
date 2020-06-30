@@ -16,35 +16,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_address_prefix' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: False
-        type: str
-    cidr:
-        description:
-            - (Required for new resource) CIDIR address prefix
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) VPC id
-        required: False
+        required: True
         type: str
     has_subnets:
         description:
             - Boolean value, set to true if VPC instance have subnets
         required: False
         type: bool
+    name:
+        description:
+            - (Required for new resource) Name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    cidr:
+        description:
+            - (Required for new resource) CIDIR address prefix
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,42 +91,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('vpc', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
     ('cidr', 'str'),
-    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'vpc',
+    'has_subnets',
     'name',
     'zone',
     'cidr',
-    'vpc',
-    'has_subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    cidr=dict(
-        required=False,
-        type='str'),
     vpc=dict(
-        required=False,
+        required='True',
         type='str'),
     has_subnets=dict(
-        required=False,
+        required='False',
         type='bool'),
+    name=dict(
+        required='True',
+        type='str'),
+    zone=dict(
+        required='True',
+        type='str'),
+    cidr=dict(
+        required='True',
+        type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -189,7 +189,7 @@ def run_module():
         resource_type='ibm_is_vpc_address_prefix',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

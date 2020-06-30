@@ -18,25 +18,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  architecture (False, str, None)
-    None
-
-
-  operatingsystem (False, str, None)
-    None
-
-
-  hypervisor (False, str, None)
-    None
-
 
   pi_image_name (True, str, None)
     Imagename Name to be used for pvminstances
@@ -51,6 +39,18 @@ Parameters
 
 
   size (False, int, None)
+    None
+
+
+  architecture (False, str, None)
+    None
+
+
+  operatingsystem (False, str, None)
+    None
+
+
+  hypervisor (False, str, None)
     None
 
 

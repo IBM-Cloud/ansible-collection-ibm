@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    domain_name:
+    cluster_id:
         description:
-            - Domain name
-        required: False
+            - (Required for new resource) Cluster ID
+        required: True
         type: str
     issuer_name:
         description:
@@ -33,6 +33,21 @@ options:
     cluster_crn:
         description:
             - cluster CRN
+        required: False
+        type: str
+    cert_crn:
+        description:
+            - (Required for new resource) Certificate CRN id
+        required: True
+        type: str
+    domain_name:
+        description:
+            - Domain name
+        required: False
+        type: str
+    expires_on:
+        description:
+            - Certificate expaire on date
         required: False
         type: str
     cloud_cert_instance_id:
@@ -45,25 +60,10 @@ options:
             - region name
         required: False
         type: str
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN id
-        required: False
-        type: str
-    cluster_id:
-        description:
-            - (Required for new resource) Cluster ID
-        required: False
-        type: str
     secret_name:
         description:
             - (Required for new resource) Secret name
-        required: False
-        type: str
-    expires_on:
-        description:
-            - Certificate expaire on date
-        required: False
+        required: True
         type: str
     id:
         description:
@@ -91,57 +91,57 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cert_crn', 'str'),
     ('cluster_id', 'str'),
+    ('cert_crn', 'str'),
     ('secret_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_name',
+    'cluster_id',
     'issuer_name',
     'cluster_crn',
+    'cert_crn',
+    'domain_name',
+    'expires_on',
     'cloud_cert_instance_id',
     'region',
-    'cert_crn',
-    'cluster_id',
     'secret_name',
-    'expires_on',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_name=dict(
-        required=False,
+    cluster_id=dict(
+        required='True',
         type='str'),
     issuer_name=dict(
-        required=False,
+        required='False',
         type='str'),
     cluster_crn=dict(
-        required=False,
-        type='str'),
-    cloud_cert_instance_id=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
+        required='False',
         type='str'),
     cert_crn=dict(
-        required=False,
+        required='True',
         type='str'),
-    cluster_id=dict(
-        required=False,
-        type='str'),
-    secret_name=dict(
-        required=False,
+    domain_name=dict(
+        required='False',
         type='str'),
     expires_on=dict(
-        required=False,
+        required='False',
+        type='str'),
+    cloud_cert_instance_id=dict(
+        required='False',
+        type='str'),
+    region=dict(
+        required='False',
+        type='str'),
+    secret_name=dict(
+        required='True',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -178,7 +178,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    name:
+    health_check:
         description:
-            - (Required for new resource) name
-        required: False
+            - (Required for new resource) Health check info
+        required: True
         type: str
     usip:
         description:
@@ -31,21 +31,6 @@ options:
         required: False
         type: str
         default: NO
-    weight:
-        description:
-            - (Required for new resource) Weight value
-        required: False
-        type: int
-    connection_limit:
-        description:
-            - (Required for new resource) Number of connections limit
-        required: False
-        type: int
-    health_check:
-        description:
-            - (Required for new resource) Health check info
-        required: False
-        type: str
     tags:
         description:
             - list of tags associated with the resource
@@ -55,17 +40,32 @@ options:
     vip_id:
         description:
             - (Required for new resource) VIP id
-        required: False
-        type: str
-    destination_ip_address:
-        description:
-            - (Required for new resource) Destination IP Address
-        required: False
+        required: True
         type: str
     destination_port:
         description:
             - (Required for new resource) Destination Port number
-        required: False
+        required: True
+        type: int
+    weight:
+        description:
+            - (Required for new resource) Weight value
+        required: True
+        type: int
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    destination_ip_address:
+        description:
+            - (Required for new resource) Destination IP Address
+        required: True
+        type: str
+    connection_limit:
+        description:
+            - (Required for new resource) Number of connections limit
+        required: True
         type: int
     id:
         description:
@@ -113,62 +113,62 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('weight', 'int'),
-    ('connection_limit', 'int'),
     ('health_check', 'str'),
     ('vip_id', 'str'),
-    ('destination_ip_address', 'str'),
     ('destination_port', 'int'),
+    ('weight', 'int'),
+    ('name', 'str'),
+    ('destination_ip_address', 'str'),
+    ('connection_limit', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'usip',
-    'weight',
-    'connection_limit',
     'health_check',
+    'usip',
     'tags',
     'vip_id',
-    'destination_ip_address',
     'destination_port',
+    'weight',
+    'name',
+    'destination_ip_address',
+    'connection_limit',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
+    health_check=dict(
+        required='True',
         type='str'),
     usip=dict(
         default='NO',
         type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
-    connection_limit=dict(
-        required=False,
-        type='int'),
-    health_check=dict(
-        required=False,
-        type='str'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     vip_id=dict(
-        required=False,
-        type='str'),
-    destination_ip_address=dict(
-        required=False,
+        required='True',
         type='str'),
     destination_port=dict(
-        required=False,
+        required='True',
+        type='int'),
+    weight=dict(
+        required='True',
+        type='int'),
+    name=dict(
+        required='True',
+        type='str'),
+    destination_ip_address=dict(
+        required='True',
+        type='str'),
+    connection_limit=dict(
+        required='True',
         type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -219,7 +219,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

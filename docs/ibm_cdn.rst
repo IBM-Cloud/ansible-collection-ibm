@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  https_port (False, int, 443)
-    HTTPS port number
+  status (False, str, None)
+    Status info of the CDN instance
 
 
-  header (False, str, None)
-    Header info
+  respect_headers (False, bool, True)
+    respect headers info
 
 
   file_extension (False, str, None)
@@ -46,19 +46,7 @@ Parameters
     Path details
 
 
-  bucket_name (False, str, None)
-    Bucket name
-
-
-  respect_headers (False, bool, True)
-    respect headers info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  host_name (False, str, None)
+  host_name (True, str, None)
     (Required for new resource) Host name
 
 
@@ -66,32 +54,44 @@ Parameters
     Origin type info
 
 
-  origin_address (False, str, None)
-    (Required for new resource) origin address info
-
-
-  protocol (False, str, HTTP)
-    Protocol name
-
-
-  vendor_name (False, str, akamai)
-    Vendor name
-
-
-  http_port (False, int, 80)
-    HTTP port number
-
-
-  status (False, str, None)
-    Status info of the CDN instance
+  https_port (False, int, 443)
+    HTTPS port number
 
 
   cname (False, str, None)
     cname info
 
 
+  certificate_type (False, str, None)
+    Certificate type
+
+
   cache_key_query_rule (False, str, include-all)
     query rule info
+
+
+  vendor_name (False, str, akamai)
+    Vendor name
+
+
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
+  bucket_name (False, str, None)
+    Bucket name
+
+
+  protocol (False, str, HTTP)
+    Protocol name
+
+
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  header (False, str, None)
+    Header info
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,51 +26,39 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  metrics_monitoring (False, list, None)
-    None
-
-
-  single_site_location (False, str, None)
-    None
+  crn (False, str, None)
+    CRN of resource instance
 
 
   region_location (False, str, None)
     None
 
 
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
+  storage_class (False, str, None)
+    None
 
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
+  metrics_monitoring (False, list, None)
+    None
 
 
   allowed_ip (False, list, None)
     List of IPv4 or IPv6 addresses
 
 
-  resource_instance_id (True, str, None)
-    None
-
-
   bucket_type (True, str, None)
     None
 
 
-  bucket_region (True, str, None)
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  single_site_location (False, str, None)
     None
 
 
   cross_region_location (False, str, None)
-    None
-
-
-  storage_class (False, str, None)
     None
 
 
@@ -84,6 +72,18 @@ Parameters
 
   bucket_name (True, str, None)
     None
+
+
+  bucket_region (True, str, None)
+    None
+
+
+  resource_instance_id (True, str, None)
+    None
+
+
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
 
 
   iaas_classic_username (False, any, None)

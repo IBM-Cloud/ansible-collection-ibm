@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint_subscription' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
+    artifact_id:
+        description:
+            - (Required for new resource) Endpoint ID
+        required: True
+        type: str
     client_id:
         description:
             - Subscription Id, API key that is used to create subscription
@@ -28,12 +33,12 @@ options:
     name:
         description:
             - (Required for new resource) Subscription name
-        required: False
+        required: True
         type: str
     type:
         description:
             - (Required for new resource) Subscription type. Allowable values are external, internal
-        required: False
+        required: True
         type: str
     client_secret:
         description:
@@ -50,11 +55,6 @@ options:
             - Indicates if client secret is provided to subscription or not
         required: False
         type: bool
-    artifact_id:
-        description:
-            - (Required for new resource) Endpoint ID
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,49 +101,49 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('artifact_id', 'str'),
     ('name', 'str'),
     ('type', 'str'),
-    ('artifact_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'artifact_id',
     'client_id',
     'name',
     'type',
     'client_secret',
     'generate_secret',
     'secret_provided',
-    'artifact_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    artifact_id=dict(
+        required='True',
+        type='str'),
     client_id=dict(
-        required=False,
+        required='False',
         type='str'),
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     type=dict(
-        required=False,
+        required='True',
         type='str'),
     client_secret=dict(
-        required=False,
+        required='False',
         type='str'),
     generate_secret=dict(
-        required=False,
+        required='False',
         type='bool'),
     secret_provided=dict(
-        required=False,
+        required='False',
         type='bool'),
-    artifact_id=dict(
-        required=False,
-        type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -194,7 +194,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint_subscription',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

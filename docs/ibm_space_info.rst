@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  space (True, str, None)
+    Space name, for example dev
+
 
   org (True, str, None)
     The org this space belongs to
@@ -40,10 +44,6 @@ Parameters
 
   developers (False, list, None)
     The IBMID of the users who  have developer role in this space, ex - user@example.com
-
-
-  space (True, str, None)
-    Space name, for example dev
 
 
   iaas_classic_username (False, any, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,19 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name_servers (False, list, None)
-    None
-
-
-  original_name_servers (False, list, None)
-    None
-
-
-  cis_id (False, str, None)
+  cis_id (True, str, None)
     (Required for new resource) CIS object id
 
 
-  domain (False, str, None)
+  domain (True, str, None)
     (Required for new resource) CISzone - Domain
 
 
@@ -47,6 +39,14 @@ Parameters
 
 
   status (False, str, None)
+    None
+
+
+  name_servers (False, list, None)
+    None
+
+
+  original_name_servers (False, list, None)
     None
 
 

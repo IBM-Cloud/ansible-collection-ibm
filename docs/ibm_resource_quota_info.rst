@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  max_service_instances (False, int, None)
+    Defines the total service instances limit.
+
+
+  vsi_limit (False, int, None)
+    Defines the VSI limit.
+
+
+  name (True, str, None)
+    Resource quota name, for example Trial Quota
+
 
   type (False, str, None)
     Type of the quota.
@@ -44,18 +56,6 @@ Parameters
 
   total_app_memory (False, str, None)
     Defines the total memory for app.
-
-
-  max_service_instances (False, int, None)
-    Defines the total service instances limit.
-
-
-  vsi_limit (False, int, None)
-    Defines the VSI limit.
-
-
-  name (True, str, None)
-    Resource quota name, for example Trial Quota
 
 
   iaas_classic_username (False, any, None)

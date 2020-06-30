@@ -16,16 +16,21 @@ description:
     - Retrieve an IBM Cloud 'ibm_is_subnet' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    available_ipv4_address_count:
+    total_ipv4_address_count:
         description:
             - None
         required: False
-        type: str
-    public_gateway:
+        type: int
+    ip_version:
+        description:
+            - None
+        required: False
+        type: int
+    status:
         description:
             - None
         required: False
@@ -35,24 +40,9 @@ options:
             - None
         required: False
         type: str
-    zone:
+    resource_name:
         description:
-            - None
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    ipv4_cidr_block:
-        description:
-            - None
-        required: False
-        type: str
-    status:
-        description:
-            - None
+            - The name of the resource
         required: False
         type: str
     resource_status:
@@ -60,24 +50,39 @@ options:
             - The status of the resource
         required: False
         type: str
-    name:
+    ipv4_cidr_block:
         description:
             - None
         required: False
         type: str
-    ipv6_cidr_block:
+    network_acl:
         description:
             - None
         required: False
         type: str
-    ip_version:
+    public_gateway:
         description:
             - None
         required: False
-        type: int
-    resource_name:
+        type: str
+    resource_group_name:
         description:
-            - The name of the resource
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    available_ipv4_address_count:
+        description:
+            - None
+        required: False
+        type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_crn:
@@ -90,26 +95,21 @@ options:
             - None
         required: True
         type: str
-    network_acl:
+    ipv6_cidr_block:
         description:
             - None
         required: False
         type: str
-    resource_group:
+    name:
         description:
             - None
         required: False
         type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    total_ipv4_address_count:
+    zone:
         description:
             - None
         required: False
-        type: int
+        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -148,64 +148,67 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'available_ipv4_address_count',
-    'public_gateway',
-    'vpc',
-    'zone',
-    'resource_controller_url',
-    'ipv4_cidr_block',
-    'status',
-    'resource_status',
-    'name',
-    'ipv6_cidr_block',
+    'total_ipv4_address_count',
     'ip_version',
+    'status',
+    'vpc',
     'resource_name',
+    'resource_status',
+    'ipv4_cidr_block',
+    'network_acl',
+    'public_gateway',
+    'resource_group_name',
+    'available_ipv4_address_count',
+    'resource_group',
+    'resource_controller_url',
     'resource_crn',
     'identifier',
-    'network_acl',
-    'resource_group',
-    'resource_group_name',
-    'total_ipv4_address_count',
+    'ipv6_cidr_block',
+    'name',
+    'zone',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    available_ipv4_address_count=dict(
+    total_ipv4_address_count=dict(
         required=False,
-        type='str'),
-    public_gateway=dict(
+        type='int'),
+    ip_version=dict(
+        required=False,
+        type='int'),
+    status=dict(
         required=False,
         type='str'),
     vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    ipv4_cidr_block=dict(
-        required=False,
-        type='str'),
-    status=dict(
+    resource_name=dict(
         required=False,
         type='str'),
     resource_status=dict(
         required=False,
         type='str'),
-    name=dict(
+    ipv4_cidr_block=dict(
         required=False,
         type='str'),
-    ipv6_cidr_block=dict(
+    network_acl=dict(
         required=False,
         type='str'),
-    ip_version=dict(
+    public_gateway=dict(
         required=False,
-        type='int'),
-    resource_name=dict(
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    available_ipv4_address_count=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     resource_crn=dict(
@@ -214,18 +217,15 @@ module_args = dict(
     identifier=dict(
         required=True,
         type='str'),
-    network_acl=dict(
+    ipv6_cidr_block=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    zone=dict(
         required=False,
         type='str'),
-    total_ipv4_address_count=dict(
-        required=False,
-        type='int'),
     generation=dict(
         type='int',
         required=False,
@@ -272,7 +272,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

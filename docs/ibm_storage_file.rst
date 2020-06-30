@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,24 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hourly_billing (False, bool, False)
-    Hourly based billing type
+  type (True, str, None)
+    (Required for new resource) Storage type
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  volumename (False, str, None)
-    Storage volume name
+  iops (True, float, None)
+    (Required for new resource) iops rate
 
 
-  allowed_subnets (False, list, None)
-    Allowed network subnets
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
 
 
   allowed_ip_addresses (False, list, None)
     Allowed range of IP addresses
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage capacity
 
 
   snapshot_schedule (False, list, None)
@@ -54,52 +62,44 @@ Parameters
     Storage mount point
 
 
-  notes (False, str, None)
-    Notes
-
-
   tags (False, list, None)
     Tags set for the storage volume
 
 
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
-
-  capacity (False, int, None)
-    (Required for new resource) Storage capacity
-
-
-  iops (False, float, None)
-    (Required for new resource) iops rate
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
-  type (False, str, None)
-    (Required for new resource) Storage type
-
-
-  hostname (False, str, None)
-    Hostname
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
+  volumename (False, str, None)
+    Storage volume name
+
+
+  hostname (False, str, None)
+    Hostname
+
+
   allowed_virtual_guest_ids (False, list, None)
     Virtual guest ID
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
+
+
+  hourly_billing (False, bool, False)
+    Hourly based billing type
+
+
+  allowed_subnets (False, list, None)
+    Allowed network subnets
+
+
+  notes (False, str, None)
+    Notes
 
 
   id (False, str, None)

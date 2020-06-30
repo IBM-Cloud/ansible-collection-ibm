@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,44 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
-    (Required for new resource) Storage block type
-
-
-  os_format_type (False, str, None)
-    (Required for new resource) OS formatr type
-
-
-  notes (False, str, None)
-    Additional note info
-
-
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  datacenter (False, str, None)
-    (Required for new resource) Datacenter name
-
-
-  iops (False, float, None)
-    (Required for new resource) IOPS value required
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    List of allowed virtual guest IDs
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
+  hostname (False, str, None)
+    Hostname
 
 
   tags (False, list, None)
     List of tags associated with the resource
+
+
+  allowed_hardware_info (False, list, None)
+    None
 
 
   allowed_host_info (False, list, None)
@@ -74,8 +46,12 @@ Parameters
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  capacity (False, int, None)
-    (Required for new resource) Storage block size
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
 
 
   allowed_virtual_guest_info (False, list, None)
@@ -86,24 +62,48 @@ Parameters
     List of allowe hardware IDs
 
 
+  notes (False, str, None)
+    Additional note info
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
+
+
   hourly_billing (False, bool, False)
     Billing done hourly, if set to true
 
 
-  target_address (False, list, None)
-    List of target Addresses
+  type (True, str, None)
+    (Required for new resource) Storage block type
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  iops (True, float, None)
+    (Required for new resource) IOPS value required
 
 
   volumename (False, str, None)
     Volume name
 
 
-  hostname (False, str, None)
-    Hostname
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
 
 
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
+  os_format_type (True, str, None)
+    (Required for new resource) OS formatr type
+
+
+  target_address (False, list, None)
+    List of target Addresses
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   id (False, str, None)

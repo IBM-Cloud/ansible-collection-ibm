@@ -16,10 +16,25 @@ description:
     - Retrieve an IBM Cloud 'ibm_resource_key' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
+    resource_alias_id:
+        description:
+            - The id of the resource alias
+        required: False
+        type: str
+    role:
+        description:
+            - User role
+        required: False
+        type: str
+    status:
+        description:
+            - Status of resource key
+        required: False
+        type: str
     credentials:
         description:
             - Credentials asociated with the key
@@ -44,21 +59,6 @@ options:
     resource_instance_id:
         description:
             - The id of the resource instance
-        required: False
-        type: str
-    resource_alias_id:
-        description:
-            - The id of the resource alias
-        required: False
-        type: str
-    role:
-        description:
-            - User role
-        required: False
-        type: str
-    status:
-        description:
-            - Status of resource key
         required: False
         type: str
     iaas_classic_username:
@@ -99,20 +99,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_alias_id',
+    'role',
+    'status',
     'credentials',
     'most_recent',
     'crn',
     'name',
     'resource_instance_id',
-    'resource_alias_id',
-    'role',
-    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_alias_id=dict(
+        required=False,
+        type='str'),
+    role=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
     credentials=dict(
         required=False,
         type='dict'),
@@ -126,15 +135,6 @@ module_args = dict(
         required=True,
         type='str'),
     resource_instance_id=dict(
-        required=False,
-        type='str'),
-    resource_alias_id=dict(
-        required=False,
-        type='str'),
-    role=dict(
-        required=False,
-        type='str'),
-    status=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -171,7 +171,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

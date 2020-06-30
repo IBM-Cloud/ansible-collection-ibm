@@ -16,14 +16,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_ha' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
+    primary_id:
+        description:
+            - (Required for new resource) primary ID
+        required: True
+        type: int
     secondary_id:
         description:
             - (Required for new resource) Secondary ID
-        required: False
+        required: True
         type: int
     stay_secondary:
         description:
@@ -36,11 +41,6 @@ options:
         required: False
         type: list
         elements: str
-    primary_id:
-        description:
-            - (Required for new resource) primary ID
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,37 +87,37 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('secondary_id', 'int'),
     ('primary_id', 'int'),
+    ('secondary_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'primary_id',
     'secondary_id',
     'stay_secondary',
     'tags',
-    'primary_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    primary_id=dict(
+        required='True',
+        type='int'),
     secondary_id=dict(
-        required=False,
+        required='True',
         type='int'),
     stay_secondary=dict(
-        required=False,
+        required='False',
         type='bool'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
-    primary_id=dict(
-        required=False,
-        type='int'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -168,7 +168,7 @@ def run_module():
         resource_type='ibm_lb_vpx_ha',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

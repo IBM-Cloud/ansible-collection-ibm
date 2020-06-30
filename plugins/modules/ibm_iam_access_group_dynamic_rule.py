@@ -16,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_dynamic_rule' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    identity_provider:
-        description:
-            - (Required for new resource) The realm name or identity proivider url
-        required: False
-        type: str
-    conditions:
-        description:
-            - (Required for new resource) conditions info
-        required: False
-        type: list
-        elements: dict
     rule_id:
         description:
             - id of the rule
@@ -39,18 +28,29 @@ options:
     access_group_id:
         description:
             - (Required for new resource) Unique identifier of the access group
-        required: False
+        required: True
         type: str
     name:
         description:
             - (Required for new resource) The name of the Rule
-        required: False
+        required: True
         type: str
     expiration:
         description:
             - (Required for new resource) The expiration in hours
-        required: False
+        required: True
         type: int
+    identity_provider:
+        description:
+            - (Required for new resource) The realm name or identity proivider url
+        required: True
+        type: str
+    conditions:
+        description:
+            - (Required for new resource) conditions info
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,48 +97,48 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('identity_provider', 'str'),
-    ('conditions', 'list'),
     ('access_group_id', 'str'),
     ('name', 'str'),
     ('expiration', 'int'),
+    ('identity_provider', 'str'),
+    ('conditions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'identity_provider',
-    'conditions',
     'rule_id',
     'access_group_id',
     'name',
     'expiration',
+    'identity_provider',
+    'conditions',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    identity_provider=dict(
-        required=False,
-        type='str'),
-    conditions=dict(
-        required=False,
-        elements='',
-        type='list'),
     rule_id=dict(
-        required=False,
+        required='False',
         type='str'),
     access_group_id=dict(
-        required=False,
+        required='True',
         type='str'),
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     expiration=dict(
-        required=False,
+        required='True',
         type='int'),
+    identity_provider=dict(
+        required='True',
+        type='str'),
+    conditions=dict(
+        required='True',
+        elements='',
+        type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -189,7 +189,7 @@ def run_module():
         resource_type='ibm_iam_access_group_dynamic_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

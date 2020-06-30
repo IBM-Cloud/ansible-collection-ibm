@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,28 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (False, str, None)
+  cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
 
 
-  threshold (False, int, None)
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
+  threshold (True, int, None)
     (Required for new resource) Rate Limiting Threshold
 
 
-  correlate (False, list, None)
-    Ratelimiting Correlate
-
-
-  action (False, list, None)
-    (Required for new resource) Rate Limiting Action
+  match (False, list, None)
+    Rate Limiting Match
 
 
   rule_id (False, str, None)
     Rate Limit rule Id
-
-
-  domain_id (False, str, None)
-    (Required for new resource) CIS Domain ID
 
 
   disabled (False, bool, False)
@@ -62,12 +58,16 @@ Parameters
     Bypass URL
 
 
-  period (False, int, None)
+  period (True, int, None)
     (Required for new resource) Rate Limiting Period
 
 
-  match (False, list, None)
-    Rate Limiting Match
+  correlate (False, list, None)
+    Ratelimiting Correlate
+
+
+  action (True, list, None)
+    (Required for new resource) Rate Limiting Action
 
 
   id (False, str, None)

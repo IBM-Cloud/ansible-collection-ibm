@@ -16,24 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: False
-        type: str
     firewall_type:
         description:
             - (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
-        required: False
+        required: True
         type: str
     lockdown:
         description:
@@ -41,6 +31,16 @@ options:
         required: False
         type: list
         elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,38 +87,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('firewall_type', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('firewall_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'domain_id',
     'firewall_type',
     'lockdown',
+    'cis_id',
+    'domain_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     firewall_type=dict(
-        required=False,
+        required='True',
         type='str'),
     lockdown=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
+    cis_id=dict(
+        required='True',
+        type='str'),
+    domain_id=dict(
+        required='True',
+        type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -169,7 +169,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

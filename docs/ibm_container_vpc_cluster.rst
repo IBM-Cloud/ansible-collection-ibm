@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  zones (True, list, None)
+    (Required for new resource) Zone info
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
 
   disable_public_service_endpoint (False, bool, False)
     Boolean value true if Public service endpoint to be disabled
@@ -34,39 +46,11 @@ Parameters
     None
 
 
-  private_service_endpoint_url (False, str, None)
+  master_status (False, str, None)
     None
 
 
-  flavor (False, str, None)
-    (Required for new resource) Cluster nodes flavour
-
-
-  vpc_id (False, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  ingress_hostname (False, str, None)
+  master_url (False, str, None)
     None
 
 
@@ -74,19 +58,35 @@ Parameters
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
 
 
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   resource_crn (False, str, None)
     The crn of the resource
 
 
-  name (False, str, None)
+  kube_version (False, str, None)
+    Kubernetes version
+
+
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  name (True, str, None)
     (Required for new resource) The cluster name
 
 
@@ -94,11 +94,11 @@ Parameters
     List of tags for the resources
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+  albs (False, list, None)
+    None
 
 
-  master_status (False, str, None)
+  public_service_endpoint_url (False, str, None)
     None
 
 
@@ -106,35 +106,35 @@ Parameters
     CRN of resource instance
 
 
-  kube_version (False, str, None)
-    Kubernetes version
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  zones (False, list, None)
-    (Required for new resource) Zone info
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
   ingress_secret (False, str, None)
     None
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  resource_status (False, str, None)
+    The status of the resource
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
 
 
-  master_url (False, str, None)
+  ingress_hostname (False, str, None)
     None
 
 
-  albs (False, list, None)
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
+
+
+  private_service_endpoint_url (False, str, None)
     None
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,24 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_record_id (False, str, None)
-    Resource record ID
+  created_on (False, str, None)
+    Creation Data
 
 
-  zone_id (False, str, None)
+  name (True, str, None)
+    (Required for new resource) DNS record name
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record Type
+
+
+  rdata (True, str, None)
+    (Required for new resource) DNS record Data
+
+
+  ttl (False, int, 900)
+    DNS record TTL
+
+
+  zone_id (True, str, None)
     (Required for new resource) Zone ID
 
 
-  rdata (False, str, None)
-    (Required for new resource) DNS record Data
+  instance_id (True, str, None)
+    (Required for new resource) Instance ID
 
 
   preference (False, int, 0)
     DNS maximum preference
-
-
-  port (False, int, None)
-    DNS server Port
 
 
   priority (False, int, 0)
@@ -54,36 +66,24 @@ Parameters
     Service info
 
 
-  instance_id (False, str, None)
-    (Required for new resource) Instance ID
+  protocol (False, str, None)
+    Protocol
 
 
-  ttl (False, int, 900)
-    DNS record TTL
+  resource_record_id (False, str, None)
+    Resource record ID
 
 
   weight (False, int, 0)
     DNS server weight
 
 
-  name (False, str, None)
-    (Required for new resource) DNS record name
-
-
-  created_on (False, str, None)
-    Creation Data
-
-
   modified_on (False, str, None)
     Modification date
 
 
-  type (False, str, None)
-    (Required for new resource) DNS record Type
-
-
-  protocol (False, str, None)
-    Protocol
+  port (False, int, None)
+    DNS server Port
 
 
   id (False, str, None)

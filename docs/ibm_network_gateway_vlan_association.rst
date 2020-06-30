@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway_id (False, int, None)
+  gateway_id (True, int, None)
     (Required for new resource) Gateway instance ID
 
 
-  network_vlan_id (False, int, None)
+  network_vlan_id (True, int, None)
     (Required for new resource) The Identifier of the VLAN to be associated
 
 

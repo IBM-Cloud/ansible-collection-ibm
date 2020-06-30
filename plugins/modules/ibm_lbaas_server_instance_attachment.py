@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas_server_instance_attachment' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    private_ip_address:
-        description:
-            - (Required for new resource) The Private IP address of a load balancer member.
-        required: False
-        type: str
     weight:
         description:
             - The weight of a load balancer member.
@@ -33,12 +28,17 @@ options:
     lbaas_id:
         description:
             - (Required for new resource) The UUID of a load balancer
-        required: False
+        required: True
         type: str
     uuid:
         description:
             - The UUID of a load balancer member
         required: False
+        type: str
+    private_ip_address:
+        description:
+            - (Required for new resource) The Private IP address of a load balancer member.
+        required: True
         type: str
     id:
         description:
@@ -86,36 +86,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('private_ip_address', 'str'),
     ('lbaas_id', 'str'),
+    ('private_ip_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_ip_address',
     'weight',
     'lbaas_id',
     'uuid',
+    'private_ip_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_ip_address=dict(
-        required=False,
-        type='str'),
     weight=dict(
-        required=False,
+        required='False',
         type='int'),
     lbaas_id=dict(
-        required=False,
+        required='True',
         type='str'),
     uuid=dict(
-        required=False,
+        required='False',
+        type='str'),
+    private_ip_address=dict(
+        required='True',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -166,7 +166,7 @@ def run_module():
         resource_type='ibm_lbaas_server_instance_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

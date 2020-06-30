@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dns_registration_id (False, str, None)
+  dns_registration_id (True, str, None)
     (Required for new resource) DNS registration ID
 
 
-  name_servers (False, list, None)
+  name_servers (True, list, None)
     (Required for new resource) Custom name servers for the domain registration
 
 

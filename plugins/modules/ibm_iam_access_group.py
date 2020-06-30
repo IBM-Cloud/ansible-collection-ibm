@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
@@ -39,7 +39,7 @@ options:
     name:
         description:
             - (Required for new resource) Name of the access group
-        required: False
+        required: True
         type: str
     id:
         description:
@@ -103,20 +103,20 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     description=dict(
-        required=False,
+        required='False',
         type='str'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     version=dict(
-        required=False,
+        required='False',
         type='str'),
     name=dict(
-        required=False,
+        required='True',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -167,7 +167,7 @@ def run_module():
         resource_type='ibm_iam_access_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

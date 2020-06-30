@@ -16,7 +16,7 @@ description:
     - Retrieve an IBM Cloud 'ibm_cis' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
@@ -25,19 +25,9 @@ options:
             - Resource instance name for example, my cis instance
         required: True
         type: str
-    resource_group_id:
+    location:
         description:
-            - The id of the resource group in which the cis instance is present
-        required: False
-        type: str
-    guid:
-        description:
-            - Unique identifier of resource instance
-        required: False
-        type: str
-    service:
-        description:
-            - The name of the Cloud Internet Services offering, 'internet-svcs'
+            - The location or the environment in which cis instance exists
         required: False
         type: str
     status:
@@ -55,9 +45,24 @@ options:
             - The crn of the resource
         required: False
         type: str
-    location:
+    resource_controller_url:
         description:
-            - The location or the environment in which cis instance exists
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - The id of the resource group in which the cis instance is present
+        required: False
+        type: str
+    guid:
+        description:
+            - Unique identifier of resource instance
+        required: False
+        type: str
+    service:
+        description:
+            - The name of the Cloud Internet Services offering, 'internet-svcs'
         required: False
         type: str
     plan:
@@ -73,11 +78,6 @@ options:
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
         type: str
     iaas_classic_username:
@@ -119,17 +119,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'resource_group_id',
-    'guid',
-    'service',
+    'location',
     'status',
     'resource_name',
     'resource_crn',
-    'location',
+    'resource_controller_url',
+    'resource_group_id',
+    'guid',
+    'service',
     'plan',
     'resource_status',
     'resource_group_name',
-    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -139,13 +139,7 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    guid=dict(
-        required=False,
-        type='str'),
-    service=dict(
+    location=dict(
         required=False,
         type='str'),
     status=dict(
@@ -157,7 +151,16 @@ module_args = dict(
     resource_crn=dict(
         required=False,
         type='str'),
-    location=dict(
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    guid=dict(
+        required=False,
+        type='str'),
+    service=dict(
         required=False,
         type='str'),
     plan=dict(
@@ -167,9 +170,6 @@ module_args = dict(
         required=False,
         type='str'),
     resource_group_name=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

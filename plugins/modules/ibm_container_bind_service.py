@@ -16,24 +16,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
     cluster_name_id:
         description:
             - (Required for new resource) Cluster name or ID
+        required: True
+        type: str
+    service_instance_id:
+        description:
+            - Service instance ID
         required: False
         type: str
-    space_guid:
+    namespace_id:
         description:
-            - The bluemix space guid this cluster belongs to
-        required: False
-        type: str
-    key:
-        description:
-            - Key info
-        required: False
+            - (Required for new resource) namespace ID
+        required: True
         type: str
     tags:
         description:
@@ -46,19 +46,14 @@ options:
             - serivice instance name
         required: False
         type: str
-    service_instance_id:
-        description:
-            - Service instance ID
-        required: False
-        type: str
-    role:
-        description:
-            - Role info
-        required: False
-        type: str
     org_guid:
         description:
             - The bluemix organization guid this cluster belongs to
+        required: False
+        type: str
+    space_guid:
+        description:
+            - The bluemix space guid this cluster belongs to
         required: False
         type: str
     account_guid:
@@ -71,14 +66,19 @@ options:
             - The cluster region
         required: False
         type: str
-    namespace_id:
-        description:
-            - (Required for new resource) namespace ID
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
+        required: False
+        type: str
+    key:
+        description:
+            - Key info
+        required: False
+        type: str
+    role:
+        description:
+            - Role info
         required: False
         type: str
     id:
@@ -114,17 +114,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_name_id',
-    'space_guid',
-    'key',
+    'service_instance_id',
+    'namespace_id',
     'tags',
     'service_instance_name',
-    'service_instance_id',
-    'role',
     'org_guid',
+    'space_guid',
     'account_guid',
     'region',
-    'namespace_id',
     'resource_group_id',
+    'key',
+    'role',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -132,44 +132,44 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     cluster_name_id=dict(
-        required=False,
+        required='True',
         type='str'),
-    space_guid=dict(
-        required=False,
+    service_instance_id=dict(
+        required='False',
         type='str'),
-    key=dict(
-        required=False,
+    namespace_id=dict(
+        required='True',
         type='str'),
     tags=dict(
-        required=False,
+        required='False',
         elements='',
         type='list'),
     service_instance_name=dict(
-        required=False,
-        type='str'),
-    service_instance_id=dict(
-        required=False,
-        type='str'),
-    role=dict(
-        required=False,
+        required='False',
         type='str'),
     org_guid=dict(
-        required=False,
+        required='False',
+        type='str'),
+    space_guid=dict(
+        required='False',
         type='str'),
     account_guid=dict(
-        required=False,
+        required='False',
         type='str'),
     region=dict(
-        required=False,
-        type='str'),
-    namespace_id=dict(
-        required=False,
+        required='False',
         type='str'),
     resource_group_id=dict(
-        required=False,
+        required='False',
+        type='str'),
+    key=dict(
+        required='False',
+        type='str'),
+    role=dict(
+        required='False',
         type='str'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

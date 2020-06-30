@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,11 +26,51 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
+  vcpu (False, list, None)
+    None
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (True, str, None)
     (Required for new resource) Instance name
 
 
-  keys (False, list, None)
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  keys (True, list, None)
     (Required for new resource) SSH key Ids for the instance
 
 
@@ -38,80 +78,40 @@ Parameters
     None
 
 
-  memory (False, int, None)
-    Instance memory
+  volumes (False, list, None)
+    List of volumes
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
+  resource_group (False, str, None)
+    Instance resource group
+
+
   gpu (False, list, None)
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  vpc (False, str, None)
-    (Required for new resource) VPC id
-
-
-  profile (False, str, None)
-    (Required for new resource) Profile info
-
-
-  primary_network_interface (False, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  vcpu (False, list, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  zone (False, str, None)
-    (Required for new resource) Zone name
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  image (False, str, None)
-    (Required for new resource) image name
-
-
-  resource_group (False, str, None)
-    Instance resource group
+  memory (False, int, None)
+    Instance memory
 
 
   status (False, str, None)
     instance status
 
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  user_data (False, str, None)
-    User data given for the instance
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   boot_volume (False, list, None)
     None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_crn (False, str, None)

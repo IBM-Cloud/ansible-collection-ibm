@@ -16,26 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
 
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.0
+    - IBM-Cloud terraform-provider-ibm v1.8.1
     - Terraform v0.12.20
 
 options:
-    parameters:
-        description:
-            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of Trigger.
-        required: False
-        type: str
-    feed:
-        description:
-            - Trigger feed
-        required: False
-        type: list
-        elements: dict
     publish:
         description:
             - Trigger visbility.
@@ -63,6 +47,22 @@ options:
             - All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
+    parameters:
+        description:
+            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of Trigger.
+        required: True
+        type: str
+    feed:
+        description:
+            - Trigger feed
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,35 +100,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameters',
-    'name',
-    'feed',
     'publish',
     'version',
     'user_defined_annotations',
     'user_defined_parameters',
     'annotations',
+    'parameters',
+    'name',
+    'feed',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameters=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    feed=dict(
-        required=False,
-        elements='',
-        type='list'),
     publish=dict(
-        required=False,
+        required='False',
         type='bool'),
     version=dict(
-        required=False,
+        required='False',
         type='str'),
     user_defined_annotations=dict(
         default='[]',
@@ -137,10 +127,20 @@ module_args = dict(
         default='[]',
         type='str'),
     annotations=dict(
-        required=False,
+        required='False',
         type='str'),
+    parameters=dict(
+        required='False',
+        type='str'),
+    name=dict(
+        required='True',
+        type='str'),
+    feed=dict(
+        required='False',
+        elements='',
+        type='list'),
     id=dict(
-        required=False,
+        required='False',
         type='str'),
     state=dict(
         type='str',
@@ -181,7 +181,7 @@ def run_module():
         resource_type='ibm_function_trigger',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.0',
+        ibm_provider_version='1.8.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

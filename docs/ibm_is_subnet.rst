@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,52 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
-
-
-  vpc (False, str, None)
-    (Required for new resource) VPC instance ID
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  name (False, str, None)
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
+
+
+  name (True, str, None)
     (Required for new resource) Subnet name
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   resource_status (False, str, None)
     The status of the resource
 
 
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  status (False, str, None)
-    None
-
-
-  zone (False, str, None)
-    (Required for new resource) Subnet zone info
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   ipv6_cidr_block (False, str, None)
     None
+
+
+  ip_version (False, str, ipv4)
+    Subnet IP version
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_group (False, str, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
+
+  zone (True, str, None)
+    (Required for new resource) Subnet zone info
 
 
   available_ipv4_address_count (False, str, None)
@@ -82,16 +90,8 @@ Parameters
     None
 
 
-  ip_version (False, str, ipv4)
-    Subnet IP version
-
-
-  network_acl (False, str, None)
+  status (False, str, None)
     None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
 
 
   id (False, str, None)

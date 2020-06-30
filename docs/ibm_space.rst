@@ -18,13 +18,29 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) The name for the space
+
+
+  org (True, str, None)
+    (Required for new resource) The org this space belongs to
+
+
+  auditors (False, list, None)
+    The IBMID of the users who will have auditor role in this space, ex - user@example.com
+
 
   managers (False, list, None)
     The IBMID of the users who will have manager role in this space, ex - user@example.com
@@ -36,22 +52,6 @@ Parameters
 
   space_quota (False, str, None)
     The name of the Space Quota Definition
-
-
-  tags (False, list, None)
-    None
-
-
-  name (False, str, None)
-    (Required for new resource) The name for the space
-
-
-  org (False, str, None)
-    (Required for new resource) The org this space belongs to
-
-
-  auditors (False, list, None)
-    The IBMID of the users who will have auditor role in this space, ex - user@example.com
 
 
   id (False, str, None)

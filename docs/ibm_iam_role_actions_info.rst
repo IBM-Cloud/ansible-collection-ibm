@@ -18,13 +18,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  service (True, str, None)
+    The Service Name
+
+
+  reader (False, list, None)
+    Reader action ids
+
 
   manager (False, list, None)
     manager action ids
@@ -36,14 +44,6 @@ Parameters
 
   writer (False, list, None)
     writer action ids
-
-
-  service (True, str, None)
-    The Service Name
-
-
-  reader (False, list, None)
-    Reader action ids
 
 
   iaas_classic_username (False, any, None)

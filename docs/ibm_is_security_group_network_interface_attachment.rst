@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_network_interface (False, str, None)
-    security group network interface attachment network interface ID
+  type (False, str, None)
+    security group network interface attachment type
 
 
-  primary_ipv4_address (False, str, None)
-    security group network interface attachment Primary IPV4 address
+  name (False, str, None)
+    security group network interface attachment name
+
+
+  port_speed (False, int, None)
+    security group network interface attachment port speed
 
 
   secondary_address (False, list, None)
     security group network interface attachment secondary address
+
+
+  subnet (False, str, None)
+    security group network interface attachment subnet
+
+
+  status (False, str, None)
+    security group network interface attachment status
 
 
   floating_ips (False, list, None)
@@ -46,32 +58,20 @@ Parameters
     None
 
 
-  name (False, str, None)
-    security group network interface attachment name
+  security_group (True, str, None)
+    (Required for new resource) security group network interface attachment group ID
 
 
-  network_interface (False, str, None)
+  network_interface (True, str, None)
     (Required for new resource) security group network interface attachment NIC ID
 
 
-  port_speed (False, int, None)
-    security group network interface attachment port speed
+  instance_network_interface (False, str, None)
+    security group network interface attachment network interface ID
 
 
-  status (False, str, None)
-    security group network interface attachment status
-
-
-  subnet (False, str, None)
-    security group network interface attachment subnet
-
-
-  type (False, str, None)
-    security group network interface attachment type
-
-
-  security_group (False, str, None)
-    (Required for new resource) security group network interface attachment group ID
+  primary_ipv4_address (False, str, None)
+    security group network interface attachment Primary IPV4 address
 
 
   id (False, str, None)

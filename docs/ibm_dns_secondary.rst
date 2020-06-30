@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,15 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  master_ip_address (False, str, None)
+  tags (False, list, None)
+    List of tags
+
+
+  master_ip_address (True, str, None)
     (Required for new resource) Master IP Address
 
 
-  transfer_frequency (False, int, None)
+  transfer_frequency (True, int, None)
     (Required for new resource) Transfer frequency value
 
 
-  zone_name (False, str, None)
+  zone_name (True, str, None)
     (Required for new resource) Zone name
 
 
@@ -44,10 +48,6 @@ Parameters
 
   status_text (False, str, None)
     Status text
-
-
-  tags (False, list, None)
-    List of tags
 
 
   id (False, str, None)

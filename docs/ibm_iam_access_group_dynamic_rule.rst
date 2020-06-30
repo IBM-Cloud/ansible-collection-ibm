@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.0
+- IBM-Cloud terraform-provider-ibm v1.8.1
 - Terraform v0.12.20
 
 
@@ -26,28 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  identity_provider (False, str, None)
-    (Required for new resource) The realm name or identity proivider url
-
-
-  conditions (False, list, None)
-    (Required for new resource) conditions info
-
-
   rule_id (False, str, None)
     id of the rule
 
 
-  access_group_id (False, str, None)
+  access_group_id (True, str, None)
     (Required for new resource) Unique identifier of the access group
 
 
-  name (False, str, None)
+  name (True, str, None)
     (Required for new resource) The name of the Rule
 
 
-  expiration (False, int, None)
+  expiration (True, int, None)
     (Required for new resource) The expiration in hours
+
+
+  identity_provider (True, str, None)
+    (Required for new resource) The realm name or identity proivider url
+
+
+  conditions (True, list, None)
+    (Required for new resource) conditions info
 
 
   id (False, str, None)
