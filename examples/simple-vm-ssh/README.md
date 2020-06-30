@@ -64,7 +64,7 @@ The following parameters can be set by the user:
 1. To destroy all resources run the 'destroy' playbook:
 
     ```
-    ansible-playbook destroy.yml
+    ansible-playbook destroy.yml -e "fip=<floating_ip_address_id> vsi=<vm_instance_id> subnet=<subnet_id>"
     ```
 
 ### List Available VSI Images and Profiles

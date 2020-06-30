@@ -3,32 +3,55 @@
   hosts: localhost
   collections:
    - ibm.cloudcollection
-
   tasks:
-    - name: Release Floating IP
-      ibm_is_floating_ip:
-        state: absent
-        id: "{{ fip.id }}"
-      when: fip is defined
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+    # - name: Release Floating IP
+    #   ibm_is_floating_ip:
+    #     state: absent
+    #     id: "{{ fip }}"
+    #   when: fip is defined
 
-    - name: Remove VSI
-      ibm_is_instance:
-        state: absent
-        id: "{{ vsi.id }}"
-        keys: []
-      when: vsi is defined
+    # - name: Remove VSI
+    #   ibm_is_instance:
+    #     state: absent
+    #     id: "{{ vsi }}"
+    #     keys: []
+    #   when: vsi is defined
 
-    - name: Remove SSH Key
-      ibm_is_ssh_key:
-        state: absent
-        id: "{{ ssh_key.id }}"
-      when: ssh_key is defined
+    # - name: Get the ssh Key
+    #   ibm_is_ssh_key_info:
+    #     name: "{{ name_prefix }}-ssh-key"
+    #     # name: "demo-key"
+    #   register: ssh_key_output
+
+    # - name: set ssh key in fact
+    #   set_fact:
+    #     cacheable: True
+    #     ssh_key: "{{ ssh_key_output.resource }}"
+
+    # - name: Remove SSH Key
+    #   ibm_is_ssh_key:
+    #     state: absent
+    #     id: "{{ ssh_key.id }}"
+    #   when: ssh_key is defined
 
     - name: Remove VPC Subnet
       ibm_is_subnet:
         state: absent
-        id: "{{ subnet.id }}"
+        id: "{{ subnet }}"
       when: subnet is defined
+
+    - name: Get the vpc details
+      ibm_is_vpc_info:
+        name: "{{ name_prefix }}-vpc"
+      register: vpc_output
+
+    - name: set subnet in fact
+      set_fact:
+        cacheable: True
+        vpc: "{{ vpc_output.resource }}"
 
     - name: Remove VPC
       ibm_is_vpc:

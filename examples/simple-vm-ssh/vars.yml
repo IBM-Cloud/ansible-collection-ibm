@@ -1,0 +1,7 @@
+---
+name_prefix: ansible-test
+vsi_image: ibm-ubuntu-18-04-64-ppc64le-minimal-for-vsi
+vsi_profile: cp2-2x4
+ssh_public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0eZ4uNSH6rtxNM7MagrBtxwlASw0iKcxDdXq9eNu93xDpsvxdn6xE/JESlIHhf9/45oLw9AKpu/MZYwqQ0O+uedwgtLvorv++fyXI36cls4xmUCuNnEhoK1aXh26N+V+lxejqF3DJhMKHYprQCnyl/8RWkWIFc2Jo60ACZ98MY4rRHgBP/0t1tqmb0I4IdBaYLctVIdv16gYJ5zqGYKeJBMG7XtgkrtOeacVoArrmjHY6n2cNgE5jLt9n9MyyGLjzq1agIpwwsWJGfhzqo2I98UhGWtUlD2UeNHbuJZmbXeyibuoV7RhDZg9LafkOXOTojjZc9rUrd8BChoHhbW3X anil@Anils-MacBook-Pro.local'
+ipv4_cidr_block: 10.240.128.0/24
+zone: us-south-3

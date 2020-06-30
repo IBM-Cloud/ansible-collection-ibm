@@ -3,15 +3,11 @@
   hosts: localhost
   collections:
    - ibm.cloudcollection
-  vars:
-    name_prefix: ansible-demo
-    vsi_image: ibm-ubuntu-18-04-64-ppc64le-minimal-for-vsi
-    vsi_profile: cp2-2x4
-    ssh_public_key: "<ssh-rsa-public-key>"
-    ipv4_cidr_block: 10.240.128.0/24
-    zone: us-south-3
-
   tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+  
     - name: Configure VPC
       ibm_is_vpc:
         name: "{{ name_prefix }}-vpc"
