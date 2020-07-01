@@ -26,8 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  display_name (True, str, None)
+    (Required for new resource) Display Name of the Custom Role
+
+
+  description (False, str, None)
+    The description of the role
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the custom Role
+
+
+  service (True, str, None)
+    (Required for new resource) The Service Name
+
+
   actions (True, list, None)
     (Required for new resource) The actions of the role
+
+
+  crn (False, str, None)
+    crn of the Custom Role
 
 
   resource_name (False, str, None)
@@ -36,30 +60,6 @@ Parameters
 
   resource_crn (False, str, None)
     The crn of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  service (True, str, None)
-    (Required for new resource) The Service Name
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the custom Role
-
-
-  description (False, str, None)
-    The description of the role
-
-
-  crn (False, str, None)
-    crn of the Custom Role
-
-
-  display_name (True, str, None)
-    (Required for new resource) Display Name of the Custom Role
 
 
   id (False, str, None)

@@ -26,12 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (False, str, None)
-    cluster id
+  zone (False, str, None)
+    Zone info.
+
+
+  alb_type (False, str, None)
+    Type of the ALB
+
+
+  status (False, str, None)
+    Status of the ALB
+
+
+  enable (False, bool, None)
+    Enable the ALB instance in the cluster
 
 
   disable_deployment (False, bool, None)
     Disable the ALB instance in the cluster
+
+
+  name (False, str, None)
+    ALB name
 
 
   load_balancer_hostname (False, str, None)
@@ -46,28 +62,12 @@ Parameters
     ALB state
 
 
-  status (False, str, None)
-    Status of the ALB
-
-
   alb_id (True, str, None)
     (Required for new resource) ALB ID
 
 
-  alb_type (False, str, None)
-    Type of the ALB
-
-
-  enable (False, bool, None)
-    Enable the ALB instance in the cluster
-
-
-  name (False, str, None)
-    ALB name
-
-
-  zone (False, str, None)
-    Zone info.
+  cluster (False, str, None)
+    cluster id
 
 
   id (False, str, None)

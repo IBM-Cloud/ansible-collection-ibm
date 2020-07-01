@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    target_address:
+        description:
+            - (Required for new resource) Load balancer pool member target address
+        required: True
+        type: str
+    weight:
+        description:
+            - Load balcner pool member weight
+        required: False
+        type: int
+    provisioning_status:
+        description:
+            - Load balancer Pool member provisioning status
+        required: False
+        type: str
     health:
         description:
             - LB Pool member health
@@ -45,21 +60,6 @@ options:
             - (Required for new resource) Load Balancer Pool port
         required: True
         type: int
-    target_address:
-        description:
-            - (Required for new resource) Load balancer pool member target address
-        required: True
-        type: str
-    weight:
-        description:
-            - Load balcner pool member weight
-        required: False
-        type: int
-    provisioning_status:
-        description:
-            - Load balancer Pool member provisioning status
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,54 +106,54 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('target_address', 'str'),
     ('pool', 'str'),
     ('lb', 'str'),
     ('port', 'int'),
-    ('target_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'target_address',
+    'weight',
+    'provisioning_status',
     'health',
     'href',
     'pool',
     'lb',
     'port',
-    'target_address',
-    'weight',
-    'provisioning_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    health=dict(
-        required='False',
-        type='str'),
-    href=dict(
-        required='False',
-        type='str'),
-    pool=dict(
-        required='True',
-        type='str'),
-    lb=dict(
-        required='True',
-        type='str'),
-    port=dict(
-        required='True',
-        type='int'),
     target_address=dict(
-        required='True',
+        required= False,
         type='str'),
     weight=dict(
-        required='False',
+        required= False,
         type='int'),
     provisioning_status=dict(
-        required='False',
+        required= False,
         type='str'),
+    health=dict(
+        required= False,
+        type='str'),
+    href=dict(
+        required= False,
+        type='str'),
+    pool=dict(
+        required= False,
+        type='str'),
+    lb=dict(
+        required= False,
+        type='str'),
+    port=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -20,6 +20,18 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name_servers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    original_name_servers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     cis_id:
         description:
             - (Required for new resource) CIS object id
@@ -40,18 +52,6 @@ options:
             - None
         required: False
         type: str
-    name_servers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    original_name_servers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,40 +104,40 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name_servers',
+    'original_name_servers',
     'cis_id',
     'domain',
     'paused',
     'status',
-    'name_servers',
-    'original_name_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required='True',
-        type='str'),
-    domain=dict(
-        required='True',
-        type='str'),
-    paused=dict(
-        required='False',
-        type='bool'),
-    status=dict(
-        required='False',
-        type='str'),
     name_servers=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     original_name_servers=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    cis_id=dict(
+        required= False,
+        type='str'),
+    domain=dict(
+        required= False,
+        type='str'),
+    paused=dict(
+        required= False,
+        type='bool'),
+    status=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

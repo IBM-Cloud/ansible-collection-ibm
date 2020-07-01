@@ -26,11 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vip (False, str, None)
+  datacenter (False, str, None)
     None
 
 
-  ssl_ciphers (False, list, None)
+  server_instances_down (False, int, None)
+    None
+
+
+  active_connections (False, int, None)
     None
 
 
@@ -46,30 +50,6 @@ Parameters
     None
 
 
-  datacenter (False, str, None)
-    None
-
-
-  server_instances_down (False, int, None)
-    None
-
-
-  type (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  server_instances_up (False, int, None)
-    None
-
-
-  active_connections (False, int, None)
-    None
-
-
   server_instances (False, list, None)
     None
 
@@ -78,7 +58,27 @@ Parameters
     None
 
 
+  type (False, str, None)
+    None
+
+
+  vip (False, str, None)
+    None
+
+
+  server_instances_up (False, int, None)
+    None
+
+
+  ssl_ciphers (False, list, None)
+    None
+
+
   description (False, str, None)
+    None
+
+
+  status (False, str, None)
     None
 
 

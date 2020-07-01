@@ -26,6 +26,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  hardware_instance_id (False, int, None)
+    Hardware instance ID
+
+
+  username (False, str, None)
+    user name
+
+
   password (False, str, None)
     password
 
@@ -48,14 +56,6 @@ Parameters
 
   virtual_instance_id (False, int, None)
     Virtual instance ID
-
-
-  hardware_instance_id (False, int, None)
-    Hardware instance ID
-
-
-  username (False, str, None)
-    user name
 
 
   id (False, str, None)

@@ -26,22 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   guid (False, str, None)
     Unique identifier of resource instance
 
@@ -50,8 +34,16 @@ Parameters
     The resource group id
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  service (False, str, None)
+    The name of the Cloud Internet Services offering
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_group_name (False, str, None)
@@ -62,8 +54,16 @@ Parameters
     (Required for new resource) The plan type of the service
 
 
-  status (False, str, None)
-    Status of resource instance
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_controller_url (False, str, None)
@@ -78,8 +78,8 @@ Parameters
     (Required for new resource) The location where the instance available
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  status (False, str, None)
+    Status of resource instance
 
 
   id (False, str, None)

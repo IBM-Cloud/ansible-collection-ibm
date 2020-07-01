@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  original_name_servers (False, list, None)
-    None
-
-
-  cis_id (True, str, None)
-    CIS object id
-
-
   domain (True, str, None)
     CISzone - Domain
 
@@ -48,6 +40,14 @@ Parameters
 
   name_servers (False, list, None)
     None
+
+
+  original_name_servers (False, list, None)
+    None
+
+
+  cis_id (True, str, None)
+    CIS object id
 
 
   iaas_classic_username (False, any, None)

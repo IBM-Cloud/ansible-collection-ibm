@@ -20,34 +20,24 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Resource instance name for example, my cis instance
-        required: True
-        type: str
-    location:
-        description:
-            - The location or the environment in which cis instance exists
-        required: False
-        type: str
-    status:
-        description:
-            - The resource instance status
-        required: False
-        type: dict
     resource_name:
         description:
             - The name of the resource
         required: False
         type: str
-    resource_crn:
+    resource_status:
         description:
-            - The crn of the resource
+            - The status of the resource
         required: False
         type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    location:
+        description:
+            - The location or the environment in which cis instance exists
         required: False
         type: str
     resource_group_id:
@@ -70,15 +60,25 @@ options:
             - The plan type of the cis instance
         required: False
         type: str
-    resource_status:
+    status:
         description:
-            - The status of the resource
+            - The resource instance status
+        required: False
+        type: dict
+    resource_crn:
+        description:
+            - The crn of the resource
         required: False
         type: str
     resource_group_name:
         description:
             - The resource group name in which resource is provisioned
         required: False
+        type: str
+    name:
+        description:
+            - Resource instance name for example, my cis instance
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -118,40 +118,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'location',
-    'status',
     'resource_name',
-    'resource_crn',
+    'resource_status',
     'resource_controller_url',
+    'location',
     'resource_group_id',
     'guid',
     'service',
     'plan',
-    'resource_status',
+    'status',
+    'resource_crn',
     'resource_group_name',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='dict'),
     resource_name=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_status=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
+        required=False,
+        type='str'),
+    location=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -166,11 +160,17 @@ module_args = dict(
     plan=dict(
         required=False,
         type='str'),
-    resource_status=dict(
+    status=dict(
+        required=False,
+        type='dict'),
+    resource_crn=dict(
         required=False,
         type='str'),
     resource_group_name=dict(
         required=False,
+        type='str'),
+    name=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',

@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Resource group ID for the network ACL
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
   resource_name (False, str, None)
     The name of the resource
 
@@ -56,6 +48,14 @@ Parameters
 
   vpc (False, str, None)
     Network ACL VPC name
+
+
+  resource_group (False, str, None)
+    Resource group ID for the network ACL
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) The name of the resource group
+
+
   default (False, bool, None)
     Specifies whether its default resource group or not
 
@@ -36,10 +40,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the resource group
 
 
   id (False, str, None)

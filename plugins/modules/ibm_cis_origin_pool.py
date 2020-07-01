@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    monitor:
-        description:
-            - Monitor value
-        required: False
-        type: str
     notification_email:
         description:
             - Email address configured to recieve the notifications
@@ -41,24 +36,40 @@ options:
             - Health info
         required: False
         type: str
-    modified_on:
-        description:
-            - Modified date info
-        required: False
-        type: str
     created_on:
         description:
             - Creation date info
         required: False
         type: str
-    cis_id:
+    modified_on:
         description:
-            - (Required for new resource) CIS instance crn
-        required: True
+            - Modified date info
+        required: False
         type: str
     name:
         description:
             - (Required for new resource) name
+        required: True
+        type: str
+    minimum_origins:
+        description:
+            - Minimum number of Origins
+        required: False
+        type: int
+        default: 1
+    monitor:
+        description:
+            - Monitor value
+        required: False
+        type: str
+    enabled:
+        description:
+            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+        required: True
+        type: bool
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
         required: True
         type: str
     check_regions:
@@ -72,17 +83,6 @@ options:
             - Description of the CIS Origin Pool
         required: False
         type: str
-    enabled:
-        description:
-            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
-        required: True
-        type: bool
-    minimum_origins:
-        description:
-            - Minimum number of Origins
-        required: False
-        type: int
-        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -130,72 +130,72 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('origins', 'list'),
-    ('cis_id', 'str'),
     ('name', 'str'),
-    ('check_regions', 'list'),
     ('enabled', 'bool'),
+    ('cis_id', 'str'),
+    ('check_regions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'monitor',
     'notification_email',
     'origins',
     'health',
-    'modified_on',
     'created_on',
-    'cis_id',
+    'modified_on',
     'name',
+    'minimum_origins',
+    'monitor',
+    'enabled',
+    'cis_id',
     'check_regions',
     'description',
-    'enabled',
-    'minimum_origins',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    monitor=dict(
-        required='False',
-        type='str'),
     notification_email=dict(
-        required='False',
+        required= False,
         type='str'),
     origins=dict(
-        required='True',
+        required= False,
         elements='',
         type='list'),
     health=dict(
-        required='False',
-        type='str'),
-    modified_on=dict(
-        required='False',
+        required= False,
         type='str'),
     created_on=dict(
-        required='False',
+        required= False,
         type='str'),
-    cis_id=dict(
-        required='True',
+    modified_on=dict(
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
-    check_regions=dict(
-        required='True',
-        elements='',
-        type='list'),
-    description=dict(
-        required='False',
-        type='str'),
-    enabled=dict(
-        required='True',
-        type='bool'),
     minimum_origins=dict(
         default=1,
         type='int'),
+    monitor=dict(
+        required= False,
+        type='str'),
+    enabled=dict(
+        required= False,
+        type='bool'),
+    cis_id=dict(
+        required= False,
+        type='str'),
+    check_regions=dict(
+        required= False,
+        elements='',
+        type='list'),
+    description=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

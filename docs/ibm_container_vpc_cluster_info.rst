@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_pools (False, list, None)
-    None
-
-
-  alb_type (False, str, all)
-    None
-
-
   ingress_secret (False, str, None)
     None
 
@@ -42,15 +34,7 @@ Parameters
     ID of the resource group.
 
 
-  public_service_endpoint_url (False, str, None)
-    None
-
-
-  health (False, str, None)
-    None
-
-
-  kube_version (False, str, None)
+  public_service_endpoint (False, bool, None)
     None
 
 
@@ -62,23 +46,31 @@ Parameters
     The crn of the resource
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   worker_count (False, int, None)
     Number of workers
 
 
-  workers (False, list, None)
+  worker_pools (False, list, None)
     None
 
 
-  private_service_endpoint (False, bool, None)
+  albs (False, list, None)
     None
 
 
-  private_service_endpoint_url (False, str, None)
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  status (False, str, None)
+    The status of the cluster master
+
+
+  alb_type (False, str, all)
+    None
+
+
+  ingress_hostname (False, str, None)
     None
 
 
@@ -86,12 +78,12 @@ Parameters
     CRN of resource instance
 
 
-  master_url (False, str, None)
+  private_service_endpoint_url (False, str, None)
     None
 
 
-  status (False, str, None)
-    The status of the cluster master
+  health (False, str, None)
+    None
 
 
   resource_controller_url (False, str, None)
@@ -102,24 +94,32 @@ Parameters
     The name of the resource
 
 
+  resource_status (False, str, None)
+    The status of the resource
+
+
   cluster_name_id (True, str, None)
     Name of the cluster
 
 
-  albs (False, list, None)
+  private_service_endpoint (False, bool, None)
     None
 
 
-  ingress_hostname (False, str, None)
+  public_service_endpoint_url (False, str, None)
     None
 
 
-  public_service_endpoint (False, bool, None)
+  workers (False, list, None)
     None
 
 
-  resource_status (False, str, None)
-    The status of the resource
+  master_url (False, str, None)
+    None
+
+
+  kube_version (False, str, None)
+    None
 
 
   ibmcloud_api_key (True, any, None)

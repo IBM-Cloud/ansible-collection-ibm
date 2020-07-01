@@ -30,6 +30,16 @@ options:
             - (Required for new resource) CIS instance crn
         required: True
         type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
     default_pool_ids:
         description:
             - (Required for new resource) List of default Pool IDs
@@ -41,6 +51,27 @@ options:
             - Description for the load balancer instance
         required: False
         type: str
+    proxied:
+        description:
+            - set to true if proxy needs to be enabled
+        required: False
+        type: bool
+        default: False
+    created_on:
+        description:
+            - Load balancer creation date
+        required: False
+        type: str
+    fallback_pool_id:
+        description:
+            - (Required for new resource) fallback pool ID
+        required: True
+        type: str
+    ttl:
+        description:
+            - TTL value
+        required: False
+        type: int
     session_affinity:
         description:
             - Session affinity info
@@ -53,37 +84,6 @@ options:
         required: False
         type: bool
         default: True
-    created_on:
-        description:
-            - Load balancer creation date
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
-        type: str
-    fallback_pool_id:
-        description:
-            - (Required for new resource) fallback pool ID
-        required: True
-        type: str
-    ttl:
-        description:
-            - TTL value
-        required: False
-        type: int
-    proxied:
-        description:
-            - set to true if proxy needs to be enabled
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -131,9 +131,9 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('default_pool_ids', 'list'),
     ('domain_id', 'str'),
     ('name', 'str'),
+    ('default_pool_ids', 'list'),
     ('fallback_pool_id', 'str'),
 ]
 
@@ -141,16 +141,16 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'modified_on',
     'cis_id',
-    'default_pool_ids',
-    'description',
-    'session_affinity',
-    'enabled',
-    'created_on',
     'domain_id',
     'name',
+    'default_pool_ids',
+    'description',
+    'proxied',
+    'created_on',
     'fallback_pool_id',
     'ttl',
-    'proxied',
+    'session_affinity',
+    'enabled',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -158,44 +158,44 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     modified_on=dict(
-        required='False',
+        required= False,
         type='str'),
     cis_id=dict(
-        required='True',
+        required= False,
+        type='str'),
+    domain_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
         type='str'),
     default_pool_ids=dict(
-        required='True',
+        required= False,
         elements='',
         type='list'),
     description=dict(
-        required='False',
+        required= False,
         type='str'),
+    proxied=dict(
+        default=False,
+        type='bool'),
+    created_on=dict(
+        required= False,
+        type='str'),
+    fallback_pool_id=dict(
+        required= False,
+        type='str'),
+    ttl=dict(
+        required= False,
+        type='int'),
     session_affinity=dict(
         default='none',
         type='str'),
     enabled=dict(
         default=True,
         type='bool'),
-    created_on=dict(
-        required='False',
-        type='str'),
-    domain_id=dict(
-        required='True',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
-    fallback_pool_id=dict(
-        required='True',
-        type='str'),
-    ttl=dict(
-        required='False',
-        type='int'),
-    proxied=dict(
-        default=False,
-        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    creation_date:
-        description:
-            - None
-        required: False
-        type: str
     sshkey:
         description:
             - None
@@ -39,6 +34,11 @@ options:
         description:
             - None
         required: True
+        type: str
+    creation_date:
+        description:
+            - None
+        required: False
         type: str
     zone:
         description:
@@ -75,19 +75,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'creation_date',
     'sshkey',
     'pi_key_name',
     'pi_cloud_instance_id',
+    'creation_date',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    creation_date=dict(
-        required=False,
-        type='str'),
     sshkey=dict(
         required=False,
         type='str'),
@@ -96,6 +93,9 @@ module_args = dict(
         type='str'),
     pi_cloud_instance_id=dict(
         required=True,
+        type='str'),
+    creation_date=dict(
+        required=False,
         type='str'),
     zone=dict(
         type='str',

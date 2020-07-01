@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    members:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     access_group_id:
         description:
             - (Required for new resource) Unique identifier of the access group
@@ -43,6 +37,12 @@ options:
         required: False
         type: list
         elements: str
+    members:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,33 +94,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'members',
     'access_group_id',
     'ibm_ids',
     'iam_service_ids',
+    'members',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    members=dict(
-        required='False',
-        elements='',
-        type='list'),
     access_group_id=dict(
-        required='True',
+        required= False,
         type='str'),
     ibm_ids=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     iam_service_ids=dict(
-        required='False',
+        required= False,
+        elements='',
+        type='list'),
+    members=dict(
+        required= False,
         elements='',
         type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -20,17 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    service:
-        description:
-            - The Service Name
-        required: False
-        type: str
     roles:
         description:
             - None
         required: False
         type: list
         elements: dict
+    service:
+        description:
+            - The Service Name
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -68,21 +68,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service',
     'roles',
+    'service',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service=dict(
-        required=False,
-        type='str'),
     roles=dict(
         required=False,
         elements='',
         type='list'),
+    service=dict(
+        required=False,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

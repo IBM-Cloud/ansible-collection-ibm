@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
+  pi_network_name (True, str, None)
     None
 
 
@@ -34,23 +34,7 @@ Parameters
     None
 
 
-  macaddress (False, str, None)
-    None
-
-
   network_id (False, str, None)
-    None
-
-
-  pi_instance_name (True, str, None)
-    Server Name to be used for pvminstances
-
-
-  pi_network_name (True, str, None)
-    None
-
-
-  ipoctet (False, str, None)
     None
 
 
@@ -59,6 +43,22 @@ Parameters
 
 
   external_ip (False, str, None)
+    None
+
+
+  pi_instance_name (True, str, None)
+    Server Name to be used for pvminstances
+
+
+  pi_cloud_instance_id (True, str, None)
+    None
+
+
+  ipoctet (False, str, None)
+    None
+
+
+  macaddress (False, str, None)
     None
 
 

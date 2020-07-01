@@ -20,37 +20,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    global:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: bool
-    port:
+    bgp_status:
         description:
             - None
         required: False
         type: str
-    location_display_name:
+    crn:
         description:
             - None
         required: False
         type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    loa_reject_reason:
+    bgp_cer_cidr:
         description:
             - None
         required: False
         type: str
-    operational_status:
+    bgp_ibm_cidr:
         description:
             - None
         required: False
@@ -60,9 +45,14 @@ options:
             - None
         required: False
         type: str
-    link_status:
+    location_display_name:
         description:
             - None
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_name:
@@ -75,22 +65,27 @@ options:
             - (Required for new resource) 
         required: True
         type: str
-    cross_connect_router:
+    global:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: bool
+    customer_name:
         description:
             - (Required for new resource) 
         required: True
         type: str
-    metered:
+    bgp_asn:
         description:
             - (Required for new resource) 
         required: True
-        type: bool
-    provider_api_managed:
+        type: int
+    name:
         description:
-            - None
-        required: False
-        type: bool
-    bgp_ibm_asn:
+            - (Required for new resource) 
+        required: True
+        type: str
+    vlan:
         description:
             - None
         required: False
@@ -100,32 +95,12 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    bgp_asn:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: int
-    location_name:
+    carrier_name:
         description:
             - (Required for new resource) 
         required: True
         type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    bgp_cer_cidr:
-        description:
-            - None
-        required: False
-        type: str
-    bgp_ibm_cidr:
+    operational_status:
         description:
             - None
         required: False
@@ -135,37 +110,22 @@ options:
             - None
         required: False
         type: str
-    bgp_status:
+    provider_api_managed:
+        description:
+            - None
+        required: False
+        type: bool
+    location_name:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    port:
         description:
             - None
         required: False
         type: str
-    carrier_name:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    customer_name:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    crn:
-        description:
-            - None
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: int
-    vlan:
+    bgp_ibm_asn:
         description:
             - None
         required: False
@@ -173,6 +133,46 @@ options:
     completion_notice_reject_reason:
         description:
             - None
+        required: False
+        type: str
+    cross_connect_router:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    speed_mbps:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: int
+    link_status:
+        description:
+            - None
+        required: False
+        type: str
+    metered:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: bool
+    type:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    loa_reject_reason:
+        description:
+            - None
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     id:
@@ -221,153 +221,153 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('global', 'bool'),
-    ('name', 'str'),
     ('bgp_base_cidr', 'str'),
-    ('cross_connect_router', 'str'),
-    ('metered', 'bool'),
-    ('bgp_asn', 'int'),
-    ('location_name', 'str'),
-    ('type', 'str'),
-    ('carrier_name', 'str'),
+    ('global', 'bool'),
     ('customer_name', 'str'),
+    ('bgp_asn', 'int'),
+    ('name', 'str'),
+    ('carrier_name', 'str'),
+    ('location_name', 'str'),
+    ('cross_connect_router', 'str'),
     ('speed_mbps', 'int'),
+    ('metered', 'bool'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'global',
-    'port',
-    'location_display_name',
-    'resource_crn',
-    'name',
-    'loa_reject_reason',
-    'operational_status',
-    'created_at',
-    'link_status',
-    'resource_name',
-    'bgp_base_cidr',
-    'cross_connect_router',
-    'metered',
-    'provider_api_managed',
-    'bgp_ibm_asn',
-    'resource_group_name',
-    'bgp_asn',
-    'location_name',
-    'resource_controller_url',
-    'type',
+    'bgp_status',
+    'crn',
     'bgp_cer_cidr',
     'bgp_ibm_cidr',
-    'resource_group',
-    'bgp_status',
-    'carrier_name',
+    'created_at',
+    'location_display_name',
+    'resource_controller_url',
+    'resource_name',
+    'bgp_base_cidr',
+    'global',
     'customer_name',
-    'crn',
-    'resource_status',
-    'speed_mbps',
+    'bgp_asn',
+    'name',
     'vlan',
+    'resource_group_name',
+    'carrier_name',
+    'operational_status',
+    'resource_group',
+    'provider_api_managed',
+    'location_name',
+    'port',
+    'bgp_ibm_asn',
     'completion_notice_reject_reason',
+    'cross_connect_router',
+    'speed_mbps',
+    'link_status',
+    'metered',
+    'type',
+    'loa_reject_reason',
+    'resource_crn',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    global=dict(
-        required='True',
-        type='bool'),
-    port=dict(
-        required='False',
-        type='str'),
-    location_display_name=dict(
-        required='False',
-        type='str'),
-    resource_crn=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
-    loa_reject_reason=dict(
-        required='False',
-        type='str'),
-    operational_status=dict(
-        required='False',
-        type='str'),
-    created_at=dict(
-        required='False',
-        type='str'),
-    link_status=dict(
-        required='False',
-        type='str'),
-    resource_name=dict(
-        required='False',
-        type='str'),
-    bgp_base_cidr=dict(
-        required='True',
-        type='str'),
-    cross_connect_router=dict(
-        required='True',
-        type='str'),
-    metered=dict(
-        required='True',
-        type='bool'),
-    provider_api_managed=dict(
-        required='False',
-        type='bool'),
-    bgp_ibm_asn=dict(
-        required='False',
-        type='int'),
-    resource_group_name=dict(
-        required='False',
-        type='str'),
-    bgp_asn=dict(
-        required='True',
-        type='int'),
-    location_name=dict(
-        required='True',
-        type='str'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
-    type=dict(
-        required='True',
-        type='str'),
-    bgp_cer_cidr=dict(
-        required='False',
-        type='str'),
-    bgp_ibm_cidr=dict(
-        required='False',
-        type='str'),
-    resource_group=dict(
-        required='False',
-        type='str'),
     bgp_status=dict(
-        required='False',
-        type='str'),
-    carrier_name=dict(
-        required='True',
-        type='str'),
-    customer_name=dict(
-        required='True',
+        required= False,
         type='str'),
     crn=dict(
-        required='False',
+        required= False,
         type='str'),
-    resource_status=dict(
-        required='False',
+    bgp_cer_cidr=dict(
+        required= False,
         type='str'),
-    speed_mbps=dict(
-        required='True',
+    bgp_ibm_cidr=dict(
+        required= False,
+        type='str'),
+    created_at=dict(
+        required= False,
+        type='str'),
+    location_display_name=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    bgp_base_cidr=dict(
+        required= False,
+        type='str'),
+    global=dict(
+        required= False,
+        type='bool'),
+    customer_name=dict(
+        required= False,
+        type='str'),
+    bgp_asn=dict(
+        required= False,
         type='int'),
+    name=dict(
+        required= False,
+        type='str'),
     vlan=dict(
-        required='False',
+        required= False,
+        type='int'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    carrier_name=dict(
+        required= False,
+        type='str'),
+    operational_status=dict(
+        required= False,
+        type='str'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    provider_api_managed=dict(
+        required= False,
+        type='bool'),
+    location_name=dict(
+        required= False,
+        type='str'),
+    port=dict(
+        required= False,
+        type='str'),
+    bgp_ibm_asn=dict(
+        required= False,
         type='int'),
     completion_notice_reject_reason=dict(
-        required='False',
+        required= False,
+        type='str'),
+    cross_connect_router=dict(
+        required= False,
+        type='str'),
+    speed_mbps=dict(
+        required= False,
+        type='int'),
+    link_status=dict(
+        required= False,
+        type='str'),
+    metered=dict(
+        required= False,
+        type='bool'),
+    type=dict(
+        required= False,
+        type='str'),
+    loa_reject_reason=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

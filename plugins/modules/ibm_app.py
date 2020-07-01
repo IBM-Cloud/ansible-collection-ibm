@@ -20,19 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    memory:
+    health_check_type:
         description:
-            - The amount of memory each instance should have. In megabytes.
+            - Type of health check to perform.
         required: False
-        type: int
+        type: str
+        default: port
     disk_quota:
         description:
             - The maximum amount of disk available to an instance of an app. In megabytes.
         required: False
         type: int
-    route_guid:
+    service_instance_guid:
         description:
-            - Define the route guids which should be bound to the application.
+            - Define the service instance guids that should be bound to this application.
         required: False
         type: list
         elements: str
@@ -41,39 +42,64 @@ options:
             - Version of the application
         required: False
         type: str
-    health_check_type:
-        description:
-            - Type of health check to perform.
-        required: False
-        type: str
-        default: port
-    name:
-        description:
-            - (Required for new resource) The name for the app
-        required: True
-        type: str
-    space_guid:
-        description:
-            - (Required for new resource) Define space guid to which app belongs
-        required: True
-        type: str
-    environment_json:
-        description:
-            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
-        required: False
-        type: dict
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
     instances:
         description:
             - The number of instances
         required: False
         type: int
         default: 1
+    space_guid:
+        description:
+            - (Required for new resource) Define space guid to which app belongs
+        required: True
+        type: str
+    app_path:
+        description:
+            - (Required for new resource) Define the  path of the zip file of the application.
+        required: True
+        type: str
+    command:
+        description:
+            - The initial command for the app
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name for the app
+        required: True
+        type: str
+    buildpack:
+        description:
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+        required: False
+        type: str
+    environment_json:
+        description:
+            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
+        required: False
+        type: dict
+    route_guid:
+        description:
+            - Define the route guids which should be bound to the application.
+        required: False
+        type: list
+        elements: str
     wait_time_minutes:
         description:
             - Define timeout to wait for the app instances to start/update/restage etc.
@@ -85,32 +111,6 @@ options:
             - Timeout in seconds for health checking of an staged app when starting up.
         required: False
         type: int
-    buildpack:
-        description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
-        required: False
-        type: str
-    service_instance_guid:
-        description:
-            - Define the service instance guids that should be bound to this application.
-        required: False
-        type: list
-        elements: str
-    app_path:
-        description:
-            - (Required for new resource) Define the  path of the zip file of the application.
-        required: True
-        type: str
-    command:
-        description:
-            - The initial command for the app
-        required: False
-        type: str
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -157,92 +157,92 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('space_guid', 'str'),
     ('app_path', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'memory',
-    'disk_quota',
-    'route_guid',
-    'app_version',
     'health_check_type',
-    'name',
-    'space_guid',
-    'environment_json',
-    'tags',
-    'instances',
-    'wait_time_minutes',
-    'health_check_timeout',
-    'buildpack',
+    'disk_quota',
     'service_instance_guid',
+    'app_version',
+    'tags',
+    'health_check_http_endpoint',
+    'memory',
+    'instances',
+    'space_guid',
     'app_path',
     'command',
-    'health_check_http_endpoint',
+    'name',
+    'buildpack',
+    'environment_json',
+    'route_guid',
+    'wait_time_minutes',
+    'health_check_timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    memory=dict(
-        required='False',
-        type='int'),
-    disk_quota=dict(
-        required='False',
-        type='int'),
-    route_guid=dict(
-        required='False',
-        elements='',
-        type='list'),
-    app_version=dict(
-        required='False',
-        type='str'),
     health_check_type=dict(
         default='port',
         type='str'),
-    name=dict(
-        required='True',
-        type='str'),
-    space_guid=dict(
-        required='True',
-        type='str'),
-    environment_json=dict(
-        required='False',
-        type='dict'),
-    tags=dict(
-        required='False',
+    disk_quota=dict(
+        required= False,
+        type='int'),
+    service_instance_guid=dict(
+        required= False,
         elements='',
         type='list'),
+    app_version=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    health_check_http_endpoint=dict(
+        required= False,
+        type='str'),
+    memory=dict(
+        required= False,
+        type='int'),
     instances=dict(
         default=1,
         type='int'),
+    space_guid=dict(
+        required= False,
+        type='str'),
+    app_path=dict(
+        required= False,
+        type='str'),
+    command=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    buildpack=dict(
+        required= False,
+        type='str'),
+    environment_json=dict(
+        required= False,
+        type='dict'),
+    route_guid=dict(
+        required= False,
+        elements='',
+        type='list'),
     wait_time_minutes=dict(
         default=20,
         type='int'),
     health_check_timeout=dict(
-        required='False',
+        required= False,
         type='int'),
-    buildpack=dict(
-        required='False',
-        type='str'),
-    service_instance_guid=dict(
-        required='False',
-        elements='',
-        type='list'),
-    app_path=dict(
-        required='True',
-        type='str'),
-    command=dict(
-        required='False',
-        type='str'),
-    health_check_http_endpoint=dict(
-        required='False',
-        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

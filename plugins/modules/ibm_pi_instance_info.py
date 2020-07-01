@@ -20,18 +20,38 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    volumes:
+    status:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: str
+    maxmem:
+        description:
+            - None
+        required: False
+        type: int
+    pin_policy:
+        description:
+            - None
+        required: False
+        type: str
     processors:
         description:
             - None
         required: False
         type: int
-    minmem:
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    minproc:
         description:
             - None
         required: False
@@ -41,7 +61,12 @@ options:
             - None
         required: False
         type: int
-    maxmem:
+    proctype:
+        description:
+            - None
+        required: False
+        type: str
+    minmem:
         description:
             - None
         required: False
@@ -51,43 +76,18 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    pi_cloud_instance_id:
+    volumes:
         description:
             - None
-        required: True
-        type: str
+        required: False
+        type: list
+        elements: str
     state:
         description:
             - None
         required: False
         type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    proctype:
-        description:
-            - None
-        required: False
-        type: str
     health_status:
-        description:
-            - None
-        required: False
-        type: str
-    minproc:
-        description:
-            - None
-        required: False
-        type: int
-    pin_policy:
         description:
             - None
         required: False
@@ -121,74 +121,74 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'volumes',
-    'processors',
-    'minmem',
-    'maxproc',
-    'maxmem',
-    'pi_instance_name',
-    'pi_cloud_instance_id',
-    'state',
     'status',
-    'addresses',
-    'proctype',
-    'health_status',
-    'minproc',
+    'maxmem',
     'pin_policy',
+    'processors',
+    'pi_cloud_instance_id',
+    'addresses',
+    'minproc',
+    'maxproc',
+    'proctype',
+    'minmem',
+    'pi_instance_name',
+    'volumes',
+    'state',
+    'health_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    volumes=dict(
+    status=dict(
         required=False,
-        elements='',
-        type='list'),
-    processors=dict(
-        required=False,
-        type='int'),
-    minmem=dict(
-        required=False,
-        type='int'),
-    maxproc=dict(
-        required=False,
-        type='int'),
+        type='str'),
     maxmem=dict(
         required=False,
         type='int'),
-    pi_instance_name=dict(
-        required=True,
+    pin_policy=dict(
+        required=False,
         type='str'),
+    processors=dict(
+        required=False,
+        type='int'),
     pi_cloud_instance_id=dict(
         required=True,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
         type='str'),
     addresses=dict(
         required=False,
         elements='',
         type='list'),
-    proctype=dict(
-        required=False,
-        type='str'),
-    health_status=dict(
-        required=False,
-        type='str'),
     minproc=dict(
         required=False,
         type='int'),
-    pin_policy=dict(
+    maxproc=dict(
+        required=False,
+        type='int'),
+    proctype=dict(
+        required=False,
+        type='str'),
+    minmem=dict(
+        required=False,
+        type='int'),
+    pi_instance_name=dict(
+        required=True,
+        type='str'),
+    volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    state=dict(
+        required=False,
+        type='str'),
+    health_status=dict(
         required=False,
         type='str'),
     zone=dict(

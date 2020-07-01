@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-
-
   volume_status (False, str, None)
     Volume status
 
@@ -52,6 +48,10 @@ Parameters
 
   pi_volume_type (True, str, None)
     (Required for new resource) Volume type
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
 
 
   id (False, str, None)

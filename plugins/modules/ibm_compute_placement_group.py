@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     datacenter:
         description:
             - (Required for new resource) Dataceneter name
@@ -41,12 +47,6 @@ options:
         required: False
         type: str
         default: SPREAD
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,35 +100,35 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'datacenter',
     'pod',
     'name',
     'rule',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     datacenter=dict(
-        required='True',
+        required= False,
         type='str'),
     pod=dict(
-        required='True',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     rule=dict(
         default='SPREAD',
         type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

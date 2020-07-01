@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  private_ip_address (True, str, None)
+    (Required for new resource) The Private IP address of a load balancer member.
+
+
   weight (False, int, None)
     The weight of a load balancer member.
 
@@ -36,10 +40,6 @@ Parameters
 
   uuid (False, str, None)
     The UUID of a load balancer member
-
-
-  private_ip_address (True, str, None)
-    (Required for new resource) The Private IP address of a load balancer member.
 
 
   id (False, str, None)

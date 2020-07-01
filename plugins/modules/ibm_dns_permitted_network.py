@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    state_:
-        description:
-            - Network status
-        required: False
-        type: str
     permitted_network_id:
         description:
             - Network Id
@@ -59,6 +54,11 @@ options:
     modified_on:
         description:
             - Network Modification date
+        required: False
+        type: str
+    state_:
+        description:
+            - Network status
         required: False
         type: str
     id:
@@ -114,7 +114,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'state_',
     'permitted_network_id',
     'instance_id',
     'zone_id',
@@ -122,38 +121,39 @@ TL_ALL_PARAMETERS = [
     'vpc_crn',
     'created_on',
     'modified_on',
+    'state_',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    state_=dict(
-        required='False',
-        type='str'),
     permitted_network_id=dict(
-        required='False',
+        required= False,
         type='str'),
     instance_id=dict(
-        required='True',
+        required= False,
         type='str'),
     zone_id=dict(
-        required='True',
+        required= False,
         type='str'),
     type=dict(
         default='vpc',
         type='str'),
     vpc_crn=dict(
-        required='True',
+        required= False,
         type='str'),
     created_on=dict(
-        required='False',
+        required= False,
         type='str'),
     modified_on=dict(
-        required='False',
+        required= False,
+        type='str'),
+    state_=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

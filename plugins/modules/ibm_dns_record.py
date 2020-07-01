@@ -20,57 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    data:
-        description:
-            - (Required for new resource) DNS record data
-        required: True
-        type: str
-    retry:
-        description:
-            - Retry count
-        required: False
-        type: int
     minimum_ttl:
         description:
             - Minimun TTL configuration
         required: False
         type: int
-    protocol:
+    ttl:
         description:
-            - protocol info
-        required: False
-        type: str
-    weight:
-        description:
-            - weight info
-        required: False
-        type: int
-        default: 0
-    domain_id:
-        description:
-            - (Required for new resource) Domain ID of dns record instance
+            - (Required for new resource) TTL configuration
         required: True
-        type: int
-    expire:
-        description:
-            - DNS record expiry info
-        required: False
-        type: int
-    responsible_person:
-        description:
-            - Responsible person for DNS record
-        required: False
-        type: str
-    priority:
-        description:
-            - priority info
-        required: False
-        type: int
-        default: 0
-    refresh:
-        description:
-            - refresh rate
-        required: False
         type: int
     type:
         description:
@@ -81,6 +39,16 @@ options:
         description:
             - service info
         required: False
+        type: str
+    protocol:
+        description:
+            - protocol info
+        required: False
+        type: str
+    data:
+        description:
+            - (Required for new resource) DNS record data
+        required: True
         type: str
     host:
         description:
@@ -93,22 +61,54 @@ options:
         required: False
         type: int
         default: 0
-    ttl:
+    responsible_person:
         description:
-            - (Required for new resource) TTL configuration
-        required: True
-        type: int
-    port:
+            - Responsible person for DNS record
+        required: False
+        type: str
+    priority:
         description:
-            - port number
+            - priority info
         required: False
         type: int
+        default: 0
+    domain_id:
+        description:
+            - (Required for new resource) Domain ID of dns record instance
+        required: True
+        type: int
+    retry:
+        description:
+            - Retry count
+        required: False
+        type: int
+    weight:
+        description:
+            - weight info
+        required: False
+        type: int
+        default: 0
     tags:
         description:
             - tags set for the resource
         required: False
         type: list
         elements: str
+    expire:
+        description:
+            - DNS record expiry info
+        required: False
+        type: int
+    refresh:
+        description:
+            - refresh rate
+        required: False
+        type: int
+    port:
+        description:
+            - port number
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -155,92 +155,92 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('data', 'str'),
-    ('domain_id', 'int'),
-    ('type', 'str'),
-    ('host', 'str'),
     ('ttl', 'int'),
+    ('type', 'str'),
+    ('data', 'str'),
+    ('host', 'str'),
+    ('domain_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'data',
-    'retry',
     'minimum_ttl',
-    'protocol',
-    'weight',
-    'domain_id',
-    'expire',
-    'responsible_person',
-    'priority',
-    'refresh',
+    'ttl',
     'type',
     'service',
+    'protocol',
+    'data',
     'host',
     'mx_priority',
-    'ttl',
-    'port',
+    'responsible_person',
+    'priority',
+    'domain_id',
+    'retry',
+    'weight',
     'tags',
+    'expire',
+    'refresh',
+    'port',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    data=dict(
-        required='True',
-        type='str'),
-    retry=dict(
-        required='False',
-        type='int'),
     minimum_ttl=dict(
-        required='False',
+        required= False,
         type='int'),
-    protocol=dict(
-        required='False',
-        type='str'),
-    weight=dict(
-        default=0,
-        type='int'),
-    domain_id=dict(
-        required='True',
-        type='int'),
-    expire=dict(
-        required='False',
-        type='int'),
-    responsible_person=dict(
-        required='False',
-        type='str'),
-    priority=dict(
-        default=0,
-        type='int'),
-    refresh=dict(
-        required='False',
+    ttl=dict(
+        required= False,
         type='int'),
     type=dict(
-        required='True',
+        required= False,
         type='str'),
     service=dict(
-        required='False',
+        required= False,
+        type='str'),
+    protocol=dict(
+        required= False,
+        type='str'),
+    data=dict(
+        required= False,
         type='str'),
     host=dict(
-        required='True',
+        required= False,
         type='str'),
     mx_priority=dict(
         default=0,
         type='int'),
-    ttl=dict(
-        required='True',
+    responsible_person=dict(
+        required= False,
+        type='str'),
+    priority=dict(
+        default=0,
         type='int'),
-    port=dict(
-        required='False',
+    domain_id=dict(
+        required= False,
+        type='int'),
+    retry=dict(
+        required= False,
+        type='int'),
+    weight=dict(
+        default=0,
         type='int'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    expire=dict(
+        required= False,
+        type='int'),
+    refresh=dict(
+        required= False,
+        type='int'),
+    port=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

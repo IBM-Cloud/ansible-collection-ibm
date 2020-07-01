@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  provisioning_status (False, str, None)
+    Load balancer Pool member provisioning status
+
+
   health (False, str, None)
     LB Pool member health
 
@@ -52,10 +56,6 @@ Parameters
 
   weight (False, int, None)
     Load balcner pool member weight
-
-
-  provisioning_status (False, str, None)
-    Load balancer Pool member provisioning status
 
 
   id (False, str, None)

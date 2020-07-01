@@ -20,62 +20,56 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
-    crn:
-        description:
-            - cloud resource name of the workspace
-        required: False
-        type: str
-    template_id:
-        description:
-            - The id of templates
-        required: False
-        type: list
-        elements: str
-    status:
-        description:
-            - The status of workspace
-        required: False
-        type: str
-    is_frozen:
-        description:
-            - None
-        required: False
-        type: bool
-    workspace_id:
-        description:
-            - The id of workspace
-        required: True
-        type: str
-    location:
-        description:
-            - The location of workspace
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - The resource group of workspace
-        required: False
-        type: str
     types:
         description:
             - None
         required: False
         type: list
         elements: str
+    is_frozen:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
+        description:
+            - The status of workspace
+        required: False
+        type: str
+    location:
+        description:
+            - The location of workspace
+        required: False
+        type: str
     description:
         description:
             - The description of workspace
+        required: False
+        type: str
+    crn:
+        description:
+            - cloud resource name of the workspace
+        required: False
+        type: str
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - The name of workspace
+        required: False
+        type: str
+    resource_group:
+        description:
+            - The resource group of workspace
         required: False
         type: str
     catalog_ref:
@@ -89,11 +83,17 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
         required: False
         type: str
-    name:
+    workspace_id:
         description:
-            - The name of workspace
-        required: False
+            - The id of workspace
+        required: True
         type: str
+    template_id:
+        description:
+            - The id of templates
+        required: False
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -132,60 +132,56 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'is_locked',
-    'crn',
-    'template_id',
-    'status',
-    'is_frozen',
-    'workspace_id',
-    'location',
-    'tags',
-    'resource_group',
     'types',
+    'is_frozen',
+    'status',
+    'location',
     'description',
+    'crn',
+    'is_locked',
+    'tags',
+    'name',
+    'resource_group',
     'catalog_ref',
     'resource_controller_url',
-    'name',
+    'workspace_id',
+    'template_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    is_locked=dict(
-        required=False,
-        type='bool'),
-    crn=dict(
-        required=False,
-        type='str'),
-    template_id=dict(
-        required=False,
-        elements='',
-        type='list'),
-    status=dict(
-        required=False,
-        type='str'),
-    is_frozen=dict(
-        required=False,
-        type='bool'),
-    workspace_id=dict(
-        required=True,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     types=dict(
         required=False,
         elements='',
         type='list'),
+    is_frozen=dict(
+        required=False,
+        type='bool'),
+    status=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     catalog_ref=dict(
@@ -195,9 +191,13 @@ module_args = dict(
     resource_controller_url=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
+    workspace_id=dict(
+        required=True,
         type='str'),
+    template_id=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

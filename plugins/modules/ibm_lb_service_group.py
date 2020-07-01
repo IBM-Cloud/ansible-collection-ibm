@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    routing_type:
-        description:
-            - (Required for new resource) Routing type
-        required: True
-        type: str
-    timeout:
-        description:
-            - Timeout value
-        required: False
-        type: int
     service_group_id:
         description:
             - Service group ID
@@ -40,32 +30,42 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: True
         type: int
+    allocation:
+        description:
+            - (Required for new resource) Allocation type
+        required: True
+        type: int
     port:
         description:
             - (Required for new resource) Port number
         required: True
+        type: int
+    virtual_server_id:
+        description:
+            - Virtual server ID
+        required: False
         type: int
     routing_method:
         description:
             - (Required for new resource) Routing method
         required: True
         type: str
+    routing_type:
+        description:
+            - (Required for new resource) Routing type
+        required: True
+        type: str
+    timeout:
+        description:
+            - Timeout value
+        required: False
+        type: int
     tags:
         description:
             - List of tags
         required: False
         type: list
         elements: str
-    virtual_server_id:
-        description:
-            - Virtual server ID
-        required: False
-        type: int
-    allocation:
-        description:
-            - (Required for new resource) Allocation type
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,60 +112,60 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('routing_type', 'str'),
     ('load_balancer_id', 'int'),
+    ('allocation', 'int'),
     ('port', 'int'),
     ('routing_method', 'str'),
-    ('allocation', 'int'),
+    ('routing_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'routing_type',
-    'timeout',
     'service_group_id',
     'load_balancer_id',
-    'port',
-    'routing_method',
-    'tags',
-    'virtual_server_id',
     'allocation',
+    'port',
+    'virtual_server_id',
+    'routing_method',
+    'routing_type',
+    'timeout',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    routing_type=dict(
-        required='True',
-        type='str'),
-    timeout=dict(
-        required='False',
-        type='int'),
     service_group_id=dict(
-        required='False',
+        required= False,
         type='int'),
     load_balancer_id=dict(
-        required='True',
-        type='int'),
-    port=dict(
-        required='True',
-        type='int'),
-    routing_method=dict(
-        required='True',
-        type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    virtual_server_id=dict(
-        required='False',
+        required= False,
         type='int'),
     allocation=dict(
-        required='True',
+        required= False,
         type='int'),
+    port=dict(
+        required= False,
+        type='int'),
+    virtual_server_id=dict(
+        required= False,
+        type='int'),
+    routing_method=dict(
+        required= False,
+        type='str'),
+    routing_type=dict(
+        required= False,
+        type='str'),
+    timeout=dict(
+        required= False,
+        type='int'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

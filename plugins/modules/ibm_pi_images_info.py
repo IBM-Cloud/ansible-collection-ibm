@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     image_info:
         description:
             - None
@@ -35,6 +30,11 @@ options:
         description:
             - Imagename Name to be used for pvminstances
         required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
         type: str
     zone:
         description:
@@ -70,24 +70,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
     'image_info',
     'pi_image_name',
+    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
     image_info=dict(
         required=False,
         elements='',
         type='list'),
     pi_image_name=dict(
         required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=True,
         type='str'),
     zone=dict(
         type='str',

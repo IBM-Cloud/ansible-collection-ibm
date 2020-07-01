@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    next_hop:
-        description:
-            - (Required for new resource) VPC route next hop value
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) VPC route name
@@ -48,6 +43,11 @@ options:
     vpc:
         description:
             - (Required for new resource) VPC instance ID
+        required: True
+        type: str
+    next_hop:
+        description:
+            - (Required for new resource) VPC route next hop value
         required: True
         type: str
     id:
@@ -96,47 +96,47 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('next_hop', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
     ('destination', 'str'),
     ('vpc', 'str'),
+    ('next_hop', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'next_hop',
     'name',
     'zone',
     'destination',
     'status',
     'vpc',
+    'next_hop',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    next_hop=dict(
-        required='True',
-        type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     zone=dict(
-        required='True',
+        required= False,
         type='str'),
     destination=dict(
-        required='True',
+        required= False,
         type='str'),
     status=dict(
-        required='False',
+        required= False,
         type='str'),
     vpc=dict(
-        required='True',
+        required= False,
+        type='str'),
+    next_hop=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

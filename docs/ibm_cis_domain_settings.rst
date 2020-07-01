@@ -30,12 +30,68 @@ Parameters
     response_buffering setting
 
 
+  websockets (False, str, None)
+    websockets setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
   ssl (False, str, None)
     SSL/TLS setting
-
-
-  certificate_status (False, str, None)
-    Certificate status
 
 
   min_tls_version (False, str, 1.1)
@@ -46,92 +102,36 @@ Parameters
     cname_flattening setting
 
 
-  websockets (False, str, None)
-    websockets setting
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
-
-
-  brotli (False, str, None)
-    brotli setting
-
-
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
   hotlink_protection (False, str, None)
     hotlink_protection setting
-
-
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
 
 
   image_size_optimization (False, str, None)
     image_size_optimization setting
 
 
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  http2 (False, str, None)
-    http2 setting
-
-
   pseudo_ipv4 (False, str, None)
     pseudo_ipv4 setting
 
 
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  certificate_status (False, str, None)
+    Certificate status
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
   prefetch_preload (False, str, None)
     prefetch_preload setting
-
-
-  always_use_https (False, str, None)
-    always_use_https setting
 
 
   id (False, str, None)

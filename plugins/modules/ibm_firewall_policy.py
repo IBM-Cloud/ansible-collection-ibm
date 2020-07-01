@@ -99,18 +99,18 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     firewall_id=dict(
-        required='True',
+        required= False,
         type='int'),
     rules=dict(
-        required='True',
+        required= False,
         elements='',
         type='list'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

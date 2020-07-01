@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
-    has_subnets:
-        description:
-            - Boolean value, set to true if VPC instance have subnets
-        required: False
-        type: bool
     name:
         description:
             - (Required for new resource) Name
@@ -45,6 +35,16 @@ options:
             - (Required for new resource) CIDIR address prefix
         required: True
         type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    has_subnets:
+        description:
+            - Boolean value, set to true if VPC instance have subnets
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,42 +91,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
     ('cidr', 'str'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
-    'has_subnets',
     'name',
     'zone',
     'cidr',
+    'vpc',
+    'has_subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
-        required='True',
-        type='str'),
-    has_subnets=dict(
-        required='False',
-        type='bool'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     zone=dict(
-        required='True',
+        required= False,
         type='str'),
     cidr=dict(
-        required='True',
+        required= False,
         type='str'),
+    vpc=dict(
+        required= False,
+        type='str'),
+    has_subnets=dict(
+        required= False,
+        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

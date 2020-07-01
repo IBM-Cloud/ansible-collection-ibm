@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    None
+
+
   wait_time_minutes (False, int, 10)
     Define timeout to wait for the service instances to succeeded/deleted etc.
 
@@ -60,10 +64,6 @@ Parameters
 
   service_keys (False, list, None)
     The service keys asociated with the service instance
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

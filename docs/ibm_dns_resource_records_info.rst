@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone_id (True, str, None)
-    Zone Id
-
-
   dns_resource_records (False, list, None)
     Collection of dns resource records
 
 
   instance_id (True, str, None)
     Instance ID
+
+
+  zone_id (True, str, None)
+    Zone Id
 
 
   iaas_classic_username (False, any, None)

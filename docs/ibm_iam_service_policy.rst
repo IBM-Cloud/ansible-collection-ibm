@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  version (False, str, None)
-    None
-
-
-  iam_service_id (True, str, None)
-    (Required for new resource) UUID of ServiceID
-
-
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
 
@@ -48,6 +36,18 @@ Parameters
 
   account_management (False, bool, False)
     Give access to all account management services
+
+
+  tags (False, list, None)
+    None
+
+
+  version (False, str, None)
+    None
+
+
+  iam_service_id (True, str, None)
+    (Required for new resource) UUID of ServiceID
 
 
   id (False, str, None)

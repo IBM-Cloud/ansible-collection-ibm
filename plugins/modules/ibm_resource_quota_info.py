@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    max_service_instances:
-        description:
-            - Defines the total service instances limit.
-        required: False
-        type: int
     vsi_limit:
         description:
             - Defines the VSI limit.
@@ -60,6 +55,11 @@ options:
             - Defines the total memory for app.
         required: False
         type: str
+    max_service_instances:
+        description:
+            - Defines the total service instances limit.
+        required: False
+        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -98,7 +98,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'max_service_instances',
     'vsi_limit',
     'name',
     'type',
@@ -106,15 +105,13 @@ TL_ALL_PARAMETERS = [
     'max_instances_per_app',
     'max_app_instance_memory',
     'total_app_memory',
+    'max_service_instances',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    max_service_instances=dict(
-        required=False,
-        type='int'),
     vsi_limit=dict(
         required=False,
         type='int'),
@@ -136,6 +133,9 @@ module_args = dict(
     total_app_memory=dict(
         required=False,
         type='str'),
+    max_service_instances=dict(
+        required=False,
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

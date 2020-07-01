@@ -20,37 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    nad_controller_id:
-        description:
-            - (Required for new resource) NAD controller ID
-        required: True
-        type: int
     load_balancing_method:
         description:
             - (Required for new resource) Load balancing method
         required: True
         type: str
-    virtual_ip_address:
-        description:
-            - (Required for new resource) Virtual IP address
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Type
-        required: True
-        type: str
-    security_certificate_id:
-        description:
-            - security certificate ID
-        required: False
-        type: int
     persistence:
         description:
             - Persistance value
@@ -66,6 +40,32 @@ options:
             - (Required for new resource) Source Port number
         required: True
         type: int
+    type:
+        description:
+            - (Required for new resource) Type
+        required: True
+        type: str
+    virtual_ip_address:
+        description:
+            - (Required for new resource) Virtual IP address
+        required: True
+        type: str
+    nad_controller_id:
+        description:
+            - (Required for new resource) NAD controller ID
+        required: True
+        type: int
+    security_certificate_id:
+        description:
+            - security certificate ID
+        required: False
+        type: int
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,61 +112,61 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
-    ('virtual_ip_address', 'str'),
-    ('type', 'str'),
     ('name', 'str'),
     ('source_port', 'int'),
+    ('type', 'str'),
+    ('virtual_ip_address', 'str'),
+    ('nad_controller_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'nad_controller_id',
     'load_balancing_method',
-    'virtual_ip_address',
-    'type',
-    'security_certificate_id',
     'persistence',
     'name',
     'source_port',
+    'type',
+    'virtual_ip_address',
+    'nad_controller_id',
+    'security_certificate_id',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    nad_controller_id=dict(
-        required='True',
-        type='int'),
     load_balancing_method=dict(
-        required='True',
+        required= False,
         type='str'),
-    virtual_ip_address=dict(
-        required='True',
-        type='str'),
-    type=dict(
-        required='True',
-        type='str'),
-    security_certificate_id=dict(
-        required='False',
-        type='int'),
     persistence=dict(
-        required='False',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     source_port=dict(
-        required='True',
+        required= False,
         type='int'),
+    type=dict(
+        required= False,
+        type='str'),
+    virtual_ip_address=dict(
+        required= False,
+        type='str'),
+    nad_controller_id=dict(
+        required= False,
+        type='int'),
+    security_certificate_id=dict(
+        required= False,
+        type='int'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

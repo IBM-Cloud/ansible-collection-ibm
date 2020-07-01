@@ -26,16 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  crn (False, str, None)
-    CRN of resource instance
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  region_location (False, str, None)
-    Region Location info.
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
 
 
   s3_endpoint_private (False, str, None)
@@ -46,8 +42,20 @@ Parameters
     List of IPv4 or IPv6 addresses
 
 
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  region_location (False, str, None)
+    Region Location info.
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   single_site_location (False, str, None)
@@ -58,24 +66,16 @@ Parameters
     Cros region location info
 
 
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
   metrics_monitoring (False, list, None)
     Enables sending metrics to IBM Cloud Monitoring.
 
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
+
+
+  crn (False, str, None)
+    CRN of resource instance
 
 
   id (False, str, None)

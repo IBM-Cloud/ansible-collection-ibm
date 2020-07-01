@@ -20,25 +20,19 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    buildpack:
+    health_check_timeout:
         description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+            - Timeout in seconds for health checking of an staged app when starting up.
         required: False
-        type: str
-    service_instance_guid:
+        type: int
+    environment_json:
         description:
-            - Define the service instance guids that should be bound to this application.
+            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
         required: False
-        type: list
-        elements: str
-    health_check_type:
+        type: dict
+    state:
         description:
-            - Type of health check to perform.
-        required: False
-        type: str
-    package_state:
-        description:
-            - The state of the application package whether staged, pending etc
+            - The state of the application
         required: False
         type: str
     health_check_http_endpoint:
@@ -51,47 +45,53 @@ options:
             - Define space guid to which app belongs
         required: True
         type: str
-    memory:
-        description:
-            - The amount of memory each instance should have. In megabytes.
-        required: False
-        type: int
-    instances:
-        description:
-            - The number of instances
-        required: False
-        type: int
-    environment_json:
-        description:
-            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
-        required: False
-        type: dict
-    name:
-        description:
-            - The name for the app
-        required: True
-        type: str
     disk_quota:
         description:
             - The maximum amount of disk available to an instance of an app. In megabytes.
         required: False
         type: int
+    memory:
+        description:
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
+    buildpack:
+        description:
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
+        required: False
+        type: str
     route_guid:
         description:
             - Define the route guids which should be bound to the application.
         required: False
         type: list
         elements: str
-    health_check_timeout:
+    service_instance_guid:
         description:
-            - Timeout in seconds for health checking of an staged app when starting up.
+            - Define the service instance guids that should be bound to this application.
         required: False
-        type: int
-    state:
+        type: list
+        elements: str
+    package_state:
         description:
-            - The state of the application
+            - The state of the application package whether staged, pending etc
         required: False
         type: str
+    health_check_type:
+        description:
+            - Type of health check to perform.
+        required: False
+        type: str
+    name:
+        description:
+            - The name for the app
+        required: True
+        type: str
+    instances:
+        description:
+            - The number of instances
+        required: False
+        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -131,37 +131,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'buildpack',
-    'service_instance_guid',
-    'health_check_type',
-    'package_state',
+    'health_check_timeout',
+    'environment_json',
+    'state',
     'health_check_http_endpoint',
     'space_guid',
-    'memory',
-    'instances',
-    'environment_json',
-    'name',
     'disk_quota',
+    'memory',
+    'buildpack',
     'route_guid',
-    'health_check_timeout',
-    'state',
+    'service_instance_guid',
+    'package_state',
+    'health_check_type',
+    'name',
+    'instances',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    buildpack=dict(
+    health_check_timeout=dict(
         required=False,
-        type='str'),
-    service_instance_guid=dict(
+        type='int'),
+    environment_json=dict(
         required=False,
-        elements='',
-        type='list'),
-    health_check_type=dict(
-        required=False,
-        type='str'),
-    package_state=dict(
+        type='dict'),
+    state=dict(
         required=False,
         type='str'),
     health_check_http_endpoint=dict(
@@ -170,31 +166,35 @@ module_args = dict(
     space_guid=dict(
         required=True,
         type='str'),
-    memory=dict(
-        required=False,
-        type='int'),
-    instances=dict(
-        required=False,
-        type='int'),
-    environment_json=dict(
-        required=False,
-        type='dict'),
-    name=dict(
-        required=True,
-        type='str'),
     disk_quota=dict(
         required=False,
         type='int'),
+    memory=dict(
+        required=False,
+        type='int'),
+    buildpack=dict(
+        required=False,
+        type='str'),
     route_guid=dict(
         required=False,
         elements='',
         type='list'),
-    health_check_timeout=dict(
+    service_instance_guid=dict(
         required=False,
-        type='int'),
-    state=dict(
+        elements='',
+        type='list'),
+    package_state=dict(
         required=False,
         type='str'),
+    health_check_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=True,
+        type='str'),
+    instances=dict(
+        required=False,
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

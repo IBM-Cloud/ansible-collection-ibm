@@ -20,63 +20,86 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    public_bandwidth_limited:
+    memory:
         description:
             - None
         required: False
         type: int
-    placement_group_id:
-        description:
-            - The placement group id
-        required: False
-        type: int
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
     ip_address_id:
         description:
             - None
         required: False
         type: int
-    notes:
-        description:
-            - None
-        required: False
-        type: str
-    ipv6_address:
-        description:
-            - None
-        required: False
-        type: str
-    public_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    public_ipv6_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    tags:
+    secondary_ip_addresses:
         description:
             - None
         required: False
         type: list
         elements: str
-    ipv6_address_id:
+    user_metadata:
+        description:
+            - None
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    os_reference_code:
+        description:
+            - None
+        required: False
+        type: str
+    hourly_billing:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    public_subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    bulk_vms:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    datacenter_choice:
+        description:
+            - The user provided datacenter options
+        required: False
+        type: list
+        elements: dict
+    placement_group_id:
+        description:
+            - The placement group id
+        required: False
+        type: int
+    dedicated_host_name:
+        description:
+            - None
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
+    secondary_ip_count:
         description:
             - None
         required: False
         type: int
     hostname:
+        description:
+            - None
+        required: False
+        type: str
+    datacenter:
         description:
             - None
         required: False
@@ -91,54 +114,18 @@ options:
             - None
         required: False
         type: int
-    transient:
-        description:
-            - None
-        required: False
-        type: bool
-    private_interface_id:
+    network_speed:
         description:
             - None
         required: False
         type: int
-    public_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    dedicated_acct_host_only:
-        description:
-            - None
-        required: False
-        type: bool
-    public_ipv6_subnet_id:
+        default: 100
+    public_ipv6_subnet:
         description:
             - None
         required: False
         type: str
-    file_storage_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    memory:
-        description:
-            - None
-        required: False
-        type: int
-    disks:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    public_vlan_id:
+    public_interface_id:
         description:
             - None
         required: False
@@ -154,68 +141,17 @@ options:
             - None
         required: False
         type: int
-    ssh_key_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    hourly_billing:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
-    datacenter_choice:
-        description:
-            - The user provided datacenter options
-        required: False
-        type: list
-        elements: dict
-    flavor_key_name:
-        description:
-            - Flavor key name used to provision vm.
-        required: False
-        type: str
-    public_bandwidth_unlimited:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    public_interface_id:
-        description:
-            - None
-        required: False
-        type: int
-    network_speed:
-        description:
-            - None
-        required: False
-        type: int
-        default: 100
-    secondary_ip_addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    evault:
-        description:
-            - None
-        required: False
-        type: int
-    os_reference_code:
+    post_install_script_uri:
         description:
             - None
         required: False
         type: str
-    datacenter:
+    public_subnet:
+        description:
+            - None
+        required: False
+        type: str
+    ipv4_address:
         description:
             - None
         required: False
@@ -226,45 +162,88 @@ options:
         required: False
         type: bool
         default: False
-    image_id:
-        description:
-            - None
-        required: False
-        type: int
     wait_time_minutes:
         description:
             - None
         required: False
         type: int
         default: 90
-    dedicated_host_id:
+    public_bandwidth_limited:
         description:
             - None
         required: False
         type: int
-    public_security_group_ids:
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    public_bandwidth_unlimited:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    dedicated_acct_host_only:
+        description:
+            - None
+        required: False
+        type: bool
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    disks:
         description:
             - None
         required: False
         type: list
         elements: int
-    private_subnet_id:
+    ipv6_address:
+        description:
+            - None
+        required: False
+        type: str
+    ipv6_address_id:
         description:
             - None
         required: False
         type: int
+    public_ipv6_subnet_id:
+        description:
+            - None
+        required: False
+        type: str
+    ssh_key_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
     block_storage_ids:
         description:
             - None
         required: False
         type: list
         elements: int
-    resource_status:
+    evault:
         description:
-            - The status of the resource
+            - None
+        required: False
+        type: int
+    private_subnet:
+        description:
+            - None
         required: False
         type: str
-    secondary_ip_count:
+    private_subnet_id:
         description:
             - None
         required: False
@@ -275,36 +254,36 @@ options:
         required: False
         type: bool
         default: True
-    bulk_vms:
+    public_security_group_ids:
         description:
             - None
         required: False
         type: list
-        elements: dict
-    dedicated_host_name:
-        description:
-            - None
-        required: False
-        type: str
-    private_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    ipv4_address_private:
-        description:
-            - None
-        required: False
-        type: str
+        elements: int
     ipv6_enabled:
         description:
             - None
         required: False
         type: bool
         default: False
+    notes:
+        description:
+            - None
+        required: False
+        type: str
     domain:
         description:
             - None
+        required: False
+        type: str
+    image_id:
+        description:
+            - None
+        required: False
+        type: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     private_network_only:
@@ -313,16 +292,37 @@ options:
         required: False
         type: bool
         default: False
-    user_metadata:
+    flavor_key_name:
+        description:
+            - Flavor key name used to provision vm.
+        required: False
+        type: str
+    dedicated_host_id:
+        description:
+            - None
+        required: False
+        type: int
+    transient:
+        description:
+            - None
+        required: False
+        type: bool
+    private_interface_id:
+        description:
+            - None
+        required: False
+        type: int
+    ipv4_address_private:
         description:
             - None
         required: False
         type: str
-    post_install_script_uri:
+    file_storage_ids:
         description:
             - None
         required: False
-        type: str
+        type: list
+        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -373,252 +373,252 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_bandwidth_limited',
-    'placement_group_id',
-    'private_vlan_id',
-    'ipv4_address',
+    'memory',
     'ip_address_id',
-    'notes',
-    'ipv6_address',
-    'public_subnet',
-    'public_ipv6_subnet',
-    'tags',
-    'ipv6_address_id',
+    'secondary_ip_addresses',
+    'user_metadata',
+    'resource_status',
+    'os_reference_code',
+    'hourly_billing',
+    'public_subnet_id',
+    'bulk_vms',
+    'datacenter_choice',
+    'placement_group_id',
+    'dedicated_host_name',
+    'public_vlan_id',
+    'secondary_ip_count',
     'hostname',
+    'datacenter',
     'placement_group_name',
     'cores',
-    'transient',
-    'private_interface_id',
-    'public_subnet_id',
-    'dedicated_acct_host_only',
-    'public_ipv6_subnet_id',
-    'file_storage_ids',
-    'memory',
-    'disks',
-    'resource_name',
-    'public_vlan_id',
+    'network_speed',
+    'public_ipv6_subnet',
+    'public_interface_id',
     'private_security_group_ids',
     'ip_address_id_private',
-    'ssh_key_ids',
-    'resource_controller_url',
-    'hourly_billing',
-    'datacenter_choice',
-    'flavor_key_name',
-    'public_bandwidth_unlimited',
-    'public_interface_id',
-    'network_speed',
-    'secondary_ip_addresses',
-    'evault',
-    'os_reference_code',
-    'datacenter',
-    'ipv6_static_enabled',
-    'image_id',
-    'wait_time_minutes',
-    'dedicated_host_id',
-    'public_security_group_ids',
-    'private_subnet_id',
-    'block_storage_ids',
-    'resource_status',
-    'secondary_ip_count',
-    'local_disk',
-    'bulk_vms',
-    'dedicated_host_name',
-    'private_subnet',
-    'ipv4_address_private',
-    'ipv6_enabled',
-    'domain',
-    'private_network_only',
-    'user_metadata',
     'post_install_script_uri',
+    'public_subnet',
+    'ipv4_address',
+    'ipv6_static_enabled',
+    'wait_time_minutes',
+    'public_bandwidth_limited',
+    'private_vlan_id',
+    'tags',
+    'public_bandwidth_unlimited',
+    'dedicated_acct_host_only',
+    'resource_name',
+    'disks',
+    'ipv6_address',
+    'ipv6_address_id',
+    'public_ipv6_subnet_id',
+    'ssh_key_ids',
+    'block_storage_ids',
+    'evault',
+    'private_subnet',
+    'private_subnet_id',
+    'local_disk',
+    'public_security_group_ids',
+    'ipv6_enabled',
+    'notes',
+    'domain',
+    'image_id',
+    'resource_controller_url',
+    'private_network_only',
+    'flavor_key_name',
+    'dedicated_host_id',
+    'transient',
+    'private_interface_id',
+    'ipv4_address_private',
+    'file_storage_ids',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_bandwidth_limited=dict(
-        required='False',
-        type='int'),
-    placement_group_id=dict(
-        required='False',
-        type='int'),
-    private_vlan_id=dict(
-        required='False',
-        type='int'),
-    ipv4_address=dict(
-        required='False',
-        type='str'),
-    ip_address_id=dict(
-        required='False',
-        type='int'),
-    notes=dict(
-        required='False',
-        type='str'),
-    ipv6_address=dict(
-        required='False',
-        type='str'),
-    public_subnet=dict(
-        required='False',
-        type='str'),
-    public_ipv6_subnet=dict(
-        required='False',
-        type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    ipv6_address_id=dict(
-        required='False',
-        type='int'),
-    hostname=dict(
-        required='False',
-        type='str'),
-    placement_group_name=dict(
-        required='False',
-        type='str'),
-    cores=dict(
-        required='False',
-        type='int'),
-    transient=dict(
-        required='False',
-        type='bool'),
-    private_interface_id=dict(
-        required='False',
-        type='int'),
-    public_subnet_id=dict(
-        required='False',
-        type='int'),
-    dedicated_acct_host_only=dict(
-        required='False',
-        type='bool'),
-    public_ipv6_subnet_id=dict(
-        required='False',
-        type='str'),
-    file_storage_ids=dict(
-        required='False',
-        elements='',
-        type='list'),
     memory=dict(
-        required='False',
+        required= False,
         type='int'),
-    disks=dict(
-        required='False',
+    ip_address_id=dict(
+        required= False,
+        type='int'),
+    secondary_ip_addresses=dict(
+        required= False,
         elements='',
         type='list'),
-    resource_name=dict(
-        required='False',
+    user_metadata=dict(
+        required= False,
         type='str'),
-    public_vlan_id=dict(
-        required='False',
-        type='int'),
-    private_security_group_ids=dict(
-        required='False',
-        elements='',
-        type='list'),
-    ip_address_id_private=dict(
-        required='False',
-        type='int'),
-    ssh_key_ids=dict(
-        required='False',
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
-        required='False',
+    resource_status=dict(
+        required= False,
+        type='str'),
+    os_reference_code=dict(
+        required= False,
         type='str'),
     hourly_billing=dict(
         default=True,
         type='bool'),
-    datacenter_choice=dict(
-        required='False',
+    public_subnet_id=dict(
+        required= False,
+        type='int'),
+    bulk_vms=dict(
+        required= False,
         elements='',
         type='list'),
-    flavor_key_name=dict(
-        required='False',
+    datacenter_choice=dict(
+        required= False,
+        elements='',
+        type='list'),
+    placement_group_id=dict(
+        required= False,
+        type='int'),
+    dedicated_host_name=dict(
+        required= False,
         type='str'),
-    public_bandwidth_unlimited=dict(
-        default=False,
-        type='bool'),
-    public_interface_id=dict(
-        required='False',
+    public_vlan_id=dict(
+        required= False,
+        type='int'),
+    secondary_ip_count=dict(
+        required= False,
+        type='int'),
+    hostname=dict(
+        required= False,
+        type='str'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    placement_group_name=dict(
+        required= False,
+        type='str'),
+    cores=dict(
+        required= False,
         type='int'),
     network_speed=dict(
         default=100,
         type='int'),
-    secondary_ip_addresses=dict(
-        required='False',
+    public_ipv6_subnet=dict(
+        required= False,
+        type='str'),
+    public_interface_id=dict(
+        required= False,
+        type='int'),
+    private_security_group_ids=dict(
+        required= False,
         elements='',
         type='list'),
-    evault=dict(
-        required='False',
+    ip_address_id_private=dict(
+        required= False,
         type='int'),
-    os_reference_code=dict(
-        required='False',
+    post_install_script_uri=dict(
+        required= False,
         type='str'),
-    datacenter=dict(
-        required='False',
+    public_subnet=dict(
+        required= False,
+        type='str'),
+    ipv4_address=dict(
+        required= False,
         type='str'),
     ipv6_static_enabled=dict(
         default=False,
         type='bool'),
-    image_id=dict(
-        required='False',
-        type='int'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
-    dedicated_host_id=dict(
-        required='False',
+    public_bandwidth_limited=dict(
+        required= False,
         type='int'),
-    public_security_group_ids=dict(
-        required='False',
+    private_vlan_id=dict(
+        required= False,
+        type='int'),
+    tags=dict(
+        required= False,
         elements='',
         type='list'),
-    private_subnet_id=dict(
-        required='False',
-        type='int'),
-    block_storage_ids=dict(
-        required='False',
-        elements='',
-        type='list'),
-    resource_status=dict(
-        required='False',
+    public_bandwidth_unlimited=dict(
+        default=False,
+        type='bool'),
+    dedicated_acct_host_only=dict(
+        required= False,
+        type='bool'),
+    resource_name=dict(
+        required= False,
         type='str'),
-    secondary_ip_count=dict(
-        required='False',
+    disks=dict(
+        required= False,
+        elements='',
+        type='list'),
+    ipv6_address=dict(
+        required= False,
+        type='str'),
+    ipv6_address_id=dict(
+        required= False,
+        type='int'),
+    public_ipv6_subnet_id=dict(
+        required= False,
+        type='str'),
+    ssh_key_ids=dict(
+        required= False,
+        elements='',
+        type='list'),
+    block_storage_ids=dict(
+        required= False,
+        elements='',
+        type='list'),
+    evault=dict(
+        required= False,
+        type='int'),
+    private_subnet=dict(
+        required= False,
+        type='str'),
+    private_subnet_id=dict(
+        required= False,
         type='int'),
     local_disk=dict(
         default=True,
         type='bool'),
-    bulk_vms=dict(
-        required='False',
+    public_security_group_ids=dict(
+        required= False,
         elements='',
         type='list'),
-    dedicated_host_name=dict(
-        required='False',
-        type='str'),
-    private_subnet=dict(
-        required='False',
-        type='str'),
-    ipv4_address_private=dict(
-        required='False',
-        type='str'),
     ipv6_enabled=dict(
         default=False,
         type='bool'),
+    notes=dict(
+        required= False,
+        type='str'),
     domain=dict(
-        required='False',
+        required= False,
+        type='str'),
+    image_id=dict(
+        required= False,
+        type='int'),
+    resource_controller_url=dict(
+        required= False,
         type='str'),
     private_network_only=dict(
         default=False,
         type='bool'),
-    user_metadata=dict(
-        required='False',
+    flavor_key_name=dict(
+        required= False,
         type='str'),
-    post_install_script_uri=dict(
-        required='False',
+    dedicated_host_id=dict(
+        required= False,
+        type='int'),
+    transient=dict(
+        required= False,
+        type='bool'),
+    private_interface_id=dict(
+        required= False,
+        type='int'),
+    ipv4_address_private=dict(
+        required= False,
         type='str'),
+    file_storage_ids=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

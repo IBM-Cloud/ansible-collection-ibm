@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_status:
-        description:
-            - PI instance operation status
-        required: False
-        type: str
     pi_instance_name:
         description:
             - (Required for new resource) PI instance Operation server name
@@ -55,6 +50,11 @@ options:
         description:
             - (Required for new resource) PI Cloud instnce id
         required: True
+        type: str
+    pi_status:
+        description:
+            - PI instance operation status
+        required: False
         type: str
     id:
         description:
@@ -105,43 +105,43 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_status',
     'pi_instance_name',
     'addresses',
     'pi_health_status',
     'pi_operation',
     'pi_progress',
     'pi_cloud_instance_id',
+    'pi_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_status=dict(
-        required='False',
-        type='str'),
     pi_instance_name=dict(
-        required='True',
+        required= False,
         type='str'),
     addresses=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     pi_health_status=dict(
-        required='False',
+        required= False,
         type='str'),
     pi_operation=dict(
-        required='True',
+        required= False,
         type='str'),
     pi_progress=dict(
-        required='False',
+        required= False,
         type='float'),
     pi_cloud_instance_id=dict(
-        required='True',
+        required= False,
+        type='str'),
+    pi_status=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

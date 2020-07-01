@@ -20,12 +20,64 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    region:
+        description:
+            - The worker pool region
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
+    machine_type:
+        description:
+            - (Required for new resource) worker nodes machine type
+        required: True
+        type: str
+    size_per_zone:
+        description:
+            - (Required for new resource) Number of nodes per zone
+        required: True
+        type: int
+    hardware:
+        description:
+            - Hardware type
+        required: False
+        type: str
+        default: shared
     disk_encryption:
         description:
             - worker node disk encrypted if set to true
         required: False
         type: bool
         default: True
+    labels:
+        description:
+            - list of labels to worker pool
+        required: False
+        type: dict
+        elements: str
+    cluster:
+        description:
+            - (Required for new resource) Cluster name
+        required: True
+        type: str
+    worker_pool_name:
+        description:
+            - (Required for new resource) worker pool name
+        required: True
+        type: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
     state_:
         description:
             - worker pool state
@@ -37,58 +89,6 @@ options:
         required: False
         type: list
         elements: dict
-    region:
-        description:
-            - The worker pool region
-        required: False
-        type: str
-    size_per_zone:
-        description:
-            - (Required for new resource) Number of nodes per zone
-        required: True
-        type: int
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
-    worker_pool_name:
-        description:
-            - (Required for new resource) worker pool name
-        required: True
-        type: str
-    hardware:
-        description:
-            - Hardware type
-        required: False
-        type: str
-        default: shared
-    labels:
-        description:
-            - list of labels to worker pool
-        required: False
-        type: dict
-        elements: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) Cluster name
-        required: True
-        type: str
-    machine_type:
-        description:
-            - (Required for new resource) worker nodes machine type
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,76 +115,76 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('size_per_zone', 'int'),
-    ('worker_pool_name', 'str'),
-    ('cluster', 'str'),
     ('machine_type', 'str'),
+    ('size_per_zone', 'int'),
+    ('cluster', 'str'),
+    ('worker_pool_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'disk_encryption',
-    'state_',
-    'zones',
     'region',
-    'size_per_zone',
-    'entitlement',
-    'worker_pool_name',
-    'hardware',
-    'labels',
     'resource_group_id',
     'resource_controller_url',
-    'cluster',
     'machine_type',
+    'size_per_zone',
+    'hardware',
+    'disk_encryption',
+    'labels',
+    'cluster',
+    'worker_pool_name',
+    'entitlement',
+    'state_',
+    'zones',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    disk_encryption=dict(
-        default=True,
-        type='bool'),
-    state_=dict(
-        required='False',
-        type='str'),
-    zones=dict(
-        required='False',
-        elements='',
-        type='list'),
     region=dict(
-        required='False',
+        required= False,
+        type='str'),
+    resource_group_id=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    machine_type=dict(
+        required= False,
         type='str'),
     size_per_zone=dict(
-        required='True',
+        required= False,
         type='int'),
-    entitlement=dict(
-        required='False',
-        type='str'),
-    worker_pool_name=dict(
-        required='True',
-        type='str'),
     hardware=dict(
         default='shared',
         type='str'),
+    disk_encryption=dict(
+        default=True,
+        type='bool'),
     labels=dict(
-        required='False',
+        required= False,
         elements='',
         type='dict'),
-    resource_group_id=dict(
-        required='False',
-        type='str'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
     cluster=dict(
-        required='True',
+        required= False,
         type='str'),
-    machine_type=dict(
-        required='True',
+    worker_pool_name=dict(
+        required= False,
         type='str'),
+    entitlement=dict(
+        required= False,
+        type='str'),
+    state_=dict(
+        required= False,
+        type='str'),
+    zones=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

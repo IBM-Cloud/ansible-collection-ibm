@@ -20,6 +20,32 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    domain_validation_method:
+        description:
+            - Domain validation methods
+        required: False
+        type: str
+        default: dns-01
+    begins_on:
+        description:
+            - Cerificate validity from date
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) Certificate name
+        required: True
+        type: str
+    issuer:
+        description:
+            - Certificate issuer info
+        required: False
+        type: str
+    algorithm:
+        description:
+            - Algorithm info
+        required: False
+        type: str
     has_previous:
         description:
             - Has Previous
@@ -31,17 +57,6 @@ options:
         required: False
         type: dict
         elements: dict
-    certificate_manager_instance_id:
-        description:
-            - (Required for new resource) Certificate manager instance ID
-        required: True
-        type: str
-    domains:
-        description:
-            - (Required for new resource) List of domain names
-        required: True
-        type: list
-        elements: str
     rotate_keys:
         description:
             - Keys are sorated if set to true
@@ -59,40 +74,25 @@ options:
         required: False
         type: str
         default: rsaEncryption 2048 bit
-    begins_on:
-        description:
-            - Cerificate validity from date
-        required: False
-        type: int
-    imported:
-        description:
-            - set to true if certificate is imported
-        required: False
-        type: bool
     status:
         description:
             - Status  of the certificate
         required: False
         type: str
-    name:
+    certificate_manager_instance_id:
         description:
-            - (Required for new resource) Certificate name
+            - (Required for new resource) Certificate manager instance ID
         required: True
         type: str
-    domain_validation_method:
+    domains:
         description:
-            - Domain validation methods
-        required: False
-        type: str
-        default: dns-01
-    issuer:
+            - (Required for new resource) List of domain names
+        required: True
+        type: list
+        elements: str
+    description:
         description:
-            - Certificate issuer info
-        required: False
-        type: str
-    algorithm:
-        description:
-            - Algorithm info
+            - Certicate description
         required: False
         type: str
     expires_on:
@@ -100,11 +100,11 @@ options:
             - Certificaet expairy date
         required: False
         type: int
-    description:
+    imported:
         description:
-            - Certicate description
+            - set to true if certificate is imported
         required: False
-        type: str
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -151,87 +151,87 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('certificate_manager_instance_id', 'str'),
     ('domains', 'list'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_validation_method',
+    'begins_on',
+    'name',
+    'issuer',
+    'algorithm',
     'has_previous',
     'issuance_info',
-    'certificate_manager_instance_id',
-    'domains',
     'rotate_keys',
     'dns_provider_instance_crn',
     'key_algorithm',
-    'begins_on',
-    'imported',
     'status',
-    'name',
-    'domain_validation_method',
-    'issuer',
-    'algorithm',
-    'expires_on',
+    'certificate_manager_instance_id',
+    'domains',
     'description',
+    'expires_on',
+    'imported',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_validation_method=dict(
+        default='dns-01',
+        type='str'),
+    begins_on=dict(
+        required= False,
+        type='int'),
+    name=dict(
+        required= False,
+        type='str'),
+    issuer=dict(
+        required= False,
+        type='str'),
+    algorithm=dict(
+        required= False,
+        type='str'),
     has_previous=dict(
-        required='False',
+        required= False,
         type='str'),
     issuance_info=dict(
-        required='False',
+        required= False,
         elements='',
         type='dict'),
-    certificate_manager_instance_id=dict(
-        required='True',
-        type='str'),
-    domains=dict(
-        required='True',
-        elements='',
-        type='list'),
     rotate_keys=dict(
         default=False,
         type='bool'),
     dns_provider_instance_crn=dict(
-        required='False',
+        required= False,
         type='str'),
     key_algorithm=dict(
         default='rsaEncryption 2048 bit',
         type='str'),
-    begins_on=dict(
-        required='False',
-        type='int'),
-    imported=dict(
-        required='False',
-        type='bool'),
     status=dict(
-        required='False',
+        required= False,
         type='str'),
-    name=dict(
-        required='True',
+    certificate_manager_instance_id=dict(
+        required= False,
         type='str'),
-    domain_validation_method=dict(
-        default='dns-01',
-        type='str'),
-    issuer=dict(
-        required='False',
-        type='str'),
-    algorithm=dict(
-        required='False',
+    domains=dict(
+        required= False,
+        elements='',
+        type='list'),
+    description=dict(
+        required= False,
         type='str'),
     expires_on=dict(
-        required='False',
+        required= False,
         type='int'),
-    description=dict(
-        required='False',
-        type='str'),
+    imported=dict(
+        required= False,
+        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

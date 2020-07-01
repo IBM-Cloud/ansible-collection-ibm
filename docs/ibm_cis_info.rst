@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
   name (True, str, None)
     Resource instance name for example, my cis instance
 
@@ -38,12 +42,20 @@ Parameters
     The resource instance status
 
 
+  plan (False, str, None)
+    The plan type of the cis instance
+
+
   resource_name (False, str, None)
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
   resource_controller_url (False, str, None)
@@ -60,18 +72,6 @@ Parameters
 
   service (False, str, None)
     The name of the Cloud Internet Services offering, 'internet-svcs'
-
-
-  plan (False, str, None)
-    The plan type of the cis instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
 
 
   iaas_classic_username (False, any, None)

@@ -96,17 +96,17 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     name=dict(
-        required='False',
+        required= False,
         type='str'),
     local_note=dict(
-        required='False',
+        required= False,
         type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

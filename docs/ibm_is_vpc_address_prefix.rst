@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
   has_subnets (False, bool, None)
     Boolean value, set to true if VPC instance have subnets
 
@@ -44,6 +40,10 @@ Parameters
 
   cidr (True, str, None)
     (Required for new resource) CIDIR address prefix
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   id (False, str, None)

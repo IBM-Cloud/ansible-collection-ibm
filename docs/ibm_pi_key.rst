@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_creation_date (False, str, None)
-    Date info
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
-
-
   key_id (False, str, None)
     Key ID in the PI instance
 
@@ -44,6 +36,14 @@ Parameters
 
   pi_ssh_key (True, str, None)
     (Required for new resource) PI instance key info
+
+
+  pi_creation_date (False, str, None)
+    Date info
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

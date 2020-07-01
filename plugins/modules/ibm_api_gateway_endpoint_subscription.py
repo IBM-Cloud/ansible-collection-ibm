@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    artifact_id:
-        description:
-            - (Required for new resource) Endpoint ID
-        required: True
-        type: str
-    client_id:
-        description:
-            - Subscription Id, API key that is used to create subscription
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Subscription name
@@ -55,6 +45,16 @@ options:
             - Indicates if client secret is provided to subscription or not
         required: False
         type: bool
+    artifact_id:
+        description:
+            - (Required for new resource) Endpoint ID
+        required: True
+        type: str
+    client_id:
+        description:
+            - Subscription Id, API key that is used to create subscription
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,49 +101,49 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('artifact_id', 'str'),
     ('name', 'str'),
     ('type', 'str'),
+    ('artifact_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'artifact_id',
-    'client_id',
     'name',
     'type',
     'client_secret',
     'generate_secret',
     'secret_provided',
+    'artifact_id',
+    'client_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    artifact_id=dict(
-        required='True',
-        type='str'),
-    client_id=dict(
-        required='False',
-        type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     type=dict(
-        required='True',
+        required= False,
         type='str'),
     client_secret=dict(
-        required='False',
+        required= False,
         type='str'),
     generate_secret=dict(
-        required='False',
+        required= False,
         type='bool'),
     secret_provided=dict(
-        required='False',
+        required= False,
         type='bool'),
+    artifact_id=dict(
+        required= False,
+        type='str'),
+    client_id=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

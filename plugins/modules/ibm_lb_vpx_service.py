@@ -20,6 +20,42 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    vip_id:
+        description:
+            - (Required for new resource) VIP id
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    destination_ip_address:
+        description:
+            - (Required for new resource) Destination IP Address
+        required: True
+        type: str
+    tags:
+        description:
+            - list of tags associated with the resource
+        required: False
+        type: list
+        elements: str
+    destination_port:
+        description:
+            - (Required for new resource) Destination Port number
+        required: True
+        type: int
+    weight:
+        description:
+            - (Required for new resource) Weight value
+        required: True
+        type: int
+    connection_limit:
+        description:
+            - (Required for new resource) Number of connections limit
+        required: True
+        type: int
     health_check:
         description:
             - (Required for new resource) Health check info
@@ -31,42 +67,6 @@ options:
         required: False
         type: str
         default: NO
-    tags:
-        description:
-            - list of tags associated with the resource
-        required: False
-        type: list
-        elements: str
-    vip_id:
-        description:
-            - (Required for new resource) VIP id
-        required: True
-        type: str
-    destination_port:
-        description:
-            - (Required for new resource) Destination Port number
-        required: True
-        type: int
-    weight:
-        description:
-            - (Required for new resource) Weight value
-        required: True
-        type: int
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
-        type: str
-    destination_ip_address:
-        description:
-            - (Required for new resource) Destination IP Address
-        required: True
-        type: str
-    connection_limit:
-        description:
-            - (Required for new resource) Number of connections limit
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,62 +113,62 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('health_check', 'str'),
     ('vip_id', 'str'),
-    ('destination_port', 'int'),
-    ('weight', 'int'),
     ('name', 'str'),
     ('destination_ip_address', 'str'),
+    ('destination_port', 'int'),
+    ('weight', 'int'),
     ('connection_limit', 'int'),
+    ('health_check', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'health_check',
-    'usip',
-    'tags',
     'vip_id',
-    'destination_port',
-    'weight',
     'name',
     'destination_ip_address',
+    'tags',
+    'destination_port',
+    'weight',
     'connection_limit',
+    'health_check',
+    'usip',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    vip_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    destination_ip_address=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    destination_port=dict(
+        required= False,
+        type='int'),
+    weight=dict(
+        required= False,
+        type='int'),
+    connection_limit=dict(
+        required= False,
+        type='int'),
     health_check=dict(
-        required='True',
+        required= False,
         type='str'),
     usip=dict(
         default='NO',
         type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    vip_id=dict(
-        required='True',
-        type='str'),
-    destination_port=dict(
-        required='True',
-        type='int'),
-    weight=dict(
-        required='True',
-        type='int'),
-    name=dict(
-        required='True',
-        type='str'),
-    destination_ip_address=dict(
-        required='True',
-        type='str'),
-    connection_limit=dict(
-        required='True',
-        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

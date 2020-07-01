@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The name of the security group
-        required: True
-        type: str
     description:
         description:
             - The description of the security group
@@ -36,6 +31,11 @@ options:
         required: False
         type: bool
         default: False
+    name:
+        description:
+            - The name of the security group
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -74,24 +74,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'description',
     'most_recent',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
     most_recent=dict(
         default=False,
         type='bool'),
+    name=dict(
+        required=True,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

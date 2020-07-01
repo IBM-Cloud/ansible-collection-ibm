@@ -26,28 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  monitor (False, str, None)
-    Monitor value
-
-
   notification_email (False, str, None)
     Email address configured to recieve the notifications
-
-
-  origins (True, list, None)
-    (Required for new resource) Origins info
-
-
-  health (False, str, None)
-    Health info
-
-
-  modified_on (False, str, None)
-    Modified date info
-
-
-  created_on (False, str, None)
-    Creation date info
 
 
   cis_id (True, str, None)
@@ -58,20 +38,40 @@ Parameters
     (Required for new resource) name
 
 
-  check_regions (True, list, None)
-    (Required for new resource) List of regions
-
-
   description (False, str, None)
     Description of the CIS Origin Pool
+
+
+  minimum_origins (False, int, 1)
+    Minimum number of Origins
+
+
+  health (False, str, None)
+    Health info
+
+
+  created_on (False, str, None)
+    Creation date info
+
+
+  modified_on (False, str, None)
+    Modified date info
+
+
+  check_regions (True, list, None)
+    (Required for new resource) List of regions
 
 
   enabled (True, bool, None)
     (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
 
 
-  minimum_origins (False, int, 1)
-    Minimum number of Origins
+  monitor (False, str, None)
+    Monitor value
+
+
+  origins (True, list, None)
+    (Required for new resource) Origins info
 
 
   id (False, str, None)

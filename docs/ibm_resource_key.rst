@@ -34,32 +34,32 @@ Parameters
     The id of the resource alias for which to create resource key
 
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
+  credentials (False, dict, None)
+    Credentials asociated with the key
 
 
   crn (False, str, None)
     crn of resource key
 
 
-  name (True, str, None)
-    (Required for new resource) The name of the resource key
-
-
   role (True, str, None)
     (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
 
 
-  credentials (False, dict, None)
-    Credentials asociated with the key
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
 
 
   status (False, str, None)
     Status of resource key
+
+
+  tags (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the resource key
 
 
   id (False, str, None)

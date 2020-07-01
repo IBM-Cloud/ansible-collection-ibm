@@ -20,19 +20,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    created_on:
+    resource_record_id:
         description:
-            - Creation Data
+            - Resource record ID
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) DNS record name
-        required: True
         type: str
     type:
         description:
             - (Required for new resource) DNS record Type
+        required: True
+        type: str
+    priority:
+        description:
+            - DNS server Priority
+        required: False
+        type: int
+        default: 0
+    protocol:
+        description:
+            - Protocol
+        required: False
+        type: str
+    zone_id:
+        description:
+            - (Required for new resource) Zone ID
         required: True
         type: str
     rdata:
@@ -46,41 +57,15 @@ options:
         required: False
         type: int
         default: 900
-    zone_id:
-        description:
-            - (Required for new resource) Zone ID
-        required: True
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) Instance ID
-        required: True
-        type: str
     preference:
         description:
             - DNS maximum preference
         required: False
         type: int
         default: 0
-    priority:
-        description:
-            - DNS server Priority
-        required: False
-        type: int
-        default: 0
     service:
         description:
             - Service info
-        required: False
-        type: str
-    protocol:
-        description:
-            - Protocol
-        required: False
-        type: str
-    resource_record_id:
-        description:
-            - Resource record ID
         required: False
         type: str
     weight:
@@ -94,11 +79,26 @@ options:
             - Modification date
         required: False
         type: str
+    instance_id:
+        description:
+            - (Required for new resource) Instance ID
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) DNS record name
+        required: True
+        type: str
     port:
         description:
             - DNS server Port
         required: False
         type: int
+    created_on:
+        description:
+            - Creation Data
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -145,83 +145,83 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('type', 'str'),
-    ('rdata', 'str'),
     ('zone_id', 'str'),
+    ('rdata', 'str'),
     ('instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'created_on',
-    'name',
+    'resource_record_id',
     'type',
+    'priority',
+    'protocol',
+    'zone_id',
     'rdata',
     'ttl',
-    'zone_id',
-    'instance_id',
     'preference',
-    'priority',
     'service',
-    'protocol',
-    'resource_record_id',
     'weight',
     'modified_on',
+    'instance_id',
+    'name',
     'port',
+    'created_on',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    created_on=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
+    resource_record_id=dict(
+        required= False,
         type='str'),
     type=dict(
-        required='True',
+        required= False,
+        type='str'),
+    priority=dict(
+        default=0,
+        type='int'),
+    protocol=dict(
+        required= False,
+        type='str'),
+    zone_id=dict(
+        required= False,
         type='str'),
     rdata=dict(
-        required='True',
+        required= False,
         type='str'),
     ttl=dict(
         default=900,
         type='int'),
-    zone_id=dict(
-        required='True',
-        type='str'),
-    instance_id=dict(
-        required='True',
-        type='str'),
     preference=dict(
         default=0,
         type='int'),
-    priority=dict(
-        default=0,
-        type='int'),
     service=dict(
-        required='False',
-        type='str'),
-    protocol=dict(
-        required='False',
-        type='str'),
-    resource_record_id=dict(
-        required='False',
+        required= False,
         type='str'),
     weight=dict(
         default=0,
         type='int'),
     modified_on=dict(
-        required='False',
+        required= False,
+        type='str'),
+    instance_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
         type='str'),
     port=dict(
-        required='False',
+        required= False,
         type='int'),
+    created_on=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

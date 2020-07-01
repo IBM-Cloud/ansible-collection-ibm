@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI Cloud instnce id
+
+
   pi_status (False, str, None)
     PI instance operation status
 
@@ -48,10 +52,6 @@ Parameters
 
   pi_progress (False, float, None)
     Progress of the operation
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI Cloud instnce id
 
 
   id (False, str, None)

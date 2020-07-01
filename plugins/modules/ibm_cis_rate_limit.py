@@ -20,21 +20,49 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
-        type: str
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
         required: True
         type: str
+    description:
+        description:
+            - A note that you can use to describe the reason for a rate limiting rule.
+        required: False
+        type: str
+    correlate:
+        description:
+            - Ratelimiting Correlate
+        required: False
+        type: list
+        elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: True
+        type: str
+    bypass:
+        description:
+            - Bypass URL
+        required: False
+        type: list
+        elements: dict
     threshold:
         description:
             - (Required for new resource) Rate Limiting Threshold
         required: True
         type: int
+    period:
+        description:
+            - (Required for new resource) Rate Limiting Period
+        required: True
+        type: int
+    action:
+        description:
+            - (Required for new resource) Rate Limiting Action
+        required: True
+        type: list
+        elements: dict
     match:
         description:
             - Rate Limiting Match
@@ -52,34 +80,6 @@ options:
         required: False
         type: bool
         default: False
-    description:
-        description:
-            - A note that you can use to describe the reason for a rate limiting rule.
-        required: False
-        type: str
-    bypass:
-        description:
-            - Bypass URL
-        required: False
-        type: list
-        elements: dict
-    period:
-        description:
-            - (Required for new resource) Rate Limiting Period
-        required: True
-        type: int
-    correlate:
-        description:
-            - Ratelimiting Correlate
-        required: False
-        type: list
-        elements: dict
-    action:
-        description:
-            - (Required for new resource) Rate Limiting Action
-        required: True
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -126,8 +126,8 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
     ('threshold', 'int'),
     ('period', 'int'),
     ('action', 'list'),
@@ -135,62 +135,62 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
     'domain_id',
+    'description',
+    'correlate',
+    'cis_id',
+    'bypass',
     'threshold',
+    'period',
+    'action',
     'match',
     'rule_id',
     'disabled',
-    'description',
-    'bypass',
-    'period',
-    'correlate',
-    'action',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required='True',
-        type='str'),
     domain_id=dict(
-        required='True',
+        required= False,
         type='str'),
+    description=dict(
+        required= False,
+        type='str'),
+    correlate=dict(
+        required= False,
+        elements='',
+        type='list'),
+    cis_id=dict(
+        required= False,
+        type='str'),
+    bypass=dict(
+        required= False,
+        elements='',
+        type='list'),
     threshold=dict(
-        required='True',
+        required= False,
         type='int'),
+    period=dict(
+        required= False,
+        type='int'),
+    action=dict(
+        required= False,
+        elements='',
+        type='list'),
     match=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     rule_id=dict(
-        required='False',
+        required= False,
         type='str'),
     disabled=dict(
         default=False,
         type='bool'),
-    description=dict(
-        required='False',
-        type='str'),
-    bypass=dict(
-        required='False',
-        elements='',
-        type='list'),
-    period=dict(
-        required='True',
-        type='int'),
-    correlate=dict(
-        required='False',
-        elements='',
-        type='list'),
-    action=dict(
-        required='True',
-        elements='',
-        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

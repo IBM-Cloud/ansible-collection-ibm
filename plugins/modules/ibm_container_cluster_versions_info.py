@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    valid_openshift_versions:
-        description:
-            - List of supported openshift-versions
-        required: False
-        type: list
-        elements: str
     org_guid:
         description:
             - The bluemix organization guid this cluster belongs to
@@ -57,6 +51,12 @@ options:
         required: False
         type: list
         elements: str
+    valid_openshift_versions:
+        description:
+            - List of supported openshift-versions
+        required: False
+        type: list
+        elements: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -74,23 +74,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'valid_openshift_versions',
     'org_guid',
     'space_guid',
     'account_guid',
     'region',
     'resource_group_id',
     'valid_kube_versions',
+    'valid_openshift_versions',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    valid_openshift_versions=dict(
-        required=False,
-        elements='',
-        type='list'),
     org_guid=dict(
         required=False,
         type='str'),
@@ -107,6 +103,10 @@ module_args = dict(
         required=False,
         type='str'),
     valid_kube_versions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    valid_openshift_versions=dict(
         required=False,
         elements='',
         type='list'),

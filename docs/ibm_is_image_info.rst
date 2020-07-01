@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    None
-
-
-  visibility (False, str, None)
-    None
-
-
   status (False, str, None)
     None
 
@@ -47,6 +39,14 @@ Parameters
 
 
   crn (False, str, None)
+    None
+
+
+  name (True, str, None)
+    None
+
+
+  visibility (False, str, None)
     None
 
 

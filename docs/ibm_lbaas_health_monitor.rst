@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  monitor_id (True, str, None)
+    (Required for new resource) Monitor ID
+
+
   lbaas_id (True, str, None)
     (Required for new resource) LBAAS id
 
@@ -52,10 +56,6 @@ Parameters
 
   url_path (False, str, /)
     URL Path
-
-
-  monitor_id (True, str, None)
-    (Required for new resource) Monitor ID
 
 
   id (False, str, None)

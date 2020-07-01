@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    state:
+        description:
+            - State of the worker
+        required: False
+        type: str
     network_interfaces:
         description:
             - None
@@ -49,11 +54,6 @@ options:
     kube_version:
         description:
             - kube version of the worker
-        required: False
-        type: str
-    state:
-        description:
-            - State of the worker
         required: False
         type: str
     pool_id:
@@ -90,13 +90,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'state',
     'network_interfaces',
     'resource_group_id',
     'worker_id',
     'cluster_name_id',
     'flavor',
     'kube_version',
-    'state',
     'pool_id',
     'pool_name',
     'resource_controller_url',
@@ -106,6 +106,9 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    state=dict(
+        required=False,
+        type='str'),
     network_interfaces=dict(
         required=False,
         elements='',
@@ -123,9 +126,6 @@ module_args = dict(
         required=False,
         type='str'),
     kube_version=dict(
-        required=False,
-        type='str'),
-    state=dict(
         required=False,
         type='str'),
     pool_id=dict(

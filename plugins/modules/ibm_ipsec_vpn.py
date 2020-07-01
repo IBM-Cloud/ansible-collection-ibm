@@ -20,25 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    address_translation:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     preshared_key:
         description:
             - Preshared Key data
-        required: False
-        type: str
-    customer_peer_ip:
-        description:
-            - Customer Peer IP Address
         required: False
         type: str
     internal_subnet_id:
@@ -46,16 +30,6 @@ options:
             - Internal subnet ID value
         required: False
         type: int
-    service_subnet_id:
-        description:
-            - Service subnet ID value
-        required: False
-        type: int
-    internal_peer_ip_address:
-        description:
-            - None
-        required: False
-        type: str
     name:
         description:
             - None
@@ -73,6 +47,17 @@ options:
         required: False
         type: list
         elements: dict
+    address_translation:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    customer_peer_ip:
+        description:
+            - Customer Peer IP Address
+        required: False
+        type: str
     remote_subnet_id:
         description:
             - Remote subnet ID value
@@ -84,6 +69,21 @@ options:
         required: False
         type: list
         elements: dict
+    service_subnet_id:
+        description:
+            - Service subnet ID value
+        required: False
+        type: int
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    internal_peer_ip_address:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,66 +135,66 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'address_translation',
     'preshared_key',
-    'customer_peer_ip',
     'internal_subnet_id',
-    'service_subnet_id',
-    'internal_peer_ip_address',
     'name',
     'phase_one',
     'phase_two',
+    'address_translation',
+    'customer_peer_ip',
     'remote_subnet_id',
     'remote_subnet',
+    'service_subnet_id',
+    'datacenter',
+    'internal_peer_ip_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
-        required='True',
-        type='str'),
-    address_translation=dict(
-        required='False',
-        elements='',
-        type='list'),
     preshared_key=dict(
-        required='False',
-        type='str'),
-    customer_peer_ip=dict(
-        required='False',
+        required= False,
         type='str'),
     internal_subnet_id=dict(
-        required='False',
+        required= False,
         type='int'),
-    service_subnet_id=dict(
-        required='False',
-        type='int'),
-    internal_peer_ip_address=dict(
-        required='False',
-        type='str'),
     name=dict(
-        required='False',
+        required= False,
         type='str'),
     phase_one=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     phase_two=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    address_translation=dict(
+        required= False,
+        elements='',
+        type='list'),
+    customer_peer_ip=dict(
+        required= False,
+        type='str'),
     remote_subnet_id=dict(
-        required='False',
+        required= False,
         type='int'),
     remote_subnet=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    service_subnet_id=dict(
+        required= False,
+        type='int'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    internal_peer_ip_address=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -20,31 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     cluster_name_id:
         description:
             - (Required for new resource) Cluster name or ID
         required: True
-        type: str
-    service_instance_id:
-        description:
-            - Service instance ID
-        required: False
-        type: str
-    namespace_id:
-        description:
-            - (Required for new resource) namespace ID
-        required: True
-        type: str
-    tags:
-        description:
-            - List of tags for the resource
-        required: False
-        type: list
-        elements: str
-    service_instance_name:
-        description:
-            - serivice instance name
-        required: False
         type: str
     org_guid:
         description:
@@ -56,20 +45,15 @@ options:
             - The bluemix space guid this cluster belongs to
         required: False
         type: str
-    account_guid:
+    service_instance_id:
         description:
-            - The bluemix account guid this cluster belongs to
+            - Service instance ID
         required: False
         type: str
-    region:
+    namespace_id:
         description:
-            - The cluster region
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
+            - (Required for new resource) namespace ID
+        required: True
         type: str
     key:
         description:
@@ -79,6 +63,22 @@ options:
     role:
         description:
             - Role info
+        required: False
+        type: str
+    region:
+        description:
+            - The cluster region
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags for the resource
+        required: False
+        type: list
+        elements: str
+    service_instance_name:
+        description:
+            - serivice instance name
         required: False
         type: str
     id:
@@ -113,63 +113,63 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'account_guid',
+    'resource_group_id',
     'cluster_name_id',
-    'service_instance_id',
-    'namespace_id',
-    'tags',
-    'service_instance_name',
     'org_guid',
     'space_guid',
-    'account_guid',
-    'region',
-    'resource_group_id',
+    'service_instance_id',
+    'namespace_id',
     'key',
     'role',
+    'region',
+    'tags',
+    'service_instance_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    account_guid=dict(
+        required= False,
+        type='str'),
+    resource_group_id=dict(
+        required= False,
+        type='str'),
     cluster_name_id=dict(
-        required='True',
+        required= False,
+        type='str'),
+    org_guid=dict(
+        required= False,
+        type='str'),
+    space_guid=dict(
+        required= False,
         type='str'),
     service_instance_id=dict(
-        required='False',
+        required= False,
         type='str'),
     namespace_id=dict(
-        required='True',
+        required= False,
+        type='str'),
+    key=dict(
+        required= False,
+        type='str'),
+    role=dict(
+        required= False,
+        type='str'),
+    region=dict(
+        required= False,
         type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     service_instance_name=dict(
-        required='False',
-        type='str'),
-    org_guid=dict(
-        required='False',
-        type='str'),
-    space_guid=dict(
-        required='False',
-        type='str'),
-    account_guid=dict(
-        required='False',
-        type='str'),
-    region=dict(
-        required='False',
-        type='str'),
-    resource_group_id=dict(
-        required='False',
-        type='str'),
-    key=dict(
-        required='False',
-        type='str'),
-    role=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

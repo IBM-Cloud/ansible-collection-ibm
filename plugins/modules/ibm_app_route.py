@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    port:
+        description:
+            - The port of the route. Supported for domains of TCP router groups only.
+        required: False
+        type: int
+    path:
+        description:
+            - The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
+        required: False
+        type: str
     tags:
         description:
             - None
@@ -40,16 +50,6 @@ options:
         description:
             - (Required for new resource) The guid of the associated domain
         required: True
-        type: str
-    port:
-        description:
-            - The port of the route. Supported for domains of TCP router groups only.
-        required: False
-        type: int
-    path:
-        description:
-            - The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
-        required: False
         type: str
     id:
         description:
@@ -103,39 +103,39 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'port',
+    'path',
     'tags',
     'host',
     'space_guid',
     'domain_guid',
-    'port',
-    'path',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    port=dict(
+        required= False,
+        type='int'),
+    path=dict(
+        required= False,
+        type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     host=dict(
-        required='False',
+        required= False,
         type='str'),
     space_guid=dict(
-        required='True',
+        required= False,
         type='str'),
     domain_guid=dict(
-        required='True',
-        type='str'),
-    port=dict(
-        required='False',
-        type='int'),
-    path=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

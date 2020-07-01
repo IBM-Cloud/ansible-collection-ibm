@@ -20,40 +20,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
     description:
         description:
             - Description of a load balancer.
         required: False
         type: str
-    subnets:
-        description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: True
-        type: list
-        elements: int
     status:
         description:
             - The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
         required: False
         type: str
-    datacenter:
+    ssl_ciphers:
         description:
             - None
         required: False
-        type: str
-    use_system_public_ip_pool:
+        type: list
+        elements: str
+    wait_time_minutes:
         description:
-            - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
+            - None
         required: False
-        type: bool
-    resource_controller_url:
+        type: int
+        default: 90
+    resource_name:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - The name of the resource
+        required: False
+        type: str
+    datacenter:
+        description:
+            - None
         required: False
         type: str
     protocols:
@@ -62,12 +58,17 @@ options:
         required: False
         type: list
         elements: dict
-    wait_time_minutes:
+    subnets:
         description:
-            - None
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: True
+        type: list
+        elements: int
+    vip:
+        description:
+            - The virtual ip address of this load balancer
         required: False
-        type: int
-        default: 90
+        type: str
     resource_status:
         description:
             - The status of the resource
@@ -84,23 +85,22 @@ options:
         required: False
         type: str
         default: PUBLIC
-    vip:
+    use_system_public_ip_pool:
         description:
-            - The virtual ip address of this load balancer
+            - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
-        type: str
-    ssl_ciphers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
+        type: bool
     health_monitors:
         description:
             - None
         required: False
         type: list
         elements: dict
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,78 +153,78 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
     'description',
-    'subnets',
     'status',
-    'datacenter',
-    'use_system_public_ip_pool',
-    'resource_controller_url',
-    'protocols',
+    'ssl_ciphers',
     'wait_time_minutes',
+    'resource_name',
+    'datacenter',
+    'protocols',
+    'subnets',
+    'vip',
     'resource_status',
     'name',
     'type',
-    'vip',
-    'ssl_ciphers',
+    'use_system_public_ip_pool',
     'health_monitors',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
-        required='False',
-        type='str'),
     description=dict(
-        required='False',
+        required= False,
         type='str'),
-    subnets=dict(
-        required='True',
-        elements='',
-        type='list'),
     status=dict(
-        required='False',
+        required= False,
         type='str'),
-    datacenter=dict(
-        required='False',
-        type='str'),
-    use_system_public_ip_pool=dict(
-        required='False',
-        type='bool'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
-    protocols=dict(
-        required='False',
+    ssl_ciphers=dict(
+        required= False,
         elements='',
         type='list'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    protocols=dict(
+        required= False,
+        elements='',
+        type='list'),
+    subnets=dict(
+        required= False,
+        elements='',
+        type='list'),
+    vip=dict(
+        required= False,
+        type='str'),
     resource_status=dict(
-        required='False',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     type=dict(
         default='PUBLIC',
         type='str'),
-    vip=dict(
-        required='False',
-        type='str'),
-    ssl_ciphers=dict(
-        required='False',
-        elements='',
-        type='list'),
+    use_system_public_ip_pool=dict(
+        required= False,
+        type='bool'),
     health_monitors=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

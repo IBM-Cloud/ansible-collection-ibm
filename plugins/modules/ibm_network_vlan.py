@@ -20,26 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    name:
-        description:
-            - VLAN name
-        required: False
-        type: str
-    router_hostname:
-        description:
-            - router host name
-        required: False
-        type: str
-    child_resource_count:
-        description:
-            - Child resource count
-        required: False
-        type: int
     subnets:
         description:
             - None
@@ -52,9 +32,9 @@ options:
         required: False
         type: list
         elements: str
-    resource_controller_url:
+    resource_name:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - The name of the resource
         required: False
         type: str
     datacenter:
@@ -67,16 +47,36 @@ options:
             - (Required for new resource) VLAN type
         required: True
         type: str
+    router_hostname:
+        description:
+            - router host name
+        required: False
+        type: str
     vlan_number:
         description:
             - VLAN number
         required: False
         type: int
+    child_resource_count:
+        description:
+            - Child resource count
+        required: False
+        type: int
+    name:
+        description:
+            - VLAN name
+        required: False
+        type: str
     softlayer_managed:
         description:
             - Zzset to true if VLAN is managed by softlayer
         required: False
         type: bool
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,60 +129,60 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'name',
-    'router_hostname',
-    'child_resource_count',
     'subnets',
     'tags',
-    'resource_controller_url',
+    'resource_name',
     'datacenter',
     'type',
+    'router_hostname',
     'vlan_number',
+    'child_resource_count',
+    'name',
     'softlayer_managed',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='False',
-        type='str'),
-    router_hostname=dict(
-        required='False',
-        type='str'),
-    child_resource_count=dict(
-        required='False',
-        type='int'),
     subnets=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
-    resource_controller_url=dict(
-        required='False',
+    resource_name=dict(
+        required= False,
         type='str'),
     datacenter=dict(
-        required='True',
+        required= False,
         type='str'),
     type=dict(
-        required='True',
+        required= False,
+        type='str'),
+    router_hostname=dict(
+        required= False,
         type='str'),
     vlan_number=dict(
-        required='False',
+        required= False,
         type='int'),
+    child_resource_count=dict(
+        required= False,
+        type='int'),
+    name=dict(
+        required= False,
+        type='str'),
     softlayer_managed=dict(
-        required='False',
+        required= False,
         type='bool'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

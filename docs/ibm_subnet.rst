@@ -26,6 +26,18 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  ip_version (False, int, 4)
+    ip version
+
+
+  endpoint_ip (False, str, None)
+    endpoint IP
+
+
+  subnet_cidr (False, str, None)
+    CIDR notation for the subnet
+
+
   private (False, bool, False)
     private subnet
 
@@ -42,20 +54,8 @@ Parameters
     VLAN ID for the subnet
 
 
-  subnet_cidr (False, str, None)
-    CIDR notation for the subnet
-
-
   notes (False, str, None)
     Notes
-
-
-  ip_version (False, int, 4)
-    ip version
-
-
-  endpoint_ip (False, str, None)
-    endpoint IP
 
 
   tags (False, list, None)

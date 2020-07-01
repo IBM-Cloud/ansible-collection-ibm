@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    original_name_servers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     cis_id:
         description:
             - CIS object id
@@ -47,6 +41,12 @@ options:
         required: False
         type: str
     name_servers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    original_name_servers:
         description:
             - None
         required: False
@@ -91,22 +91,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'original_name_servers',
     'cis_id',
     'domain',
     'paused',
     'status',
     'name_servers',
+    'original_name_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    original_name_servers=dict(
-        required=False,
-        elements='',
-        type='list'),
     cis_id=dict(
         required=True,
         type='str'),
@@ -120,6 +116,10 @@ module_args = dict(
         required=False,
         type='str'),
     name_servers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    original_name_servers=dict(
         required=False,
         elements='',
         type='list'),

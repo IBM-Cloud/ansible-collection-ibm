@@ -26,6 +26,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  fingerprint (False, str, None)
+    None
+
+
+  length (False, int, None)
+    None
+
+
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
@@ -47,14 +55,6 @@ Parameters
 
 
   type (False, str, None)
-    None
-
-
-  fingerprint (False, str, None)
-    None
-
-
-  length (False, int, None)
     None
 
 

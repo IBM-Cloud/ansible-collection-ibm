@@ -25,17 +25,22 @@ options:
             - (Required for new resource) Connections value
         required: True
         type: int
-    datacenter:
+    ip_address:
         description:
-            - (Required for new resource) Datacenter name info
-        required: True
+            - None
+        required: False
         type: str
-    ha_enabled:
+    ssl_offload:
         description:
-            - true if High availability is enabled
+            - boolean value true if SSL offload is enabled
         required: False
         type: bool
         default: False
+    ssl_enabled:
+        description:
+            - None
+        required: False
+        type: bool
     tags:
         description:
             - Tags associated with resource
@@ -47,16 +52,22 @@ options:
             - None
         required: False
         type: str
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name info
+        required: True
+        type: str
+    ha_enabled:
+        description:
+            - true if High availability is enabled
+        required: False
+        type: bool
+        default: False
     security_certificate_id:
         description:
             - Security certificate ID
         required: False
         type: int
-    ip_address:
-        description:
-            - None
-        required: False
-        type: str
     subnet_id:
         description:
             - None
@@ -65,17 +76,6 @@ options:
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
-        required: False
-        type: bool
-        default: False
-    ssl_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-    ssl_offload:
-        description:
-            - boolean value true if SSL offload is enabled
         required: False
         type: bool
         default: False
@@ -132,16 +132,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'connections',
-    'datacenter',
-    'ha_enabled',
+    'ip_address',
+    'ssl_offload',
+    'ssl_enabled',
     'tags',
     'hostname',
+    'datacenter',
+    'ha_enabled',
     'security_certificate_id',
-    'ip_address',
     'subnet_id',
     'dedicated',
-    'ssl_enabled',
-    'ssl_offload',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -149,41 +149,41 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     connections=dict(
-        required='True',
+        required= False,
         type='int'),
+    ip_address=dict(
+        required= False,
+        type='str'),
+    ssl_offload=dict(
+        default=False,
+        type='bool'),
+    ssl_enabled=dict(
+        required= False,
+        type='bool'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    hostname=dict(
+        required= False,
+        type='str'),
     datacenter=dict(
-        required='True',
+        required= False,
         type='str'),
     ha_enabled=dict(
         default=False,
         type='bool'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    hostname=dict(
-        required='False',
-        type='str'),
     security_certificate_id=dict(
-        required='False',
+        required= False,
         type='int'),
-    ip_address=dict(
-        required='False',
-        type='str'),
     subnet_id=dict(
-        required='False',
+        required= False,
         type='int'),
     dedicated=dict(
         default=False,
         type='bool'),
-    ssl_enabled=dict(
-        required='False',
-        type='bool'),
-    ssl_offload=dict(
-        default=False,
-        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

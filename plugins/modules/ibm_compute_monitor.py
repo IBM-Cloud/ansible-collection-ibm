@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notified_users:
-        description:
-            - List of users notified
-        required: False
-        type: list
-        elements: int
     tags:
         description:
             - List of tags
@@ -57,6 +51,12 @@ options:
             - wait cycles count
         required: False
         type: int
+    notified_users:
+        description:
+            - List of users notified
+        required: False
+        type: list
+        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,44 +110,44 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notified_users',
     'tags',
     'guest_id',
     'ip_address',
     'query_type_id',
     'response_action_id',
     'wait_cycles',
+    'notified_users',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notified_users=dict(
-        required='False',
-        elements='',
-        type='list'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     guest_id=dict(
-        required='True',
+        required= False,
         type='int'),
     ip_address=dict(
-        required='False',
+        required= False,
         type='str'),
     query_type_id=dict(
-        required='True',
+        required= False,
         type='int'),
     response_action_id=dict(
-        required='True',
+        required= False,
         type='int'),
     wait_cycles=dict(
-        required='False',
+        required= False,
         type='int'),
+    notified_users=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

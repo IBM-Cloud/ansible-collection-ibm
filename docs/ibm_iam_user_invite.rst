@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  access_groups (False, list, None)
-    access group ids to associate the inviting user
-
-
   iam_policy (False, list, None)
     None
 
@@ -44,6 +40,10 @@ Parameters
 
   users (True, list, None)
     (Required for new resource) List of ibm id or email of user
+
+
+  access_groups (False, list, None)
+    access group ids to associate the inviting user
 
 
   id (False, str, None)

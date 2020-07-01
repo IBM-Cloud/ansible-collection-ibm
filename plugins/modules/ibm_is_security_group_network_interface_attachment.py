@@ -25,16 +25,16 @@ options:
             - security group network interface attachment type
         required: False
         type: str
-    name:
+    instance_network_interface:
         description:
-            - security group network interface attachment name
+            - security group network interface attachment network interface ID
         required: False
         type: str
-    port_speed:
+    primary_ipv4_address:
         description:
-            - security group network interface attachment port speed
+            - security group network interface attachment Primary IPV4 address
         required: False
-        type: int
+        type: str
     secondary_address:
         description:
             - security group network interface attachment secondary address
@@ -73,16 +73,16 @@ options:
             - (Required for new resource) security group network interface attachment NIC ID
         required: True
         type: str
-    instance_network_interface:
+    name:
         description:
-            - security group network interface attachment network interface ID
+            - security group network interface attachment name
         required: False
         type: str
-    primary_ipv4_address:
+    port_speed:
         description:
-            - security group network interface attachment Primary IPV4 address
+            - security group network interface attachment port speed
         required: False
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -136,8 +136,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'name',
-    'port_speed',
+    'instance_network_interface',
+    'primary_ipv4_address',
     'secondary_address',
     'subnet',
     'status',
@@ -145,8 +145,8 @@ TL_ALL_PARAMETERS = [
     'security_groups',
     'security_group',
     'network_interface',
-    'instance_network_interface',
-    'primary_ipv4_address',
+    'name',
+    'port_speed',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -154,46 +154,46 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     type=dict(
-        required='False',
+        required= False,
         type='str'),
-    name=dict(
-        required='False',
+    instance_network_interface=dict(
+        required= False,
         type='str'),
-    port_speed=dict(
-        required='False',
-        type='int'),
+    primary_ipv4_address=dict(
+        required= False,
+        type='str'),
     secondary_address=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     subnet=dict(
-        required='False',
+        required= False,
         type='str'),
     status=dict(
-        required='False',
+        required= False,
         type='str'),
     floating_ips=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     security_groups=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     security_group=dict(
-        required='True',
+        required= False,
         type='str'),
     network_interface=dict(
-        required='True',
+        required= False,
         type='str'),
-    instance_network_interface=dict(
-        required='False',
+    name=dict(
+        required= False,
         type='str'),
-    primary_ipv4_address=dict(
-        required='False',
-        type='str'),
+    port_speed=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

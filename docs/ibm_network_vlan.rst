@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
   name (False, str, None)
     VLAN name
 
@@ -38,20 +34,20 @@ Parameters
     router host name
 
 
+  vlan_number (False, int, None)
+    VLAN number
+
+
+  softlayer_managed (False, bool, None)
+    Zzset to true if VLAN is managed by softlayer
+
+
   child_resource_count (False, int, None)
     Child resource count
 
 
-  subnets (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    List of tags
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  resource_name (False, str, None)
+    The name of the resource
 
 
   datacenter (True, str, None)
@@ -62,12 +58,16 @@ Parameters
     (Required for new resource) VLAN type
 
 
-  vlan_number (False, int, None)
-    VLAN number
+  tags (False, list, None)
+    List of tags
 
 
-  softlayer_managed (False, bool, None)
-    Zzset to true if VLAN is managed by softlayer
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  subnets (False, list, None)
+    None
 
 
   id (False, str, None)

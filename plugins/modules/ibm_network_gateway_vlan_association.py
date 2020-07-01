@@ -98,16 +98,16 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     gateway_id=dict(
-        required='True',
+        required= False,
         type='int'),
     network_vlan_id=dict(
-        required='True',
+        required= False,
         type='int'),
     bypass=dict(
         default=True,
         type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

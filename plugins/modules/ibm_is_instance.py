@@ -26,41 +26,14 @@ options:
         required: False
         type: list
         elements: dict
-    zone:
+    status:
         description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
-        type: str
-    tags:
-        description:
-            - list of tags for the instance
-        required: False
-        type: list
-        elements: str
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    user_data:
-        description:
-            - User data given for the instance
+            - instance status
         required: False
         type: str
-    image:
+    resource_name:
         description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
+            - The name of the resource
         required: False
         type: str
     resource_group_name:
@@ -73,23 +46,55 @@ options:
             - (Required for new resource) Instance name
         required: True
         type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
-    keys:
-        description:
-            - (Required for new resource) SSH key Ids for the instance
-        required: True
-        type: list
-        elements: str
     volume_attachments:
         description:
             - None
         required: False
         type: list
         elements: dict
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    gpu:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    tags:
+        description:
+            - list of tags for the instance
+        required: False
+        type: list
+        elements: str
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
     volumes:
         description:
             - List of volumes
@@ -101,26 +106,10 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
-    resource_group:
+    profile:
         description:
-            - Instance resource group
-        required: False
-        type: str
-    gpu:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    memory:
-        description:
-            - Instance memory
-        required: False
-        type: int
-    status:
-        description:
-            - instance status
-        required: False
+            - (Required for new resource) Profile info
+        required: True
         type: str
     primary_network_interface:
         description:
@@ -128,22 +117,33 @@ options:
         required: True
         type: list
         elements: dict
-    boot_volume:
+    network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_name:
+    resource_status:
         description:
-            - The name of the resource
+            - The status of the resource
         required: False
         type: str
-    resource_crn:
+    keys:
         description:
-            - The crn of the resource
+            - (Required for new resource) SSH key Ids for the instance
+        required: True
+        type: list
+        elements: str
+    resource_group:
+        description:
+            - Instance resource group
         required: False
         type: str
+    memory:
+        description:
+            - Instance memory
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -190,40 +190,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
-    ('profile', 'str'),
-    ('image', 'str'),
     ('name', 'str'),
     ('vpc', 'str'),
-    ('keys', 'list'),
+    ('zone', 'str'),
+    ('image', 'str'),
+    ('profile', 'str'),
     ('primary_network_interface', 'list'),
+    ('keys', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vcpu',
-    'zone',
-    'profile',
-    'tags',
-    'network_interfaces',
-    'user_data',
-    'image',
-    'resource_status',
+    'status',
+    'resource_name',
     'resource_group_name',
     'name',
-    'vpc',
-    'keys',
     'volume_attachments',
+    'user_data',
+    'boot_volume',
+    'gpu',
+    'resource_crn',
+    'vpc',
+    'zone',
+    'tags',
+    'image',
     'volumes',
     'resource_controller_url',
-    'resource_group',
-    'gpu',
-    'memory',
-    'status',
+    'profile',
     'primary_network_interface',
-    'boot_volume',
-    'resource_name',
-    'resource_crn',
+    'network_interfaces',
+    'resource_status',
+    'keys',
+    'resource_group',
+    'memory',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -231,85 +231,85 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     vcpu=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
-    zone=dict(
-        required='True',
+    status=dict(
+        required= False,
         type='str'),
-    profile=dict(
-        required='True',
+    resource_name=dict(
+        required= False,
         type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    network_interfaces=dict(
-        required='False',
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    volume_attachments=dict(
+        required= False,
         elements='',
         type='list'),
     user_data=dict(
-        required='False',
+        required= False,
         type='str'),
-    image=dict(
-        required='True',
-        type='str'),
-    resource_status=dict(
-        required='False',
-        type='str'),
-    resource_group_name=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
+    boot_volume=dict(
+        required= False,
+        elements='',
+        type='list'),
+    gpu=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_crn=dict(
+        required= False,
         type='str'),
     vpc=dict(
-        required='True',
+        required= False,
         type='str'),
-    keys=dict(
-        required='True',
+    zone=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
         elements='',
         type='list'),
-    volume_attachments=dict(
-        required='False',
-        elements='',
-        type='list'),
+    image=dict(
+        required= False,
+        type='str'),
     volumes=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     resource_controller_url=dict(
-        required='False',
+        required= False,
         type='str'),
-    resource_group=dict(
-        required='False',
-        type='str'),
-    gpu=dict(
-        required='False',
-        elements='',
-        type='list'),
-    memory=dict(
-        required='False',
-        type='int'),
-    status=dict(
-        required='False',
+    profile=dict(
+        required= False,
         type='str'),
     primary_network_interface=dict(
-        required='True',
+        required= False,
         elements='',
         type='list'),
-    boot_volume=dict(
-        required='False',
+    network_interfaces=dict(
+        required= False,
         elements='',
         type='list'),
-    resource_name=dict(
-        required='False',
+    resource_status=dict(
+        required= False,
         type='str'),
-    resource_crn=dict(
-        required='False',
+    keys=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required= False,
         type='str'),
+    memory=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

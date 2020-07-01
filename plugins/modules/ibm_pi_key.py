@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pi_key_name:
+        description:
+            - (Required for new resource) Key name in the PI instance
+        required: True
+        type: str
+    pi_ssh_key:
+        description:
+            - (Required for new resource) PI instance key info
+        required: True
+        type: str
     pi_creation_date:
         description:
             - Date info
@@ -34,16 +44,6 @@ options:
         description:
             - Key ID in the PI instance
         required: False
-        type: str
-    pi_key_name:
-        description:
-            - (Required for new resource) Key name in the PI instance
-        required: True
-        type: str
-    pi_ssh_key:
-        description:
-            - (Required for new resource) PI instance key info
-        required: True
         type: str
     id:
         description:
@@ -87,41 +87,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_key_name', 'str'),
     ('pi_ssh_key', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_key_name',
+    'pi_ssh_key',
     'pi_creation_date',
     'pi_cloud_instance_id',
     'key_id',
-    'pi_key_name',
-    'pi_ssh_key',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_creation_date=dict(
-        required='False',
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required='True',
-        type='str'),
-    key_id=dict(
-        required='False',
-        type='str'),
     pi_key_name=dict(
-        required='True',
+        required= False,
         type='str'),
     pi_ssh_key=dict(
-        required='True',
+        required= False,
+        type='str'),
+    pi_creation_date=dict(
+        required= False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required= False,
+        type='str'),
+    key_id=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

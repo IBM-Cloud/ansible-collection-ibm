@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  parameters (False, str, None)
+    All parameters set on package by user and those set by the IBM Cloud Function backend/API.
+
+
   bind_package_name (False, str, None)
     Name of package to be binded.
 
@@ -52,10 +56,6 @@ Parameters
 
   annotations (False, str, None)
     All annotations set on package by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All parameters set on package by user and those set by the IBM Cloud Function backend/API.
 
 
   id (False, str, None)

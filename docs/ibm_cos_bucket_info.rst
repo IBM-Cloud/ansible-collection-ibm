@@ -26,34 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  region_location (False, str, None)
-    None
-
-
-  storage_class (False, str, None)
-    None
-
-
-  metrics_monitoring (False, list, None)
-    None
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
-
-
-  bucket_type (True, str, None)
-    None
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
   single_site_location (False, str, None)
     None
 
@@ -62,19 +34,27 @@ Parameters
     None
 
 
+  bucket_region (True, str, None)
+    None
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  metrics_monitoring (False, list, None)
+    None
+
+
   s3_endpoint_private (False, str, None)
     Private endpoint for the COS bucket
-
-
-  activity_tracking (False, list, None)
-    None
 
 
   bucket_name (True, str, None)
     None
 
 
-  bucket_region (True, str, None)
+  bucket_type (True, str, None)
     None
 
 
@@ -82,8 +62,28 @@ Parameters
     None
 
 
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  region_location (False, str, None)
+    None
+
+
   s3_endpoint_public (False, str, None)
     Public endpoint for the COS bucket
+
+
+  storage_class (False, str, None)
+    None
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
+  activity_tracking (False, list, None)
+    None
 
 
   iaas_classic_username (False, any, None)

@@ -30,15 +30,7 @@ Parameters
     None
 
 
-  private_subnet_id (False, int, None)
-    None
-
-
-  ipv4_address (False, str, None)
-    None
-
-
-  ip_address_id_private (False, int, None)
+  ipv6_address_id (False, int, None)
     None
 
 
@@ -46,24 +38,28 @@ Parameters
     None
 
 
-  cores (False, int, None)
-    Number of cpu cores
+  domain (True, str, None)
+    The domain of the virtual guest
+
+
+  status (False, str, None)
+    The VSI status
 
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
 
 
-  ip_address_id (False, int, None)
+  private_interface_id (False, int, None)
     None
 
 
-  domain (True, str, None)
-    The domain of the virtual guest
+  ipv4_address_private (False, str, None)
+    None
 
 
-  power_state (False, str, None)
-    The current power state of a virtual guest.
+  ip_address_id (False, int, None)
+    None
 
 
   ipv6_address (False, str, None)
@@ -78,27 +74,27 @@ Parameters
     None
 
 
-  hostname (True, str, None)
-    The hostname of the virtual guest
+  cores (False, int, None)
+    Number of cpu cores
 
 
-  datacenter (False, str, None)
-    Datacenter in which the virtual guest is deployed
+  private_subnet_id (False, int, None)
+    None
+
+
+  ipv4_address (False, str, None)
+    None
 
 
   public_interface_id (False, int, None)
     None
 
 
-  private_interface_id (False, int, None)
-    None
+  power_state (False, str, None)
+    The current power state of a virtual guest.
 
 
-  ipv4_address_private (False, str, None)
-    None
-
-
-  ipv6_address_id (False, int, None)
+  ip_address_id_private (False, int, None)
     None
 
 
@@ -106,8 +102,12 @@ Parameters
     None
 
 
-  status (False, str, None)
-    The VSI status
+  hostname (True, str, None)
+    The hostname of the virtual guest
+
+
+  datacenter (False, str, None)
+    Datacenter in which the virtual guest is deployed
 
 
   last_known_power_state (False, str, None)

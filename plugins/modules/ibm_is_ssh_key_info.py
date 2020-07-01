@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    length:
+        description:
+            - None
+        required: False
+        type: int
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
@@ -55,11 +60,6 @@ options:
             - None
         required: False
         type: str
-    length:
-        description:
-            - None
-        required: False
-        type: int
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -98,6 +98,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'length',
     'resource_controller_url',
     'resource_name',
     'resource_crn',
@@ -105,13 +106,15 @@ TL_ALL_PARAMETERS = [
     'name',
     'type',
     'fingerprint',
-    'length',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    length=dict(
+        required=False,
+        type='int'),
     resource_controller_url=dict(
         required=False,
         type='str'),
@@ -133,9 +136,6 @@ module_args = dict(
     fingerprint=dict(
         required=False,
         type='str'),
-    length=dict(
-        required=False,
-        type='int'),
     generation=dict(
         type='int',
         required=False,

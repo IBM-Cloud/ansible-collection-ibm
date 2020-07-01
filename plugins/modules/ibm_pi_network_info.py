@@ -25,27 +25,17 @@ options:
             - None
         required: False
         type: str
+    type:
+        description:
+            - None
+        required: False
+        type: str
     vlan_id:
         description:
             - None
         required: False
         type: int
     gateway:
-        description:
-            - None
-        required: False
-        type: str
-    available_ip_count:
-        description:
-            - None
-        required: False
-        type: float
-    used_ip_count:
-        description:
-            - None
-        required: False
-        type: float
-    name:
         description:
             - None
         required: False
@@ -60,16 +50,26 @@ options:
             - None
         required: True
         type: str
-    type:
+    available_ip_count:
         description:
             - None
         required: False
-        type: str
+        type: float
+    used_ip_count:
+        description:
+            - None
+        required: False
+        type: float
     used_ip_percent:
         description:
             - None
         required: False
         type: float
+    name:
+        description:
+            - None
+        required: False
+        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -106,15 +106,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cidr',
+    'type',
     'vlan_id',
     'gateway',
-    'available_ip_count',
-    'used_ip_count',
-    'name',
     'pi_network_name',
     'pi_cloud_instance_id',
-    'type',
+    'available_ip_count',
+    'used_ip_count',
     'used_ip_percent',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -124,19 +124,13 @@ module_args = dict(
     cidr=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     vlan_id=dict(
         required=False,
         type='int'),
     gateway=dict(
-        required=False,
-        type='str'),
-    available_ip_count=dict(
-        required=False,
-        type='float'),
-    used_ip_count=dict(
-        required=False,
-        type='float'),
-    name=dict(
         required=False,
         type='str'),
     pi_network_name=dict(
@@ -145,12 +139,18 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    type=dict(
+    available_ip_count=dict(
         required=False,
-        type='str'),
+        type='float'),
+    used_ip_count=dict(
+        required=False,
+        type='float'),
     used_ip_percent=dict(
         required=False,
         type='float'),
+    name=dict(
+        required=False,
+        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),

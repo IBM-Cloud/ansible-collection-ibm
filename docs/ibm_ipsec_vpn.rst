@@ -30,7 +30,35 @@ Parameters
     (Required for new resource) Datacenter name
 
 
+  name (False, str, None)
+    None
+
+
+  phase_one (False, list, None)
+    None
+
+
   address_translation (False, list, None)
+    None
+
+
+  internal_subnet_id (False, int, None)
+    Internal subnet ID value
+
+
+  remote_subnet_id (False, int, None)
+    Remote subnet ID value
+
+
+  remote_subnet (False, list, None)
+    None
+
+
+  internal_peer_ip_address (False, str, None)
+    None
+
+
+  phase_two (False, list, None)
     None
 
 
@@ -42,36 +70,8 @@ Parameters
     Customer Peer IP Address
 
 
-  internal_subnet_id (False, int, None)
-    Internal subnet ID value
-
-
   service_subnet_id (False, int, None)
     Service subnet ID value
-
-
-  internal_peer_ip_address (False, str, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  phase_one (False, list, None)
-    None
-
-
-  phase_two (False, list, None)
-    None
-
-
-  remote_subnet_id (False, int, None)
-    Remote subnet ID value
-
-
-  remote_subnet (False, list, None)
-    None
 
 
   id (False, str, None)

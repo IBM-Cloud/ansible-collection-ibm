@@ -20,9 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    status:
+    certificate_type:
         description:
-            - Status info of the CDN instance
+            - Certificate type
+        required: False
+        type: str
+    header:
+        description:
+            - Header info
         required: False
         type: str
     respect_headers:
@@ -31,11 +36,22 @@ options:
         required: False
         type: bool
         default: True
-    file_extension:
+    origin_address:
         description:
-            - File extension info
+            - (Required for new resource) origin address info
+        required: True
+        type: str
+    cname:
+        description:
+            - cname info
         required: False
         type: str
+    cache_key_query_rule:
+        description:
+            - query rule info
+        required: False
+        type: str
+        default: include-all
     performance_configuration:
         description:
             - performance configuration info
@@ -48,11 +64,12 @@ options:
         required: False
         type: str
         default: /*
-    host_name:
+    vendor_name:
         description:
-            - (Required for new resource) Host name
-        required: True
+            - Vendor name
+        required: False
         type: str
+        default: akamai
     origin_type:
         description:
             - Origin type info
@@ -65,32 +82,26 @@ options:
         required: False
         type: int
         default: 443
-    cname:
+    file_extension:
         description:
-            - cname info
+            - File extension info
         required: False
         type: str
-    certificate_type:
+    host_name:
         description:
-            - Certificate type
-        required: False
-        type: str
-    cache_key_query_rule:
-        description:
-            - query rule info
-        required: False
-        type: str
-        default: include-all
-    vendor_name:
-        description:
-            - Vendor name
-        required: False
-        type: str
-        default: akamai
-    origin_address:
-        description:
-            - (Required for new resource) origin address info
+            - (Required for new resource) Host name
         required: True
+        type: str
+    http_port:
+        description:
+            - HTTP port number
+        required: False
+        type: int
+        default: 80
+    status:
+        description:
+            - Status info of the CDN instance
+        required: False
         type: str
     bucket_name:
         description:
@@ -103,17 +114,6 @@ options:
         required: False
         type: str
         default: HTTP
-    http_port:
-        description:
-            - HTTP port number
-        required: False
-        type: int
-        default: 80
-    header:
-        description:
-            - Header info
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -160,43 +160,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_name', 'str'),
     ('origin_address', 'str'),
+    ('host_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
+    'certificate_type',
+    'header',
     'respect_headers',
-    'file_extension',
+    'origin_address',
+    'cname',
+    'cache_key_query_rule',
     'performance_configuration',
     'path',
-    'host_name',
+    'vendor_name',
     'origin_type',
     'https_port',
-    'cname',
-    'certificate_type',
-    'cache_key_query_rule',
-    'vendor_name',
-    'origin_address',
+    'file_extension',
+    'host_name',
+    'http_port',
+    'status',
     'bucket_name',
     'protocol',
-    'http_port',
-    'header',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required='False',
+    certificate_type=dict(
+        required= False,
+        type='str'),
+    header=dict(
+        required= False,
         type='str'),
     respect_headers=dict(
         default=True,
         type='bool'),
-    file_extension=dict(
-        required='False',
+    origin_address=dict(
+        required= False,
+        type='str'),
+    cname=dict(
+        required= False,
+        type='str'),
+    cache_key_query_rule=dict(
+        default='include-all',
         type='str'),
     performance_configuration=dict(
         default='General web delivery',
@@ -204,8 +213,8 @@ module_args = dict(
     path=dict(
         default='/*',
         type='str'),
-    host_name=dict(
-        required='True',
+    vendor_name=dict(
+        default='akamai',
         type='str'),
     origin_type=dict(
         default='HOST_SERVER',
@@ -213,35 +222,26 @@ module_args = dict(
     https_port=dict(
         default=443,
         type='int'),
-    cname=dict(
-        required='False',
+    file_extension=dict(
+        required= False,
         type='str'),
-    certificate_type=dict(
-        required='False',
-        type='str'),
-    cache_key_query_rule=dict(
-        default='include-all',
-        type='str'),
-    vendor_name=dict(
-        default='akamai',
-        type='str'),
-    origin_address=dict(
-        required='True',
-        type='str'),
-    bucket_name=dict(
-        required='False',
-        type='str'),
-    protocol=dict(
-        default='HTTP',
+    host_name=dict(
+        required= False,
         type='str'),
     http_port=dict(
         default=80,
         type='int'),
-    header=dict(
-        required='False',
+    status=dict(
+        required= False,
+        type='str'),
+    bucket_name=dict(
+        required= False,
+        type='str'),
+    protocol=dict(
+        default='HTTP',
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

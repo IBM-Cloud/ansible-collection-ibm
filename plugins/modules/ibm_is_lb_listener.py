@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    listener_id:
-        description:
-            - None
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
-        type: str
     port:
         description:
             - (Required for new resource) Loadbalancer listener port
@@ -59,6 +49,16 @@ options:
         description:
             - Loadbalancer listener status
         required: False
+        type: str
+    listener_id:
+        description:
+            - None
+        required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
         type: str
     id:
         description:
@@ -106,53 +106,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
     ('port', 'int'),
     ('protocol', 'str'),
+    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'listener_id',
-    'lb',
     'port',
     'protocol',
     'certificate_instance',
     'connection_limit',
     'default_pool',
     'status',
+    'listener_id',
+    'lb',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    listener_id=dict(
-        required='False',
-        type='str'),
-    lb=dict(
-        required='True',
-        type='str'),
     port=dict(
-        required='True',
+        required= False,
         type='int'),
     protocol=dict(
-        required='True',
+        required= False,
         type='str'),
     certificate_instance=dict(
-        required='False',
+        required= False,
         type='str'),
     connection_limit=dict(
-        required='False',
+        required= False,
         type='int'),
     default_pool=dict(
-        required='False',
+        required= False,
         type='str'),
     status=dict(
-        required='False',
+        required= False,
+        type='str'),
+    listener_id=dict(
+        required= False,
+        type='str'),
+    lb=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

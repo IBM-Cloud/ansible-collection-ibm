@@ -20,23 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Name of action.
-        required: True
-        type: str
-    limits:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    exec:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     publish:
         description:
             - Action visibilty.
@@ -57,6 +40,23 @@ options:
             - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
+    name:
+        description:
+            - Name of action.
+        required: True
+        type: str
+    limits:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    exec:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     function_namespace:
         description:
             - The namespace in IBM Cloud™ Functions where you want to
@@ -81,30 +81,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'limits',
-    'exec',
     'publish',
     'version',
     'annotations',
     'parameters',
+    'name',
+    'limits',
+    'exec',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
-    limits=dict(
-        required=False,
-        elements='',
-        type='list'),
-    exec=dict(
-        required=False,
-        elements='',
-        type='list'),
     publish=dict(
         required=False,
         type='bool'),
@@ -117,6 +106,17 @@ module_args = dict(
     parameters=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=True,
+        type='str'),
+    limits=dict(
+        required=False,
+        elements='',
+        type='list'),
+    exec=dict(
+        required=False,
+        elements='',
+        type='list'),
     function_namespace=dict(
         type='str',
         fallback=(env_fallback, ['FUNCTION_NAMESPACE']),

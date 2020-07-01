@@ -26,44 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  available_ipv4_address_count (False, str, None)
+    None
 
 
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
+  total_ipv4_address_count (False, int, None)
+    None
 
 
-  name (True, str, None)
-    (Required for new resource) Subnet name
-
-
-  resource_status (False, str, None)
-    The status of the resource
+  resource_group (False, str, None)
+    None
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
   ipv6_cidr_block (False, str, None)
     None
 
 
-  ip_version (False, str, ipv4)
-    Subnet IP version
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group (False, str, None)
-    None
+  name (True, str, None)
+    (Required for new resource) Subnet name
 
 
   network_acl (False, str, None)
@@ -74,24 +58,40 @@ Parameters
     Public Gateway of the subnet
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  status (False, str, None)
+    None
 
 
   zone (True, str, None)
     (Required for new resource) Subnet zone info
 
 
-  available_ipv4_address_count (False, str, None)
-    None
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  total_ipv4_address_count (False, int, None)
-    None
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
 
 
-  status (False, str, None)
-    None
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
+
+
+  ip_version (False, str, ipv4)
+    Subnet IP version
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
   id (False, str, None)

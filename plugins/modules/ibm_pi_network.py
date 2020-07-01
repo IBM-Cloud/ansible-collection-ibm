@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    vlan_id:
+        description:
+            - VLAN Id value
+        required: False
+        type: float
+    pi_network_type:
+        description:
+            - (Required for new resource) PI network type
+        required: True
+        type: str
     pi_network_name:
         description:
             - (Required for new resource) PI network name
@@ -50,16 +60,6 @@ options:
         description:
             - PI network ID
         required: False
-        type: str
-    vlan_id:
-        description:
-            - VLAN Id value
-        required: False
-        type: float
-    pi_network_type:
-        description:
-            - (Required for new resource) PI network type
-        required: True
         type: str
     id:
         description:
@@ -103,54 +103,54 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_network_type', 'str'),
     ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
-    ('pi_network_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'vlan_id',
+    'pi_network_type',
     'pi_network_name',
     'pi_dns',
     'pi_cidr',
     'pi_gateway',
     'pi_cloud_instance_id',
     'network_id',
-    'vlan_id',
-    'pi_network_type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    vlan_id=dict(
+        required= False,
+        type='float'),
+    pi_network_type=dict(
+        required= False,
+        type='str'),
     pi_network_name=dict(
-        required='True',
+        required= False,
         type='str'),
     pi_dns=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     pi_cidr=dict(
-        required='False',
+        required= False,
         type='str'),
     pi_gateway=dict(
-        required='False',
+        required= False,
         type='str'),
     pi_cloud_instance_id=dict(
-        required='True',
+        required= False,
         type='str'),
     network_id=dict(
-        required='False',
-        type='str'),
-    vlan_id=dict(
-        required='False',
-        type='float'),
-    pi_network_type=dict(
-        required='True',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

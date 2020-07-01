@@ -26,6 +26,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  users (False, list, None)
+    The IBMID of the users who will have user role in this org, ex - user@example.com
+
+
+  tags (False, list, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) Org name, for example myorg@domain
 
@@ -44,14 +52,6 @@ Parameters
 
   auditors (False, list, None)
     The IBMID of the users who will have auditor role in this org, ex - user@example.com
-
-
-  users (False, list, None)
-    The IBMID of the users who will have user role in this org, ex - user@example.com
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

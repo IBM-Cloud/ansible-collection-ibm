@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pi_volume_shareable:
+        description:
+            - None
+        required: False
+        type: bool
     volumeattachid:
         description:
             - Volume attachment ID
@@ -45,11 +50,6 @@ options:
             - None
         required: False
         type: str
-    pi_volume_shareable:
-        description:
-            - None
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,38 +99,38 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_volume_shareable',
     'volumeattachid',
     'pi_cloud_instance_id',
     'pi_volume_attach_name',
     'pi_instance_name',
     'status',
-    'pi_volume_shareable',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_volume_shareable=dict(
+        required= False,
+        type='bool'),
     volumeattachid=dict(
-        required='False',
+        required= False,
         type='str'),
     pi_cloud_instance_id=dict(
-        required='True',
+        required= False,
         type='str'),
     pi_volume_attach_name=dict(
-        required='True',
+        required= False,
         type='str'),
     pi_instance_name=dict(
-        required='True',
+        required= False,
         type='str'),
     status=dict(
-        required='False',
+        required= False,
         type='str'),
-    pi_volume_shareable=dict(
-        required='False',
-        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

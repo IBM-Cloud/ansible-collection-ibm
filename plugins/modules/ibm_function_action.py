@@ -20,25 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    version:
         description:
-            - (Required for new resource) Name of action.
-        required: True
-        type: str
-    exec:
-        description:
-            - (Required for new resource) Execution info
-        required: True
-        type: list
-        elements: dict
-    publish:
-        description:
-            - Action visibilty.
+            - Semantic version of the item.
         required: False
-        type: bool
+        type: str
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
+        required: False
+        type: str
+        default: []
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
         required: False
         type: str
         default: []
@@ -52,23 +47,28 @@ options:
             - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
         required: False
         type: str
+    name:
+        description:
+            - (Required for new resource) Name of action.
+        required: True
+        type: str
     limits:
         description:
             - None
         required: False
         type: list
         elements: dict
-    version:
+    exec:
         description:
-            - Semantic version of the item.
-        required: False
-        type: str
-    user_defined_parameters:
+            - (Required for new resource) Execution info
+        required: True
+        type: list
+        elements: dict
+    publish:
         description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+            - Action visibilty.
         required: False
-        type: str
-        default: []
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,52 +107,52 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'exec',
-    'publish',
+    'version',
     'user_defined_annotations',
+    'user_defined_parameters',
     'annotations',
     'parameters',
+    'name',
     'limits',
-    'version',
-    'user_defined_parameters',
+    'exec',
+    'publish',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required='True',
+    version=dict(
+        required= False,
         type='str'),
-    exec=dict(
-        required='True',
-        elements='',
-        type='list'),
-    publish=dict(
-        required='False',
-        type='bool'),
     user_defined_annotations=dict(
         default='[]',
-        type='str'),
-    annotations=dict(
-        required='False',
-        type='str'),
-    parameters=dict(
-        required='False',
-        type='str'),
-    limits=dict(
-        required='False',
-        elements='',
-        type='list'),
-    version=dict(
-        required='False',
         type='str'),
     user_defined_parameters=dict(
         default='[]',
         type='str'),
+    annotations=dict(
+        required= False,
+        type='str'),
+    parameters=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    limits=dict(
+        required= False,
+        elements='',
+        type='list'),
+    exec=dict(
+        required= False,
+        elements='',
+        type='list'),
+    publish=dict(
+        required= False,
+        type='bool'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

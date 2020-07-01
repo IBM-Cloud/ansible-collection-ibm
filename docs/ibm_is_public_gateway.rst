@@ -26,28 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the Public gateway instance
-
-
-  floating_ip (False, dict, None)
-    None
+  status (False, str, None)
+    Public gateway instance status
 
 
   resource_group (False, str, None)
     Public gateway resource group info
 
 
-  tags (False, list, None)
-    Service tags for the public gateway instance
+  zone (True, str, None)
+    (Required for new resource) Public gateway zone info
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_status (False, str, None)
@@ -58,20 +50,28 @@ Parameters
     The resource group name in which resource is provisioned
 
 
-  status (False, str, None)
-    Public gateway instance status
+  name (True, str, None)
+    (Required for new resource) Name of the Public gateway instance
+
+
+  floating_ip (False, dict, None)
+    None
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   vpc (True, str, None)
     (Required for new resource) Public gateway VPC info
 
 
-  zone (True, str, None)
-    (Required for new resource) Public gateway zone info
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  tags (False, list, None)
+    Service tags for the public gateway instance
 
 
   id (False, str, None)

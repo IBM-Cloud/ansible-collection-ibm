@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    timeout:
+        description:
+            - Timeout for dead peer detection
+        required: False
+        type: int
+        default: 120
     name:
         description:
             - (Required for new resource) VPN Gateway connection name
@@ -35,27 +41,26 @@ options:
             - (Required for new resource) VPN gateway connection peer address
         required: True
         type: str
-    admin_state_up:
+    local_cidrs:
         description:
-            - VPN gateway connection admin state
+            - VPN gateway connection local CIDRs
         required: False
-        type: bool
-        default: False
+        type: list
+        elements: str
     peer_cidrs:
         description:
             - VPN gateway connection peer CIDRs
         required: False
         type: list
         elements: str
-    timeout:
-        description:
-            - Timeout for dead peer detection
-        required: False
-        type: int
-        default: 120
     ike_policy:
         description:
             - VPN gateway connection IKE Policy
+        required: False
+        type: str
+    status:
+        description:
+            - VPN gateway connection status
         required: False
         type: str
     preshared_key:
@@ -63,12 +68,12 @@ options:
             - (Required for new resource) vpn gateway
         required: True
         type: str
-    local_cidrs:
+    admin_state_up:
         description:
-            - VPN gateway connection local CIDRs
+            - VPN gateway connection admin state
         required: False
-        type: list
-        elements: str
+        type: bool
+        default: False
     action:
         description:
             - Action detection for dead peer detection action
@@ -84,11 +89,6 @@ options:
     ipsec_policy:
         description:
             - IP security policy for vpn gateway connection
-        required: False
-        type: str
-    status:
-        description:
-            - VPN gateway connection status
         required: False
         type: str
     id:
@@ -145,54 +145,57 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'timeout',
     'name',
     'vpn_gateway',
     'peer_address',
-    'admin_state_up',
-    'peer_cidrs',
-    'timeout',
-    'ike_policy',
-    'preshared_key',
     'local_cidrs',
+    'peer_cidrs',
+    'ike_policy',
+    'status',
+    'preshared_key',
+    'admin_state_up',
     'action',
     'interval',
     'ipsec_policy',
-    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    timeout=dict(
+        default=120,
+        type='int'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     vpn_gateway=dict(
-        required='True',
+        required= False,
         type='str'),
     peer_address=dict(
-        required='True',
+        required= False,
+        type='str'),
+    local_cidrs=dict(
+        required= False,
+        elements='',
+        type='list'),
+    peer_cidrs=dict(
+        required= False,
+        elements='',
+        type='list'),
+    ike_policy=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
+    preshared_key=dict(
+        required= False,
         type='str'),
     admin_state_up=dict(
         default=False,
         type='bool'),
-    peer_cidrs=dict(
-        required='False',
-        elements='',
-        type='list'),
-    timeout=dict(
-        default=120,
-        type='int'),
-    ike_policy=dict(
-        required='False',
-        type='str'),
-    preshared_key=dict(
-        required='True',
-        type='str'),
-    local_cidrs=dict(
-        required='False',
-        elements='',
-        type='list'),
     action=dict(
         default='none',
         type='str'),
@@ -200,13 +203,10 @@ module_args = dict(
         default=30,
         type='int'),
     ipsec_policy=dict(
-        required='False',
-        type='str'),
-    status=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

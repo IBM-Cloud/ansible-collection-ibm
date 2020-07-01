@@ -26,24 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  has_previous (False, str, None)
-    Has Previous
-
-
-  issuance_info (False, dict, None)
-    None
-
-
   certificate_manager_instance_id (True, str, None)
     (Required for new resource) Certificate manager instance ID
 
 
   domains (True, list, None)
     (Required for new resource) List of domain names
-
-
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
 
 
   dns_provider_instance_crn (False, str, None)
@@ -54,40 +42,52 @@ Parameters
     Keyalgorithm info
 
 
-  begins_on (False, int, None)
-    Cerificate validity from date
+  algorithm (False, str, None)
+    Algorithm info
 
 
-  imported (False, bool, None)
-    set to true if certificate is imported
+  has_previous (False, str, None)
+    Has Previous
 
 
-  status (False, str, None)
-    Status  of the certificate
-
-
-  name (True, str, None)
-    (Required for new resource) Certificate name
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
 
 
   domain_validation_method (False, str, dns-01)
     Domain validation methods
 
 
-  issuer (False, str, None)
-    Certificate issuer info
+  imported (False, bool, None)
+    set to true if certificate is imported
 
 
-  algorithm (False, str, None)
-    Algorithm info
-
-
-  expires_on (False, int, None)
-    Certificaet expairy date
+  name (True, str, None)
+    (Required for new resource) Certificate name
 
 
   description (False, str, None)
     Certicate description
+
+
+  issuer (False, str, None)
+    Certificate issuer info
+
+
+  status (False, str, None)
+    Status  of the certificate
+
+
+  issuance_info (False, dict, None)
+    None
+
+
+  begins_on (False, int, None)
+    Cerificate validity from date
+
+
+  expires_on (False, int, None)
+    Certificaet expairy date
 
 
   id (False, str, None)

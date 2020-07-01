@@ -20,50 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: True
+        type: str
     standard_key:
         description:
             - Standard key type
         required: False
         type: bool
         default: False
-    resource_name:
+    iv_value:
         description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    key_protect_id:
-        description:
-            - (Required for new resource) Key protect instance ID
-        required: True
-        type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
-    crn:
-        description:
-            - Crn of the key
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
+            - Only for imported root key
         required: False
         type: str
     key_id:
@@ -71,10 +41,10 @@ options:
             - Key ID
         required: False
         type: str
-    key_name:
+    payload:
         description:
-            - (Required for new resource) Key name
-        required: True
+            - None
+        required: False
         type: str
     force_delete:
         description:
@@ -87,9 +57,39 @@ options:
             - Only for imported root key
         required: False
         type: str
-    iv_value:
+    crn:
         description:
-            - Only for imported root key
+            - Crn of the key
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    key_protect_id:
+        description:
+            - (Required for new resource) Key protect instance ID
+        required: True
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
         required: False
         type: str
     id:
@@ -138,76 +138,76 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key_protect_id', 'str'),
     ('key_name', 'str'),
+    ('key_protect_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'standard_key',
-    'resource_name',
-    'resource_controller_url',
-    'resource_status',
-    'key_protect_id',
-    'payload',
-    'crn',
-    'resource_crn',
-    'resource_group_name',
-    'key_id',
     'key_name',
+    'standard_key',
+    'iv_value',
+    'key_id',
+    'payload',
     'force_delete',
     'encrypted_nonce',
-    'iv_value',
+    'crn',
+    'resource_crn',
+    'key_protect_id',
+    'resource_name',
+    'resource_group_name',
+    'resource_controller_url',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    key_name=dict(
+        required= False,
+        type='str'),
     standard_key=dict(
         default=False,
         type='bool'),
-    resource_name=dict(
-        required='False',
-        type='str'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
-    resource_status=dict(
-        required='False',
-        type='str'),
-    key_protect_id=dict(
-        required='True',
-        type='str'),
-    payload=dict(
-        required='False',
-        type='str'),
-    crn=dict(
-        required='False',
-        type='str'),
-    resource_crn=dict(
-        required='False',
-        type='str'),
-    resource_group_name=dict(
-        required='False',
+    iv_value=dict(
+        required= False,
         type='str'),
     key_id=dict(
-        required='False',
+        required= False,
         type='str'),
-    key_name=dict(
-        required='True',
+    payload=dict(
+        required= False,
         type='str'),
     force_delete=dict(
         default=False,
         type='bool'),
     encrypted_nonce=dict(
-        required='False',
+        required= False,
         type='str'),
-    iv_value=dict(
-        required='False',
+    crn=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
+        required= False,
+        type='str'),
+    key_protect_id=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

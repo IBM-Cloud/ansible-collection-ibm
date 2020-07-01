@@ -20,28 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    shared:
-        description:
-            - The Shared status of an endpoint
-        required: False
-        type: bool
-    provider_id:
-        description:
-            - Provider ID of an endpoint allowable values user-defined and whisk
-        required: False
-        type: str
-        default: user-defined
-    endpoint_id:
-        description:
-            - Endpoint ID
-        required: False
-        type: str
-    type:
-        description:
-            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
-        required: False
-        type: str
-        default: unshare
     service_instance_crn:
         description:
             - (Required for new resource) Api Gateway Service Instance Crn
@@ -69,11 +47,33 @@ options:
         required: False
         type: bool
         default: False
+    shared:
+        description:
+            - The Shared status of an endpoint
+        required: False
+        type: bool
     base_path:
         description:
             - Base path of an endpoint
         required: False
         type: str
+    provider_id:
+        description:
+            - Provider ID of an endpoint allowable values user-defined and whisk
+        required: False
+        type: str
+        default: user-defined
+    endpoint_id:
+        description:
+            - Endpoint ID
+        required: False
+        type: str
+    type:
+        description:
+            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+        required: False
+        type: str
+        default: unshare
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,55 +127,55 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shared',
-    'provider_id',
-    'endpoint_id',
-    'type',
     'service_instance_crn',
     'open_api_doc_name',
     'name',
     'routes',
     'managed',
+    'shared',
     'base_path',
+    'provider_id',
+    'endpoint_id',
+    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shared=dict(
-        required='False',
-        type='bool'),
-    provider_id=dict(
-        default='user-defined',
-        type='str'),
-    endpoint_id=dict(
-        required='False',
-        type='str'),
-    type=dict(
-        default='unshare',
-        type='str'),
     service_instance_crn=dict(
-        required='True',
+        required= False,
         type='str'),
     open_api_doc_name=dict(
-        required='True',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     routes=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     managed=dict(
         default=False,
         type='bool'),
+    shared=dict(
+        required= False,
+        type='bool'),
     base_path=dict(
-        required='False',
+        required= False,
+        type='str'),
+    provider_id=dict(
+        default='user-defined',
+        type='str'),
+    endpoint_id=dict(
+        required= False,
+        type='str'),
+    type=dict(
+        default='unshare',
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

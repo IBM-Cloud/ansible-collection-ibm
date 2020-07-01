@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  endpoints (False, list, None)
-    List of all endpoints of an instance
-
-
   service_instance_crn (True, str, None)
     Api Gateway Service Instance Crn
+
+
+  endpoints (False, list, None)
+    List of all endpoints of an instance
 
 
   iaas_classic_username (False, any, None)

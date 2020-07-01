@@ -20,22 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    refresh_api_servers:
-        description:
-            - Boolean value true of API server to be refreshed in K8S cluster
-        required: False
-        type: bool
-        default: True
-    private_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name of ID
@@ -46,11 +30,27 @@ options:
             - None
         required: False
         type: bool
+    private_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
+    public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
     public_service_endpoint_url:
         description:
             - None
         required: False
         type: str
+    refresh_api_servers:
+        description:
+            - Boolean value true of API server to be refreshed in K8S cluster
+        required: False
+        type: bool
+        default: True
     reload_workers:
         description:
             - Boolean value set true if worker nodes to be reloaded
@@ -93,12 +93,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_service_endpoint',
-    'refresh_api_servers',
-    'private_service_endpoint_url',
     'cluster',
     'private_service_endpoint',
+    'private_service_endpoint_url',
+    'public_service_endpoint',
     'public_service_endpoint_url',
+    'refresh_api_servers',
     'reload_workers',
     'resource_group_id',
 ]
@@ -107,32 +107,32 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_service_endpoint=dict(
-        required='False',
+    cluster=dict(
+        required= False,
+        type='str'),
+    private_service_endpoint=dict(
+        required= False,
         type='bool'),
+    private_service_endpoint_url=dict(
+        required= False,
+        type='str'),
+    public_service_endpoint=dict(
+        required= False,
+        type='bool'),
+    public_service_endpoint_url=dict(
+        required= False,
+        type='str'),
     refresh_api_servers=dict(
         default=True,
         type='bool'),
-    private_service_endpoint_url=dict(
-        required='False',
-        type='str'),
-    cluster=dict(
-        required='True',
-        type='str'),
-    private_service_endpoint=dict(
-        required='False',
-        type='bool'),
-    public_service_endpoint_url=dict(
-        required='False',
-        type='str'),
     reload_workers=dict(
         default=True,
         type='bool'),
     resource_group_id=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

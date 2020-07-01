@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    feed:
+        description:
+            - Trigger feed
+        required: False
+        type: list
+        elements: dict
     publish:
         description:
             - Trigger visbility.
@@ -57,12 +63,6 @@ options:
             - (Required for new resource) Name of Trigger.
         required: True
         type: str
-    feed:
-        description:
-            - Trigger feed
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,6 +100,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'feed',
     'publish',
     'version',
     'user_defined_annotations',
@@ -107,18 +108,21 @@ TL_ALL_PARAMETERS = [
     'annotations',
     'parameters',
     'name',
-    'feed',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    feed=dict(
+        required= False,
+        elements='',
+        type='list'),
     publish=dict(
-        required='False',
+        required= False,
         type='bool'),
     version=dict(
-        required='False',
+        required= False,
         type='str'),
     user_defined_annotations=dict(
         default='[]',
@@ -127,20 +131,16 @@ module_args = dict(
         default='[]',
         type='str'),
     annotations=dict(
-        required='False',
+        required= False,
         type='str'),
     parameters=dict(
-        required='False',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
-    feed=dict(
-        required='False',
-        elements='',
-        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

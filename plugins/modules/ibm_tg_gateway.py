@@ -31,9 +31,15 @@ options:
         required: False
         type: bool
         default: False
-    resource_controller_url:
+    tags:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
+    resource_name:
+        description:
+            - The name of the resource
         required: False
         type: str
     resource_status:
@@ -41,35 +47,29 @@ options:
             - The status of the resource
         required: False
         type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name Transit Gateway Services
         required: True
         type: str
-    tags:
-        description:
-            - Tags for the transit gateway instance
-        required: False
-        type: list
-        elements: str
     resource_group:
         description:
             - None
         required: False
         type: str
-    resource_name:
+    resource_controller_url:
         description:
-            - The name of the resource
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     resource_crn:
         description:
             - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     id:
@@ -126,14 +126,14 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'location',
     'global',
-    'resource_controller_url',
-    'resource_status',
-    'resource_group_name',
-    'name',
     'tags',
-    'resource_group',
     'resource_name',
+    'resource_status',
+    'name',
+    'resource_group',
+    'resource_controller_url',
     'resource_crn',
+    'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -141,38 +141,38 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     location=dict(
-        required='True',
+        required= False,
         type='str'),
     global=dict(
         default=False,
         type='bool'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
-    resource_status=dict(
-        required='False',
-        type='str'),
-    resource_group_name=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
-    resource_group=dict(
-        required='False',
-        type='str'),
     resource_name=dict(
-        required='False',
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
         type='str'),
     resource_crn=dict(
-        required='False',
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

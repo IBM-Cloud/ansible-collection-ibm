@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
+    pi_instance_name:
         description:
-            - None
+            - Server Name to be used for pvminstances
         required: True
         type: str
     ip:
@@ -30,7 +30,7 @@ options:
             - None
         required: False
         type: str
-    macaddress:
+    ipoctet:
         description:
             - None
         required: False
@@ -40,9 +40,14 @@ options:
             - None
         required: False
         type: str
-    pi_instance_name:
+    external_ip:
         description:
-            - Server Name to be used for pvminstances
+            - None
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
         required: True
         type: str
     pi_network_name:
@@ -50,17 +55,12 @@ options:
             - None
         required: True
         type: str
-    ipoctet:
+    macaddress:
         description:
             - None
         required: False
         type: str
     type:
-        description:
-            - None
-        required: False
-        type: str
-    external_ip:
         description:
             - None
         required: False
@@ -94,53 +94,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
-    'ip',
-    'macaddress',
-    'network_id',
     'pi_instance_name',
-    'pi_network_name',
+    'ip',
     'ipoctet',
-    'type',
+    'network_id',
     'external_ip',
+    'pi_cloud_instance_id',
+    'pi_network_name',
+    'macaddress',
+    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
+    pi_instance_name=dict(
         required=True,
         type='str'),
     ip=dict(
         required=False,
         type='str'),
-    macaddress=dict(
+    ipoctet=dict(
         required=False,
         type='str'),
     network_id=dict(
         required=False,
         type='str'),
-    pi_instance_name=dict(
+    external_ip=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
     pi_network_name=dict(
         required=True,
         type='str'),
-    ipoctet=dict(
+    macaddress=dict(
         required=False,
         type='str'),
     type=dict(
-        required=False,
-        type='str'),
-    external_ip=dict(
         required=False,
         type='str'),
     zone=dict(

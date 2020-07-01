@@ -26,40 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
 
 
-  description (False, str, None)
-    Description of a load balancer.
-
-
-  subnets (True, list, None)
-    (Required for new resource) The subnet where this Load Balancer will be provisioned.
-
-
-  status (False, str, None)
-    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
-
-
-  datacenter (False, str, None)
-    None
+  vip (False, str, None)
+    The virtual ip address of this load balancer
 
 
   use_system_public_ip_pool (False, bool, None)
     in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  health_monitors (False, list, None)
+    None
 
 
   protocols (False, list, None)
     Protocols to be assigned to this load balancer.
 
 
-  wait_time_minutes (False, int, 90)
+  ssl_ciphers (False, list, None)
     None
+
+
+  resource_name (False, str, None)
+    The name of the resource
 
 
   resource_status (False, str, None)
@@ -70,20 +62,28 @@ Parameters
     (Required for new resource) The load balancer's name.
 
 
+  datacenter (False, str, None)
+    None
+
+
+  subnets (True, list, None)
+    (Required for new resource) The subnet where this Load Balancer will be provisioned.
+
+
+  status (False, str, None)
+    The operation status 'ONLINE' or 'OFFLINE' of a load balancer.
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  description (False, str, None)
+    Description of a load balancer.
+
+
   type (False, str, PUBLIC)
     Specifies if a load balancer is public or private
-
-
-  vip (False, str, None)
-    The virtual ip address of this load balancer
-
-
-  ssl_ciphers (False, list, None)
-    None
-
-
-  health_monitors (False, list, None)
-    None
 
 
   id (False, str, None)

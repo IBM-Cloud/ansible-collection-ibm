@@ -104,20 +104,20 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     primary_id=dict(
-        required='True',
+        required= False,
         type='int'),
     secondary_id=dict(
-        required='True',
+        required= False,
         type='int'),
     stay_secondary=dict(
-        required='False',
+        required= False,
         type='bool'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

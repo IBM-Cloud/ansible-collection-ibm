@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notified_users (False, list, None)
-    List of users notified
-
-
-  tags (False, list, None)
-    List of tags
-
-
   guest_id (True, int, None)
     (Required for new resource) Guest ID
 
@@ -52,6 +44,14 @@ Parameters
 
   wait_cycles (False, int, None)
     wait cycles count
+
+
+  notified_users (False, list, None)
+    List of users notified
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

@@ -30,40 +30,12 @@ Parameters
     (Required for new resource) Record type
 
 
-  content (False, str, None)
-    DNS record content
-
-
-  data (False, dict, None)
-    None
-
-
-  record_id (False, str, None)
-    None
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id
-
-
-  name (False, str, None)
-    DNS record name
-
-
   priority (False, int, None)
     Priority Value
 
 
-  proxied (False, bool, False)
-    Boolean value true if proxied else flase
-
-
   ttl (False, int, 1)
     TTL value
-
-
-  created_on (False, str, None)
-    None
 
 
   modified_on (False, str, None)
@@ -74,8 +46,36 @@ Parameters
     None
 
 
+  record_id (False, str, None)
+    None
+
+
+  name (False, str, None)
+    DNS record name
+
+
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  content (False, str, None)
+    DNS record content
+
+
+  data (False, dict, None)
+    None
+
+
+  proxied (False, bool, False)
+    Boolean value true if proxied else flase
+
+
+  created_on (False, str, None)
+    None
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id
 
 
   id (False, str, None)

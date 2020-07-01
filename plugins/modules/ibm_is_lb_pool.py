@@ -25,24 +25,14 @@ options:
             - (Required for new resource) Load Balancer ID
         required: True
         type: str
-    protocol:
-        description:
-            - (Required for new resource) Load Balancer Protocol
-        required: True
-        type: str
-    health_delay:
-        description:
-            - (Required for new resource) Load Blancer health delay time period
-        required: True
-        type: int
-    health_timeout:
-        description:
-            - (Required for new resource) Load Balancer health timeout interval
-        required: True
-        type: int
     health_monitor_url:
         description:
             - None
+        required: False
+        type: str
+    session_persistence_type:
+        description:
+            - Load Balancer Pool session persisence type.
         required: False
         type: str
     health_monitor_port:
@@ -50,9 +40,19 @@ options:
             - None
         required: False
         type: int
-    session_persistence_type:
+    pool_id:
         description:
-            - Load Balancer Pool session persisence type.
+            - None
+        required: False
+        type: str
+    health_type:
+        description:
+            - (Required for new resource) Load Balancer health type
+        required: True
+        type: str
+    session_persistence_cookie_name:
+        description:
+            - Load Balancer Pool session persisence cookie name
         required: False
         type: str
     provisioning_status:
@@ -65,31 +65,31 @@ options:
             - (Required for new resource) Load Balancer Pool name
         required: True
         type: str
-    health_retries:
-        description:
-            - (Required for new resource) Load Balancer health retry count
-        required: True
-        type: int
-    health_type:
-        description:
-            - (Required for new resource) Load Balancer health type
-        required: True
-        type: str
-    session_persistence_cookie_name:
-        description:
-            - Load Balancer Pool session persisence cookie name
-        required: False
-        type: str
-    pool_id:
-        description:
-            - None
-        required: False
-        type: str
     algorithm:
         description:
             - (Required for new resource) Load Balancer Pool algorithm
         required: True
         type: str
+    protocol:
+        description:
+            - (Required for new resource) Load Balancer Protocol
+        required: True
+        type: str
+    health_delay:
+        description:
+            - (Required for new resource) Load Blancer health delay time period
+        required: True
+        type: int
+    health_retries:
+        description:
+            - (Required for new resource) Load Balancer health retry count
+        required: True
+        type: int
+    health_timeout:
+        description:
+            - (Required for new resource) Load Balancer health timeout interval
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -137,31 +137,31 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('lb', 'str'),
+    ('health_type', 'str'),
+    ('name', 'str'),
+    ('algorithm', 'str'),
     ('protocol', 'str'),
     ('health_delay', 'int'),
-    ('health_timeout', 'int'),
-    ('name', 'str'),
     ('health_retries', 'int'),
-    ('health_type', 'str'),
-    ('algorithm', 'str'),
+    ('health_timeout', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
-    'protocol',
-    'health_delay',
-    'health_timeout',
     'health_monitor_url',
-    'health_monitor_port',
     'session_persistence_type',
-    'provisioning_status',
-    'name',
-    'health_retries',
+    'health_monitor_port',
+    'pool_id',
     'health_type',
     'session_persistence_cookie_name',
-    'pool_id',
+    'provisioning_status',
+    'name',
     'algorithm',
+    'protocol',
+    'health_delay',
+    'health_retries',
+    'health_timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -169,49 +169,49 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     lb=dict(
-        required='True',
+        required= False,
         type='str'),
-    protocol=dict(
-        required='True',
-        type='str'),
-    health_delay=dict(
-        required='True',
-        type='int'),
-    health_timeout=dict(
-        required='True',
-        type='int'),
     health_monitor_url=dict(
-        required='False',
+        required= False,
+        type='str'),
+    session_persistence_type=dict(
+        required= False,
         type='str'),
     health_monitor_port=dict(
-        required='False',
+        required= False,
         type='int'),
-    session_persistence_type=dict(
-        required='False',
+    pool_id=dict(
+        required= False,
         type='str'),
-    provisioning_status=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
-    health_retries=dict(
-        required='True',
-        type='int'),
     health_type=dict(
-        required='True',
+        required= False,
         type='str'),
     session_persistence_cookie_name=dict(
-        required='False',
+        required= False,
         type='str'),
-    pool_id=dict(
-        required='False',
+    provisioning_status=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
         type='str'),
     algorithm=dict(
-        required='True',
+        required= False,
         type='str'),
+    protocol=dict(
+        required= False,
+        type='str'),
+    health_delay=dict(
+        required= False,
+        type='int'),
+    health_retries=dict(
+        required= False,
+        type='int'),
+    health_timeout=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

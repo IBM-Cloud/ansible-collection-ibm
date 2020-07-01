@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    org_guid:
+        description:
+            - (Required for new resource) The organization that owns the domain.
+        required: True
+        type: str
     tags:
         description:
             - None
@@ -29,11 +34,6 @@ options:
     name:
         description:
             - (Required for new resource) The name of the domain
-        required: True
-        type: str
-    org_guid:
-        description:
-            - (Required for new resource) The organization that owns the domain.
         required: True
         type: str
     id:
@@ -82,33 +82,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('org_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'org_guid',
     'tags',
     'name',
-    'org_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    org_guid=dict(
+        required= False,
+        type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     name=dict(
-        required='True',
-        type='str'),
-    org_guid=dict(
-        required='True',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

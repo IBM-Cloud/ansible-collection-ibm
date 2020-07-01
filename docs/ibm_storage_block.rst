@@ -26,60 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hostname (False, str, None)
-    Hostname
-
-
   tags (False, list, None)
     List of tags associated with the resource
 
 
-  allowed_hardware_info (False, list, None)
-    None
-
-
-  allowed_host_info (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    List of allowed virtual guest IDs
-
-
-  allowed_virtual_guest_info (False, list, None)
-    None
-
-
-  allowed_hardware_ids (False, list, None)
-    List of allowe hardware IDs
-
-
-  notes (False, str, None)
-    Additional note info
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
-
-
-  hourly_billing (False, bool, False)
-    Billing done hourly, if set to true
-
-
-  type (True, str, None)
-    (Required for new resource) Storage block type
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  target_address (False, list, None)
+    List of target Addresses
 
 
   iops (True, float, None)
@@ -90,20 +42,68 @@ Parameters
     Volume name
 
 
-  capacity (True, int, None)
-    (Required for new resource) Storage block size
-
-
   os_format_type (True, str, None)
     (Required for new resource) OS formatr type
 
 
-  target_address (False, list, None)
-    List of target Addresses
+  hourly_billing (False, bool, False)
+    Billing done hourly, if set to true
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  type (True, str, None)
+    (Required for new resource) Storage block type
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
+
+
+  allowed_virtual_guest_info (False, list, None)
+    None
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
+
+
+  allowed_host_info (False, list, None)
+    None
 
 
   resource_name (False, str, None)
     The name of the resource
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
+
+
+  hostname (False, str, None)
+    Hostname
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
+  notes (False, str, None)
+    Additional note info
+
+
+  allowed_hardware_ids (False, list, None)
+    List of allowe hardware IDs
+
+
+  allowed_hardware_info (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -20,35 +20,24 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    default_network_acl:
+    default_security_group:
         description:
-            - None
+            - Security group associated with VPC
         required: False
         type: str
-    cse_source_addresses:
+    crn:
         description:
-            - None
+            - The crn of the resource
         required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - None
-        required: True
         type: str
-    resource_name:
+    resource_crn:
         description:
-            - The name of the resource
+            - The crn of the resource
         required: False
         type: str
     resource_status:
         description:
             - The status of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
         required: False
         type: str
     subnets:
@@ -72,25 +61,20 @@ options:
             - None
         required: False
         type: str
-    resource_crn:
+    resource_group_name:
         description:
-            - The crn of the resource
+            - The resource group name in which resource is provisioned
         required: False
         type: str
-    default_security_group:
-        description:
-            - Security group associated with VPC
-        required: False
-        type: str
-    tags:
+    cse_source_addresses:
         description:
             - None
         required: False
         type: list
-        elements: str
-    crn:
+        elements: dict
+    default_network_acl:
         description:
-            - The crn of the resource
+            - None
         required: False
         type: str
     resource_controller_url:
@@ -98,6 +82,22 @@ options:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    name:
+        description:
+            - None
+        required: True
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -136,44 +136,37 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default_network_acl',
-    'cse_source_addresses',
-    'name',
-    'resource_name',
+    'default_security_group',
+    'crn',
+    'resource_crn',
     'resource_status',
-    'resource_group_name',
     'subnets',
     'classic_access',
     'resource_group',
     'status',
-    'resource_crn',
-    'default_security_group',
-    'tags',
-    'crn',
+    'resource_group_name',
+    'cse_source_addresses',
+    'default_network_acl',
     'resource_controller_url',
+    'resource_name',
+    'name',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default_network_acl=dict(
+    default_security_group=dict(
         required=False,
         type='str'),
-    cse_source_addresses=dict(
+    crn=dict(
         required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=True,
         type='str'),
-    resource_name=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
     resource_status=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
         required=False,
         type='str'),
     subnets=dict(
@@ -189,22 +182,29 @@ module_args = dict(
     status=dict(
         required=False,
         type='str'),
-    resource_crn=dict(
+    resource_group_name=dict(
         required=False,
         type='str'),
-    default_security_group=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    cse_source_addresses=dict(
         required=False,
         elements='',
         type='list'),
-    crn=dict(
+    default_network_acl=dict(
         required=False,
         type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=True,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     generation=dict(
         type='int',
         required=False,

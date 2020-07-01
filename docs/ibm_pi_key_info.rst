@@ -26,19 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  creation_date (False, str, None)
-    None
-
-
-  sshkey (False, str, None)
-    None
-
-
   pi_key_name (True, str, None)
     SSHKey Name to be used for pvminstances
 
 
   pi_cloud_instance_id (True, str, None)
+    None
+
+
+  creation_date (False, str, None)
+    None
+
+
+  sshkey (False, str, None)
     None
 
 

@@ -20,10 +20,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_instance_id:
+    credentials:
         description:
-            - The id of the resource instance for which to create resource key
+            - Credentials asociated with the key
         required: False
+        type: dict
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) The name of the resource key
+        required: True
+        type: str
+    role:
+        description:
+            - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
+        required: True
         type: str
     resource_alias_id:
         description:
@@ -35,35 +51,19 @@ options:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    tags:
+    resource_instance_id:
         description:
-            - None
-        required: False
-        type: list
-        elements: str
-    crn:
-        description:
-            - crn of resource key
+            - The id of the resource instance for which to create resource key
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) The name of the resource key
-        required: True
-        type: str
-    role:
-        description:
-            - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
-        required: True
-        type: str
-    credentials:
-        description:
-            - Credentials asociated with the key
-        required: False
-        type: dict
     status:
         description:
             - Status of resource key
+        required: False
+        type: str
+    crn:
+        description:
+            - crn of resource key
         required: False
         type: str
     id:
@@ -118,51 +118,51 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
-    'resource_alias_id',
-    'parameters',
+    'credentials',
     'tags',
-    'crn',
     'name',
     'role',
-    'credentials',
+    'resource_alias_id',
+    'parameters',
+    'resource_instance_id',
     'status',
+    'crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_instance_id=dict(
-        required='False',
-        type='str'),
-    resource_alias_id=dict(
-        required='False',
-        type='str'),
-    parameters=dict(
-        required='False',
+    credentials=dict(
+        required= False,
         type='dict'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
-    crn=dict(
-        required='False',
-        type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     role=dict(
-        required='True',
+        required= False,
         type='str'),
-    credentials=dict(
-        required='False',
+    resource_alias_id=dict(
+        required= False,
+        type='str'),
+    parameters=dict(
+        required= False,
         type='dict'),
+    resource_instance_id=dict(
+        required= False,
+        type='str'),
     status=dict(
-        required='False',
+        required= False,
+        type='str'),
+    crn=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

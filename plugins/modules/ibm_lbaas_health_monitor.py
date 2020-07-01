@@ -20,6 +20,23 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    timeout:
+        description:
+            - Timeout in seconds
+        required: False
+        type: int
+        default: 2
+    url_path:
+        description:
+            - URL Path
+        required: False
+        type: str
+        default: /
+    monitor_id:
+        description:
+            - (Required for new resource) Monitor ID
+        required: True
+        type: str
     lbaas_id:
         description:
             - (Required for new resource) LBAAS id
@@ -47,23 +64,6 @@ options:
         required: False
         type: int
         default: 2
-    timeout:
-        description:
-            - Timeout in seconds
-        required: False
-        type: int
-        default: 2
-    url_path:
-        description:
-            - URL Path
-        required: False
-        type: str
-        default: /
-    monitor_id:
-        description:
-            - (Required for new resource) Monitor ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,43 +110,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('monitor_id', 'str'),
     ('lbaas_id', 'str'),
     ('protocol', 'str'),
     ('port', 'int'),
-    ('monitor_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'timeout',
+    'url_path',
+    'monitor_id',
     'lbaas_id',
     'protocol',
     'port',
     'interval',
     'max_retries',
-    'timeout',
-    'url_path',
-    'monitor_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lbaas_id=dict(
-        required='True',
-        type='str'),
-    protocol=dict(
-        required='True',
-        type='str'),
-    port=dict(
-        required='True',
-        type='int'),
-    interval=dict(
-        default=5,
-        type='int'),
-    max_retries=dict(
-        default=2,
-        type='int'),
     timeout=dict(
         default=2,
         type='int'),
@@ -154,10 +139,25 @@ module_args = dict(
         default='/',
         type='str'),
     monitor_id=dict(
-        required='True',
+        required= False,
         type='str'),
+    lbaas_id=dict(
+        required= False,
+        type='str'),
+    protocol=dict(
+        required= False,
+        type='str'),
+    port=dict(
+        required= False,
+        type='int'),
+    interval=dict(
+        default=5,
+        type='int'),
+    max_retries=dict(
+        default=2,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -20,44 +20,27 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
-    region_location:
+    bucket_type:
         description:
             - None
-        required: False
+        required: True
+        type: str
+    resource_instance_id:
+        description:
+            - None
+        required: True
         type: str
     storage_class:
         description:
             - None
         required: False
         type: str
-    metrics_monitoring:
+    crn:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    allowed_ip:
-        description:
-            - List of IPv4 or IPv6 addresses
-        required: False
-        type: list
-        elements: str
-    bucket_type:
-        description:
-            - None
-        required: True
-        type: str
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
+            - CRN of resource instance
         required: False
         type: str
-    single_site_location:
+    region_location:
         description:
             - None
         required: False
@@ -72,12 +55,6 @@ options:
             - Private endpoint for the COS bucket
         required: False
         type: str
-    activity_tracking:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     bucket_name:
         description:
             - None
@@ -88,16 +65,39 @@ options:
             - None
         required: True
         type: str
-    resource_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     s3_endpoint_public:
         description:
             - Public endpoint for the COS bucket
         required: False
         type: str
+    allowed_ip:
+        description:
+            - List of IPv4 or IPv6 addresses
+        required: False
+        type: list
+        elements: str
+    activity_tracking:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    single_site_location:
+        description:
+            - None
+        required: False
+        type: str
+    metrics_monitoring:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -132,58 +132,47 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bucket_type', 'str'),
+    ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
     ('bucket_region', 'str'),
-    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'bucket_type',
+    'resource_instance_id',
+    'storage_class',
     'crn',
     'region_location',
-    'storage_class',
-    'metrics_monitoring',
-    'allowed_ip',
-    'bucket_type',
-    'key_protect',
-    'single_site_location',
     'cross_region_location',
     's3_endpoint_private',
-    'activity_tracking',
     'bucket_name',
     'bucket_region',
-    'resource_instance_id',
     's3_endpoint_public',
+    'allowed_ip',
+    'activity_tracking',
+    'key_protect',
+    'single_site_location',
+    'metrics_monitoring',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    crn=dict(
-        required=False,
+    bucket_type=dict(
+        required=True,
         type='str'),
-    region_location=dict(
-        required=False,
+    resource_instance_id=dict(
+        required=True,
         type='str'),
     storage_class=dict(
         required=False,
         type='str'),
-    metrics_monitoring=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_ip=dict(
-        required=False,
-        elements='',
-        type='list'),
-    bucket_type=dict(
-        required=True,
-        type='str'),
-    key_protect=dict(
+    crn=dict(
         required=False,
         type='str'),
-    single_site_location=dict(
+    region_location=dict(
         required=False,
         type='str'),
     cross_region_location=dict(
@@ -192,22 +181,33 @@ module_args = dict(
     s3_endpoint_private=dict(
         required=False,
         type='str'),
-    activity_tracking=dict(
-        required=False,
-        elements='',
-        type='list'),
     bucket_name=dict(
         required=True,
         type='str'),
     bucket_region=dict(
         required=True,
         type='str'),
-    resource_instance_id=dict(
-        required=True,
-        type='str'),
     s3_endpoint_public=dict(
         required=False,
         type='str'),
+    allowed_ip=dict(
+        required=False,
+        elements='',
+        type='list'),
+    activity_tracking=dict(
+        required=False,
+        elements='',
+        type='list'),
+    key_protect=dict(
+        required=False,
+        type='str'),
+    single_site_location=dict(
+        required=False,
+        type='str'),
+    metrics_monitoring=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

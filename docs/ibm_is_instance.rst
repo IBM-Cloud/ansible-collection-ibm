@@ -26,8 +26,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  volume_attachments (False, list, None)
+    None
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  boot_volume (False, list, None)
+    None
+
+
   vcpu (False, list, None)
     None
+
+
+  memory (False, int, None)
+    Instance memory
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  gpu (False, list, None)
+    None
+
+
+  status (False, str, None)
+    instance status
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   zone (True, str, None)
@@ -42,80 +106,16 @@ Parameters
     list of tags for the instance
 
 
-  network_interfaces (False, list, None)
-    None
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  volume_attachments (False, list, None)
-    None
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  gpu (False, list, None)
-    None
-
-
-  memory (False, int, None)
-    Instance memory
-
-
-  status (False, str, None)
-    instance status
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  boot_volume (False, list, None)
-    None
-
-
   resource_name (False, str, None)
     The name of the resource
 
 
   resource_crn (False, str, None)
     The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
 
 
   id (False, str, None)

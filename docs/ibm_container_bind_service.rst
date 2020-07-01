@@ -30,16 +30,12 @@ Parameters
     (Required for new resource) Cluster name or ID
 
 
-  service_instance_id (False, str, None)
-    Service instance ID
+  key (False, str, None)
+    Key info
 
 
-  namespace_id (True, str, None)
-    (Required for new resource) namespace ID
-
-
-  tags (False, list, None)
-    List of tags for the resource
+  role (False, str, None)
+    Role info
 
 
   service_instance_name (False, str, None)
@@ -54,24 +50,28 @@ Parameters
     The bluemix space guid this cluster belongs to
 
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
   region (False, str, None)
     The cluster region
 
 
+  tags (False, list, None)
+    List of tags for the resource
+
+
+  service_instance_id (False, str, None)
+    Service instance ID
+
+
+  namespace_id (True, str, None)
+    (Required for new resource) namespace ID
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
+
+
   resource_group_id (False, str, None)
     ID of the resource group.
-
-
-  key (False, str, None)
-    Key info
-
-
-  role (False, str, None)
-    Role info
 
 
   id (False, str, None)

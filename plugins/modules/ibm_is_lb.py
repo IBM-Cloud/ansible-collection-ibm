@@ -20,9 +20,27 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_name:
+    type:
         description:
-            - The name of the resource
+            - Load Balancer type
+        required: False
+        type: str
+        default: public
+    private_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    subnets:
+        description:
+            - (Required for new resource) Load Balancer subnets list
+        required: True
+        type: list
+        elements: str
+    hostname:
+        description:
+            - None
         required: False
         type: str
     resource_group_name:
@@ -30,21 +48,19 @@ options:
             - The resource group name in which resource is provisioned
         required: False
         type: str
-    subnets:
+    resource_name:
         description:
-            - (Required for new resource) Load Balancer subnets list
+            - The name of the resource
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
         required: True
-        type: list
-        elements: str
-    tags:
+        type: str
+    status:
         description:
             - None
-        required: False
-        type: list
-        elements: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     operating_status:
@@ -58,7 +74,7 @@ options:
         required: False
         type: list
         elements: str
-    private_ips:
+    tags:
         description:
             - None
         required: False
@@ -69,25 +85,9 @@ options:
             - None
         required: False
         type: str
-    hostname:
+    resource_controller_url:
         description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
-    type:
-        description:
-            - Load Balancer type
-        required: False
-        type: str
-        default: public
-    status:
-        description:
-            - None
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
         required: False
         type: str
     id:
@@ -142,70 +142,70 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'resource_group_name',
+    'type',
+    'private_ips',
     'subnets',
-    'tags',
-    'resource_controller_url',
+    'hostname',
+    'resource_group_name',
+    'resource_name',
+    'name',
+    'status',
     'operating_status',
     'public_ips',
-    'private_ips',
+    'tags',
     'resource_group',
-    'hostname',
-    'name',
-    'type',
-    'status',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
-        required='False',
-        type='str'),
-    resource_group_name=dict(
-        required='False',
-        type='str'),
-    subnets=dict(
-        required='True',
-        elements='',
-        type='list'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
-        required='False',
-        type='str'),
-    operating_status=dict(
-        required='False',
-        type='str'),
-    public_ips=dict(
-        required='False',
-        elements='',
-        type='list'),
-    private_ips=dict(
-        required='False',
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required='False',
-        type='str'),
-    hostname=dict(
-        required='False',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
     type=dict(
         default='public',
         type='str'),
+    private_ips=dict(
+        required= False,
+        elements='',
+        type='list'),
+    subnets=dict(
+        required= False,
+        elements='',
+        type='list'),
+    hostname=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
     status=dict(
-        required='False',
+        required= False,
+        type='str'),
+    operating_status=dict(
+        required= False,
+        type='str'),
+    public_ips=dict(
+        required= False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

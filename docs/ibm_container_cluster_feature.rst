@@ -26,28 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_service_endpoint (False, bool, None)
+  cluster (True, str, None)
+    (Required for new resource) Cluster name of ID
+
+
+  public_service_endpoint_url (False, str, None)
     None
 
 
   refresh_api_servers (False, bool, True)
     Boolean value true of API server to be refreshed in K8S cluster
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name of ID
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
-    None
 
 
   reload_workers (False, bool, True)
@@ -56,6 +44,18 @@ Parameters
 
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  private_service_endpoint_url (False, str, None)
+    None
 
 
   id (False, str, None)

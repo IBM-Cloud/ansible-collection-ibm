@@ -26,8 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  password (False, str, None)
-    Password
+  public_ip (False, str, None)
+    Public IP Address
+
+
+  username (False, str, None)
+    User name
 
 
   addon_configuration (False, list, None)
@@ -46,18 +50,6 @@ Parameters
     (Required for new resource) name
 
 
-  firewall_type (True, str, None)
-    (Required for new resource) Firewall type
-
-
-  public_ip (False, str, None)
-    Public IP Address
-
-
-  public_ipv6 (False, str, None)
-    Public IPV6 IP
-
-
   public_vlan_id (False, int, None)
     Public VLAN id
 
@@ -66,12 +58,20 @@ Parameters
     Private VLAN id
 
 
+  firewall_type (True, str, None)
+    (Required for new resource) Firewall type
+
+
+  public_ipv6 (False, str, None)
+    Public IPV6 IP
+
+
   private_ip (False, str, None)
     Private IP Address
 
 
-  username (False, str, None)
-    User name
+  password (False, str, None)
+    Password
 
 
   id (False, str, None)

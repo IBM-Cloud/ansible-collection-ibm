@@ -26,16 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  create_date (False, str, None)
-    certificate creation date
-
-
   modify_date (False, str, None)
     certificate modificatiob date
 
 
+  tags (False, list, None)
+    Tags set for resource
+
+
   intermediate_certificate (False, str, None)
     Intermediate certificate value
+
+
+  common_name (False, str, None)
+    Common name
+
+
+  validity_days (False, int, None)
+    Validity days
+
+
+  validity_end (False, str, None)
+    Validity ends before
+
+
+  key_size (False, int, None)
+    SSL key size
+
+
+  create_date (False, str, None)
+    certificate creation date
+
+
+  certificate (True, str, None)
+    (Required for new resource) SSL Certifcate
 
 
   private_key (True, str, None)
@@ -48,30 +72,6 @@ Parameters
 
   validity_begin (False, str, None)
     Validity begins from
-
-
-  validity_end (False, str, None)
-    Validity ends before
-
-
-  key_size (False, int, None)
-    SSL key size
-
-
-  certificate (True, str, None)
-    (Required for new resource) SSL Certifcate
-
-
-  common_name (False, str, None)
-    Common name
-
-
-  validity_days (False, int, None)
-    Validity days
-
-
-  tags (False, list, None)
-    Tags set for resource
 
 
   id (False, str, None)

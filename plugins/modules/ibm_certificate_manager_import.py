@@ -20,7 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    algorithm:
+    imported:
+        description:
+            - None
+        required: False
+        type: bool
+    status:
         description:
             - None
         required: False
@@ -41,44 +46,39 @@ options:
         required: True
         type: dict
         elements: dict
-    begins_on:
-        description:
-            - Certificate validity start date
-        required: False
-        type: int
-    imported:
-        description:
-            - None
-        required: False
-        type: bool
-    key_algorithm:
-        description:
-            - None
-        required: False
-        type: str
     description:
         description:
             - Description of the certificate instance
         required: False
         type: str
-    issuer:
+    begins_on:
         description:
-            - certificate issuer info
+            - Certificate validity start date
         required: False
-        type: str
+        type: int
     expires_on:
         description:
             - certificate expiry date
         required: False
         type: int
-    status:
+    has_previous:
         description:
             - None
         required: False
         type: str
-    has_previous:
+    key_algorithm:
         description:
             - None
+        required: False
+        type: str
+    algorithm:
+        description:
+            - None
+        required: False
+        type: str
+    issuer:
+        description:
+            - certificate issuer info
         required: False
         type: str
     id:
@@ -134,63 +134,63 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'algorithm',
+    'imported',
+    'status',
     'certificate_manager_instance_id',
     'name',
     'data',
-    'begins_on',
-    'imported',
-    'key_algorithm',
     'description',
-    'issuer',
+    'begins_on',
     'expires_on',
-    'status',
     'has_previous',
+    'key_algorithm',
+    'algorithm',
+    'issuer',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    algorithm=dict(
-        required='False',
+    imported=dict(
+        required= False,
+        type='bool'),
+    status=dict(
+        required= False,
         type='str'),
     certificate_manager_instance_id=dict(
-        required='True',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
     data=dict(
-        required='True',
+        required= False,
         elements='',
         type='dict'),
-    begins_on=dict(
-        required='False',
-        type='int'),
-    imported=dict(
-        required='False',
-        type='bool'),
-    key_algorithm=dict(
-        required='False',
-        type='str'),
     description=dict(
-        required='False',
+        required= False,
+        type='str'),
+    begins_on=dict(
+        required= False,
+        type='int'),
+    expires_on=dict(
+        required= False,
+        type='int'),
+    has_previous=dict(
+        required= False,
+        type='str'),
+    key_algorithm=dict(
+        required= False,
+        type='str'),
+    algorithm=dict(
+        required= False,
         type='str'),
     issuer=dict(
-        required='False',
-        type='str'),
-    expires_on=dict(
-        required='False',
-        type='int'),
-    status=dict(
-        required='False',
-        type='str'),
-    has_previous=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

@@ -30,26 +30,6 @@ Parameters
     List of tags
 
 
-  nad_controller_id (True, int, None)
-    (Required for new resource) NAD controller ID
-
-
-  load_balancing_method (True, str, None)
-    (Required for new resource) Load balancing method
-
-
-  virtual_ip_address (True, str, None)
-    (Required for new resource) Virtual IP address
-
-
-  type (True, str, None)
-    (Required for new resource) Type
-
-
-  security_certificate_id (False, int, None)
-    security certificate ID
-
-
   persistence (False, str, None)
     Persistance value
 
@@ -60,6 +40,26 @@ Parameters
 
   source_port (True, int, None)
     (Required for new resource) Source Port number
+
+
+  type (True, str, None)
+    (Required for new resource) Type
+
+
+  security_certificate_id (False, int, None)
+    security certificate ID
+
+
+  virtual_ip_address (True, str, None)
+    (Required for new resource) Virtual IP address
+
+
+  nad_controller_id (True, int, None)
+    (Required for new resource) NAD controller ID
+
+
+  load_balancing_method (True, str, None)
+    (Required for new resource) Load balancing method
 
 
   id (False, str, None)

@@ -20,20 +20,46 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    memory_capacity:
+        description:
+            - The capacity that the dedicated host's memory allocation is restricted to.
+        required: False
+        type: int
+    domain:
+        description:
+            - (Required for new resource) The domain of dedicatated host.
+        required: True
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+        required: True
+        type: str
+    router_hostname:
+        description:
+            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+        required: True
+        type: str
+    disk_capacity:
+        description:
+            - The capacity that the dedicated host's disk allocation is restricted to.
+        required: False
+        type: int
     wait_time_minutes:
         description:
             - None
         required: False
         type: int
         default: 90
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     hostname:
         description:
             - (Required for new resource) The host name of dedicatated host.
-        required: True
-        type: str
-    domain:
-        description:
-            - (Required for new resource) The domain of dedicatated host.
         required: True
         type: str
     flavor:
@@ -48,37 +74,11 @@ options:
         required: False
         type: bool
         default: True
-    router_hostname:
-        description:
-            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-        required: True
-        type: str
     cpu_count:
         description:
             - The capacity that the dedicated host's CPU allocation is restricted to.
         required: False
         type: int
-    disk_capacity:
-        description:
-            - The capacity that the dedicated host's disk allocation is restricted to.
-        required: False
-        type: int
-    datacenter:
-        description:
-            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-        required: True
-        type: str
-    memory_capacity:
-        description:
-            - The capacity that the dedicated host's memory allocation is restricted to.
-        required: False
-        type: int
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,39 +125,55 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('hostname', 'str'),
     ('domain', 'str'),
-    ('router_hostname', 'str'),
     ('datacenter', 'str'),
+    ('router_hostname', 'str'),
+    ('hostname', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'wait_time_minutes',
-    'hostname',
+    'memory_capacity',
     'domain',
+    'datacenter',
+    'router_hostname',
+    'disk_capacity',
+    'wait_time_minutes',
+    'tags',
+    'hostname',
     'flavor',
     'hourly_billing',
-    'router_hostname',
     'cpu_count',
-    'disk_capacity',
-    'datacenter',
-    'memory_capacity',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    memory_capacity=dict(
+        required= False,
+        type='int'),
+    domain=dict(
+        required= False,
+        type='str'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    router_hostname=dict(
+        required= False,
+        type='str'),
+    disk_capacity=dict(
+        required= False,
+        type='int'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     hostname=dict(
-        required='True',
-        type='str'),
-    domain=dict(
-        required='True',
+        required= False,
         type='str'),
     flavor=dict(
         default='56_CORES_X_242_RAM_X_1_4_TB',
@@ -165,27 +181,11 @@ module_args = dict(
     hourly_billing=dict(
         default=True,
         type='bool'),
-    router_hostname=dict(
-        required='True',
-        type='str'),
     cpu_count=dict(
-        required='False',
+        required= False,
         type='int'),
-    disk_capacity=dict(
-        required='False',
-        type='int'),
-    datacenter=dict(
-        required='True',
-        type='str'),
-    memory_capacity=dict(
-        required='False',
-        type='int'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

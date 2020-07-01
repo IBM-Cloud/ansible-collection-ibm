@@ -30,10 +30,6 @@ Parameters
     None
 
 
-  certificate_manager_instance_id (True, str, None)
-    (Required for new resource) Instance ID of the certificate manager resource
-
-
   name (True, str, None)
     (Required for new resource) Name of the instance
 
@@ -42,35 +38,39 @@ Parameters
     (Required for new resource) certificate data
 
 
-  begins_on (False, int, None)
-    Certificate validity start date
-
-
-  imported (False, bool, None)
-    None
-
-
-  key_algorithm (False, str, None)
-    None
-
-
   description (False, str, None)
     Description of the certificate instance
 
 
-  issuer (False, str, None)
-    certificate issuer info
+  begins_on (False, int, None)
+    Certificate validity start date
 
 
   expires_on (False, int, None)
     certificate expiry date
 
 
+  has_previous (False, str, None)
+    None
+
+
+  certificate_manager_instance_id (True, str, None)
+    (Required for new resource) Instance ID of the certificate manager resource
+
+
+  issuer (False, str, None)
+    certificate issuer info
+
+
+  imported (False, bool, None)
+    None
+
+
   status (False, str, None)
     None
 
 
-  has_previous (False, str, None)
+  key_algorithm (False, str, None)
     None
 
 

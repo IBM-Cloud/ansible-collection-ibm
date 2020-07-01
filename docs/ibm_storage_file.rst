@@ -26,12 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) Storage type
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  notes (False, str, None)
+    Notes
+
+
+  mountpoint (False, str, None)
+    Storage mount point
+
+
+  hourly_billing (False, bool, False)
+    Hourly based billing type
 
 
   iops (True, float, None)
@@ -42,36 +50,32 @@ Parameters
     Snapshot capacity
 
 
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
+  snapshot_schedule (False, list, None)
+    None
+
+
+  type (True, str, None)
+    (Required for new resource) Storage type
+
+
+  allowed_subnets (False, list, None)
+    Allowed network subnets
 
 
   resource_name (False, str, None)
     The name of the resource
 
 
-  capacity (True, int, None)
-    (Required for new resource) Storage capacity
+  resource_status (False, str, None)
+    The status of the resource
 
 
-  snapshot_schedule (False, list, None)
-    None
-
-
-  mountpoint (False, str, None)
-    Storage mount point
-
-
-  tags (False, list, None)
-    Tags set for the storage volume
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
 
 
   resource_controller_url (False, str, None)
     The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   volumename (False, str, None)
@@ -86,20 +90,16 @@ Parameters
     Virtual guest ID
 
 
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
+  tags (False, list, None)
+    Tags set for the storage volume
 
 
-  hourly_billing (False, bool, False)
-    Hourly based billing type
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  allowed_subnets (False, list, None)
-    Allowed network subnets
-
-
-  notes (False, str, None)
-    Notes
+  capacity (True, int, None)
+    (Required for new resource) Storage capacity
 
 
   id (False, str, None)

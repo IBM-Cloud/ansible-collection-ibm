@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    private_vlan_id:
+        description:
+            - Private VLAN id
+        required: False
+        type: int
+    username:
+        description:
+            - User name
+        required: False
+        type: str
     password:
         description:
             - Password
@@ -36,16 +51,11 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
-    pod:
+    public_vlan_id:
         description:
-            - (Required for new resource) POD name
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
-        type: str
+            - Public VLAN id
+        required: False
+        type: int
     firewall_type:
         description:
             - (Required for new resource) Firewall type
@@ -61,25 +71,15 @@ options:
             - Public IPV6 IP
         required: False
         type: str
-    public_vlan_id:
-        description:
-            - Public VLAN id
-        required: False
-        type: int
-    private_vlan_id:
-        description:
-            - Private VLAN id
-        required: False
-        type: int
     private_ip:
         description:
             - Private IP Address
         required: False
         type: str
-    username:
+    pod:
         description:
-            - User name
-        required: False
+            - (Required for new resource) POD name
+        required: True
         type: str
     id:
         description:
@@ -127,71 +127,71 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
-    ('pod', 'str'),
     ('name', 'str'),
+    ('datacenter', 'str'),
     ('firewall_type', 'str'),
+    ('pod', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'private_vlan_id',
+    'username',
     'password',
     'addon_configuration',
     'datacenter',
-    'pod',
-    'name',
+    'public_vlan_id',
     'firewall_type',
     'public_ip',
     'public_ipv6',
-    'public_vlan_id',
-    'private_vlan_id',
     'private_ip',
-    'username',
+    'pod',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required= False,
+        type='str'),
+    private_vlan_id=dict(
+        required= False,
+        type='int'),
+    username=dict(
+        required= False,
+        type='str'),
     password=dict(
-        required='False',
+        required= False,
         type='str'),
     addon_configuration=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     datacenter=dict(
-        required='True',
-        type='str'),
-    pod=dict(
-        required='True',
-        type='str'),
-    name=dict(
-        required='True',
-        type='str'),
-    firewall_type=dict(
-        required='True',
-        type='str'),
-    public_ip=dict(
-        required='False',
-        type='str'),
-    public_ipv6=dict(
-        required='False',
+        required= False,
         type='str'),
     public_vlan_id=dict(
-        required='False',
+        required= False,
         type='int'),
-    private_vlan_id=dict(
-        required='False',
-        type='int'),
-    private_ip=dict(
-        required='False',
+    firewall_type=dict(
+        required= False,
         type='str'),
-    username=dict(
-        required='False',
+    public_ip=dict(
+        required= False,
+        type='str'),
+    public_ipv6=dict(
+        required= False,
+        type='str'),
+    private_ip=dict(
+        required= False,
+        type='str'),
+    pod=dict(
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

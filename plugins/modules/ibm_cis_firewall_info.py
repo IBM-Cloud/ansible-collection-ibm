@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - CIS object id
+        required: True
+        type: str
+    domain_id:
+        description:
+            - Associated CIS domain
+        required: True
+        type: str
     firewall_type:
         description:
             - Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
@@ -31,16 +41,6 @@ options:
         required: False
         type: list
         elements: dict
-    cis_id:
-        description:
-            - CIS object id
-        required: True
-        type: str
-    domain_id:
-        description:
-            - Associated CIS domain
-        required: True
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -74,23 +74,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('firewall_type', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('firewall_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'firewall_type',
-    'lockdown',
     'cis_id',
     'domain_id',
+    'firewall_type',
+    'lockdown',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=True,
+        type='str'),
+    domain_id=dict(
+        required=True,
+        type='str'),
     firewall_type=dict(
         required=True,
         type='str'),
@@ -98,12 +104,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    cis_id=dict(
-        required=True,
-        type='str'),
-    domain_id=dict(
-        required=True,
-        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  iam_service_ids (False, list, None)
+    None
+
+
   members (False, list, None)
     None
 
@@ -35,10 +39,6 @@ Parameters
 
 
   ibm_ids (False, list, None)
-    None
-
-
-  iam_service_ids (False, list, None)
     None
 
 

@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  hypervisor (False, str, None)
+    None
+
+
   pi_image_name (True, str, None)
     Imagename Name to be used for pvminstances
 
@@ -47,10 +51,6 @@ Parameters
 
 
   operatingsystem (False, str, None)
-    None
-
-
-  hypervisor (False, str, None)
     None
 
 

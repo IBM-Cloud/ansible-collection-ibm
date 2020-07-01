@@ -26,15 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cidr (False, str, None)
-    None
+  pi_network_name (True, str, None)
+    Network Name to be used for pvminstances
 
 
-  vlan_id (False, int, None)
-    None
-
-
-  gateway (False, str, None)
+  type (False, str, None)
     None
 
 
@@ -50,15 +46,19 @@ Parameters
     None
 
 
-  pi_network_name (True, str, None)
-    Network Name to be used for pvminstances
-
-
   pi_cloud_instance_id (True, str, None)
     None
 
 
-  type (False, str, None)
+  cidr (False, str, None)
+    None
+
+
+  vlan_id (False, int, None)
+    None
+
+
+  gateway (False, str, None)
     None
 
 

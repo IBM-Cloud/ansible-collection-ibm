@@ -26,8 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, dict, None)
-    The resource instance status
+  resource_group_id (False, str, None)
+    The id of the resource group in which the instance is present
+
+
+  location (False, str, None)
+    The location or the environment in which instance exists
+
+
+  plan (False, str, None)
+    The plan type of the instance
 
 
   crn (False, str, None)
@@ -38,40 +46,32 @@ Parameters
     The name of the resource
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  location (False, str, None)
-    The location or the environment in which instance exists
-
-
-  service (False, str, None)
-    The service type of the instance
-
-
-  plan (False, str, None)
-    The plan type of the instance
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
   name (True, str, None)
     Resource instance name for example, myobjectstorage
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the instance is present
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
+  status (False, dict, None)
+    The resource instance status
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  service (False, str, None)
+    The service type of the instance
 
 
   iaas_classic_username (False, any, None)

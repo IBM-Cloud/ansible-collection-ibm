@@ -20,29 +20,19 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    dh_group:
+    authentication_algorithm:
         description:
-            - (Required for new resource) IKE DH group
+            - (Required for new resource) Authentication algorithm type
         required: True
-        type: int
-    resource_group:
-        description:
-            - IKE resource group ID
-        required: False
         type: str
-    ike_version:
+    encryption_algorithm:
         description:
-            - IKE version
-        required: False
-        type: int
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
+            - (Required for new resource) Encryption alogorithm type
+        required: True
         type: str
-    href:
+    negotiation_mode:
         description:
-            - IKE href value
+            - IKE negotiation mode
         required: False
         type: str
     vpn_connections:
@@ -61,15 +51,10 @@ options:
             - (Required for new resource) IKE name
         required: True
         type: str
-    authentication_algorithm:
+    resource_group:
         description:
-            - (Required for new resource) Authentication algorithm type
-        required: True
-        type: str
-    encryption_algorithm:
-        description:
-            - (Required for new resource) Encryption alogorithm type
-        required: True
+            - IKE resource group ID
+        required: False
         type: str
     key_lifetime:
         description:
@@ -77,9 +62,14 @@ options:
         required: False
         type: int
         default: 28800
-    negotiation_mode:
+    ike_version:
         description:
-            - IKE negotiation mode
+            - IKE version
+        required: False
+        type: int
+    href:
+        description:
+            - IKE href value
         required: False
         type: str
     resource_name:
@@ -87,6 +77,16 @@ options:
             - The name of the resource
         required: False
         type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    dh_group:
+        description:
+            - (Required for new resource) IKE DH group
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -133,75 +133,75 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('dh_group', 'int'),
-    ('name', 'str'),
     ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
+    ('name', 'str'),
+    ('dh_group', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dh_group',
-    'resource_group',
-    'ike_version',
-    'resource_group_name',
-    'href',
+    'authentication_algorithm',
+    'encryption_algorithm',
+    'negotiation_mode',
     'vpn_connections',
     'resource_controller_url',
     'name',
-    'authentication_algorithm',
-    'encryption_algorithm',
+    'resource_group',
     'key_lifetime',
-    'negotiation_mode',
+    'ike_version',
+    'href',
     'resource_name',
+    'resource_group_name',
+    'dh_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dh_group=dict(
-        required='True',
-        type='int'),
-    resource_group=dict(
-        required='False',
+    authentication_algorithm=dict(
+        required= False,
         type='str'),
-    ike_version=dict(
-        required='False',
-        type='int'),
-    resource_group_name=dict(
-        required='False',
+    encryption_algorithm=dict(
+        required= False,
         type='str'),
-    href=dict(
-        required='False',
+    negotiation_mode=dict(
+        required= False,
         type='str'),
     vpn_connections=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
     resource_controller_url=dict(
-        required='False',
+        required= False,
         type='str'),
     name=dict(
-        required='True',
+        required= False,
         type='str'),
-    authentication_algorithm=dict(
-        required='True',
-        type='str'),
-    encryption_algorithm=dict(
-        required='True',
+    resource_group=dict(
+        required= False,
         type='str'),
     key_lifetime=dict(
         default=28800,
         type='int'),
-    negotiation_mode=dict(
-        required='False',
+    ike_version=dict(
+        required= False,
+        type='int'),
+    href=dict(
+        required= False,
         type='str'),
     resource_name=dict(
-        required='False',
+        required= False,
         type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    dh_group=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

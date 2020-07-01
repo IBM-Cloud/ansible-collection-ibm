@@ -30,40 +30,28 @@ Parameters
     method
 
 
-  created_on (False, str, None)
-    None
+  retries (False, int, 2)
+    retries
 
 
-  expected_codes (False, str, None)
-    expected_codes
-
-
-  description (False, str, None)
-    description
-
-
-  interval (False, int, 60)
-    interval
-
-
-  follow_redirects (False, bool, None)
-    follow_redirects
+  allow_insecure (False, bool, False)
+    allow_insecure
 
 
   port (False, int, None)
     None
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  created_on (False, str, None)
+    None
 
 
-  path (False, str, None)
-    path
+  modified_on (False, str, None)
+    None
 
 
-  expected_body (False, str, None)
-    expected_body
+  expected_codes (False, str, None)
+    expected_codes
 
 
   type (False, str, http)
@@ -74,16 +62,28 @@ Parameters
     timeout
 
 
-  allow_insecure (False, bool, False)
-    allow_insecure
+  follow_redirects (False, bool, None)
+    follow_redirects
 
 
-  retries (False, int, 2)
-    retries
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  modified_on (False, str, None)
-    None
+  description (False, str, None)
+    description
+
+
+  interval (False, int, 60)
+    interval
+
+
+  path (False, str, None)
+    path
+
+
+  expected_body (False, str, None)
+    expected_body
 
 
   id (False, str, None)

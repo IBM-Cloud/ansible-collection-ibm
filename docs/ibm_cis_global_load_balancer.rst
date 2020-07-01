@@ -26,24 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  modified_on (False, str, None)
-    Load balancer modified date
-
-
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
 
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
+  fallback_pool_id (True, str, None)
+    (Required for new resource) fallback pool ID
 
 
   description (False, str, None)
     Description for the load balancer instance
-
-
-  session_affinity (False, str, none)
-    Session affinity info
 
 
   enabled (False, bool, True)
@@ -62,8 +54,8 @@ Parameters
     (Required for new resource) name
 
 
-  fallback_pool_id (True, str, None)
-    (Required for new resource) fallback pool ID
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
 
 
   ttl (False, int, None)
@@ -72,6 +64,14 @@ Parameters
 
   proxied (False, bool, False)
     set to true if proxy needs to be enabled
+
+
+  session_affinity (False, str, none)
+    Session affinity info
+
+
+  modified_on (False, str, None)
+    Load balancer modified date
 
 
   id (False, str, None)

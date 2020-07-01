@@ -20,41 +20,25 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    worker_pools:
+    worker_count:
         description:
-            - None
+            - Number of workers
         required: False
-        type: list
-        elements: dict
+        type: int
     alb_type:
         description:
             - None
         required: False
         type: str
         default: all
-    ingress_secret:
-        description:
-            - None
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
         type: str
-    public_service_endpoint_url:
+    status:
         description:
-            - None
-        required: False
-        type: str
-    health:
-        description:
-            - None
-        required: False
-        type: str
-    kube_version:
-        description:
-            - None
+            - The status of the cluster master
         required: False
         type: str
     tags:
@@ -63,33 +47,17 @@ options:
         required: False
         type: list
         elements: str
-    resource_crn:
+    resource_name:
         description:
-            - The crn of the resource
+            - The name of the resource
         required: False
         type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    worker_count:
-        description:
-            - Number of workers
-        required: False
-        type: int
-    workers:
+    ingress_hostname:
         description:
             - None
         required: False
-        type: list
-        elements: str
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    private_service_endpoint_url:
+        type: str
+    ingress_secret:
         description:
             - None
         required: False
@@ -104,19 +72,24 @@ options:
             - None
         required: False
         type: str
-    status:
+    health:
         description:
-            - The status of the cluster master
+            - None
         required: False
         type: str
-    resource_controller_url:
+    resource_crn:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+            - The crn of the resource
         required: False
         type: str
-    resource_name:
+    resource_status:
         description:
-            - The name of the resource
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
         required: False
         type: str
     cluster_name_id:
@@ -130,19 +103,46 @@ options:
         required: False
         type: list
         elements: dict
-    ingress_hostname:
-        description:
-            - None
-        required: False
-        type: str
     public_service_endpoint:
         description:
             - None
         required: False
         type: bool
-    resource_status:
+    private_service_endpoint:
         description:
-            - The status of the resource
+            - None
+        required: False
+        type: bool
+    kube_version:
+        description:
+            - None
+        required: False
+        type: str
+    workers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    worker_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    public_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
+    private_service_endpoint_url:
+        description:
+            - None
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
         required: False
         type: str
     ibmcloud_api_key:
@@ -163,79 +163,59 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_pools',
-    'alb_type',
-    'ingress_secret',
-    'resource_group_id',
-    'public_service_endpoint_url',
-    'health',
-    'kube_version',
-    'tags',
-    'resource_crn',
-    'resource_group_name',
     'worker_count',
-    'workers',
-    'private_service_endpoint',
-    'private_service_endpoint_url',
+    'alb_type',
+    'resource_group_id',
+    'status',
+    'tags',
+    'resource_name',
+    'ingress_hostname',
+    'ingress_secret',
     'crn',
     'master_url',
-    'status',
-    'resource_controller_url',
-    'resource_name',
+    'health',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
     'cluster_name_id',
     'albs',
-    'ingress_hostname',
     'public_service_endpoint',
-    'resource_status',
+    'private_service_endpoint',
+    'kube_version',
+    'workers',
+    'worker_pools',
+    'public_service_endpoint_url',
+    'private_service_endpoint_url',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_pools=dict(
+    worker_count=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
     alb_type=dict(
         default='all',
-        type='str'),
-    ingress_secret=dict(
-        required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    public_service_endpoint_url=dict(
-        required=False,
-        type='str'),
-    health=dict(
-        required=False,
-        type='str'),
-    kube_version=dict(
+    status=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_crn=dict(
+    resource_name=dict(
         required=False,
         type='str'),
-    resource_group_name=dict(
+    ingress_hostname=dict(
         required=False,
         type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    workers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    private_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    private_service_endpoint_url=dict(
+    ingress_secret=dict(
         required=False,
         type='str'),
     crn=dict(
@@ -244,13 +224,16 @@ module_args = dict(
     master_url=dict(
         required=False,
         type='str'),
-    status=dict(
+    health=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    resource_crn=dict(
         required=False,
         type='str'),
-    resource_name=dict(
+    resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
         required=False,
         type='str'),
     cluster_name_id=dict(
@@ -260,13 +243,30 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    ingress_hostname=dict(
-        required=False,
-        type='str'),
     public_service_endpoint=dict(
         required=False,
         type='bool'),
-    resource_status=dict(
+    private_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    kube_version=dict(
+        required=False,
+        type='str'),
+    workers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    worker_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    public_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    private_service_endpoint_url=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(

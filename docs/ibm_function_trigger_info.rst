@@ -26,6 +26,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  parameters (False, str, None)
+    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+
+
+  name (True, str, None)
+    Name of Trigger.
+
+
   publish (False, bool, None)
     Trigger Visibility.
 
@@ -36,14 +44,6 @@ Parameters
 
   annotations (False, str, None)
     All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
-  name (True, str, None)
-    Name of Trigger.
 
 
   function_namespace (True, any, None)

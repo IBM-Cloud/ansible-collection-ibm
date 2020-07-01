@@ -97,16 +97,16 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     ipaddress=dict(
-        required='True',
+        required= False,
         type='str'),
     hostname=dict(
-        required='True',
+        required= False,
         type='str'),
     ttl=dict(
-        required='False',
+        required= False,
         type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

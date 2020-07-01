@@ -20,6 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    capacity:
+        description:
+            - (Required for new resource) number of ip addresses in the subnet
+        required: True
+        type: int
+    tags:
+        description:
+            - tags set for the resource
+        required: False
+        type: list
+        elements: str
     private:
         description:
             - private subnet
@@ -31,16 +42,22 @@ options:
             - (Required for new resource) subnet type
         required: True
         type: str
-    capacity:
+    ip_version:
         description:
-            - (Required for new resource) number of ip addresses in the subnet
-        required: True
+            - ip version
+        required: False
         type: int
+        default: 4
     vlan_id:
         description:
             - VLAN ID for the subnet
         required: False
         type: int
+    endpoint_ip:
+        description:
+            - endpoint IP
+        required: False
+        type: str
     subnet_cidr:
         description:
             - CIDR notation for the subnet
@@ -51,23 +68,6 @@ options:
             - Notes
         required: False
         type: str
-    ip_version:
-        description:
-            - ip version
-        required: False
-        type: int
-        default: 4
-    endpoint_ip:
-        description:
-            - endpoint IP
-        required: False
-        type: str
-    tags:
-        description:
-            - tags set for the resource
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,57 +114,57 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'capacity',
+    'tags',
     'private',
     'type',
-    'capacity',
+    'ip_version',
     'vlan_id',
+    'endpoint_ip',
     'subnet_cidr',
     'notes',
-    'ip_version',
-    'endpoint_ip',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    capacity=dict(
+        required= False,
+        type='int'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     private=dict(
         default=False,
         type='bool'),
     type=dict(
-        required='True',
-        type='str'),
-    capacity=dict(
-        required='True',
-        type='int'),
-    vlan_id=dict(
-        required='False',
-        type='int'),
-    subnet_cidr=dict(
-        required='False',
-        type='str'),
-    notes=dict(
-        required='False',
+        required= False,
         type='str'),
     ip_version=dict(
         default=4,
         type='int'),
+    vlan_id=dict(
+        required= False,
+        type='int'),
     endpoint_ip=dict(
-        required='False',
+        required= False,
         type='str'),
-    tags=dict(
-        required='False',
-        elements='',
-        type='list'),
+    subnet_cidr=dict(
+        required= False,
+        type='str'),
+    notes=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

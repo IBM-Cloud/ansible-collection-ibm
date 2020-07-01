@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    output_values:
+        description:
+            - None
+        required: False
+        type: dict
+    output_json:
+        description:
+            - The json output in string
+        required: False
+        type: str
     resource_controller_url:
         description:
             - The URL of the IBM Cloud dashboard that can be used to explore and view details about this Workspace
@@ -40,16 +50,6 @@ options:
             - None
         required: False
         type: int
-    output_values:
-        description:
-            - None
-        required: False
-        type: dict
-    output_json:
-        description:
-            - The json output in string
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -89,18 +89,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'output_values',
+    'output_json',
     'resource_controller_url',
     'workspace_id',
     'template_id',
     'type',
-    'output_values',
-    'output_json',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    output_values=dict(
+        required=False,
+        type='dict'),
+    output_json=dict(
+        required=False,
+        type='str'),
     resource_controller_url=dict(
         required=False,
         type='str'),
@@ -113,12 +119,6 @@ module_args = dict(
     type=dict(
         required=False,
         type='int'),
-    output_values=dict(
-        required=False,
-        type='dict'),
-    output_json=dict(
-        required=False,
-        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags
-
-
-  master_ip_address (True, str, None)
-    (Required for new resource) Master IP Address
-
-
-  transfer_frequency (True, int, None)
-    (Required for new resource) Transfer frequency value
-
-
   zone_name (True, str, None)
     (Required for new resource) Zone name
 
@@ -48,6 +36,18 @@ Parameters
 
   status_text (False, str, None)
     Status text
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  master_ip_address (True, str, None)
+    (Required for new resource) Master IP Address
+
+
+  transfer_frequency (True, int, None)
+    (Required for new resource) Transfer frequency value
 
 
   id (False, str, None)

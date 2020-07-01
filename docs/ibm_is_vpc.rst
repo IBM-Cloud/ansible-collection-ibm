@@ -26,36 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Resource group info
-
-
-  status (False, str, None)
-    VPC status
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
   name (True, str, None)
     (Required for new resource) VPC name
 
 
-  tags (False, list, None)
-    List of tags
-
-
   crn (False, str, None)
     The crn of the resource
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  subnets (False, list, None)
+    None
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
 
 
   classic_access (False, bool, False)
@@ -66,28 +58,36 @@ Parameters
     Security group associated with VPC
 
 
-  resource_name (False, str, None)
-    The name of the resource
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   resource_group_name (False, str, None)
     The resource group name in which resource is provisioned
 
 
-  subnets (False, list, None)
-    None
-
-
   default_network_acl (False, str, None)
     Default network ACL
 
 
-  cse_source_addresses (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  status (False, str, None)
+    VPC status
 
 
   id (False, str, None)

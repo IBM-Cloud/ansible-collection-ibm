@@ -26,6 +26,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  rule (False, str, None)
+    None
+
+
+  virtual_guests (False, list, None)
+    None
+
+
   name (True, str, None)
     None
 
@@ -35,14 +43,6 @@ Parameters
 
 
   pod (False, str, None)
-    None
-
-
-  rule (False, str, None)
-    None
-
-
-  virtual_guests (False, list, None)
     None
 
 

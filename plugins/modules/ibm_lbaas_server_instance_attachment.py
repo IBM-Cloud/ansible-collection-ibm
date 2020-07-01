@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    weight:
-        description:
-            - The weight of a load balancer member.
-        required: False
-        type: int
     lbaas_id:
         description:
             - (Required for new resource) The UUID of a load balancer
@@ -40,6 +35,11 @@ options:
             - (Required for new resource) The Private IP address of a load balancer member.
         required: True
         type: str
+    weight:
+        description:
+            - The weight of a load balancer member.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,30 +92,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'weight',
     'lbaas_id',
     'uuid',
     'private_ip_address',
+    'weight',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    weight=dict(
-        required='False',
-        type='int'),
     lbaas_id=dict(
-        required='True',
+        required= False,
         type='str'),
     uuid=dict(
-        required='False',
+        required= False,
         type='str'),
     private_ip_address=dict(
-        required='True',
+        required= False,
         type='str'),
+    weight=dict(
+        required= False,
+        type='int'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

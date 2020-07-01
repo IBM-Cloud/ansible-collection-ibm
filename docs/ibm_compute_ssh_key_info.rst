@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  label (True, str, None)
-    The label associated with the ssh key
-
-
   public_key (False, str, None)
     The public ssh key
 
@@ -44,6 +40,10 @@ Parameters
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created key is used. If false, an error is returned
+
+
+  label (True, str, None)
+    The label associated with the ssh key
 
 
   iaas_classic_username (False, any, None)

@@ -20,20 +20,25 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    target_http_status_code:
+    target_id:
         description:
-            - Listener Policy target HTTPS Status code.
+            - Listener Policy Target ID
         required: False
-        type: int
+        type: str
     target_url:
         description:
             - Policy Target URL
         required: False
         type: str
-    lb:
+    name:
         description:
-            - (Required for new resource) Load Balancer Listener Policy
-        required: True
+            - Policy name
+        required: False
+        type: str
+    policy_id:
+        description:
+            - Listener Policy ID
+        required: False
         type: str
     action:
         description:
@@ -45,36 +50,31 @@ options:
             - (Required for new resource) Listener Policy Priority
         required: True
         type: int
-    name:
-        description:
-            - Policy name
-        required: False
-        type: str
-    policy_id:
-        description:
-            - Listener Policy ID
-        required: False
-        type: str
     rules:
         description:
             - Policy Rules
         required: False
         type: list
         elements: dict
+    target_http_status_code:
+        description:
+            - Listener Policy target HTTPS Status code.
+        required: False
+        type: int
     provisioning_status:
         description:
             - Listner Policy status
         required: False
         type: str
+    lb:
+        description:
+            - (Required for new resource) Load Balancer Listener Policy
+        required: True
+        type: str
     listener:
         description:
             - (Required for new resource) Listener ID
         required: True
-        type: str
-    target_id:
-        description:
-            - Listener Policy Target ID
-        required: False
         type: str
     id:
         description:
@@ -122,67 +122,67 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
     ('action', 'str'),
     ('priority', 'int'),
+    ('lb', 'str'),
     ('listener', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_http_status_code',
+    'target_id',
     'target_url',
-    'lb',
-    'action',
-    'priority',
     'name',
     'policy_id',
+    'action',
+    'priority',
     'rules',
+    'target_http_status_code',
     'provisioning_status',
+    'lb',
     'listener',
-    'target_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_http_status_code=dict(
-        required='False',
-        type='int'),
+    target_id=dict(
+        required= False,
+        type='str'),
     target_url=dict(
-        required='False',
+        required= False,
         type='str'),
-    lb=dict(
-        required='True',
-        type='str'),
-    action=dict(
-        required='True',
-        type='str'),
-    priority=dict(
-        required='True',
-        type='int'),
     name=dict(
-        required='False',
+        required= False,
         type='str'),
     policy_id=dict(
-        required='False',
+        required= False,
         type='str'),
+    action=dict(
+        required= False,
+        type='str'),
+    priority=dict(
+        required= False,
+        type='int'),
     rules=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    target_http_status_code=dict(
+        required= False,
+        type='int'),
     provisioning_status=dict(
-        required='False',
+        required= False,
+        type='str'),
+    lb=dict(
+        required= False,
         type='str'),
     listener=dict(
-        required='True',
-        type='str'),
-    target_id=dict(
-        required='False',
+        required= False,
         type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

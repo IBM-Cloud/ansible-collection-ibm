@@ -25,11 +25,6 @@ options:
             - certificate creation date
         required: False
         type: str
-    modify_date:
-        description:
-            - certificate modificatiob date
-        required: False
-        type: str
     intermediate_certificate:
         description:
             - Intermediate certificate value
@@ -45,21 +40,22 @@ options:
             - Organization name
         required: False
         type: str
-    validity_begin:
+    validity_days:
         description:
-            - Validity begins from
+            - Validity days
         required: False
-        type: str
+        type: int
     validity_end:
         description:
             - Validity ends before
         required: False
         type: str
-    key_size:
+    tags:
         description:
-            - SSL key size
+            - Tags set for resource
         required: False
-        type: int
+        type: list
+        elements: str
     certificate:
         description:
             - (Required for new resource) SSL Certifcate
@@ -70,17 +66,21 @@ options:
             - Common name
         required: False
         type: str
-    validity_days:
+    validity_begin:
         description:
-            - Validity days
+            - Validity begins from
+        required: False
+        type: str
+    key_size:
+        description:
+            - SSL key size
         required: False
         type: int
-    tags:
+    modify_date:
         description:
-            - Tags set for resource
+            - certificate modificatiob date
         required: False
-        type: list
-        elements: str
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -134,17 +134,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'create_date',
-    'modify_date',
     'intermediate_certificate',
     'private_key',
     'organization_name',
-    'validity_begin',
+    'validity_days',
     'validity_end',
-    'key_size',
+    'tags',
     'certificate',
     'common_name',
-    'validity_days',
-    'tags',
+    'validity_begin',
+    'key_size',
+    'modify_date',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -152,44 +152,44 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     create_date=dict(
-        required='False',
-        type='str'),
-    modify_date=dict(
-        required='False',
+        required= False,
         type='str'),
     intermediate_certificate=dict(
-        required='False',
+        required= False,
         type='str'),
     private_key=dict(
-        required='True',
+        required= False,
         type='str'),
     organization_name=dict(
-        required='False',
-        type='str'),
-    validity_begin=dict(
-        required='False',
-        type='str'),
-    validity_end=dict(
-        required='False',
-        type='str'),
-    key_size=dict(
-        required='False',
-        type='int'),
-    certificate=dict(
-        required='True',
-        type='str'),
-    common_name=dict(
-        required='False',
+        required= False,
         type='str'),
     validity_days=dict(
-        required='False',
+        required= False,
         type='int'),
+    validity_end=dict(
+        required= False,
+        type='str'),
     tags=dict(
-        required='False',
+        required= False,
         elements='',
         type='list'),
+    certificate=dict(
+        required= False,
+        type='str'),
+    common_name=dict(
+        required= False,
+        type='str'),
+    validity_begin=dict(
+        required= False,
+        type='str'),
+    key_size=dict(
+        required= False,
+        type='int'),
+    modify_date=dict(
+        required= False,
+        type='str'),
     id=dict(
-        required='False',
+        required= False,
         type='str'),
     state=dict(
         type='str',

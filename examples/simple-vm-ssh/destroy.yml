@@ -7,35 +7,35 @@
     - name: Fetch the variables from var file
       include_vars:
         file: vars.yml
-    # - name: Release Floating IP
-    #   ibm_is_floating_ip:
-    #     state: absent
-    #     id: "{{ fip }}"
-    #   when: fip is defined
+    - name: Release Floating IP
+      ibm_is_floating_ip:
+        state: absent
+        id: "{{ fip }}"
+      when: fip is defined
 
-    # - name: Remove VSI
-    #   ibm_is_instance:
-    #     state: absent
-    #     id: "{{ vsi }}"
-    #     keys: []
-    #   when: vsi is defined
+    - name: Remove VSI
+      ibm_is_instance:
+        state: absent
+        id: "{{ vsi }}"
+        keys: []
+      when: vsi is defined
 
-    # - name: Get the ssh Key
-    #   ibm_is_ssh_key_info:
-    #     name: "{{ name_prefix }}-ssh-key"
-    #     # name: "demo-key"
-    #   register: ssh_key_output
+    - name: Get the ssh Key
+      ibm_is_ssh_key_info:
+        name: "{{ name_prefix }}-ssh-key"
+        # name: "demo-key"
+      register: ssh_key_output
 
-    # - name: set ssh key in fact
-    #   set_fact:
-    #     cacheable: True
-    #     ssh_key: "{{ ssh_key_output.resource }}"
+    - name: set ssh key in fact
+      set_fact:
+        cacheable: True
+        ssh_key: "{{ ssh_key_output.resource }}"
 
-    # - name: Remove SSH Key
-    #   ibm_is_ssh_key:
-    #     state: absent
-    #     id: "{{ ssh_key.id }}"
-    #   when: ssh_key is defined
+    - name: Remove SSH Key
+      ibm_is_ssh_key:
+        state: absent
+        id: "{{ ssh_key.id }}"
+      when: ssh_key is defined
 
     - name: Remove VPC Subnet
       ibm_is_subnet:
