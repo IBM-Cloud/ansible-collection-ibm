@@ -1,12 +1,13 @@
 ---
 - name: IBM IAM User invite example.
   hosts: localhost
-- name: Fetch the variables from var file
-  include_vars:
-    file: vars.yml
   collections:
    - ibm.cloudcollection
   tasks:
+
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
     - name: space data details
       ibm_space_info:
         space: "{{ ibm_space }}"
