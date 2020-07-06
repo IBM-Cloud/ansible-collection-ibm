@@ -67,9 +67,9 @@ The following parameters can be set by the user:
     ansible-playbook destroy.yml -e "fip=<floating_ip_address_id> vsi=<vm_instance_id> subnet=<subnet_id>"
     ```
 
-### List Available VSI Images and Profiles
+### List 
 
-1. To destroy all resources run the 'destroy' playbook:
+1. To list available VSI Images and Profiles run the 'list_vsi_images_and_profiles' playbook:
 
     ```
     ansible-playbook list_vsi_images_and_profiles.yml
