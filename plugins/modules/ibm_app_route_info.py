@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    space_guid:
-        description:
-            - The guid of the space
-        required: True
-        type: str
-    domain_guid:
-        description:
-            - The guid of the domain
-        required: True
-        type: str
     host:
         description:
             - The host of the route
@@ -44,6 +34,16 @@ options:
         description:
             - The port of the route
         required: False
+        type: str
+    space_guid:
+        description:
+            - The guid of the space
+        required: True
+        type: str
+    domain_guid:
+        description:
+            - The guid of the domain
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -84,23 +84,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'space_guid',
-    'domain_guid',
     'host',
     'path',
     'port',
+    'space_guid',
+    'domain_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    space_guid=dict(
-        required=True,
-        type='str'),
-    domain_guid=dict(
-        required=True,
-        type='str'),
     host=dict(
         required=False,
         type='str'),
@@ -109,6 +103,12 @@ module_args = dict(
         type='str'),
     port=dict(
         required=False,
+        type='str'),
+    space_guid=dict(
+        required=True,
+        type='str'),
+    domain_guid=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',

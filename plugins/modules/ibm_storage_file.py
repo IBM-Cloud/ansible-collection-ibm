@@ -20,27 +20,25 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    allowed_virtual_guest_ids:
+    allowed_subnets:
         description:
-            - Virtual guest ID
-        required: False
-        type: list
-        elements: int
-    allowed_hardware_ids:
-        description:
-            - Hardaware ID
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - Tags set for the storage volume
+            - Allowed network subnets
         required: False
         type: list
         elements: str
-    resource_name:
+    datacenter:
         description:
-            - The name of the resource
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    iops:
+        description:
+            - (Required for new resource) iops rate
+        required: True
+        type: float
+    notes:
+        description:
+            - Notes
         required: False
         type: str
     capacity:
@@ -48,6 +46,17 @@ options:
             - (Required for new resource) Storage capacity
         required: True
         type: int
+    tags:
+        description:
+            - Tags set for the storage volume
+        required: False
+        type: list
+        elements: str
+    type:
+        description:
+            - (Required for new resource) Storage type
+        required: True
+        type: str
     snapshot_capacity:
         description:
             - Snapshot capacity
@@ -65,63 +74,12 @@ options:
         required: False
         type: list
         elements: dict
-    mountpoint:
-        description:
-            - Storage mount point
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Storage type
-        required: True
-        type: str
     hourly_billing:
         description:
             - Hourly based billing type
         required: False
         type: bool
         default: False
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    volumename:
-        description:
-            - Storage volume name
-        required: False
-        type: str
-    iops:
-        description:
-            - (Required for new resource) iops rate
-        required: True
-        type: float
-    hostname:
-        description:
-            - Hostname
-        required: False
-        type: str
-    allowed_subnets:
-        description:
-            - Allowed network subnets
-        required: False
-        type: list
-        elements: str
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -168,57 +126,54 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
+    ('iops', 'float'),
     ('capacity', 'int'),
     ('type', 'str'),
-    ('iops', 'float'),
-    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'allowed_virtual_guest_ids',
-    'allowed_hardware_ids',
-    'tags',
-    'resource_name',
+    'allowed_subnets',
+    'datacenter',
+    'iops',
+    'notes',
     'capacity',
+    'tags',
+    'type',
     'snapshot_capacity',
     'allowed_ip_addresses',
     'snapshot_schedule',
-    'mountpoint',
-    'type',
     'hourly_billing',
-    'resource_status',
-    'volumename',
-    'iops',
-    'hostname',
-    'allowed_subnets',
-    'notes',
-    'resource_controller_url',
-    'datacenter',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    allowed_virtual_guest_ids=dict(
+    allowed_subnets=dict(
         required= False,
         elements='',
         type='list'),
-    allowed_hardware_ids=dict(
+    datacenter=dict(
         required= False,
-        elements='',
-        type='list'),
-    tags=dict(
+        type='str'),
+    iops=dict(
         required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
+        type='float'),
+    notes=dict(
         required= False,
         type='str'),
     capacity=dict(
         required= False,
         type='int'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    type=dict(
+        required= False,
+        type='str'),
     snapshot_capacity=dict(
         required= False,
         type='int'),
@@ -230,40 +185,9 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    mountpoint=dict(
-        required= False,
-        type='str'),
-    type=dict(
-        required= False,
-        type='str'),
     hourly_billing=dict(
         default=False,
         type='bool'),
-    resource_status=dict(
-        required= False,
-        type='str'),
-    volumename=dict(
-        required= False,
-        type='str'),
-    iops=dict(
-        required= False,
-        type='float'),
-    hostname=dict(
-        required= False,
-        type='str'),
-    allowed_subnets=dict(
-        required= False,
-        elements='',
-        type='list'),
-    notes=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    datacenter=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

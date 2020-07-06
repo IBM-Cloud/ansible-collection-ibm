@@ -25,21 +25,11 @@ options:
             - (Required for new resource) The UUID of a load balancer
         required: True
         type: str
-    uuid:
-        description:
-            - The UUID of a load balancer member
-        required: False
-        type: str
     private_ip_address:
         description:
             - (Required for new resource) The Private IP address of a load balancer member.
         required: True
         type: str
-    weight:
-        description:
-            - The weight of a load balancer member.
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,9 +83,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lbaas_id',
-    'uuid',
     'private_ip_address',
-    'weight',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -105,15 +93,9 @@ module_args = dict(
     lbaas_id=dict(
         required= False,
         type='str'),
-    uuid=dict(
-        required= False,
-        type='str'),
     private_ip_address=dict(
         required= False,
         type='str'),
-    weight=dict(
-        required= False,
-        type='int'),
     id=dict(
         required= False,
         type='str'),

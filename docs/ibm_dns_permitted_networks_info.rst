@@ -26,16 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone_id (True, str, None)
-    Zone ID
-
-
-  dns_permitted_networks (False, list, None)
-    Collection of permitted networks
-
-
   instance_id (True, str, None)
     Instance ID
+
+
+  zone_id (True, str, None)
+    Zone ID
 
 
   iaas_classic_username (False, any, None)

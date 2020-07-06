@@ -30,22 +30,6 @@ Parameters
     The Service Name
 
 
-  reader (False, list, None)
-    Reader action ids
-
-
-  manager (False, list, None)
-    manager action ids
-
-
-  reader_plus (False, list, None)
-    readerplus action ids
-
-
-  writer (False, list, None)
-    writer action ids
-
-
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

@@ -26,92 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  connectionstrings (False, list, None)
-    None
-
-
-  whitelist (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  status (False, str, None)
-    The resource instance status
-
-
-  users (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  groups (False, list, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  name (True, str, None)
-    Resource instance name for example, my Database instance
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  service (False, str, None)
-    The name of the Cloud Internet database service
-
-
   resource_group_id (False, str, None)
     The id of the resource group in which the Database instance is present
-
-
-  guid (False, str, None)
-    Unique identifier of resource instance
-
-
-  adminuser (False, str, None)
-    The admin user id for the instance
-
-
-  adminpassword (False, str, None)
-    The admin user id for the instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
 
 
   location (False, str, None)
     The location or the region in which the Database instance exists
 
 
-  plan (False, str, None)
-    The plan type of the Database instance
+  service (False, str, None)
+    The name of the Cloud Internet database service
+
+
+  tags (False, list, None)
+    None
+
+
+  name (True, str, None)
+    Resource instance name for example, my Database instance
 
 
   iaas_classic_username (False, any, None)

@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  host (False, str, None)
+    The host portion of the route. Required for shared-domains.
+
+
   space_guid (True, str, None)
     (Required for new resource) The guid of the associated space
 
@@ -44,10 +48,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  host (False, str, None)
-    The host portion of the route. Required for shared-domains.
 
 
   id (False, str, None)

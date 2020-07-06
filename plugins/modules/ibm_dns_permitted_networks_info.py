@@ -30,12 +30,6 @@ options:
             - Zone ID
         required: True
         type: str
-    dns_permitted_networks:
-        description:
-            - Collection of permitted networks
-        required: False
-        type: list
-        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -77,7 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'instance_id',
     'zone_id',
-    'dns_permitted_networks',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -90,10 +83,6 @@ module_args = dict(
     zone_id=dict(
         required=True,
         type='str'),
-    dns_permitted_networks=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

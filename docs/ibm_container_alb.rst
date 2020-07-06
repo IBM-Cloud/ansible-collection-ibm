@@ -26,40 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  region (False, str, None)
-    None
-
-
-  cluster (False, str, None)
-    Cluster id
-
-
-  user_ip (False, str, None)
-    IP assigned by the user
-
-
-  enable (False, bool, None)
-    set to true if ALB needs to be enabled
-
-
-  name (False, str, None)
-    ALB name
-
-
-  zone (False, str, None)
-    ALB zone
-
-
   alb_id (True, str, None)
     (Required for new resource) ALB ID
 
 
-  alb_type (False, str, None)
-    ALB type
-
-
-  disable_deployment (False, bool, None)
-    Set to true if ALB needs to be disabled
+  region (False, str, None)
+    None
 
 
   id (False, str, None)

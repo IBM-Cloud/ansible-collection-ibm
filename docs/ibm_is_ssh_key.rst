@@ -26,48 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_key (True, str, None)
-    (Required for new resource) SSH Public key data
-
-
-  resource_group (False, str, None)
-    Resource group ID
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  tags (False, list, None)
-    List of tags for SSH key
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   name (True, str, None)
     (Required for new resource) SSH Key name
 
 
-  type (False, str, None)
-    Key type
-
-
-  fingerprint (False, str, None)
-    SSH key Fingerprint info
-
-
-  length (False, int, None)
-    SSH key Length
+  public_key (True, str, None)
+    (Required for new resource) SSH Public key data
 
 
   id (False, str, None)

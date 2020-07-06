@@ -20,20 +20,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    proxiable:
+    name:
         description:
-            - None
+            - DNS record name
+        required: False
+        type: str
+    content:
+        description:
+            - DNS record content
+        required: False
+        type: str
+    proxied:
+        description:
+            - Boolean value true if proxied else flase
         required: False
         type: bool
+        default: False
     cis_id:
         description:
             - (Required for new resource) CIS object id
         required: True
         type: str
-    name:
+    domain_id:
         description:
-            - DNS record name
-        required: False
+            - (Required for new resource) Associated CIS domain
+        required: True
         type: str
     type:
         description:
@@ -46,27 +57,6 @@ options:
         required: False
         type: dict
         elements: dict
-    proxied:
-        description:
-            - Boolean value true if proxied else flase
-        required: False
-        type: bool
-        default: False
-    modified_on:
-        description:
-            - None
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    content:
-        description:
-            - DNS record content
-        required: False
-        type: str
     priority:
         description:
             - Priority Value
@@ -78,16 +68,6 @@ options:
         required: False
         type: int
         default: 1
-    created_on:
-        description:
-            - None
-        required: False
-        type: str
-    record_id:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,38 +115,40 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('type', 'str'),
     ('domain_id', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'proxiable',
-    'cis_id',
     'name',
+    'content',
+    'proxied',
+    'cis_id',
+    'domain_id',
     'type',
     'data',
-    'proxied',
-    'modified_on',
-    'domain_id',
-    'content',
     'priority',
     'ttl',
-    'created_on',
-    'record_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    proxiable=dict(
+    name=dict(
         required= False,
+        type='str'),
+    content=dict(
+        required= False,
+        type='str'),
+    proxied=dict(
+        default=False,
         type='bool'),
     cis_id=dict(
         required= False,
         type='str'),
-    name=dict(
+    domain_id=dict(
         required= False,
         type='str'),
     type=dict(
@@ -176,30 +158,12 @@ module_args = dict(
         required= False,
         elements='',
         type='dict'),
-    proxied=dict(
-        default=False,
-        type='bool'),
-    modified_on=dict(
-        required= False,
-        type='str'),
-    domain_id=dict(
-        required= False,
-        type='str'),
-    content=dict(
-        required= False,
-        type='str'),
     priority=dict(
         required= False,
         type='int'),
     ttl=dict(
         default=1,
         type='int'),
-    created_on=dict(
-        required= False,
-        type='str'),
-    record_id=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

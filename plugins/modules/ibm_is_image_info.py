@@ -30,26 +30,6 @@ options:
             - None
         required: False
         type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    os:
-        description:
-            - None
-        required: False
-        type: str
-    architecture:
-        description:
-            - None
-        required: False
-        type: str
-    crn:
-        description:
-            - None
-        required: False
-        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -90,10 +70,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'visibility',
-    'status',
-    'os',
-    'architecture',
-    'crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -104,18 +80,6 @@ module_args = dict(
         required=True,
         type='str'),
     visibility=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    os=dict(
-        required=False,
-        type='str'),
-    architecture=dict(
-        required=False,
-        type='str'),
-    crn=dict(
         required=False,
         type='str'),
     generation=dict(

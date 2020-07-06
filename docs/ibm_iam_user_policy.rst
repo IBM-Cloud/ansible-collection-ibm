@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  account_management (False, bool, False)
-    Give access to all account management services
-
-
-  tags (False, list, None)
-    None
-
-
-  version (False, str, None)
-    None
-
-
   ibm_id (True, str, None)
     (Required for new resource) The ibm id or email of user
 
@@ -46,7 +34,11 @@ Parameters
     (Required for new resource) Role names of the policy definition
 
 
-  resources (False, list, None)
+  account_management (False, bool, False)
+    Give access to all account management services
+
+
+  tags (False, list, None)
     None
 
 

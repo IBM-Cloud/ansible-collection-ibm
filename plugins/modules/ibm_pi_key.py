@@ -40,11 +40,6 @@ options:
             - (Required for new resource) PI cloud instance ID
         required: True
         type: str
-    key_id:
-        description:
-            - Key ID in the PI instance
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,7 +93,6 @@ TL_ALL_PARAMETERS = [
     'pi_ssh_key',
     'pi_creation_date',
     'pi_cloud_instance_id',
-    'key_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -115,9 +109,6 @@ module_args = dict(
         required= False,
         type='str'),
     pi_cloud_instance_id=dict(
-        required= False,
-        type='str'),
-    key_id=dict(
         required= False,
         type='str'),
     id=dict(

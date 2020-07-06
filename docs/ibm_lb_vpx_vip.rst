@@ -26,22 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags
-
-
-  persistence (False, str, None)
-    Persistance value
-
-
-  name (True, str, None)
-    (Required for new resource) Name
-
-
-  source_port (True, int, None)
-    (Required for new resource) Source Port number
-
-
   type (True, str, None)
     (Required for new resource) Type
 
@@ -54,12 +38,24 @@ Parameters
     (Required for new resource) Virtual IP address
 
 
-  nad_controller_id (True, int, None)
-    (Required for new resource) NAD controller ID
-
-
   load_balancing_method (True, str, None)
     (Required for new resource) Load balancing method
+
+
+  name (True, str, None)
+    (Required for new resource) Name
+
+
+  source_port (True, int, None)
+    (Required for new resource) Source Port number
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  nad_controller_id (True, int, None)
+    (Required for new resource) NAD controller ID
 
 
   id (False, str, None)

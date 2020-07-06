@@ -26,31 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hypervisor (False, str, None)
-    None
-
-
   pi_image_name (True, str, None)
     Imagename Name to be used for pvminstances
 
 
   pi_cloud_instance_id (True, str, None)
-    None
-
-
-  state (False, str, None)
-    None
-
-
-  size (False, int, None)
-    None
-
-
-  architecture (False, str, None)
-    None
-
-
-  operatingsystem (False, str, None)
     None
 
 

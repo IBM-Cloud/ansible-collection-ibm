@@ -20,50 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    enable:
+    alb_id:
         description:
-            - set to true if ALB needs to be enabled
-        required: False
-        type: bool
-    disable_deployment:
-        description:
-            - Set to true if ALB needs to be disabled
-        required: False
-        type: bool
-    name:
-        description:
-            - ALB name
-        required: False
-        type: str
-    cluster:
-        description:
-            - Cluster id
-        required: False
-        type: str
-    alb_type:
-        description:
-            - ALB type
-        required: False
-        type: str
-    user_ip:
-        description:
-            - IP assigned by the user
-        required: False
-        type: str
-    zone:
-        description:
-            - ALB zone
-        required: False
+            - (Required for new resource) ALB ID
+        required: True
         type: str
     region:
         description:
             - None
         required: False
-        type: str
-    alb_id:
-        description:
-            - (Required for new resource) ALB ID
-        required: True
         type: str
     id:
         description:
@@ -96,46 +61,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enable',
-    'disable_deployment',
-    'name',
-    'cluster',
-    'alb_type',
-    'user_ip',
-    'zone',
-    'region',
     'alb_id',
+    'region',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    enable=dict(
-        required= False,
-        type='bool'),
-    disable_deployment=dict(
-        required= False,
-        type='bool'),
-    name=dict(
-        required= False,
-        type='str'),
-    cluster=dict(
-        required= False,
-        type='str'),
-    alb_type=dict(
-        required= False,
-        type='str'),
-    user_ip=dict(
-        required= False,
-        type='str'),
-    zone=dict(
+    alb_id=dict(
         required= False,
         type='str'),
     region=dict(
-        required= False,
-        type='str'),
-    alb_id=dict(
         required= False,
         type='str'),
     id=dict(

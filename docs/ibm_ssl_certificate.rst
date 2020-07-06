@@ -26,12 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  billing_contact (False, list, None)
+    None
+
+
+  administrative_contact (False, list, None)
+    None
+
+
   ssl_type (True, str, None)
     (Required for new resource) ssl type
 
 
-  order_approver_email_address (True, str, None)
-    (Required for new resource) Email address of the approver
+  certificate_signing_request (True, str, None)
+    (Required for new resource) certificate signing request info
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    Administrative contact same as technical flag
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    billing contact
 
 
   billing_address_same_as_organization_flag (False, bool, False)
@@ -42,52 +58,36 @@ Parameters
     (Required for new resource) Technical contact info
 
 
-  server_count (True, int, None)
-    (Required for new resource) Server count
-
-
-  technical_contact_same_as_org_address_flag (False, bool, False)
-    Technical contact same as org address flag
-
-
-  organization_information (True, list, None)
-    (Required for new resource) Organization information
-
-
-  billing_contact (False, list, None)
-    None
+  server_type (True, str, None)
+    (Required for new resource) server type
 
 
   validity_months (True, int, None)
     (Required for new resource) vslidity of the ssl certificate in month
 
 
-  billing_contact_same_as_technical_flag (False, bool, False)
-    billing contact
+  order_approver_email_address (True, str, None)
+    (Required for new resource) Email address of the approver
 
 
-  administrative_contact (False, list, None)
-    None
+  technical_contact_same_as_org_address_flag (False, bool, False)
+    Technical contact same as org address flag
 
 
-  administrative_address_same_as_organization_flag (False, bool, False)
-    administrative address same as organization flag
+  server_count (True, int, None)
+    (Required for new resource) Server count
 
 
-  server_type (True, str, None)
-    (Required for new resource) server type
-
-
-  certificate_signing_request (True, str, None)
-    (Required for new resource) certificate signing request info
+  organization_information (True, list, None)
+    (Required for new resource) Organization information
 
 
   renewal_flag (False, bool, True)
     Renewal flag
 
 
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    Administrative contact same as technical flag
+  administrative_address_same_as_organization_flag (False, bool, False)
+    administrative address same as organization flag
 
 
   id (False, str, None)

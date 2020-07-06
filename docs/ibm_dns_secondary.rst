@@ -30,14 +30,6 @@ Parameters
     (Required for new resource) Zone name
 
 
-  status_id (False, int, None)
-    Status ID
-
-
-  status_text (False, str, None)
-    Status text
-
-
   tags (False, list, None)
     List of tags
 

@@ -20,9 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    termination_policy:
+    name:
         description:
-            - (Required for new resource) Termination policy
+            - (Required for new resource) Name
+        required: True
+        type: str
+    regional_group:
+        description:
+            - (Required for new resource) regional group
         required: True
         type: str
     virtual_server_id:
@@ -30,23 +35,28 @@ options:
             - virtual server ID
         required: False
         type: int
-    health_check:
+    port:
         description:
-            - None
+            - Port number
         required: False
-        type: dict
-        elements: dict
+        type: int
     network_vlan_ids:
         description:
             - List of network VLAN ids
         required: False
         type: list
         elements: int
-    regional_group:
+    tags:
         description:
-            - (Required for new resource) regional group
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    minimum_member_count:
+        description:
+            - (Required for new resource) Minimum member count
         required: True
-        type: str
+        type: int
     maximum_member_count:
         description:
             - (Required for new resource) Maximum member count
@@ -57,33 +67,23 @@ options:
             - (Required for new resource) Cooldown value
         required: True
         type: int
-    port:
+    termination_policy:
         description:
-            - Port number
+            - (Required for new resource) Termination policy
+        required: True
+        type: str
+    health_check:
+        description:
+            - None
         required: False
-        type: int
+        type: dict
+        elements: dict
     virtual_guest_member_template:
         description:
             - (Required for new resource) Virtual guest member template
         required: True
         type: list
         elements: dict
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) Name
-        required: True
-        type: str
-    minimum_member_count:
-        description:
-            - (Required for new resource) Minimum member count
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -130,62 +130,48 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('termination_policy', 'str'),
+    ('name', 'str'),
     ('regional_group', 'str'),
+    ('minimum_member_count', 'int'),
     ('maximum_member_count', 'int'),
     ('cooldown', 'int'),
+    ('termination_policy', 'str'),
     ('virtual_guest_member_template', 'list'),
-    ('name', 'str'),
-    ('minimum_member_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'termination_policy',
-    'virtual_server_id',
-    'health_check',
-    'network_vlan_ids',
+    'name',
     'regional_group',
+    'virtual_server_id',
+    'port',
+    'network_vlan_ids',
+    'tags',
+    'minimum_member_count',
     'maximum_member_count',
     'cooldown',
-    'port',
+    'termination_policy',
+    'health_check',
     'virtual_guest_member_template',
-    'tags',
-    'name',
-    'minimum_member_count',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    termination_policy=dict(
+    name=dict(
+        required= False,
+        type='str'),
+    regional_group=dict(
         required= False,
         type='str'),
     virtual_server_id=dict(
         required= False,
         type='int'),
-    health_check=dict(
-        required= False,
-        elements='',
-        type='dict'),
-    network_vlan_ids=dict(
-        required= False,
-        elements='',
-        type='list'),
-    regional_group=dict(
-        required= False,
-        type='str'),
-    maximum_member_count=dict(
-        required= False,
-        type='int'),
-    cooldown=dict(
-        required= False,
-        type='int'),
     port=dict(
         required= False,
         type='int'),
-    virtual_guest_member_template=dict(
+    network_vlan_ids=dict(
         required= False,
         elements='',
         type='list'),
@@ -193,12 +179,26 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    name=dict(
-        required= False,
-        type='str'),
     minimum_member_count=dict(
         required= False,
         type='int'),
+    maximum_member_count=dict(
+        required= False,
+        type='int'),
+    cooldown=dict(
+        required= False,
+        type='int'),
+    termination_policy=dict(
+        required= False,
+        type='str'),
+    health_check=dict(
+        required= False,
+        elements='',
+        type='dict'),
+    virtual_guest_member_template=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

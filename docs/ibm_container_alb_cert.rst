@@ -30,36 +30,12 @@ Parameters
     (Required for new resource) Cluster ID
 
 
-  issuer_name (False, str, None)
-    certificate issuer name
-
-
-  cert_crn (True, str, None)
-    (Required for new resource) Certificate CRN id
-
-
   secret_name (True, str, None)
     (Required for new resource) Secret name
 
 
-  domain_name (False, str, None)
-    Domain name
-
-
-  expires_on (False, str, None)
-    Certificate expaire on date
-
-
-  cluster_crn (False, str, None)
-    cluster CRN
-
-
-  cloud_cert_instance_id (False, str, None)
-    cloud cert instance ID
-
-
-  region (False, str, None)
-    region name
+  cert_crn (True, str, None)
+    (Required for new resource) Certificate CRN id
 
 
   id (False, str, None)

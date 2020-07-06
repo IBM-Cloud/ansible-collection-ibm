@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    version:
-        description:
-            - Semantic version of the item.
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of rule.
@@ -40,16 +35,6 @@ options:
             - (Required for new resource) Name of action.
         required: True
         type: str
-    status:
-        description:
-            - Status of the rule.
-        required: False
-        type: str
-    publish:
-        description:
-            - Rule visbility.
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,21 +74,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'version',
     'name',
     'trigger_name',
     'action_name',
-    'status',
-    'publish',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    version=dict(
-        required= False,
-        type='str'),
     name=dict(
         required= False,
         type='str'),
@@ -113,12 +92,6 @@ module_args = dict(
     action_name=dict(
         required= False,
         type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    publish=dict(
-        required= False,
-        type='bool'),
     id=dict(
         required= False,
         type='str'),

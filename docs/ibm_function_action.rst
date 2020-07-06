@@ -26,28 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  version (False, str, None)
-    Semantic version of the item.
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
+  name (True, str, None)
+    (Required for new resource) Name of action.
 
 
   user_defined_parameters (False, str, [])
     Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-
-
-  annotations (False, str, None)
-    All annotations set on action by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
-
-
-  name (True, str, None)
-    (Required for new resource) Name of action.
 
 
   exec (True, list, None)
@@ -58,8 +42,8 @@ Parameters
     Action visibilty.
 
 
-  limits (False, list, None)
-    None
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
 
 
   id (False, str, None)

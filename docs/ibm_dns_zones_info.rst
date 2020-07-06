@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dns_zones (False, list, None)
-    Collection of dns zones
-
-
   instance_id (True, str, None)
     Instance ID
 

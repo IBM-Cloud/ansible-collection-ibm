@@ -34,14 +34,6 @@ Parameters
     None
 
 
-  creation_date (False, str, None)
-    None
-
-
-  sshkey (False, str, None)
-    None
-
-
   zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 

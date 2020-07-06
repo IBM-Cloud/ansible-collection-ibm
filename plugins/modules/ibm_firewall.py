@@ -37,26 +37,6 @@ options:
         required: False
         type: list
         elements: str
-    location:
-        description:
-            - Location info
-        required: False
-        type: str
-    primary_ip:
-        description:
-            - Primary IP address
-        required: False
-        type: str
-    username:
-        description:
-            - User name
-        required: False
-        type: str
-    password:
-        description:
-            - Password for the given User
-        required: False
-        type: str
     firewall_type:
         description:
             - Firewall type
@@ -117,10 +97,6 @@ TL_ALL_PARAMETERS = [
     'ha_enabled',
     'public_vlan_id',
     'tags',
-    'location',
-    'primary_ip',
-    'username',
-    'password',
     'firewall_type',
 ]
 
@@ -138,18 +114,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    location=dict(
-        required= False,
-        type='str'),
-    primary_ip=dict(
-        required= False,
-        type='str'),
-    username=dict(
-        required= False,
-        type='str'),
-    password=dict(
-        required= False,
-        type='str'),
     firewall_type=dict(
         default='HARDWARE_FIREWALL_DEDICATED',
         type='str'),

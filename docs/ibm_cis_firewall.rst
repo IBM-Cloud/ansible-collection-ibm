@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  firewall_type (True, str, None)
+    (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
+
+
   lockdown (False, list, None)
     Lockdown json Data
 
@@ -36,10 +40,6 @@ Parameters
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
-
-
-  firewall_type (True, str, None)
-    (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
 
 
   id (False, str, None)

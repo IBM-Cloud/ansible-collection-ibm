@@ -26,28 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  annotations (False, str, None)
-    All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
-  parameters (False, str, None)
-    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
   name (True, str, None)
     (Required for new resource) Name of Trigger.
 
 
   feed (False, list, None)
     Trigger feed
-
-
-  publish (False, bool, None)
-    Trigger visbility.
-
-
-  version (False, str, None)
-    Semantic version of the item.
 
 
   user_defined_annotations (False, str, [])

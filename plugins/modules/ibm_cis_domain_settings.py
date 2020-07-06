@@ -20,15 +20,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    image_size_optimization:
+    domain_id:
         description:
-            - image_size_optimization setting
-        required: False
-        type: str
-    ssl:
-        description:
-            - SSL/TLS setting
-        required: False
+            - (Required for new resource) Associated CIS domain
+        required: True
         type: str
     min_tls_version:
         description:
@@ -36,121 +31,6 @@ options:
         required: False
         type: str
         default: 1.1
-    automatic_https_rewrites:
-        description:
-            - automatic_https_rewrites setting
-        required: False
-        type: str
-    image_load_optimization:
-        description:
-            - image_load_optimization setting
-        required: False
-        type: str
-    pseudo_ipv4:
-        description:
-            - pseudo_ipv4 setting
-        required: False
-        type: str
-    response_buffering:
-        description:
-            - response_buffering setting
-        required: False
-        type: str
-    websockets:
-        description:
-            - websockets setting
-        required: False
-        type: str
-    always_use_https:
-        description:
-            - always_use_https setting
-        required: False
-        type: str
-    ip_geolocation:
-        description:
-            - ip_geolocation setting
-        required: False
-        type: str
-    origin_error_page_pass_thru:
-        description:
-            - origin_error_page_pass_thru setting
-        required: False
-        type: str
-    prefetch_preload:
-        description:
-            - prefetch_preload setting
-        required: False
-        type: str
-    script_load_optimization:
-        description:
-            - script_load_optimization setting
-        required: False
-        type: str
-    certificate_status:
-        description:
-            - Certificate status
-        required: False
-        type: str
-    ipv6:
-        description:
-            - ipv6 setting
-        required: False
-        type: str
-    hotlink_protection:
-        description:
-            - hotlink_protection setting
-        required: False
-        type: str
-    true_client_ip_header:
-        description:
-            - true_client_ip_header setting
-        required: False
-        type: str
-    cname_flattening:
-        description:
-            - cname_flattening setting
-        required: False
-        type: str
-    opportunistic_encryption:
-        description:
-            - opportunistic_encryption setting
-        required: False
-        type: str
-    http2:
-        description:
-            - http2 setting
-        required: False
-        type: str
-    server_side_exclude:
-        description:
-            - server_side_exclude setting
-        required: False
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    waf:
-        description:
-            - WAF setting
-        required: False
-        type: str
-    browser_check:
-        description:
-            - browser_check setting
-        required: False
-        type: str
-    brotli:
-        description:
-            - brotli setting
-        required: False
-        type: str
-    tls_client_auth:
-        description:
-            - tls_client_auth setting
-        required: False
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -208,32 +88,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'image_size_optimization',
-    'ssl',
-    'min_tls_version',
-    'automatic_https_rewrites',
-    'image_load_optimization',
-    'pseudo_ipv4',
-    'response_buffering',
-    'websockets',
-    'always_use_https',
-    'ip_geolocation',
-    'origin_error_page_pass_thru',
-    'prefetch_preload',
-    'script_load_optimization',
-    'certificate_status',
-    'ipv6',
-    'hotlink_protection',
-    'true_client_ip_header',
-    'cname_flattening',
-    'opportunistic_encryption',
-    'http2',
-    'server_side_exclude',
     'domain_id',
-    'waf',
-    'browser_check',
-    'brotli',
-    'tls_client_auth',
+    'min_tls_version',
     'cis_id',
 ]
 
@@ -241,83 +97,11 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    image_size_optimization=dict(
-        required= False,
-        type='str'),
-    ssl=dict(
+    domain_id=dict(
         required= False,
         type='str'),
     min_tls_version=dict(
         default='1.1',
-        type='str'),
-    automatic_https_rewrites=dict(
-        required= False,
-        type='str'),
-    image_load_optimization=dict(
-        required= False,
-        type='str'),
-    pseudo_ipv4=dict(
-        required= False,
-        type='str'),
-    response_buffering=dict(
-        required= False,
-        type='str'),
-    websockets=dict(
-        required= False,
-        type='str'),
-    always_use_https=dict(
-        required= False,
-        type='str'),
-    ip_geolocation=dict(
-        required= False,
-        type='str'),
-    origin_error_page_pass_thru=dict(
-        required= False,
-        type='str'),
-    prefetch_preload=dict(
-        required= False,
-        type='str'),
-    script_load_optimization=dict(
-        required= False,
-        type='str'),
-    certificate_status=dict(
-        required= False,
-        type='str'),
-    ipv6=dict(
-        required= False,
-        type='str'),
-    hotlink_protection=dict(
-        required= False,
-        type='str'),
-    true_client_ip_header=dict(
-        required= False,
-        type='str'),
-    cname_flattening=dict(
-        required= False,
-        type='str'),
-    opportunistic_encryption=dict(
-        required= False,
-        type='str'),
-    http2=dict(
-        required= False,
-        type='str'),
-    server_side_exclude=dict(
-        required= False,
-        type='str'),
-    domain_id=dict(
-        required= False,
-        type='str'),
-    waf=dict(
-        required= False,
-        type='str'),
-    browser_check=dict(
-        required= False,
-        type='str'),
-    brotli=dict(
-        required= False,
-        type='str'),
-    tls_client_auth=dict(
-        required= False,
         type='str'),
     cis_id=dict(
         required= False,

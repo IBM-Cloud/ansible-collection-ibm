@@ -20,22 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     pi_instance_name:
         description:
             - None
         required: True
         type: str
-    pvm_snapshots:
+    pi_cloud_instance_id:
         description:
             - None
-        required: False
-        type: list
-        elements: dict
+        required: True
+        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -65,31 +59,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
     'pi_instance_name',
-    'pvm_snapshots',
+    'pi_cloud_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
     pi_instance_name=dict(
         required=True,
         type='str'),
-    pvm_snapshots=dict(
-        required=False,
-        elements='',
-        type='list'),
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),

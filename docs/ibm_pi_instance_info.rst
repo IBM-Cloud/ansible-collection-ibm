@@ -26,59 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  minproc (False, int, None)
-    None
-
-
-  maxmem (False, int, None)
-    None
-
-
-  pin_policy (False, str, None)
-    None
-
-
-  pi_cloud_instance_id (True, str, None)
-    None
-
-
-  processors (False, int, None)
-    None
-
-
-  minmem (False, int, None)
-    None
-
-
-  state (False, str, None)
-    None
-
-
-  health_status (False, str, None)
-    None
-
-
-  addresses (False, list, None)
-    None
-
-
-  proctype (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  maxproc (False, int, None)
-    None
-
-
   pi_instance_name (True, str, None)
     Server Name to be used for pvminstances
 
 
-  volumes (False, list, None)
+  pi_cloud_instance_id (True, str, None)
     None
 
 

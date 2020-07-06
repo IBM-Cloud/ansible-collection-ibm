@@ -26,56 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) IKE name
+  authentication_algorithm (True, str, None)
+    (Required for new resource) Authentication algorithm type
 
 
   dh_group (True, int, None)
     (Required for new resource) IKE DH group
 
 
-  key_lifetime (False, int, 28800)
-    IKE Key lifetime
-
-
-  href (False, str, None)
-    IKE href value
-
-
-  vpn_connections (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  authentication_algorithm (True, str, None)
-    (Required for new resource) Authentication algorithm type
+  name (True, str, None)
+    (Required for new resource) IKE name
 
 
   encryption_algorithm (True, str, None)
     (Required for new resource) Encryption alogorithm type
 
 
-  resource_group (False, str, None)
-    IKE resource group ID
+  key_lifetime (False, int, 28800)
+    IKE Key lifetime
 
 
   ike_version (False, int, None)
     IKE version
-
-
-  negotiation_mode (False, str, None)
-    IKE negotiation mode
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
 
 
   id (False, str, None)

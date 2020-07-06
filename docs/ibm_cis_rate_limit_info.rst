@@ -26,15 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    None
-
-
-  rate_limit (False, list, None)
-    None
-
-
   cis_id (True, str, None)
+    None
+
+
+  domain_id (True, str, None)
     None
 
 

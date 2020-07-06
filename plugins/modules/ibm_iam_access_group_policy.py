@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     access_group_id:
         description:
             - (Required for new resource) ID of access group
@@ -31,29 +37,12 @@ options:
         required: True
         type: list
         elements: str
-    resources:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     account_management:
         description:
             - Give access to all account management services
         required: False
         type: bool
         default: False
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    version:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,18 +95,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'access_group_id',
     'roles',
-    'resources',
     'account_management',
-    'tags',
-    'version',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     access_group_id=dict(
         required= False,
         type='str'),
@@ -125,20 +116,9 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    resources=dict(
-        required= False,
-        elements='',
-        type='list'),
     account_management=dict(
         default=False,
         type='bool'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    version=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

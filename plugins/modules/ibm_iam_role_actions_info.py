@@ -25,30 +25,6 @@ options:
             - The Service Name
         required: True
         type: str
-    reader:
-        description:
-            - Reader action ids
-        required: False
-        type: list
-        elements: str
-    manager:
-        description:
-            - manager action ids
-        required: False
-        type: list
-        elements: str
-    reader_plus:
-        description:
-            - readerplus action ids
-        required: False
-        type: list
-        elements: str
-    writer:
-        description:
-            - writer action ids
-        required: False
-        type: list
-        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -88,10 +64,6 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'service',
-    'reader',
-    'manager',
-    'reader_plus',
-    'writer',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -101,22 +73,6 @@ module_args = dict(
     service=dict(
         required=True,
         type='str'),
-    reader=dict(
-        required=False,
-        elements='',
-        type='list'),
-    manager=dict(
-        required=False,
-        elements='',
-        type='list'),
-    reader_plus=dict(
-        required=False,
-        elements='',
-        type='list'),
-    writer=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -20,47 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_group:
-        description:
-            - Resource Group ID
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    name:
-        description:
-            - Security group name
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) Security group's resource group id
         required: True
         type: str
-    rules:
-        description:
-            - Security Rules
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,45 +76,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'resource_controller_url',
-    'resource_name',
-    'resource_crn',
-    'resource_group_name',
-    'name',
     'vpc',
-    'rules',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
-        required= False,
-        type='str'),
-    name=dict(
-        required= False,
-        type='str'),
     vpc=dict(
         required= False,
         type='str'),
-    rules=dict(
-        required= False,
-        elements='',
-        type='list'),
     id=dict(
         required= False,
         type='str'),

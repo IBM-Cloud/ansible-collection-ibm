@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  has_subnets (False, bool, None)
-    Boolean value, set to true if VPC instance have subnets
-
-
   name (True, str, None)
     (Required for new resource) Name
 

@@ -25,33 +25,6 @@ options:
             - (Required for new resource) Connections value
         required: True
         type: int
-    ip_address:
-        description:
-            - None
-        required: False
-        type: str
-    ssl_offload:
-        description:
-            - boolean value true if SSL offload is enabled
-        required: False
-        type: bool
-        default: False
-    ssl_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-    tags:
-        description:
-            - Tags associated with resource
-        required: False
-        type: list
-        elements: str
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name info
@@ -68,17 +41,24 @@ options:
             - Security certificate ID
         required: False
         type: int
-    subnet_id:
+    ssl_offload:
         description:
-            - None
+            - boolean value true if SSL offload is enabled
         required: False
-        type: int
+        type: bool
+        default: False
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
         required: False
         type: bool
         default: False
+    tags:
+        description:
+            - Tags associated with resource
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,16 +112,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'connections',
-    'ip_address',
-    'ssl_offload',
-    'ssl_enabled',
-    'tags',
-    'hostname',
     'datacenter',
     'ha_enabled',
     'security_certificate_id',
-    'subnet_id',
+    'ssl_offload',
     'dedicated',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -151,22 +127,6 @@ module_args = dict(
     connections=dict(
         required= False,
         type='int'),
-    ip_address=dict(
-        required= False,
-        type='str'),
-    ssl_offload=dict(
-        default=False,
-        type='bool'),
-    ssl_enabled=dict(
-        required= False,
-        type='bool'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    hostname=dict(
-        required= False,
-        type='str'),
     datacenter=dict(
         required= False,
         type='str'),
@@ -176,12 +136,16 @@ module_args = dict(
     security_certificate_id=dict(
         required= False,
         type='int'),
-    subnet_id=dict(
-        required= False,
-        type='int'),
+    ssl_offload=dict(
+        default=False,
+        type='bool'),
     dedicated=dict(
         default=False,
         type='bool'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

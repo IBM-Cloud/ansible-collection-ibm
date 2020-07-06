@@ -20,21 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    label:
-        description:
-            - (Required for new resource) SSH Key label
-        required: True
-        type: str
-    public_key:
-        description:
-            - (Required for new resource) Plublic Key info
-        required: True
-        type: str
-    fingerprint:
-        description:
-            - SSH key fingerprint
-        required: False
-        type: str
     notes:
         description:
             - Additional notes
@@ -46,6 +31,16 @@ options:
         required: False
         type: list
         elements: str
+    label:
+        description:
+            - (Required for new resource) SSH Key label
+        required: True
+        type: str
+    public_key:
+        description:
+            - (Required for new resource) Plublic Key info
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,26 +93,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'label',
-    'public_key',
-    'fingerprint',
     'notes',
     'tags',
+    'label',
+    'public_key',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    label=dict(
-        required= False,
-        type='str'),
-    public_key=dict(
-        required= False,
-        type='str'),
-    fingerprint=dict(
-        required= False,
-        type='str'),
     notes=dict(
         required= False,
         type='str'),
@@ -125,6 +110,12 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    label=dict(
+        required= False,
+        type='str'),
+    public_key=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

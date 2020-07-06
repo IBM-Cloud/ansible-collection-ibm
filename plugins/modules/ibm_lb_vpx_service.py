@@ -35,12 +35,6 @@ options:
             - (Required for new resource) Destination IP Address
         required: True
         type: str
-    tags:
-        description:
-            - list of tags associated with the resource
-        required: False
-        type: list
-        elements: str
     destination_port:
         description:
             - (Required for new resource) Destination Port number
@@ -67,6 +61,12 @@ options:
         required: False
         type: str
         default: NO
+    tags:
+        description:
+            - list of tags associated with the resource
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,12 +127,12 @@ TL_ALL_PARAMETERS = [
     'vip_id',
     'name',
     'destination_ip_address',
-    'tags',
     'destination_port',
     'weight',
     'connection_limit',
     'health_check',
     'usip',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -148,10 +148,6 @@ module_args = dict(
     destination_ip_address=dict(
         required= False,
         type='str'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
     destination_port=dict(
         required= False,
         type='int'),
@@ -167,6 +163,10 @@ module_args = dict(
     usip=dict(
         default='NO',
         type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

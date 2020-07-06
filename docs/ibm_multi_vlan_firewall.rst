@@ -26,52 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_ip (False, str, None)
-    Public IP Address
-
-
-  username (False, str, None)
-    User name
-
-
-  addon_configuration (False, list, None)
-    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+  pod (True, str, None)
+    (Required for new resource) POD name
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
-  pod (True, str, None)
-    (Required for new resource) POD name
-
-
   name (True, str, None)
     (Required for new resource) name
-
-
-  public_vlan_id (False, int, None)
-    Public VLAN id
-
-
-  private_vlan_id (False, int, None)
-    Private VLAN id
 
 
   firewall_type (True, str, None)
     (Required for new resource) Firewall type
 
 
-  public_ipv6 (False, str, None)
-    Public IPV6 IP
-
-
-  private_ip (False, str, None)
-    Private IP Address
-
-
-  password (False, str, None)
-    Password
+  addon_configuration (False, list, None)
+    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
 
 
   id (False, str, None)

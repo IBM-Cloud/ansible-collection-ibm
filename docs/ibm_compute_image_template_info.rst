@@ -30,10 +30,6 @@ Parameters
     The name of this image template
 
 
-  id (False, int, None)
-    The internal id of the image template
-
-
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

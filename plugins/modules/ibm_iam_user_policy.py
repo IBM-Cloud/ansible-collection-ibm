@@ -20,12 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resources:
+    ibm_id:
         description:
-            - None
-        required: False
+            - (Required for new resource) The ibm id or email of user
+        required: True
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
         type: list
-        elements: dict
+        elements: str
     account_management:
         description:
             - Give access to all account management services
@@ -36,22 +41,6 @@ options:
         description:
             - None
         required: False
-        type: list
-        elements: str
-    version:
-        description:
-            - None
-        required: False
-        type: str
-    ibm_id:
-        description:
-            - (Required for new resource) The ibm id or email of user
-        required: True
-        type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
         type: list
         elements: str
     id:
@@ -106,19 +95,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resources',
-    'account_management',
-    'tags',
-    'version',
     'ibm_id',
     'roles',
+    'account_management',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resources=dict(
+    ibm_id=dict(
+        required= False,
+        type='str'),
+    roles=dict(
         required= False,
         elements='',
         type='list'),
@@ -126,16 +116,6 @@ module_args = dict(
         default=False,
         type='bool'),
     tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    version=dict(
-        required= False,
-        type='str'),
-    ibm_id=dict(
-        required= False,
-        type='str'),
-    roles=dict(
         required= False,
         elements='',
         type='list'),

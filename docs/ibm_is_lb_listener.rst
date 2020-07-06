@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default_pool (False, str, None)
-    Loadbalancer default pool info
-
-
-  status (False, str, None)
-    Loadbalancer listener status
-
-
-  listener_id (False, str, None)
-    None
-
-
   lb (True, str, None)
     (Required for new resource) Loadbalancer listener ID
 

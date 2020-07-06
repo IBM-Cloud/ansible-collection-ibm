@@ -20,31 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    trigger_name:
-        description:
-            - Name of the trigger.
-        required: False
-        type: str
-    action_name:
-        description:
-            - Name of an action.
-        required: False
-        type: str
-    status:
-        description:
-            - Status of the rule.
-        required: False
-        type: str
-    publish:
-        description:
-            - Rule Visibility.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the rule
-        required: False
-        type: str
     name:
         description:
             - Name of the rule.
@@ -74,11 +49,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'trigger_name',
-    'action_name',
-    'status',
-    'publish',
-    'version',
     'name',
 ]
 
@@ -86,21 +56,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    trigger_name=dict(
-        required=False,
-        type='str'),
-    action_name=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    publish=dict(
-        required=False,
-        type='bool'),
-    version=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),

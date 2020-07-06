@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    endpoint:
-        description:
-            - None
-        required: False
-        type: str
     name:
         description:
             - None
@@ -73,8 +63,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'endpoint',
     'name',
 ]
 
@@ -82,12 +70,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    endpoint=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),

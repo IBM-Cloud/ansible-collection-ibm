@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    max_retries:
+        description:
+            - Maximum retry counts
+        required: False
+        type: int
+        default: 2
     timeout:
         description:
             - Timeout in seconds
@@ -58,12 +64,6 @@ options:
         required: False
         type: int
         default: 5
-    max_retries:
-        description:
-            - Maximum retry counts
-        required: False
-        type: int
-        default: 2
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,6 +118,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'max_retries',
     'timeout',
     'url_path',
     'monitor_id',
@@ -125,13 +126,15 @@ TL_ALL_PARAMETERS = [
     'protocol',
     'port',
     'interval',
-    'max_retries',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    max_retries=dict(
+        default=2,
+        type='int'),
     timeout=dict(
         default=2,
         type='int'),
@@ -152,9 +155,6 @@ module_args = dict(
         type='int'),
     interval=dict(
         default=5,
-        type='int'),
-    max_retries=dict(
-        default=2,
         type='int'),
     id=dict(
         required= False,

@@ -20,10 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    org_quota_definition_guid:
+    tags:
         description:
-            - Org quota guid
+            - None
         required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Org name, for example myorg@domain
+        required: True
         type: str
     billing_managers:
         description:
@@ -49,17 +55,6 @@ options:
         required: False
         type: list
         elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) Org name, for example myorg@domain
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +106,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'org_quota_definition_guid',
+    'tags',
+    'name',
     'billing_managers',
     'managers',
     'auditors',
     'users',
-    'tags',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    org_quota_definition_guid=dict(
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    name=dict(
         required= False,
         type='str'),
     billing_managers=dict(
@@ -143,13 +141,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    name=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

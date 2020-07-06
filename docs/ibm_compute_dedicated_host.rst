@@ -26,32 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  memory_capacity (False, int, None)
-    The capacity that the dedicated host's memory allocation is restricted to.
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-
-
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
-
-
-  hourly_billing (False, bool, True)
-    The billing type for the dedicatated host.
-
-
-  router_hostname (True, str, None)
-    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-
-
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
-
-
-  disk_capacity (False, int, None)
-    The capacity that the dedicated host's disk allocation is restricted to.
+  tags (False, list, None)
+    None
 
 
   hostname (True, str, None)
@@ -62,12 +38,24 @@ Parameters
     (Required for new resource) The domain of dedicatated host.
 
 
+  hourly_billing (False, bool, True)
+    The billing type for the dedicatated host.
+
+
+  router_hostname (True, str, None)
+    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+
+
   wait_time_minutes (False, int, 90)
     None
 
 
-  tags (False, list, None)
-    None
+  datacenter (True, str, None)
+    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+
+
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
 
 
   id (False, str, None)

@@ -30,27 +30,12 @@ options:
             - (Required for new resource) PFS info
         required: True
         type: str
-    transform_protocol:
+    key_lifetime:
         description:
-            - IPSEC transform protocol
+            - IPSEC key lifetime
         required: False
-        type: str
-    vpn_connections:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
+        type: int
+        default: 3600
     name:
         description:
             - (Required for new resource) IPSEC name
@@ -60,32 +45,6 @@ options:
         description:
             - (Required for new resource) Authentication alorothm
         required: True
-        type: str
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
-    key_lifetime:
-        description:
-            - IPSEC key lifetime
-        required: False
-        type: int
-        default: 3600
-    encapsulation_mode:
-        description:
-            - IPSEC encapsulation mode
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
         type: str
     id:
         description:
@@ -143,17 +102,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'encryption_algorithm',
     'pfs',
-    'transform_protocol',
-    'vpn_connections',
-    'resource_name',
-    'resource_crn',
+    'key_lifetime',
     'name',
     'authentication_algorithm',
-    'resource_group',
-    'key_lifetime',
-    'encapsulation_mode',
-    'resource_controller_url',
-    'resource_group_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -166,38 +117,13 @@ module_args = dict(
     pfs=dict(
         required= False,
         type='str'),
-    transform_protocol=dict(
-        required= False,
-        type='str'),
-    vpn_connections=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
-        required= False,
-        type='str'),
+    key_lifetime=dict(
+        default=3600,
+        type='int'),
     name=dict(
         required= False,
         type='str'),
     authentication_algorithm=dict(
-        required= False,
-        type='str'),
-    resource_group=dict(
-        required= False,
-        type='str'),
-    key_lifetime=dict(
-        default=3600,
-        type='int'),
-    encapsulation_mode=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
         required= False,
         type='str'),
     id=dict(

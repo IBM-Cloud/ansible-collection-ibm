@@ -20,40 +20,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
         type: str
-    cluster_name_id:
+    tags:
         description:
-            - (Required for new resource) Cluster name or ID
-        required: True
-        type: str
-    org_guid:
-        description:
-            - The bluemix organization guid this cluster belongs to
+            - List of tags for the resource
         required: False
-        type: str
+        type: list
+        elements: str
     space_guid:
         description:
             - The bluemix space guid this cluster belongs to
-        required: False
-        type: str
-    service_instance_id:
-        description:
-            - Service instance ID
         required: False
         type: str
     namespace_id:
         description:
             - (Required for new resource) namespace ID
         required: True
+        type: str
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
         type: str
     key:
         description:
@@ -65,20 +56,19 @@ options:
             - Role info
         required: False
         type: str
+    cluster_name_id:
+        description:
+            - (Required for new resource) Cluster name or ID
+        required: True
+        type: str
     region:
         description:
             - The cluster region
         required: False
         type: str
-    tags:
+    org_guid:
         description:
-            - List of tags for the resource
-        required: False
-        type: list
-        elements: str
-    service_instance_name:
-        description:
-            - serivice instance name
+            - The bluemix organization guid this cluster belongs to
         required: False
         type: str
     id:
@@ -107,49 +97,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster_name_id', 'str'),
     ('namespace_id', 'str'),
+    ('cluster_name_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_guid',
     'resource_group_id',
-    'cluster_name_id',
-    'org_guid',
+    'tags',
     'space_guid',
-    'service_instance_id',
     'namespace_id',
+    'account_guid',
     'key',
     'role',
+    'cluster_name_id',
     'region',
-    'tags',
-    'service_instance_name',
+    'org_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_guid=dict(
-        required= False,
-        type='str'),
     resource_group_id=dict(
         required= False,
         type='str'),
-    cluster_name_id=dict(
+    tags=dict(
         required= False,
-        type='str'),
-    org_guid=dict(
-        required= False,
-        type='str'),
+        elements='',
+        type='list'),
     space_guid=dict(
         required= False,
         type='str'),
-    service_instance_id=dict(
+    namespace_id=dict(
         required= False,
         type='str'),
-    namespace_id=dict(
+    account_guid=dict(
         required= False,
         type='str'),
     key=dict(
@@ -158,14 +141,13 @@ module_args = dict(
     role=dict(
         required= False,
         type='str'),
+    cluster_name_id=dict(
+        required= False,
+        type='str'),
     region=dict(
         required= False,
         type='str'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    service_instance_name=dict(
+    org_guid=dict(
         required= False,
         type='str'),
     id=dict(

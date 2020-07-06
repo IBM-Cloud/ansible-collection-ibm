@@ -30,17 +30,6 @@ options:
             - None
         required: True
         type: str
-    boot_volume_id:
-        description:
-            - None
-        required: False
-        type: str
-    instance_volumes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -78,8 +67,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
     'pi_cloud_instance_id',
-    'boot_volume_id',
-    'instance_volumes',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -92,13 +79,6 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    boot_volume_id=dict(
-        required=False,
-        type='str'),
-    instance_volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),

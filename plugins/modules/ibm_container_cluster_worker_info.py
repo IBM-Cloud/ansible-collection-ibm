@@ -20,49 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    status:
+    worker_id:
         description:
-            - Status of the worker
-        required: False
-        type: str
-    public_vlan:
-        description:
-            - None
-        required: False
-        type: str
-    public_ip:
-        description:
-            - None
-        required: False
+            - ID of the worker
+        required: True
         type: str
     org_guid:
         description:
             - The bluemix organization guid this cluster belongs to
-        required: False
-        type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    state:
-        description:
-            - State of the worker
-        required: False
-        type: str
-    private_vlan:
-        description:
-            - None
-        required: False
-        type: str
-    private_ip:
-        description:
-            - None
         required: False
         type: str
     space_guid:
@@ -70,20 +35,20 @@ options:
             - The bluemix space guid this cluster belongs to
         required: False
         type: str
+    account_guid:
+        description:
+            - The bluemix account guid this cluster belongs to
+        required: False
+        type: str
     region:
         description:
             - The cluster region
         required: False
         type: str
-    resource_controller_url:
+    resource_group_id:
         description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+            - ID of the resource group.
         required: False
-        type: str
-    worker_id:
-        description:
-            - ID of the worker
-        required: True
         type: str
     ibmcloud_api_key:
         description:
@@ -103,63 +68,35 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'public_vlan',
-    'public_ip',
-    'org_guid',
-    'account_guid',
-    'resource_group_id',
-    'state',
-    'private_vlan',
-    'private_ip',
-    'space_guid',
-    'region',
-    'resource_controller_url',
     'worker_id',
+    'org_guid',
+    'space_guid',
+    'account_guid',
+    'region',
+    'resource_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    public_vlan=dict(
-        required=False,
-        type='str'),
-    public_ip=dict(
-        required=False,
+    worker_id=dict(
+        required=True,
         type='str'),
     org_guid=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    private_vlan=dict(
-        required=False,
-        type='str'),
-    private_ip=dict(
         required=False,
         type='str'),
     space_guid=dict(
         required=False,
         type='str'),
+    account_guid=dict(
+        required=False,
+        type='str'),
     region=dict(
         required=False,
         type='str'),
-    resource_controller_url=dict(
+    resource_group_id=dict(
         required=False,
-        type='str'),
-    worker_id=dict(
-        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',

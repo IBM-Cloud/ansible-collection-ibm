@@ -25,27 +25,6 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    region:
-        description:
-            - The zone region
-        required: False
-        type: str
-    wait_till_albs:
-        description:
-            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
-        required: False
-        type: bool
-        default: True
     cluster:
         description:
             - (Required for new resource) cluster name or ID
@@ -56,16 +35,17 @@ options:
             - (Required for new resource) Workerpool name
         required: True
         type: str
-    private_vlan_id:
+    resource_group_id:
         description:
-            - None
+            - ID of the resource group.
         required: False
         type: str
-    worker_count:
+    wait_till_albs:
         description:
-            - None
+            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
         required: False
-        type: int
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,14 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'zone',
-    'public_vlan_id',
-    'resource_group_id',
-    'region',
-    'wait_till_albs',
     'cluster',
     'worker_pool',
-    'private_vlan_id',
-    'worker_count',
+    'resource_group_id',
+    'wait_till_albs',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -117,30 +93,18 @@ module_args = dict(
     zone=dict(
         required= False,
         type='str'),
-    public_vlan_id=dict(
-        required= False,
-        type='str'),
-    resource_group_id=dict(
-        required= False,
-        type='str'),
-    region=dict(
-        required= False,
-        type='str'),
-    wait_till_albs=dict(
-        default=True,
-        type='bool'),
     cluster=dict(
         required= False,
         type='str'),
     worker_pool=dict(
         required= False,
         type='str'),
-    private_vlan_id=dict(
+    resource_group_id=dict(
         required= False,
         type='str'),
-    worker_count=dict(
-        required= False,
-        type='int'),
+    wait_till_albs=dict(
+        default=True,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

@@ -26,124 +26,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  guid (False, str, None)
-    Unique identifier of resource instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  groups (False, list, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  users (False, list, None)
-    None
-
-
-  whitelist (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
-
-
-  adminuser (False, str, None)
-    The admin user id for the instance
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  adminpassword (False, str, None)
+    The admin user password for the instance
 
 
   key_protect_key (False, str, None)
     The CRN of Key protect key
 
 
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
 
 
   key_protect_instance (False, str, None)
     The CRN of Key protect instance
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
+  users (False, list, None)
+    None
 
 
   point_in_time_recovery_time (False, str, None)
     The point in time recovery time stamp of the deployed instance
 
 
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
+  remote_leader_id (False, str, None)
+    The CRN of leader database
 
 
   tags (False, list, None)
     None
 
 
-  connectionstrings (False, list, None)
-    None
-
-
-  service (True, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  status (False, str, None)
-    The resource instance status
-
-
-  adminpassword (False, str, None)
-    The admin user password for the instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
   backup_id (False, str, None)
     The CRN of backup source database
 
 
-  remote_leader_id (False, str, None)
-    The CRN of leader database
+  whitelist (False, list, None)
+    None
+
+
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  service (True, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
 
 
   id (False, str, None)

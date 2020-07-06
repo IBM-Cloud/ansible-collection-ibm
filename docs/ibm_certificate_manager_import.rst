@@ -26,52 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  algorithm (False, str, None)
-    None
-
-
   name (True, str, None)
     (Required for new resource) Name of the instance
-
-
-  data (True, dict, None)
-    (Required for new resource) certificate data
 
 
   description (False, str, None)
     Description of the certificate instance
 
 
-  begins_on (False, int, None)
-    Certificate validity start date
-
-
-  expires_on (False, int, None)
-    certificate expiry date
-
-
-  has_previous (False, str, None)
-    None
-
-
   certificate_manager_instance_id (True, str, None)
     (Required for new resource) Instance ID of the certificate manager resource
 
 
-  issuer (False, str, None)
-    certificate issuer info
-
-
-  imported (False, bool, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  key_algorithm (False, str, None)
-    None
+  data (True, dict, None)
+    (Required for new resource) certificate data
 
 
   id (False, str, None)

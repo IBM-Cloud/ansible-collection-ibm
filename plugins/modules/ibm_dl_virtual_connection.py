@@ -35,26 +35,6 @@ options:
             - (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
         required: True
         type: str
-    network_id:
-        description:
-            - Unique identifier of the target network. For type=vpc virtual connections this is the CRN of the target VPC. This field does not apply to type=classic connections.
-        required: False
-        type: str
-    created_at:
-        description:
-            - The date and time resource was created
-        required: False
-        type: str
-    status:
-        description:
-            - Status of the virtual connection.Possible values: [pending,attached,approval_pending,rejected,expired,deleting,detached_by_network_pending,detached_by_network]
-        required: False
-        type: str
-    network_account:
-        description:
-            - For virtual connections across two different IBM Cloud Accounts network_account indicates the account that owns the target network.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,10 +91,6 @@ TL_ALL_PARAMETERS = [
     'gateway',
     'type',
     'name',
-    'network_id',
-    'created_at',
-    'status',
-    'network_account',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -128,18 +104,6 @@ module_args = dict(
         required= False,
         type='str'),
     name=dict(
-        required= False,
-        type='str'),
-    network_id=dict(
-        required= False,
-        type='str'),
-    created_at=dict(
-        required= False,
-        type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    network_account=dict(
         required= False,
         type='str'),
     id=dict(

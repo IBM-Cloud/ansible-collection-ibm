@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rules (False, list, None)
-    Policy Rules
-
-
   target_id (False, str, None)
     Listener Policy Target ID
 
@@ -38,12 +34,8 @@ Parameters
     Listener Policy target HTTPS Status code.
 
 
-  provisioning_status (False, str, None)
-    Listner Policy status
-
-
-  priority (True, int, None)
-    (Required for new resource) Listener Policy Priority
+  target_url (False, str, None)
+    Policy Target URL
 
 
   listener (True, str, None)
@@ -54,20 +46,12 @@ Parameters
     (Required for new resource) Policy Action
 
 
-  name (False, str, None)
-    Policy name
-
-
-  policy_id (False, str, None)
-    Listener Policy ID
-
-
-  target_url (False, str, None)
-    Policy Target URL
-
-
   lb (True, str, None)
     (Required for new resource) Load Balancer Listener Policy
+
+
+  priority (True, int, None)
+    (Required for new resource) Listener Policy Priority
 
 
   id (False, str, None)

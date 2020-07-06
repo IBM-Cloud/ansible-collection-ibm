@@ -26,24 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  label (True, str, None)
-    (Required for new resource) SSH Key label
-
-
-  public_key (True, str, None)
-    (Required for new resource) Plublic Key info
-
-
-  fingerprint (False, str, None)
-    SSH key fingerprint
-
-
   notes (False, str, None)
     Additional notes
 
 
   tags (False, list, None)
     List of tags for the resource
+
+
+  label (True, str, None)
+    (Required for new resource) SSH Key label
+
+
+  public_key (True, str, None)
+    (Required for new resource) Plublic Key info
 
 
   id (False, str, None)

@@ -20,39 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    preshared_key:
-        description:
-            - Preshared Key data
-        required: False
-        type: str
-    internal_subnet_id:
-        description:
-            - Internal subnet ID value
-        required: False
-        type: int
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    phase_one:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    phase_two:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    address_translation:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     customer_peer_ip:
         description:
             - Customer Peer IP Address
@@ -74,15 +41,38 @@ options:
             - Service subnet ID value
         required: False
         type: int
+    phase_one:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    phase_two:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    address_translation:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    preshared_key:
+        description:
+            - Preshared Key data
+        required: False
+        type: str
+    internal_subnet_id:
+        description:
+            - Internal subnet ID value
+        required: False
+        type: int
     datacenter:
         description:
             - (Required for new resource) Datacenter name
         required: True
-        type: str
-    internal_peer_ip_address:
-        description:
-            - None
-        required: False
         type: str
     id:
         description:
@@ -135,45 +125,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'preshared_key',
-    'internal_subnet_id',
-    'name',
-    'phase_one',
-    'phase_two',
-    'address_translation',
     'customer_peer_ip',
     'remote_subnet_id',
     'remote_subnet',
     'service_subnet_id',
+    'phase_one',
+    'phase_two',
+    'address_translation',
+    'preshared_key',
+    'internal_subnet_id',
     'datacenter',
-    'internal_peer_ip_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    preshared_key=dict(
-        required= False,
-        type='str'),
-    internal_subnet_id=dict(
-        required= False,
-        type='int'),
-    name=dict(
-        required= False,
-        type='str'),
-    phase_one=dict(
-        required= False,
-        elements='',
-        type='list'),
-    phase_two=dict(
-        required= False,
-        elements='',
-        type='list'),
-    address_translation=dict(
-        required= False,
-        elements='',
-        type='list'),
     customer_peer_ip=dict(
         required= False,
         type='str'),
@@ -187,10 +154,25 @@ module_args = dict(
     service_subnet_id=dict(
         required= False,
         type='int'),
-    datacenter=dict(
+    phase_one=dict(
+        required= False,
+        elements='',
+        type='list'),
+    phase_two=dict(
+        required= False,
+        elements='',
+        type='list'),
+    address_translation=dict(
+        required= False,
+        elements='',
+        type='list'),
+    preshared_key=dict(
         required= False,
         type='str'),
-    internal_peer_ip_address=dict(
+    internal_subnet_id=dict(
+        required= False,
+        type='int'),
+    datacenter=dict(
         required= False,
         type='str'),
     id=dict(

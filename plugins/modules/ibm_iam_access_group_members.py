@@ -37,12 +37,6 @@ options:
         required: False
         type: list
         elements: str
-    members:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,7 +91,6 @@ TL_ALL_PARAMETERS = [
     'access_group_id',
     'ibm_ids',
     'iam_service_ids',
-    'members',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -112,10 +105,6 @@ module_args = dict(
         elements='',
         type='list'),
     iam_service_ids=dict(
-        required= False,
-        elements='',
-        type='list'),
-    members=dict(
         required= False,
         elements='',
         type='list'),

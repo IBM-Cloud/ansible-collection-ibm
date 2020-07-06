@@ -26,28 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  admin_key (False, str, None)
-    None
+  region (False, str, None)
+    The cluster region
 
 
-  config_file_path (False, str, None)
-    The absolute path to the kubernetes config yml file
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   download (False, bool, True)
     If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
-  admin_certificate (False, str, None)
-    None
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
-  config_dir (False, str, None)
-    The directory where the cluster config to be downloaded. Default is home directory
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
 
 
   cluster_name_id (True, str, None)
@@ -58,40 +54,12 @@ Parameters
     If set to true will download the config for admin
 
 
-  calico_config_file_path (False, str, None)
-    The absolute path to the calico network config file
-
-
-  ca_certificate (False, str, None)
-    None
-
-
-  token (False, str, None)
-    None
-
-
-  region (False, str, None)
-    The cluster region
-
-
   space_guid (False, str, None)
     The bluemix space guid this cluster belongs to
 
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
   network (False, bool, False)
     If set to true will download the Calico network config with the Admin config
-
-
-  host (False, str, None)
-    None
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
 
 
   ibmcloud_api_key (True, any, None)

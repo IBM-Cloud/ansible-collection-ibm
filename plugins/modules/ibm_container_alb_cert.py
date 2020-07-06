@@ -20,50 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN id
-        required: True
-        type: str
     cluster_id:
         description:
             - (Required for new resource) Cluster ID
         required: True
-        type: str
-    expires_on:
-        description:
-            - Certificate expaire on date
-        required: False
-        type: str
-    issuer_name:
-        description:
-            - certificate issuer name
-        required: False
-        type: str
-    cluster_crn:
-        description:
-            - cluster CRN
-        required: False
         type: str
     secret_name:
         description:
             - (Required for new resource) Secret name
         required: True
         type: str
-    domain_name:
+    cert_crn:
         description:
-            - Domain name
-        required: False
-        type: str
-    cloud_cert_instance_id:
-        description:
-            - cloud cert instance ID
-        required: False
-        type: str
-    region:
-        description:
-            - region name
-        required: False
+            - (Required for new resource) Certificate CRN id
+        required: True
         type: str
     id:
         description:
@@ -91,53 +61,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cert_crn', 'str'),
     ('cluster_id', 'str'),
     ('secret_name', 'str'),
+    ('cert_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cert_crn',
     'cluster_id',
-    'expires_on',
-    'issuer_name',
-    'cluster_crn',
     'secret_name',
-    'domain_name',
-    'cloud_cert_instance_id',
-    'region',
+    'cert_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cert_crn=dict(
-        required= False,
-        type='str'),
     cluster_id=dict(
-        required= False,
-        type='str'),
-    expires_on=dict(
-        required= False,
-        type='str'),
-    issuer_name=dict(
-        required= False,
-        type='str'),
-    cluster_crn=dict(
         required= False,
         type='str'),
     secret_name=dict(
         required= False,
         type='str'),
-    domain_name=dict(
-        required= False,
-        type='str'),
-    cloud_cert_instance_id=dict(
-        required= False,
-        type='str'),
-    region=dict(
+    cert_crn=dict(
         required= False,
         type='str'),
     id=dict(

@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    service_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     name:
         description:
             - Name of the serviceID
@@ -69,7 +63,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_ids',
     'name',
 ]
 
@@ -77,10 +70,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=True,
         type='str'),

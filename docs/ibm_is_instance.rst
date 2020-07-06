@@ -26,28 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  volume_attachments (False, list, None)
-    None
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  vcpu (False, list, None)
-    None
-
-
-  memory (False, int, None)
-    Instance memory
+  volumes (False, list, None)
+    List of volumes
 
 
   name (True, str, None)
     (Required for new resource) Instance name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   keys (True, list, None)
@@ -62,60 +50,20 @@ Parameters
     None
 
 
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  gpu (False, list, None)
-    None
-
-
-  status (False, str, None)
-    instance status
+  image (True, str, None)
+    (Required for new resource) image name
 
 
   vpc (True, str, None)
     (Required for new resource) VPC id
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
   profile (True, str, None)
     (Required for new resource) Profile info
 
 
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

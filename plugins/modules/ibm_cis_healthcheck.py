@@ -20,27 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    expected_body:
+    retries:
         description:
-            - expected_body
-        required: False
-        type: str
-    interval:
-        description:
-            - interval
+            - retries
         required: False
         type: int
-        default: 60
-    follow_redirects:
-        description:
-            - follow_redirects
-        required: False
-        type: bool
-    created_on:
-        description:
-            - None
-        required: False
-        type: str
+        default: 2
     path:
         description:
             - path
@@ -51,37 +36,27 @@ options:
             - description
         required: False
         type: str
+    timeout:
+        description:
+            - timeout
+        required: False
+        type: int
+        default: 5
+    follow_redirects:
+        description:
+            - follow_redirects
+        required: False
+        type: bool
     allow_insecure:
         description:
             - allow_insecure
         required: False
         type: bool
         default: False
-    port:
-        description:
-            - None
-        required: False
-        type: int
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
         required: True
-        type: str
-    expected_codes:
-        description:
-            - expected_codes
-        required: False
-        type: str
-    retries:
-        description:
-            - retries
-        required: False
-        type: int
-        default: 2
-    modified_on:
-        description:
-            - None
-        required: False
         type: str
     type:
         description:
@@ -89,17 +64,32 @@ options:
         required: False
         type: str
         default: http
+    interval:
+        description:
+            - interval
+        required: False
+        type: int
+        default: 60
+    port:
+        description:
+            - None
+        required: False
+        type: int
+    expected_body:
+        description:
+            - expected_body
+        required: False
+        type: str
+    expected_codes:
+        description:
+            - expected_codes
+        required: False
+        type: str
     method:
         description:
             - method
         required: False
         type: str
-    timeout:
-        description:
-            - timeout
-        required: False
-        type: int
-        default: 5
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -151,72 +141,64 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'expected_body',
-    'interval',
-    'follow_redirects',
-    'created_on',
+    'retries',
     'path',
     'description',
-    'allow_insecure',
-    'port',
-    'cis_id',
-    'expected_codes',
-    'retries',
-    'modified_on',
-    'type',
-    'method',
     'timeout',
+    'follow_redirects',
+    'allow_insecure',
+    'cis_id',
+    'type',
+    'interval',
+    'port',
+    'expected_body',
+    'expected_codes',
+    'method',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expected_body=dict(
-        required= False,
-        type='str'),
-    interval=dict(
-        default=60,
+    retries=dict(
+        default=2,
         type='int'),
-    follow_redirects=dict(
-        required= False,
-        type='bool'),
-    created_on=dict(
-        required= False,
-        type='str'),
     path=dict(
         required= False,
         type='str'),
     description=dict(
         required= False,
         type='str'),
+    timeout=dict(
+        default=5,
+        type='int'),
+    follow_redirects=dict(
+        required= False,
+        type='bool'),
     allow_insecure=dict(
         default=False,
         type='bool'),
-    port=dict(
-        required= False,
-        type='int'),
     cis_id=dict(
-        required= False,
-        type='str'),
-    expected_codes=dict(
-        required= False,
-        type='str'),
-    retries=dict(
-        default=2,
-        type='int'),
-    modified_on=dict(
         required= False,
         type='str'),
     type=dict(
         default='http',
         type='str'),
+    interval=dict(
+        default=60,
+        type='int'),
+    port=dict(
+        required= False,
+        type='int'),
+    expected_body=dict(
+        required= False,
+        type='str'),
+    expected_codes=dict(
+        required= False,
+        type='str'),
     method=dict(
         required= False,
         type='str'),
-    timeout=dict(
-        default=5,
-        type='int'),
     id=dict(
         required= False,
         type='str'),

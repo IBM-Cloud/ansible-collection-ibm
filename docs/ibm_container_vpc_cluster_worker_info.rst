@@ -26,44 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pool_id (False, str, None)
-    worker pool id
-
-
-  flavor (False, str, None)
-    flavor of the worker
-
-
-  cluster_name_id (True, str, None)
-    Name or ID of the cluster
-
-
-  kube_version (False, str, None)
-    kube version of the worker
-
-
-  state (False, str, None)
-    State of the worker
-
-
-  pool_name (False, str, None)
-    worker pool name
-
-
-  network_interfaces (False, list, None)
-    None
+  worker_id (True, str, None)
+    ID of the worker
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_id (True, str, None)
-    ID of the worker
+  cluster_name_id (True, str, None)
+    Name or ID of the cluster
 
 
   ibmcloud_api_key (True, any, None)

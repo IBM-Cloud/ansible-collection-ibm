@@ -30,24 +30,12 @@ Parameters
     (Required for new resource) Encryption algorithm
 
 
-  resource_group (False, str, None)
-    Resource group info
+  pfs (True, str, None)
+    (Required for new resource) PFS info
 
 
-  transform_protocol (False, str, None)
-    IPSEC transform protocol
-
-
-  vpn_connections (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
 
 
   name (True, str, None)
@@ -56,26 +44,6 @@ Parameters
 
   authentication_algorithm (True, str, None)
     (Required for new resource) Authentication alorothm
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  encapsulation_mode (False, str, None)
-    IPSEC encapsulation mode
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  pfs (True, str, None)
-    (Required for new resource) PFS info
-
-
-  key_lifetime (False, int, 3600)
-    IPSEC key lifetime
 
 
   id (False, str, None)

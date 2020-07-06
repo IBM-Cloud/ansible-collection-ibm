@@ -30,22 +30,6 @@ options:
             - The guid of the space in which the instance is present
         required: True
         type: str
-    credentials:
-        description:
-            - The service broker-provided credentials to use this service.
-        required: False
-        type: dict
-    service_keys:
-        description:
-            - Service keys asociated with the service instance
-        required: False
-        type: list
-        elements: dict
-    service_plan_guid:
-        description:
-            - The uniquie identifier of the service offering plan type
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -87,9 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'space_guid',
-    'credentials',
-    'service_keys',
-    'service_plan_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -101,16 +82,6 @@ module_args = dict(
         type='str'),
     space_guid=dict(
         required=True,
-        type='str'),
-    credentials=dict(
-        required=False,
-        type='dict'),
-    service_keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    service_plan_guid=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

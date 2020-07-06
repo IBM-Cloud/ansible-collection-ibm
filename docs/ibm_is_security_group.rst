@@ -26,36 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  name (False, str, None)
-    Security group name
-
-
   vpc (True, str, None)
     (Required for new resource) Security group's resource group id
-
-
-  rules (False, list, None)
-    Security Rules
-
-
-  resource_group (False, str, None)
-    Resource Group ID
 
 
   id (False, str, None)

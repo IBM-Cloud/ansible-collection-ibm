@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    soft_reboot:
-        description:
-            - Boolean value set to true, if soft reboot needs to be done.
-        required: False
-        type: bool
-        default: True
     security_group_id:
         description:
             - (Required for new resource) Security group ID
@@ -36,6 +30,12 @@ options:
             - (Required for new resource) Network interface ID
         required: True
         type: int
+    soft_reboot:
+        description:
+            - Boolean value set to true, if soft reboot needs to be done.
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,24 +88,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'soft_reboot',
     'security_group_id',
     'network_interface_id',
+    'soft_reboot',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    soft_reboot=dict(
-        default=True,
-        type='bool'),
     security_group_id=dict(
         required= False,
         type='int'),
     network_interface_id=dict(
         required= False,
         type='int'),
+    soft_reboot=dict(
+        default=True,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

@@ -20,49 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - security group network interface attachment type
-        required: False
-        type: str
-    instance_network_interface:
-        description:
-            - security group network interface attachment network interface ID
-        required: False
-        type: str
-    primary_ipv4_address:
-        description:
-            - security group network interface attachment Primary IPV4 address
-        required: False
-        type: str
-    secondary_address:
-        description:
-            - security group network interface attachment secondary address
-        required: False
-        type: list
-        elements: str
-    subnet:
-        description:
-            - security group network interface attachment subnet
-        required: False
-        type: str
-    status:
-        description:
-            - security group network interface attachment status
-        required: False
-        type: str
-    floating_ips:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    security_groups:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     security_group:
         description:
             - (Required for new resource) security group network interface attachment group ID
@@ -73,16 +30,6 @@ options:
             - (Required for new resource) security group network interface attachment NIC ID
         required: True
         type: str
-    name:
-        description:
-            - security group network interface attachment name
-        required: False
-        type: str
-    port_speed:
-        description:
-            - security group network interface attachment port speed
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,63 +82,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'instance_network_interface',
-    'primary_ipv4_address',
-    'secondary_address',
-    'subnet',
-    'status',
-    'floating_ips',
-    'security_groups',
     'security_group',
     'network_interface',
-    'name',
-    'port_speed',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required= False,
-        type='str'),
-    instance_network_interface=dict(
-        required= False,
-        type='str'),
-    primary_ipv4_address=dict(
-        required= False,
-        type='str'),
-    secondary_address=dict(
-        required= False,
-        elements='',
-        type='list'),
-    subnet=dict(
-        required= False,
-        type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    floating_ips=dict(
-        required= False,
-        elements='',
-        type='list'),
-    security_groups=dict(
-        required= False,
-        elements='',
-        type='list'),
     security_group=dict(
         required= False,
         type='str'),
     network_interface=dict(
         required= False,
         type='str'),
-    name=dict(
-        required= False,
-        type='str'),
-    port_speed=dict(
-        required= False,
-        type='int'),
     id=dict(
         required= False,
         type='str'),

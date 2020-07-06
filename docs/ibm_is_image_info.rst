@@ -26,22 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    None
-
-
-  os (False, str, None)
-    None
-
-
-  architecture (False, str, None)
-    None
-
-
-  crn (False, str, None)
-    None
-
-
   name (True, str, None)
     None
 

@@ -34,18 +34,6 @@ Parameters
     The guid of the space in which the instance is present
 
 
-  credentials (False, dict, None)
-    The service broker-provided credentials to use this service.
-
-
-  service_keys (False, list, None)
-    Service keys asociated with the service instance
-
-
-  service_plan_guid (False, str, None)
-    The uniquie identifier of the service offering plan type
-
-
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

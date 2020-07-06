@@ -30,24 +30,6 @@ options:
             - The org this space belongs to
         required: True
         type: str
-    auditors:
-        description:
-            - The IBMID of the users who  have auditor role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    managers:
-        description:
-            - The IBMID of the users who  have manager role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    developers:
-        description:
-            - The IBMID of the users who  have developer role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -89,9 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'space',
     'org',
-    'auditors',
-    'managers',
-    'developers',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -104,18 +83,6 @@ module_args = dict(
     org=dict(
         required=True,
         type='str'),
-    auditors=dict(
-        required=False,
-        elements='',
-        type='list'),
-    managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    developers=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

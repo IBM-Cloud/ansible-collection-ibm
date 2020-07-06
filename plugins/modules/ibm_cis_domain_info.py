@@ -30,28 +30,6 @@ options:
             - CISzone - Domain
         required: True
         type: str
-    paused:
-        description:
-            - None
-        required: False
-        type: bool
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    name_servers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    original_name_servers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -93,10 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cis_id',
     'domain',
-    'paused',
-    'status',
-    'name_servers',
-    'original_name_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -109,20 +83,6 @@ module_args = dict(
     domain=dict(
         required=True,
         type='str'),
-    paused=dict(
-        required=False,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
-    name_servers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    original_name_servers=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -26,8 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rule_id (False, str, None)
-    id of the rule
+  identity_provider (True, str, None)
+    (Required for new resource) The realm name or identity proivider url
+
+
+  conditions (True, list, None)
+    (Required for new resource) conditions info
 
 
   access_group_id (True, str, None)
@@ -40,14 +44,6 @@ Parameters
 
   expiration (True, int, None)
     (Required for new resource) The expiration in hours
-
-
-  identity_provider (True, str, None)
-    (Required for new resource) The realm name or identity proivider url
-
-
-  conditions (True, list, None)
-    (Required for new resource) conditions info
 
 
   id (False, str, None)

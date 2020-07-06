@@ -25,14 +25,32 @@ options:
             - (Required for new resource) CIS Domain ID
         required: True
         type: str
-    description:
+    disabled:
         description:
-            - A note that you can use to describe the reason for a rate limiting rule.
+            - Whether this rate limiting rule is currently disabled.
         required: False
-        type: str
+        type: bool
+        default: False
+    period:
+        description:
+            - (Required for new resource) Rate Limiting Period
+        required: True
+        type: int
+    action:
+        description:
+            - (Required for new resource) Rate Limiting Action
+        required: True
+        type: list
+        elements: dict
     correlate:
         description:
             - Ratelimiting Correlate
+        required: False
+        type: list
+        elements: dict
+    match:
+        description:
+            - Rate Limiting Match
         required: False
         type: list
         elements: dict
@@ -40,6 +58,11 @@ options:
         description:
             - (Required for new resource) CIS Intance CRN
         required: True
+        type: str
+    description:
+        description:
+            - A note that you can use to describe the reason for a rate limiting rule.
+        required: False
         type: str
     bypass:
         description:
@@ -52,34 +75,6 @@ options:
             - (Required for new resource) Rate Limiting Threshold
         required: True
         type: int
-    period:
-        description:
-            - (Required for new resource) Rate Limiting Period
-        required: True
-        type: int
-    action:
-        description:
-            - (Required for new resource) Rate Limiting Action
-        required: True
-        type: list
-        elements: dict
-    match:
-        description:
-            - Rate Limiting Match
-        required: False
-        type: list
-        elements: dict
-    rule_id:
-        description:
-            - Rate Limit rule Id
-        required: False
-        type: str
-    disabled:
-        description:
-            - Whether this rate limiting rule is currently disabled.
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,25 +122,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('domain_id', 'str'),
-    ('cis_id', 'str'),
-    ('threshold', 'int'),
     ('period', 'int'),
     ('action', 'list'),
+    ('cis_id', 'str'),
+    ('threshold', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain_id',
-    'description',
-    'correlate',
-    'cis_id',
-    'bypass',
-    'threshold',
+    'disabled',
     'period',
     'action',
+    'correlate',
     'match',
-    'rule_id',
-    'disabled',
+    'cis_id',
+    'description',
+    'bypass',
+    'threshold',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -155,14 +149,28 @@ module_args = dict(
     domain_id=dict(
         required= False,
         type='str'),
-    description=dict(
+    disabled=dict(
+        default=False,
+        type='bool'),
+    period=dict(
         required= False,
-        type='str'),
+        type='int'),
+    action=dict(
+        required= False,
+        elements='',
+        type='list'),
     correlate=dict(
         required= False,
         elements='',
         type='list'),
+    match=dict(
+        required= False,
+        elements='',
+        type='list'),
     cis_id=dict(
+        required= False,
+        type='str'),
+    description=dict(
         required= False,
         type='str'),
     bypass=dict(
@@ -172,23 +180,6 @@ module_args = dict(
     threshold=dict(
         required= False,
         type='int'),
-    period=dict(
-        required= False,
-        type='int'),
-    action=dict(
-        required= False,
-        elements='',
-        type='list'),
-    match=dict(
-        required= False,
-        elements='',
-        type='list'),
-    rule_id=dict(
-        required= False,
-        type='str'),
-    disabled=dict(
-        default=False,
-        type='bool'),
     id=dict(
         required= False,
         type='str'),

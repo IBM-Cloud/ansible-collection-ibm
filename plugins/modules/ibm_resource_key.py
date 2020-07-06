@@ -20,22 +20,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    credentials:
+    name:
         description:
-            - Credentials asociated with the key
+            - (Required for new resource) The name of the resource key
+        required: True
+        type: str
+    resource_instance_id:
+        description:
+            - The id of the resource instance for which to create resource key
         required: False
-        type: dict
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) The name of the resource key
-        required: True
-        type: str
     role:
         description:
             - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
@@ -44,26 +44,6 @@ options:
     resource_alias_id:
         description:
             - The id of the resource alias for which to create resource key
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
-    resource_instance_id:
-        description:
-            - The id of the resource instance for which to create resource key
-        required: False
-        type: str
-    status:
-        description:
-            - Status of resource key
-        required: False
-        type: str
-    crn:
-        description:
-            - crn of resource key
         required: False
         type: str
     id:
@@ -118,47 +98,31 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'credentials',
-    'tags',
     'name',
+    'resource_instance_id',
+    'tags',
     'role',
     'resource_alias_id',
-    'parameters',
-    'resource_instance_id',
-    'status',
-    'crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    credentials=dict(
+    name=dict(
         required= False,
-        type='dict'),
+        type='str'),
+    resource_instance_id=dict(
+        required= False,
+        type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    name=dict(
-        required= False,
-        type='str'),
     role=dict(
         required= False,
         type='str'),
     resource_alias_id=dict(
-        required= False,
-        type='str'),
-    parameters=dict(
-        required= False,
-        type='dict'),
-    resource_instance_id=dict(
-        required= False,
-        type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    crn=dict(
         required= False,
         type='str'),
     id=dict(

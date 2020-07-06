@@ -20,50 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_volume_name:
-        description:
-            - Volume Name to be used for pvminstances
-        required: True
-        type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    creation_date:
-        description:
-            - None
-        required: False
-        type: str
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
-    size:
+    pi_volume_name:
         description:
-            - None
-        required: False
-        type: int
-    shareable:
-        description:
-            - None
-        required: False
-        type: bool
-    bootable:
-        description:
-            - None
-        required: False
-        type: bool
-    disk_type:
-        description:
-            - None
-        required: False
+            - Volume Name to be used for pvminstances
+        required: True
         type: str
     zone:
         description:
@@ -94,53 +59,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_volume_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_volume_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_volume_name',
-    'state',
-    'name',
-    'creation_date',
     'pi_cloud_instance_id',
-    'size',
-    'shareable',
-    'bootable',
-    'disk_type',
+    'pi_volume_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_volume_name=dict(
-        required=True,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    creation_date=dict(
-        required=False,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    size=dict(
-        required=False,
-        type='int'),
-    shareable=dict(
-        required=False,
-        type='bool'),
-    bootable=dict(
-        required=False,
-        type='bool'),
-    disk_type=dict(
-        required=False,
+    pi_volume_name=dict(
+        required=True,
         type='str'),
     zone=dict(
         type='str',

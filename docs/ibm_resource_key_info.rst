@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  credentials (False, dict, None)
-    Credentials asociated with the key
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
-
-
-  crn (False, str, None)
-    crn of resource key
-
-
   name (True, str, None)
     The name of the resource key
 
@@ -50,12 +38,8 @@ Parameters
     The id of the resource alias
 
 
-  role (False, str, None)
-    User role
-
-
-  status (False, str, None)
-    Status of resource key
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
 
 
   iaas_classic_username (False, any, None)

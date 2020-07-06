@@ -20,80 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    types:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    is_frozen:
-        description:
-            - None
-        required: False
-        type: bool
-    status:
-        description:
-            - The status of workspace
-        required: False
-        type: str
-    location:
-        description:
-            - The location of workspace
-        required: False
-        type: str
-    description:
-        description:
-            - The description of workspace
-        required: False
-        type: str
-    crn:
-        description:
-            - cloud resource name of the workspace
-        required: False
-        type: str
-    is_locked:
-        description:
-            - None
-        required: False
-        type: bool
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - The name of workspace
-        required: False
-        type: str
-    resource_group:
-        description:
-            - The resource group of workspace
-        required: False
-        type: str
-    catalog_ref:
-        description:
-            - Catalog references
-        required: False
-        type: dict
-        elements: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
-        required: False
-        type: str
     workspace_id:
         description:
             - The id of workspace
         required: True
         type: str
-    template_id:
-        description:
-            - The id of templates
-        required: False
-        type: list
-        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -132,72 +63,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'types',
-    'is_frozen',
-    'status',
-    'location',
-    'description',
-    'crn',
-    'is_locked',
-    'tags',
-    'name',
-    'resource_group',
-    'catalog_ref',
-    'resource_controller_url',
     'workspace_id',
-    'template_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    types=dict(
-        required=False,
-        elements='',
-        type='list'),
-    is_frozen=dict(
-        required=False,
-        type='bool'),
-    status=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    crn=dict(
-        required=False,
-        type='str'),
-    is_locked=dict(
-        required=False,
-        type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    catalog_ref=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
     workspace_id=dict(
         required=True,
         type='str'),
-    template_id=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -30,22 +30,6 @@ Parameters
     None
 
 
-  creation_date (False, str, None)
-    None
-
-
-  enabled (False, bool, None)
-    None
-
-
-  tenant_name (False, str, None)
-    None
-
-
-  cloud_instances (False, list, None)
-    None
-
-
   zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 

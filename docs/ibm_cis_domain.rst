@@ -26,28 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  original_name_servers (False, list, None)
-    None
-
-
   cis_id (True, str, None)
     (Required for new resource) CIS object id
 
 
   domain (True, str, None)
     (Required for new resource) CISzone - Domain
-
-
-  paused (False, bool, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  name_servers (False, list, None)
-    None
 
 
   id (False, str, None)

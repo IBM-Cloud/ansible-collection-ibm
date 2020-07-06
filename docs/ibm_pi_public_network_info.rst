@@ -34,22 +34,6 @@ Parameters
     None
 
 
-  network_id (False, str, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  type (False, str, None)
-    None
-
-
-  vlan_id (False, int, None)
-    None
-
-
   zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 

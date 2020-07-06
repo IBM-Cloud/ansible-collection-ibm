@@ -26,14 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  serial (False, str, None)
-    DNS serial info
-
-
-  update_date (False, str, None)
-    DNS update date
-
-
   target (False, str, None)
     DNS target info
 

@@ -1,6 +1,6 @@
 
-ibm_org_quota_info -- Retrieve IBM Cloud 'ibm_org_quota' resource
-=================================================================
+ibm_dl_virtual_connection -- Configure IBM Cloud 'ibm_dl_virtual_connection' resource
+=====================================================================================
 
 .. contents::
    :local:
@@ -10,7 +10,7 @@ ibm_org_quota_info -- Retrieve IBM Cloud 'ibm_org_quota' resource
 Synopsis
 --------
 
-Retrieve an IBM Cloud 'ibm_org_quota' resource
+Create, update or destroy an IBM Cloud 'ibm_dl_virtual_connection' resource
 
 
 
@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  gateway (True, str, None)
+    (Required for new resource) The Direct Link gateway identifier
+
+
+  type (True, str, None)
+    (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
+
+
   name (True, str, None)
-    Org quota name, for example qIBM
+    (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
+
+
+  id (False, str, None)
+    (Required when updating or destroying existing resource) IBM Cloud Resource ID.
+
+
+  state (False, any, available)
+    State of resource
 
 
   iaas_classic_username (False, any, None)

@@ -20,30 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    state_store_json:
-        description:
-            - None
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
-        required: False
-        type: str
-    workspace_id:
-        description:
-            - The id of workspace
-        required: True
-        type: str
     template_id:
         description:
             - The id of template
         required: True
         type: str
-    state_store:
+    workspace_id:
         description:
-            - None
-        required: False
+            - The id of workspace
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -78,37 +63,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('workspace_id', 'str'),
     ('template_id', 'str'),
+    ('workspace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'state_store_json',
-    'resource_controller_url',
-    'workspace_id',
     'template_id',
-    'state_store',
+    'workspace_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    state_store_json=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    workspace_id=dict(
-        required=True,
-        type='str'),
     template_id=dict(
         required=True,
         type='str'),
-    state_store=dict(
-        required=False,
+    workspace_id=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',

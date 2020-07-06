@@ -30,26 +30,6 @@ options:
             - None
         required: True
         type: str
-    network_id:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    type:
-        description:
-            - None
-        required: False
-        type: str
-    vlan_id:
-        description:
-            - None
-        required: False
-        type: int
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -86,10 +66,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_network_name',
     'pi_cloud_instance_id',
-    'network_id',
-    'name',
-    'type',
-    'vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -102,18 +78,6 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    network_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),

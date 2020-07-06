@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    port_range_min:
+        description:
+            - Port number minimum range
+        required: False
+        type: int
+    port_range_max:
+        description:
+            - Port number max range
+        required: False
+        type: int
+    remote_group_id:
+        description:
+            - remote group ID
+        required: False
+        type: int
     remote_ip:
         description:
             - Remote IP Address
@@ -46,21 +61,6 @@ options:
         required: False
         type: str
         default: IPv4
-    port_range_min:
-        description:
-            - Port number minimum range
-        required: False
-        type: int
-    port_range_max:
-        description:
-            - Port number max range
-        required: False
-        type: int
-    remote_group_id:
-        description:
-            - remote group ID
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,20 +113,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'port_range_min',
+    'port_range_max',
+    'remote_group_id',
     'remote_ip',
     'protocol',
     'security_group_id',
     'direction',
     'ether_type',
-    'port_range_min',
-    'port_range_max',
-    'remote_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    port_range_min=dict(
+        required= False,
+        type='int'),
+    port_range_max=dict(
+        required= False,
+        type='int'),
+    remote_group_id=dict(
+        required= False,
+        type='int'),
     remote_ip=dict(
         required= False,
         type='str'),
@@ -142,15 +151,6 @@ module_args = dict(
     ether_type=dict(
         default='IPv4',
         type='str'),
-    port_range_min=dict(
-        required= False,
-        type='int'),
-    port_range_max=dict(
-        required= False,
-        type='int'),
-    remote_group_id=dict(
-        required= False,
-        type='int'),
     id=dict(
         required= False,
         type='str'),

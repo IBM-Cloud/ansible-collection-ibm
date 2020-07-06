@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - None
-        required: False
-        type: str
     local_note:
         description:
             - None
@@ -86,7 +81,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'local_note',
     'tags',
 ]
@@ -95,9 +89,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required= False,
-        type='str'),
     local_note=dict(
         required= False,
         type='str'),

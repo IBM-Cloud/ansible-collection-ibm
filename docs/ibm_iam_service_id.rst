@@ -34,14 +34,6 @@ Parameters
     Description of the serviceID
 
 
-  version (False, str, None)
-    version of the serviceID
-
-
-  crn (False, str, None)
-    crn of the serviceID
-
-
   tags (False, list, None)
     None
 

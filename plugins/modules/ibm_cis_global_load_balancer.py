@@ -20,24 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    modified_on:
+    fallback_pool_id:
         description:
-            - Load balancer modified date
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
+            - (Required for new resource) fallback pool ID
         required: True
         type: str
     default_pool_ids:
@@ -46,27 +31,6 @@ options:
         required: True
         type: list
         elements: str
-    description:
-        description:
-            - Description for the load balancer instance
-        required: False
-        type: str
-    proxied:
-        description:
-            - set to true if proxy needs to be enabled
-        required: False
-        type: bool
-        default: False
-    created_on:
-        description:
-            - Load balancer creation date
-        required: False
-        type: str
-    fallback_pool_id:
-        description:
-            - (Required for new resource) fallback pool ID
-        required: True
-        type: str
     ttl:
         description:
             - TTL value
@@ -84,6 +48,32 @@ options:
         required: False
         type: bool
         default: True
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    description:
+        description:
+            - Description for the load balancer instance
+        required: False
+        type: str
+    proxied:
+        description:
+            - set to true if proxy needs to be enabled
+        required: False
+        type: bool
+        default: False
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -130,61 +120,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
+    ('fallback_pool_id', 'str'),
+    ('default_pool_ids', 'list'),
     ('domain_id', 'str'),
     ('name', 'str'),
-    ('default_pool_ids', 'list'),
-    ('fallback_pool_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'modified_on',
-    'cis_id',
-    'domain_id',
-    'name',
-    'default_pool_ids',
-    'description',
-    'proxied',
-    'created_on',
     'fallback_pool_id',
+    'default_pool_ids',
     'ttl',
     'session_affinity',
     'enabled',
+    'domain_id',
+    'name',
+    'description',
+    'proxied',
+    'cis_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    modified_on=dict(
-        required= False,
-        type='str'),
-    cis_id=dict(
-        required= False,
-        type='str'),
-    domain_id=dict(
-        required= False,
-        type='str'),
-    name=dict(
+    fallback_pool_id=dict(
         required= False,
         type='str'),
     default_pool_ids=dict(
         required= False,
         elements='',
         type='list'),
-    description=dict(
-        required= False,
-        type='str'),
-    proxied=dict(
-        default=False,
-        type='bool'),
-    created_on=dict(
-        required= False,
-        type='str'),
-    fallback_pool_id=dict(
-        required= False,
-        type='str'),
     ttl=dict(
         required= False,
         type='int'),
@@ -194,6 +161,21 @@ module_args = dict(
     enabled=dict(
         default=True,
         type='bool'),
+    domain_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    description=dict(
+        required= False,
+        type='str'),
+    proxied=dict(
+        default=False,
+        type='bool'),
+    cis_id=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

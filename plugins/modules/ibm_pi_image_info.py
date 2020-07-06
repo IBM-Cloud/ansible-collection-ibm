@@ -30,31 +30,6 @@ options:
             - None
         required: True
         type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
-    size:
-        description:
-            - None
-        required: False
-        type: int
-    architecture:
-        description:
-            - None
-        required: False
-        type: str
-    operatingsystem:
-        description:
-            - None
-        required: False
-        type: str
-    hypervisor:
-        description:
-            - None
-        required: False
-        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -92,11 +67,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_image_name',
     'pi_cloud_instance_id',
-    'state',
-    'size',
-    'architecture',
-    'operatingsystem',
-    'hypervisor',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -108,21 +78,6 @@ module_args = dict(
         type='str'),
     pi_cloud_instance_id=dict(
         required=True,
-        type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    size=dict(
-        required=False,
-        type='int'),
-    architecture=dict(
-        required=False,
-        type='str'),
-    operatingsystem=dict(
-        required=False,
-        type='str'),
-    hypervisor=dict(
-        required=False,
         type='str'),
     zone=dict(
         type='str',

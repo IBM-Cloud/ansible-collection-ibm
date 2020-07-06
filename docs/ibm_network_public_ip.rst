@@ -30,10 +30,6 @@ Parameters
     Additional notes
 
 
-  ip_address (False, str, None)
-    IP Address
-
-
   routes_to (True, str, None)
     (Required for new resource) Route info
 

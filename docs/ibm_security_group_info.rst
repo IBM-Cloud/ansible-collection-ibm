@@ -30,10 +30,6 @@ Parameters
     The name of the security group
 
 
-  description (False, str, None)
-    The description of the security group
-
-
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created group is used. If false, an error is returned
 

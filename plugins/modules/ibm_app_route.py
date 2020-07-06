@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    host:
+        description:
+            - The host portion of the route. Required for shared-domains.
+        required: False
+        type: str
+    space_guid:
+        description:
+            - (Required for new resource) The guid of the associated space
+        required: True
+        type: str
+    domain_guid:
+        description:
+            - (Required for new resource) The guid of the associated domain
+        required: True
+        type: str
     port:
         description:
             - The port of the route. Supported for domains of TCP router groups only.
@@ -36,21 +51,6 @@ options:
         required: False
         type: list
         elements: str
-    host:
-        description:
-            - The host portion of the route. Required for shared-domains.
-        required: False
-        type: str
-    space_guid:
-        description:
-            - (Required for new resource) The guid of the associated space
-        required: True
-        type: str
-    domain_guid:
-        description:
-            - (Required for new resource) The guid of the associated domain
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,18 +103,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'port',
-    'path',
-    'tags',
     'host',
     'space_guid',
     'domain_guid',
+    'port',
+    'path',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    host=dict(
+        required= False,
+        type='str'),
+    space_guid=dict(
+        required= False,
+        type='str'),
+    domain_guid=dict(
+        required= False,
+        type='str'),
     port=dict(
         required= False,
         type='int'),
@@ -125,15 +134,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    host=dict(
-        required= False,
-        type='str'),
-    space_guid=dict(
-        required= False,
-        type='str'),
-    domain_guid=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

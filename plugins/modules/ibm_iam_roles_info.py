@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    roles:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     service:
         description:
             - The Service Name
@@ -68,7 +62,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'roles',
     'service',
 ]
 
@@ -76,10 +69,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     service=dict(
         required=False,
         type='str'),

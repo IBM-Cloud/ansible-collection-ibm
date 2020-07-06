@@ -20,35 +20,35 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    worker_count:
-        description:
-            - (Required for new resource) The number of workers
-        required: True
-        type: int
-    cluster:
-        description:
-            - (Required for new resource) Cluster name
-        required: True
-        type: str
     worker_pool_name:
         description:
             - (Required for new resource) worker pool name
         required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
         type: str
     vpc_id:
         description:
             - (Required for new resource) The vpc id where the cluster is
         required: True
         type: str
+    worker_count:
+        description:
+            - (Required for new resource) The number of workers
+        required: True
+        type: int
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     entitlement:
         description:
             - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) Cluster name
+        required: True
         type: str
     flavor:
         description:
@@ -61,12 +61,6 @@ options:
         required: True
         type: list
         elements: dict
-    labels:
-        description:
-            - Labels
-        required: False
-        type: dict
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,47 +87,46 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker_count', 'int'),
-    ('cluster', 'str'),
     ('worker_pool_name', 'str'),
     ('vpc_id', 'str'),
+    ('worker_count', 'int'),
+    ('cluster', 'str'),
     ('flavor', 'str'),
     ('zones', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_count',
-    'cluster',
     'worker_pool_name',
-    'resource_group_id',
     'vpc_id',
+    'worker_count',
+    'resource_group_id',
     'entitlement',
+    'cluster',
     'flavor',
     'zones',
-    'labels',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_count=dict(
-        required= False,
-        type='int'),
-    cluster=dict(
-        required= False,
-        type='str'),
     worker_pool_name=dict(
-        required= False,
-        type='str'),
-    resource_group_id=dict(
         required= False,
         type='str'),
     vpc_id=dict(
         required= False,
         type='str'),
+    worker_count=dict(
+        required= False,
+        type='int'),
+    resource_group_id=dict(
+        required= False,
+        type='str'),
     entitlement=dict(
+        required= False,
+        type='str'),
+    cluster=dict(
         required= False,
         type='str'),
     flavor=dict(
@@ -143,10 +136,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    labels=dict(
-        required= False,
-        elements='',
-        type='dict'),
     id=dict(
         required= False,
         type='str'),

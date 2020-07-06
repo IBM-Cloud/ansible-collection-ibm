@@ -25,24 +25,29 @@ options:
             - Listener Policy Target ID
         required: False
         type: str
+    target_http_status_code:
+        description:
+            - Listener Policy target HTTPS Status code.
+        required: False
+        type: int
     target_url:
         description:
             - Policy Target URL
         required: False
         type: str
-    name:
+    listener:
         description:
-            - Policy name
-        required: False
-        type: str
-    policy_id:
-        description:
-            - Listener Policy ID
-        required: False
+            - (Required for new resource) Listener ID
+        required: True
         type: str
     action:
         description:
             - (Required for new resource) Policy Action
+        required: True
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Load Balancer Listener Policy
         required: True
         type: str
     priority:
@@ -50,32 +55,6 @@ options:
             - (Required for new resource) Listener Policy Priority
         required: True
         type: int
-    rules:
-        description:
-            - Policy Rules
-        required: False
-        type: list
-        elements: dict
-    target_http_status_code:
-        description:
-            - Listener Policy target HTTPS Status code.
-        required: False
-        type: int
-    provisioning_status:
-        description:
-            - Listner Policy status
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Load Balancer Listener Policy
-        required: True
-        type: str
-    listener:
-        description:
-            - (Required for new resource) Listener ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,25 +101,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('priority', 'int'),
-    ('lb', 'str'),
     ('listener', 'str'),
+    ('action', 'str'),
+    ('lb', 'str'),
+    ('priority', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'target_id',
-    'target_url',
-    'name',
-    'policy_id',
-    'action',
-    'priority',
-    'rules',
     'target_http_status_code',
-    'provisioning_status',
-    'lb',
+    'target_url',
     'listener',
+    'action',
+    'lb',
+    'priority',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -150,37 +125,24 @@ module_args = dict(
     target_id=dict(
         required= False,
         type='str'),
-    target_url=dict(
-        required= False,
-        type='str'),
-    name=dict(
-        required= False,
-        type='str'),
-    policy_id=dict(
-        required= False,
-        type='str'),
-    action=dict(
-        required= False,
-        type='str'),
-    priority=dict(
-        required= False,
-        type='int'),
-    rules=dict(
-        required= False,
-        elements='',
-        type='list'),
     target_http_status_code=dict(
         required= False,
         type='int'),
-    provisioning_status=dict(
-        required= False,
-        type='str'),
-    lb=dict(
+    target_url=dict(
         required= False,
         type='str'),
     listener=dict(
         required= False,
         type='str'),
+    action=dict(
+        required= False,
+        type='str'),
+    lb=dict(
+        required= False,
+        type='str'),
+    priority=dict(
+        required= False,
+        type='int'),
     id=dict(
         required= False,
         type='str'),

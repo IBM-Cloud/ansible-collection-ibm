@@ -20,31 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    publish:
-        description:
-            - Package Visibility.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the package.
-        required: False
-        type: str
-    annotations:
-        description:
-            - All annotations set on package by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    parameters:
-        description:
-            - All parameters set on package by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    bind_package_name:
-        description:
-            - Name of binded package.
-        required: False
-        type: str
     name:
         description:
             - Name of the package.
@@ -74,11 +49,6 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'publish',
-    'version',
-    'annotations',
-    'parameters',
-    'bind_package_name',
     'name',
 ]
 
@@ -86,21 +56,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    publish=dict(
-        required=False,
-        type='bool'),
-    version=dict(
-        required=False,
-        type='str'),
-    annotations=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='str'),
-    bind_package_name=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),

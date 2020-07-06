@@ -20,21 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    subnets:
+    name:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    resource_name:
-        description:
-            - The name of the resource
+            - VLAN name
         required: False
         type: str
     datacenter:
@@ -47,36 +35,12 @@ options:
             - (Required for new resource) VLAN type
         required: True
         type: str
-    router_hostname:
+    tags:
         description:
-            - router host name
+            - List of tags
         required: False
-        type: str
-    vlan_number:
-        description:
-            - VLAN number
-        required: False
-        type: int
-    child_resource_count:
-        description:
-            - Child resource count
-        required: False
-        type: int
-    name:
-        description:
-            - VLAN name
-        required: False
-        type: str
-    softlayer_managed:
-        description:
-            - Zzset to true if VLAN is managed by softlayer
-        required: False
-        type: bool
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,32 +93,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnets',
-    'tags',
-    'resource_name',
+    'name',
     'datacenter',
     'type',
-    'router_hostname',
-    'vlan_number',
-    'child_resource_count',
-    'name',
-    'softlayer_managed',
-    'resource_controller_url',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnets=dict(
-        required= False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
+    name=dict(
         required= False,
         type='str'),
     datacenter=dict(
@@ -163,24 +112,10 @@ module_args = dict(
     type=dict(
         required= False,
         type='str'),
-    router_hostname=dict(
+    tags=dict(
         required= False,
-        type='str'),
-    vlan_number=dict(
-        required= False,
-        type='int'),
-    child_resource_count=dict(
-        required= False,
-        type='int'),
-    name=dict(
-        required= False,
-        type='str'),
-    softlayer_managed=dict(
-        required= False,
-        type='bool'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

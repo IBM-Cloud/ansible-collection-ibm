@@ -25,12 +25,6 @@ options:
             - Instance ID
         required: True
         type: str
-    dns_zones:
-        description:
-            - Collection of dns zones
-        required: False
-        type: list
-        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -70,7 +64,6 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
-    'dns_zones',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -80,10 +73,6 @@ module_args = dict(
     instance_id=dict(
         required=True,
         type='str'),
-    dns_zones=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

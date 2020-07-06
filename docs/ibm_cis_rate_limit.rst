@@ -38,12 +38,16 @@ Parameters
     (Required for new resource) Rate Limiting Period
 
 
+  action (True, list, None)
+    (Required for new resource) Rate Limiting Action
+
+
   correlate (False, list, None)
     Ratelimiting Correlate
 
 
-  rule_id (False, str, None)
-    Rate Limit rule Id
+  match (False, list, None)
+    Rate Limiting Match
 
 
   cis_id (True, str, None)
@@ -60,14 +64,6 @@ Parameters
 
   threshold (True, int, None)
     (Required for new resource) Rate Limiting Threshold
-
-
-  action (True, list, None)
-    (Required for new resource) Rate Limiting Action
-
-
-  match (False, list, None)
-    Rate Limiting Match
 
 
   id (False, str, None)

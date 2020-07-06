@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  billing_item_id (False, int, None)
-    Billing Item ID
-
-
   firewall_type (True, str, None)
     (Required for new resource) Firewall type
 

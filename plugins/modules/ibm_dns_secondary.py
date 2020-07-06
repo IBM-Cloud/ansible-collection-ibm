@@ -20,15 +20,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    status_id:
+    zone_name:
         description:
-            - Status ID
-        required: False
-        type: int
-    status_text:
-        description:
-            - Status text
-        required: False
+            - (Required for new resource) Zone name
+        required: True
         type: str
     tags:
         description:
@@ -46,11 +41,6 @@ options:
             - (Required for new resource) Transfer frequency value
         required: True
         type: int
-    zone_name:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,29 +87,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone_name', 'str'),
     ('master_ip_address', 'str'),
     ('transfer_frequency', 'int'),
-    ('zone_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status_id',
-    'status_text',
+    'zone_name',
     'tags',
     'master_ip_address',
     'transfer_frequency',
-    'zone_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status_id=dict(
-        required= False,
-        type='int'),
-    status_text=dict(
+    zone_name=dict(
         required= False,
         type='str'),
     tags=dict(
@@ -132,9 +117,6 @@ module_args = dict(
     transfer_frequency=dict(
         required= False,
         type='int'),
-    zone_name=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

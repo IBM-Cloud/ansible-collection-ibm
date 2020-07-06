@@ -20,37 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    post_install_script_uri:
-        description:
-            - None
-        required: False
-        type: str
-    private_ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
-    public_ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ip_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    members:
-        description:
-            - (Required for new resource) The hardware members of this network Gateway
-        required: True
-        type: list
-        elements: dict
     name:
         description:
             - (Required for new resource) The name of the gateway
@@ -62,30 +31,15 @@ options:
         required: False
         type: list
         elements: int
-    private_ip_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_ipv6_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    status:
+    post_install_script_uri:
         description:
             - None
         required: False
         type: str
-    associated_vlans:
+    members:
         description:
-            - The VLAN instances associated with this Network Gateway
-        required: False
+            - (Required for new resource) The hardware members of this network Gateway
+        required: True
         type: list
         elements: dict
     id:
@@ -134,50 +88,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('members', 'list'),
     ('name', 'str'),
+    ('members', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'post_install_script_uri',
-    'private_ipv4_address',
-    'public_ipv4_address',
-    'private_vlan_id',
-    'public_ip_address_id',
-    'members',
     'name',
     'ssh_key_ids',
-    'private_ip_address_id',
-    'public_ipv6_address_id',
-    'public_vlan_id',
-    'status',
-    'associated_vlans',
+    'post_install_script_uri',
+    'members',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    post_install_script_uri=dict(
-        required= False,
-        type='str'),
-    private_ipv4_address=dict(
-        required= False,
-        type='str'),
-    public_ipv4_address=dict(
-        required= False,
-        type='str'),
-    private_vlan_id=dict(
-        required= False,
-        type='int'),
-    public_ip_address_id=dict(
-        required= False,
-        type='int'),
-    members=dict(
-        required= False,
-        elements='',
-        type='list'),
     name=dict(
         required= False,
         type='str'),
@@ -185,19 +111,10 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    private_ip_address_id=dict(
-        required= False,
-        type='int'),
-    public_ipv6_address_id=dict(
-        required= False,
-        type='int'),
-    public_vlan_id=dict(
-        required= False,
-        type='int'),
-    status=dict(
+    post_install_script_uri=dict(
         required= False,
         type='str'),
-    associated_vlans=dict(
+    members=dict(
         required= False,
         elements='',
         type='list'),

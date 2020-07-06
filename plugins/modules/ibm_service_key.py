@@ -20,14 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service_instance_guid:
+        description:
+            - (Required for new resource) The guid of the service instance for which to create service key
+        required: True
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
-        required: False
-        type: dict
-    credentials:
-        description:
-            - Credentials asociated with the key
         required: False
         type: dict
     tags:
@@ -39,11 +39,6 @@ options:
     name:
         description:
             - (Required for new resource) The name of the service key
-        required: True
-        type: str
-    service_instance_guid:
-        description:
-            - (Required for new resource) The guid of the service instance for which to create service key
         required: True
         type: str
     id:
@@ -92,27 +87,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('service_instance_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'service_instance_guid',
     'parameters',
-    'credentials',
     'tags',
     'name',
-    'service_instance_guid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameters=dict(
+    service_instance_guid=dict(
         required= False,
-        type='dict'),
-    credentials=dict(
+        type='str'),
+    parameters=dict(
         required= False,
         type='dict'),
     tags=dict(
@@ -120,9 +114,6 @@ module_args = dict(
         elements='',
         type='list'),
     name=dict(
-        required= False,
-        type='str'),
-    service_instance_guid=dict(
         required= False,
         type='str'),
     id=dict(

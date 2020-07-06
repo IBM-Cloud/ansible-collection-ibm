@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    CIS object id
-
-
   domain_id (True, str, None)
     Associated CIS domain
 
@@ -38,8 +34,8 @@ Parameters
     Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
 
 
-  lockdown (False, list, None)
-    Lockdown json Data
+  cis_id (True, str, None)
+    CIS object id
 
 
   iaas_classic_username (False, any, None)

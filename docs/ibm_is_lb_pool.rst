@@ -26,48 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  health_monitor_url (False, str, None)
-    None
-
-
-  health_monitor_port (False, int, None)
-    None
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
   health_timeout (True, int, None)
     (Required for new resource) Load Balancer health timeout interval
 
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
 
 
   health_retries (True, int, None)
     (Required for new resource) Load Balancer health retry count
-
-
-  provisioning_status (False, str, None)
-    None
-
-
-  pool_id (False, str, None)
-    None
 
 
   name (True, str, None)
@@ -80,6 +60,10 @@ Parameters
 
   session_persistence_cookie_name (False, str, None)
     Load Balancer Pool session persisence cookie name
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   id (False, str, None)

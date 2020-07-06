@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    hardware_instance_id:
-        description:
-            - Hardware instance ID
-        required: False
-        type: int
-    billing_item_id:
-        description:
-            - Billing Item ID
-        required: False
-        type: int
     firewall_type:
         description:
             - (Required for new resource) Firewall type
@@ -38,6 +28,11 @@ options:
     virtual_instance_id:
         description:
             - Virtual instance ID
+        required: False
+        type: int
+    hardware_instance_id:
+        description:
+            - Hardware instance ID
         required: False
         type: int
     id:
@@ -91,26 +86,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hardware_instance_id',
-    'billing_item_id',
     'firewall_type',
     'virtual_instance_id',
+    'hardware_instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hardware_instance_id=dict(
-        required= False,
-        type='int'),
-    billing_item_id=dict(
-        required= False,
-        type='int'),
     firewall_type=dict(
         required= False,
         type='str'),
     virtual_instance_id=dict(
+        required= False,
+        type='int'),
+    hardware_instance_id=dict(
         required= False,
         type='int'),
     id=dict(

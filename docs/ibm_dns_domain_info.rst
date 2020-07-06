@@ -30,10 +30,6 @@ Parameters
     The name of the domain
 
 
-  id (False, int, None)
-    A domain record's internal identifier
-
-
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

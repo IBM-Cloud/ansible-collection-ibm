@@ -34,10 +34,6 @@ Parameters
     (Required for new resource) Secondary ID
 
 
-  stay_secondary (False, bool, None)
-    Boolean value for stay secondary
-
-
   tags (False, list, None)
     Tags set for the resource
 

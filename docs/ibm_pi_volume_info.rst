@@ -26,40 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  state (False, str, None)
-    None
-
-
-  size (False, int, None)
-    None
-
-
-  shareable (False, bool, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
-  bootable (False, bool, None)
-    None
-
-
-  creation_date (False, str, None)
+  pi_cloud_instance_id (True, str, None)
     None
 
 
   pi_volume_name (True, str, None)
     Volume Name to be used for pvminstances
-
-
-  disk_type (False, str, None)
-    None
-
-
-  pi_cloud_instance_id (True, str, None)
-    None
 
 
   zone (False, str, None)

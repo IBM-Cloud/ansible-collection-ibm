@@ -20,38 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    subnets:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    id:
-        description:
-            - None
-        required: False
-        type: int
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    number:
-        description:
-            - None
-        required: False
-        type: int
-    router_hostname:
-        description:
-            - None
-        required: False
-        type: str
-    virtual_guests:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -89,37 +57,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnets',
-    'name',
-    'number',
-    'router_hostname',
-    'virtual_guests',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    id=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    number=dict(
-        required=False,
-        type='int'),
-    router_hostname=dict(
-        required=False,
-        type='str'),
-    virtual_guests=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

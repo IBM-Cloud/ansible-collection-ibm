@@ -26,28 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  timeout (False, int, 120)
-    Timeout for dead peer detection
-
-
-  ipsec_policy (False, str, None)
-    IP security policy for vpn gateway connection
-
-
-  status (False, str, None)
-    VPN gateway connection status
-
-
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
 
 
   admin_state_up (False, bool, False)
     VPN gateway connection admin state
-
-
-  local_cidrs (False, list, None)
-    VPN gateway connection local CIDRs
 
 
   peer_cidrs (False, list, None)
@@ -58,24 +42,36 @@ Parameters
     Action detection for dead peer detection action
 
 
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
+  timeout (False, int, 120)
+    Timeout for dead peer detection
+
+
+  ike_policy (False, str, None)
+    VPN gateway connection IKE Policy
+
+
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
 
 
   peer_address (True, str, None)
     (Required for new resource) VPN gateway connection peer address
 
 
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
+  local_cidrs (False, list, None)
+    VPN gateway connection local CIDRs
 
 
   interval (False, int, 30)
     Interval for dead peer detection interval
 
 
-  ike_policy (False, str, None)
-    VPN gateway connection IKE Policy
+  ipsec_policy (False, str, None)
+    IP security policy for vpn gateway connection
+
+
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
 
 
   id (False, str, None)

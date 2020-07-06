@@ -30,11 +30,6 @@ options:
             - None
         required: True
         type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -76,7 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'region_',
-    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -88,9 +82,6 @@ module_args = dict(
         type='str'),
     region_=dict(
         required=True,
-        type='str'),
-    status=dict(
-        required=False,
         type='str'),
     generation=dict(
         type='int',

@@ -26,24 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  workspace_id (True, str, None)
-    The id of workspace
-
-
   template_id (True, str, None)
     The id of template
 
 
-  state_store (False, str, None)
-    None
-
-
-  state_store_json (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
+  workspace_id (True, str, None)
+    The id of workspace
 
 
   iaas_classic_username (False, any, None)

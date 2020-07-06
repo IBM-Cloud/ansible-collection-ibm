@@ -35,11 +35,6 @@ options:
             - (Required for new resource) VPC route destination CIDR value
         required: True
         type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) VPC instance ID
@@ -108,7 +103,6 @@ TL_ALL_PARAMETERS = [
     'name',
     'zone',
     'destination',
-    'status',
     'vpc',
     'next_hop',
 ]
@@ -124,9 +118,6 @@ module_args = dict(
         required= False,
         type='str'),
     destination=dict(
-        required= False,
-        type='str'),
-    status=dict(
         required= False,
         type='str'),
     vpc=dict(

@@ -1,6 +1,6 @@
 
-ibm_org_quota_info -- Retrieve IBM Cloud 'ibm_org_quota' resource
-=================================================================
+ibm_app_info -- Retrieve IBM Cloud 'ibm_app' resource
+=====================================================
 
 .. contents::
    :local:
@@ -10,7 +10,7 @@ ibm_org_quota_info -- Retrieve IBM Cloud 'ibm_org_quota' resource
 Synopsis
 --------
 
-Retrieve an IBM Cloud 'ibm_org_quota' resource
+Retrieve an IBM Cloud 'ibm_app' resource
 
 
 
@@ -27,7 +27,11 @@ Parameters
 ----------
 
   name (True, str, None)
-    Org quota name, for example qIBM
+    The name for the app
+
+
+  space_guid (True, str, None)
+    Define space guid to which app belongs
 
 
   iaas_classic_username (False, any, None)

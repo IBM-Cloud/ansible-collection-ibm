@@ -20,41 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI instance Operation server name
-        required: True
-        type: str
-    addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    pi_health_status:
-        description:
-            - PI instance health status
-        required: False
-        type: str
     pi_operation:
         description:
             - (Required for new resource) PI instance operation type
         required: True
         type: str
-    pi_progress:
-        description:
-            - Progress of the operation
-        required: False
-        type: float
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI Cloud instnce id
         required: True
         type: str
-    pi_status:
+    pi_instance_name:
         description:
-            - PI instance operation status
-        required: False
+            - (Required for new resource) PI instance Operation server name
+        required: True
         type: str
     id:
         description:
@@ -98,46 +77,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_operation', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
-    'addresses',
-    'pi_health_status',
     'pi_operation',
-    'pi_progress',
     'pi_cloud_instance_id',
-    'pi_status',
+    'pi_instance_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required= False,
-        type='str'),
-    addresses=dict(
-        required= False,
-        elements='',
-        type='list'),
-    pi_health_status=dict(
-        required= False,
-        type='str'),
     pi_operation=dict(
         required= False,
         type='str'),
-    pi_progress=dict(
-        required= False,
-        type='float'),
     pi_cloud_instance_id=dict(
         required= False,
         type='str'),
-    pi_status=dict(
+    pi_instance_name=dict(
         required= False,
         type='str'),
     id=dict(

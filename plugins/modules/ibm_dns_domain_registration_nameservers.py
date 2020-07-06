@@ -31,12 +31,6 @@ options:
         required: True
         type: list
         elements: str
-    original_name_servers:
-        description:
-            - Save of name servers prior to update
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,7 +85,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'dns_registration_id',
     'name_servers',
-    'original_name_servers',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -102,10 +95,6 @@ module_args = dict(
         required= False,
         type='str'),
     name_servers=dict(
-        required= False,
-        elements='',
-        type='list'),
-    original_name_servers=dict(
         required= False,
         elements='',
         type='list'),

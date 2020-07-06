@@ -26,32 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  machine_type (True, str, None)
-    (Required for new resource) worker nodes machine type
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   hardware (False, str, shared)
     Hardware type
 
 
-  state_ (False, str, None)
-    worker pool state
-
-
-  zones (False, list, None)
-    None
-
-
-  region (False, str, None)
-    The worker pool region
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
 
 
   cluster (True, str, None)
     (Required for new resource) Cluster name
+
+
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   size_per_zone (True, int, None)
@@ -60,22 +56,6 @@ Parameters
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
-
-
-  labels (False, dict, None)
-    list of labels to worker pool
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
 
 
   id (False, str, None)

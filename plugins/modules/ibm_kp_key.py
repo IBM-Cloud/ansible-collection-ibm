@@ -20,10 +20,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    key_name:
+    iv_value:
         description:
-            - (Required for new resource) Key name
-        required: True
+            - Only for imported root key
+        required: False
         type: str
     standard_key:
         description:
@@ -31,40 +31,14 @@ options:
         required: False
         type: bool
         default: False
-    iv_value:
+    key_name:
         description:
-            - Only for imported root key
-        required: False
+            - (Required for new resource) Key name
+        required: True
         type: str
-    key_id:
-        description:
-            - Key ID
-        required: False
-        type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
-    force_delete:
-        description:
-            - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
     encrypted_nonce:
         description:
             - Only for imported root key
-        required: False
-        type: str
-    crn:
-        description:
-            - Crn of the key
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
         required: False
         type: str
     key_protect_id:
@@ -72,26 +46,12 @@ options:
             - (Required for new resource) Key protect instance ID
         required: True
         type: str
-    resource_name:
+    force_delete:
         description:
-            - The name of the resource
+            - set to true to force delete the key
         required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -144,68 +104,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_name',
-    'standard_key',
     'iv_value',
-    'key_id',
-    'payload',
-    'force_delete',
+    'standard_key',
+    'key_name',
     'encrypted_nonce',
-    'crn',
-    'resource_crn',
     'key_protect_id',
-    'resource_name',
-    'resource_group_name',
-    'resource_controller_url',
-    'resource_status',
+    'force_delete',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_name=dict(
+    iv_value=dict(
         required= False,
         type='str'),
     standard_key=dict(
         default=False,
         type='bool'),
-    iv_value=dict(
+    key_name=dict(
         required= False,
         type='str'),
-    key_id=dict(
-        required= False,
-        type='str'),
-    payload=dict(
-        required= False,
-        type='str'),
-    force_delete=dict(
-        default=False,
-        type='bool'),
     encrypted_nonce=dict(
-        required= False,
-        type='str'),
-    crn=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
         required= False,
         type='str'),
     key_protect_id=dict(
         required= False,
         type='str'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    resource_status=dict(
-        required= False,
-        type='str'),
+    force_delete=dict(
+        default=False,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dns_resource_records (False, list, None)
-    Collection of dns resource records
-
-
   instance_id (True, str, None)
     Instance ID
 

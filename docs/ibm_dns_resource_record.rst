@@ -26,36 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone_id (True, str, None)
-    (Required for new resource) Zone ID
+  port (False, int, None)
+    DNS server Port
 
 
-  priority (False, int, 0)
-    DNS server Priority
+  service (False, str, None)
+    Service info
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance ID
 
 
   name (True, str, None)
     (Required for new resource) DNS record name
-
-
-  preference (False, int, 0)
-    DNS maximum preference
-
-
-  weight (False, int, 0)
-    DNS server weight
-
-
-  protocol (False, str, None)
-    Protocol
-
-
-  created_on (False, str, None)
-    Creation Data
-
-
-  resource_record_id (False, str, None)
-    Resource record ID
 
 
   rdata (True, str, None)
@@ -66,24 +50,28 @@ Parameters
     DNS record TTL
 
 
-  port (False, int, None)
-    DNS server Port
-
-
-  modified_on (False, str, None)
-    Modification date
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Instance ID
-
-
   type (True, str, None)
     (Required for new resource) DNS record Type
 
 
-  service (False, str, None)
-    Service info
+  priority (False, int, 0)
+    DNS server Priority
+
+
+  weight (False, int, 0)
+    DNS server weight
+
+
+  protocol (False, str, None)
+    Protocol
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone ID
+
+
+  preference (False, int, 0)
+    DNS maximum preference
 
 
   id (False, str, None)

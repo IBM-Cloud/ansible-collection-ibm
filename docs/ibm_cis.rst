@@ -26,60 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (False, str, None)
-    Unique identifier of resource instance
+  tags (False, list, None)
+    None
 
 
   resource_group_id (False, str, None)
     The resource group id
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  service (False, str, None)
-    The name of the Cloud Internet Services offering
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
 
 
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
   name (True, str, None)
     (Required for new resource) A name for the resource instance
 
 
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  status (False, str, None)
-    Status of resource instance
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
   id (False, str, None)

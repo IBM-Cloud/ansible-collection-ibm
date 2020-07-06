@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    id:
-        description:
-            - The internal id of the image template
-        required: False
-        type: int
     name:
         description:
             - The name of this image template
@@ -75,9 +70,6 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    id=dict(
-        required=False,
-        type='int'),
     name=dict(
         required=True,
         type='str'),

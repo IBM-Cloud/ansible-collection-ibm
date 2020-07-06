@@ -25,26 +25,6 @@ options:
             - (Required for new resource) Cluster name of ID
         required: True
         type: str
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    private_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     refresh_api_servers:
         description:
             - Boolean value true of API server to be refreshed in K8S cluster
@@ -57,11 +37,6 @@ options:
         required: False
         type: bool
         default: True
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,13 +69,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster',
-    'private_service_endpoint',
-    'private_service_endpoint_url',
-    'public_service_endpoint',
-    'public_service_endpoint_url',
     'refresh_api_servers',
     'reload_workers',
-    'resource_group_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -110,27 +80,12 @@ module_args = dict(
     cluster=dict(
         required= False,
         type='str'),
-    private_service_endpoint=dict(
-        required= False,
-        type='bool'),
-    private_service_endpoint_url=dict(
-        required= False,
-        type='str'),
-    public_service_endpoint=dict(
-        required= False,
-        type='bool'),
-    public_service_endpoint_url=dict(
-        required= False,
-        type='str'),
     refresh_api_servers=dict(
         default=True,
         type='bool'),
     reload_workers=dict(
         default=True,
         type='bool'),
-    resource_group_id=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

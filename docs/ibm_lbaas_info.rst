@@ -26,59 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (False, str, None)
-    None
-
-
-  server_instances_down (False, int, None)
-    None
-
-
-  active_connections (False, int, None)
-    None
-
-
-  use_system_public_ip_pool (False, bool, None)
-    None
-
-
-  protocols (False, list, None)
-    None
-
-
-  health_monitors (False, list, None)
-    None
-
-
-  server_instances (False, list, None)
-    None
-
-
   name (True, str, None)
-    None
-
-
-  type (False, str, None)
-    None
-
-
-  vip (False, str, None)
-    None
-
-
-  server_instances_up (False, int, None)
-    None
-
-
-  ssl_ciphers (False, list, None)
-    None
-
-
-  description (False, str, None)
-    None
-
-
-  status (False, str, None)
     None
 
 

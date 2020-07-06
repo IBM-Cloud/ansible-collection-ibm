@@ -25,11 +25,6 @@ options:
             - Additional notes
         required: False
         type: str
-    ip_address:
-        description:
-            - IP Address
-        required: False
-        type: str
     routes_to:
         description:
             - (Required for new resource) Route info
@@ -93,7 +88,6 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'notes',
-    'ip_address',
     'routes_to',
     'tags',
 ]
@@ -103,9 +97,6 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     notes=dict(
-        required= False,
-        type='str'),
-    ip_address=dict(
         required= False,
         type='str'),
     routes_to=dict(

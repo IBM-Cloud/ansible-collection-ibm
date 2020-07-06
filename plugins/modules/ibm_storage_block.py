@@ -20,115 +20,59 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notes:
-        description:
-            - Additional note info
-        required: False
-        type: str
-    allowed_virtual_guest_info:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    allowed_ip_addresses:
-        description:
-            - Allowed IP addresses
-        required: False
-        type: list
-        elements: str
-    hourly_billing:
-        description:
-            - Billing done hourly, if set to true
-        required: False
-        type: bool
-        default: False
-    iops:
-        description:
-            - (Required for new resource) IOPS value required
-        required: True
-        type: float
-    volumename:
-        description:
-            - Volume name
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    allowed_hardware_ids:
-        description:
-            - List of allowe hardware IDs
-        required: False
-        type: list
-        elements: int
-    allowed_host_info:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    hostname:
-        description:
-            - Hostname
-        required: False
-        type: str
-    snapshot_capacity:
-        description:
-            - Snapshot capacity in GB
-        required: False
-        type: int
-    type:
-        description:
-            - (Required for new resource) Storage block type
-        required: True
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    allowed_virtual_guest_ids:
-        description:
-            - List of allowed virtual guest IDs
-        required: False
-        type: list
-        elements: int
-    allowed_hardware_info:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     tags:
         description:
             - List of tags associated with the resource
         required: False
         type: list
         elements: str
-    target_address:
+    type:
         description:
-            - List of target Addresses
-        required: False
-        type: list
-        elements: str
-    resource_name:
+            - (Required for new resource) Storage block type
+        required: True
+        type: str
+    iops:
         description:
-            - The name of the resource
+            - (Required for new resource) IOPS value required
+        required: True
+        type: float
+    os_format_type:
+        description:
+            - (Required for new resource) OS formatr type
+        required: True
+        type: str
+    hourly_billing:
+        description:
+            - Billing done hourly, if set to true
         required: False
+        type: bool
+        default: False
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
         type: str
     capacity:
         description:
             - (Required for new resource) Storage block size
         required: True
         type: int
-    os_format_type:
+    snapshot_capacity:
         description:
-            - (Required for new resource) OS formatr type
-        required: True
+            - Snapshot capacity in GB
+        required: False
+        type: int
+    notes:
+        description:
+            - Additional note info
+        required: False
         type: str
+    allowed_ip_addresses:
+        description:
+            - Allowed IP addresses
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -175,109 +119,63 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('iops', 'float'),
     ('type', 'str'),
+    ('iops', 'float'),
+    ('os_format_type', 'str'),
     ('datacenter', 'str'),
     ('capacity', 'int'),
-    ('os_format_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notes',
-    'allowed_virtual_guest_info',
-    'allowed_ip_addresses',
-    'hourly_billing',
-    'iops',
-    'volumename',
-    'resource_controller_url',
-    'allowed_hardware_ids',
-    'allowed_host_info',
-    'hostname',
-    'snapshot_capacity',
-    'type',
-    'datacenter',
-    'allowed_virtual_guest_ids',
-    'allowed_hardware_info',
     'tags',
-    'target_address',
-    'resource_name',
-    'capacity',
+    'type',
+    'iops',
     'os_format_type',
+    'hourly_billing',
+    'datacenter',
+    'capacity',
+    'snapshot_capacity',
+    'notes',
+    'allowed_ip_addresses',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notes=dict(
-        required= False,
-        type='str'),
-    allowed_virtual_guest_info=dict(
-        required= False,
-        elements='',
-        type='list'),
-    allowed_ip_addresses=dict(
-        required= False,
-        elements='',
-        type='list'),
-    hourly_billing=dict(
-        default=False,
-        type='bool'),
-    iops=dict(
-        required= False,
-        type='float'),
-    volumename=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    allowed_hardware_ids=dict(
-        required= False,
-        elements='',
-        type='list'),
-    allowed_host_info=dict(
-        required= False,
-        elements='',
-        type='list'),
-    hostname=dict(
-        required= False,
-        type='str'),
-    snapshot_capacity=dict(
-        required= False,
-        type='int'),
-    type=dict(
-        required= False,
-        type='str'),
-    datacenter=dict(
-        required= False,
-        type='str'),
-    allowed_virtual_guest_ids=dict(
-        required= False,
-        elements='',
-        type='list'),
-    allowed_hardware_info=dict(
-        required= False,
-        elements='',
-        type='list'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    target_address=dict(
+    type=dict(
         required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
+        type='str'),
+    iops=dict(
+        required= False,
+        type='float'),
+    os_format_type=dict(
+        required= False,
+        type='str'),
+    hourly_billing=dict(
+        default=False,
+        type='bool'),
+    datacenter=dict(
         required= False,
         type='str'),
     capacity=dict(
         required= False,
         type='int'),
-    os_format_type=dict(
+    snapshot_capacity=dict(
+        required= False,
+        type='int'),
+    notes=dict(
         required= False,
         type='str'),
+    allowed_ip_addresses=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

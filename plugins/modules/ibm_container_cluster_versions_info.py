@@ -45,18 +45,6 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    valid_kube_versions:
-        description:
-            - List supported kube-versions
-        required: False
-        type: list
-        elements: str
-    valid_openshift_versions:
-        description:
-            - List of supported openshift-versions
-        required: False
-        type: list
-        elements: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -79,8 +67,6 @@ TL_ALL_PARAMETERS = [
     'account_guid',
     'region',
     'resource_group_id',
-    'valid_kube_versions',
-    'valid_openshift_versions',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -102,14 +88,6 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    valid_kube_versions=dict(
-        required=False,
-        elements='',
-        type='list'),
-    valid_openshift_versions=dict(
-        required=False,
-        elements='',
-        type='list'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,

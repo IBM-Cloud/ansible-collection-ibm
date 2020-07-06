@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_id (False, str, None)
-    Key ID in the PI instance
-
-
   pi_key_name (True, str, None)
     (Required for new resource) Key name in the PI instance
 

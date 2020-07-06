@@ -30,11 +30,6 @@ options:
             - (Required for new resource) Secondary ID
         required: True
         type: int
-    stay_secondary:
-        description:
-            - Boolean value for stay secondary
-        required: False
-        type: bool
     tags:
         description:
             - Tags set for the resource
@@ -95,7 +90,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'primary_id',
     'secondary_id',
-    'stay_secondary',
     'tags',
 ]
 
@@ -109,9 +103,6 @@ module_args = dict(
     secondary_id=dict(
         required= False,
         type='int'),
-    stay_secondary=dict(
-        required= False,
-        type='bool'),
     tags=dict(
         required= False,
         elements='',

@@ -30,12 +30,6 @@ options:
             - None
         required: True
         type: str
-    rate_limit:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -77,7 +71,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cis_id',
     'domain_id',
-    'rate_limit',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -90,10 +83,6 @@ module_args = dict(
     domain_id=dict(
         required=True,
         type='str'),
-    rate_limit=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

@@ -20,75 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     address_prefix_management:
         description:
             - Address Prefix management value
         required: False
         type: str
         default: auto
-    status:
-        description:
-            - VPC status
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    default_network_acl:
-        description:
-            - Default network ACL
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
-    default_security_group:
-        description:
-            - Security group associated with VPC
-        required: False
-        type: str
-    cse_source_addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    subnets:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     classic_access:
         description:
             - Set to true if classic access needs to enabled to VPC
@@ -99,11 +36,6 @@ options:
         description:
             - (Required for new resource) VPC name
         required: True
-        type: str
-    crn:
-        description:
-            - The crn of the resource
-        required: False
         type: str
     id:
         description:
@@ -156,77 +88,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_status',
     'address_prefix_management',
-    'status',
-    'resource_crn',
-    'default_network_acl',
-    'resource_group',
-    'default_security_group',
-    'cse_source_addresses',
-    'tags',
-    'resource_name',
-    'resource_group_name',
-    'resource_controller_url',
-    'subnets',
     'classic_access',
     'name',
-    'crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_status=dict(
-        required= False,
-        type='str'),
     address_prefix_management=dict(
         default='auto',
         type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
-        required= False,
-        type='str'),
-    default_network_acl=dict(
-        required= False,
-        type='str'),
-    resource_group=dict(
-        required= False,
-        type='str'),
-    default_security_group=dict(
-        required= False,
-        type='str'),
-    cse_source_addresses=dict(
-        required= False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
-    subnets=dict(
-        required= False,
-        elements='',
-        type='list'),
     classic_access=dict(
         default=False,
         type='bool'),
     name=dict(
-        required= False,
-        type='str'),
-    crn=dict(
         required= False,
         type='str'),
     id=dict(

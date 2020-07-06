@@ -26,28 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  publish (False, bool, None)
-    Rule Visibility.
-
-
-  version (False, str, None)
-    Semantic version of the rule
-
-
   name (True, str, None)
     Name of the rule.
-
-
-  trigger_name (False, str, None)
-    Name of the trigger.
-
-
-  action_name (False, str, None)
-    Name of an action.
-
-
-  status (False, str, None)
-    Status of the rule.
 
 
   function_namespace (True, any, None)

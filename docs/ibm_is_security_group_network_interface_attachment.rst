@@ -26,52 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  status (False, str, None)
-    security group network interface attachment status
-
-
-  subnet (False, str, None)
-    security group network interface attachment subnet
-
-
-  security_groups (False, list, None)
-    None
-
-
   security_group (True, str, None)
     (Required for new resource) security group network interface attachment group ID
 
 
   network_interface (True, str, None)
     (Required for new resource) security group network interface attachment NIC ID
-
-
-  name (False, str, None)
-    security group network interface attachment name
-
-
-  secondary_address (False, list, None)
-    security group network interface attachment secondary address
-
-
-  instance_network_interface (False, str, None)
-    security group network interface attachment network interface ID
-
-
-  port_speed (False, int, None)
-    security group network interface attachment port speed
-
-
-  primary_ipv4_address (False, str, None)
-    security group network interface attachment Primary IPV4 address
-
-
-  type (False, str, None)
-    security group network interface attachment type
-
-
-  floating_ips (False, list, None)
-    None
 
 
   id (False, str, None)

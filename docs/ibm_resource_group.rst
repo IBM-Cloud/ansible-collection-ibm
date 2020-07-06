@@ -30,14 +30,6 @@ Parameters
     (Required for new resource) The name of the resource group
 
 
-  default (False, bool, None)
-    Specifies whether its default resource group or not
-
-
-  state_ (False, str, None)
-    State of the resource group
-
-
   tags (False, list, None)
     None
 

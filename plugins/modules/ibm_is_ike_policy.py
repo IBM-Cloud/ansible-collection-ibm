@@ -25,36 +25,20 @@ options:
             - (Required for new resource) Authentication algorithm type
         required: True
         type: str
-    encryption_algorithm:
+    dh_group:
         description:
-            - (Required for new resource) Encryption alogorithm type
+            - (Required for new resource) IKE DH group
         required: True
-        type: str
-    negotiation_mode:
-        description:
-            - IKE negotiation mode
-        required: False
-        type: str
-    vpn_connections:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
+        type: int
     name:
         description:
             - (Required for new resource) IKE name
         required: True
         type: str
-    resource_group:
+    encryption_algorithm:
         description:
-            - IKE resource group ID
-        required: False
+            - (Required for new resource) Encryption alogorithm type
+        required: True
         type: str
     key_lifetime:
         description:
@@ -66,26 +50,6 @@ options:
         description:
             - IKE version
         required: False
-        type: int
-    href:
-        description:
-            - IKE href value
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    dh_group:
-        description:
-            - (Required for new resource) IKE DH group
-        required: True
         type: int
     id:
         description:
@@ -134,26 +98,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('authentication_algorithm', 'str'),
-    ('encryption_algorithm', 'str'),
-    ('name', 'str'),
     ('dh_group', 'int'),
+    ('name', 'str'),
+    ('encryption_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'authentication_algorithm',
-    'encryption_algorithm',
-    'negotiation_mode',
-    'vpn_connections',
-    'resource_controller_url',
+    'dh_group',
     'name',
-    'resource_group',
+    'encryption_algorithm',
     'key_lifetime',
     'ike_version',
-    'href',
-    'resource_name',
-    'resource_group_name',
-    'dh_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -163,41 +120,19 @@ module_args = dict(
     authentication_algorithm=dict(
         required= False,
         type='str'),
-    encryption_algorithm=dict(
+    dh_group=dict(
         required= False,
-        type='str'),
-    negotiation_mode=dict(
-        required= False,
-        type='str'),
-    vpn_connections=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
+        type='int'),
     name=dict(
         required= False,
         type='str'),
-    resource_group=dict(
+    encryption_algorithm=dict(
         required= False,
         type='str'),
     key_lifetime=dict(
         default=28800,
         type='int'),
     ike_version=dict(
-        required= False,
-        type='int'),
-    href=dict(
-        required= False,
-        type='str'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
-        required= False,
-        type='str'),
-    dh_group=dict(
         required= False,
         type='int'),
     id=dict(

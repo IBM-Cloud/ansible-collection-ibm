@@ -20,111 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_user_data:
-        description:
-            - Base64 encoded data to be passed in for invoking a cloud init script
-        required: False
-        type: str
-    pi_key_pair_name:
-        description:
-            - (Required for new resource) SSH key name
-        required: True
-        type: str
-    pi_sys_type:
-        description:
-            - (Required for new resource) PI Instance system type
-        required: True
-        type: str
-    pi_replication_scheme:
-        description:
-            - Replication scheme
-        required: False
-        type: str
-        default: suffix
-    pi_progress:
-        description:
-            - Progress of the operation
-        required: False
-        type: float
-    max_memory:
-        description:
-            - Maximum memory size
-        required: False
-        type: float
-    pi_image_id:
-        description:
-            - (Required for new resource) PI instance image name
-        required: True
-        type: str
-    addresses:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    pin_policy:
-        description:
-            - PIN Policy of the Instance
-        required: False
-        type: str
-    min_memory:
-        description:
-            - Minimum memory
-        required: False
-        type: float
-    instance_id:
-        description:
-            - Instance ID
-        required: False
-        type: str
-    pi_proc_type:
-        description:
-            - (Required for new resource) Instance processor type
-        required: True
-        type: str
-    status:
-        description:
-            - PI instance status
-        required: False
-        type: str
-    pi_replicants:
-        description:
-            - PI Instance repicas count
-        required: False
-        type: float
-        default: 1
-    pi_replication_policy:
-        description:
-            - Replication policy for the PI INstance
-        required: False
-        type: str
-        default: none
-    reboot_for_resource_change:
-        description:
-            - Flag to be passed for CPU/Memory changes that require a reboot to take effect
-        required: False
-        type: str
-    migratable:
-        description:
-            - set to true to enable migration of the PI instance
-        required: False
-        type: bool
-    max_processors:
-        description:
-            - Maximum number of processors
-        required: False
-        type: float
-    pi_volume_ids:
-        description:
-            - List of PI volumes
-        required: False
-        type: list
-        elements: str
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI Instance name
-        required: True
-        type: str
     pi_processors:
         description:
             - (Required for new resource) Processors count
@@ -136,32 +31,75 @@ options:
         required: True
         type: list
         elements: str
-    health_status:
+    pi_user_data:
         description:
-            - PI Instance health status
+            - Base64 encoded data to be passed in for invoking a cloud init script
         required: False
         type: str
-    pi_memory:
+    pi_key_pair_name:
         description:
-            - (Required for new resource) Memory size
+            - (Required for new resource) SSH key name
         required: True
-        type: float
+        type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI Instance name
+        required: True
+        type: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) This is the Power Instance id that is assigned to the account
         required: True
         type: str
-    min_processors:
-        description:
-            - Minimum number of the CPUs
-        required: False
-        type: float
     pi_pin_policy:
         description:
             - Pin Policy of the instance
         required: False
         type: str
         default: none
+    pi_memory:
+        description:
+            - (Required for new resource) Memory size
+        required: True
+        type: float
+    pi_sys_type:
+        description:
+            - (Required for new resource) PI Instance system type
+        required: True
+        type: str
+    pi_replication_scheme:
+        description:
+            - Replication scheme
+        required: False
+        type: str
+        default: suffix
+    pi_replication_policy:
+        description:
+            - Replication policy for the PI INstance
+        required: False
+        type: str
+        default: none
+    reboot_for_resource_change:
+        description:
+            - Flag to be passed for CPU/Memory changes that require a reboot to take effect
+        required: False
+        type: str
+    pi_image_id:
+        description:
+            - (Required for new resource) PI instance image name
+        required: True
+        type: str
+    pi_proc_type:
+        description:
+            - (Required for new resource) Instance processor type
+        required: True
+        type: str
+    pi_replicants:
+        description:
+            - PI Instance repicas count
+        required: False
+        type: float
+        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -204,114 +142,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_processors', 'float'),
+    ('pi_network_ids', 'list'),
     ('pi_key_pair_name', 'str'),
+    ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
+    ('pi_memory', 'float'),
     ('pi_sys_type', 'str'),
     ('pi_image_id', 'str'),
     ('pi_proc_type', 'str'),
-    ('pi_instance_name', 'str'),
-    ('pi_processors', 'float'),
-    ('pi_network_ids', 'list'),
-    ('pi_memory', 'float'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_user_data',
-    'pi_key_pair_name',
-    'pi_sys_type',
-    'pi_replication_scheme',
-    'pi_progress',
-    'max_memory',
-    'pi_image_id',
-    'addresses',
-    'pin_policy',
-    'min_memory',
-    'instance_id',
-    'pi_proc_type',
-    'status',
-    'pi_replicants',
-    'pi_replication_policy',
-    'reboot_for_resource_change',
-    'migratable',
-    'max_processors',
-    'pi_volume_ids',
-    'pi_instance_name',
     'pi_processors',
     'pi_network_ids',
-    'health_status',
-    'pi_memory',
+    'pi_user_data',
+    'pi_key_pair_name',
+    'pi_instance_name',
     'pi_cloud_instance_id',
-    'min_processors',
     'pi_pin_policy',
+    'pi_memory',
+    'pi_sys_type',
+    'pi_replication_scheme',
+    'pi_replication_policy',
+    'reboot_for_resource_change',
+    'pi_image_id',
+    'pi_proc_type',
+    'pi_replicants',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_user_data=dict(
-        required= False,
-        type='str'),
-    pi_key_pair_name=dict(
-        required= False,
-        type='str'),
-    pi_sys_type=dict(
-        required= False,
-        type='str'),
-    pi_replication_scheme=dict(
-        default='suffix',
-        type='str'),
-    pi_progress=dict(
-        required= False,
-        type='float'),
-    max_memory=dict(
-        required= False,
-        type='float'),
-    pi_image_id=dict(
-        required= False,
-        type='str'),
-    addresses=dict(
-        required= False,
-        elements='',
-        type='list'),
-    pin_policy=dict(
-        required= False,
-        type='str'),
-    min_memory=dict(
-        required= False,
-        type='float'),
-    instance_id=dict(
-        required= False,
-        type='str'),
-    pi_proc_type=dict(
-        required= False,
-        type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    pi_replicants=dict(
-        default=1,
-        type='float'),
-    pi_replication_policy=dict(
-        default='none',
-        type='str'),
-    reboot_for_resource_change=dict(
-        required= False,
-        type='str'),
-    migratable=dict(
-        required= False,
-        type='bool'),
-    max_processors=dict(
-        required= False,
-        type='float'),
-    pi_volume_ids=dict(
-        required= False,
-        elements='',
-        type='list'),
-    pi_instance_name=dict(
-        required= False,
-        type='str'),
     pi_processors=dict(
         required= False,
         type='float'),
@@ -319,21 +183,45 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    health_status=dict(
+    pi_user_data=dict(
         required= False,
+        type='str'),
+    pi_key_pair_name=dict(
+        required= False,
+        type='str'),
+    pi_instance_name=dict(
+        required= False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required= False,
+        type='str'),
+    pi_pin_policy=dict(
+        default='none',
         type='str'),
     pi_memory=dict(
         required= False,
         type='float'),
-    pi_cloud_instance_id=dict(
+    pi_sys_type=dict(
         required= False,
         type='str'),
-    min_processors=dict(
-        required= False,
-        type='float'),
-    pi_pin_policy=dict(
+    pi_replication_scheme=dict(
+        default='suffix',
+        type='str'),
+    pi_replication_policy=dict(
         default='none',
         type='str'),
+    reboot_for_resource_change=dict(
+        required= False,
+        type='str'),
+    pi_image_id=dict(
+        required= False,
+        type='str'),
+    pi_proc_type=dict(
+        required= False,
+        type='str'),
+    pi_replicants=dict(
+        default=1,
+        type='float'),
     id=dict(
         required= False,
         type='str'),

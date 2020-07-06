@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  provisioning_status (False, str, None)
-    Load balancer Pool member provisioning status
-
-
-  health (False, str, None)
-    LB Pool member health
-
-
-  href (False, str, None)
-    LB pool member Href value
-
-
   pool (True, str, None)
     (Required for new resource) Loadblancer Poold ID
 
@@ -52,10 +40,6 @@ Parameters
 
   target_address (True, str, None)
     (Required for new resource) Load balancer pool member target address
-
-
-  weight (False, int, None)
-    Load balcner pool member weight
 
 
   id (False, str, None)

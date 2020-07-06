@@ -26,24 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  managers (False, list, None)
-    The IBMID of the users who  have manager role in this space, ex - user@example.com
-
-
-  developers (False, list, None)
-    The IBMID of the users who  have developer role in this space, ex - user@example.com
-
-
   space (True, str, None)
     Space name, for example dev
 
 
   org (True, str, None)
     The org this space belongs to
-
-
-  auditors (False, list, None)
-    The IBMID of the users who  have auditor role in this space, ex - user@example.com
 
 
   iaas_classic_username (False, any, None)

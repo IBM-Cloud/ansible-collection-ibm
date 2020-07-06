@@ -25,26 +25,6 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    ip:
-        description:
-            - None
-        required: False
-        type: str
-    ipoctet:
-        description:
-            - None
-        required: False
-        type: str
-    network_id:
-        description:
-            - None
-        required: False
-        type: str
-    external_ip:
-        description:
-            - None
-        required: False
-        type: str
     pi_cloud_instance_id:
         description:
             - None
@@ -54,16 +34,6 @@ options:
         description:
             - None
         required: True
-        type: str
-    macaddress:
-        description:
-            - None
-        required: False
-        type: str
-    type:
-        description:
-            - None
-        required: False
         type: str
     zone:
         description:
@@ -102,14 +72,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
-    'ip',
-    'ipoctet',
-    'network_id',
-    'external_ip',
     'pi_cloud_instance_id',
     'pi_network_name',
-    'macaddress',
-    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -119,29 +83,11 @@ module_args = dict(
     pi_instance_name=dict(
         required=True,
         type='str'),
-    ip=dict(
-        required=False,
-        type='str'),
-    ipoctet=dict(
-        required=False,
-        type='str'),
-    network_id=dict(
-        required=False,
-        type='str'),
-    external_ip=dict(
-        required=False,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
     pi_network_name=dict(
         required=True,
-        type='str'),
-    macaddress=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
         type='str'),
     zone=dict(
         type='str',

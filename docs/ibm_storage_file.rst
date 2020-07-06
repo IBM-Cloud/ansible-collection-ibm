@@ -26,80 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
-  notes (False, str, None)
-    Notes
-
-
-  mountpoint (False, str, None)
-    Storage mount point
-
-
-  hourly_billing (False, bool, False)
-    Hourly based billing type
-
-
-  iops (True, float, None)
-    (Required for new resource) iops rate
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
-  snapshot_schedule (False, list, None)
-    None
-
-
-  type (True, str, None)
-    (Required for new resource) Storage type
-
-
   allowed_subnets (False, list, None)
     Allowed network subnets
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  volumename (False, str, None)
-    Storage volume name
-
-
-  hostname (False, str, None)
-    Hostname
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
-
-
-  tags (False, list, None)
-    Tags set for the storage volume
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
+  iops (True, float, None)
+    (Required for new resource) iops rate
+
+
+  notes (False, str, None)
+    Notes
+
+
   capacity (True, int, None)
     (Required for new resource) Storage capacity
+
+
+  tags (False, list, None)
+    Tags set for the storage volume
+
+
+  type (True, str, None)
+    (Required for new resource) Storage type
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
+
+
+  snapshot_schedule (False, list, None)
+    None
+
+
+  hourly_billing (False, bool, False)
+    Hourly based billing type
 
 
   id (False, str, None)

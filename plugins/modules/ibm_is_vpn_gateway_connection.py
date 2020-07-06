@@ -20,20 +20,43 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    preshared_key:
+        description:
+            - (Required for new resource) vpn gateway
+        required: True
+        type: str
+    admin_state_up:
+        description:
+            - VPN gateway connection admin state
+        required: False
+        type: bool
+        default: False
+    peer_cidrs:
+        description:
+            - VPN gateway connection peer CIDRs
+        required: False
+        type: list
+        elements: str
+    action:
+        description:
+            - Action detection for dead peer detection action
+        required: False
+        type: str
+        default: none
     timeout:
         description:
             - Timeout for dead peer detection
         required: False
         type: int
         default: 120
+    ike_policy:
+        description:
+            - VPN gateway connection IKE Policy
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) VPN Gateway connection name
-        required: True
-        type: str
-    vpn_gateway:
-        description:
-            - (Required for new resource) VPN Gateway info
         required: True
         type: str
     peer_address:
@@ -47,39 +70,6 @@ options:
         required: False
         type: list
         elements: str
-    peer_cidrs:
-        description:
-            - VPN gateway connection peer CIDRs
-        required: False
-        type: list
-        elements: str
-    ike_policy:
-        description:
-            - VPN gateway connection IKE Policy
-        required: False
-        type: str
-    status:
-        description:
-            - VPN gateway connection status
-        required: False
-        type: str
-    preshared_key:
-        description:
-            - (Required for new resource) vpn gateway
-        required: True
-        type: str
-    admin_state_up:
-        description:
-            - VPN gateway connection admin state
-        required: False
-        type: bool
-        default: False
-    action:
-        description:
-            - Action detection for dead peer detection action
-        required: False
-        type: str
-        default: none
     interval:
         description:
             - Interval for dead peer detection interval
@@ -90,6 +80,11 @@ options:
         description:
             - IP security policy for vpn gateway connection
         required: False
+        type: str
+    vpn_gateway:
+        description:
+            - (Required for new resource) VPN Gateway info
+        required: True
         type: str
     id:
         description:
@@ -137,40 +132,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('vpn_gateway', 'str'),
-    ('peer_address', 'str'),
     ('preshared_key', 'str'),
+    ('name', 'str'),
+    ('peer_address', 'str'),
+    ('vpn_gateway', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'timeout',
-    'name',
-    'vpn_gateway',
-    'peer_address',
-    'local_cidrs',
-    'peer_cidrs',
-    'ike_policy',
-    'status',
     'preshared_key',
     'admin_state_up',
+    'peer_cidrs',
     'action',
+    'timeout',
+    'ike_policy',
+    'name',
+    'peer_address',
+    'local_cidrs',
     'interval',
     'ipsec_policy',
+    'vpn_gateway',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    preshared_key=dict(
+        required= False,
+        type='str'),
+    admin_state_up=dict(
+        default=False,
+        type='bool'),
+    peer_cidrs=dict(
+        required= False,
+        elements='',
+        type='list'),
+    action=dict(
+        default='none',
+        type='str'),
     timeout=dict(
         default=120,
         type='int'),
-    name=dict(
+    ike_policy=dict(
         required= False,
         type='str'),
-    vpn_gateway=dict(
+    name=dict(
         required= False,
         type='str'),
     peer_address=dict(
@@ -180,29 +187,13 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    peer_cidrs=dict(
-        required= False,
-        elements='',
-        type='list'),
-    ike_policy=dict(
-        required= False,
-        type='str'),
-    status=dict(
-        required= False,
-        type='str'),
-    preshared_key=dict(
-        required= False,
-        type='str'),
-    admin_state_up=dict(
-        default=False,
-        type='bool'),
-    action=dict(
-        default='none',
-        type='str'),
     interval=dict(
         default=30,
         type='int'),
     ipsec_policy=dict(
+        required= False,
+        type='str'),
+    vpn_gateway=dict(
         required= False,
         type='str'),
     id=dict(

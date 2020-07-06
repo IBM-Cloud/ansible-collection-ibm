@@ -20,14 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
     description:
         description:
             - Zone description
-        required: False
-        type: str
-    state_:
-        description:
-            - Zone state
         required: False
         type: str
     label:
@@ -35,29 +35,9 @@ options:
             - Label
         required: False
         type: str
-    created_on:
-        description:
-            - Creation date
-        required: False
-        type: str
-    modified_on:
-        description:
-            - Modification date
-        required: False
-        type: str
     instance_id:
         description:
             - (Required for new resource) Instance ID
-        required: True
-        type: str
-    zone_id:
-        description:
-            - Zone ID
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Zone name
         required: True
         type: str
     id:
@@ -106,48 +86,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'state_',
-    'label',
-    'created_on',
-    'modified_on',
-    'instance_id',
-    'zone_id',
     'name',
+    'description',
+    'label',
+    'instance_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
+    name=dict(
         required= False,
         type='str'),
-    state_=dict(
+    description=dict(
         required= False,
         type='str'),
     label=dict(
         required= False,
         type='str'),
-    created_on=dict(
-        required= False,
-        type='str'),
-    modified_on=dict(
-        required= False,
-        type='str'),
     instance_id=dict(
-        required= False,
-        type='str'),
-    zone_id=dict(
-        required= False,
-        type='str'),
-    name=dict(
         required= False,
         type='str'),
     id=dict(

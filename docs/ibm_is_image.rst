@@ -30,50 +30,6 @@ Parameters
     (Required for new resource) Image Href value
 
 
-  visibility (False, str, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  tags (False, list, None)
-    Tags for the image
-
-
-  status (False, str, None)
-    None
-
-
-  size (False, int, None)
-    None
-
-
-  file (False, str, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
   name (True, str, None)
     (Required for new resource) Image name
 

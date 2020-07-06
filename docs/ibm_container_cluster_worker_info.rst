@@ -26,24 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_vlan (False, str, None)
-    None
+  worker_id (True, str, None)
+    ID of the worker
 
 
   org_guid (False, str, None)
     The bluemix organization guid this cluster belongs to
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
-
-
-  public_ip (False, str, None)
-    None
 
 
   space_guid (False, str, None)
@@ -54,28 +42,12 @@ Parameters
     The bluemix account guid this cluster belongs to
 
 
-  worker_id (True, str, None)
-    ID of the worker
-
-
-  state (False, str, None)
-    State of the worker
-
-
-  status (False, str, None)
-    Status of the worker
-
-
-  public_vlan (False, str, None)
-    None
-
-
-  private_ip (False, str, None)
-    None
-
-
   region (False, str, None)
     The cluster region
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

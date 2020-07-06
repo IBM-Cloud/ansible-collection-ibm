@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
+    condition:
         description:
-            - (Required for new resource) Policy rule type.
+            - (Required for new resource) Condition info of the rule.
         required: True
         type: str
     field:
@@ -30,15 +30,15 @@ options:
             - None
         required: False
         type: str
-    rule:
+    type:
         description:
-            - None
-        required: False
+            - (Required for new resource) Policy rule type.
+        required: True
         type: str
-    provisioning_status:
+    value:
         description:
-            - None
-        required: False
+            - (Required for new resource) policy rule value info
+        required: True
         type: str
     lb:
         description:
@@ -53,16 +53,6 @@ options:
     policy:
         description:
             - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
-    condition:
-        description:
-            - (Required for new resource) Condition info of the rule.
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) policy rule value info
         required: True
         type: str
     id:
@@ -111,41 +101,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('condition', 'str'),
     ('type', 'str'),
+    ('value', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
     ('policy', 'str'),
-    ('condition', 'str'),
-    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
+    'condition',
     'field',
-    'rule',
-    'provisioning_status',
+    'type',
+    'value',
     'lb',
     'listener',
     'policy',
-    'condition',
-    'value',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
+    condition=dict(
         required= False,
         type='str'),
     field=dict(
         required= False,
         type='str'),
-    rule=dict(
+    type=dict(
         required= False,
         type='str'),
-    provisioning_status=dict(
+    value=dict(
         required= False,
         type='str'),
     lb=dict(
@@ -155,12 +143,6 @@ module_args = dict(
         required= False,
         type='str'),
     policy=dict(
-        required= False,
-        type='str'),
-    condition=dict(
-        required= False,
-        type='str'),
-    value=dict(
         required= False,
         type='str'),
     id=dict(
