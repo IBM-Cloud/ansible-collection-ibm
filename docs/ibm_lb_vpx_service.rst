@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vip_id (True, str, None)
-    (Required for new resource) VIP id
+  usip (False, str, False)
+    usip info
 
 
-  name (True, str, None)
-    (Required for new resource) name
+  tags (False, list, None)
+    list of tags associated with the resource
 
 
   destination_ip_address (True, str, None)
@@ -46,20 +46,20 @@ Parameters
     (Required for new resource) Weight value
 
 
-  connection_limit (True, int, None)
-    (Required for new resource) Number of connections limit
-
-
   health_check (True, str, None)
     (Required for new resource) Health check info
 
 
-  usip (False, str, False)
-    usip info
+  vip_id (True, str, None)
+    (Required for new resource) VIP id
 
 
-  tags (False, list, None)
-    list of tags associated with the resource
+  name (True, str, None)
+    (Required for new resource) name
+
+
+  connection_limit (True, int, None)
+    (Required for new resource) Number of connections limit
 
 
   id (False, str, None)

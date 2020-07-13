@@ -34,6 +34,46 @@ Parameters
     The id of the resource group in which the cis instance is present
 
 
+  location (False, str, None)
+    The location or the environment in which cis instance exists
+
+
+  plan (False, str, None)
+    The plan type of the cis instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  guid (False, str, None)
+    Unique identifier of resource instance
+
+
+  service (False, str, None)
+    The name of the Cloud Internet Services offering, 'internet-svcs'
+
+
+  status (False, dict, None)
+    The resource instance status
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

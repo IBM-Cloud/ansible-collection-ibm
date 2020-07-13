@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  scale_amount (True, int, None)
+    (Required for new resource) Scale amount
+
+
   cooldown (False, int, None)
     cooldown value
 
@@ -48,10 +52,6 @@ Parameters
 
   scale_type (True, str, None)
     (Required for new resource) scale type
-
-
-  scale_amount (True, int, None)
-    (Required for new resource) Scale amount
 
 
   id (False, str, None)

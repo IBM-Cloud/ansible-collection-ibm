@@ -34,6 +34,22 @@ Parameters
     (Required for new resource) CISzone - Domain
 
 
+  paused (False, bool, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  name_servers (False, list, None)
+    None
+
+
+  original_name_servers (False, list, None)
+    None
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 

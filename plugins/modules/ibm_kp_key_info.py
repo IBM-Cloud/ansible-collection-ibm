@@ -30,6 +30,12 @@ options:
             - None
         required: False
         type: str
+    keys:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -70,6 +76,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'key_protect_id',
     'key_name',
+    'keys',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -82,6 +89,10 @@ module_args = dict(
     key_name=dict(
         required=False,
         type='str'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

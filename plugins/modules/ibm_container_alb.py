@@ -20,16 +20,46 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - ALB name
+        required: False
+        type: str
+    zone:
+        description:
+            - ALB zone
+        required: False
+        type: str
     alb_id:
         description:
             - (Required for new resource) ALB ID
         required: True
         type: str
-    region:
+    alb_type:
         description:
-            - None
+            - ALB type
         required: False
         type: str
+    cluster:
+        description:
+            - Cluster id
+        required: False
+        type: str
+    user_ip:
+        description:
+            - IP assigned by the user
+        required: False
+        type: str
+    disable_deployment:
+        description:
+            - Set to true if ALB needs to be disabled
+        required: False
+        type: bool
+    enable:
+        description:
+            - set to true if ALB needs to be enabled
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -61,20 +91,44 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'zone',
     'alb_id',
-    'region',
+    'alb_type',
+    'cluster',
+    'user_ip',
+    'disable_deployment',
+    'enable',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required= False,
+        type='str'),
+    zone=dict(
+        required= False,
+        type='str'),
     alb_id=dict(
         required= False,
         type='str'),
-    region=dict(
+    alb_type=dict(
         required= False,
         type='str'),
+    cluster=dict(
+        required= False,
+        type='str'),
+    user_ip=dict(
+        required= False,
+        type='str'),
+    disable_deployment=dict(
+        required= False,
+        type='bool'),
+    enable=dict(
+        required= False,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

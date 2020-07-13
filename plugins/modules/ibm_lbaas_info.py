@@ -20,10 +20,79 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - None
+        required: False
+        type: str
+    vip:
+        description:
+            - None
+        required: False
+        type: str
+    active_connections:
+        description:
+            - None
+        required: False
+        type: int
     name:
         description:
             - None
         required: True
+        type: str
+    protocols:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    server_instances:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    server_instances_down:
+        description:
+            - None
+        required: False
+        type: int
+    server_instances_up:
+        description:
+            - None
+        required: False
+        type: int
+    ssl_ciphers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    health_monitors:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    description:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    use_system_public_ip_pool:
+        description:
+            - None
+        required: False
+        type: bool
+    datacenter:
+        description:
+            - None
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -63,15 +132,71 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'vip',
+    'active_connections',
     'name',
+    'protocols',
+    'server_instances',
+    'server_instances_down',
+    'server_instances_up',
+    'ssl_ciphers',
+    'health_monitors',
+    'description',
+    'status',
+    'use_system_public_ip_pool',
+    'datacenter',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required=False,
+        type='str'),
+    vip=dict(
+        required=False,
+        type='str'),
+    active_connections=dict(
+        required=False,
+        type='int'),
     name=dict(
         required=True,
+        type='str'),
+    protocols=dict(
+        required=False,
+        elements='',
+        type='list'),
+    server_instances=dict(
+        required=False,
+        elements='',
+        type='list'),
+    server_instances_down=dict(
+        required=False,
+        type='int'),
+    server_instances_up=dict(
+        required=False,
+        type='int'),
+    ssl_ciphers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    health_monitors=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    use_system_public_ip_pool=dict(
+        required=False,
+        type='bool'),
+    datacenter=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

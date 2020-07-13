@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
   name (True, str, None)
     (Required for new resource) The name of the domain
 
 
   router_group_guid (False, str, None)
     The guid of the router group.
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

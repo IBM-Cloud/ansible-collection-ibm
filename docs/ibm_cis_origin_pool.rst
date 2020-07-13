@@ -42,6 +42,14 @@ Parameters
     Monitor value
 
 
+  origins (True, list, None)
+    (Required for new resource) Origins info
+
+
+  health (False, str, None)
+    Health info
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
@@ -50,8 +58,12 @@ Parameters
     (Required for new resource) name
 
 
-  origins (True, list, None)
-    (Required for new resource) Origins info
+  created_on (False, str, None)
+    Creation date info
+
+
+  modified_on (False, str, None)
+    Modified date info
 
 
   minimum_origins (False, int, 1)

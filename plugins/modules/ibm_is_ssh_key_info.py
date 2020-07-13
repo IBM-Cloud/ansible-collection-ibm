@@ -20,6 +20,41 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - None
+        required: False
+        type: str
+    fingerprint:
+        description:
+            - None
+        required: False
+        type: str
+    length:
+        description:
+            - None
+        required: False
+        type: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
     name:
         description:
             - None
@@ -63,6 +98,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'fingerprint',
+    'length',
+    'resource_controller_url',
+    'resource_name',
+    'resource_crn',
+    'resource_group_name',
     'name',
 ]
 
@@ -70,6 +112,27 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required=False,
+        type='str'),
+    fingerprint=dict(
+        required=False,
+        type='str'),
+    length=dict(
+        required=False,
+        type='int'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),

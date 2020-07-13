@@ -20,6 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service_keys:
+        description:
+            - Service keys asociated with the service instance
+        required: False
+        type: list
+        elements: dict
+    service_plan_guid:
+        description:
+            - The uniquie identifier of the service offering plan type
+        required: False
+        type: str
     name:
         description:
             - Service instance name for example, speech_to_text
@@ -30,6 +41,11 @@ options:
             - The guid of the space in which the instance is present
         required: True
         type: str
+    credentials:
+        description:
+            - The service broker-provided credentials to use this service.
+        required: False
+        type: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -69,20 +85,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'service_keys',
+    'service_plan_guid',
     'name',
     'space_guid',
+    'credentials',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    service_keys=dict(
+        required=False,
+        elements='',
+        type='list'),
+    service_plan_guid=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
     space_guid=dict(
         required=True,
         type='str'),
+    credentials=dict(
+        required=False,
+        type='dict'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

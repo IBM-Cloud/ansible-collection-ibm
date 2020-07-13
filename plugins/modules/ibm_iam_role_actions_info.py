@@ -20,11 +20,35 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    reader_plus:
+        description:
+            - readerplus action ids
+        required: False
+        type: list
+        elements: str
+    writer:
+        description:
+            - writer action ids
+        required: False
+        type: list
+        elements: str
     service:
         description:
             - The Service Name
         required: True
         type: str
+    reader:
+        description:
+            - Reader action ids
+        required: False
+        type: list
+        elements: str
+    manager:
+        description:
+            - manager action ids
+        required: False
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -63,16 +87,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'reader_plus',
+    'writer',
     'service',
+    'reader',
+    'manager',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    reader_plus=dict(
+        required=False,
+        elements='',
+        type='list'),
+    writer=dict(
+        required=False,
+        elements='',
+        type='list'),
     service=dict(
         required=True,
         type='str'),
+    reader=dict(
+        required=False,
+        elements='',
+        type='list'),
+    manager=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

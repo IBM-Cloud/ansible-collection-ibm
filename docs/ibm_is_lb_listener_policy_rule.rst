@@ -26,24 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  condition (True, str, None)
-    (Required for new resource) Condition info of the rule.
-
-
-  field (False, str, None)
-    None
-
-
-  type (True, str, None)
-    (Required for new resource) Policy rule type.
+  lb (True, str, None)
+    (Required for new resource) Loadbalancer ID
 
 
   value (True, str, None)
     (Required for new resource) policy rule value info
 
 
-  lb (True, str, None)
-    (Required for new resource) Loadbalancer ID
+  field (False, str, None)
+    None
+
+
+  provisioning_status (False, str, None)
+    None
 
 
   listener (True, str, None)
@@ -52,6 +48,18 @@ Parameters
 
   policy (True, str, None)
     (Required for new resource) Listener Policy ID
+
+
+  condition (True, str, None)
+    (Required for new resource) Condition info of the rule.
+
+
+  type (True, str, None)
+    (Required for new resource) Policy rule type.
+
+
+  rule (False, str, None)
+    None
 
 
   id (False, str, None)

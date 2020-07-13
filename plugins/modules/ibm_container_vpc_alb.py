@@ -20,16 +20,61 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    alb_id:
+    name:
         description:
-            - (Required for new resource) ALB ID
-        required: True
+            - ALB name
+        required: False
+        type: str
+    load_balancer_hostname:
+        description:
+            - Load balancer host name
+        required: False
+        type: str
+    resize:
+        description:
+            - boolean value to resize the albs
+        required: False
+        type: bool
+    state_:
+        description:
+            - ALB state
+        required: False
+        type: str
+    alb_type:
+        description:
+            - Type of the ALB
+        required: False
+        type: str
+    cluster:
+        description:
+            - cluster id
+        required: False
         type: str
     enable:
         description:
             - Enable the ALB instance in the cluster
         required: False
         type: bool
+    disable_deployment:
+        description:
+            - Disable the ALB instance in the cluster
+        required: False
+        type: bool
+    status:
+        description:
+            - Status of the ALB
+        required: False
+        type: str
+    zone:
+        description:
+            - Zone info.
+        required: False
+        type: str
+    alb_id:
+        description:
+            - (Required for new resource) ALB ID
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -61,20 +106,56 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'alb_id',
+    'name',
+    'load_balancer_hostname',
+    'resize',
+    'state_',
+    'alb_type',
+    'cluster',
     'enable',
+    'disable_deployment',
+    'status',
+    'zone',
+    'alb_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    alb_id=dict(
+    name=dict(
+        required= False,
+        type='str'),
+    load_balancer_hostname=dict(
+        required= False,
+        type='str'),
+    resize=dict(
+        required= False,
+        type='bool'),
+    state_=dict(
+        required= False,
+        type='str'),
+    alb_type=dict(
+        required= False,
+        type='str'),
+    cluster=dict(
         required= False,
         type='str'),
     enable=dict(
         required= False,
         type='bool'),
+    disable_deployment=dict(
+        required= False,
+        type='bool'),
+    status=dict(
+        required= False,
+        type='str'),
+    zone=dict(
+        required= False,
+        type='str'),
+    alb_id=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

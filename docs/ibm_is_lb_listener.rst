@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  listener_id (False, str, None)
+    None
+
+
   lb (True, str, None)
     (Required for new resource) Loadbalancer listener ID
 
@@ -44,6 +48,14 @@ Parameters
 
   connection_limit (False, int, None)
     Connection limit for Loadbalancer
+
+
+  default_pool (False, str, None)
+    Loadbalancer default pool info
+
+
+  status (False, str, None)
+    Loadbalancer listener status
 
 
   id (False, str, None)

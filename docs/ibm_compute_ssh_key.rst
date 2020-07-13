@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notes (False, str, None)
-    Additional notes
-
-
   tags (False, list, None)
     List of tags for the resource
 
@@ -40,6 +36,14 @@ Parameters
 
   public_key (True, str, None)
     (Required for new resource) Plublic Key info
+
+
+  fingerprint (False, str, None)
+    SSH key fingerprint
+
+
+  notes (False, str, None)
+    Additional notes
 
 
   id (False, str, None)

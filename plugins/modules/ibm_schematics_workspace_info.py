@@ -25,6 +25,75 @@ options:
             - The id of workspace
         required: True
         type: str
+    status:
+        description:
+            - The status of workspace
+        required: False
+        type: str
+    types:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    is_frozen:
+        description:
+            - None
+        required: False
+        type: bool
+    is_locked:
+        description:
+            - None
+        required: False
+        type: bool
+    description:
+        description:
+            - The description of workspace
+        required: False
+        type: str
+    crn:
+        description:
+            - cloud resource name of the workspace
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
+        required: False
+        type: str
+    name:
+        description:
+            - The name of workspace
+        required: False
+        type: str
+    resource_group:
+        description:
+            - The resource group of workspace
+        required: False
+        type: str
+    location:
+        description:
+            - The location of workspace
+        required: False
+        type: str
+    catalog_ref:
+        description:
+            - Catalog references
+        required: False
+        type: dict
+        elements: dict
+    template_id:
+        description:
+            - The id of templates
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -64,6 +133,19 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'workspace_id',
+    'status',
+    'types',
+    'is_frozen',
+    'is_locked',
+    'description',
+    'crn',
+    'resource_controller_url',
+    'name',
+    'resource_group',
+    'location',
+    'catalog_ref',
+    'template_id',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -73,6 +155,49 @@ module_args = dict(
     workspace_id=dict(
         required=True,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    types=dict(
+        required=False,
+        elements='',
+        type='list'),
+    is_frozen=dict(
+        required=False,
+        type='bool'),
+    is_locked=dict(
+        required=False,
+        type='bool'),
+    description=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    catalog_ref=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    template_id=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

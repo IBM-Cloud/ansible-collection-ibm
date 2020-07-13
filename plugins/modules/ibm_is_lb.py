@@ -20,10 +20,47 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Load Balancer name
         required: True
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    public_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    hostname:
+        description:
+            - None
+        required: False
         type: str
     type:
         description:
@@ -31,12 +68,28 @@ options:
         required: False
         type: str
         default: public
+    operating_status:
+        description:
+            - None
+        required: False
+        type: str
+    private_ips:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     subnets:
         description:
             - (Required for new resource) Load Balancer subnets list
         required: True
         type: list
         elements: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,25 +142,68 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_controller_url',
+    'resource_name',
+    'resource_group_name',
     'name',
+    'status',
+    'public_ips',
+    'tags',
+    'hostname',
     'type',
+    'operating_status',
+    'private_ips',
     'subnets',
+    'resource_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
     name=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
+    public_ips=dict(
+        required= False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    hostname=dict(
         required= False,
         type='str'),
     type=dict(
         default='public',
         type='str'),
+    operating_status=dict(
+        required= False,
+        type='str'),
+    private_ips=dict(
+        required= False,
+        elements='',
+        type='list'),
     subnets=dict(
         required= False,
         elements='',
         type='list'),
+    resource_group=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

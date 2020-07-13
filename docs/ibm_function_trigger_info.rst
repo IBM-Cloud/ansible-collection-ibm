@@ -26,6 +26,22 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  publish (False, bool, None)
+    Trigger Visibility.
+
+
+  version (False, str, None)
+    Semantic version of the trigger.
+
+
+  annotations (False, str, None)
+    All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
+
+
+  parameters (False, str, None)
+    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+
+
   name (True, str, None)
     Name of Trigger.
 

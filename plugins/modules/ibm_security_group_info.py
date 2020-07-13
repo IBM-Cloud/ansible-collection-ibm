@@ -25,6 +25,11 @@ options:
             - The name of the security group
         required: True
         type: str
+    description:
+        description:
+            - The description of the security group
+        required: False
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created group is used. If false, an error is returned
@@ -70,6 +75,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'description',
     'most_recent',
 ]
 
@@ -79,6 +85,9 @@ from ansible.module_utils.basic import env_fallback
 module_args = dict(
     name=dict(
         required=True,
+        type='str'),
+    description=dict(
+        required=False,
         type='str'),
     most_recent=dict(
         default=False,

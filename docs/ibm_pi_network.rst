@@ -26,12 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_gateway (False, str, None)
-    PI network gateway
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
+  vlan_id (False, float, None)
+    VLAN Id value
 
 
   pi_network_type (True, str, None)
@@ -44,6 +40,22 @@ Parameters
 
   pi_dns (False, list, None)
     List of PI network DNS name
+
+
+  pi_cidr (False, str, None)
+    PI network CIDR
+
+
+  pi_gateway (False, str, None)
+    PI network gateway
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
+  network_id (False, str, None)
+    PI network ID
 
 
   id (False, str, None)

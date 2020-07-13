@@ -26,16 +26,112 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
+
+
+  brotli (False, str, None)
+    brotli setting
 
 
   min_tls_version (False, str, 1.1)
     Minimum version of TLS required
 
 
+  browser_check (False, str, None)
+    browser_check setting
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
+
+
+  certificate_status (False, str, None)
+    Certificate status
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
 
 
   id (False, str, None)

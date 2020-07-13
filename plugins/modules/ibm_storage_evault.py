@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - Tags set for the resource
-        required: False
-        type: list
-        elements: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name
@@ -46,6 +40,27 @@ options:
             - Hardware instance ID
         required: False
         type: int
+    username:
+        description:
+            - user name
+        required: False
+        type: str
+    password:
+        description:
+            - password
+        required: False
+        type: str
+    service_resource_name:
+        description:
+            - service resource name
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags set for the resource
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,21 +113,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
     'datacenter',
     'capacity',
     'virtual_instance_id',
     'hardware_instance_id',
+    'username',
+    'password',
+    'service_resource_name',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
     datacenter=dict(
         required= False,
         type='str'),
@@ -125,6 +139,19 @@ module_args = dict(
     hardware_instance_id=dict(
         required= False,
         type='int'),
+    username=dict(
+        required= False,
+        type='str'),
+    password=dict(
+        required= False,
+        type='str'),
+    service_resource_name=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

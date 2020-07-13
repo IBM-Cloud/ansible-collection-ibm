@@ -20,21 +20,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service_instance_crn:
+        description:
+            - (Required for new resource) Api Gateway Service Instance Crn
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Endpoint name
+        required: True
+        type: str
+    managed:
+        description:
+            - Managed indicates if endpoint is online or offline.
+        required: False
+        type: bool
+        default: False
+    shared:
+        description:
+            - The Shared status of an endpoint
+        required: False
+        type: bool
     type:
         description:
             - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
         required: False
         type: str
         default: unshare
-    provider_id:
+    open_api_doc_name:
         description:
-            - Provider ID of an endpoint allowable values user-defined and whisk
-        required: False
-        type: str
-        default: user-defined
-    name:
-        description:
-            - (Required for new resource) Endpoint name
+            - (Required for new resource) Json File path
         required: True
         type: str
     routes:
@@ -43,21 +58,21 @@ options:
         required: False
         type: list
         elements: str
-    managed:
+    base_path:
         description:
-            - Managed indicates if endpoint is online or offline.
+            - Base path of an endpoint
         required: False
-        type: bool
-        default: False
-    service_instance_crn:
-        description:
-            - (Required for new resource) Api Gateway Service Instance Crn
-        required: True
         type: str
-    open_api_doc_name:
+    provider_id:
         description:
-            - (Required for new resource) Json File path
-        required: True
+            - Provider ID of an endpoint allowable values user-defined and whisk
+        required: False
+        type: str
+        default: user-defined
+    endpoint_id:
+        description:
+            - Endpoint ID
+        required: False
         type: str
     id:
         description:
@@ -105,46 +120,58 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('service_instance_crn', 'str'),
+    ('name', 'str'),
     ('open_api_doc_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'provider_id',
-    'name',
-    'routes',
-    'managed',
     'service_instance_crn',
+    'name',
+    'managed',
+    'shared',
+    'type',
     'open_api_doc_name',
+    'routes',
+    'base_path',
+    'provider_id',
+    'endpoint_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    service_instance_crn=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    managed=dict(
+        default=False,
+        type='bool'),
+    shared=dict(
+        required= False,
+        type='bool'),
     type=dict(
         default='unshare',
         type='str'),
-    provider_id=dict(
-        default='user-defined',
-        type='str'),
-    name=dict(
+    open_api_doc_name=dict(
         required= False,
         type='str'),
     routes=dict(
         required= False,
         elements='',
         type='list'),
-    managed=dict(
-        default=False,
-        type='bool'),
-    service_instance_crn=dict(
+    base_path=dict(
         required= False,
         type='str'),
-    open_api_doc_name=dict(
+    provider_id=dict(
+        default='user-defined',
+        type='str'),
+    endpoint_id=dict(
         required= False,
         type='str'),
     id=dict(

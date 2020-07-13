@@ -20,15 +20,77 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    health_status:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    maxmem:
+        description:
+            - None
+        required: False
+        type: int
+    state:
+        description:
+            - None
+        required: False
+        type: str
+    processors:
+        description:
+            - None
+        required: False
+        type: int
+    minproc:
+        description:
+            - None
+        required: False
+        type: int
+    minmem:
+        description:
+            - None
+        required: False
+        type: int
+    maxproc:
+        description:
+            - None
+        required: False
+        type: int
     pi_instance_name:
         description:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    pi_cloud_instance_id:
+    volumes:
         description:
             - None
-        required: True
+        required: False
+        type: list
+        elements: str
+    pin_policy:
+        description:
+            - None
+        required: False
+        type: str
+    addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    proctype:
+        description:
+            - None
+        required: False
         type: str
     zone:
         description:
@@ -59,25 +121,75 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
     'pi_cloud_instance_id',
+    'health_status',
+    'status',
+    'maxmem',
+    'state',
+    'processors',
+    'minproc',
+    'minmem',
+    'maxproc',
+    'pi_instance_name',
+    'volumes',
+    'pin_policy',
+    'addresses',
+    'proctype',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=True,
+        type='str'),
+    health_status=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    maxmem=dict(
+        required=False,
+        type='int'),
+    state=dict(
+        required=False,
+        type='str'),
+    processors=dict(
+        required=False,
+        type='int'),
+    minproc=dict(
+        required=False,
+        type='int'),
+    minmem=dict(
+        required=False,
+        type='int'),
+    maxproc=dict(
+        required=False,
+        type='int'),
     pi_instance_name=dict(
         required=True,
         type='str'),
-    pi_cloud_instance_id=dict(
-        required=True,
+    volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pin_policy=dict(
+        required=False,
+        type='str'),
+    addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    proctype=dict(
+        required=False,
         type='str'),
     zone=dict(
         type='str',

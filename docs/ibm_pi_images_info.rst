@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_image_name (False, str, None)
-    Imagename Name to be used for pvminstances
+  image_info (False, list, None)
+    None
 
 
   pi_cloud_instance_id (True, str, None)

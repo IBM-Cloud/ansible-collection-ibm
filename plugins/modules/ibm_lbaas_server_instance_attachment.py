@@ -20,15 +20,25 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    private_ip_address:
+        description:
+            - (Required for new resource) The Private IP address of a load balancer member.
+        required: True
+        type: str
+    weight:
+        description:
+            - The weight of a load balancer member.
+        required: False
+        type: int
     lbaas_id:
         description:
             - (Required for new resource) The UUID of a load balancer
         required: True
         type: str
-    private_ip_address:
+    uuid:
         description:
-            - (Required for new resource) The Private IP address of a load balancer member.
-        required: True
+            - The UUID of a load balancer member
+        required: False
         type: str
     id:
         description:
@@ -76,24 +86,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lbaas_id', 'str'),
     ('private_ip_address', 'str'),
+    ('lbaas_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lbaas_id',
     'private_ip_address',
+    'weight',
+    'lbaas_id',
+    'uuid',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    private_ip_address=dict(
+        required= False,
+        type='str'),
+    weight=dict(
+        required= False,
+        type='int'),
     lbaas_id=dict(
         required= False,
         type='str'),
-    private_ip_address=dict(
+    uuid=dict(
         required= False,
         type='str'),
     id=dict(

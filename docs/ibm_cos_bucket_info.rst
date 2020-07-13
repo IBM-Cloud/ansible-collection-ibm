@@ -26,11 +26,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bucket_name (True, str, None)
-    None
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
 
 
-  resource_instance_id (True, str, None)
+  crn (False, str, None)
+    CRN of resource instance
+
+
+  s3_endpoint_public (False, str, None)
+    Public endpoint for the COS bucket
+
+
+  metrics_monitoring (False, list, None)
     None
 
 
@@ -38,7 +46,43 @@ Parameters
     None
 
 
+  resource_instance_id (True, str, None)
+    None
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  single_site_location (False, str, None)
+    None
+
+
+  activity_tracking (False, list, None)
+    None
+
+
+  bucket_name (True, str, None)
+    None
+
+
   bucket_region (True, str, None)
+    None
+
+
+  storage_class (False, str, None)
+    None
+
+
+  s3_endpoint_private (False, str, None)
+    Private endpoint for the COS bucket
+
+
+  region_location (False, str, None)
+    None
+
+
+  cross_region_location (False, str, None)
     None
 
 

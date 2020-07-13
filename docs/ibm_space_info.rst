@@ -34,6 +34,18 @@ Parameters
     The org this space belongs to
 
 
+  auditors (False, list, None)
+    The IBMID of the users who  have auditor role in this space, ex - user@example.com
+
+
+  managers (False, list, None)
+    The IBMID of the users who  have manager role in this space, ex - user@example.com
+
+
+  developers (False, list, None)
+    The IBMID of the users who  have developer role in this space, ex - user@example.com
+
+
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

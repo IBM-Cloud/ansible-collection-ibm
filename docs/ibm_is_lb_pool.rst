@@ -26,44 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  health_monitor_url (False, str, None)
+    None
 
 
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
 
 
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   health_retries (True, int, None)
     (Required for new resource) Load Balancer health retry count
 
 
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  provisioning_status (False, str, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) Load Balancer Pool name
-
-
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
 
 
   session_persistence_cookie_name (False, str, None)
     Load Balancer Pool session persisence cookie name
 
 
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_monitor_port (False, int, None)
+    None
+
+
+  pool_id (False, str, None)
+    None
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
   id (False, str, None)

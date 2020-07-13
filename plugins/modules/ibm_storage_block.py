@@ -20,56 +20,100 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - (Required for new resource) Storage block type
+        required: True
+        type: str
+    os_format_type:
+        description:
+            - (Required for new resource) OS formatr type
+        required: True
+        type: str
+    allowed_host_info:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    volumename:
+        description:
+            - Volume name
+        required: False
+        type: str
+    allowed_ip_addresses:
+        description:
+            - Allowed IP addresses
+        required: False
+        type: list
+        elements: str
     tags:
         description:
             - List of tags associated with the resource
         required: False
         type: list
         elements: str
-    type:
-        description:
-            - (Required for new resource) Storage block type
-        required: True
-        type: str
-    iops:
-        description:
-            - (Required for new resource) IOPS value required
-        required: True
-        type: float
-    os_format_type:
-        description:
-            - (Required for new resource) OS formatr type
-        required: True
-        type: str
     hourly_billing:
         description:
             - Billing done hourly, if set to true
         required: False
         type: bool
         default: False
-    datacenter:
+    iops:
         description:
-            - (Required for new resource) Datacenter name
+            - (Required for new resource) IOPS value required
         required: True
+        type: float
+    notes:
+        description:
+            - Additional note info
+        required: False
+        type: str
+    allowed_hardware_ids:
+        description:
+            - List of allowe hardware IDs
+        required: False
+        type: list
+        elements: int
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
         type: str
     capacity:
         description:
             - (Required for new resource) Storage block size
         required: True
         type: int
+    hostname:
+        description:
+            - Hostname
+        required: False
+        type: str
     snapshot_capacity:
         description:
             - Snapshot capacity in GB
         required: False
         type: int
-    notes:
+    allowed_virtual_guest_ids:
         description:
-            - Additional note info
+            - List of allowed virtual guest IDs
         required: False
-        type: str
-    allowed_ip_addresses:
+        type: list
+        elements: int
+    target_address:
         description:
-            - Allowed IP addresses
+            - List of target Addresses
         required: False
         type: list
         elements: str
@@ -120,59 +164,95 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('type', 'str'),
-    ('iops', 'float'),
     ('os_format_type', 'str'),
     ('datacenter', 'str'),
+    ('iops', 'float'),
     ('capacity', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
     'type',
-    'iops',
     'os_format_type',
-    'hourly_billing',
+    'allowed_host_info',
     'datacenter',
-    'capacity',
-    'snapshot_capacity',
-    'notes',
+    'volumename',
     'allowed_ip_addresses',
+    'tags',
+    'hourly_billing',
+    'iops',
+    'notes',
+    'allowed_hardware_ids',
+    'resource_controller_url',
+    'resource_name',
+    'capacity',
+    'hostname',
+    'snapshot_capacity',
+    'allowed_virtual_guest_ids',
+    'target_address',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required= False,
+        type='str'),
+    os_format_type=dict(
+        required= False,
+        type='str'),
+    allowed_host_info=dict(
+        required= False,
+        elements='',
+        type='list'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    volumename=dict(
+        required= False,
+        type='str'),
+    allowed_ip_addresses=dict(
+        required= False,
+        elements='',
+        type='list'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    type=dict(
-        required= False,
-        type='str'),
-    iops=dict(
-        required= False,
-        type='float'),
-    os_format_type=dict(
-        required= False,
-        type='str'),
     hourly_billing=dict(
         default=False,
         type='bool'),
-    datacenter=dict(
+    iops=dict(
+        required= False,
+        type='float'),
+    notes=dict(
+        required= False,
+        type='str'),
+    allowed_hardware_ids=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
         required= False,
         type='str'),
     capacity=dict(
         required= False,
         type='int'),
+    hostname=dict(
+        required= False,
+        type='str'),
     snapshot_capacity=dict(
         required= False,
         type='int'),
-    notes=dict(
+    allowed_virtual_guest_ids=dict(
         required= False,
-        type='str'),
-    allowed_ip_addresses=dict(
+        elements='',
+        type='list'),
+    target_address=dict(
         required= False,
         elements='',
         type='list'),

@@ -20,11 +20,66 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    app_instance_limit:
+        description:
+            - Defines the total app instance limit for organization.
+        required: False
+        type: int
+    app_tasks_limit:
+        description:
+            - Defines the total app task limit for organization.
+        required: False
+        type: int
+    total_reserved_route_ports:
+        description:
+            - Defines the number of reserved route ports for organization.
+        required: False
+        type: int
     name:
         description:
             - Org quota name, for example qIBM
         required: True
         type: str
+    non_basic_services_allowed:
+        description:
+            - Define non basic services are allowed for organization.
+        required: False
+        type: bool
+    total_services:
+        description:
+            - Defines the total services for organization.
+        required: False
+        type: int
+    memory_limit:
+        description:
+            - Defines the total memory limit for organization.
+        required: False
+        type: int
+    trial_db_allowed:
+        description:
+            - Defines trial db are allowed for organization.
+        required: False
+        type: bool
+    total_routes:
+        description:
+            - Defines the total route for organization.
+        required: False
+        type: int
+    instance_memory_limit:
+        description:
+            - Defines the  total instance memory limit for organization.
+        required: False
+        type: int
+    total_private_domains:
+        description:
+            - Defines the total private domain limit for organization.v
+        required: False
+        type: int
+    total_service_keys:
+        description:
+            - Defines the total service keys for organization.
+        required: False
+        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -63,16 +118,60 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'app_instance_limit',
+    'app_tasks_limit',
+    'total_reserved_route_ports',
     'name',
+    'non_basic_services_allowed',
+    'total_services',
+    'memory_limit',
+    'trial_db_allowed',
+    'total_routes',
+    'instance_memory_limit',
+    'total_private_domains',
+    'total_service_keys',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    app_instance_limit=dict(
+        required=False,
+        type='int'),
+    app_tasks_limit=dict(
+        required=False,
+        type='int'),
+    total_reserved_route_ports=dict(
+        required=False,
+        type='int'),
     name=dict(
         required=True,
         type='str'),
+    non_basic_services_allowed=dict(
+        required=False,
+        type='bool'),
+    total_services=dict(
+        required=False,
+        type='int'),
+    memory_limit=dict(
+        required=False,
+        type='int'),
+    trial_db_allowed=dict(
+        required=False,
+        type='bool'),
+    total_routes=dict(
+        required=False,
+        type='int'),
+    instance_memory_limit=dict(
+        required=False,
+        type='int'),
+    total_private_domains=dict(
+        required=False,
+        type='int'),
+    total_service_keys=dict(
+        required=False,
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

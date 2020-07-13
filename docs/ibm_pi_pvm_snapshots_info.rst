@@ -26,11 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (True, str, None)
+    None
+
+
   pi_instance_name (True, str, None)
     None
 
 
-  pi_cloud_instance_id (True, str, None)
+  pvm_snapshots (False, list, None)
     None
 
 

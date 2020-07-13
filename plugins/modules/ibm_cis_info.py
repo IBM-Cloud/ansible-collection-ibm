@@ -30,6 +30,56 @@ options:
             - The id of the resource group in which the cis instance is present
         required: False
         type: str
+    location:
+        description:
+            - The location or the environment in which cis instance exists
+        required: False
+        type: str
+    plan:
+        description:
+            - The plan type of the cis instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    guid:
+        description:
+            - Unique identifier of resource instance
+        required: False
+        type: str
+    service:
+        description:
+            - The name of the Cloud Internet Services offering, 'internet-svcs'
+        required: False
+        type: str
+    status:
+        description:
+            - The resource instance status
+        required: False
+        type: dict
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -70,6 +120,16 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'resource_group_id',
+    'location',
+    'plan',
+    'resource_name',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
+    'guid',
+    'service',
+    'status',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -80,6 +140,36 @@ module_args = dict(
         required=True,
         type='str'),
     resource_group_id=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    plan=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    guid=dict(
+        required=False,
+        type='str'),
+    service=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='dict'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(

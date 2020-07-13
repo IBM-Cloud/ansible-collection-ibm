@@ -25,6 +25,11 @@ options:
             - None
         required: True
         type: str
+    family:
+        description:
+            - None
+        required: False
+        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -64,6 +69,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'family',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -72,6 +78,9 @@ from ansible.module_utils.basic import env_fallback
 module_args = dict(
     name=dict(
         required=True,
+        type='str'),
+    family=dict(
+        required=False,
         type='str'),
     generation=dict(
         type='int',

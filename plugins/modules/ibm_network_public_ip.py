@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notes:
+    ip_address:
         description:
-            - Additional notes
+            - IP Address
         required: False
         type: str
     routes_to:
@@ -36,6 +36,11 @@ options:
         required: False
         type: list
         elements: str
+    notes:
+        description:
+            - Additional notes
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,16 +92,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notes',
+    'ip_address',
     'routes_to',
     'tags',
+    'notes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notes=dict(
+    ip_address=dict(
         required= False,
         type='str'),
     routes_to=dict(
@@ -106,6 +112,9 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    notes=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

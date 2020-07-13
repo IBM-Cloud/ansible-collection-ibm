@@ -26,6 +26,26 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  capacity (False, int, 100)
+    Vloume capacity value
+
+
+  resource_group (False, str, None)
+    Resource group name
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  encryption_key (False, str, None)
+    Volume encryption key info
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
   name (True, str, None)
     (Required for new resource) Volume name
 
@@ -38,8 +58,32 @@ Parameters
     (Required for new resource) Zone name
 
 
-  capacity (False, int, 100)
-    Vloume capacity value
+  iops (False, int, None)
+    IOPS value for the Volume
+
+
+  crn (False, str, None)
+    CRN value for the volume instance
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  status (False, str, None)
+    Volume status
+
+
+  tags (False, list, None)
+    Tags for the volume instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   id (False, str, None)

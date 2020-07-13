@@ -20,6 +20,41 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - Type of the quota.
+        required: False
+        type: str
+    max_apps:
+        description:
+            - Defines the total app limit.
+        required: False
+        type: int
+    max_instances_per_app:
+        description:
+            - Defines the total instances limit per app.
+        required: False
+        type: int
+    max_app_instance_memory:
+        description:
+            - Defines the total memory of app instance.
+        required: False
+        type: str
+    total_app_memory:
+        description:
+            - Defines the total memory for app.
+        required: False
+        type: str
+    max_service_instances:
+        description:
+            - Defines the total service instances limit.
+        required: False
+        type: int
+    vsi_limit:
+        description:
+            - Defines the VSI limit.
+        required: False
+        type: int
     name:
         description:
             - Resource quota name, for example Trial Quota
@@ -63,6 +98,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'max_apps',
+    'max_instances_per_app',
+    'max_app_instance_memory',
+    'total_app_memory',
+    'max_service_instances',
+    'vsi_limit',
     'name',
 ]
 
@@ -70,6 +112,27 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required=False,
+        type='str'),
+    max_apps=dict(
+        required=False,
+        type='int'),
+    max_instances_per_app=dict(
+        required=False,
+        type='int'),
+    max_app_instance_memory=dict(
+        required=False,
+        type='str'),
+    total_app_memory=dict(
+        required=False,
+        type='str'),
+    max_service_instances=dict(
+        required=False,
+        type='int'),
+    vsi_limit=dict(
+        required=False,
+        type='int'),
     name=dict(
         required=True,
         type='str'),

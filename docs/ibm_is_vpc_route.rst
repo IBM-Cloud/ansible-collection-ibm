@@ -38,6 +38,10 @@ Parameters
     (Required for new resource) VPC route destination CIDR value
 
 
+  status (False, str, None)
+    None
+
+
   vpc (True, str, None)
     (Required for new resource) VPC instance ID
 

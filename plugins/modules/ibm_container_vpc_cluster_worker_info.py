@@ -20,15 +20,51 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    worker_id:
+    kube_version:
         description:
-            - ID of the worker
-        required: True
+            - kube version of the worker
+        required: False
         type: str
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
+        type: str
+    flavor:
+        description:
+            - flavor of the worker
+        required: False
+        type: str
+    state:
+        description:
+            - State of the worker
+        required: False
+        type: str
+    pool_id:
+        description:
+            - worker pool id
+        required: False
+        type: str
+    pool_name:
+        description:
+            - worker pool name
+        required: False
+        type: str
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this cluster
+        required: False
+        type: str
+    worker_id:
+        description:
+            - ID of the worker
+        required: True
         type: str
     cluster_name_id:
         description:
@@ -54,8 +90,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_id',
+    'kube_version',
     'resource_group_id',
+    'flavor',
+    'state',
+    'pool_id',
+    'pool_name',
+    'network_interfaces',
+    'resource_controller_url',
+    'worker_id',
     'cluster_name_id',
 ]
 
@@ -63,11 +106,33 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_id=dict(
-        required=True,
+    kube_version=dict(
+        required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
+        type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
+    state=dict(
+        required=False,
+        type='str'),
+    pool_id=dict(
+        required=False,
+        type='str'),
+    pool_name=dict(
+        required=False,
+        type='str'),
+    network_interfaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    worker_id=dict(
+        required=True,
         type='str'),
     cluster_name_id=dict(
         required=True,

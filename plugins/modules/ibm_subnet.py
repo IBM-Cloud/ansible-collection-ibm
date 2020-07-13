@@ -20,17 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notes:
+    private:
         description:
-            - Notes
+            - private subnet
         required: False
-        type: str
-    tags:
-        description:
-            - tags set for the resource
-        required: False
-        type: list
-        elements: str
+        type: bool
+        default: False
     ip_version:
         description:
             - ip version
@@ -42,21 +37,36 @@ options:
             - (Required for new resource) number of ip addresses in the subnet
         required: True
         type: int
-    endpoint_ip:
+    subnet_cidr:
         description:
-            - endpoint IP
+            - CIDR notation for the subnet
         required: False
         type: str
-    private:
+    notes:
         description:
-            - private subnet
+            - Notes
         required: False
-        type: bool
-        default: False
+        type: str
+    tags:
+        description:
+            - tags set for the resource
+        required: False
+        type: list
+        elements: str
     type:
         description:
             - (Required for new resource) subnet type
         required: True
+        type: str
+    vlan_id:
+        description:
+            - VLAN ID for the subnet
+        required: False
+        type: int
+    endpoint_ip:
+        description:
+            - endpoint IP
+        required: False
         type: str
     id:
         description:
@@ -110,19 +120,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notes',
-    'tags',
+    'private',
     'ip_version',
     'capacity',
-    'endpoint_ip',
-    'private',
+    'subnet_cidr',
+    'notes',
+    'tags',
     'type',
+    'vlan_id',
+    'endpoint_ip',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    private=dict(
+        default=False,
+        type='bool'),
+    ip_version=dict(
+        default=4,
+        type='int'),
+    capacity=dict(
+        required= False,
+        type='int'),
+    subnet_cidr=dict(
+        required= False,
+        type='str'),
     notes=dict(
         required= False,
         type='str'),
@@ -130,19 +154,13 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    ip_version=dict(
-        default=4,
-        type='int'),
-    capacity=dict(
+    type=dict(
+        required= False,
+        type='str'),
+    vlan_id=dict(
         required= False,
         type='int'),
     endpoint_ip=dict(
-        required= False,
-        type='str'),
-    private=dict(
-        default=False,
-        type='bool'),
-    type=dict(
         required= False,
         type='str'),
     id=dict(

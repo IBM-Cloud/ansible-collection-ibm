@@ -26,20 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Zone name
-
-
   description (False, str, None)
     Zone description
+
+
+  state_ (False, str, None)
+    Zone state
 
 
   label (False, str, None)
     Label
 
 
+  created_on (False, str, None)
+    Creation date
+
+
+  modified_on (False, str, None)
+    Modification date
+
+
   instance_id (True, str, None)
     (Required for new resource) Instance ID
+
+
+  zone_id (False, str, None)
+    Zone ID
+
+
+  name (True, str, None)
+    (Required for new resource) Zone name
 
 
   id (False, str, None)

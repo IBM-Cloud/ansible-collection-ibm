@@ -26,16 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  version (False, str, None)
+    version of the serviceID
+
+
+  crn (False, str, None)
+    crn of the serviceID
+
+
+  tags (False, list, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) Name of the serviceID
 
 
   description (False, str, None)
     Description of the serviceID
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

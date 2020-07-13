@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) DNS name
+        required: True
+        type: str
+    serial:
+        description:
+            - DNS serial info
+        required: False
+        type: str
+    update_date:
+        description:
+            - DNS update date
+        required: False
+        type: str
     target:
         description:
             - DNS target info
@@ -31,11 +46,6 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) DNS name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,15 +97,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'serial',
+    'update_date',
     'target',
     'tags',
-    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required= False,
+        type='str'),
+    serial=dict(
+        required= False,
+        type='str'),
+    update_date=dict(
+        required= False,
+        type='str'),
     target=dict(
         required= False,
         type='str'),
@@ -103,9 +124,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    name=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

@@ -20,16 +20,18 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vip_id:
+    usip:
         description:
-            - (Required for new resource) VIP id
-        required: True
+            - usip info
+        required: False
         type: str
-    name:
+        default: NO
+    tags:
         description:
-            - (Required for new resource) name
-        required: True
-        type: str
+            - list of tags associated with the resource
+        required: False
+        type: list
+        elements: str
     destination_ip_address:
         description:
             - (Required for new resource) Destination IP Address
@@ -45,28 +47,26 @@ options:
             - (Required for new resource) Weight value
         required: True
         type: int
-    connection_limit:
-        description:
-            - (Required for new resource) Number of connections limit
-        required: True
-        type: int
     health_check:
         description:
             - (Required for new resource) Health check info
         required: True
         type: str
-    usip:
+    vip_id:
         description:
-            - usip info
-        required: False
+            - (Required for new resource) VIP id
+        required: True
         type: str
-        default: NO
-    tags:
+    name:
         description:
-            - list of tags associated with the resource
-        required: False
-        type: list
-        elements: str
+            - (Required for new resource) name
+        required: True
+        type: str
+    connection_limit:
+        description:
+            - (Required for new resource) Number of connections limit
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,38 +113,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vip_id', 'str'),
-    ('name', 'str'),
     ('destination_ip_address', 'str'),
     ('destination_port', 'int'),
     ('weight', 'int'),
-    ('connection_limit', 'int'),
     ('health_check', 'str'),
+    ('vip_id', 'str'),
+    ('name', 'str'),
+    ('connection_limit', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vip_id',
-    'name',
+    'usip',
+    'tags',
     'destination_ip_address',
     'destination_port',
     'weight',
-    'connection_limit',
     'health_check',
-    'usip',
-    'tags',
+    'vip_id',
+    'name',
+    'connection_limit',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vip_id=dict(
-        required= False,
+    usip=dict(
+        default='NO',
         type='str'),
-    name=dict(
+    tags=dict(
         required= False,
-        type='str'),
+        elements='',
+        type='list'),
     destination_ip_address=dict(
         required= False,
         type='str'),
@@ -154,19 +155,18 @@ module_args = dict(
     weight=dict(
         required= False,
         type='int'),
-    connection_limit=dict(
-        required= False,
-        type='int'),
     health_check=dict(
         required= False,
         type='str'),
-    usip=dict(
-        default='NO',
-        type='str'),
-    tags=dict(
+    vip_id=dict(
         required= False,
-        elements='',
-        type='list'),
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    connection_limit=dict(
+        required= False,
+        type='int'),
     id=dict(
         required= False,
         type='str'),

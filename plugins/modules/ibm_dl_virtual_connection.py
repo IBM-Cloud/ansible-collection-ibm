@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    gateway:
-        description:
-            - (Required for new resource) The Direct Link gateway identifier
-        required: True
-        type: str
     type:
         description:
             - (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
@@ -33,6 +28,31 @@ options:
     name:
         description:
             - (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
+        required: True
+        type: str
+    network_id:
+        description:
+            - Unique identifier of the target network. For type=vpc virtual connections this is the CRN of the target VPC. This field does not apply to type=classic connections.
+        required: False
+        type: str
+    created_at:
+        description:
+            - The date and time resource was created
+        required: False
+        type: str
+    status:
+        description:
+            - Status of the virtual connection.Possible values: [pending,attached,approval_pending,rejected,expired,deleting,detached_by_network_pending,detached_by_network]
+        required: False
+        type: str
+    network_account:
+        description:
+            - For virtual connections across two different IBM Cloud Accounts network_account indicates the account that owns the target network.
+        required: False
+        type: str
+    gateway:
+        description:
+            - (Required for new resource) The Direct Link gateway identifier
         required: True
         type: str
     id:
@@ -81,29 +101,45 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('gateway', 'str'),
     ('type', 'str'),
     ('name', 'str'),
+    ('gateway', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'gateway',
     'type',
     'name',
+    'network_id',
+    'created_at',
+    'status',
+    'network_account',
+    'gateway',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    gateway=dict(
-        required= False,
-        type='str'),
     type=dict(
         required= False,
         type='str'),
     name=dict(
+        required= False,
+        type='str'),
+    network_id=dict(
+        required= False,
+        type='str'),
+    created_at=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
+    network_account=dict(
+        required= False,
+        type='str'),
+    gateway=dict(
         required= False,
         type='str'),
     id=dict(

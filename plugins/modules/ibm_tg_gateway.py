@@ -25,6 +25,37 @@ options:
             - (Required for new resource) Name Transit Gateway Services
         required: True
         type: str
+    tags:
+        description:
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
     location:
         description:
             - (Required for new resource) Location of Transit Gateway Services
@@ -36,6 +67,11 @@ options:
         required: False
         type: bool
         default: False
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,8 +125,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'tags',
+    'resource_group',
+    'resource_name',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
     'location',
     'global',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -100,12 +143,34 @@ module_args = dict(
     name=dict(
         required= False,
         type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
     location=dict(
         required= False,
         type='str'),
     global=dict(
         default=False,
         type='bool'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

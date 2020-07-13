@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    fallback_pool_id:
+    cis_id:
         description:
-            - (Required for new resource) fallback pool ID
+            - (Required for new resource) CIS instance crn
         required: True
         type: str
     default_pool_ids:
@@ -36,18 +36,28 @@ options:
             - TTL value
         required: False
         type: int
+    proxied:
+        description:
+            - set to true if proxy needs to be enabled
+        required: False
+        type: bool
+        default: False
     session_affinity:
         description:
             - Session affinity info
         required: False
         type: str
         default: none
-    enabled:
+    created_on:
         description:
-            - set to true of LB needs to enabled
+            - Load balancer creation date
         required: False
-        type: bool
-        default: True
+        type: str
+    modified_on:
+        description:
+            - Load balancer modified date
+        required: False
+        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
@@ -58,22 +68,22 @@ options:
             - (Required for new resource) name
         required: True
         type: str
+    fallback_pool_id:
+        description:
+            - (Required for new resource) fallback pool ID
+        required: True
+        type: str
     description:
         description:
             - Description for the load balancer instance
         required: False
         type: str
-    proxied:
+    enabled:
         description:
-            - set to true if proxy needs to be enabled
+            - set to true of LB needs to enabled
         required: False
         type: bool
-        default: False
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -120,32 +130,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('fallback_pool_id', 'str'),
+    ('cis_id', 'str'),
     ('default_pool_ids', 'list'),
     ('domain_id', 'str'),
     ('name', 'str'),
-    ('cis_id', 'str'),
+    ('fallback_pool_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'fallback_pool_id',
+    'cis_id',
     'default_pool_ids',
     'ttl',
+    'proxied',
     'session_affinity',
-    'enabled',
+    'created_on',
+    'modified_on',
     'domain_id',
     'name',
+    'fallback_pool_id',
     'description',
-    'proxied',
-    'cis_id',
+    'enabled',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    fallback_pool_id=dict(
+    cis_id=dict(
         required= False,
         type='str'),
     default_pool_ids=dict(
@@ -155,27 +167,33 @@ module_args = dict(
     ttl=dict(
         required= False,
         type='int'),
+    proxied=dict(
+        default=False,
+        type='bool'),
     session_affinity=dict(
         default='none',
         type='str'),
-    enabled=dict(
-        default=True,
-        type='bool'),
+    created_on=dict(
+        required= False,
+        type='str'),
+    modified_on=dict(
+        required= False,
+        type='str'),
     domain_id=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
+    fallback_pool_id=dict(
+        required= False,
+        type='str'),
     description=dict(
         required= False,
         type='str'),
-    proxied=dict(
-        default=False,
+    enabled=dict(
+        default=True,
         type='bool'),
-    cis_id=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),

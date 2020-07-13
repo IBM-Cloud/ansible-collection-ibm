@@ -26,16 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID
+  cert_crn (True, str, None)
+    (Required for new resource) Certificate CRN id
 
 
   secret_name (True, str, None)
     (Required for new resource) Secret name
 
 
-  cert_crn (True, str, None)
-    (Required for new resource) Certificate CRN id
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID
+
+
+  domain_name (False, str, None)
+    Domain name
+
+
+  expires_on (False, str, None)
+    Certificate expaire on date
+
+
+  issuer_name (False, str, None)
+    certificate issuer name
+
+
+  cluster_crn (False, str, None)
+    cluster CRN
+
+
+  cloud_cert_instance_id (False, str, None)
+    cloud cert instance ID
 
 
   id (False, str, None)

@@ -26,11 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The name of the gateway
+  public_vlan_id (False, int, None)
+    None
 
 
-  ssh_key_ids (False, list, None)
+  status (False, str, None)
+    None
+
+
+  members (True, list, None)
+    (Required for new resource) The hardware members of this network Gateway
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  public_ipv6_address_id (False, int, None)
     None
 
 
@@ -38,8 +50,32 @@ Parameters
     None
 
 
-  members (True, list, None)
-    (Required for new resource) The hardware members of this network Gateway
+  private_ip_address_id (False, int, None)
+    None
+
+
+  private_ipv4_address (False, str, None)
+    None
+
+
+  public_ipv4_address (False, str, None)
+    None
+
+
+  public_ip_address_id (False, int, None)
+    None
+
+
+  associated_vlans (False, list, None)
+    The VLAN instances associated with this Network Gateway
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the gateway
+
+
+  ssh_key_ids (False, list, None)
+    None
 
 
   id (False, str, None)

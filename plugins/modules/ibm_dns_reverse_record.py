@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    ipaddress:
-        description:
-            - (Required for new resource) IP Address
-        required: True
-        type: str
     hostname:
         description:
             - (Required for new resource) Host name
@@ -35,6 +30,11 @@ options:
             - TTL value
         required: False
         type: int
+    ipaddress:
+        description:
+            - (Required for new resource) IP Address
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -81,30 +81,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('ipaddress', 'str'),
     ('hostname', 'str'),
+    ('ipaddress', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ipaddress',
     'hostname',
     'ttl',
+    'ipaddress',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ipaddress=dict(
-        required= False,
-        type='str'),
     hostname=dict(
         required= False,
         type='str'),
     ttl=dict(
         required= False,
         type='int'),
+    ipaddress=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

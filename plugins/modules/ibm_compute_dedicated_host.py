@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    disk_capacity:
+        description:
+            - The capacity that the dedicated host's disk allocation is restricted to.
+        required: False
+        type: int
     tags:
         description:
             - None
@@ -36,17 +41,17 @@ options:
             - (Required for new resource) The domain of dedicatated host.
         required: True
         type: str
-    hourly_billing:
+    flavor:
         description:
-            - The billing type for the dedicatated host.
+            - The flavor of the dedicatated host.
         required: False
-        type: bool
-        default: True
-    router_hostname:
-        description:
-            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-        required: True
         type: str
+        default: 56_CORES_X_242_RAM_X_1_4_TB
+    cpu_count:
+        description:
+            - The capacity that the dedicated host's CPU allocation is restricted to.
+        required: False
+        type: int
     wait_time_minutes:
         description:
             - None
@@ -58,12 +63,22 @@ options:
             - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
         required: True
         type: str
-    flavor:
+    hourly_billing:
         description:
-            - The flavor of the dedicatated host.
+            - The billing type for the dedicatated host.
         required: False
+        type: bool
+        default: True
+    router_hostname:
+        description:
+            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+        required: True
         type: str
-        default: 56_CORES_X_242_RAM_X_1_4_TB
+    memory_capacity:
+        description:
+            - The capacity that the dedicated host's memory allocation is restricted to.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,26 +127,32 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('hostname', 'str'),
     ('domain', 'str'),
-    ('router_hostname', 'str'),
     ('datacenter', 'str'),
+    ('router_hostname', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'disk_capacity',
     'tags',
     'hostname',
     'domain',
-    'hourly_billing',
-    'router_hostname',
+    'flavor',
+    'cpu_count',
     'wait_time_minutes',
     'datacenter',
-    'flavor',
+    'hourly_billing',
+    'router_hostname',
+    'memory_capacity',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    disk_capacity=dict(
+        required= False,
+        type='int'),
     tags=dict(
         required= False,
         elements='',
@@ -142,21 +163,27 @@ module_args = dict(
     domain=dict(
         required= False,
         type='str'),
-    hourly_billing=dict(
-        default=True,
-        type='bool'),
-    router_hostname=dict(
-        required= False,
+    flavor=dict(
+        default='56_CORES_X_242_RAM_X_1_4_TB',
         type='str'),
+    cpu_count=dict(
+        required= False,
+        type='int'),
     wait_time_minutes=dict(
         default=90,
         type='int'),
     datacenter=dict(
         required= False,
         type='str'),
-    flavor=dict(
-        default='56_CORES_X_242_RAM_X_1_4_TB',
+    hourly_billing=dict(
+        default=True,
+        type='bool'),
+    router_hostname=dict(
+        required= False,
         type='str'),
+    memory_capacity=dict(
+        required= False,
+        type='int'),
     id=dict(
         required= False,
         type='str'),

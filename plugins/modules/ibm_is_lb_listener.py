@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    listener_id:
+        description:
+            - None
+        required: False
+        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer listener ID
@@ -45,6 +50,16 @@ options:
             - Connection limit for Loadbalancer
         required: False
         type: int
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    status:
+        description:
+            - Loadbalancer listener status
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,17 +113,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'listener_id',
     'lb',
     'port',
     'protocol',
     'certificate_instance',
     'connection_limit',
+    'default_pool',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    listener_id=dict(
+        required= False,
+        type='str'),
     lb=dict(
         required= False,
         type='str'),
@@ -124,6 +145,12 @@ module_args = dict(
     connection_limit=dict(
         required= False,
         type='int'),
+    default_pool=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

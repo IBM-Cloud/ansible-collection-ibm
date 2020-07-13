@@ -20,22 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    encryption_algorithm:
+    resource_name:
         description:
-            - (Required for new resource) Encryption algorithm
-        required: True
-        type: str
-    pfs:
-        description:
-            - (Required for new resource) PFS info
-        required: True
-        type: str
-    key_lifetime:
-        description:
-            - IPSEC key lifetime
+            - The name of the resource
         required: False
-        type: int
-        default: 3600
+        type: str
     name:
         description:
             - (Required for new resource) IPSEC name
@@ -46,6 +35,58 @@ options:
             - (Required for new resource) Authentication alorothm
         required: True
         type: str
+    encryption_algorithm:
+        description:
+            - (Required for new resource) Encryption algorithm
+        required: True
+        type: str
+    resource_group:
+        description:
+            - Resource group info
+        required: False
+        type: str
+    key_lifetime:
+        description:
+            - IPSEC key lifetime
+        required: False
+        type: int
+        default: 3600
+    transform_protocol:
+        description:
+            - IPSEC transform protocol
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    pfs:
+        description:
+            - (Required for new resource) PFS info
+        required: True
+        type: str
+    encapsulation_mode:
+        description:
+            - IPSEC encapsulation mode
+        required: False
+        type: str
+    vpn_connections:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,40 +133,73 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('encryption_algorithm', 'str'),
-    ('pfs', 'str'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
+    ('encryption_algorithm', 'str'),
+    ('pfs', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'encryption_algorithm',
-    'pfs',
-    'key_lifetime',
+    'resource_name',
     'name',
     'authentication_algorithm',
+    'encryption_algorithm',
+    'resource_group',
+    'key_lifetime',
+    'transform_protocol',
+    'resource_controller_url',
+    'resource_crn',
+    'resource_group_name',
+    'pfs',
+    'encapsulation_mode',
+    'vpn_connections',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    encryption_algorithm=dict(
+    resource_name=dict(
         required= False,
         type='str'),
-    pfs=dict(
-        required= False,
-        type='str'),
-    key_lifetime=dict(
-        default=3600,
-        type='int'),
     name=dict(
         required= False,
         type='str'),
     authentication_algorithm=dict(
         required= False,
         type='str'),
+    encryption_algorithm=dict(
+        required= False,
+        type='str'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    key_lifetime=dict(
+        default=3600,
+        type='int'),
+    transform_protocol=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    pfs=dict(
+        required= False,
+        type='str'),
+    encapsulation_mode=dict(
+        required= False,
+        type='str'),
+    vpn_connections=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

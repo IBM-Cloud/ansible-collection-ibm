@@ -31,6 +31,11 @@ options:
         required: True
         type: list
         elements: dict
+    rule_id:
+        description:
+            - id of the rule
+        required: False
+        type: str
     access_group_id:
         description:
             - (Required for new resource) Unique identifier of the access group
@@ -103,6 +108,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'identity_provider',
     'conditions',
+    'rule_id',
     'access_group_id',
     'name',
     'expiration',
@@ -119,6 +125,9 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    rule_id=dict(
+        required= False,
+        type='str'),
     access_group_id=dict(
         required= False,
         type='str'),

@@ -20,12 +20,32 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    os:
+        description:
+            - None
+        required: False
+        type: str
+    architecture:
+        description:
+            - None
+        required: False
+        type: str
+    crn:
+        description:
+            - None
+        required: False
+        type: str
     name:
         description:
             - None
         required: True
         type: str
     visibility:
+        description:
+            - None
+        required: False
+        type: str
+    status:
         description:
             - None
         required: False
@@ -68,18 +88,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'os',
+    'architecture',
+    'crn',
     'name',
     'visibility',
+    'status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    os=dict(
+        required=False,
+        type='str'),
+    architecture=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
     visibility=dict(
+        required=False,
+        type='str'),
+    status=dict(
         required=False,
         type='str'),
     generation=dict(

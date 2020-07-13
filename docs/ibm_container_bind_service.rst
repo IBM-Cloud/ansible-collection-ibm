@@ -26,24 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  service_instance_id (False, str, None)
+    Service instance ID
 
 
   tags (False, list, None)
     List of tags for the resource
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  namespace_id (True, str, None)
-    (Required for new resource) namespace ID
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
+  cluster_name_id (True, str, None)
+    (Required for new resource) Cluster name or ID
 
 
   key (False, str, None)
@@ -54,16 +46,16 @@ Parameters
     Role info
 
 
-  cluster_name_id (True, str, None)
-    (Required for new resource) Cluster name or ID
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  region (False, str, None)
-    The cluster region
+  service_instance_name (False, str, None)
+    serivice instance name
 
 
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
+  namespace_id (True, str, None)
+    (Required for new resource) namespace ID
 
 
   id (False, str, None)

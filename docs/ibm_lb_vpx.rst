@@ -26,8 +26,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  type (False, str, None)
+    Type of the VPX
+
+
+  speed (True, int, None)
+    (Required for new resource) Speed value
+
+
+  vip_pool (False, list, None)
+    List of VIP ids
+
+
+  management_ip_address (False, str, None)
+    management IP address
+
+
+  name (False, str, None)
+    Name
+
+
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
+
+
+  ip_count (True, int, None)
+    (Required for new resource) IP address count
+
+
+  private_subnet (False, str, None)
+    Private subnet
+
+
+  tags (False, list, None)
+    List of the tags
 
 
   version (True, str, None)
@@ -38,16 +70,16 @@ Parameters
     (Required for new resource) Plan info
 
 
-  tags (False, list, None)
-    List of the tags
+  public_vlan_id (False, int, None)
+    Piblic VLAN id
 
 
-  speed (True, int, None)
-    (Required for new resource) Speed value
+  public_subnet (False, str, None)
+    Public subnet
 
 
-  ip_count (True, int, None)
-    (Required for new resource) IP address count
+  private_vlan_id (False, int, None)
+    Private VLAN id
 
 
   id (False, str, None)

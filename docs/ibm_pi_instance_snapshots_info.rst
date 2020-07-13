@@ -30,6 +30,10 @@ Parameters
     None
 
 
+  instance_snapshots (False, list, None)
+    None
+
+
   zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 

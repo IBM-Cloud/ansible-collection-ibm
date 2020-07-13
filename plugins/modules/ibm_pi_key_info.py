@@ -30,6 +30,16 @@ options:
             - None
         required: True
         type: str
+    creation_date:
+        description:
+            - None
+        required: False
+        type: str
+    sshkey:
+        description:
+            - None
+        required: False
+        type: str
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -67,6 +77,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_key_name',
     'pi_cloud_instance_id',
+    'creation_date',
+    'sshkey',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -78,6 +90,12 @@ module_args = dict(
         type='str'),
     pi_cloud_instance_id=dict(
         required=True,
+        type='str'),
+    creation_date=dict(
+        required=False,
+        type='str'),
+    sshkey=dict(
+        required=False,
         type='str'),
     zone=dict(
         type='str',

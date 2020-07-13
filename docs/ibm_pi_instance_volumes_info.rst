@@ -34,6 +34,14 @@ Parameters
     None
 
 
+  boot_volume_id (False, str, None)
+    None
+
+
+  instance_volumes (False, list, None)
+    None
+
+
   zone (False, str, None)
     Denotes which IBM Cloud zone to connect to in multizone environment. This can also be provided via the environment variable 'IC_ZONE'.
 

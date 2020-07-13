@@ -20,16 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     name:
         description:
             - (Required for new resource) Org name, for example myorg@domain
         required: True
+        type: str
+    org_quota_definition_guid:
+        description:
+            - Org quota guid
+        required: False
         type: str
     billing_managers:
         description:
@@ -52,6 +51,12 @@ options:
     users:
         description:
             - The IBMID of the users who will have user role in this org, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
         required: False
         type: list
         elements: str
@@ -106,23 +111,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
     'name',
+    'org_quota_definition_guid',
     'billing_managers',
     'managers',
     'auditors',
     'users',
+    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
     name=dict(
+        required= False,
+        type='str'),
+    org_quota_definition_guid=dict(
         required= False,
         type='str'),
     billing_managers=dict(
@@ -138,6 +143,10 @@ module_args = dict(
         elements='',
         type='list'),
     users=dict(
+        required= False,
+        elements='',
+        type='list'),
+    tags=dict(
         required= False,
         elements='',
         type='list'),

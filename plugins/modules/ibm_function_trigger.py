@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    parameters:
+        description:
+            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Name of Trigger.
@@ -31,6 +36,16 @@ options:
         required: False
         type: list
         elements: dict
+    publish:
+        description:
+            - Trigger visbility.
+        required: False
+        type: bool
+    version:
+        description:
+            - Semantic version of the item.
+        required: False
+        type: str
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
@@ -43,6 +58,11 @@ options:
         required: False
         type: str
         default: []
+    annotations:
+        description:
+            - All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -80,16 +100,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'parameters',
     'name',
     'feed',
+    'publish',
+    'version',
     'user_defined_annotations',
     'user_defined_parameters',
+    'annotations',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    parameters=dict(
+        required= False,
+        type='str'),
     name=dict(
         required= False,
         type='str'),
@@ -97,11 +124,20 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    publish=dict(
+        required= False,
+        type='bool'),
+    version=dict(
+        required= False,
+        type='str'),
     user_defined_annotations=dict(
         default='[]',
         type='str'),
     user_defined_parameters=dict(
         default='[]',
+        type='str'),
+    annotations=dict(
+        required= False,
         type='str'),
     id=dict(
         required= False,

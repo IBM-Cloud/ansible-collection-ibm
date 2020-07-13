@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  encryption_algorithm (True, str, None)
-    (Required for new resource) Encryption algorithm
-
-
-  pfs (True, str, None)
-    (Required for new resource) PFS info
-
-
-  key_lifetime (False, int, 3600)
-    IPSEC key lifetime
+  resource_name (False, str, None)
+    The name of the resource
 
 
   name (True, str, None)
@@ -44,6 +36,46 @@ Parameters
 
   authentication_algorithm (True, str, None)
     (Required for new resource) Authentication alorothm
+
+
+  encryption_algorithm (True, str, None)
+    (Required for new resource) Encryption algorithm
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
+
+
+  transform_protocol (False, str, None)
+    IPSEC transform protocol
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  pfs (True, str, None)
+    (Required for new resource) PFS info
+
+
+  encapsulation_mode (False, str, None)
+    IPSEC encapsulation mode
+
+
+  vpn_connections (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -20,11 +20,27 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    query_type_id:
+        description:
+            - (Required for new resource) Query Type ID
+        required: True
+        type: int
+    response_action_id:
+        description:
+            - (Required for new resource) Response action ID
+        required: True
+        type: int
     wait_cycles:
         description:
             - wait cycles count
         required: False
         type: int
+    notified_users:
+        description:
+            - List of users notified
+        required: False
+        type: list
+        elements: int
     tags:
         description:
             - List of tags
@@ -41,16 +57,6 @@ options:
             - IP Address
         required: False
         type: str
-    query_type_id:
-        description:
-            - (Required for new resource) Query Type ID
-        required: True
-        type: int
-    response_action_id:
-        description:
-            - (Required for new resource) Response action ID
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,28 +103,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guest_id', 'int'),
     ('query_type_id', 'int'),
     ('response_action_id', 'int'),
+    ('guest_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'query_type_id',
+    'response_action_id',
     'wait_cycles',
+    'notified_users',
     'tags',
     'guest_id',
     'ip_address',
-    'query_type_id',
-    'response_action_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    query_type_id=dict(
+        required= False,
+        type='int'),
+    response_action_id=dict(
+        required= False,
+        type='int'),
     wait_cycles=dict(
         required= False,
         type='int'),
+    notified_users=dict(
+        required= False,
+        elements='',
+        type='list'),
     tags=dict(
         required= False,
         elements='',
@@ -129,12 +146,6 @@ module_args = dict(
     ip_address=dict(
         required= False,
         type='str'),
-    query_type_id=dict(
-        required= False,
-        type='int'),
-    response_action_id=dict(
-        required= False,
-        type='int'),
     id=dict(
         required= False,
         type='str'),

@@ -20,17 +20,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    available_ipv4_address_count:
+        description:
+            - None
+        required: False
+        type: str
     public_gateway:
         description:
             - Public Gateway of the subnet
         required: False
         type: str
-    ip_version:
+    resource_group_name:
         description:
-            - Subnet IP version
+            - The resource group name in which resource is provisioned
         required: False
         type: str
-        default: ipv4
+    ipv4_cidr_block:
+        description:
+            - IPV4 subnet - CIDR block
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Subnet name
+        required: True
+        type: str
     vpc:
         description:
             - (Required for new resource) VPC instance ID
@@ -41,10 +60,45 @@ options:
             - (Required for new resource) Subnet zone info
         required: True
         type: str
-    name:
+    resource_controller_url:
         description:
-            - (Required for new resource) Subnet name
-        required: True
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    ipv6_cidr_block:
+        description:
+            - None
+        required: False
+        type: str
+    total_ipv4_address_count:
+        description:
+            - None
+        required: False
+        type: int
+    network_acl:
+        description:
+            - None
+        required: False
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
         type: str
     id:
         description:
@@ -92,29 +146,52 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('vpc', 'str'),
     ('zone', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_name',
+    'available_ipv4_address_count',
     'public_gateway',
-    'ip_version',
+    'resource_group_name',
+    'ipv4_cidr_block',
+    'name',
     'vpc',
     'zone',
-    'name',
+    'resource_controller_url',
+    'resource_status',
+    'ipv6_cidr_block',
+    'total_ipv4_address_count',
+    'network_acl',
+    'status',
+    'resource_group',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_name=dict(
+        required= False,
+        type='str'),
+    available_ipv4_address_count=dict(
+        required= False,
+        type='str'),
     public_gateway=dict(
         required= False,
         type='str'),
-    ip_version=dict(
-        default='ipv4',
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    ipv4_cidr_block=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
         type='str'),
     vpc=dict(
         required= False,
@@ -122,7 +199,28 @@ module_args = dict(
     zone=dict(
         required= False,
         type='str'),
-    name=dict(
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    ipv6_cidr_block=dict(
+        required= False,
+        type='str'),
+    total_ipv4_address_count=dict(
+        required= False,
+        type='int'),
+    network_acl=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
         required= False,
         type='str'),
     id=dict(

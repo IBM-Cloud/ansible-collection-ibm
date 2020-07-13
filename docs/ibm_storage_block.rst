@@ -26,44 +26,76 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags associated with the resource
-
-
   type (True, str, None)
     (Required for new resource) Storage block type
-
-
-  iops (True, float, None)
-    (Required for new resource) IOPS value required
 
 
   os_format_type (True, str, None)
     (Required for new resource) OS formatr type
 
 
-  hourly_billing (False, bool, False)
-    Billing done hourly, if set to true
+  allowed_host_info (False, list, None)
+    None
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
-  capacity (True, int, None)
-    (Required for new resource) Storage block size
+  volumename (False, str, None)
+    Volume name
 
 
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
+
+
+  tags (False, list, None)
+    List of tags associated with the resource
+
+
+  hourly_billing (False, bool, False)
+    Billing done hourly, if set to true
+
+
+  iops (True, float, None)
+    (Required for new resource) IOPS value required
 
 
   notes (False, str, None)
     Additional note info
 
 
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
+  allowed_hardware_ids (False, list, None)
+    List of allowe hardware IDs
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
+
+
+  hostname (False, str, None)
+    Hostname
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
+
+
+  target_address (False, list, None)
+    List of target Addresses
 
 
   id (False, str, None)

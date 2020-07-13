@@ -26,7 +26,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tenant_name (False, str, None)
+    None
+
+
+  cloud_instances (False, list, None)
+    None
+
+
   pi_cloud_instance_id (True, str, None)
+    None
+
+
+  creation_date (False, str, None)
+    None
+
+
+  enabled (False, bool, None)
     None
 
 

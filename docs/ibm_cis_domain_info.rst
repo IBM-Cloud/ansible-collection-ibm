@@ -34,6 +34,22 @@ Parameters
     CISzone - Domain
 
 
+  paused (False, bool, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  name_servers (False, list, None)
+    None
+
+
+  original_name_servers (False, list, None)
+    None
+
+
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

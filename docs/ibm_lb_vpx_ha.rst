@@ -26,16 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  stay_secondary (False, bool, None)
+    Boolean value for stay secondary
+
+
+  tags (False, list, None)
+    Tags set for the resource
+
+
   primary_id (True, int, None)
     (Required for new resource) primary ID
 
 
   secondary_id (True, int, None)
     (Required for new resource) Secondary ID
-
-
-  tags (False, list, None)
-    Tags set for the resource
 
 
   id (False, str, None)

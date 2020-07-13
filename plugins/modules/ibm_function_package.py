@@ -20,22 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    bind_package_name:
-        description:
-            - Name of package to be binded.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of package.
-        required: True
-        type: str
     publish:
         description:
             - Package visibilty.
         required: False
         type: bool
         default: False
+    version:
+        description:
+            - Semantic version of the item.
+        required: False
+        type: str
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
@@ -48,6 +43,26 @@ options:
         required: False
         type: str
         default: []
+    annotations:
+        description:
+            - All annotations set on package by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    parameters:
+        description:
+            - All parameters set on package by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    bind_package_name:
+        description:
+            - Name of package to be binded.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of package.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,31 +100,43 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bind_package_name',
-    'name',
     'publish',
+    'version',
     'user_defined_annotations',
     'user_defined_parameters',
+    'annotations',
+    'parameters',
+    'bind_package_name',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bind_package_name=dict(
-        required= False,
-        type='str'),
-    name=dict(
-        required= False,
-        type='str'),
     publish=dict(
         default=False,
         type='bool'),
+    version=dict(
+        required= False,
+        type='str'),
     user_defined_annotations=dict(
         default='[]',
         type='str'),
     user_defined_parameters=dict(
         default='[]',
+        type='str'),
+    annotations=dict(
+        required= False,
+        type='str'),
+    parameters=dict(
+        required= False,
+        type='str'),
+    bind_package_name=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
         type='str'),
     id=dict(
         required= False,

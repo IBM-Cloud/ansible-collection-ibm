@@ -26,20 +26,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retries (False, int, 2)
-    retries
-
-
-  path (False, str, None)
-    path
+  expected_codes (False, str, None)
+    expected_codes
 
 
   description (False, str, None)
     description
 
 
+  type (False, str, http)
+    type
+
+
+  retries (False, int, 2)
+    retries
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
   timeout (False, int, 5)
     timeout
+
+
+  interval (False, int, 60)
+    interval
+
+
+  modified_on (False, str, None)
+    None
+
+
+  port (False, int, None)
+    None
+
+
+  path (False, str, None)
+    path
+
+
+  expected_body (False, str, None)
+    expected_body
+
+
+  method (False, str, None)
+    method
 
 
   follow_redirects (False, bool, None)
@@ -50,32 +82,8 @@ Parameters
     allow_insecure
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  type (False, str, http)
-    type
-
-
-  interval (False, int, 60)
-    interval
-
-
-  port (False, int, None)
+  created_on (False, str, None)
     None
-
-
-  expected_body (False, str, None)
-    expected_body
-
-
-  expected_codes (False, str, None)
-    expected_codes
-
-
-  method (False, str, None)
-    method
 
 
   id (False, str, None)

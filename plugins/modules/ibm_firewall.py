@@ -20,12 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    ha_enabled:
-        description:
-            - set to true if High availability is enabled
-        required: False
-        type: bool
-        default: False
     public_vlan_id:
         description:
             - (Required for new resource) Public VLAN ID
@@ -37,12 +31,38 @@ options:
         required: False
         type: list
         elements: str
+    location:
+        description:
+            - Location info
+        required: False
+        type: str
+    primary_ip:
+        description:
+            - Primary IP address
+        required: False
+        type: str
+    username:
+        description:
+            - User name
+        required: False
+        type: str
+    password:
+        description:
+            - Password for the given User
+        required: False
+        type: str
     firewall_type:
         description:
             - Firewall type
         required: False
         type: str
         default: HARDWARE_FIREWALL_DEDICATED
+    ha_enabled:
+        description:
+            - set to true if High availability is enabled
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,19 +114,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ha_enabled',
     'public_vlan_id',
     'tags',
+    'location',
+    'primary_ip',
+    'username',
+    'password',
     'firewall_type',
+    'ha_enabled',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ha_enabled=dict(
-        default=False,
-        type='bool'),
     public_vlan_id=dict(
         required= False,
         type='int'),
@@ -114,9 +135,24 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    location=dict(
+        required= False,
+        type='str'),
+    primary_ip=dict(
+        required= False,
+        type='str'),
+    username=dict(
+        required= False,
+        type='str'),
+    password=dict(
+        required= False,
+        type='str'),
     firewall_type=dict(
         default='HARDWARE_FIREWALL_DEDICATED',
         type='str'),
+    ha_enabled=dict(
+        default=False,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

@@ -20,30 +20,45 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    ttl:
+    retry:
         description:
-            - (Required for new resource) TTL configuration
-        required: True
-        type: int
-    tags:
-        description:
-            - tags set for the resource
+            - Retry count
         required: False
-        type: list
-        elements: str
+        type: int
+    minimum_ttl:
+        description:
+            - Minimun TTL configuration
+        required: False
+        type: int
+    service:
+        description:
+            - service info
+        required: False
+        type: str
     data:
         description:
             - (Required for new resource) DNS record data
         required: True
         type: str
-    type:
+    domain_id:
         description:
-            - (Required for new resource) DNS record type
+            - (Required for new resource) Domain ID of dns record instance
         required: True
-        type: str
-    protocol:
+        type: int
+    mx_priority:
         description:
-            - protocol info
+            - Maximum priority
+        required: False
+        type: int
+        default: 0
+    refresh:
+        description:
+            - refresh rate
+        required: False
+        type: int
+    responsible_person:
+        description:
+            - Responsible person for DNS record
         required: False
         type: str
     port:
@@ -51,21 +66,21 @@ options:
             - port number
         required: False
         type: int
-    weight:
+    tags:
         description:
-            - weight info
+            - tags set for the resource
+        required: False
+        type: list
+        elements: str
+    expire:
+        description:
+            - DNS record expiry info
         required: False
         type: int
-        default: 0
-    domain_id:
+    protocol:
         description:
-            - (Required for new resource) Domain ID of dns record instance
-        required: True
-        type: int
-    host:
-        description:
-            - (Required for new resource) Hostname
-        required: True
+            - protocol info
+        required: False
         type: str
     priority:
         description:
@@ -73,16 +88,26 @@ options:
         required: False
         type: int
         default: 0
-    mx_priority:
+    weight:
         description:
-            - Maximum priority
+            - weight info
         required: False
         type: int
         default: 0
-    service:
+    host:
         description:
-            - service info
-        required: False
+            - (Required for new resource) Hostname
+        required: True
+        type: str
+    ttl:
+        description:
+            - (Required for new resource) TTL configuration
+        required: True
+        type: int
+    type:
+        description:
+            - (Required for new resource) DNS record type
+        required: True
         type: str
     id:
         description:
@@ -130,68 +155,88 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('ttl', 'int'),
     ('data', 'str'),
-    ('type', 'str'),
     ('domain_id', 'int'),
     ('host', 'str'),
+    ('ttl', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ttl',
-    'tags',
-    'data',
-    'type',
-    'protocol',
-    'port',
-    'weight',
-    'domain_id',
-    'host',
-    'priority',
-    'mx_priority',
+    'retry',
+    'minimum_ttl',
     'service',
+    'data',
+    'domain_id',
+    'mx_priority',
+    'refresh',
+    'responsible_person',
+    'port',
+    'tags',
+    'expire',
+    'protocol',
+    'priority',
+    'weight',
+    'host',
+    'ttl',
+    'type',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ttl=dict(
+    retry=dict(
+        required= False,
+        type='int'),
+    minimum_ttl=dict(
+        required= False,
+        type='int'),
+    service=dict(
+        required= False,
+        type='str'),
+    data=dict(
+        required= False,
+        type='str'),
+    domain_id=dict(
+        required= False,
+        type='int'),
+    mx_priority=dict(
+        default=0,
+        type='int'),
+    refresh=dict(
+        required= False,
+        type='int'),
+    responsible_person=dict(
+        required= False,
+        type='str'),
+    port=dict(
         required= False,
         type='int'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    data=dict(
+    expire=dict(
         required= False,
-        type='str'),
-    type=dict(
-        required= False,
-        type='str'),
+        type='int'),
     protocol=dict(
-        required= False,
-        type='str'),
-    port=dict(
-        required= False,
-        type='int'),
-    weight=dict(
-        default=0,
-        type='int'),
-    domain_id=dict(
-        required= False,
-        type='int'),
-    host=dict(
         required= False,
         type='str'),
     priority=dict(
         default=0,
         type='int'),
-    mx_priority=dict(
+    weight=dict(
         default=0,
         type='int'),
-    service=dict(
+    host=dict(
+        required= False,
+        type='str'),
+    ttl=dict(
+        required= False,
+        type='int'),
+    type=dict(
         required= False,
         type='str'),
     id=dict(

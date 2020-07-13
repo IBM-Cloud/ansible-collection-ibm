@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    subnets:
+        description:
+            - List of subnets
+        required: False
+        type: list
+        elements: dict
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -57,12 +63,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     generation=dict(
         type='int',
         required=False,

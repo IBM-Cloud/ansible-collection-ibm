@@ -26,16 +26,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   name (True, str, None)
     (Required for new resource) Load Balancer name
+
+
+  status (False, str, None)
+    None
+
+
+  public_ips (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  hostname (False, str, None)
+    None
 
 
   type (False, str, public)
     Load Balancer type
 
 
+  operating_status (False, str, None)
+    None
+
+
+  private_ips (False, list, None)
+    None
+
+
   subnets (True, list, None)
     (Required for new resource) Load Balancer subnets list
+
+
+  resource_group (False, str, None)
+    None
 
 
   id (False, str, None)

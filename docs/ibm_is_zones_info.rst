@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zones (False, list, None)
+    None
+
+
   region_ (True, str, None)
     None
 

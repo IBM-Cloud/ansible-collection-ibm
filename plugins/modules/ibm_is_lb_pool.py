@@ -20,14 +20,29 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    protocol:
+    health_monitor_url:
         description:
-            - (Required for new resource) Load Balancer Protocol
+            - None
+        required: False
+        type: str
+    session_persistence_type:
+        description:
+            - Load Balancer Pool session persisence type.
+        required: False
+        type: str
+    algorithm:
+        description:
+            - (Required for new resource) Load Balancer Pool algorithm
         required: True
         type: str
-    health_timeout:
+    lb:
         description:
-            - (Required for new resource) Load Balancer health timeout interval
+            - (Required for new resource) Load Balancer ID
+        required: True
+        type: str
+    health_retries:
+        description:
+            - (Required for new resource) Load Balancer health retry count
         required: True
         type: int
     health_type:
@@ -35,29 +50,14 @@ options:
             - (Required for new resource) Load Balancer health type
         required: True
         type: str
-    session_persistence_type:
+    provisioning_status:
         description:
-            - Load Balancer Pool session persisence type.
+            - None
         required: False
         type: str
-    health_delay:
-        description:
-            - (Required for new resource) Load Blancer health delay time period
-        required: True
-        type: int
-    health_retries:
-        description:
-            - (Required for new resource) Load Balancer health retry count
-        required: True
-        type: int
     name:
         description:
             - (Required for new resource) Load Balancer Pool name
-        required: True
-        type: str
-    algorithm:
-        description:
-            - (Required for new resource) Load Balancer Pool algorithm
         required: True
         type: str
     session_persistence_cookie_name:
@@ -65,9 +65,29 @@ options:
             - Load Balancer Pool session persisence cookie name
         required: False
         type: str
-    lb:
+    health_timeout:
         description:
-            - (Required for new resource) Load Balancer ID
+            - (Required for new resource) Load Balancer health timeout interval
+        required: True
+        type: int
+    health_delay:
+        description:
+            - (Required for new resource) Load Blancer health delay time period
+        required: True
+        type: int
+    health_monitor_port:
+        description:
+            - None
+        required: False
+        type: int
+    pool_id:
+        description:
+            - None
+        required: False
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Load Balancer Protocol
         required: True
         type: str
     id:
@@ -116,62 +136,78 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
-    ('health_timeout', 'int'),
-    ('health_type', 'str'),
-    ('health_delay', 'int'),
-    ('health_retries', 'int'),
-    ('name', 'str'),
     ('algorithm', 'str'),
     ('lb', 'str'),
+    ('health_retries', 'int'),
+    ('health_type', 'str'),
+    ('name', 'str'),
+    ('health_timeout', 'int'),
+    ('health_delay', 'int'),
+    ('protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'protocol',
-    'health_timeout',
-    'health_type',
+    'health_monitor_url',
     'session_persistence_type',
-    'health_delay',
-    'health_retries',
-    'name',
     'algorithm',
-    'session_persistence_cookie_name',
     'lb',
+    'health_retries',
+    'health_type',
+    'provisioning_status',
+    'name',
+    'session_persistence_cookie_name',
+    'health_timeout',
+    'health_delay',
+    'health_monitor_port',
+    'pool_id',
+    'protocol',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    protocol=dict(
-        required= False,
-        type='str'),
-    health_timeout=dict(
-        required= False,
-        type='int'),
-    health_type=dict(
+    health_monitor_url=dict(
         required= False,
         type='str'),
     session_persistence_type=dict(
         required= False,
         type='str'),
-    health_delay=dict(
+    algorithm=dict(
         required= False,
-        type='int'),
+        type='str'),
+    lb=dict(
+        required= False,
+        type='str'),
     health_retries=dict(
         required= False,
         type='int'),
-    name=dict(
+    health_type=dict(
         required= False,
         type='str'),
-    algorithm=dict(
+    provisioning_status=dict(
+        required= False,
+        type='str'),
+    name=dict(
         required= False,
         type='str'),
     session_persistence_cookie_name=dict(
         required= False,
         type='str'),
-    lb=dict(
+    health_timeout=dict(
+        required= False,
+        type='int'),
+    health_delay=dict(
+        required= False,
+        type='int'),
+    health_monitor_port=dict(
+        required= False,
+        type='int'),
+    pool_id=dict(
+        required= False,
+        type='str'),
+    protocol=dict(
         required= False,
         type='str'),
     id=dict(

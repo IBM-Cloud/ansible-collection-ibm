@@ -30,6 +30,70 @@ Parameters
     None
 
 
+  ipv4_cidr_block (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  zone (False, str, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  name (False, str, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  public_gateway (False, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  ipv6_cidr_block (False, str, None)
+    None
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
+  vpc (False, str, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
   generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 

@@ -20,10 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    default:
         description:
-            - (Required for new resource) The name of the resource group
-        required: True
+            - Specifies whether its default resource group or not
+        required: False
+        type: bool
+    state_:
+        description:
+            - State of the resource group
+        required: False
         type: str
     tags:
         description:
@@ -31,6 +36,11 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) The name of the resource group
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -82,21 +92,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'default',
+    'state_',
     'tags',
+    'name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    default=dict(
+        required= False,
+        type='bool'),
+    state_=dict(
         required= False,
         type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
+    name=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

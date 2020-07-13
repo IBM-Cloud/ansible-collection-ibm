@@ -26,12 +26,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  available_ipv4_address_count (False, str, None)
+    None
+
+
   public_gateway (False, str, None)
     Public Gateway of the subnet
 
 
-  ip_version (False, str, ipv4)
-    Subnet IP version
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
+
+
+  name (True, str, None)
+    (Required for new resource) Subnet name
 
 
   vpc (True, str, None)
@@ -42,8 +58,36 @@ Parameters
     (Required for new resource) Subnet zone info
 
 
-  name (True, str, None)
-    (Required for new resource) Subnet name
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  ipv6_cidr_block (False, str, None)
+    None
+
+
+  total_ipv4_address_count (False, int, None)
+    None
+
+
+  network_acl (False, str, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
   id (False, str, None)

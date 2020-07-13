@@ -20,24 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    source_resource_type:
+    source_resource_instance_id:
         description:
-            - Resource type of source service
+            - The source resource instance Id
         required: False
-        type: str
-    target_service_name:
-        description:
-            - (Required for new resource) The target service name
-        required: True
         type: str
     target_resource_instance_id:
         description:
             - The target resource instance Id
-        required: False
-        type: str
-    target_resource_group_id:
-        description:
-            - The target resource group Id
         required: False
         type: str
     source_resource_group_id:
@@ -45,9 +35,14 @@ options:
             - The source resource group Id
         required: False
         type: str
-    target_resource_type:
+    source_resource_type:
         description:
-            - Resource type of target service
+            - Resource type of source service
+        required: False
+        type: str
+    source_service_account:
+        description:
+            - Account GUID of source service
         required: False
         type: str
     source_service_name:
@@ -61,10 +56,25 @@ options:
         required: True
         type: list
         elements: str
-    source_resource_instance_id:
+    target_resource_group_id:
         description:
-            - The source resource instance Id
+            - The target resource group Id
         required: False
+        type: str
+    target_resource_type:
+        description:
+            - Resource type of target service
+        required: False
+        type: str
+    version:
+        description:
+            - None
+        required: False
+        type: str
+    target_service_name:
+        description:
+            - (Required for new resource) The target service name
+        required: True
         type: str
     id:
         description:
@@ -112,44 +122,43 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('target_service_name', 'str'),
     ('source_service_name', 'str'),
     ('roles', 'list'),
+    ('target_service_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_resource_type',
-    'target_service_name',
+    'source_resource_instance_id',
     'target_resource_instance_id',
-    'target_resource_group_id',
     'source_resource_group_id',
-    'target_resource_type',
+    'source_resource_type',
+    'source_service_account',
     'source_service_name',
     'roles',
-    'source_resource_instance_id',
+    'target_resource_group_id',
+    'target_resource_type',
+    'version',
+    'target_service_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_resource_type=dict(
-        required= False,
-        type='str'),
-    target_service_name=dict(
+    source_resource_instance_id=dict(
         required= False,
         type='str'),
     target_resource_instance_id=dict(
         required= False,
         type='str'),
-    target_resource_group_id=dict(
-        required= False,
-        type='str'),
     source_resource_group_id=dict(
         required= False,
         type='str'),
-    target_resource_type=dict(
+    source_resource_type=dict(
+        required= False,
+        type='str'),
+    source_service_account=dict(
         required= False,
         type='str'),
     source_service_name=dict(
@@ -159,7 +168,16 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    source_resource_instance_id=dict(
+    target_resource_group_id=dict(
+        required= False,
+        type='str'),
+    target_resource_type=dict(
+        required= False,
+        type='str'),
+    version=dict(
+        required= False,
+        type='str'),
+    target_service_name=dict(
         required= False,
         type='str'),
     id=dict(

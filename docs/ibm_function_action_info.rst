@@ -26,8 +26,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  publish (False, bool, None)
+    Action visibilty.
+
+
+  version (False, str, None)
+    Semantic version of the item.
+
+
+  annotations (False, str, None)
+    All annotations set on action by user and those set by the IBM Cloud Function backend/API.
+
+
+  parameters (False, str, None)
+    All paramters set on action by user and those set by the IBM Cloud Function backend/API.
+
+
   name (True, str, None)
     Name of action.
+
+
+  limits (False, list, None)
+    None
+
+
+  exec (False, list, None)
+    None
 
 
   function_namespace (True, any, None)

@@ -20,10 +20,45 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    iv_value:
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    encrypted_nonce:
         description:
             - Only for imported root key
         required: False
+        type: str
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: True
         type: str
     standard_key:
         description:
@@ -31,14 +66,20 @@ options:
         required: False
         type: bool
         default: False
-    key_name:
+    force_delete:
         description:
-            - (Required for new resource) Key name
-        required: True
-        type: str
-    encrypted_nonce:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
+    iv_value:
         description:
             - Only for imported root key
+        required: False
+        type: str
+    crn:
+        description:
+            - Crn of the key
         required: False
         type: str
     key_protect_id:
@@ -46,12 +87,11 @@ options:
             - (Required for new resource) Key protect instance ID
         required: True
         type: str
-    force_delete:
+    key_id:
         description:
-            - set to true to force delete the key
+            - Key ID
         required: False
-        type: bool
-        default: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,36 +144,68 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iv_value',
-    'standard_key',
-    'key_name',
+    'resource_name',
+    'resource_crn',
+    'resource_status',
+    'resource_group_name',
+    'resource_controller_url',
+    'payload',
     'encrypted_nonce',
-    'key_protect_id',
+    'key_name',
+    'standard_key',
     'force_delete',
+    'iv_value',
+    'crn',
+    'key_protect_id',
+    'key_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iv_value=dict(
+    resource_name=dict(
         required= False,
         type='str'),
-    standard_key=dict(
-        default=False,
-        type='bool'),
-    key_name=dict(
+    resource_crn=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    payload=dict(
         required= False,
         type='str'),
     encrypted_nonce=dict(
         required= False,
         type='str'),
-    key_protect_id=dict(
+    key_name=dict(
         required= False,
         type='str'),
+    standard_key=dict(
+        default=False,
+        type='bool'),
     force_delete=dict(
         default=False,
         type='bool'),
+    iv_value=dict(
+        required= False,
+        type='str'),
+    crn=dict(
+        required= False,
+        type='str'),
+    key_protect_id=dict(
+        required= False,
+        type='str'),
+    key_id=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

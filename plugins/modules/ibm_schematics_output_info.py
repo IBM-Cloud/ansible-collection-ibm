@@ -30,9 +30,24 @@ options:
             - The id of template
         required: True
         type: str
+    type:
+        description:
+            - None
+        required: False
+        type: int
+    output_values:
+        description:
+            - None
+        required: False
+        type: dict
     output_json:
         description:
             - The json output in string
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this Workspace
         required: False
         type: str
     iaas_classic_username:
@@ -76,7 +91,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'workspace_id',
     'template_id',
+    'type',
+    'output_values',
     'output_json',
+    'resource_controller_url',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -89,7 +107,16 @@ module_args = dict(
     template_id=dict(
         required=True,
         type='str'),
+    type=dict(
+        required=False,
+        type='int'),
+    output_values=dict(
+        required=False,
+        type='dict'),
     output_json=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(

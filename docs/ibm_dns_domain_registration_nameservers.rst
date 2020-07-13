@@ -34,6 +34,10 @@ Parameters
     (Required for new resource) Custom name servers for the domain registration
 
 
+  original_name_servers (False, list, None)
+    Save of name servers prior to update
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 

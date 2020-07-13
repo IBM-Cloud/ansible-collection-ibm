@@ -20,6 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    stay_secondary:
+        description:
+            - Boolean value for stay secondary
+        required: False
+        type: bool
+    tags:
+        description:
+            - Tags set for the resource
+        required: False
+        type: list
+        elements: str
     primary_id:
         description:
             - (Required for new resource) primary ID
@@ -30,12 +41,6 @@ options:
             - (Required for new resource) Secondary ID
         required: True
         type: int
-    tags:
-        description:
-            - Tags set for the resource
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,25 +93,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'stay_secondary',
+    'tags',
     'primary_id',
     'secondary_id',
-    'tags',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    stay_secondary=dict(
+        required= False,
+        type='bool'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
     primary_id=dict(
         required= False,
         type='int'),
     secondary_id=dict(
         required= False,
         type='int'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
     id=dict(
         required= False,
         type='str'),

@@ -20,27 +20,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    rotate_keys:
+    expires_on:
         description:
-            - Keys are sorated if set to true
+            - Certificaet expairy date
         required: False
-        type: bool
-        default: False
+        type: int
+    certificate_manager_instance_id:
+        description:
+            - (Required for new resource) Certificate manager instance ID
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Certificate name
+        required: True
+        type: str
     description:
         description:
             - Certicate description
         required: False
         type: str
-    domain_validation_method:
+    issuer:
         description:
-            - Domain validation methods
+            - Certificate issuer info
         required: False
-        type: str
-        default: dns-01
-    certificate_manager_instance_id:
-        description:
-            - (Required for new resource) Certificate manager instance ID
-        required: True
         type: str
     domains:
         description:
@@ -48,22 +51,60 @@ options:
         required: True
         type: list
         elements: str
-    dns_provider_instance_crn:
+    status:
         description:
-            - DNS provider instance CRN
+            - Status  of the certificate
         required: False
         type: str
-    name:
+    rotate_keys:
         description:
-            - (Required for new resource) Certificate name
-        required: True
-        type: str
+            - Keys are sorated if set to true
+        required: False
+        type: bool
+        default: False
     key_algorithm:
         description:
             - Keyalgorithm info
         required: False
         type: str
         default: rsaEncryption 2048 bit
+    imported:
+        description:
+            - set to true if certificate is imported
+        required: False
+        type: bool
+    has_previous:
+        description:
+            - Has Previous
+        required: False
+        type: str
+    issuance_info:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
+    domain_validation_method:
+        description:
+            - Domain validation methods
+        required: False
+        type: str
+        default: dns-01
+    dns_provider_instance_crn:
+        description:
+            - DNS provider instance CRN
+        required: False
+        type: str
+    algorithm:
+        description:
+            - Algorithm info
+        required: False
+        type: str
+    begins_on:
+        description:
+            - Cerificate validity from date
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,51 +152,84 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('certificate_manager_instance_id', 'str'),
-    ('domains', 'list'),
     ('name', 'str'),
+    ('domains', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'rotate_keys',
-    'description',
-    'domain_validation_method',
+    'expires_on',
     'certificate_manager_instance_id',
-    'domains',
-    'dns_provider_instance_crn',
     'name',
+    'description',
+    'issuer',
+    'domains',
+    'status',
+    'rotate_keys',
     'key_algorithm',
+    'imported',
+    'has_previous',
+    'issuance_info',
+    'domain_validation_method',
+    'dns_provider_instance_crn',
+    'algorithm',
+    'begins_on',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    rotate_keys=dict(
-        default=False,
-        type='bool'),
+    expires_on=dict(
+        required= False,
+        type='int'),
+    certificate_manager_instance_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
     description=dict(
         required= False,
         type='str'),
-    domain_validation_method=dict(
-        default='dns-01',
-        type='str'),
-    certificate_manager_instance_id=dict(
+    issuer=dict(
         required= False,
         type='str'),
     domains=dict(
         required= False,
         elements='',
         type='list'),
-    dns_provider_instance_crn=dict(
+    status=dict(
         required= False,
         type='str'),
-    name=dict(
-        required= False,
-        type='str'),
+    rotate_keys=dict(
+        default=False,
+        type='bool'),
     key_algorithm=dict(
         default='rsaEncryption 2048 bit',
         type='str'),
+    imported=dict(
+        required= False,
+        type='bool'),
+    has_previous=dict(
+        required= False,
+        type='str'),
+    issuance_info=dict(
+        required= False,
+        elements='',
+        type='dict'),
+    domain_validation_method=dict(
+        default='dns-01',
+        type='str'),
+    dns_provider_instance_crn=dict(
+        required= False,
+        type='str'),
+    algorithm=dict(
+        required= False,
+        type='str'),
+    begins_on=dict(
+        required= False,
+        type='int'),
     id=dict(
         required= False,
         type='str'),

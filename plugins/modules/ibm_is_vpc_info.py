@@ -20,11 +20,84 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    default_security_group:
+        description:
+            - Security group associated with VPC
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
     name:
         description:
             - None
         required: True
         type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
+    default_network_acl:
+        description:
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    subnets:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    cse_source_addresses:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    classic_access:
+        description:
+            - None
+        required: False
+        type: bool
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -63,16 +136,75 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'default_security_group',
+    'resource_controller_url',
+    'resource_crn',
+    'resource_group_name',
     'name',
+    'resource_group',
+    'crn',
+    'default_network_acl',
+    'tags',
+    'resource_name',
+    'resource_status',
+    'subnets',
+    'status',
+    'cse_source_addresses',
+    'classic_access',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    default_security_group=dict(
+        required=False,
+        type='str'),
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    resource_crn=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    crn=dict(
+        required=False,
+        type='str'),
+    default_network_acl=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    status=dict(
+        required=False,
+        type='str'),
+    cse_source_addresses=dict(
+        required=False,
+        elements='',
+        type='list'),
+    classic_access=dict(
+        required=False,
+        type='bool'),
     generation=dict(
         type='int',
         required=False,

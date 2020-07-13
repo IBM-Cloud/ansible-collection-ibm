@@ -41,6 +41,17 @@ options:
             - Monitor value
         required: False
         type: str
+    origins:
+        description:
+            - (Required for new resource) Origins info
+        required: True
+        type: list
+        elements: dict
+    health:
+        description:
+            - Health info
+        required: False
+        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -51,12 +62,16 @@ options:
             - (Required for new resource) name
         required: True
         type: str
-    origins:
+    created_on:
         description:
-            - (Required for new resource) Origins info
-        required: True
-        type: list
-        elements: dict
+            - Creation date info
+        required: False
+        type: str
+    modified_on:
+        description:
+            - Modified date info
+        required: False
+        type: str
     minimum_origins:
         description:
             - Minimum number of Origins
@@ -116,9 +131,9 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('check_regions', 'list'),
     ('enabled', 'bool'),
+    ('origins', 'list'),
     ('cis_id', 'str'),
     ('name', 'str'),
-    ('origins', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -127,9 +142,12 @@ TL_ALL_PARAMETERS = [
     'description',
     'enabled',
     'monitor',
+    'origins',
+    'health',
     'cis_id',
     'name',
-    'origins',
+    'created_on',
+    'modified_on',
     'minimum_origins',
     'notification_email',
 ]
@@ -151,16 +169,25 @@ module_args = dict(
     monitor=dict(
         required= False,
         type='str'),
+    origins=dict(
+        required= False,
+        elements='',
+        type='list'),
+    health=dict(
+        required= False,
+        type='str'),
     cis_id=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
-    origins=dict(
+    created_on=dict(
         required= False,
-        elements='',
-        type='list'),
+        type='str'),
+    modified_on=dict(
+        required= False,
+        type='str'),
     minimum_origins=dict(
         default=1,
         type='int'),

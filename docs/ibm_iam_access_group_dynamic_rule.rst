@@ -34,6 +34,10 @@ Parameters
     (Required for new resource) conditions info
 
 
+  rule_id (False, str, None)
+    id of the rule
+
+
   access_group_id (True, str, None)
     (Required for new resource) Unique identifier of the access group
 

@@ -25,9 +25,61 @@ options:
             - The id of the resource group in which the Database instance is present
         required: False
         type: str
+    adminpassword:
+        description:
+            - The admin user id for the instance
+        required: False
+        type: str
+    members_disk_allocation_mb:
+        description:
+            - Disk allocation required for cluster
+        required: False
+        type: int
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    groups:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    plan:
+        description:
+            - The plan type of the Database instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    name:
+        description:
+            - Resource instance name for example, my Database instance
+        required: True
+        type: str
     location:
         description:
             - The location or the region in which the Database instance exists
+        required: False
+        type: str
+    guid:
+        description:
+            - Unique identifier of resource instance
         required: False
         type: str
     service:
@@ -35,16 +87,53 @@ options:
             - The name of the Cloud Internet database service
         required: False
         type: str
-    tags:
+    status:
+        description:
+            - The resource instance status
+        required: False
+        type: str
+    members_memory_allocation_mb:
+        description:
+            - Memory allocation required for cluster
+        required: False
+        type: int
+    connectionstrings:
         description:
             - None
         required: False
         type: list
-        elements: str
-    name:
+        elements: dict
+    resource_controller_url:
         description:
-            - Resource instance name for example, my Database instance
-        required: True
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+        required: False
+        type: str
+    adminuser:
+        description:
+            - The admin user id for the instance
+        required: False
+        type: str
+    version:
+        description:
+            - The database version to provision if specified
+        required: False
+        type: str
+    users:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    whitelist:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -85,10 +174,27 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'location',
-    'service',
+    'adminpassword',
+    'members_disk_allocation_mb',
     'tags',
+    'groups',
+    'resource_status',
+    'resource_group_name',
+    'plan',
+    'resource_name',
     'name',
+    'location',
+    'guid',
+    'service',
+    'status',
+    'members_memory_allocation_mb',
+    'connectionstrings',
+    'resource_controller_url',
+    'adminuser',
+    'version',
+    'users',
+    'whitelist',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -98,18 +204,73 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
+    adminpassword=dict(
+        required=False,
+        type='str'),
+    members_disk_allocation_mb=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_status=dict(
+        required=False,
+        type='str'),
+    resource_group_name=dict(
+        required=False,
+        type='str'),
+    plan=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=True,
+        type='str'),
     location=dict(
+        required=False,
+        type='str'),
+    guid=dict(
         required=False,
         type='str'),
     service=dict(
         required=False,
         type='str'),
-    tags=dict(
+    status=dict(
+        required=False,
+        type='str'),
+    members_memory_allocation_mb=dict(
+        required=False,
+        type='int'),
+    connectionstrings=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=True,
+    resource_controller_url=dict(
+        required=False,
+        type='str'),
+    adminuser=dict(
+        required=False,
+        type='str'),
+    version=dict(
+        required=False,
+        type='str'),
+    users=dict(
+        required=False,
+        elements='',
+        type='list'),
+    whitelist=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_crn=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

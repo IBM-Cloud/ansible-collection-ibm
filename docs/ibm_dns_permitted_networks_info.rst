@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  dns_permitted_networks (False, list, None)
+    Collection of permitted networks
+
+
   instance_id (True, str, None)
     Instance ID
 

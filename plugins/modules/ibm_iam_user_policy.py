@@ -31,6 +31,12 @@ options:
         required: True
         type: list
         elements: str
+    resources:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     account_management:
         description:
             - Give access to all account management services
@@ -43,6 +49,11 @@ options:
         required: False
         type: list
         elements: str
+    version:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,8 +108,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'ibm_id',
     'roles',
+    'resources',
     'account_management',
     'tags',
+    'version',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -112,6 +125,10 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    resources=dict(
+        required= False,
+        elements='',
+        type='list'),
     account_management=dict(
         default=False,
         type='bool'),
@@ -119,6 +136,9 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    version=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

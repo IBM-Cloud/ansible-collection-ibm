@@ -25,6 +25,12 @@ options:
             - Name of the access group
         required: False
         type: str
+    groups:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -63,6 +69,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'access_group_name',
+    'groups',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -72,6 +79,10 @@ module_args = dict(
     access_group_name=dict(
         required=False,
         type='str'),
+    groups=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

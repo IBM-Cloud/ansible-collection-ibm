@@ -20,11 +20,53 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - Type of the VPX
+        required: False
+        type: str
+    speed:
+        description:
+            - (Required for new resource) Speed value
+        required: True
+        type: int
+    vip_pool:
+        description:
+            - List of VIP ids
+        required: False
+        type: list
+        elements: str
+    management_ip_address:
+        description:
+            - management IP address
+        required: False
+        type: str
+    name:
+        description:
+            - Name
+        required: False
+        type: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name
         required: True
         type: str
+    ip_count:
+        description:
+            - (Required for new resource) IP address count
+        required: True
+        type: int
+    private_subnet:
+        description:
+            - Private subnet
+        required: False
+        type: str
+    tags:
+        description:
+            - List of the tags
+        required: False
+        type: list
+        elements: str
     version:
         description:
             - (Required for new resource) version info
@@ -35,21 +77,20 @@ options:
             - (Required for new resource) Plan info
         required: True
         type: str
-    tags:
+    public_vlan_id:
         description:
-            - List of the tags
+            - Piblic VLAN id
         required: False
-        type: list
-        elements: str
-    speed:
-        description:
-            - (Required for new resource) Speed value
-        required: True
         type: int
-    ip_count:
+    public_subnet:
         description:
-            - (Required for new resource) IP address count
-        required: True
+            - Public subnet
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - Private VLAN id
+        required: False
         type: int
     id:
         description:
@@ -97,44 +138,77 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('speed', 'int'),
     ('datacenter', 'str'),
+    ('ip_count', 'int'),
     ('version', 'str'),
     ('plan', 'str'),
-    ('speed', 'int'),
-    ('ip_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'speed',
+    'vip_pool',
+    'management_ip_address',
+    'name',
     'datacenter',
+    'ip_count',
+    'private_subnet',
+    'tags',
     'version',
     'plan',
-    'tags',
-    'speed',
-    'ip_count',
+    'public_vlan_id',
+    'public_subnet',
+    'private_vlan_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required= False,
+        type='str'),
+    speed=dict(
+        required= False,
+        type='int'),
+    vip_pool=dict(
+        required= False,
+        elements='',
+        type='list'),
+    management_ip_address=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
     datacenter=dict(
         required= False,
         type='str'),
-    version=dict(
+    ip_count=dict(
         required= False,
-        type='str'),
-    plan=dict(
+        type='int'),
+    private_subnet=dict(
         required= False,
         type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    speed=dict(
+    version=dict(
+        required= False,
+        type='str'),
+    plan=dict(
+        required= False,
+        type='str'),
+    public_vlan_id=dict(
         required= False,
         type='int'),
-    ip_count=dict(
+    public_subnet=dict(
+        required= False,
+        type='str'),
+    private_vlan_id=dict(
         required= False,
         type='int'),
     id=dict(

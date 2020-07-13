@@ -20,36 +20,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    type:
         description:
-            - DNS record name
+            - (Required for new resource) Record type
+        required: True
+        type: str
+    ttl:
+        description:
+            - TTL value
+        required: False
+        type: int
+        default: 1
+    modified_on:
+        description:
+            - None
         required: False
         type: str
     content:
         description:
             - DNS record content
         required: False
-        type: str
-    proxied:
-        description:
-            - Boolean value true if proxied else flase
-        required: False
-        type: bool
-        default: False
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Record type
-        required: True
         type: str
     data:
         description:
@@ -62,12 +52,42 @@ options:
             - Priority Value
         required: False
         type: int
-    ttl:
+    proxied:
         description:
-            - TTL value
+            - Boolean value true if proxied else flase
         required: False
-        type: int
-        default: 1
+        type: bool
+        default: False
+    created_on:
+        description:
+            - None
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    name:
+        description:
+            - DNS record name
+        required: False
+        type: str
+    proxiable:
+        description:
+            - None
+        required: False
+        type: bool
+    record_id:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,44 +134,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'content',
-    'proxied',
-    'cis_id',
-    'domain_id',
     'type',
+    'ttl',
+    'modified_on',
+    'content',
     'data',
     'priority',
-    'ttl',
+    'proxied',
+    'created_on',
+    'cis_id',
+    'domain_id',
+    'name',
+    'proxiable',
+    'record_id',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    type=dict(
+        required= False,
+        type='str'),
+    ttl=dict(
+        default=1,
+        type='int'),
+    modified_on=dict(
         required= False,
         type='str'),
     content=dict(
-        required= False,
-        type='str'),
-    proxied=dict(
-        default=False,
-        type='bool'),
-    cis_id=dict(
-        required= False,
-        type='str'),
-    domain_id=dict(
-        required= False,
-        type='str'),
-    type=dict(
         required= False,
         type='str'),
     data=dict(
@@ -161,9 +179,27 @@ module_args = dict(
     priority=dict(
         required= False,
         type='int'),
-    ttl=dict(
-        default=1,
-        type='int'),
+    proxied=dict(
+        default=False,
+        type='bool'),
+    created_on=dict(
+        required= False,
+        type='str'),
+    cis_id=dict(
+        required= False,
+        type='str'),
+    domain_id=dict(
+        required= False,
+        type='str'),
+    name=dict(
+        required= False,
+        type='str'),
+    proxiable=dict(
+        required= False,
+        type='bool'),
+    record_id=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

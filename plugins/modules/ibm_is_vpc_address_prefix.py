@@ -40,6 +40,11 @@ options:
             - (Required for new resource) VPC id
         required: True
         type: str
+    has_subnets:
+        description:
+            - Boolean value, set to true if VPC instance have subnets
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,6 +103,7 @@ TL_ALL_PARAMETERS = [
     'zone',
     'cidr',
     'vpc',
+    'has_subnets',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -116,6 +122,9 @@ module_args = dict(
     vpc=dict(
         required= False,
         type='str'),
+    has_subnets=dict(
+        required= False,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

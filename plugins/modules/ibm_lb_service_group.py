@@ -20,9 +20,40 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service_group_id:
+        description:
+            - Service group ID
+        required: False
+        type: int
+    routing_method:
+        description:
+            - (Required for new resource) Routing method
+        required: True
+        type: str
+    routing_type:
+        description:
+            - (Required for new resource) Routing type
+        required: True
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    virtual_server_id:
+        description:
+            - Virtual server ID
+        required: False
+        type: int
     load_balancer_id:
         description:
             - (Required for new resource) Loadbalancer ID
+        required: True
+        type: int
+    allocation:
+        description:
+            - (Required for new resource) Allocation type
         required: True
         type: int
     port:
@@ -30,32 +61,11 @@ options:
             - (Required for new resource) Port number
         required: True
         type: int
-    routing_type:
-        description:
-            - (Required for new resource) Routing type
-        required: True
-        type: str
-    allocation:
-        description:
-            - (Required for new resource) Allocation type
-        required: True
-        type: int
-    routing_method:
-        description:
-            - (Required for new resource) Routing method
-        required: True
-        type: str
     timeout:
         description:
             - Timeout value
         required: False
         type: int
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,50 +112,58 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('load_balancer_id', 'int'),
-    ('port', 'int'),
-    ('routing_type', 'str'),
-    ('allocation', 'int'),
     ('routing_method', 'str'),
+    ('routing_type', 'str'),
+    ('load_balancer_id', 'int'),
+    ('allocation', 'int'),
+    ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'load_balancer_id',
-    'port',
-    'routing_type',
-    'allocation',
+    'service_group_id',
     'routing_method',
-    'timeout',
+    'routing_type',
     'tags',
+    'virtual_server_id',
+    'load_balancer_id',
+    'allocation',
+    'port',
+    'timeout',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    load_balancer_id=dict(
-        required= False,
-        type='int'),
-    port=dict(
-        required= False,
-        type='int'),
-    routing_type=dict(
-        required= False,
-        type='str'),
-    allocation=dict(
+    service_group_id=dict(
         required= False,
         type='int'),
     routing_method=dict(
         required= False,
         type='str'),
-    timeout=dict(
+    routing_type=dict(
         required= False,
-        type='int'),
+        type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
+    virtual_server_id=dict(
+        required= False,
+        type='int'),
+    load_balancer_id=dict(
+        required= False,
+        type='int'),
+    allocation=dict(
+        required= False,
+        type='int'),
+    port=dict(
+        required= False,
+        type='int'),
+    timeout=dict(
+        required= False,
+        type='int'),
     id=dict(
         required= False,
         type='str'),

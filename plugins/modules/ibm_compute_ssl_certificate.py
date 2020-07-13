@@ -20,10 +20,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    private_key:
+    modify_date:
         description:
-            - (Required for new resource) SSL Private Key
-        required: True
+            - certificate modificatiob date
+        required: False
         type: str
     tags:
         description:
@@ -31,6 +31,41 @@ options:
         required: False
         type: list
         elements: str
+    private_key:
+        description:
+            - (Required for new resource) SSL Private Key
+        required: True
+        type: str
+    organization_name:
+        description:
+            - Organization name
+        required: False
+        type: str
+    validity_end:
+        description:
+            - Validity ends before
+        required: False
+        type: str
+    validity_begin:
+        description:
+            - Validity begins from
+        required: False
+        type: str
+    validity_days:
+        description:
+            - Validity days
+        required: False
+        type: int
+    key_size:
+        description:
+            - SSL key size
+        required: False
+        type: int
+    create_date:
+        description:
+            - certificate creation date
+        required: False
+        type: str
     certificate:
         description:
             - (Required for new resource) SSL Certifcate
@@ -39,6 +74,11 @@ options:
     intermediate_certificate:
         description:
             - Intermediate certificate value
+        required: False
+        type: str
+    common_name:
+        description:
+            - Common name
         required: False
         type: str
     id:
@@ -93,27 +133,59 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_key',
+    'modify_date',
     'tags',
+    'private_key',
+    'organization_name',
+    'validity_end',
+    'validity_begin',
+    'validity_days',
+    'key_size',
+    'create_date',
     'certificate',
     'intermediate_certificate',
+    'common_name',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_key=dict(
+    modify_date=dict(
         required= False,
         type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
+    private_key=dict(
+        required= False,
+        type='str'),
+    organization_name=dict(
+        required= False,
+        type='str'),
+    validity_end=dict(
+        required= False,
+        type='str'),
+    validity_begin=dict(
+        required= False,
+        type='str'),
+    validity_days=dict(
+        required= False,
+        type='int'),
+    key_size=dict(
+        required= False,
+        type='int'),
+    create_date=dict(
+        required= False,
+        type='str'),
     certificate=dict(
         required= False,
         type='str'),
     intermediate_certificate=dict(
+        required= False,
+        type='str'),
+    common_name=dict(
         required= False,
         type='str'),
     id=dict(

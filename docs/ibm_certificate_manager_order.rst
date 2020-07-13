@@ -26,36 +26,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
-
-
-  description (False, str, None)
-    Certicate description
-
-
-  domain_validation_method (False, str, dns-01)
-    Domain validation methods
+  expires_on (False, int, None)
+    Certificaet expairy date
 
 
   certificate_manager_instance_id (True, str, None)
     (Required for new resource) Certificate manager instance ID
 
 
+  name (True, str, None)
+    (Required for new resource) Certificate name
+
+
+  description (False, str, None)
+    Certicate description
+
+
+  issuer (False, str, None)
+    Certificate issuer info
+
+
   domains (True, list, None)
     (Required for new resource) List of domain names
+
+
+  status (False, str, None)
+    Status  of the certificate
+
+
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
+
+
+  key_algorithm (False, str, rsaEncryption 2048 bit)
+    Keyalgorithm info
+
+
+  imported (False, bool, None)
+    set to true if certificate is imported
+
+
+  has_previous (False, str, None)
+    Has Previous
+
+
+  issuance_info (False, dict, None)
+    None
+
+
+  domain_validation_method (False, str, dns-01)
+    Domain validation methods
 
 
   dns_provider_instance_crn (False, str, None)
     DNS provider instance CRN
 
 
-  name (True, str, None)
-    (Required for new resource) Certificate name
+  algorithm (False, str, None)
+    Algorithm info
 
 
-  key_algorithm (False, str, rsaEncryption 2048 bit)
-    Keyalgorithm info
+  begins_on (False, int, None)
+    Cerificate validity from date
 
 
   id (False, str, None)

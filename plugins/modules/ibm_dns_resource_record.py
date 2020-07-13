@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    port:
-        description:
-            - DNS server Port
-        required: False
-        type: int
-    service:
-        description:
-            - Service info
-        required: False
-        type: str
     instance_id:
         description:
             - (Required for new resource) Instance ID
@@ -40,21 +30,27 @@ options:
             - (Required for new resource) DNS record name
         required: True
         type: str
-    rdata:
-        description:
-            - (Required for new resource) DNS record Data
-        required: True
-        type: str
     ttl:
         description:
             - DNS record TTL
         required: False
         type: int
         default: 900
-    type:
+    preference:
         description:
-            - (Required for new resource) DNS record Type
-        required: True
+            - DNS maximum preference
+        required: False
+        type: int
+        default: 0
+    port:
+        description:
+            - DNS server Port
+        required: False
+        type: int
+    modified_on:
+        description:
+            - Modification date
+        required: False
         type: str
     priority:
         description:
@@ -78,12 +74,31 @@ options:
             - (Required for new resource) Zone ID
         required: True
         type: str
-    preference:
+    rdata:
         description:
-            - DNS maximum preference
+            - (Required for new resource) DNS record Data
+        required: True
+        type: str
+    created_on:
+        description:
+            - Creation Data
         required: False
-        type: int
-        default: 0
+        type: str
+    resource_record_id:
+        description:
+            - Resource record ID
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) DNS record Type
+        required: True
+        type: str
+    service:
+        description:
+            - Service info
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,50 +147,50 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
     ('name', 'str'),
+    ('zone_id', 'str'),
     ('rdata', 'str'),
     ('type', 'str'),
-    ('zone_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'port',
-    'service',
     'instance_id',
     'name',
-    'rdata',
     'ttl',
-    'type',
+    'preference',
+    'port',
+    'modified_on',
     'priority',
     'weight',
     'protocol',
     'zone_id',
-    'preference',
+    'rdata',
+    'created_on',
+    'resource_record_id',
+    'type',
+    'service',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    port=dict(
-        required= False,
-        type='int'),
-    service=dict(
-        required= False,
-        type='str'),
     instance_id=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
-    rdata=dict(
-        required= False,
-        type='str'),
     ttl=dict(
         default=900,
         type='int'),
-    type=dict(
+    preference=dict(
+        default=0,
+        type='int'),
+    port=dict(
+        required= False,
+        type='int'),
+    modified_on=dict(
         required= False,
         type='str'),
     priority=dict(
@@ -190,9 +205,21 @@ module_args = dict(
     zone_id=dict(
         required= False,
         type='str'),
-    preference=dict(
-        default=0,
-        type='int'),
+    rdata=dict(
+        required= False,
+        type='str'),
+    created_on=dict(
+        required= False,
+        type='str'),
+    resource_record_id=dict(
+        required= False,
+        type='str'),
+    type=dict(
+        required= False,
+        type='str'),
+    service=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

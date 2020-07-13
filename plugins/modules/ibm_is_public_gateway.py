@@ -20,20 +20,67 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    floating_ip:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
     vpc:
         description:
             - (Required for new resource) Public gateway VPC info
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the Public gateway instance
         required: True
         type: str
     zone:
         description:
             - (Required for new resource) Public gateway zone info
         required: True
+        type: str
+    tags:
+        description:
+            - Service tags for the public gateway instance
+        required: False
+        type: list
+        elements: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the Public gateway instance
+        required: True
+        type: str
+    status:
+        description:
+            - Public gateway instance status
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
         type: str
     id:
         description:
@@ -82,28 +129,66 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vpc', 'str'),
-    ('name', 'str'),
     ('zone', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'floating_ip',
     'vpc',
-    'name',
     'zone',
+    'tags',
+    'resource_controller_url',
+    'resource_name',
+    'resource_status',
+    'resource_group_name',
+    'name',
+    'status',
+    'resource_group',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    floating_ip=dict(
+        required= False,
+        elements='',
+        type='dict'),
     vpc=dict(
+        required= False,
+        type='str'),
+    zone=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
-    zone=dict(
+    status=dict(
+        required= False,
+        type='str'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
         required= False,
         type='str'),
     id=dict(

@@ -34,8 +34,20 @@ Parameters
     The id of template
 
 
+  type (False, int, None)
+    None
+
+
+  output_values (False, dict, None)
+    None
+
+
   output_json (False, str, None)
     The json output in string
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this Workspace
 
 
   iaas_classic_username (False, any, None)

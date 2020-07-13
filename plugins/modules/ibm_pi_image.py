@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    image_id:
+        description:
+            - Image ID
+        required: False
+        type: str
     pi_image_name:
         description:
             - (Required for new resource) Image name
@@ -84,6 +89,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'image_id',
     'pi_image_name',
     'pi_image_id',
     'pi_cloud_instance_id',
@@ -93,6 +99,9 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    image_id=dict(
+        required= False,
+        type='str'),
     pi_image_name=dict(
         required= False,
         type='str'),

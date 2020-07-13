@@ -26,6 +26,22 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  master_ip_address (False, str, None)
+    None
+
+
+  transfer_frequency (False, int, None)
+    None
+
+
+  status_id (False, int, None)
+    None
+
+
+  status_text (False, str, None)
+    None
+
+
   zone_name (True, str, None)
     The name of the secondary
 

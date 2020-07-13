@@ -20,6 +20,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    dns_permitted_networks:
+        description:
+            - Collection of permitted networks
+        required: False
+        type: list
+        elements: dict
     instance_id:
         description:
             - Instance ID
@@ -69,6 +75,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'dns_permitted_networks',
     'instance_id',
     'zone_id',
 ]
@@ -77,6 +84,10 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    dns_permitted_networks=dict(
+        required=False,
+        elements='',
+        type='list'),
     instance_id=dict(
         required=True,
         type='str'),

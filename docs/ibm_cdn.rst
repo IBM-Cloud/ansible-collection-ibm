@@ -26,44 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  respect_headers (False, bool, True)
-    respect headers info
-
-
-  file_extension (False, str, None)
-    File extension info
-
-
-  vendor_name (False, str, akamai)
-    Vendor name
-
-
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
-
-
-  http_port (False, int, 80)
-    HTTP port number
-
-
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
   performance_configuration (False, str, General web delivery)
     performance configuration info
-
-
-  https_port (False, int, 443)
-    HTTPS port number
-
-
-  cache_key_query_rule (False, str, include-all)
-    query rule info
 
 
   path (False, str, /*)
@@ -74,12 +38,60 @@ Parameters
     (Required for new resource) Host name
 
 
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  status (False, str, None)
+    Status info of the CDN instance
+
+
+  file_extension (False, str, None)
+    File extension info
+
+
+  certificate_type (False, str, None)
+    Certificate type
+
+
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
+  https_port (False, int, 443)
+    HTTPS port number
+
+
   bucket_name (False, str, None)
     Bucket name
 
 
+  header (False, str, None)
+    Header info
+
+
+  respect_headers (False, bool, True)
+    respect headers info
+
+
+  vendor_name (False, str, akamai)
+    Vendor name
+
+
   protocol (False, str, HTTP)
     Protocol name
+
+
+  cname (False, str, None)
+    cname info
 
 
   id (False, str, None)

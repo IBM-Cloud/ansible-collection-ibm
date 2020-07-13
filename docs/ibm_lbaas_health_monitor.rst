@@ -26,18 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  max_retries (False, int, 2)
-    Maximum retry counts
-
-
-  timeout (False, int, 2)
-    Timeout in seconds
-
-
-  url_path (False, str, /)
-    URL Path
-
-
   monitor_id (True, str, None)
     (Required for new resource) Monitor ID
 
@@ -56,6 +44,18 @@ Parameters
 
   interval (False, int, 5)
     Interval value
+
+
+  max_retries (False, int, 2)
+    Maximum retry counts
+
+
+  timeout (False, int, 2)
+    Timeout in seconds
+
+
+  url_path (False, str, /)
+    URL Path
 
 
   id (False, str, None)

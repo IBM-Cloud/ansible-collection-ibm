@@ -26,32 +26,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  connections (True, int, None)
-    (Required for new resource) Connections value
+  ip_address (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    Tags associated with resource
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name info
 
 
-  ha_enabled (False, bool, False)
-    true if High availability is enabled
-
-
   security_certificate_id (False, int, None)
     Security certificate ID
 
 
-  ssl_offload (False, bool, False)
-    boolean value true if SSL offload is enabled
+  subnet_id (False, int, None)
+    None
 
 
   dedicated (False, bool, False)
     Boolena value true if Load balncer is dedicated type
 
 
-  tags (False, list, None)
-    Tags associated with resource
+  ssl_enabled (False, bool, None)
+    None
+
+
+  ssl_offload (False, bool, False)
+    boolean value true if SSL offload is enabled
+
+
+  hostname (False, str, None)
+    None
+
+
+  connections (True, int, None)
+    (Required for new resource) Connections value
+
+
+  ha_enabled (False, bool, False)
+    true if High availability is enabled
 
 
   id (False, str, None)

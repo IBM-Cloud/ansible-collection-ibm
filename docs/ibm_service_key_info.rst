@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  credentials (False, dict, None)
+    Credentials asociated with the key
+
+
   name (True, str, None)
     The name of the service key
 

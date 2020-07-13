@@ -25,6 +25,12 @@ options:
             - Certificate Manager Instance ID
         required: True
         type: str
+    certificates:
+        description:
+            - List of certificates
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -64,6 +70,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'certificate_manager_instance_id',
+    'certificates',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -73,6 +80,10 @@ module_args = dict(
     certificate_manager_instance_id=dict(
         required=True,
         type='str'),
+    certificates=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

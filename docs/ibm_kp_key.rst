@@ -26,28 +26,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  iv_value (False, str, None)
-    Only for imported root key
+  resource_name (False, str, None)
+    The name of the resource
 
 
-  standard_key (False, bool, False)
-    Standard key type
+  resource_crn (False, str, None)
+    The crn of the resource
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+
+
+  payload (False, str, None)
+    None
 
 
   encrypted_nonce (False, str, None)
     Only for imported root key
 
 
-  key_protect_id (True, str, None)
-    (Required for new resource) Key protect instance ID
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  standard_key (False, bool, False)
+    Standard key type
 
 
   force_delete (False, bool, False)
     set to true to force delete the key
+
+
+  iv_value (False, str, None)
+    Only for imported root key
+
+
+  crn (False, str, None)
+    Crn of the key
+
+
+  key_protect_id (True, str, None)
+    (Required for new resource) Key protect instance ID
+
+
+  key_id (False, str, None)
+    Key ID
 
 
   id (False, str, None)

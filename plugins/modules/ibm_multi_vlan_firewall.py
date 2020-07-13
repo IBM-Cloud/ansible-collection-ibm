@@ -20,32 +20,67 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pod:
-        description:
-            - (Required for new resource) POD name
-        required: True
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
-        type: str
-    firewall_type:
-        description:
-            - (Required for new resource) Firewall type
-        required: True
-        type: str
     addon_configuration:
         description:
             - High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
         required: False
         type: list
         elements: str
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    pod:
+        description:
+            - (Required for new resource) POD name
+        required: True
+        type: str
+    public_vlan_id:
+        description:
+            - Public VLAN id
+        required: False
+        type: int
+    firewall_type:
+        description:
+            - (Required for new resource) Firewall type
+        required: True
+        type: str
+    public_ip:
+        description:
+            - Public IP Address
+        required: False
+        type: str
+    password:
+        description:
+            - Password
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    private_vlan_id:
+        description:
+            - Private VLAN id
+        required: False
+        type: int
+    public_ipv6:
+        description:
+            - Public IPV6 IP
+        required: False
+        type: str
+    private_ip:
+        description:
+            - Private IP Address
+        required: False
+        type: str
+    username:
+        description:
+            - User name
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,41 +127,69 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pod', 'str'),
     ('datacenter', 'str'),
-    ('name', 'str'),
+    ('pod', 'str'),
     ('firewall_type', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pod',
-    'datacenter',
-    'name',
-    'firewall_type',
     'addon_configuration',
+    'datacenter',
+    'pod',
+    'public_vlan_id',
+    'firewall_type',
+    'public_ip',
+    'password',
+    'name',
+    'private_vlan_id',
+    'public_ipv6',
+    'private_ip',
+    'username',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    addon_configuration=dict(
+        required= False,
+        elements='',
+        type='list'),
+    datacenter=dict(
+        required= False,
+        type='str'),
     pod=dict(
         required= False,
         type='str'),
-    datacenter=dict(
+    public_vlan_id=dict(
+        required= False,
+        type='int'),
+    firewall_type=dict(
+        required= False,
+        type='str'),
+    public_ip=dict(
+        required= False,
+        type='str'),
+    password=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
-    firewall_type=dict(
+    private_vlan_id=dict(
+        required= False,
+        type='int'),
+    public_ipv6=dict(
         required= False,
         type='str'),
-    addon_configuration=dict(
+    private_ip=dict(
         required= False,
-        elements='',
-        type='list'),
+        type='str'),
+    username=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

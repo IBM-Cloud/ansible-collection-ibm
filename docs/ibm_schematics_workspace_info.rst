@@ -30,6 +30,58 @@ Parameters
     The id of workspace
 
 
+  status (False, str, None)
+    The status of workspace
+
+
+  types (False, list, None)
+    None
+
+
+  is_frozen (False, bool, None)
+    None
+
+
+  is_locked (False, bool, None)
+    None
+
+
+  description (False, str, None)
+    The description of workspace
+
+
+  crn (False, str, None)
+    cloud resource name of the workspace
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this workspace
+
+
+  name (False, str, None)
+    The name of workspace
+
+
+  resource_group (False, str, None)
+    The resource group of workspace
+
+
+  location (False, str, None)
+    The location of workspace
+
+
+  catalog_ref (False, dict, None)
+    Catalog references
+
+
+  template_id (False, list, None)
+    The id of templates
+
+
+  tags (False, list, None)
+    None
+
+
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 

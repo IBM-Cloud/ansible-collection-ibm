@@ -26,6 +26,18 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  org (True, str, None)
+    (Required for new resource) The org this space belongs to
+
+
+  auditors (False, list, None)
+    The IBMID of the users who will have auditor role in this space, ex - user@example.com
+
+
+  managers (False, list, None)
+    The IBMID of the users who will have manager role in this space, ex - user@example.com
+
+
   developers (False, list, None)
     The IBMID of the users who will have developer role in this space, ex - user@example.com
 
@@ -40,18 +52,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) The name for the space
-
-
-  org (True, str, None)
-    (Required for new resource) The org this space belongs to
-
-
-  auditors (False, list, None)
-    The IBMID of the users who will have auditor role in this space, ex - user@example.com
-
-
-  managers (False, list, None)
-    The IBMID of the users who will have manager role in this space, ex - user@example.com
 
 
   id (False, str, None)

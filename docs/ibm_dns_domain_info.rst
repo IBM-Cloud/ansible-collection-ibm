@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  id (False, int, None)
+    A domain record's internal identifier
+
+
   name (True, str, None)
     The name of the domain
 

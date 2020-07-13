@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notes:
-        description:
-            - Additional notes
-        required: False
-        type: str
     tags:
         description:
             - List of tags for the resource
@@ -40,6 +35,16 @@ options:
         description:
             - (Required for new resource) Plublic Key info
         required: True
+        type: str
+    fingerprint:
+        description:
+            - SSH key fingerprint
+        required: False
+        type: str
+    notes:
+        description:
+            - Additional notes
+        required: False
         type: str
     id:
         description:
@@ -93,19 +98,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notes',
     'tags',
     'label',
     'public_key',
+    'fingerprint',
+    'notes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notes=dict(
-        required= False,
-        type='str'),
     tags=dict(
         required= False,
         elements='',
@@ -114,6 +117,12 @@ module_args = dict(
         required= False,
         type='str'),
     public_key=dict(
+        required= False,
+        type='str'),
+    fingerprint=dict(
+        required= False,
+        type='str'),
+    notes=dict(
         required= False,
         type='str'),
     id=dict(

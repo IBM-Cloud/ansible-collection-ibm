@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  port (True, int, None)
-    (Required for new resource) Port number
-
-
   enabled (True, bool, None)
     (Required for new resource) Boolean value true, if enabled else false
 
@@ -52,6 +48,10 @@ Parameters
 
   ip_address_id (True, int, None)
     (Required for new resource) IP Address ID
+
+
+  port (True, int, None)
+    (Required for new resource) Port number
 
 
   id (False, str, None)

@@ -26,32 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
-
-  disabled (False, bool, False)
-    Whether this rate limiting rule is currently disabled.
-
-
-  period (True, int, None)
-    (Required for new resource) Rate Limiting Period
-
-
-  action (True, list, None)
-    (Required for new resource) Rate Limiting Action
-
-
-  correlate (False, list, None)
-    Ratelimiting Correlate
-
-
-  match (False, list, None)
-    Rate Limiting Match
+  rule_id (False, str, None)
+    Rate Limit rule Id
 
 
   cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
+
+
+  disabled (False, bool, False)
+    Whether this rate limiting rule is currently disabled.
 
 
   description (False, str, None)
@@ -62,8 +46,28 @@ Parameters
     Bypass URL
 
 
+  period (True, int, None)
+    (Required for new resource) Rate Limiting Period
+
+
+  correlate (False, list, None)
+    Ratelimiting Correlate
+
+
+  match (False, list, None)
+    Rate Limiting Match
+
+
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
   threshold (True, int, None)
     (Required for new resource) Rate Limiting Threshold
+
+
+  action (True, list, None)
+    (Required for new resource) Rate Limiting Action
 
 
   id (False, str, None)

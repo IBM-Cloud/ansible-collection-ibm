@@ -26,11 +26,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  local_note (False, str, None)
+  tags (False, list, None)
     None
 
 
-  tags (False, list, None)
+  name (False, str, None)
+    None
+
+
+  local_note (False, str, None)
     None
 
 

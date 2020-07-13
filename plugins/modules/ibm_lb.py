@@ -20,45 +20,65 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    connections:
+    ip_address:
         description:
-            - (Required for new resource) Connections value
-        required: True
-        type: int
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name info
-        required: True
+            - None
+        required: False
         type: str
-    ha_enabled:
-        description:
-            - true if High availability is enabled
-        required: False
-        type: bool
-        default: False
-    security_certificate_id:
-        description:
-            - Security certificate ID
-        required: False
-        type: int
-    ssl_offload:
-        description:
-            - boolean value true if SSL offload is enabled
-        required: False
-        type: bool
-        default: False
-    dedicated:
-        description:
-            - Boolena value true if Load balncer is dedicated type
-        required: False
-        type: bool
-        default: False
     tags:
         description:
             - Tags associated with resource
         required: False
         type: list
         elements: str
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name info
+        required: True
+        type: str
+    security_certificate_id:
+        description:
+            - Security certificate ID
+        required: False
+        type: int
+    subnet_id:
+        description:
+            - None
+        required: False
+        type: int
+    dedicated:
+        description:
+            - Boolena value true if Load balncer is dedicated type
+        required: False
+        type: bool
+        default: False
+    ssl_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+    ssl_offload:
+        description:
+            - boolean value true if SSL offload is enabled
+        required: False
+        type: bool
+        default: False
+    hostname:
+        description:
+            - None
+        required: False
+        type: str
+    connections:
+        description:
+            - (Required for new resource) Connections value
+        required: True
+        type: int
+    ha_enabled:
+        description:
+            - true if High availability is enabled
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,47 +125,63 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('connections', 'int'),
     ('datacenter', 'str'),
+    ('connections', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'connections',
-    'datacenter',
-    'ha_enabled',
-    'security_certificate_id',
-    'ssl_offload',
-    'dedicated',
+    'ip_address',
     'tags',
+    'datacenter',
+    'security_certificate_id',
+    'subnet_id',
+    'dedicated',
+    'ssl_enabled',
+    'ssl_offload',
+    'hostname',
+    'connections',
+    'ha_enabled',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    connections=dict(
-        required= False,
-        type='int'),
-    datacenter=dict(
+    ip_address=dict(
         required= False,
         type='str'),
-    ha_enabled=dict(
-        default=False,
-        type='bool'),
-    security_certificate_id=dict(
-        required= False,
-        type='int'),
-    ssl_offload=dict(
-        default=False,
-        type='bool'),
-    dedicated=dict(
-        default=False,
-        type='bool'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
+    datacenter=dict(
+        required= False,
+        type='str'),
+    security_certificate_id=dict(
+        required= False,
+        type='int'),
+    subnet_id=dict(
+        required= False,
+        type='int'),
+    dedicated=dict(
+        default=False,
+        type='bool'),
+    ssl_enabled=dict(
+        required= False,
+        type='bool'),
+    ssl_offload=dict(
+        default=False,
+        type='bool'),
+    hostname=dict(
+        required= False,
+        type='str'),
+    connections=dict(
+        required= False,
+        type='int'),
+    ha_enabled=dict(
+        default=False,
+        type='bool'),
     id=dict(
         required= False,
         type='str'),

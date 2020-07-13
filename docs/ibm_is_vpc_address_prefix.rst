@@ -42,6 +42,10 @@ Parameters
     (Required for new resource) VPC id
 
 
+  has_subnets (False, bool, None)
+    Boolean value, set to true if VPC instance have subnets
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 

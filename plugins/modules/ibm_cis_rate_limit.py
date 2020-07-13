@@ -20,9 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    domain_id:
+    rule_id:
         description:
-            - (Required for new resource) CIS Domain ID
+            - Rate Limit rule Id
+        required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
         required: True
         type: str
     disabled:
@@ -31,17 +36,22 @@ options:
         required: False
         type: bool
         default: False
+    description:
+        description:
+            - A note that you can use to describe the reason for a rate limiting rule.
+        required: False
+        type: str
+    bypass:
+        description:
+            - Bypass URL
+        required: False
+        type: list
+        elements: dict
     period:
         description:
             - (Required for new resource) Rate Limiting Period
         required: True
         type: int
-    action:
-        description:
-            - (Required for new resource) Rate Limiting Action
-        required: True
-        type: list
-        elements: dict
     correlate:
         description:
             - Ratelimiting Correlate
@@ -54,27 +64,22 @@ options:
         required: False
         type: list
         elements: dict
-    cis_id:
+    domain_id:
         description:
-            - (Required for new resource) CIS Intance CRN
+            - (Required for new resource) CIS Domain ID
         required: True
         type: str
-    description:
-        description:
-            - A note that you can use to describe the reason for a rate limiting rule.
-        required: False
-        type: str
-    bypass:
-        description:
-            - Bypass URL
-        required: False
-        type: list
-        elements: dict
     threshold:
         description:
             - (Required for new resource) Rate Limiting Threshold
         required: True
         type: int
+    action:
+        description:
+            - (Required for new resource) Rate Limiting Action
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,44 +126,51 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
-    ('period', 'int'),
-    ('action', 'list'),
     ('cis_id', 'str'),
+    ('period', 'int'),
+    ('domain_id', 'str'),
     ('threshold', 'int'),
+    ('action', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'disabled',
-    'period',
-    'action',
-    'correlate',
-    'match',
+    'rule_id',
     'cis_id',
+    'disabled',
     'description',
     'bypass',
+    'period',
+    'correlate',
+    'match',
+    'domain_id',
     'threshold',
+    'action',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
+    rule_id=dict(
+        required= False,
+        type='str'),
+    cis_id=dict(
         required= False,
         type='str'),
     disabled=dict(
         default=False,
         type='bool'),
-    period=dict(
+    description=dict(
         required= False,
-        type='int'),
-    action=dict(
+        type='str'),
+    bypass=dict(
         required= False,
         elements='',
         type='list'),
+    period=dict(
+        required= False,
+        type='int'),
     correlate=dict(
         required= False,
         elements='',
@@ -167,19 +179,16 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    cis_id=dict(
+    domain_id=dict(
         required= False,
         type='str'),
-    description=dict(
-        required= False,
-        type='str'),
-    bypass=dict(
-        required= False,
-        elements='',
-        type='list'),
     threshold=dict(
         required= False,
         type='int'),
+    action=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),

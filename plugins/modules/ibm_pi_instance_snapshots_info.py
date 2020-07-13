@@ -25,6 +25,12 @@ options:
             - None
         required: True
         type: str
+    instance_snapshots:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -60,6 +66,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
+    'instance_snapshots',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -69,6 +76,10 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
+    instance_snapshots=dict(
+        required=False,
+        elements='',
+        type='list'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),

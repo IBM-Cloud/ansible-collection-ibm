@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notes (False, str, None)
-    Additional notes
+  ip_address (False, str, None)
+    IP Address
 
 
   routes_to (True, str, None)
@@ -36,6 +36,10 @@ Parameters
 
   tags (False, list, None)
     List of tags
+
+
+  notes (False, str, None)
+    Additional notes
 
 
   id (False, str, None)

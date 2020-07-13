@@ -20,16 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    service_endpoints:
         description:
-            - The resource group id
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
         type: str
-    parameters:
+    resource_controller_url:
         description:
-            - Arbitrary parameters to pass. Must be a JSON object
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
         required: False
-        type: dict
+        type: str
     name:
         description:
             - (Required for new resource) A name for the resource instance
@@ -45,15 +45,61 @@ options:
             - (Required for new resource) The location where the instance available
         required: True
         type: str
-    service_endpoints:
+    guid:
         description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+            - Guid of resource instance
+        required: False
+        type: str
+    resource_crn:
+        description:
+            - The crn of the resource
         required: False
         type: str
     service:
         description:
             - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
         required: True
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    status:
+        description:
+            - Status of resource instance
+        required: False
+        type: str
+    crn:
+        description:
+            - CRN of resource instance
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
         type: str
     id:
         description:
@@ -109,25 +155,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'parameters',
+    'service_endpoints',
+    'resource_controller_url',
     'name',
     'plan',
     'location',
-    'service_endpoints',
+    'guid',
+    'resource_crn',
     'service',
+    'resource_name',
+    'resource_group_name',
+    'resource_group_id',
+    'parameters',
+    'tags',
+    'status',
+    'crn',
+    'resource_status',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    service_endpoints=dict(
         required= False,
         type='str'),
-    parameters=dict(
+    resource_controller_url=dict(
         required= False,
-        type='dict'),
+        type='str'),
     name=dict(
         required= False,
         type='str'),
@@ -137,10 +192,38 @@ module_args = dict(
     location=dict(
         required= False,
         type='str'),
-    service_endpoints=dict(
+    guid=dict(
+        required= False,
+        type='str'),
+    resource_crn=dict(
         required= False,
         type='str'),
     service=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    resource_group_id=dict(
+        required= False,
+        type='str'),
+    parameters=dict(
+        required= False,
+        type='dict'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    status=dict(
+        required= False,
+        type='str'),
+    crn=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
         required= False,
         type='str'),
     id=dict(

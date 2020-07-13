@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    uri:
-        description:
-            - (Required for new resource) URI of the hook
-        required: True
-        type: str
     tags:
         description:
             - Tags associated with resource
@@ -34,6 +29,11 @@ options:
     name:
         description:
             - (Required for new resource) Provision hook name
+        required: True
+        type: str
+    uri:
+        description:
+            - (Required for new resource) URI of the hook
         required: True
         type: str
     id:
@@ -82,29 +82,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('uri', 'str'),
     ('name', 'str'),
+    ('uri', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'uri',
     'tags',
     'name',
+    'uri',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    uri=dict(
-        required= False,
-        type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
     name=dict(
+        required= False,
+        type='str'),
+    uri=dict(
         required= False,
         type='str'),
     id=dict(

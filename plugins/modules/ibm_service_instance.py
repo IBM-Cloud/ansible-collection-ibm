@@ -20,14 +20,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) A name for the service instance
+        required: True
+        type: str
     space_guid:
         description:
             - (Required for new resource) The guid of the space in which the instance will be created
         required: True
         type: str
-    service:
+    service_keys:
         description:
-            - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
+            - The service keys asociated with the service instance
+        required: False
+        type: list
+        elements: dict
+    parameters:
+        description:
+            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
+        required: False
+        type: dict
+    plan:
+        description:
+            - (Required for new resource) The plan type of the service
         required: True
         type: str
     tags:
@@ -36,10 +52,20 @@ options:
         required: False
         type: list
         elements: str
-    plan:
+    service:
         description:
-            - (Required for new resource) The plan type of the service
+            - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
         required: True
+        type: str
+    credentials:
+        description:
+            - The service broker-provided credentials to use this service.
+        required: False
+        type: dict
+    service_plan_guid:
+        description:
+            - The uniquie identifier of the service offering plan type
+        required: False
         type: str
     wait_time_minutes:
         description:
@@ -47,16 +73,6 @@ options:
         required: False
         type: int
         default: 10
-    name:
-        description:
-            - (Required for new resource) A name for the service instance
-        required: True
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
-        required: False
-        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,49 +119,62 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('space_guid', 'str'),
-    ('service', 'str'),
-    ('plan', 'str'),
     ('name', 'str'),
+    ('space_guid', 'str'),
+    ('plan', 'str'),
+    ('service', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'space_guid',
-    'service',
-    'tags',
-    'plan',
-    'wait_time_minutes',
     'name',
+    'space_guid',
+    'service_keys',
     'parameters',
+    'plan',
+    'tags',
+    'service',
+    'credentials',
+    'service_plan_guid',
+    'wait_time_minutes',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required= False,
+        type='str'),
     space_guid=dict(
         required= False,
         type='str'),
-    service=dict(
+    service_keys=dict(
+        required= False,
+        elements='',
+        type='list'),
+    parameters=dict(
+        required= False,
+        type='dict'),
+    plan=dict(
         required= False,
         type='str'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    plan=dict(
+    service=dict(
+        required= False,
+        type='str'),
+    credentials=dict(
+        required= False,
+        type='dict'),
+    service_plan_guid=dict(
         required= False,
         type='str'),
     wait_time_minutes=dict(
         default=10,
         type='int'),
-    name=dict(
-        required= False,
-        type='str'),
-    parameters=dict(
-        required= False,
-        type='dict'),
     id=dict(
         required= False,
         type='str'),

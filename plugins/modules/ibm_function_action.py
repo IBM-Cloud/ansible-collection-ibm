@@ -25,18 +25,6 @@ options:
             - (Required for new resource) Name of action.
         required: True
         type: str
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-        required: False
-        type: str
-        default: []
-    exec:
-        description:
-            - (Required for new resource) Execution info
-        required: True
-        type: list
-        elements: dict
     publish:
         description:
             - Action visibilty.
@@ -48,6 +36,39 @@ options:
         required: False
         type: str
         default: []
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+        required: False
+        type: str
+        default: []
+    annotations:
+        description:
+            - All annotations set on action by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    parameters:
+        description:
+            - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    limits:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    exec:
+        description:
+            - (Required for new resource) Execution info
+        required: True
+        type: list
+        elements: dict
+    version:
+        description:
+            - Semantic version of the item.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,10 +108,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'user_defined_parameters',
-    'exec',
     'publish',
     'user_defined_annotations',
+    'user_defined_parameters',
+    'annotations',
+    'parameters',
+    'limits',
+    'exec',
+    'version',
 ]
 
 # define available arguments/parameters a user can pass to the module
@@ -100,18 +125,31 @@ module_args = dict(
     name=dict(
         required= False,
         type='str'),
-    user_defined_parameters=dict(
-        default='[]',
-        type='str'),
-    exec=dict(
-        required= False,
-        elements='',
-        type='list'),
     publish=dict(
         required= False,
         type='bool'),
     user_defined_annotations=dict(
         default='[]',
+        type='str'),
+    user_defined_parameters=dict(
+        default='[]',
+        type='str'),
+    annotations=dict(
+        required= False,
+        type='str'),
+    parameters=dict(
+        required= False,
+        type='str'),
+    limits=dict(
+        required= False,
+        elements='',
+        type='list'),
+    exec=dict(
+        required= False,
+        elements='',
+        type='list'),
+    version=dict(
+        required= False,
         type='str'),
     id=dict(
         required= False,

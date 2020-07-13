@@ -20,6 +20,32 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    capacity:
+        description:
+            - Vloume capacity value
+        required: False
+        type: int
+        default: 100
+    resource_group:
+        description:
+            - Resource group name
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    encryption_key:
+        description:
+            - Volume encryption key info
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Volume name
@@ -35,12 +61,42 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
-    capacity:
+    iops:
         description:
-            - Vloume capacity value
+            - IOPS value for the Volume
         required: False
         type: int
-        default: 100
+    crn:
+        description:
+            - CRN value for the volume instance
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_status:
+        description:
+            - The status of the resource
+        required: False
+        type: str
+    status:
+        description:
+            - Volume status
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags for the volume instance
+        required: False
+        type: list
+        elements: str
+    resource_crn:
+        description:
+            - The crn of the resource
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,16 +150,42 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'capacity',
+    'resource_group',
+    'resource_group_name',
+    'encryption_key',
+    'resource_name',
     'name',
     'profile',
     'zone',
-    'capacity',
+    'iops',
+    'crn',
+    'resource_controller_url',
+    'resource_status',
+    'status',
+    'tags',
+    'resource_crn',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    capacity=dict(
+        default=100,
+        type='int'),
+    resource_group=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    encryption_key=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
     name=dict(
         required= False,
         type='str'),
@@ -113,9 +195,28 @@ module_args = dict(
     zone=dict(
         required= False,
         type='str'),
-    capacity=dict(
-        default=100,
+    iops=dict(
+        required= False,
         type='int'),
+    crn=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_status=dict(
+        required= False,
+        type='str'),
+    status=dict(
+        required= False,
+        type='str'),
+    tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    resource_crn=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

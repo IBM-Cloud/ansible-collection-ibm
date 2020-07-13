@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone_name (True, str, None)
-    (Required for new resource) Zone name
+  status_text (False, str, None)
+    Status text
 
 
   tags (False, list, None)
@@ -40,6 +40,14 @@ Parameters
 
   transfer_frequency (True, int, None)
     (Required for new resource) Transfer frequency value
+
+
+  zone_name (True, str, None)
+    (Required for new resource) Zone name
+
+
+  status_id (False, int, None)
+    Status ID
 
 
   id (False, str, None)

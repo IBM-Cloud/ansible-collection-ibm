@@ -26,8 +26,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  reader_plus (False, list, None)
+    readerplus action ids
+
+
+  writer (False, list, None)
+    writer action ids
+
+
   service (True, str, None)
     The Service Name
+
+
+  reader (False, list, None)
+    Reader action ids
+
+
+  manager (False, list, None)
+    manager action ids
 
 
   iaas_classic_username (False, any, None)

@@ -26,11 +26,27 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  os (False, str, None)
+    None
+
+
+  architecture (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    None
+
+
   name (True, str, None)
     None
 
 
   visibility (False, str, None)
+    None
+
+
+  status (False, str, None)
     None
 
 

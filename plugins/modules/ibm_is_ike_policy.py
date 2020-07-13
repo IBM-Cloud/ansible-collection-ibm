@@ -20,24 +20,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    authentication_algorithm:
+    encryption_algorithm:
         description:
-            - (Required for new resource) Authentication algorithm type
+            - (Required for new resource) Encryption alogorithm type
         required: True
         type: str
-    dh_group:
+    href:
         description:
-            - (Required for new resource) IKE DH group
-        required: True
-        type: int
+            - IKE href value
+        required: False
+        type: str
+    vpn_connections:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     name:
         description:
             - (Required for new resource) IKE name
         required: True
         type: str
-    encryption_algorithm:
+    authentication_algorithm:
         description:
-            - (Required for new resource) Encryption alogorithm type
+            - (Required for new resource) Authentication algorithm type
         required: True
         type: str
     key_lifetime:
@@ -51,6 +57,36 @@ options:
             - IKE version
         required: False
         type: int
+    negotiation_mode:
+        description:
+            - IKE negotiation mode
+        required: False
+        type: str
+    resource_controller_url:
+        description:
+            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource
+        required: False
+        type: str
+    resource_group_name:
+        description:
+            - The resource group name in which resource is provisioned
+        required: False
+        type: str
+    dh_group:
+        description:
+            - (Required for new resource) IKE DH group
+        required: True
+        type: int
+    resource_group:
+        description:
+            - IKE resource group ID
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,36 +133,47 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('encryption_algorithm', 'str'),
+    ('name', 'str'),
     ('authentication_algorithm', 'str'),
     ('dh_group', 'int'),
-    ('name', 'str'),
-    ('encryption_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'authentication_algorithm',
-    'dh_group',
-    'name',
     'encryption_algorithm',
+    'href',
+    'vpn_connections',
+    'name',
+    'authentication_algorithm',
     'key_lifetime',
     'ike_version',
+    'negotiation_mode',
+    'resource_controller_url',
+    'resource_name',
+    'resource_group_name',
+    'dh_group',
+    'resource_group',
 ]
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    authentication_algorithm=dict(
+    encryption_algorithm=dict(
         required= False,
         type='str'),
-    dh_group=dict(
+    href=dict(
         required= False,
-        type='int'),
+        type='str'),
+    vpn_connections=dict(
+        required= False,
+        elements='',
+        type='list'),
     name=dict(
         required= False,
         type='str'),
-    encryption_algorithm=dict(
+    authentication_algorithm=dict(
         required= False,
         type='str'),
     key_lifetime=dict(
@@ -135,6 +182,24 @@ module_args = dict(
     ike_version=dict(
         required= False,
         type='int'),
+    negotiation_mode=dict(
+        required= False,
+        type='str'),
+    resource_controller_url=dict(
+        required= False,
+        type='str'),
+    resource_name=dict(
+        required= False,
+        type='str'),
+    resource_group_name=dict(
+        required= False,
+        type='str'),
+    dh_group=dict(
+        required= False,
+        type='int'),
+    resource_group=dict(
+        required= False,
+        type='str'),
     id=dict(
         required= False,
         type='str'),

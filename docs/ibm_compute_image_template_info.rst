@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  id (False, int, None)
+    The internal id of the image template
+
+
   name (True, str, None)
     The name of this image template
 

@@ -26,26 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  customer_peer_ip (False, str, None)
-    Customer Peer IP Address
-
-
-  remote_subnet_id (False, int, None)
-    Remote subnet ID value
-
-
-  remote_subnet (False, list, None)
-    None
-
-
-  service_subnet_id (False, int, None)
-    Service subnet ID value
-
-
-  phase_one (False, list, None)
-    None
-
-
   phase_two (False, list, None)
     None
 
@@ -58,12 +38,40 @@ Parameters
     Preshared Key data
 
 
-  internal_subnet_id (False, int, None)
-    Internal subnet ID value
+  remote_subnet_id (False, int, None)
+    Remote subnet ID value
+
+
+  remote_subnet (False, list, None)
+    None
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
+
+
+  internal_peer_ip_address (False, str, None)
+    None
+
+
+  customer_peer_ip (False, str, None)
+    Customer Peer IP Address
+
+
+  internal_subnet_id (False, int, None)
+    Internal subnet ID value
+
+
+  service_subnet_id (False, int, None)
+    Service subnet ID value
+
+
+  name (False, str, None)
+    None
+
+
+  phase_one (False, list, None)
+    None
 
 
   id (False, str, None)

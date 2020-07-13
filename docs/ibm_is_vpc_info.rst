@@ -26,7 +26,63 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  default_security_group (False, str, None)
+    Security group associated with VPC
+
+
+  resource_controller_url (False, str, None)
+    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+
+
+  resource_crn (False, str, None)
+    The crn of the resource
+
+
+  resource_group_name (False, str, None)
+    The resource group name in which resource is provisioned
+
+
   name (True, str, None)
+    None
+
+
+  resource_group (False, str, None)
+    None
+
+
+  crn (False, str, None)
+    The crn of the resource
+
+
+  default_network_acl (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_name (False, str, None)
+    The name of the resource
+
+
+  resource_status (False, str, None)
+    The status of the resource
+
+
+  subnets (False, list, None)
+    None
+
+
+  status (False, str, None)
+    None
+
+
+  cse_source_addresses (False, list, None)
+    None
+
+
+  classic_access (False, bool, None)
     None
 
 

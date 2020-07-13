@@ -20,6 +20,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    publish:
+        description:
+            - Trigger Visibility.
+        required: False
+        type: bool
+    version:
+        description:
+            - Semantic version of the trigger.
+        required: False
+        type: str
+    annotations:
+        description:
+            - All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
+    parameters:
+        description:
+            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
+        required: False
+        type: str
     name:
         description:
             - Name of Trigger.
@@ -49,6 +69,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'publish',
+    'version',
+    'annotations',
+    'parameters',
     'name',
 ]
 
@@ -56,6 +80,18 @@ TL_ALL_PARAMETERS = [
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    publish=dict(
+        required=False,
+        type='bool'),
+    version=dict(
+        required=False,
+        type='str'),
+    annotations=dict(
+        required=False,
+        type='str'),
+    parameters=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),

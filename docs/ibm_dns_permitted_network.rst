@@ -26,20 +26,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone Id
-
-
   type (False, str, vpc)
     Network Type
 
 
   vpc_crn (True, str, None)
     (Required for new resource) VPC CRN id
+
+
+  created_on (False, str, None)
+    Network creation date
+
+
+  modified_on (False, str, None)
+    Network Modification date
+
+
+  state_ (False, str, None)
+    Network status
+
+
+  permitted_network_id (False, str, None)
+    Network Id
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone Id
 
 
   id (False, str, None)
