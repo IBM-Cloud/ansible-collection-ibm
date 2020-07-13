@@ -1,0 +1,10 @@
+---
+datacenter: "dal12"
+machine_type: "b3c.4x16"
+hardware: "shared"
+private_vlan_id: "2863552"
+public_vlan_id: "2863550"
+cluster_name: "mycluster"
+default_worker_pool_size: 2
+entitlement: <ADD Entitlement details for Openshift cluster>
+kube_version: "4.3.23_openshift"
