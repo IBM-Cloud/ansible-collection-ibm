@@ -15,7 +15,6 @@
          - resource_group_output.rc != 0
          - '"ResourceGroupDoesnotExist" not in resource_group_output.stderr'     
       register: resource_group_output
-      # ignore_errors: yes
 
     - name: Save Resource group info as fact
       set_fact:
