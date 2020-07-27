@@ -1,0 +1,49 @@
+---
+- name: Destroy api gateway endpoint subscription and api gateway instance.
+  hosts: localhost
+  collections:
+   - ibm.cloudcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+
+    - name: Get Resource id details
+      ibm_resource_instance_info:
+        name: "{{ service_name }}"
+      register: resource_info
+
+    - name: Get resource
+      set_fact:
+        cacheable: True
+        api-gateway: "{{ resource_info.resource }}"
+
+    - name: Get api gateway info
+      ibm_api_gateway_info:
+        service_instance_crn: "{{ api-gateway.id }}"
+      register: apigateway_output
+
+    - name: Save api gateway info as fact
+      set_fact:
+        cacheable: True
+        endpoint-info: "{{ apigateway_output.resource }}"
+      when: apigateway_output.rc==0
+
+    - name: destroy endpoint resource for one api document
+      ibm_api_gateway_endpoint:
+        service_instance_crn: "{{ api-gateway.id }}"
+        name: "{{ endpoint_name }}"
+        managed: "{{ managed }}"
+        open_api_doc_name: "{{ file_path }}"
+        id: endpoint-info.endpoint.endpoints[0].endpoint_id
+        state: absent
+
+    - name: destroy apigateway resource instance
+      ibm_resource_instance:
+        name: "{{ service_name }}"
+        location: "global"
+        service: "api-gateway"
+        plan: "lite"
+        id: "{{ api-gateway.id }}"
+        state: absent
+      register: resource_instance_output

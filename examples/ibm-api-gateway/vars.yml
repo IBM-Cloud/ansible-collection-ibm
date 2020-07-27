@@ -1,0 +1,12 @@
+---
+region: "us-south"
+service_name: "testapigateway"
+endpoint_name: "myendpoint"
+managed: False
+file_path: "<PATH_TO_API_ENDPOINT_DOCUMENT>"
+action_type: "unshare"
+dir_path: "<PATH_TO_API_ENDPOINTS_DIRECTORY>"
+subscription_name: "subscription1"
+subscription_type: "internal"
+secret: "<SECRET_OF_THE_API_KEY>"
+generate_secret: True
