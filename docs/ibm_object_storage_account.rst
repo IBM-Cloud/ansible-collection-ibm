@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_object_storage_account' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,15 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  name (False, str, None)
-    None
-
-
   local_note (False, str, None)
+    None
+
+
+  tags (False, list, None)
     None
 
 

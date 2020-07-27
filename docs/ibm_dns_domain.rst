@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_dns_domain' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,24 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) DNS name
-
-
-  serial (False, str, None)
-    DNS serial info
-
-
-  update_date (False, str, None)
-    DNS update date
-
-
   target (False, str, None)
     DNS target info
 
 
   tags (False, list, None)
     tags associated with reosurce.
+
+
+  name (True, str, None)
+    (Required for new resource) DNS name
 
 
   id (False, str, None)

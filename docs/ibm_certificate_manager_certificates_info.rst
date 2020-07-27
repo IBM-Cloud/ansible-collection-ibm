@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -28,10 +28,6 @@ Parameters
 
   certificate_manager_instance_id (True, str, None)
     Certificate Manager Instance ID
-
-
-  certificates (False, list, None)
-    List of certificates
 
 
   iaas_classic_username (False, any, None)

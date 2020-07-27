@@ -12,27 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_pi_volume_attach' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_volume_shareable (False, bool, None)
-    None
-
-
-  volumeattachid (False, str, None)
-    Volume attachment ID
-
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) Cloud Instance ID - This is the service_instance_id.
@@ -44,10 +38,6 @@ Parameters
 
   pi_instance_name (True, str, None)
     (Required for new resource) PI Instance name
-
-
-  status (False, str, None)
-    None
 
 
   id (False, str, None)

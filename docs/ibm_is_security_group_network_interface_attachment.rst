@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_security_group_network_interface_attachment' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,52 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_network_interface (False, str, None)
-    security group network interface attachment network interface ID
-
-
-  port_speed (False, int, None)
-    security group network interface attachment port speed
-
-
-  primary_ipv4_address (False, str, None)
-    security group network interface attachment Primary IPV4 address
-
-
-  secondary_address (False, list, None)
-    security group network interface attachment secondary address
-
-
-  type (False, str, None)
-    security group network interface attachment type
-
-
-  floating_ips (False, list, None)
-    None
-
-
   security_group (True, str, None)
     (Required for new resource) security group network interface attachment group ID
 
 
   network_interface (True, str, None)
     (Required for new resource) security group network interface attachment NIC ID
-
-
-  security_groups (False, list, None)
-    None
-
-
-  status (False, str, None)
-    security group network interface attachment status
-
-
-  subnet (False, str, None)
-    security group network interface attachment subnet
-
-
-  name (False, str, None)
-    security group network interface attachment name
 
 
   id (False, str, None)

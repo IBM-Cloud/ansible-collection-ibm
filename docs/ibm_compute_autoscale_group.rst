@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,28 +28,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  health_check (False, dict, None)
+    None
+
+
+  network_vlan_ids (False, list, None)
+    List of network VLAN ids
+
+
+  tags (False, list, None)
+    List of tags
+
+
   minimum_member_count (True, int, None)
     (Required for new resource) Minimum member count
 
 
-  cooldown (True, int, None)
-    (Required for new resource) Cooldown value
+  termination_policy (True, str, None)
+    (Required for new resource) Termination policy
 
 
   virtual_server_id (False, int, None)
     virtual server ID
 
 
-  health_check (False, dict, None)
-    None
+  port (False, int, None)
+    Port number
 
 
   virtual_guest_member_template (True, list, None)
     (Required for new resource) Virtual guest member template
-
-
-  network_vlan_ids (False, list, None)
-    List of network VLAN ids
 
 
   name (True, str, None)
@@ -62,16 +72,8 @@ Parameters
     (Required for new resource) Maximum member count
 
 
-  termination_policy (True, str, None)
-    (Required for new resource) Termination policy
-
-
-  port (False, int, None)
-    Port number
-
-
-  tags (False, list, None)
-    List of tags
+  cooldown (True, int, None)
+    (Required for new resource) Cooldown value
 
 
   id (False, str, None)

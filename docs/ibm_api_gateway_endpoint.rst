@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -30,40 +32,28 @@ Parameters
     (Required for new resource) Api Gateway Service Instance Crn
 
 
+  open_api_doc_name (True, str, None)
+    (Required for new resource) Json File path
+
+
   name (True, str, None)
     (Required for new resource) Endpoint name
-
-
-  managed (False, bool, False)
-    Managed indicates if endpoint is online or offline.
-
-
-  shared (False, bool, None)
-    The Shared status of an endpoint
 
 
   type (False, str, unshare)
     Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
-  open_api_doc_name (True, str, None)
-    (Required for new resource) Json File path
-
-
   routes (False, list, None)
     Invokable routes for an endpoint
 
 
-  base_path (False, str, None)
-    Base path of an endpoint
+  managed (False, bool, False)
+    Managed indicates if endpoint is online or offline.
 
 
   provider_id (False, str, user-defined)
     Provider ID of an endpoint allowable values user-defined and whisk
-
-
-  endpoint_id (False, str, None)
-    Endpoint ID
 
 
   id (False, str, None)

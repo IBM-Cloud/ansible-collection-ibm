@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,12 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
   name (True, str, None)
     (Required for new resource) IPSEC name
+
+
+  pfs (True, str, None)
+    (Required for new resource) PFS info
+
+
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
 
 
   authentication_algorithm (True, str, None)
@@ -40,42 +46,6 @@ Parameters
 
   encryption_algorithm (True, str, None)
     (Required for new resource) Encryption algorithm
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  key_lifetime (False, int, 3600)
-    IPSEC key lifetime
-
-
-  transform_protocol (False, str, None)
-    IPSEC transform protocol
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  pfs (True, str, None)
-    (Required for new resource) PFS info
-
-
-  encapsulation_mode (False, str, None)
-    IPSEC encapsulation mode
-
-
-  vpn_connections (False, list, None)
-    None
 
 
   id (False, str, None)

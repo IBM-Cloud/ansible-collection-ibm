@@ -12,27 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_policy' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  scale_amount (True, int, None)
-    (Required for new resource) Scale amount
-
-
-  cooldown (False, int, None)
-    cooldown value
-
 
   scale_group_id (True, int, None)
     (Required for new resource) scale group ID
@@ -52,6 +46,14 @@ Parameters
 
   scale_type (True, str, None)
     (Required for new resource) scale type
+
+
+  scale_amount (True, int, None)
+    (Required for new resource) Scale amount
+
+
+  cooldown (False, int, None)
+    cooldown value
 
 
   id (False, str, None)

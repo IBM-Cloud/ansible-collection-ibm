@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,52 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Resource instance name for example, my cis instance
-
-
   resource_group_id (False, str, None)
     The id of the resource group in which the cis instance is present
 
 
-  location (False, str, None)
-    The location or the environment in which cis instance exists
-
-
-  plan (False, str, None)
-    The plan type of the cis instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  guid (False, str, None)
-    Unique identifier of resource instance
-
-
-  service (False, str, None)
-    The name of the Cloud Internet Services offering, 'internet-svcs'
-
-
-  status (False, dict, None)
-    The resource instance status
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
+  name (True, str, None)
+    Resource instance name for example, my cis instance
 
 
   iaas_classic_username (False, any, None)

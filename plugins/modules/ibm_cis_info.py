@@ -14,71 +14,20 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_cis' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Resource instance name for example, my cis instance
-        required: True
-        type: str
     resource_group_id:
         description:
             - The id of the resource group in which the cis instance is present
         required: False
         type: str
-    location:
+    name:
         description:
-            - The location or the environment in which cis instance exists
-        required: False
-        type: str
-    plan:
-        description:
-            - The plan type of the cis instance
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
-        type: str
-    guid:
-        description:
-            - Unique identifier of resource instance
-        required: False
-        type: str
-    service:
-        description:
-            - The name of the Cloud Internet Services offering, 'internet-svcs'
-        required: False
-        type: str
-    status:
-        description:
-            - The resource instance status
-        required: False
-        type: dict
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
+            - Resource instance name for example, my cis instance
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -118,59 +67,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'resource_group_id',
-    'location',
-    'plan',
-    'resource_name',
-    'resource_crn',
-    'resource_status',
-    'resource_group_name',
-    'guid',
-    'service',
-    'status',
-    'resource_controller_url',
+    'name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    plan=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
-    resource_group_name=dict(
-        required=False,
-        type='str'),
-    guid=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='dict'),
-    resource_controller_url=dict(
-        required=False,
+    name=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -206,7 +125,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -215,7 +134,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

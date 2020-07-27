@@ -12,19 +12,29 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_subnet' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  notes (False, str, None)
+    Notes
+
+
+  tags (False, list, None)
+    tags set for the resource
+
 
   private (False, bool, False)
     private subnet
@@ -38,24 +48,8 @@ Parameters
     (Required for new resource) number of ip addresses in the subnet
 
 
-  subnet_cidr (False, str, None)
-    CIDR notation for the subnet
-
-
-  notes (False, str, None)
-    Notes
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
   type (True, str, None)
     (Required for new resource) subnet type
-
-
-  vlan_id (False, int, None)
-    VLAN ID for the subnet
 
 
   endpoint_ip (False, str, None)

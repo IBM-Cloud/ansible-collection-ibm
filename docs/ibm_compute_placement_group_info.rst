@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -27,22 +27,6 @@ Parameters
 ----------
 
   name (True, str, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  pod (False, str, None)
-    None
-
-
-  rule (False, str, None)
-    None
-
-
-  virtual_guests (False, list, None)
     None
 
 

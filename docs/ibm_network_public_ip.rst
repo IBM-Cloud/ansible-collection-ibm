@@ -12,23 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_network_public_ip' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  ip_address (False, str, None)
-    IP Address
-
 
   routes_to (True, str, None)
     (Required for new resource) Route info

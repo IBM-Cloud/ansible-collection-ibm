@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,23 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tenant_name (False, str, None)
-    None
-
-
-  cloud_instances (False, list, None)
-    None
-
-
   pi_cloud_instance_id (True, str, None)
-    None
-
-
-  creation_date (False, str, None)
-    None
-
-
-  enabled (False, bool, None)
     None
 
 

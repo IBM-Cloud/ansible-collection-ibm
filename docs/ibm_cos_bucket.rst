@@ -12,23 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
 
   single_site_location (False, str, None)
     single site location info
@@ -38,36 +36,16 @@ Parameters
     Region Location info.
 
 
-  s3_endpoint_public (False, str, None)
-    Public endpoint for the COS bucket
-
-
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
-
-
-  crn (False, str, None)
-    CRN of resource instance
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
   storage_class (True, str, None)
     (Required for new resource) Storage class info
 
 
-  s3_endpoint_private (False, str, None)
-    Private endpoint for the COS bucket
-
-
   allowed_ip (False, list, None)
     List of IPv4 or IPv6 addresses
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
   metrics_monitoring (False, list, None)
@@ -76,6 +54,18 @@ Parameters
 
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
 
 
   id (False, str, None)

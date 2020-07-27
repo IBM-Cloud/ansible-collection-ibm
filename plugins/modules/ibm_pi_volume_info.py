@@ -14,55 +14,19 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_pi_volume' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    shareable:
+    pi_cloud_instance_id:
         description:
             - None
-        required: False
-        type: bool
-    bootable:
-        description:
-            - None
-        required: False
-        type: bool
-    creation_date:
-        description:
-            - None
-        required: False
-        type: str
-    disk_type:
-        description:
-            - None
-        required: False
+        required: True
         type: str
     pi_volume_name:
         description:
             - Volume Name to be used for pvminstances
-        required: True
-        type: str
-    state:
-        description:
-            - None
-        required: False
-        type: str
-    size:
-        description:
-            - None
-        required: False
-        type: int
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - None
         required: True
         type: str
     zone:
@@ -94,52 +58,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_volume_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_volume_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shareable',
-    'bootable',
-    'creation_date',
-    'disk_type',
-    'pi_volume_name',
-    'state',
-    'size',
-    'name',
     'pi_cloud_instance_id',
+    'pi_volume_name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shareable=dict(
-        required=False,
-        type='bool'),
-    bootable=dict(
-        required=False,
-        type='bool'),
-    creation_date=dict(
-        required=False,
-        type='str'),
-    disk_type=dict(
-        required=False,
-        type='str'),
-    pi_volume_name=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    state=dict(
-        required=False,
-        type='str'),
-    size=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
+    pi_volume_name=dict(
         required=True,
         type='str'),
     zone=dict(
@@ -169,7 +115,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -178,7 +124,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

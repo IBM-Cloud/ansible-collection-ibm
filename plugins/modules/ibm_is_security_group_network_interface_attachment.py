@@ -14,44 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_network_interface_attachment' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    instance_network_interface:
-        description:
-            - security group network interface attachment network interface ID
-        required: False
-        type: str
-    port_speed:
-        description:
-            - security group network interface attachment port speed
-        required: False
-        type: int
-    primary_ipv4_address:
-        description:
-            - security group network interface attachment Primary IPV4 address
-        required: False
-        type: str
-    secondary_address:
-        description:
-            - security group network interface attachment secondary address
-        required: False
-        type: list
-        elements: str
-    type:
-        description:
-            - security group network interface attachment type
-        required: False
-        type: str
-    floating_ips:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     security_group:
         description:
             - (Required for new resource) security group network interface attachment group ID
@@ -61,27 +29,6 @@ options:
         description:
             - (Required for new resource) security group network interface attachment NIC ID
         required: True
-        type: str
-    security_groups:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    status:
-        description:
-            - security group network interface attachment status
-        required: False
-        type: str
-    subnet:
-        description:
-            - security group network interface attachment subnet
-        required: False
-        type: str
-    name:
-        description:
-            - security group network interface attachment name
-        required: False
         type: str
     id:
         description:
@@ -135,61 +82,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_network_interface',
-    'port_speed',
-    'primary_ipv4_address',
-    'secondary_address',
-    'type',
-    'floating_ips',
     'security_group',
     'network_interface',
-    'security_groups',
-    'status',
-    'subnet',
-    'name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_network_interface=dict(
-        required= False,
-        type='str'),
-    port_speed=dict(
-        required= False,
-        type='int'),
-    primary_ipv4_address=dict(
-        required= False,
-        type='str'),
-    secondary_address=dict(
-        required= False,
-        elements='',
-        type='list'),
-    type=dict(
-        required= False,
-        type='str'),
-    floating_ips=dict(
-        required= False,
-        elements='',
-        type='list'),
     security_group=dict(
         required= False,
         type='str'),
     network_interface=dict(
-        required= False,
-        type='str'),
-    security_groups=dict(
-        required= False,
-        elements='',
-        type='list'),
-    status=dict(
-        required= False,
-        type='str'),
-    subnet=dict(
-        required= False,
-        type='str'),
-    name=dict(
         required= False,
         type='str'),
     id=dict(
@@ -235,6 +149,20 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     # VPC required arguments checks
     if module.params['generation'] == 1:
         missing_args = []
@@ -256,7 +184,7 @@ def run_module():
         resource_type='ibm_is_security_group_network_interface_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -265,7 +193,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

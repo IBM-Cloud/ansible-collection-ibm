@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_compute_bare_metal' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,55 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    OS refernece code value
-
-
-  image_template_id (False, int, None)
-    OS image template ID
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  secondary_ip_addresses (False, list, None)
-    None
-
-
-  user_metadata (False, str, None)
-    User metadata info
+  domain (True, str, None)
+    (Required for new resource) Domain name
 
 
   package_key_name (False, str, None)
-    None
-
-
-  memory (False, int, None)
-    None
-
-
-  public_ipv4_address_id (False, int, None)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  block_storage_ids (False, list, None)
     None
 
 
@@ -82,7 +40,43 @@ Parameters
     None
 
 
-  gpu_key_name (False, str, None)
+  notes (False, str, None)
+    Optional notes info
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  software_guard_extensions (False, bool, False)
     None
 
 
@@ -90,91 +84,15 @@ Parameters
     None
 
 
-  gpu_secondary_key_name (False, str, None)
+  storage_groups (False, list, None)
     None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  private_ipv4_address (False, str, None)
-    None
-
-
-  ipv6_address_id (False, int, None)
-    None
-
-
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
 
 
   post_install_script_uri (False, str, None)
     None
 
 
-  redundant_power_supply (False, bool, None)
-    None
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  storage_groups (False, list, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  ipv6_address (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    Optional notes info
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
-  software_guard_extensions (False, bool, False)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  public_ipv4_address (False, str, None)
-    None
-
-
-  private_ipv4_address_id (False, int, None)
-    None
-
-
-  datacenter (False, str, None)
+  tags (False, list, None)
     None
 
 
@@ -182,35 +100,43 @@ Parameters
     Network speed in MBPS
 
 
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
   tcp_monitoring (False, bool, False)
     TCP monitoring enabled if set as true
 
 
-  redundant_network (False, bool, False)
+  process_key_name (False, str, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
-
-
-  global_identifier (False, str, None)
-    The unique global identifier of the bare metal server
+  restricted_network (False, bool, False)
+    None
 
 
   secondary_ip_count (False, int, None)
     Secondary IP addresses count
 
 
-  hostname (False, str, None)
-    Host name
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
 
 
-  file_storage_ids (False, list, None)
+  redundant_network (False, bool, False)
     None
 
 
-  process_key_name (False, str, None)
+  gpu_key_name (False, str, None)
+    None
+
+
+  gpu_secondary_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
     None
 
 

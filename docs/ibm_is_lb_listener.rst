@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,8 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  listener_id (False, str, None)
-    None
+  certificate_instance (False, str, None)
+    certificate instance for the Loadbalancer
+
+
+  connection_limit (False, int, None)
+    Connection limit for Loadbalancer
 
 
   lb (True, str, None)
@@ -40,22 +46,6 @@ Parameters
 
   protocol (True, str, None)
     (Required for new resource) Loadbalancer protocol
-
-
-  certificate_instance (False, str, None)
-    certificate instance for the Loadbalancer
-
-
-  connection_limit (False, int, None)
-    Connection limit for Loadbalancer
-
-
-  default_pool (False, str, None)
-    Loadbalancer default pool info
-
-
-  status (False, str, None)
-    Loadbalancer listener status
 
 
   id (False, str, None)

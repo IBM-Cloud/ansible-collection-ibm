@@ -14,124 +14,27 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_compute_vm_instance' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    hostname:
-        description:
-            - The hostname of the virtual guest
-        required: True
-        type: str
-    domain:
-        description:
-            - The domain of the virtual guest
-        required: True
-        type: str
-    power_state:
-        description:
-            - The current power state of a virtual guest.
-        required: False
-        type: str
-    private_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    ip_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    datacenter:
-        description:
-            - Datacenter in which the virtual guest is deployed
-        required: False
-        type: str
-    public_subnet_id:
-        description:
-            - None
-        required: False
-        type: int
-    ipv4_address:
-        description:
-            - None
-        required: False
-        type: str
-    public_ipv6_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    ipv6_address:
-        description:
-            - None
-        required: False
-        type: str
-    ipv6_address_id:
-        description:
-            - None
-        required: False
-        type: int
-    cores:
-        description:
-            - Number of cpu cores
-        required: False
-        type: int
-    status:
-        description:
-            - The VSI status
-        required: False
-        type: str
-    last_known_power_state:
-        description:
-            - The last known power state of a virtual guest in the event the guest is turned off outside of IMS or has gone offline.
-        required: False
-        type: str
-    private_interface_id:
-        description:
-            - None
-        required: False
-        type: int
-    ipv4_address_private:
-        description:
-            - None
-        required: False
-        type: str
-    ip_address_id_private:
-        description:
-            - None
-        required: False
-        type: int
-    public_interface_id:
-        description:
-            - None
-        required: False
-        type: int
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
         required: False
         type: bool
         default: False
-    public_ipv6_subnet_id:
+    domain:
         description:
-            - None
-        required: False
+            - The domain of the virtual guest
+        required: True
         type: str
-    secondary_ip_addresses:
+    hostname:
         description:
-            - None
-        required: False
-        type: list
-        elements: str
-    secondary_ip_count:
-        description:
-            - None
-        required: False
-        type: int
+            - The hostname of the virtual guest
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -165,107 +68,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('hostname', 'str'),
     ('domain', 'str'),
+    ('hostname', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hostname',
-    'domain',
-    'power_state',
-    'private_subnet_id',
-    'ip_address_id',
-    'datacenter',
-    'public_subnet_id',
-    'ipv4_address',
-    'public_ipv6_subnet',
-    'ipv6_address',
-    'ipv6_address_id',
-    'cores',
-    'status',
-    'last_known_power_state',
-    'private_interface_id',
-    'ipv4_address_private',
-    'ip_address_id_private',
-    'public_interface_id',
     'most_recent',
-    'public_ipv6_subnet_id',
-    'secondary_ip_addresses',
-    'secondary_ip_count',
+    'domain',
+    'hostname',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hostname=dict(
-        required=True,
-        type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     domain=dict(
         required=True,
         type='str'),
-    power_state=dict(
-        required=False,
+    hostname=dict(
+        required=True,
         type='str'),
-    private_subnet_id=dict(
-        required=False,
-        type='int'),
-    ip_address_id=dict(
-        required=False,
-        type='int'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    public_subnet_id=dict(
-        required=False,
-        type='int'),
-    ipv4_address=dict(
-        required=False,
-        type='str'),
-    public_ipv6_subnet=dict(
-        required=False,
-        type='str'),
-    ipv6_address=dict(
-        required=False,
-        type='str'),
-    ipv6_address_id=dict(
-        required=False,
-        type='int'),
-    cores=dict(
-        required=False,
-        type='int'),
-    status=dict(
-        required=False,
-        type='str'),
-    last_known_power_state=dict(
-        required=False,
-        type='str'),
-    private_interface_id=dict(
-        required=False,
-        type='int'),
-    ipv4_address_private=dict(
-        required=False,
-        type='str'),
-    ip_address_id_private=dict(
-        required=False,
-        type='int'),
-    public_interface_id=dict(
-        required=False,
-        type='int'),
-    most_recent=dict(
-        default=False,
-        type='bool'),
-    public_ipv6_subnet_id=dict(
-        required=False,
-        type='str'),
-    secondary_ip_addresses=dict(
-        required=False,
-        elements='',
-        type='list'),
-    secondary_ip_count=dict(
-        required=False,
-        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -300,7 +136,7 @@ def run_module():
         resource_type='ibm_compute_vm_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -309,7 +145,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

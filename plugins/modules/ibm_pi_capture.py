@@ -14,9 +14,9 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_capture' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
@@ -30,26 +30,6 @@ options:
             - (Required for new resource) Instance Name of the Power VM
         required: True
         type: str
-    pi_capture_volume_ids:
-        description:
-            - List of volume names that need to be passed in the input
-        required: False
-        type: str
-    pi_capture_cloud_storage_region:
-        description:
-            - List of Regions to use
-        required: False
-        type: str
-    pi_capture_cloud_storage_access_key:
-        description:
-            - Name of Cloud Storage Access Key
-        required: False
-        type: str
-    pi_capture_storage_image_path:
-        description:
-            - Name of the Image Path
-        required: False
-        type: str
     pi_capture_name:
         description:
             - (Required for new resource) Name of the capture to create. Note : this must be unique
@@ -59,6 +39,26 @@ options:
         description:
             - (Required for new resource) Name of destination to store the image capture to
         required: True
+        type: str
+    pi_capture_cloud_storage_region:
+        description:
+            - List of Regions to use
+        required: False
+        type: str
+    pi_capture_storage_image_path:
+        description:
+            - Name of the Image Path
+        required: False
+        type: str
+    pi_capture_volume_ids:
+        description:
+            - List of volume names that need to be passed in the input
+        required: False
+        type: str
+    pi_capture_cloud_storage_access_key:
+        description:
+            - Name of Cloud Storage Access Key
+        required: False
         type: str
     pi_capture_cloud_storage_secret_key:
         description:
@@ -117,14 +117,24 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
     'pi_instance_name',
-    'pi_capture_volume_ids',
-    'pi_capture_cloud_storage_region',
-    'pi_capture_cloud_storage_access_key',
-    'pi_capture_storage_image_path',
     'pi_capture_name',
     'pi_capture_destination',
+    'pi_capture_cloud_storage_region',
+    'pi_capture_storage_image_path',
+    'pi_capture_volume_ids',
+    'pi_capture_cloud_storage_access_key',
     'pi_capture_cloud_storage_secret_key',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
@@ -136,22 +146,22 @@ module_args = dict(
     pi_instance_name=dict(
         required= False,
         type='str'),
-    pi_capture_volume_ids=dict(
+    pi_capture_name=dict(
+        required= False,
+        type='str'),
+    pi_capture_destination=dict(
         required= False,
         type='str'),
     pi_capture_cloud_storage_region=dict(
         required= False,
         type='str'),
-    pi_capture_cloud_storage_access_key=dict(
-        required= False,
-        type='str'),
     pi_capture_storage_image_path=dict(
         required= False,
         type='str'),
-    pi_capture_name=dict(
+    pi_capture_volume_ids=dict(
         required= False,
         type='str'),
-    pi_capture_destination=dict(
+    pi_capture_cloud_storage_access_key=dict(
         required= False,
         type='str'),
     pi_capture_cloud_storage_secret_key=dict(
@@ -198,11 +208,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_pi_capture',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -211,7 +235,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,36 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
+  iv_value (False, str, None)
+    Only for imported root key
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
-  payload (False, str, None)
-    None
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
   encrypted_nonce (False, str, None)
     Only for imported root key
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
+  key_protect_id (True, str, None)
+    (Required for new resource) Key protect instance ID
 
 
   standard_key (False, bool, False)
@@ -64,22 +50,6 @@ Parameters
 
   force_delete (False, bool, False)
     set to true to force delete the key
-
-
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  crn (False, str, None)
-    Crn of the key
-
-
-  key_protect_id (True, str, None)
-    (Required for new resource) Key protect instance ID
-
-
-  key_id (False, str, None)
-    Key ID
 
 
   id (False, str, None)

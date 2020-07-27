@@ -14,28 +14,22 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    zones:
+    flavor:
         description:
-            - (Required for new resource) Zones info
+            - (Required for new resource) cluster node falvor
         required: True
-        type: list
-        elements: dict
+        type: str
     vpc_id:
         description:
             - (Required for new resource) The vpc id where the cluster is
         required: True
         type: str
-    worker_count:
-        description:
-            - (Required for new resource) The number of workers
-        required: True
-        type: int
     entitlement:
         description:
             - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
@@ -51,22 +45,22 @@ options:
             - (Required for new resource) worker pool name
         required: True
         type: str
-    labels:
+    zones:
         description:
-            - Labels
-        required: False
-        type: dict
-        elements: str
+            - (Required for new resource) Zones info
+        required: True
+        type: list
+        elements: dict
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
         type: str
-    flavor:
+    worker_count:
         description:
-            - (Required for new resource) cluster node falvor
+            - (Required for new resource) The number of workers
         required: True
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,41 +87,46 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zones', 'list'),
+    ('flavor', 'str'),
     ('vpc_id', 'str'),
-    ('worker_count', 'int'),
     ('cluster', 'str'),
     ('worker_pool_name', 'str'),
-    ('flavor', 'str'),
+    ('zones', 'list'),
+    ('worker_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zones',
+    'flavor',
     'vpc_id',
-    'worker_count',
     'entitlement',
     'cluster',
     'worker_pool_name',
-    'labels',
+    'zones',
     'resource_group_id',
-    'flavor',
+    'worker_count',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zones=dict(
+    flavor=dict(
         required= False,
-        elements='',
-        type='list'),
+        type='str'),
     vpc_id=dict(
         required= False,
         type='str'),
-    worker_count=dict(
-        required= False,
-        type='int'),
     entitlement=dict(
         required= False,
         type='str'),
@@ -137,16 +136,16 @@ module_args = dict(
     worker_pool_name=dict(
         required= False,
         type='str'),
-    labels=dict(
+    zones=dict(
         required= False,
         elements='',
-        type='dict'),
+        type='list'),
     resource_group_id=dict(
         required= False,
         type='str'),
-    flavor=dict(
+    worker_count=dict(
         required= False,
-        type='str'),
+        type='int'),
     id=dict(
         required= False,
         type='str'),
@@ -181,11 +180,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -194,7 +207,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

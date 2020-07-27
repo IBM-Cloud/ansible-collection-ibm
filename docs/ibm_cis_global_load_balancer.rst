@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cis_global_load_balancer' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -30,34 +32,6 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
-
-
-  ttl (False, int, None)
-    TTL value
-
-
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
-
-
-  session_affinity (False, str, none)
-    Session affinity info
-
-
-  created_on (False, str, None)
-    Load balancer creation date
-
-
-  modified_on (False, str, None)
-    Load balancer modified date
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
   name (True, str, None)
     (Required for new resource) name
 
@@ -66,8 +40,28 @@ Parameters
     (Required for new resource) fallback pool ID
 
 
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
+
+
+  ttl (False, int, None)
+    TTL value
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
   description (False, str, None)
     Description for the load balancer instance
+
+
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
+
+
+  session_affinity (False, str, none)
+    Session affinity info
 
 
   enabled (False, bool, True)

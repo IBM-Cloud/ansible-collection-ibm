@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,8 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  check_regions (True, list, None)
-    (Required for new resource) List of regions
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   description (False, str, None)
@@ -42,28 +44,12 @@ Parameters
     Monitor value
 
 
-  origins (True, list, None)
-    (Required for new resource) Origins info
-
-
-  health (False, str, None)
-    Health info
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
   name (True, str, None)
     (Required for new resource) name
 
 
-  created_on (False, str, None)
-    Creation date info
-
-
-  modified_on (False, str, None)
-    Modified date info
+  check_regions (True, list, None)
+    (Required for new resource) List of regions
 
 
   minimum_origins (False, int, 1)
@@ -72,6 +58,10 @@ Parameters
 
   notification_email (False, str, None)
     Email address configured to recieve the notifications
+
+
+  origins (True, list, None)
+    (Required for new resource) Origins info
 
 
   id (False, str, None)

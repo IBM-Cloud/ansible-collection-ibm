@@ -14,65 +14,45 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    ip_address:
-        description:
-            - None
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags associated with resource
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name info
-        required: True
-        type: str
-    security_certificate_id:
-        description:
-            - Security certificate ID
-        required: False
-        type: int
-    subnet_id:
-        description:
-            - None
-        required: False
-        type: int
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
         required: False
         type: bool
         default: False
-    ssl_enabled:
+    tags:
         description:
-            - None
+            - Tags associated with resource
         required: False
-        type: bool
+        type: list
+        elements: str
+    connections:
+        description:
+            - (Required for new resource) Connections value
+        required: True
+        type: int
+    security_certificate_id:
+        description:
+            - Security certificate ID
+        required: False
+        type: int
     ssl_offload:
         description:
             - boolean value true if SSL offload is enabled
         required: False
         type: bool
         default: False
-    hostname:
+    datacenter:
         description:
-            - None
-        required: False
-        type: str
-    connections:
-        description:
-            - (Required for new resource) Connections value
+            - (Required for new resource) Datacenter name info
         required: True
-        type: int
+        type: str
     ha_enabled:
         description:
             - true if High availability is enabled
@@ -125,62 +105,56 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('connections', 'int'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ip_address',
-    'tags',
-    'datacenter',
-    'security_certificate_id',
-    'subnet_id',
     'dedicated',
-    'ssl_enabled',
-    'ssl_offload',
-    'hostname',
+    'tags',
     'connections',
+    'security_certificate_id',
+    'ssl_offload',
+    'datacenter',
     'ha_enabled',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ip_address=dict(
+    dedicated=dict(
         required= False,
-        type='str'),
+        type='bool'),
     tags=dict(
         required= False,
         elements='',
         type='list'),
-    datacenter=dict(
-        required= False,
-        type='str'),
-    security_certificate_id=dict(
-        required= False,
-        type='int'),
-    subnet_id=dict(
-        required= False,
-        type='int'),
-    dedicated=dict(
-        default=False,
-        type='bool'),
-    ssl_enabled=dict(
-        required= False,
-        type='bool'),
-    ssl_offload=dict(
-        default=False,
-        type='bool'),
-    hostname=dict(
-        required= False,
-        type='str'),
     connections=dict(
         required= False,
         type='int'),
+    security_certificate_id=dict(
+        required= False,
+        type='int'),
+    ssl_offload=dict(
+        required= False,
+        type='bool'),
+    datacenter=dict(
+        required= False,
+        type='str'),
     ha_enabled=dict(
-        default=False,
+        required= False,
         type='bool'),
     id=dict(
         required= False,
@@ -230,11 +204,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -243,7 +231,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

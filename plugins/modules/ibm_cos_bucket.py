@@ -14,17 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
     single_site_location:
         description:
             - single site location info
@@ -35,41 +30,10 @@ options:
             - Region Location info.
         required: False
         type: str
-    s3_endpoint_public:
-        description:
-            - Public endpoint for the COS bucket
-        required: False
-        type: str
-    activity_tracking:
-        description:
-            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-        required: False
-        type: list
-        elements: dict
-    resource_instance_id:
-        description:
-            - (Required for new resource) resource instance ID
-        required: True
-        type: str
-    crn:
-        description:
-            - CRN of resource instance
-        required: False
-        type: str
-    cross_region_location:
-        description:
-            - Cros region location info
-        required: False
-        type: str
     storage_class:
         description:
             - (Required for new resource) Storage class info
         required: True
-        type: str
-    s3_endpoint_private:
-        description:
-            - Private endpoint for the COS bucket
-        required: False
         type: str
     allowed_ip:
         description:
@@ -77,6 +41,12 @@ options:
         required: False
         type: list
         elements: str
+    activity_tracking:
+        description:
+            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+        required: False
+        type: list
+        elements: dict
     metrics_monitoring:
         description:
             - Enables sending metrics to IBM Cloud Monitoring.
@@ -87,6 +57,21 @@ options:
         description:
             - (Required for new resource) COS Bucket name
         required: True
+        type: str
+    resource_instance_id:
+        description:
+            - (Required for new resource) resource instance ID
+        required: True
+        type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    cross_region_location:
+        description:
+            - Cros region location info
+        required: False
         type: str
     id:
         description:
@@ -134,64 +119,64 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_instance_id', 'str'),
     ('storage_class', 'str'),
     ('bucket_name', 'str'),
+    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_protect',
     'single_site_location',
     'region_location',
-    's3_endpoint_public',
-    'activity_tracking',
-    'resource_instance_id',
-    'crn',
-    'cross_region_location',
     'storage_class',
-    's3_endpoint_private',
     'allowed_ip',
+    'activity_tracking',
     'metrics_monitoring',
     'bucket_name',
+    'resource_instance_id',
+    'key_protect',
+    'cross_region_location',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('bucket_name', 'str'),
+    ('bucket_type', 'str'),
+    ('bucket_region', 'str'),
+    ('resource_instance_id', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'bucket_name',
+    'bucket_type',
+    'bucket_region',
+    'resource_instance_id',
+]
+
+TL_CONFLICTS_MAP = {
+    'single_site_location':  ['region_location', 'cross_region_location'],
+    'region_location':  ['cross_region_location', 'single_site_location'],
+    'cross_region_location':  ['region_location', 'single_site_location'],
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_protect=dict(
-        required= False,
-        type='str'),
     single_site_location=dict(
         required= False,
         type='str'),
     region_location=dict(
         required= False,
         type='str'),
-    s3_endpoint_public=dict(
-        required= False,
-        type='str'),
-    activity_tracking=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_instance_id=dict(
-        required= False,
-        type='str'),
-    crn=dict(
-        required= False,
-        type='str'),
-    cross_region_location=dict(
-        required= False,
-        type='str'),
     storage_class=dict(
         required= False,
         type='str'),
-    s3_endpoint_private=dict(
-        required= False,
-        type='str'),
     allowed_ip=dict(
+        required= False,
+        elements='',
+        type='list'),
+    activity_tracking=dict(
         required= False,
         elements='',
         type='list'),
@@ -200,6 +185,15 @@ module_args = dict(
         elements='',
         type='list'),
     bucket_name=dict(
+        required= False,
+        type='str'),
+    resource_instance_id=dict(
+        required= False,
+        type='str'),
+    key_protect=dict(
+        required= False,
+        type='str'),
+    cross_region_location=dict(
         required= False,
         type='str'),
     id=dict(
@@ -250,20 +244,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_cos_bucket',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_cos_bucket',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

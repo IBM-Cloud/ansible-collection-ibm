@@ -14,9 +14,9 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_service_instance' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
@@ -25,17 +25,6 @@ options:
             - (Required for new resource) A name for the service instance
         required: True
         type: str
-    space_guid:
-        description:
-            - (Required for new resource) The guid of the space in which the instance will be created
-        required: True
-        type: str
-    service_keys:
-        description:
-            - The service keys asociated with the service instance
-        required: False
-        type: list
-        elements: dict
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -52,27 +41,22 @@ options:
         required: False
         type: list
         elements: str
-    service:
-        description:
-            - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
-        required: True
-        type: str
-    credentials:
-        description:
-            - The service broker-provided credentials to use this service.
-        required: False
-        type: dict
-    service_plan_guid:
-        description:
-            - The uniquie identifier of the service offering plan type
-        required: False
-        type: str
     wait_time_minutes:
         description:
             - Define timeout to wait for the service instances to succeeded/deleted etc.
         required: False
         type: int
         default: 10
+    space_guid:
+        description:
+            - (Required for new resource) The guid of the space in which the instance will be created
+        required: True
+        type: str
+    service:
+        description:
+            - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -120,24 +104,35 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('space_guid', 'str'),
     ('plan', 'str'),
+    ('space_guid', 'str'),
     ('service', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'space_guid',
-    'service_keys',
     'parameters',
     'plan',
     'tags',
-    'service',
-    'credentials',
-    'service_plan_guid',
     'wait_time_minutes',
+    'space_guid',
+    'service',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('name', 'str'),
+    ('space_guid', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'name',
+    'space_guid',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
@@ -146,13 +141,6 @@ module_args = dict(
     name=dict(
         required= False,
         type='str'),
-    space_guid=dict(
-        required= False,
-        type='str'),
-    service_keys=dict(
-        required= False,
-        elements='',
-        type='list'),
     parameters=dict(
         required= False,
         type='dict'),
@@ -163,18 +151,15 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
+    wait_time_minutes=dict(
+        required= False,
+        type='int'),
+    space_guid=dict(
+        required= False,
+        type='str'),
     service=dict(
         required= False,
         type='str'),
-    credentials=dict(
-        required= False,
-        type='dict'),
-    service_plan_guid=dict(
-        required= False,
-        type='str'),
-    wait_time_minutes=dict(
-        default=10,
-        type='int'),
     id=dict(
         required= False,
         type='str'),
@@ -223,20 +208,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_service_instance',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_service_instance',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

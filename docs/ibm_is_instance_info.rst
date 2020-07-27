@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,100 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  boot_volume (False, list, None)
-    Instance Boot Volume
-
-
-  image (False, str, None)
-    Instance Image
-
-
-  status (False, str, None)
-    instance status
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
   passphrase (False, str, None)
     Passphrase for Instance Private Key file
-
-
-  zone (False, str, None)
-    Zone name
-
-
-  network_interfaces (False, list, None)
-    Instance Network interface info
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  memory (False, int, None)
-    Instance memory
-
-
-  name (True, str, None)
-    Instance name
-
-
-  password (False, str, None)
-    password for Windows Instance
-
-
-  keys (False, list, None)
-    Instance keys
-
-
-  vpc (False, str, None)
-    VPC id
-
-
-  profile (False, str, None)
-    Profile info
-
-
-  primary_network_interface (False, list, None)
-    Primary Network interface info
 
 
   private_key (False, str, None)
     Instance Private Key file
 
 
-  volume_attachments (False, list, None)
-    Instance Volume Attachments
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  vcpu (False, list, None)
-    Instance vCPU
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  name (True, str, None)
+    Instance name
 
 
   generation (False, int, 2)

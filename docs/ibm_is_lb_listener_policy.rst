@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,48 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  lb (True, str, None)
-    (Required for new resource) Load Balancer Listener Policy
-
-
-  policy_id (False, str, None)
-    Listener Policy ID
-
-
-  target_http_status_code (False, int, None)
-    Listener Policy target HTTPS Status code.
-
-
-  target_url (False, str, None)
-    Policy Target URL
-
-
-  provisioning_status (False, str, None)
-    Listner Policy status
-
-
   listener (True, str, None)
     (Required for new resource) Listener ID
-
-
-  action (True, str, None)
-    (Required for new resource) Policy Action
 
 
   priority (True, int, None)
     (Required for new resource) Listener Policy Priority
 
 
-  name (False, str, None)
-    Policy name
-
-
-  rules (False, list, None)
-    Policy Rules
-
-
   target_id (False, str, None)
     Listener Policy Target ID
+
+
+  target_url (False, str, None)
+    Policy Target URL
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer Listener Policy
+
+
+  action (True, str, None)
+    (Required for new resource) Policy Action
+
+
+  target_http_status_code (False, int, None)
+    Listener Policy target HTTPS Status code.
 
 
   id (False, str, None)

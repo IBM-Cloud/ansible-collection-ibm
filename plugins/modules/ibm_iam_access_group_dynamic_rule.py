@@ -14,28 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_dynamic_rule' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    identity_provider:
-        description:
-            - (Required for new resource) The realm name or identity proivider url
-        required: True
-        type: str
-    conditions:
-        description:
-            - (Required for new resource) conditions info
-        required: True
-        type: list
-        elements: dict
-    rule_id:
-        description:
-            - id of the rule
-        required: False
-        type: str
     access_group_id:
         description:
             - (Required for new resource) Unique identifier of the access group
@@ -51,6 +35,17 @@ options:
             - (Required for new resource) The expiration in hours
         required: True
         type: int
+    identity_provider:
+        description:
+            - (Required for new resource) The realm name or identity proivider url
+        required: True
+        type: str
+    conditions:
+        description:
+            - (Required for new resource) conditions info
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,37 +92,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('identity_provider', 'str'),
-    ('conditions', 'list'),
     ('access_group_id', 'str'),
     ('name', 'str'),
     ('expiration', 'int'),
+    ('identity_provider', 'str'),
+    ('conditions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'identity_provider',
-    'conditions',
-    'rule_id',
     'access_group_id',
     'name',
     'expiration',
+    'identity_provider',
+    'conditions',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    identity_provider=dict(
-        required= False,
-        type='str'),
-    conditions=dict(
-        required= False,
-        elements='',
-        type='list'),
-    rule_id=dict(
-        required= False,
-        type='str'),
     access_group_id=dict(
         required= False,
         type='str'),
@@ -137,6 +131,13 @@ module_args = dict(
     expiration=dict(
         required= False,
         type='int'),
+    identity_provider=dict(
+        required= False,
+        type='str'),
+    conditions=dict(
+        required= False,
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),
@@ -185,11 +186,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_iam_access_group_dynamic_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -198,7 +213,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

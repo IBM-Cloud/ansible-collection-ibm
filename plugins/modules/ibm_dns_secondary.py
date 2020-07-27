@@ -14,23 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    status_text:
-        description:
-            - Status text
-        required: False
-        type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     master_ip_address:
         description:
             - (Required for new resource) Master IP Address
@@ -46,11 +35,12 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
-    status_id:
+    tags:
         description:
-            - Status ID
+            - List of tags
         required: False
-        type: int
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,25 +94,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status_text',
-    'tags',
     'master_ip_address',
     'transfer_frequency',
     'zone_name',
-    'status_id',
+    'tags',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('zone_name', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'zone_name',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status_text=dict(
-        required= False,
-        type='str'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
     master_ip_address=dict(
         required= False,
         type='str'),
@@ -132,9 +125,10 @@ module_args = dict(
     zone_name=dict(
         required= False,
         type='str'),
-    status_id=dict(
+    tags=dict(
         required= False,
-        type='int'),
+        elements='',
+        type='list'),
     id=dict(
         required= False,
         type='str'),
@@ -183,20 +177,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_dns_secondary',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_dns_secondary',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

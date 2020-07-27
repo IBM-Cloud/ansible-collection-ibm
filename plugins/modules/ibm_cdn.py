@@ -14,43 +14,62 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_cdn' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    performance_configuration:
+    host_name:
         description:
-            - performance configuration info
-        required: False
+            - (Required for new resource) Host name
+        required: True
         type: str
-        default: General web delivery
     path:
         description:
             - Path details
         required: False
         type: str
         default: /*
-    host_name:
+    performance_configuration:
         description:
-            - (Required for new resource) Host name
-        required: True
+            - performance configuration info
+        required: False
         type: str
+        default: General web delivery
+    origin_type:
+        description:
+            - Origin type info
+        required: False
+        type: str
+        default: HOST_SERVER
     http_port:
         description:
             - HTTP port number
         required: False
         type: int
         default: 80
-    status:
+    https_port:
         description:
-            - Status info of the CDN instance
+            - HTTPS port number
+        required: False
+        type: int
+        default: 443
+    respect_headers:
+        description:
+            - respect headers info
+        required: False
+        type: bool
+        default: True
+    cache_key_query_rule:
+        description:
+            - query rule info
         required: False
         type: str
-    file_extension:
+        default: include-all
+    bucket_name:
         description:
-            - File extension info
+            - Bucket name
         required: False
         type: str
     certificate_type:
@@ -58,60 +77,26 @@ options:
             - Certificate type
         required: False
         type: str
-    cache_key_query_rule:
-        description:
-            - query rule info
-        required: False
-        type: str
-        default: include-all
-    origin_type:
-        description:
-            - Origin type info
-        required: False
-        type: str
-        default: HOST_SERVER
-    origin_address:
-        description:
-            - (Required for new resource) origin address info
-        required: True
-        type: str
-    https_port:
-        description:
-            - HTTPS port number
-        required: False
-        type: int
-        default: 443
-    bucket_name:
-        description:
-            - Bucket name
-        required: False
-        type: str
-    header:
-        description:
-            - Header info
-        required: False
-        type: str
-    respect_headers:
-        description:
-            - respect headers info
-        required: False
-        type: bool
-        default: True
     vendor_name:
         description:
             - Vendor name
         required: False
         type: str
         default: akamai
+    origin_address:
+        description:
+            - (Required for new resource) origin address info
+        required: True
+        type: str
     protocol:
         description:
             - Protocol name
         required: False
         type: str
         default: HTTP
-    cname:
+    file_extension:
         description:
-            - cname info
+            - File extension info
         required: False
         type: str
     id:
@@ -166,78 +151,76 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'performance_configuration',
-    'path',
     'host_name',
-    'http_port',
-    'status',
-    'file_extension',
-    'certificate_type',
-    'cache_key_query_rule',
+    'path',
+    'performance_configuration',
     'origin_type',
-    'origin_address',
+    'http_port',
     'https_port',
-    'bucket_name',
-    'header',
     'respect_headers',
+    'cache_key_query_rule',
+    'bucket_name',
+    'certificate_type',
     'vendor_name',
+    'origin_address',
     'protocol',
-    'cname',
+    'file_extension',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    performance_configuration=dict(
-        default='General web delivery',
-        type='str'),
-    path=dict(
-        default='/*',
-        type='str'),
     host_name=dict(
         required= False,
         type='str'),
-    http_port=dict(
-        default=80,
-        type='int'),
-    status=dict(
+    path=dict(
         required= False,
         type='str'),
-    file_extension=dict(
+    performance_configuration=dict(
+        required= False,
+        type='str'),
+    origin_type=dict(
+        required= False,
+        type='str'),
+    http_port=dict(
+        required= False,
+        type='int'),
+    https_port=dict(
+        required= False,
+        type='int'),
+    respect_headers=dict(
+        required= False,
+        type='bool'),
+    cache_key_query_rule=dict(
+        required= False,
+        type='str'),
+    bucket_name=dict(
         required= False,
         type='str'),
     certificate_type=dict(
         required= False,
         type='str'),
-    cache_key_query_rule=dict(
-        default='include-all',
-        type='str'),
-    origin_type=dict(
-        default='HOST_SERVER',
+    vendor_name=dict(
+        required= False,
         type='str'),
     origin_address=dict(
         required= False,
         type='str'),
-    https_port=dict(
-        default=443,
-        type='int'),
-    bucket_name=dict(
-        required= False,
-        type='str'),
-    header=dict(
-        required= False,
-        type='str'),
-    respect_headers=dict(
-        default=True,
-        type='bool'),
-    vendor_name=dict(
-        default='akamai',
-        type='str'),
     protocol=dict(
-        default='HTTP',
+        required= False,
         type='str'),
-    cname=dict(
+    file_extension=dict(
         required= False,
         type='str'),
     id=dict(
@@ -288,11 +271,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_cdn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -301,7 +298,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,80 +28,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  volumename (False, str, None)
-    Storage volume name
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
-  notes (False, str, None)
-    Notes
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  type (True, str, None)
-    (Required for new resource) Storage type
-
-
   iops (True, float, None)
     (Required for new resource) iops rate
-
-
-  snapshot_schedule (False, list, None)
-    None
-
-
-  mountpoint (False, str, None)
-    Storage mount point
-
-
-  hourly_billing (False, bool, False)
-    Hourly based billing type
-
-
-  tags (False, list, None)
-    Tags set for the storage volume
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  capacity (True, int, None)
-    (Required for new resource) Storage capacity
-
-
-  hostname (False, str, None)
-    Hostname
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
 
 
   allowed_subnets (False, list, None)
     Allowed network subnets
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  hourly_billing (False, bool, False)
+    Hourly based billing type
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage capacity
+
+
+  tags (False, list, None)
+    Tags set for the storage volume
+
+
+  type (True, str, None)
+    (Required for new resource) Storage type
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
+
+
+  notes (False, str, None)
+    Notes
+
+
+  snapshot_schedule (False, list, None)
+    None
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
   id (False, str, None)

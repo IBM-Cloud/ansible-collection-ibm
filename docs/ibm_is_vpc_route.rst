@@ -12,19 +12,25 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_vpc_route' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  next_hop (True, str, None)
+    (Required for new resource) VPC route next hop value
+
 
   name (True, str, None)
     (Required for new resource) VPC route name
@@ -38,16 +44,8 @@ Parameters
     (Required for new resource) VPC route destination CIDR value
 
 
-  status (False, str, None)
-    None
-
-
   vpc (True, str, None)
     (Required for new resource) VPC instance ID
-
-
-  next_hop (True, str, None)
-    (Required for new resource) VPC route next hop value
 
 
   id (False, str, None)

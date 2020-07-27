@@ -14,30 +14,15 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_instance' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) A name for the resource instance
-        required: True
-        type: str
-    plan:
-        description:
-            - (Required for new resource) The plan type of the service
         required: True
         type: str
     location:
@@ -45,30 +30,10 @@ options:
             - (Required for new resource) The location where the instance available
         required: True
         type: str
-    guid:
+    plan:
         description:
-            - Guid of resource instance
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    service:
-        description:
-            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
+            - (Required for new resource) The plan type of the service
         required: True
-        type: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
         type: str
     resource_group_id:
         description:
@@ -80,25 +45,14 @@ options:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    tags:
+    service:
         description:
-            - None
-        required: False
-        type: list
-        elements: str
-    status:
-        description:
-            - Status of resource instance
-        required: False
+            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
+        required: True
         type: str
-    crn:
+    service_endpoints:
         description:
-            - CRN of resource instance
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
         type: str
     id:
@@ -148,63 +102,45 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('plan', 'str'),
     ('location', 'str'),
+    ('plan', 'str'),
     ('service', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_endpoints',
-    'resource_controller_url',
     'name',
-    'plan',
     'location',
-    'guid',
-    'resource_crn',
-    'service',
-    'resource_name',
-    'resource_group_name',
+    'plan',
     'resource_group_id',
     'parameters',
-    'tags',
-    'status',
-    'crn',
-    'resource_status',
+    'service',
+    'service_endpoints',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('name', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'name',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_endpoints=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
     name=dict(
-        required= False,
-        type='str'),
-    plan=dict(
         required= False,
         type='str'),
     location=dict(
         required= False,
         type='str'),
-    guid=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
-        required= False,
-        type='str'),
-    service=dict(
-        required= False,
-        type='str'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_group_name=dict(
+    plan=dict(
         required= False,
         type='str'),
     resource_group_id=dict(
@@ -213,17 +149,10 @@ module_args = dict(
     parameters=dict(
         required= False,
         type='dict'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    status=dict(
+    service=dict(
         required= False,
         type='str'),
-    crn=dict(
-        required= False,
-        type='str'),
-    resource_status=dict(
+    service_endpoints=dict(
         required= False,
         type='str'),
     id=dict(
@@ -274,20 +203,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_resource_instance',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_resource_instance',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

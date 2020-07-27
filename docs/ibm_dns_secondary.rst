@@ -12,27 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  status_text (False, str, None)
-    Status text
-
-
-  tags (False, list, None)
-    List of tags
-
 
   master_ip_address (True, str, None)
     (Required for new resource) Master IP Address
@@ -46,8 +40,8 @@ Parameters
     (Required for new resource) Zone name
 
 
-  status_id (False, int, None)
-    Status ID
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

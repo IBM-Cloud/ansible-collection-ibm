@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_vpc_address_prefix' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -40,10 +42,6 @@ Parameters
 
   vpc (True, str, None)
     (Required for new resource) VPC id
-
-
-  has_subnets (False, bool, None)
-    Boolean value, set to true if VPC instance have subnets
 
 
   id (False, str, None)

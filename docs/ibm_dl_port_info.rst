@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,32 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location_name (False, str, None)
-    Port location name identifier
-
-
-  provider_name (False, str, None)
-    Port's provider name
-
-
-  supported_link_speeds (False, list, None)
-    Port's supported speeds in megabits per second
-
-
   port_id (True, str, None)
     Port ID
-
-
-  direct_link_count (False, int, None)
-    Count of existing Direct Link gateways in this account on this port
-
-
-  label (False, str, None)
-    Port Label
-
-
-  location_display_name (False, str, None)
-    Port location long name
 
 
   iaas_classic_username (False, any, None)

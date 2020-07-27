@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -32,18 +32,6 @@ Parameters
 
   org (True, str, None)
     The org this space belongs to
-
-
-  auditors (False, list, None)
-    The IBMID of the users who  have auditor role in this space, ex - user@example.com
-
-
-  managers (False, list, None)
-    The IBMID of the users who  have manager role in this space, ex - user@example.com
-
-
-  developers (False, list, None)
-    The IBMID of the users who  have developer role in this space, ex - user@example.com
 
 
   iaas_classic_username (False, any, None)

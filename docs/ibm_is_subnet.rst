@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_subnet' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,68 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  available_ipv4_address_count (False, str, None)
-    None
-
-
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
-
-
   name (True, str, None)
     (Required for new resource) Subnet name
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
 
 
   zone (True, str, None)
     (Required for new resource) Subnet zone info
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
 
 
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  ipv6_cidr_block (False, str, None)
-    None
-
-
-  total_ipv4_address_count (False, int, None)
-    None
-
-
-  network_acl (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
-
-  resource_group (False, str, None)
-    None
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
 
 
   id (False, str, None)

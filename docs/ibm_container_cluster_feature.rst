@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,36 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  public_service_endpoint_url (False, str, None)
-    None
-
-
   refresh_api_servers (False, bool, True)
     Boolean value true of API server to be refreshed in K8S cluster
-
-
-  private_service_endpoint_url (False, str, None)
-    None
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name of ID
 
 
   reload_workers (False, bool, True)
     Boolean value set true if worker nodes to be reloaded
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  private_service_endpoint (False, bool, None)
-    None
+  cluster (True, str, None)
+    (Required for new resource) Cluster name of ID
 
 
   id (False, str, None)

@@ -1,6 +1,6 @@
 namespace: "ibm"
 name: "cloudcollection"
-version: "1.8.2"
+version: "1.9.0"
 readme: "README.md"
 authors:
     - "Jay W Carman"
@@ -8,7 +8,6 @@ authors:
 description: "Ansible modules collection for IBM cloud."
 license:
     - "MPL-2.0"
-documentation: "https://github.com/IBM-Cloud/ansible-collection-ibm/tree/master/docs"
 issues: "https://github.com/IBM-Cloud/ansible-collection-ibm/issues"
 tags:
     - ibmcloud

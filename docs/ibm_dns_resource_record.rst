@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_dns_resource_record' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -30,24 +32,40 @@ Parameters
     (Required for new resource) Instance ID
 
 
+  type (True, str, None)
+    (Required for new resource) DNS record Type
+
+
+  rdata (True, str, None)
+    (Required for new resource) DNS record Data
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone ID
+
+
   name (True, str, None)
     (Required for new resource) DNS record name
-
-
-  ttl (False, int, 900)
-    DNS record TTL
 
 
   preference (False, int, 0)
     DNS maximum preference
 
 
+  protocol (False, str, None)
+    Protocol
+
+
+  service (False, str, None)
+    Service info
+
+
+  ttl (False, int, 900)
+    DNS record TTL
+
+
   port (False, int, None)
     DNS server Port
-
-
-  modified_on (False, str, None)
-    Modification date
 
 
   priority (False, int, 0)
@@ -56,34 +74,6 @@ Parameters
 
   weight (False, int, 0)
     DNS server weight
-
-
-  protocol (False, str, None)
-    Protocol
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone ID
-
-
-  rdata (True, str, None)
-    (Required for new resource) DNS record Data
-
-
-  created_on (False, str, None)
-    Creation Data
-
-
-  resource_record_id (False, str, None)
-    Resource record ID
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record Type
-
-
-  service (False, str, None)
-    Service info
 
 
   id (False, str, None)

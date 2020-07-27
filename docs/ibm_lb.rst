@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_lb' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,44 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_address (False, str, None)
-    None
+  dedicated (False, bool, False)
+    Boolena value true if Load balncer is dedicated type
 
 
   tags (False, list, None)
     Tags associated with resource
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name info
+  connections (True, int, None)
+    (Required for new resource) Connections value
 
 
   security_certificate_id (False, int, None)
     Security certificate ID
 
 
-  subnet_id (False, int, None)
-    None
-
-
-  dedicated (False, bool, False)
-    Boolena value true if Load balncer is dedicated type
-
-
-  ssl_enabled (False, bool, None)
-    None
-
-
   ssl_offload (False, bool, False)
     boolean value true if SSL offload is enabled
 
 
-  hostname (False, str, None)
-    None
-
-
-  connections (True, int, None)
-    (Required for new resource) Connections value
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name info
 
 
   ha_enabled (False, bool, False)

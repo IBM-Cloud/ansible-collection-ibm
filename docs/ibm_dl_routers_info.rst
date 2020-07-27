@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location_name (True, str, None)
-    The name of the Direct Link location
-
-
-  cross_connect_routers (False, list, None)
-    Collection of Direct Link cross connect routers
-
-
   offering_type (True, str, None)
     The Direct Link offering type
+
+
+  location_name (True, str, None)
+    The name of the Direct Link location
 
 
   iaas_classic_username (False, any, None)

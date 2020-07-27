@@ -14,49 +14,21 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_function_action' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    publish:
-        description:
-            - Action visibilty.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the item.
-        required: False
-        type: str
-    annotations:
-        description:
-            - All annotations set on action by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    parameters:
-        description:
-            - All paramters set on action by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
     name:
         description:
             - Name of action.
         required: True
         type: str
-    limits:
+    namespace:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    exec:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
+            - Name of the namespace.
+        required: True
+        type: str
     function_namespace:
         description:
             - The namespace in IBM Cloud™ Functions where you want to
@@ -77,46 +49,35 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'publish',
-    'version',
-    'annotations',
-    'parameters',
     'name',
-    'limits',
-    'exec',
+    'namespace',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    publish=dict(
-        required=False,
-        type='bool'),
-    version=dict(
-        required=False,
-        type='str'),
-    annotations=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),
-    limits=dict(
-        required=False,
-        elements='',
-        type='list'),
-    exec=dict(
-        required=False,
-        elements='',
-        type='list'),
+    namespace=dict(
+        required=True,
+        type='str'),
     function_namespace=dict(
         type='str',
         fallback=(env_fallback, ['FUNCTION_NAMESPACE']),
@@ -141,7 +102,7 @@ def run_module():
         resource_type='ibm_function_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -150,7 +111,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

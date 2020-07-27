@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,16 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service_instance_id (False, str, None)
-    Service instance ID
-
-
   tags (False, list, None)
     List of tags for the resource
 
 
-  cluster_name_id (True, str, None)
-    (Required for new resource) Cluster name or ID
+  namespace_id (True, str, None)
+    (Required for new resource) namespace ID
+
+
+  org_guid (False, str, None)
+    The bluemix organization guid this cluster belongs to
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  account_guid (False, str, None)
+    The bluemix account guid this cluster belongs to
 
 
   key (False, str, None)
@@ -46,16 +56,16 @@ Parameters
     Role info
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  region (False, str, None)
+    The cluster region
 
 
-  service_instance_name (False, str, None)
-    serivice instance name
+  cluster_name_id (True, str, None)
+    (Required for new resource) Cluster name or ID
 
 
-  namespace_id (True, str, None)
-    (Required for new resource) namespace ID
+  space_guid (False, str, None)
+    The bluemix space guid this cluster belongs to
 
 
   id (False, str, None)

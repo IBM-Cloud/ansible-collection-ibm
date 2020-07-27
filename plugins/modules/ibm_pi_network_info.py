@@ -14,61 +14,20 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_pi_network' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    used_ip_count:
-        description:
-            - None
-        required: False
-        type: float
-    used_ip_percent:
-        description:
-            - None
-        required: False
-        type: float
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
-    cidr:
-        description:
-            - None
-        required: False
-        type: str
-    vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    gateway:
-        description:
-            - None
-        required: False
-        type: str
-    available_ip_count:
-        description:
-            - None
-        required: False
-        type: float
-    name:
-        description:
-            - None
-        required: False
-        type: str
     pi_network_name:
         description:
             - Network Name to be used for pvminstances
         required: True
         type: str
-    type:
+    pi_cloud_instance_id:
         description:
             - None
-        required: False
+        required: True
         type: str
     zone:
         description:
@@ -99,57 +58,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'used_ip_count',
-    'used_ip_percent',
-    'pi_cloud_instance_id',
-    'cidr',
-    'vlan_id',
-    'gateway',
-    'available_ip_count',
-    'name',
     'pi_network_name',
-    'type',
+    'pi_cloud_instance_id',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    used_ip_count=dict(
-        required=False,
-        type='float'),
-    used_ip_percent=dict(
-        required=False,
-        type='float'),
-    pi_cloud_instance_id=dict(
-        required=True,
-        type='str'),
-    cidr=dict(
-        required=False,
-        type='str'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
-    gateway=dict(
-        required=False,
-        type='str'),
-    available_ip_count=dict(
-        required=False,
-        type='float'),
-    name=dict(
-        required=False,
-        type='str'),
     pi_network_name=dict(
         required=True,
         type='str'),
-    type=dict(
-        required=False,
+    pi_cloud_instance_id=dict(
+        required=True,
         type='str'),
     zone=dict(
         type='str',
@@ -178,7 +115,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -187,7 +124,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

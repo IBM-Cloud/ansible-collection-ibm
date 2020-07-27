@@ -12,19 +12,25 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_storage_evault' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    Tags set for the resource
+
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
@@ -40,22 +46,6 @@ Parameters
 
   hardware_instance_id (False, int, None)
     Hardware instance ID
-
-
-  username (False, str, None)
-    user name
-
-
-  password (False, str, None)
-    password
-
-
-  service_resource_name (False, str, None)
-    service resource name
-
-
-  tags (False, list, None)
-    Tags set for the resource
 
 
   id (False, str, None)

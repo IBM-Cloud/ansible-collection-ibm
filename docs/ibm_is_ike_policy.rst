@@ -12,35 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  encryption_algorithm (True, str, None)
-    (Required for new resource) Encryption alogorithm type
-
-
-  href (False, str, None)
-    IKE href value
-
-
-  vpn_connections (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) IKE name
-
 
   authentication_algorithm (True, str, None)
     (Required for new resource) Authentication algorithm type
@@ -54,28 +40,16 @@ Parameters
     IKE version
 
 
-  negotiation_mode (False, str, None)
-    IKE negotiation mode
+  name (True, str, None)
+    (Required for new resource) IKE name
 
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
+  encryption_algorithm (True, str, None)
+    (Required for new resource) Encryption alogorithm type
 
 
   dh_group (True, int, None)
     (Required for new resource) IKE DH group
-
-
-  resource_group (False, str, None)
-    IKE resource group ID
 
 
   id (False, str, None)

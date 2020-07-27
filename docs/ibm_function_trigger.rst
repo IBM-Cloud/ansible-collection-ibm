@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,36 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters (False, str, None)
-    All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
-
-
-  name (True, str, None)
-    (Required for new resource) Name of Trigger.
-
-
   feed (False, list, None)
     Trigger feed
-
-
-  publish (False, bool, None)
-    Trigger visbility.
-
-
-  version (False, str, None)
-    Semantic version of the item.
 
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
 
 
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of Trigger.
+
+
   user_defined_parameters (False, str, [])
     Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
-
-
-  annotations (False, str, None)
-    All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
 
 
   id (False, str, None)

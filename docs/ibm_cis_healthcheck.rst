@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,36 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  expected_codes (False, str, None)
-    expected_codes
-
-
-  description (False, str, None)
-    description
-
-
-  type (False, str, http)
-    type
-
-
-  retries (False, int, 2)
-    retries
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  timeout (False, int, 5)
-    timeout
-
-
   interval (False, int, 60)
     interval
-
-
-  modified_on (False, str, None)
-    None
 
 
   port (False, int, None)
@@ -66,12 +40,36 @@ Parameters
     path
 
 
+  method (False, str, None)
+    method
+
+
   expected_body (False, str, None)
     expected_body
 
 
-  method (False, str, None)
-    method
+  description (False, str, None)
+    description
+
+
+  retries (False, int, 2)
+    retries
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  expected_codes (False, str, None)
+    expected_codes
+
+
+  type (False, str, http)
+    type
+
+
+  timeout (False, int, 5)
+    timeout
 
 
   follow_redirects (False, bool, None)
@@ -80,10 +78,6 @@ Parameters
 
   allow_insecure (False, bool, False)
     allow_insecure
-
-
-  created_on (False, str, None)
-    None
 
 
   id (False, str, None)

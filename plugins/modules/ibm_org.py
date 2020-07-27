@@ -14,28 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_org' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Org name, for example myorg@domain
-        required: True
-        type: str
-    org_quota_definition_guid:
-        description:
-            - Org quota guid
-        required: False
-        type: str
-    billing_managers:
-        description:
-            - The IBMID of the users who will have billing manager role in this org, ex - user@example.com
-        required: False
-        type: list
-        elements: str
     managers:
         description:
             - The IBMID of the users who will have manager role in this org, ex - user@example.com
@@ -57,6 +41,17 @@ options:
     tags:
         description:
             - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Org name, for example myorg@domain
+        required: True
+        type: str
+    billing_managers:
+        description:
+            - The IBMID of the users who will have billing manager role in this org, ex - user@example.com
         required: False
         type: list
         elements: str
@@ -111,29 +106,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'org_quota_definition_guid',
-    'billing_managers',
     'managers',
     'auditors',
     'users',
     'tags',
+    'name',
+    'billing_managers',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('org', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'org',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required= False,
-        type='str'),
-    org_quota_definition_guid=dict(
-        required= False,
-        type='str'),
-    billing_managers=dict(
-        required= False,
-        elements='',
-        type='list'),
     managers=dict(
         required= False,
         elements='',
@@ -147,6 +143,13 @@ module_args = dict(
         elements='',
         type='list'),
     tags=dict(
+        required= False,
+        elements='',
+        type='list'),
+    name=dict(
+        required= False,
+        type='str'),
+    billing_managers=dict(
         required= False,
         elements='',
         type='list'),
@@ -198,20 +201,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_org',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_org',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

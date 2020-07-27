@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,23 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_vlan_id (False, int, None)
-    None
+  name (True, str, None)
+    (Required for new resource) The name of the gateway
 
 
-  status (False, str, None)
-    None
-
-
-  members (True, list, None)
-    (Required for new resource) The hardware members of this network Gateway
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  public_ipv6_address_id (False, int, None)
+  ssh_key_ids (False, list, None)
     None
 
 
@@ -50,32 +40,8 @@ Parameters
     None
 
 
-  private_ip_address_id (False, int, None)
-    None
-
-
-  private_ipv4_address (False, str, None)
-    None
-
-
-  public_ipv4_address (False, str, None)
-    None
-
-
-  public_ip_address_id (False, int, None)
-    None
-
-
-  associated_vlans (False, list, None)
-    The VLAN instances associated with this Network Gateway
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the gateway
-
-
-  ssh_key_ids (False, list, None)
-    None
+  members (True, list, None)
+    (Required for new resource) The hardware members of this network Gateway
 
 
   id (False, str, None)

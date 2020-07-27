@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_dns_record' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,72 +28,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retry (False, int, None)
-    Retry count
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  service (False, str, None)
-    service info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  port (False, int, None)
-    port number
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  expire (False, int, None)
-    DNS record expiry info
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
   protocol (False, str, None)
     protocol info
 
 
-  priority (False, int, 0)
-    priority info
-
-
   weight (False, int, 0)
     weight info
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
+  tags (False, list, None)
+    tags set for the resource
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   ttl (True, int, None)
     (Required for new resource) TTL configuration
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  service (False, str, None)
+    service info
+
+
+  port (False, int, None)
+    port number
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
   id (False, str, None)

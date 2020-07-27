@@ -14,17 +14,22 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    vlan_id:
+    pi_gateway:
         description:
-            - VLAN Id value
+            - PI network gateway
         required: False
-        type: float
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: True
+        type: str
     pi_network_type:
         description:
             - (Required for new resource) PI network type
@@ -41,26 +46,6 @@ options:
         required: False
         type: list
         elements: str
-    pi_cidr:
-        description:
-            - PI network CIDR
-        required: False
-        type: str
-    pi_gateway:
-        description:
-            - PI network gateway
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
-        required: True
-        type: str
-    network_id:
-        description:
-            - PI network ID
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,30 +88,44 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_network_type', 'str'),
     ('pi_network_name', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vlan_id',
+    'pi_gateway',
+    'pi_cloud_instance_id',
     'pi_network_type',
     'pi_network_name',
     'pi_dns',
-    'pi_cidr',
-    'pi_gateway',
-    'pi_cloud_instance_id',
-    'network_id',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'pi_network_name',
+    'pi_cloud_instance_id',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vlan_id=dict(
+    pi_gateway=dict(
         required= False,
-        type='float'),
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required= False,
+        type='str'),
     pi_network_type=dict(
         required= False,
         type='str'),
@@ -137,18 +136,6 @@ module_args = dict(
         required= False,
         elements='',
         type='list'),
-    pi_cidr=dict(
-        required= False,
-        type='str'),
-    pi_gateway=dict(
-        required= False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required= False,
-        type='str'),
-    network_id=dict(
-        required= False,
-        type='str'),
     id=dict(
         required= False,
         type='str'),
@@ -190,20 +177,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_pi_network',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_pi_network',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()

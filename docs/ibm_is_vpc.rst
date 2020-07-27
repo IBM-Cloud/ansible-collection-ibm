@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,60 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  cse_source_addresses (False, list, None)
-    None
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  tags (False, list, None)
-    List of tags
-
-
-  crn (False, str, None)
-    The crn of the resource
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  subnets (False, list, None)
-    None
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
 
 
   classic_access (False, bool, False)
     Set to true if classic access needs to enabled to VPC
-
-
-  default_security_group (False, str, None)
-    Security group associated with VPC
-
-
-  status (False, str, None)
-    VPC status
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
 
 
   name (True, str, None)

@@ -14,47 +14,15 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_dl_port' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    location_name:
-        description:
-            - Port location name identifier
-        required: False
-        type: str
-    provider_name:
-        description:
-            - Port's provider name
-        required: False
-        type: str
-    supported_link_speeds:
-        description:
-            - Port's supported speeds in megabits per second
-        required: False
-        type: list
-        elements: int
     port_id:
         description:
             - Port ID
         required: True
-        type: str
-    direct_link_count:
-        description:
-            - Count of existing Direct Link gateways in this account on this port
-        required: False
-        type: int
-    label:
-        description:
-            - Port Label
-        required: False
-        type: str
-    location_display_name:
-        description:
-            - Port location long name
-        required: False
         type: str
     iaas_classic_username:
         description:
@@ -94,40 +62,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location_name',
-    'provider_name',
-    'supported_link_speeds',
     'port_id',
-    'direct_link_count',
-    'label',
-    'location_display_name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location_name=dict(
-        required=False,
-        type='str'),
-    provider_name=dict(
-        required=False,
-        type='str'),
-    supported_link_speeds=dict(
-        required=False,
-        elements='',
-        type='list'),
     port_id=dict(
         required=True,
-        type='str'),
-    direct_link_count=dict(
-        required=False,
-        type='int'),
-    label=dict(
-        required=False,
-        type='str'),
-    location_display_name=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -163,7 +116,7 @@ def run_module():
         resource_type='ibm_dl_port',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -172,7 +125,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,36 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cert_crn (True, str, None)
-    (Required for new resource) Certificate CRN id
-
-
   secret_name (True, str, None)
     (Required for new resource) Secret name
 
 
+  cert_crn (True, str, None)
+    (Required for new resource) Certificate CRN id
+
+
   cluster_id (True, str, None)
     (Required for new resource) Cluster ID
-
-
-  domain_name (False, str, None)
-    Domain name
-
-
-  expires_on (False, str, None)
-    Certificate expaire on date
-
-
-  issuer_name (False, str, None)
-    certificate issuer name
-
-
-  cluster_crn (False, str, None)
-    cluster CRN
-
-
-  cloud_cert_instance_id (False, str, None)
-    cloud cert instance ID
 
 
   id (False, str, None)

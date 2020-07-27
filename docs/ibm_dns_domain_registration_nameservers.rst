@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_dns_domain_registration_nameservers' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -32,10 +34,6 @@ Parameters
 
   name_servers (True, list, None)
     (Required for new resource) Custom name servers for the domain registration
-
-
-  original_name_servers (False, list, None)
-    Save of name servers prior to update
 
 
   id (False, str, None)

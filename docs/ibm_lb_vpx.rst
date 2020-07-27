@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,60 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
-    Type of the VPX
-
-
-  speed (True, int, None)
-    (Required for new resource) Speed value
-
-
-  vip_pool (False, list, None)
-    List of VIP ids
-
-
-  management_ip_address (False, str, None)
-    management IP address
-
-
-  name (False, str, None)
-    Name
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
   ip_count (True, int, None)
     (Required for new resource) IP address count
-
-
-  private_subnet (False, str, None)
-    Private subnet
-
-
-  tags (False, list, None)
-    List of the tags
-
-
-  version (True, str, None)
-    (Required for new resource) version info
 
 
   plan (True, str, None)
     (Required for new resource) Plan info
 
 
-  public_vlan_id (False, int, None)
-    Piblic VLAN id
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  public_subnet (False, str, None)
-    Public subnet
+  version (True, str, None)
+    (Required for new resource) version info
 
 
-  private_vlan_id (False, int, None)
-    Private VLAN id
+  tags (False, list, None)
+    List of the tags
+
+
+  speed (True, int, None)
+    (Required for new resource) Speed value
 
 
   id (False, str, None)

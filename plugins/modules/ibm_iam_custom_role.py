@@ -14,56 +14,36 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    actions:
-        description:
-            - (Required for new resource) The actions of the role
-        required: True
-        type: list
-        elements: str
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-        required: False
-        type: str
     description:
         description:
             - The description of the role
         required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name of the custom Role
+        required: True
         type: str
     service:
         description:
             - (Required for new resource) The Service Name
         required: True
         type: str
-    crn:
+    actions:
         description:
-            - crn of the Custom Role
-        required: False
-        type: str
+            - (Required for new resource) The actions of the role
+        required: True
+        type: list
+        elements: str
     display_name:
         description:
             - (Required for new resource) Display Name of the Custom Role
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The name of the custom Role
         required: True
         type: str
     id:
@@ -112,55 +92,49 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('actions', 'list'),
-    ('service', 'str'),
-    ('display_name', 'str'),
     ('name', 'str'),
+    ('service', 'str'),
+    ('actions', 'list'),
+    ('display_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'actions',
-    'resource_name',
-    'resource_crn',
-    'resource_controller_url',
     'description',
-    'service',
-    'crn',
-    'display_name',
     'name',
+    'service',
+    'actions',
+    'display_name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    actions=dict(
-        required= False,
-        elements='',
-        type='list'),
-    resource_name=dict(
-        required= False,
-        type='str'),
-    resource_crn=dict(
-        required= False,
-        type='str'),
-    resource_controller_url=dict(
-        required= False,
-        type='str'),
     description=dict(
+        required= False,
+        type='str'),
+    name=dict(
         required= False,
         type='str'),
     service=dict(
         required= False,
         type='str'),
-    crn=dict(
+    actions=dict(
         required= False,
-        type='str'),
+        elements='',
+        type='list'),
     display_name=dict(
-        required= False,
-        type='str'),
-    name=dict(
         required= False,
         type='str'),
     id=dict(
@@ -211,11 +185,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_iam_custom_role',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -224,7 +212,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

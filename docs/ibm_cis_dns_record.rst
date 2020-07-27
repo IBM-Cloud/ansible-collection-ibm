@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) Record type
-
-
   ttl (False, int, 1)
     TTL value
 
 
-  modified_on (False, str, None)
-    None
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id
+
+
+  name (False, str, None)
+    DNS record name
 
 
   content (False, str, None)
@@ -54,28 +56,12 @@ Parameters
     Boolean value true if proxied else flase
 
 
-  created_on (False, str, None)
-    None
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id
-
-
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
 
-  name (False, str, None)
-    DNS record name
-
-
-  proxiable (False, bool, None)
-    None
-
-
-  record_id (False, str, None)
-    None
+  type (True, str, None)
+    (Required for new resource) Record type
 
 
   id (False, str, None)

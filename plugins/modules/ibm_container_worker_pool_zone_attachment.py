@@ -14,31 +14,20 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    public_vlan_id:
+    zone:
         description:
-            - None
-        required: False
+            - (Required for new resource) Zone name
+        required: True
         type: str
-    worker_count:
+    resource_group_id:
         description:
-            - None
-        required: False
-        type: int
-    wait_till_albs:
-        description:
-            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
-        required: False
-        type: bool
-        default: True
-    private_vlan_id:
-        description:
-            - None
+            - ID of the resource group.
         required: False
         type: str
     cluster:
@@ -51,16 +40,12 @@ options:
             - (Required for new resource) Workerpool name
         required: True
         type: str
-    resource_group_id:
+    wait_till_albs:
         description:
-            - ID of the resource group.
+            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
         required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,37 +72,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone', 'str'),
     ('cluster', 'str'),
     ('worker_pool', 'str'),
-    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_vlan_id',
-    'worker_count',
-    'wait_till_albs',
-    'private_vlan_id',
+    'zone',
+    'resource_group_id',
     'cluster',
     'worker_pool',
-    'resource_group_id',
-    'zone',
+    'wait_till_albs',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_vlan_id=dict(
+    zone=dict(
         required= False,
         type='str'),
-    worker_count=dict(
-        required= False,
-        type='int'),
-    wait_till_albs=dict(
-        default=True,
-        type='bool'),
-    private_vlan_id=dict(
+    resource_group_id=dict(
         required= False,
         type='str'),
     cluster=dict(
@@ -126,12 +112,9 @@ module_args = dict(
     worker_pool=dict(
         required= False,
         type='str'),
-    resource_group_id=dict(
+    wait_till_albs=dict(
         required= False,
-        type='str'),
-    zone=dict(
-        required= False,
-        type='str'),
+        type='bool'),
     id=dict(
         required= False,
         type='str'),
@@ -166,11 +149,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -179,7 +176,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

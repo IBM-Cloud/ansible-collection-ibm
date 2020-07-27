@@ -14,54 +14,29 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    public_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
     refresh_api_servers:
         description:
             - Boolean value true of API server to be refreshed in K8S cluster
         required: False
         type: bool
         default: True
-    private_service_endpoint_url:
-        description:
-            - None
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) Cluster name of ID
-        required: True
-        type: str
     reload_workers:
         description:
             - Boolean value set true if worker nodes to be reloaded
         required: False
         type: bool
         default: True
-    resource_group_id:
+    cluster:
         description:
-            - ID of the resource group.
-        required: False
+            - (Required for new resource) Cluster name of ID
+        required: True
         type: str
-    private_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,44 +68,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_service_endpoint',
-    'public_service_endpoint_url',
     'refresh_api_servers',
-    'private_service_endpoint_url',
-    'cluster',
     'reload_workers',
-    'resource_group_id',
-    'private_service_endpoint',
+    'cluster',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_service_endpoint=dict(
-        required= False,
-        type='bool'),
-    public_service_endpoint_url=dict(
-        required= False,
-        type='str'),
     refresh_api_servers=dict(
-        default=True,
-        type='bool'),
-    private_service_endpoint_url=dict(
         required= False,
-        type='str'),
+        type='bool'),
+    reload_workers=dict(
+        required= False,
+        type='bool'),
     cluster=dict(
         required= False,
         type='str'),
-    reload_workers=dict(
-        default=True,
-        type='bool'),
-    resource_group_id=dict(
-        required= False,
-        type='str'),
-    private_service_endpoint=dict(
-        required= False,
-        type='bool'),
     id=dict(
         required= False,
         type='str'),
@@ -165,11 +130,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -178,7 +157,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

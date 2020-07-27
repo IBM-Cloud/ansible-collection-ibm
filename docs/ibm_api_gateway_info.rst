@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -28,10 +28,6 @@ Parameters
 
   service_instance_crn (True, str, None)
     Api Gateway Service Instance Crn
-
-
-  endpoints (False, list, None)
-    List of all endpoints of an instance
 
 
   iaas_classic_username (False, any, None)

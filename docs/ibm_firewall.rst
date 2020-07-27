@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_firewall' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,28 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_vlan_id (True, int, None)
-    (Required for new resource) Public VLAN ID
-
-
   tags (False, list, None)
     List of tags for the firewall
-
-
-  location (False, str, None)
-    Location info
-
-
-  primary_ip (False, str, None)
-    Primary IP address
-
-
-  username (False, str, None)
-    User name
-
-
-  password (False, str, None)
-    Password for the given User
 
 
   firewall_type (False, str, HARDWARE_FIREWALL_DEDICATED)
@@ -56,6 +38,10 @@ Parameters
 
   ha_enabled (False, bool, False)
     set to true if High availability is enabled
+
+
+  public_vlan_id (True, int, None)
+    (Required for new resource) Public VLAN ID
 
 
   id (False, str, None)

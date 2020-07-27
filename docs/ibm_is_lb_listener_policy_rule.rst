@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -30,36 +32,28 @@ Parameters
     (Required for new resource) Loadbalancer ID
 
 
-  value (True, str, None)
-    (Required for new resource) policy rule value info
-
-
-  field (False, str, None)
-    None
-
-
-  provisioning_status (False, str, None)
-    None
-
-
   listener (True, str, None)
     (Required for new resource) Listener ID.
-
-
-  policy (True, str, None)
-    (Required for new resource) Listener Policy ID
 
 
   condition (True, str, None)
     (Required for new resource) Condition info of the rule.
 
 
+  field (False, str, None)
+    None
+
+
+  policy (True, str, None)
+    (Required for new resource) Listener Policy ID
+
+
   type (True, str, None)
     (Required for new resource) Policy rule type.
 
 
-  rule (False, str, None)
-    None
+  value (True, str, None)
+    (Required for new resource) policy rule value info
 
 
   id (False, str, None)

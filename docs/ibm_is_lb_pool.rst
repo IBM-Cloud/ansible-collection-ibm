@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,16 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  health_monitor_url (False, str, None)
-    None
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
-
-
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
 
 
   lb (True, str, None)
@@ -46,40 +44,28 @@ Parameters
     (Required for new resource) Load Balancer health retry count
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  provisioning_status (False, str, None)
-    None
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
 
 
   name (True, str, None)
     (Required for new resource) Load Balancer Pool name
 
 
-  session_persistence_cookie_name (False, str, None)
-    Load Balancer Pool session persisence cookie name
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_monitor_port (False, int, None)
-    None
-
-
-  pool_id (False, str, None)
-    None
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
 
 
   protocol (True, str, None)
     (Required for new resource) Load Balancer Protocol
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
 
 
   id (False, str, None)

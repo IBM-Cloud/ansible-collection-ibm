@@ -14,139 +14,25 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_is_instance' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    resource_name:
-        description:
-            - The name of the resource
-        required: False
-        type: str
-    resource_crn:
-        description:
-            - The crn of the resource
-        required: False
-        type: str
-    tags:
-        description:
-            - list of tags for the instance
-        required: False
-        type: list
-        elements: str
-    boot_volume:
-        description:
-            - Instance Boot Volume
-        required: False
-        type: list
-        elements: dict
-    image:
-        description:
-            - Instance Image
-        required: False
-        type: str
-    status:
-        description:
-            - instance status
-        required: False
-        type: str
-    resource_controller_url:
-        description:
-            - The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-        required: False
-        type: str
-    resource_status:
-        description:
-            - The status of the resource
-        required: False
-        type: str
     passphrase:
         description:
             - Passphrase for Instance Private Key file
         required: False
         type: str
-    zone:
-        description:
-            - Zone name
-        required: False
-        type: str
-    network_interfaces:
-        description:
-            - Instance Network interface info
-        required: False
-        type: list
-        elements: dict
-    resource_group:
-        description:
-            - Instance resource group
-        required: False
-        type: str
-    memory:
-        description:
-            - Instance memory
-        required: False
-        type: int
-    name:
-        description:
-            - Instance name
-        required: True
-        type: str
-    password:
-        description:
-            - password for Windows Instance
-        required: False
-        type: str
-    keys:
-        description:
-            - Instance keys
-        required: False
-        type: list
-        elements: dict
-    vpc:
-        description:
-            - VPC id
-        required: False
-        type: str
-    profile:
-        description:
-            - Profile info
-        required: False
-        type: str
-    primary_network_interface:
-        description:
-            - Primary Network interface info
-        required: False
-        type: list
-        elements: dict
     private_key:
         description:
             - Instance Private Key file
         required: False
         type: str
-    volume_attachments:
+    name:
         description:
-            - Instance Volume Attachments
-        required: False
-        type: list
-        elements: dict
-    volumes:
-        description:
-            - List of volumes
-        required: False
-        type: list
-        elements: str
-    vcpu:
-        description:
-            - Instance vCPU
-        required: False
-        type: list
-        elements: dict
-    resource_group_name:
-        description:
-            - The resource group name in which resource is provisioned
-        required: False
+            - Instance name
+        required: True
         type: str
     generation:
         description:
@@ -186,115 +72,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_name',
-    'resource_crn',
-    'tags',
-    'boot_volume',
-    'image',
-    'status',
-    'resource_controller_url',
-    'resource_status',
     'passphrase',
-    'zone',
-    'network_interfaces',
-    'resource_group',
-    'memory',
-    'name',
-    'password',
-    'keys',
-    'vpc',
-    'profile',
-    'primary_network_interface',
     'private_key',
-    'volume_attachments',
-    'volumes',
-    'vcpu',
-    'resource_group_name',
+    'name',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_name=dict(
-        required=False,
-        type='str'),
-    resource_crn=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    boot_volume=dict(
-        required=False,
-        elements='',
-        type='list'),
-    image=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    resource_controller_url=dict(
-        required=False,
-        type='str'),
-    resource_status=dict(
-        required=False,
-        type='str'),
     passphrase=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    memory=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=True,
-        type='str'),
-    password=dict(
-        required=False,
-        type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
     private_key=dict(
         required=False,
         type='str'),
-    volume_attachments=dict(
-        required=False,
-        elements='',
-        type='list'),
-    volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    vcpu=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group_name=dict(
-        required=False,
+    name=dict(
+        required=True,
         type='str'),
     generation=dict(
         type='int',
@@ -342,7 +146,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -351,7 +155,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

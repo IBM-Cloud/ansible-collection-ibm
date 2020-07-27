@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,40 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  actions (True, list, None)
-    (Required for new resource) The actions of the role
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about the resource
-
-
   description (False, str, None)
     The description of the role
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the custom Role
 
 
   service (True, str, None)
     (Required for new resource) The Service Name
 
 
-  crn (False, str, None)
-    crn of the Custom Role
+  actions (True, list, None)
+    (Required for new resource) The actions of the role
 
 
   display_name (True, str, None)
     (Required for new resource) Display Name of the Custom Role
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the custom Role
 
 
   id (False, str, None)

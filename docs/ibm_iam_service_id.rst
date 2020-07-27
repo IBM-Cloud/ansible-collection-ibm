@@ -12,27 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_iam_service_id' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  version (False, str, None)
-    version of the serviceID
-
-
-  crn (False, str, None)
-    crn of the serviceID
-
 
   tags (False, list, None)
     None

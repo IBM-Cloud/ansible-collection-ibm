@@ -14,137 +14,15 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_dl_gateway' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    created_at:
-        description:
-            - The date and time resource was created
-        required: False
-        type: str
-    cross_connect_router:
-        description:
-            - Cross connect router
-        required: False
-        type: str
-    dedicated_hosting_id:
-        description:
-            - Dedicated host id
-        required: False
-        type: str
-    port:
-        description:
-            - Gateway port
-        required: False
-        type: str
     name:
         description:
             - The unique user-defined name for this gateway
         required: True
-        type: str
-    bgp_base_cidr:
-        description:
-            - BGP base CIDR
-        required: False
-        type: str
-    bgp_cer_cidr:
-        description:
-            - BGP customer edge router CIDR
-        required: False
-        type: str
-    bgp_status:
-        description:
-            - Gateway BGP status
-        required: False
-        type: str
-    type:
-        description:
-            - Gateway type
-        required: False
-        type: str
-    provider_api_managed:
-        description:
-            - Indicates whether gateway was created through a provider portal
-        required: False
-        type: bool
-    vlan:
-        description:
-            - VLAN allocated for this gateway
-        required: False
-        type: int
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
-        required: False
-        type: str
-    completion_notice_reject_reason:
-        description:
-            - Reason for completion notice rejection
-        required: False
-        type: str
-    link_status:
-        description:
-            - Gateway link status
-        required: False
-        type: str
-    operational_status:
-        description:
-            - Gateway operational status
-        required: False
-        type: str
-    location_display_name:
-        description:
-            - Gateway location long name
-        required: False
-        type: str
-    gateway_vcs:
-        description:
-            - Collection of direct link gateway virtual connections
-        required: False
-        type: list
-        elements: dict
-    bgp_ibm_asn:
-        description:
-            - IBM BGP ASN
-        required: False
-        type: int
-    crn:
-        description:
-            - The CRN (Cloud Resource Name) of this gateway
-        required: False
-        type: str
-    global:
-        description:
-            - Gateways with global routing (true) can connect to networks outside their associated region
-        required: False
-        type: bool
-    speed_mbps:
-        description:
-            - Gateway speed in megabits per second
-        required: False
-        type: int
-    bgp_asn:
-        description:
-            - BGP ASN
-        required: False
-        type: int
-    location_name:
-        description:
-            - Gateway location
-        required: False
-        type: str
-    metered:
-        description:
-            - Metered billing option
-        required: False
-        type: bool
-    resource_group:
-        description:
-            - Gateway resource group
-        required: False
         type: str
     iaas_classic_username:
         description:
@@ -184,112 +62,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'created_at',
-    'cross_connect_router',
-    'dedicated_hosting_id',
-    'port',
     'name',
-    'bgp_base_cidr',
-    'bgp_cer_cidr',
-    'bgp_status',
-    'type',
-    'provider_api_managed',
-    'vlan',
-    'bgp_ibm_cidr',
-    'completion_notice_reject_reason',
-    'link_status',
-    'operational_status',
-    'location_display_name',
-    'gateway_vcs',
-    'bgp_ibm_asn',
-    'crn',
-    'global',
-    'speed_mbps',
-    'bgp_asn',
-    'location_name',
-    'metered',
-    'resource_group',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    created_at=dict(
-        required=False,
-        type='str'),
-    cross_connect_router=dict(
-        required=False,
-        type='str'),
-    dedicated_hosting_id=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
-        type='str'),
-    bgp_base_cidr=dict(
-        required=False,
-        type='str'),
-    bgp_cer_cidr=dict(
-        required=False,
-        type='str'),
-    bgp_status=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    provider_api_managed=dict(
-        required=False,
-        type='bool'),
-    vlan=dict(
-        required=False,
-        type='int'),
-    bgp_ibm_cidr=dict(
-        required=False,
-        type='str'),
-    completion_notice_reject_reason=dict(
-        required=False,
-        type='str'),
-    link_status=dict(
-        required=False,
-        type='str'),
-    operational_status=dict(
-        required=False,
-        type='str'),
-    location_display_name=dict(
-        required=False,
-        type='str'),
-    gateway_vcs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    bgp_ibm_asn=dict(
-        required=False,
-        type='int'),
-    crn=dict(
-        required=False,
-        type='str'),
-    global=dict(
-        required=False,
-        type='bool'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
-    bgp_asn=dict(
-        required=False,
-        type='int'),
-    location_name=dict(
-        required=False,
-        type='str'),
-    metered=dict(
-        required=False,
-        type='bool'),
-    resource_group=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -325,7 +116,7 @@ def run_module():
         resource_type='ibm_dl_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -334,7 +125,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

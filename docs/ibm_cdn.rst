@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cdn' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,72 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
+  host_name (True, str, None)
+    (Required for new resource) Host name
 
 
   path (False, str, /*)
     Path details
 
 
-  host_name (True, str, None)
-    (Required for new resource) Host name
-
-
-  http_port (False, int, 80)
-    HTTP port number
-
-
-  status (False, str, None)
-    Status info of the CDN instance
-
-
-  file_extension (False, str, None)
-    File extension info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  cache_key_query_rule (False, str, include-all)
-    query rule info
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
 
 
   origin_type (False, str, HOST_SERVER)
     Origin type info
 
 
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
+  http_port (False, int, 80)
+    HTTP port number
 
 
   https_port (False, int, 443)
     HTTPS port number
 
 
+  respect_headers (False, bool, True)
+    respect headers info
+
+
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
   bucket_name (False, str, None)
     Bucket name
 
 
-  header (False, str, None)
-    Header info
-
-
-  respect_headers (False, bool, True)
-    respect headers info
+  certificate_type (False, str, None)
+    Certificate type
 
 
   vendor_name (False, str, akamai)
     Vendor name
 
 
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
   protocol (False, str, HTTP)
     Protocol name
 
 
-  cname (False, str, None)
-    cname info
+  file_extension (False, str, None)
+    File extension info
 
 
   id (False, str, None)

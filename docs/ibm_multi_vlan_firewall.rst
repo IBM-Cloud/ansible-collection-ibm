@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -34,44 +36,16 @@ Parameters
     (Required for new resource) Datacenter name
 
 
-  pod (True, str, None)
-    (Required for new resource) POD name
-
-
-  public_vlan_id (False, int, None)
-    Public VLAN id
-
-
   firewall_type (True, str, None)
     (Required for new resource) Firewall type
 
 
-  public_ip (False, str, None)
-    Public IP Address
-
-
-  password (False, str, None)
-    Password
+  pod (True, str, None)
+    (Required for new resource) POD name
 
 
   name (True, str, None)
     (Required for new resource) name
-
-
-  private_vlan_id (False, int, None)
-    Private VLAN id
-
-
-  public_ipv6 (False, str, None)
-    Public IPV6 IP
-
-
-  private_ip (False, str, None)
-    Private IP Address
-
-
-  username (False, str, None)
-    User name
 
 
   id (False, str, None)

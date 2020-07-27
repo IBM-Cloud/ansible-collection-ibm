@@ -14,40 +14,19 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_function_rule' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    trigger_name:
-        description:
-            - Name of the trigger.
-        required: False
-        type: str
-    action_name:
-        description:
-            - Name of an action.
-        required: False
-        type: str
-    status:
-        description:
-            - Status of the rule.
-        required: False
-        type: str
-    publish:
-        description:
-            - Rule Visibility.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the rule
-        required: False
-        type: str
     name:
         description:
             - Name of the rule.
+        required: True
+        type: str
+    namespace:
+        description:
+            - Name of the namespace.
         required: True
         type: str
     function_namespace:
@@ -70,38 +49,33 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'trigger_name',
-    'action_name',
-    'status',
-    'publish',
-    'version',
     'name',
+    'namespace',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    trigger_name=dict(
-        required=False,
-        type='str'),
-    action_name=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    publish=dict(
-        required=False,
-        type='bool'),
-    version=dict(
-        required=False,
-        type='str'),
     name=dict(
+        required=True,
+        type='str'),
+    namespace=dict(
         required=True,
         type='str'),
     function_namespace=dict(
@@ -128,7 +102,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -137,7 +111,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

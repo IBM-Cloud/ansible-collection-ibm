@@ -12,27 +12,21 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_pi_network_port' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  portid (False, str, None)
-    None
-
-
-  status (False, str, None)
-    None
-
 
   pi_network_name (True, str, None)
     (Required for new resource)
@@ -43,14 +37,6 @@ Parameters
 
 
   pi_network_port_description (False, str, None)
-    None
-
-
-  ipaddress (False, str, None)
-    None
-
-
-  macaddress (False, str, None)
     None
 
 

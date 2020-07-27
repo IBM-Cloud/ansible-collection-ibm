@@ -14,36 +14,20 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_pi_public_network' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    vlan_id:
+    pi_network_name:
         description:
-            - None
+            - Network Name to be used for pvminstances
         required: False
-        type: int
+        type: str
     pi_cloud_instance_id:
         description:
             - None
         required: True
-        type: str
-    network_id:
-        description:
-            - None
-        required: False
-        type: str
-    name:
-        description:
-            - None
-        required: False
-        type: str
-    type:
-        description:
-            - None
-        required: False
         type: str
     zone:
         description:
@@ -79,31 +63,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vlan_id',
+    'pi_network_name',
     'pi_cloud_instance_id',
-    'network_id',
-    'name',
-    'type',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vlan_id=dict(
+    pi_network_name=dict(
         required=False,
-        type='int'),
+        type='str'),
     pi_cloud_instance_id=dict(
         required=True,
-        type='str'),
-    network_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
         type='str'),
     zone=dict(
         type='str',
@@ -132,7 +114,7 @@ def run_module():
         resource_type='ibm_pi_public_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -141,7 +123,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

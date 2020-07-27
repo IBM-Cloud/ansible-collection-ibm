@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_image' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,60 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    Tags for the image
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_crn (False, str, None)
-    The crn of the resource
+  name (True, str, None)
+    (Required for new resource) Image name
 
 
   href (True, str, None)
     (Required for new resource) Image Href value
 
 
-  name (True, str, None)
-    (Required for new resource) Image name
-
-
-  visibility (False, str, None)
-    None
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
-  file (False, str, None)
-    None
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  resource_group (False, str, None)
-    None
-
-
   operating_system (True, str, None)
     (Required for new resource) Image Operating system
-
-
-  status (False, str, None)
-    None
-
-
-  size (False, int, None)
-    None
 
 
   id (False, str, None)

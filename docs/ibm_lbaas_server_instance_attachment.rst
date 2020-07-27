@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_lbaas_server_instance_attachment' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,20 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_ip_address (True, str, None)
-    (Required for new resource) The Private IP address of a load balancer member.
-
-
-  weight (False, int, None)
-    The weight of a load balancer member.
-
-
   lbaas_id (True, str, None)
     (Required for new resource) The UUID of a load balancer
 
 
-  uuid (False, str, None)
-    The UUID of a load balancer member
+  private_ip_address (True, str, None)
+    (Required for new resource) The Private IP address of a load balancer member.
 
 
   id (False, str, None)

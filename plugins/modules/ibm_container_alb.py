@@ -14,52 +14,22 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - ALB name
-        required: False
-        type: str
-    zone:
-        description:
-            - ALB zone
-        required: False
-        type: str
     alb_id:
         description:
             - (Required for new resource) ALB ID
         required: True
         type: str
-    alb_type:
+    region:
         description:
-            - ALB type
+            - None
         required: False
         type: str
-    cluster:
-        description:
-            - Cluster id
-        required: False
-        type: str
-    user_ip:
-        description:
-            - IP assigned by the user
-        required: False
-        type: str
-    disable_deployment:
-        description:
-            - Set to true if ALB needs to be disabled
-        required: False
-        type: bool
-    enable:
-        description:
-            - set to true if ALB needs to be enabled
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,44 +61,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'zone',
     'alb_id',
-    'alb_type',
-    'cluster',
-    'user_ip',
-    'disable_deployment',
-    'enable',
+    'region',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required= False,
-        type='str'),
-    zone=dict(
-        required= False,
-        type='str'),
     alb_id=dict(
         required= False,
         type='str'),
-    alb_type=dict(
+    region=dict(
         required= False,
         type='str'),
-    cluster=dict(
-        required= False,
-        type='str'),
-    user_ip=dict(
-        required= False,
-        type='str'),
-    disable_deployment=dict(
-        required= False,
-        type='bool'),
-    enable=dict(
-        required= False,
-        type='bool'),
     id=dict(
         required= False,
         type='str'),
@@ -163,11 +119,25 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
         resource_type='ibm_container_alb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -176,7 +146,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

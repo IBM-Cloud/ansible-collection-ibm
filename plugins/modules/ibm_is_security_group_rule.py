@@ -14,18 +14,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
-
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    ip_version:
-        description:
-            - IP version: ipv4 or ipv6
-        required: False
-        type: str
-        default: ipv4
     remote:
         description:
             - Security group id: an IP address, a CIDR block, or a single security group identifier
@@ -54,16 +48,17 @@ options:
             - (Required for new resource) Security group id
         required: True
         type: str
-    rule_id:
-        description:
-            - Rule id
-        required: False
-        type: str
     direction:
         description:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
+    ip_version:
+        description:
+            - IP version: ipv4 or ipv6
+        required: False
+        type: str
+        default: ipv4
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -116,23 +111,32 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ip_version',
     'remote',
     'icmp',
     'tcp',
     'udp',
     'group',
-    'rule_id',
     'direction',
+    'ip_version',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+    'icmp':  ['tcp', 'udp'],
+    'tcp':  ['udp', 'icmp'],
+    'udp':  ['tcp', 'icmp'],
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ip_version=dict(
-        default='ipv4',
-        type='str'),
     remote=dict(
         required= False,
         type='str'),
@@ -151,10 +155,10 @@ module_args = dict(
     group=dict(
         required= False,
         type='str'),
-    rule_id=dict(
+    direction=dict(
         required= False,
         type='str'),
-    direction=dict(
+    ip_version=dict(
         required= False,
         type='str'),
     id=dict(
@@ -200,6 +204,20 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
     # VPC required arguments checks
     if module.params['generation'] == 1:
         missing_args = []
@@ -221,7 +239,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -230,7 +248,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

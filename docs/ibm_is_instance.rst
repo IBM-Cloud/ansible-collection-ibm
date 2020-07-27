@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
 
+This module supports idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,44 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  boot_volume (False, list, None)
-    None
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  memory (False, int, None)
-    Instance memory
-
-
-  status (False, str, None)
-    instance status
-
-
-  resource_name (False, str, None)
-    The name of the resource
-
-
-  resource_group_name (False, str, None)
-    The resource group name in which resource is provisioned
-
-
   name (True, str, None)
     (Required for new resource) Instance name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
-  resource_crn (False, str, None)
-    The crn of the resource
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  volumes (False, list, None)
+    List of volumes
 
 
   network_interfaces (False, list, None)
@@ -74,44 +64,8 @@ Parameters
     User data given for the instance
 
 
-  vcpu (False, list, None)
-    None
-
-
-  resource_controller_url (False, str, None)
-    The URL of the IBM Cloud dashboard that can be used to explore and view details about this instance
-
-
-  resource_status (False, str, None)
-    The status of the resource
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  volume_attachments (False, list, None)
-    None
-
-
   image (True, str, None)
     (Required for new resource) image name
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
 
 
   id (False, str, None)

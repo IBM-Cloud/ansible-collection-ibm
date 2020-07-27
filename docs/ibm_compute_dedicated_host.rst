@@ -12,13 +12,15 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
 
+This module does not support idempotency
+
 
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.8.1
+- IBM-Cloud terraform-provider-ibm v1.9.0
 - Terraform v0.12.20
 
 
@@ -26,31 +28,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disk_capacity (False, int, None)
-    The capacity that the dedicated host's disk allocation is restricted to.
-
-
   tags (False, list, None)
-    None
-
-
-  hostname (True, str, None)
-    (Required for new resource) The host name of dedicatated host.
-
-
-  domain (True, str, None)
-    (Required for new resource) The domain of dedicatated host.
-
-
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
-
-
-  cpu_count (False, int, None)
-    The capacity that the dedicated host's CPU allocation is restricted to.
-
-
-  wait_time_minutes (False, int, 90)
     None
 
 
@@ -66,8 +44,20 @@ Parameters
     (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
 
 
-  memory_capacity (False, int, None)
-    The capacity that the dedicated host's memory allocation is restricted to.
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  hostname (True, str, None)
+    (Required for new resource) The host name of dedicatated host.
+
+
+  domain (True, str, None)
+    (Required for new resource) The domain of dedicatated host.
+
+
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
 
 
   id (False, str, None)

@@ -14,74 +14,16 @@ version_added: "2.8"
 
 description:
     - Retrieve an IBM Cloud 'ibm_pi_cloud_instance' resource
-
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    tenant_id:
-        description:
-            - None
-        required: False
-        type: str
-    region:
-        description:
-            - None
-        required: False
-        type: str
-    capabilities:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    total_processors_consumed:
-        description:
-            - None
-        required: False
-        type: float
-    total_instances:
-        description:
-            - None
-        required: False
-        type: float
-    total_ssd_storage_consumed:
-        description:
-            - None
-        required: False
-        type: float
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
-    enabled:
-        description:
-            - None
-        required: False
-        type: bool
-    pvm_instances:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    total_standard_storage_consumed:
-        description:
-            - None
-        required: False
-        type: float
-    creation_date:
-        description:
-            - None
-        required: False
-        type: str
-    total_memory_consumed:
-        description:
-            - None
-        required: False
-        type: float
     zone:
         description:
             - Denotes which IBM Cloud zone to connect to in multizone
@@ -116,62 +58,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tenant_id',
-    'region',
-    'capabilities',
-    'total_processors_consumed',
-    'total_instances',
-    'total_ssd_storage_consumed',
     'pi_cloud_instance_id',
-    'enabled',
-    'pvm_instances',
-    'total_standard_storage_consumed',
-    'creation_date',
-    'total_memory_consumed',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tenant_id=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
-    capabilities=dict(
-        required=False,
-        elements='',
-        type='list'),
-    total_processors_consumed=dict(
-        required=False,
-        type='float'),
-    total_instances=dict(
-        required=False,
-        type='float'),
-    total_ssd_storage_consumed=dict(
-        required=False,
-        type='float'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    pvm_instances=dict(
-        required=False,
-        elements='',
-        type='list'),
-    total_standard_storage_consumed=dict(
-        required=False,
-        type='float'),
-    creation_date=dict(
-        required=False,
-        type='str'),
-    total_memory_consumed=dict(
-        required=False,
-        type='float'),
     zone=dict(
         type='str',
         fallback=(env_fallback, ['IC_ZONE'])),
@@ -199,7 +105,7 @@ def run_module():
         resource_type='ibm_pi_cloud_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
+        ibm_provider_version='1.9.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -208,7 +114,6 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
-
 
 def main():
     run_module()

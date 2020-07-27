@@ -14,55 +14,40 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
-
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.8.1
+    - IBM-Cloud terraform-provider-ibm v1.9.0
     - Terraform v0.12.20
 
 options:
-    parameters:
-        description:
-            - All parameters set on trigger by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of Trigger.
-        required: True
-        type: str
     feed:
         description:
             - Trigger feed
         required: False
         type: list
         elements: dict
-    publish:
-        description:
-            - Trigger visbility.
-        required: False
-        type: bool
-    version:
-        description:
-            - Semantic version of the item.
-        required: False
-        type: str
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
         required: False
         type: str
         default: []
+    namespace:
+        description:
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of Trigger.
+        required: True
+        type: str
     user_defined_parameters:
         description:
             - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
         required: False
         type: str
         default: []
-    annotations:
-        description:
-            - All annotations set on trigger by user and those set by the IBM Cloud Function backend/API.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,48 +80,51 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('namespace', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameters',
-    'name',
     'feed',
-    'publish',
-    'version',
     'user_defined_annotations',
+    'namespace',
+    'name',
     'user_defined_parameters',
-    'annotations',
 ]
+
+# Params for Data source 
+TL_REQUIRED_PARAMETERS_DS = [
+    ('name', 'str'),
+    ('namespace', 'str'),
+]
+
+TL_ALL_PARAMETERS_DS = [
+    'name',
+    'namespace',
+]
+
+TL_CONFLICTS_MAP = {
+}
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameters=dict(
+    feed=dict(
+        required= False,
+        elements='',
+        type='list'),
+    user_defined_annotations=dict(
+        required= False,
+        type='str'),
+    namespace=dict(
         required= False,
         type='str'),
     name=dict(
         required= False,
         type='str'),
-    feed=dict(
-        required= False,
-        elements='',
-        type='list'),
-    publish=dict(
-        required= False,
-        type='bool'),
-    version=dict(
-        required= False,
-        type='str'),
-    user_defined_annotations=dict(
-        default='[]',
-        type='str'),
     user_defined_parameters=dict(
-        default='[]',
-        type='str'),
-    annotations=dict(
         required= False,
         type='str'),
     id=dict(
@@ -177,20 +165,43 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-    result = ibmcloud_terraform(
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_function_trigger',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.8.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.9.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_function_trigger',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.9.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
-
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 def main():
     run_module()
