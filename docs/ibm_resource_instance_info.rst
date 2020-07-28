@@ -42,11 +42,12 @@ Parameters
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
+  resource_group_id (False, str, None)
+    The resource group id
+
+
   ibmcloud_api_key (True, any, None)
     The IBM Cloud API key to authenticate with the IBM Cloud platform. This can also be provided via the environment variable 'IC_API_KEY'.
-
-
-
 
 
 
@@ -61,4 +62,3 @@ Authors
 ~~~~~~~
 
 - Jay Carman (@jaywcarman)
-

@@ -44,6 +44,11 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -63,9 +68,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'resource_group_id',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -96,6 +102,9 @@ module_args = dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
         default='us-south'),
+    resource_group_id=dict(
+        required= False,
+        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
