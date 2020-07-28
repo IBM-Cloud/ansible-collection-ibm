@@ -1,0 +1,65 @@
+---
+- name: Create key protect encryption for a cos bucket
+  hosts: localhost
+  collections:
+   - ibm.cloudcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+    
+    - name: provision COS instance
+      ibm_resource_instance:
+        name: "{{ cos_name }}"
+        location: "{{ location }}"
+        service: "cloud-object-storage"
+        plan: "{{ plan }}"
+      register: cos_resource_instance_output
+    
+    - name: Save cos resource instance as fact
+      set_fact:
+        cacheable: True
+        cos_instance: "{{ cos_resource_instance_output.resource }}"
+      when: cos_resource_instance_output.rc==0
+
+    - name: provision key protect instance
+      ibm_resource_instance:
+        name: "{{ kp_name }}"
+        location: "{{ kp_location }}"
+        service: "kms"
+        plan: "{{ kp_plan }}"
+      register: kp_resource_instance_output
+    
+    - name: Save key protect resource instance as fact
+      set_fact:
+        cacheable: True
+        kp_instance: "{{ kp_resource_instance_output.resource }}"
+      when: kp_resource_instance_output.rc==0
+
+    - name: provision key protect key
+      ibm_kp_key:
+        key_protect_id: "{{ kp_instance.guid }}"
+        key_name: "{{ key_name }}"
+        standard_key: "{{ standard_key }}"
+      register: kp_key_output
+
+    - name: Save key protect key resource as fact
+      set_fact:
+        cacheable: True
+        kp_key: "{{ kp_key_output.resource }}"
+      when: kp_key_output.rc==0
+
+    - name: provision cos bucket with key protect encryption
+      ibm_cos_bucket:
+        bucket_name: "{{ bucket_name }}"
+        resource_instance_id: "{{ cos_instance.id }}" 
+        region_location: "us-south"
+        storage_class: "flex"
+        key_protect: "{{ kp_key.id }}"
+      register: cos_bucket_output
+      when: policy is defined
+    
+    - name: Save cos bucket resource as fact
+      set_fact:
+        cacheable: True
+        cos_bucket: "{{ cos_bucket_output.resource }}"

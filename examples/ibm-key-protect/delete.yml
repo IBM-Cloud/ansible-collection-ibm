@@ -1,0 +1,67 @@
+---
+- name: Destroy cos, kp, authorization policy and kp key instances
+  hosts: localhost
+  collections:
+   - ibm.cloudcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+
+    - name: Remove cos bucket
+      ibm_cos_bucket:
+        state: absent
+        id: "{{ cos_bucket }}"
+      when: cos_bucket is defined
+
+    - name: Remove IAM authorization policy
+      ibm_iam_authorization_policy:
+        state: absent
+        id: "{{ policy }}"
+      when: policy is defined
+
+    - name: Remove Key protect key
+      ibm_kp_key:
+        state: absent
+        id: "{{ kp_key }}"
+      when: kp_key is defined
+
+    - name: Get kp Resource id details
+      ibm_resource_instance_info:
+        name: "{{ kp_name }}"
+      register: kp_resource_info
+
+    - name: Get kp resource
+      set_fact:
+        cacheable: True
+        kp_resource: "{{ kp_resource_info.resource }}"
+
+    - name: destroy key protect resource instance
+      ibm_resource_instance:
+        name: "{{ kp_name }}"
+        location: "{{ kp_location }}"
+        service: "kms"
+        plan: "{{ kp_plan }}"
+        id: "{{ kp_resource.id }}"
+        state: absent
+      register: kp_resource_output
+
+    - name: Get cos Resource id details
+      ibm_resource_instance_info:
+        name: "{{ cos_name }}"
+      register: cos_resource_info
+
+    - name: Get cos resource
+      set_fact:
+        cacheable: True
+        cos_resource: "{{ cos_resource_info.resource }}"
+
+    - name: destroy cos resource instance
+      ibm_resource_instance:
+        name: "{{ cos_name }}"
+        location: "{{ location }}"
+        service: "cloud-object-storage"
+        plan: "{{ plan }}"
+        id: "{{ cos_resource.id }}"
+        state: absent
+      register: cos_resource_output
