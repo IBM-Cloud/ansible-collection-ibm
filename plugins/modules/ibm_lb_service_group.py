@@ -16,13 +16,33 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
     allocation:
         description:
             - (Required for new resource) Allocation type
+        required: True
+        type: int
+    port:
+        description:
+            - (Required for new resource) Port number
+        required: True
+        type: int
+    routing_type:
+        description:
+            - (Required for new resource) Routing type
+        required: True
+        type: str
+    timeout:
+        description:
+            - Timeout value
+        required: False
+        type: int
+    load_balancer_id:
+        description:
+            - (Required for new resource) Loadbalancer ID
         required: True
         type: int
     routing_method:
@@ -36,26 +56,6 @@ options:
         required: False
         type: list
         elements: str
-    timeout:
-        description:
-            - Timeout value
-        required: False
-        type: int
-    load_balancer_id:
-        description:
-            - (Required for new resource) Loadbalancer ID
-        required: True
-        type: int
-    port:
-        description:
-            - (Required for new resource) Port number
-        required: True
-        type: int
-    routing_type:
-        description:
-            - (Required for new resource) Routing type
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,24 +103,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('allocation', 'int'),
-    ('routing_method', 'str'),
-    ('load_balancer_id', 'int'),
     ('port', 'int'),
     ('routing_type', 'str'),
+    ('load_balancer_id', 'int'),
+    ('routing_method', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'allocation',
-    'routing_method',
-    'tags',
-    'timeout',
-    'load_balancer_id',
     'port',
     'routing_type',
+    'timeout',
+    'load_balancer_id',
+    'routing_method',
+    'tags',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -135,29 +135,29 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     allocation=dict(
-        required= False,
-        type='int'),
-    routing_method=dict(
-        required= False,
-        type='str'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    timeout=dict(
-        required= False,
-        type='int'),
-    load_balancer_id=dict(
-        required= False,
+        required=False,
         type='int'),
     port=dict(
-        required= False,
+        required=False,
         type='int'),
     routing_type=dict(
-        required= False,
+        required=False,
         type='str'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    load_balancer_id=dict(
+        required=False,
+        type='int'),
+    routing_method=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -204,7 +204,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -216,13 +215,13 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result = ibmcloud_terraform(
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -231,6 +230,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

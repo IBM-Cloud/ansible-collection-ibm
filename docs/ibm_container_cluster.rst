@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,88 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
-  is_trusted (False, bool, None)
-    None
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  worker_num (False, int, 0)
-    Number of worker nodes
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
   webhook (False, list, None)
     None
 
 
-  private_vlan_id (False, str, None)
-    Private VLAN ID
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  billing (False, str, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  wait_time_minutes (False, int, None)
-    None
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
   default_pool_size (False, int, 1)
     The size of the default worker pool
 
 
-  public_vlan_id (False, str, None)
-    Public VLAN ID
+  private_vlan_id (False, str, None)
+    Private VLAN ID
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
   gateway_enabled (False, bool, False)
     Set true for gateway enabled clusters
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  machine_type (False, str, None)
+    Machine type
+
+
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
 
 
   id (False, str, None)

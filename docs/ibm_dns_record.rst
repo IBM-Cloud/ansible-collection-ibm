@@ -20,13 +20,37 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  service (False, str, None)
+    service info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
 
   type (True, str, None)
     (Required for new resource) DNS record type
@@ -36,44 +60,20 @@ Parameters
     protocol info
 
 
+  port (False, int, None)
+    port number
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
   weight (False, int, 0)
     weight info
 
 
   tags (False, list, None)
     tags set for the resource
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  service (False, str, None)
-    service info
-
-
-  port (False, int, None)
-    port number
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
 
 
   id (False, str, None)

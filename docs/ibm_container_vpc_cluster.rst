@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
   cos_instance_crn (False, str, None)
     A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
+  name (True, str, None)
+    (Required for new resource) The cluster name
 
 
   zones (True, list, None)
     (Required for new resource) Zone info
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
   vpc_id (True, str, None)
@@ -60,12 +64,8 @@ Parameters
     Boolean value true if Public service endpoint to be disabled
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
 
 
   id (False, str, None)

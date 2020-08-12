@@ -1,6 +1,6 @@
 
-ibm_is_vpc_instances_info -- Retrieve IBM Cloud 'ibm_is_vpc_instances' resource
-===============================================================================
+ibm_is_security_group_info -- Retrieve IBM Cloud 'ibm_is_security_group' resource
+=================================================================================
 
 .. contents::
    :local:
@@ -10,7 +10,7 @@ ibm_is_vpc_instances_info -- Retrieve IBM Cloud 'ibm_is_vpc_instances' resource
 Synopsis
 --------
 
-Retrieve an IBM Cloud 'ibm_is_vpc_instances' resource
+Retrieve an IBM Cloud 'ibm_is_security_group' resource
 
 
 
@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.6.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instances (False, list, None)
-    None
+  name (True, str, None)
+    Security group name
 
 
   generation (False, int, 2)

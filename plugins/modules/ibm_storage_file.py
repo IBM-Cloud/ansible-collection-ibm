@@ -16,18 +16,34 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    iops:
+    type:
         description:
-            - (Required for new resource) iops rate
+            - (Required for new resource) Storage type
         required: True
-        type: float
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
     allowed_subnets:
         description:
             - Allowed network subnets
+        required: False
+        type: list
+        elements: str
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags set for the storage volume
         required: False
         type: list
         elements: str
@@ -42,44 +58,28 @@ options:
             - (Required for new resource) Storage capacity
         required: True
         type: int
-    tags:
+    iops:
         description:
-            - Tags set for the storage volume
-        required: False
-        type: list
-        elements: str
-    type:
-        description:
-            - (Required for new resource) Storage type
+            - (Required for new resource) iops rate
         required: True
-        type: str
+        type: float
+    snapshot_capacity:
+        description:
+            - Snapshot capacity
+        required: False
+        type: int
     allowed_ip_addresses:
         description:
             - Allowed range of IP addresses
         required: False
         type: list
         elements: str
-    snapshot_capacity:
-        description:
-            - Snapshot capacity
-        required: False
-        type: int
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
     snapshot_schedule:
         description:
             - None
         required: False
         type: list
         elements: dict
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -126,28 +126,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('iops', 'float'),
-    ('capacity', 'int'),
     ('type', 'str'),
     ('datacenter', 'str'),
+    ('capacity', 'int'),
+    ('iops', 'float'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iops',
+    'type',
+    'datacenter',
     'allowed_subnets',
+    'notes',
+    'tags',
     'hourly_billing',
     'capacity',
-    'tags',
-    'type',
-    'allowed_ip_addresses',
+    'iops',
     'snapshot_capacity',
-    'notes',
+    'allowed_ip_addresses',
     'snapshot_schedule',
-    'datacenter',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -161,45 +161,45 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iops=dict(
-        required= False,
-        type='float'),
+    type=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
     allowed_subnets=dict(
-        required= False,
+        required=False,
+        elements='',
+        type='list'),
+    notes=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
         elements='',
         type='list'),
     hourly_billing=dict(
-        required= False,
+        required=False,
         type='bool'),
     capacity=dict(
-        required= False,
+        required=False,
         type='int'),
-    tags=dict(
-        required= False,
-        elements='',
-        type='list'),
-    type=dict(
-        required= False,
-        type='str'),
-    allowed_ip_addresses=dict(
-        required= False,
-        elements='',
-        type='list'),
+    iops=dict(
+        required=False,
+        type='float'),
     snapshot_capacity=dict(
-        required= False,
+        required=False,
         type='int'),
-    notes=dict(
-        required= False,
-        type='str'),
-    snapshot_schedule=dict(
-        required= False,
+    allowed_ip_addresses=dict(
+        required=False,
         elements='',
         type='list'),
-    datacenter=dict(
-        required= False,
-        type='str'),
+    snapshot_schedule=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -246,7 +246,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -258,13 +257,13 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result = ibmcloud_terraform(
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -273,6 +272,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

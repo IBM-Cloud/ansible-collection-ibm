@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    single_site_location:
-        description:
-            - single site location info
-        required: False
-        type: str
     region_location:
         description:
             - Region Location info.
@@ -47,12 +42,6 @@ options:
         required: False
         type: list
         elements: dict
-    metrics_monitoring:
-        description:
-            - Enables sending metrics to IBM Cloud Monitoring.
-        required: False
-        type: list
-        elements: dict
     bucket_name:
         description:
             - (Required for new resource) COS Bucket name
@@ -63,14 +52,25 @@ options:
             - (Required for new resource) resource instance ID
         required: True
         type: str
-    key_protect:
+    single_site_location:
         description:
-            - CRN of the key you want to use data at rest encryption
+            - single site location info
         required: False
         type: str
     cross_region_location:
         description:
             - Cros region location info
+        required: False
+        type: str
+    metrics_monitoring:
+        description:
+            - Enables sending metrics to IBM Cloud Monitoring.
+        required: False
+        type: list
+        elements: dict
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
         required: False
         type: str
     id:
@@ -126,78 +126,78 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'single_site_location',
     'region_location',
     'storage_class',
     'allowed_ip',
     'activity_tracking',
-    'metrics_monitoring',
     'bucket_name',
     'resource_instance_id',
-    'key_protect',
+    'single_site_location',
     'cross_region_location',
+    'metrics_monitoring',
+    'key_protect',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('bucket_name', 'str'),
-    ('bucket_type', 'str'),
-    ('bucket_region', 'str'),
     ('resource_instance_id', 'str'),
+    ('bucket_name', 'str'),
+    ('bucket_region', 'str'),
+    ('bucket_type', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bucket_name',
-    'bucket_type',
-    'bucket_region',
     'resource_instance_id',
+    'bucket_name',
+    'bucket_region',
+    'bucket_type',
 ]
 
 TL_CONFLICTS_MAP = {
-    'single_site_location':  ['region_location', 'cross_region_location'],
-    'region_location':  ['cross_region_location', 'single_site_location'],
-    'cross_region_location':  ['region_location', 'single_site_location'],
+    'region_location': ['cross_region_location', 'single_site_location'],
+    'single_site_location': ['region_location', 'cross_region_location'],
+    'cross_region_location': ['region_location', 'single_site_location'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    single_site_location=dict(
-        required= False,
-        type='str'),
     region_location=dict(
-        required= False,
+        required=False,
         type='str'),
     storage_class=dict(
-        required= False,
+        required=False,
         type='str'),
     allowed_ip=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     activity_tracking=dict(
-        required= False,
-        elements='',
-        type='list'),
-    metrics_monitoring=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     bucket_name=dict(
-        required= False,
+        required=False,
         type='str'),
     resource_instance_id=dict(
-        required= False,
+        required=False,
         type='str'),
-    key_protect=dict(
-        required= False,
+    single_site_location=dict(
+        required=False,
         type='str'),
     cross_region_location=dict(
-        required= False,
+        required=False,
+        type='str'),
+    metrics_monitoring=dict(
+        required=False,
+        elements='',
+        type='list'),
+    key_protect=dict(
+        required=False,
         type='str'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -244,7 +244,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -256,22 +255,22 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
             resource_type='ibm_cos_bucket',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.9.0',
+            ibm_provider_version='1.10.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
@@ -281,6 +280,7 @@ def run_module():
         module.exit_json(**result)
     else:
         module.exit_json(**result_ds)
+
 
 def main():
     run_module()

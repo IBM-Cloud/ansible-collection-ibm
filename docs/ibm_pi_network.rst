@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_gateway (False, str, None)
-    PI network gateway
-
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
@@ -46,6 +42,10 @@ Parameters
 
   pi_dns (False, list, None)
     List of PI network DNS name
+
+
+  pi_gateway (False, str, None)
+    PI network gateway
 
 
   id (False, str, None)

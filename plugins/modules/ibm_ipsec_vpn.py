@@ -16,19 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    phase_one:
+    preshared_key:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    customer_peer_ip:
-        description:
-            - Customer Peer IP Address
+            - Preshared Key data
         required: False
         type: str
     remote_subnet:
@@ -37,11 +31,22 @@ options:
         required: False
         type: list
         elements: dict
+    remote_subnet_id:
+        description:
+            - Remote subnet ID value
+        required: False
+        type: int
     datacenter:
         description:
             - (Required for new resource) Datacenter name
         required: True
         type: str
+    phase_one:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     phase_two:
         description:
             - None
@@ -54,19 +59,14 @@ options:
         required: False
         type: list
         elements: dict
-    preshared_key:
+    customer_peer_ip:
         description:
-            - Preshared Key data
+            - Customer Peer IP Address
         required: False
         type: str
     internal_subnet_id:
         description:
             - Internal subnet ID value
-        required: False
-        type: int
-    remote_subnet_id:
-        description:
-            - Remote subnet ID value
         required: False
         type: int
     service_subnet_id:
@@ -125,19 +125,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'phase_one',
-    'customer_peer_ip',
+    'preshared_key',
     'remote_subnet',
+    'remote_subnet_id',
     'datacenter',
+    'phase_one',
     'phase_two',
     'address_translation',
-    'preshared_key',
+    'customer_peer_ip',
     'internal_subnet_id',
-    'remote_subnet_id',
     'service_subnet_id',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -145,50 +145,50 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'remote_subnet':  ['remote_subnet_id'],
-    'remote_subnet_id':  ['remote_subnet'],
+    'remote_subnet': ['remote_subnet_id'],
+    'remote_subnet_id': ['remote_subnet'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    phase_one=dict(
-        required= False,
-        elements='',
-        type='list'),
-    customer_peer_ip=dict(
-        required= False,
+    preshared_key=dict(
+        required=False,
         type='str'),
     remote_subnet=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
+    remote_subnet_id=dict(
+        required=False,
+        type='int'),
     datacenter=dict(
-        required= False,
+        required=False,
         type='str'),
+    phase_one=dict(
+        required=False,
+        elements='',
+        type='list'),
     phase_two=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     address_translation=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
-    preshared_key=dict(
-        required= False,
+    customer_peer_ip=dict(
+        required=False,
         type='str'),
     internal_subnet_id=dict(
-        required= False,
-        type='int'),
-    remote_subnet_id=dict(
-        required= False,
+        required=False,
         type='int'),
     service_subnet_id=dict(
-        required= False,
+        required=False,
         type='int'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -235,7 +235,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -247,13 +246,13 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result = ibmcloud_terraform(
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -262,6 +261,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

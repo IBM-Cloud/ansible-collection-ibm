@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
+    parameters:
+        description:
+            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
+        required: False
+        type: dict
     tags:
         description:
             - None
@@ -36,11 +41,6 @@ options:
             - (Required for new resource) The guid of the service instance for which to create service key
         required: True
         type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
-        required: False
-        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,23 +93,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'parameters',
     'tags',
     'name',
     'service_instance_guid',
-    'parameters',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('space_guid', 'str'),
     ('name', 'str'),
     ('service_instance_name', 'str'),
+    ('space_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'space_guid',
     'name',
     'service_instance_name',
+    'space_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -119,21 +119,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    parameters=dict(
+        required=False,
+        type='dict'),
     tags=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     name=dict(
-        required= False,
+        required=False,
         type='str'),
     service_instance_guid=dict(
-        required= False,
+        required=False,
         type='str'),
-    parameters=dict(
-        required= False,
-        type='dict'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -180,7 +180,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -192,22 +191,22 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_service_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
             resource_type='ibm_service_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.9.0',
+            ibm_provider_version='1.10.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
@@ -217,6 +216,7 @@ def run_module():
         module.exit_json(**result)
     else:
         module.exit_json(**result_ds)
+
 
 def main():
     run_module()

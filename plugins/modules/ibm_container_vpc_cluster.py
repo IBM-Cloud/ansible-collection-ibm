@@ -16,54 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    cos_instance_crn:
-        description:
-            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: True
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
-    update_all_workers:
-        description:
-            - Updates all the woker nodes if sets to true
-        required: False
-        type: bool
-        default: False
-    worker_count:
-        description:
-            - Number of worker nodes in the cluster
-        required: False
-        type: int
-        default: 1
-    zones:
-        description:
-            - (Required for new resource) Zone info
-        required: True
-        type: list
-        elements: dict
-    vpc_id:
-        description:
-            - (Required for new resource) The vpc id where the cluster is
-        required: True
-        type: str
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
     wait_till:
         description:
             - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
@@ -75,6 +31,50 @@ options:
             - (Required for new resource) Cluster nodes flavour
         required: True
         type: str
+    cos_instance_crn:
+        description:
+            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+        required: False
+        type: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The cluster name
+        required: True
+        type: str
+    zones:
+        description:
+            - (Required for new resource) Zone info
+        required: True
+        type: list
+        elements: dict
+    update_all_workers:
+        description:
+            - Updates all the woker nodes if sets to true
+        required: False
+        type: bool
+        default: False
+    vpc_id:
+        description:
+            - (Required for new resource) The vpc id where the cluster is
+        required: True
+        type: str
+    disable_public_service_endpoint:
+        description:
+            - Boolean value true if Public service endpoint to be disabled
+        required: False
+        type: bool
+        default: False
+    worker_count:
+        description:
+            - Number of worker nodes in the cluster
+        required: False
+        type: int
+        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,27 +101,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('flavor', 'str'),
     ('name', 'str'),
     ('zones', 'list'),
     ('vpc_id', 'str'),
-    ('flavor', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cos_instance_crn',
-    'name',
-    'entitlement',
-    'update_all_workers',
-    'worker_count',
-    'zones',
-    'vpc_id',
-    'disable_public_service_endpoint',
     'wait_till',
     'flavor',
+    'cos_instance_crn',
+    'entitlement',
+    'name',
+    'zones',
+    'update_all_workers',
+    'vpc_id',
+    'disable_public_service_endpoint',
+    'worker_count',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('cluster_name_id', 'str'),
 ]
@@ -137,39 +137,39 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cos_instance_crn=dict(
-        required= False,
-        type='str'),
-    name=dict(
-        required= False,
-        type='str'),
-    entitlement=dict(
-        required= False,
-        type='str'),
-    update_all_workers=dict(
-        required= False,
-        type='bool'),
-    worker_count=dict(
-        required= False,
-        type='int'),
-    zones=dict(
-        required= False,
-        elements='',
-        type='list'),
-    vpc_id=dict(
-        required= False,
-        type='str'),
-    disable_public_service_endpoint=dict(
-        required= False,
-        type='bool'),
     wait_till=dict(
-        required= False,
+        required=False,
         type='str'),
     flavor=dict(
-        required= False,
+        required=False,
         type='str'),
+    cos_instance_crn=dict(
+        required=False,
+        type='str'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    update_all_workers=dict(
+        required=False,
+        type='bool'),
+    vpc_id=dict(
+        required=False,
+        type='str'),
+    disable_public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -202,7 +202,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -214,22 +213,22 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
             resource_type='ibm_container_vpc_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.9.0',
+            ibm_provider_version='1.10.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
@@ -239,6 +238,7 @@ def run_module():
         module.exit_json(**result)
     else:
         module.exit_json(**result_ds)
+
 
 def main():
     run_module()

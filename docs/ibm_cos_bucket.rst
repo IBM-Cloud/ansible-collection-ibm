@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  single_site_location (False, str, None)
-    single site location info
-
 
   region_location (False, str, None)
     Region Location info.
@@ -48,10 +44,6 @@ Parameters
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
-
-
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
 
@@ -60,12 +52,20 @@ Parameters
     (Required for new resource) resource instance ID
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
+  single_site_location (False, str, None)
+    single site location info
 
 
   cross_region_location (False, str, None)
     Cros region location info
+
+
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   id (False, str, None)

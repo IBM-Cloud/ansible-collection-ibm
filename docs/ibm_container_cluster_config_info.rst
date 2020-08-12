@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
-  region (False, str, None)
-    The cluster region
-
-
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   download (False, bool, True)
@@ -46,20 +38,12 @@ Parameters
     If set to true will download the Calico network config with the Admin config
 
 
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
 
 
   admin (False, bool, False)
     If set to true will download the config for admin
-
-
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

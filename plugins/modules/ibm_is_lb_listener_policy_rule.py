@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
+    condition:
+        description:
+            - (Required for new resource) Condition info of the rule.
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Policy rule type.
+        required: True
+        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer ID
@@ -30,30 +40,20 @@ options:
             - (Required for new resource) Listener ID.
         required: True
         type: str
-    condition:
-        description:
-            - (Required for new resource) Condition info of the rule.
-        required: True
-        type: str
-    field:
-        description:
-            - None
-        required: False
-        type: str
     policy:
         description:
             - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Policy rule type.
         required: True
         type: str
     value:
         description:
             - (Required for new resource) policy rule value info
         required: True
+        type: str
+    field:
+        description:
+            - None
+        required: False
         type: str
     id:
         description:
@@ -101,26 +101,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('condition', 'str'),
+    ('type', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
-    ('condition', 'str'),
     ('policy', 'str'),
-    ('type', 'str'),
     ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'condition',
+    'type',
     'lb',
     'listener',
-    'condition',
-    'field',
     'policy',
-    'type',
     'value',
+    'field',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -134,29 +134,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
-        required= False,
-        type='str'),
-    listener=dict(
-        required= False,
-        type='str'),
     condition=dict(
-        required= False,
-        type='str'),
-    field=dict(
-        required= False,
-        type='str'),
-    policy=dict(
-        required= False,
+        required=False,
         type='str'),
     type=dict(
-        required= False,
+        required=False,
+        type='str'),
+    lb=dict(
+        required=False,
+        type='str'),
+    listener=dict(
+        required=False,
+        type='str'),
+    policy=dict(
+        required=False,
         type='str'),
     value=dict(
-        required= False,
+        required=False,
+        type='str'),
+    field=dict(
+        required=False,
         type='str'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -198,7 +198,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -210,7 +209,7 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     # VPC required arguments checks
     if module.params['generation'] == 1:
@@ -233,7 +232,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -242,6 +241,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

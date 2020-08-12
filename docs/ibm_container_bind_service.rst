@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,44 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags for the resource
-
-
-  namespace_id (True, str, None)
-    (Required for new resource) namespace ID
-
-
-  org_guid (False, str, None)
-    The bluemix organization guid this cluster belongs to
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  account_guid (False, str, None)
-    The bluemix account guid this cluster belongs to
-
-
   key (False, str, None)
     Key info
-
-
-  role (False, str, None)
-    Role info
-
-
-  region (False, str, None)
-    The cluster region
 
 
   cluster_name_id (True, str, None)
     (Required for new resource) Cluster name or ID
 
 
-  space_guid (False, str, None)
-    The bluemix space guid this cluster belongs to
+  role (False, str, None)
+    Role info
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  tags (False, list, None)
+    List of tags for the resource
+
+
+  namespace_id (True, str, None)
+    (Required for new resource) namespace ID
 
 
   id (False, str, None)

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_count (True, int, None)
-    (Required for new resource) IP address count
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  speed (True, int, None)
+    (Required for new resource) Speed value
 
 
   plan (True, str, None)
     (Required for new resource) Plan info
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  version (True, str, None)
-    (Required for new resource) version info
+  ip_count (True, int, None)
+    (Required for new resource) IP address count
 
 
   tags (False, list, None)
     List of the tags
 
 
-  speed (True, int, None)
-    (Required for new resource) Speed value
+  version (True, str, None)
+    (Required for new resource) version info
 
 
   id (False, str, None)

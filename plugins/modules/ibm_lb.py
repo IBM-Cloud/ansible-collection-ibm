@@ -16,13 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
+    ha_enabled:
+        description:
+            - true if High availability is enabled
+        required: False
+        type: bool
+        default: False
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
+        required: False
+        type: bool
+        default: False
+    ssl_offload:
+        description:
+            - boolean value true if SSL offload is enabled
         required: False
         type: bool
         default: False
@@ -37,28 +49,16 @@ options:
             - (Required for new resource) Connections value
         required: True
         type: int
-    security_certificate_id:
-        description:
-            - Security certificate ID
-        required: False
-        type: int
-    ssl_offload:
-        description:
-            - boolean value true if SSL offload is enabled
-        required: False
-        type: bool
-        default: False
     datacenter:
         description:
             - (Required for new resource) Datacenter name info
         required: True
         type: str
-    ha_enabled:
+    security_certificate_id:
         description:
-            - true if High availability is enabled
+            - Security certificate ID
         required: False
-        type: bool
-        default: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,16 +111,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'ha_enabled',
     'dedicated',
+    'ssl_offload',
     'tags',
     'connections',
-    'security_certificate_id',
-    'ssl_offload',
     'datacenter',
-    'ha_enabled',
+    'security_certificate_id',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -134,30 +134,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    ha_enabled=dict(
+        required=False,
+        type='bool'),
     dedicated=dict(
-        required= False,
+        required=False,
+        type='bool'),
+    ssl_offload=dict(
+        required=False,
         type='bool'),
     tags=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     connections=dict(
-        required= False,
+        required=False,
         type='int'),
-    security_certificate_id=dict(
-        required= False,
-        type='int'),
-    ssl_offload=dict(
-        required= False,
-        type='bool'),
     datacenter=dict(
-        required= False,
+        required=False,
         type='str'),
-    ha_enabled=dict(
-        required= False,
-        type='bool'),
+    security_certificate_id=dict(
+        required=False,
+        type='int'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -204,7 +204,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -216,13 +215,13 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result = ibmcloud_terraform(
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -231,6 +230,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

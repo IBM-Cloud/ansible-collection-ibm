@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
+
+
+  peer_address (True, str, None)
+    (Required for new resource) VPN gateway connection peer address
+
+
   preshared_key (True, str, None)
     (Required for new resource) vpn gateway
 
 
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
-
-
-  action (False, str, none)
-    Action detection for dead peer detection action
-
-
-  interval (False, int, 30)
-    Interval for dead peer detection interval
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
 
 
   timeout (False, int, 120)
@@ -60,16 +60,16 @@ Parameters
     (Required for new resource) VPN Gateway connection name
 
 
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
 
 
-  peer_address (True, str, None)
-    (Required for new resource) VPN gateway connection peer address
+  action (False, str, none)
+    Action detection for dead peer detection action
 
 
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
+  interval (False, int, 30)
+    Interval for dead peer detection interval
 
 
   local_cidrs (False, list, None)

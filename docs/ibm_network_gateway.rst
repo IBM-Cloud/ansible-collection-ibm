@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -32,16 +32,16 @@ Parameters
     (Required for new resource) The name of the gateway
 
 
-  ssh_key_ids (False, list, None)
-    None
-
-
   post_install_script_uri (False, str, None)
     None
 
 
   members (True, list, None)
     (Required for new resource) The hardware members of this network Gateway
+
+
+  ssh_key_ids (False, list, None)
+    None
 
 
   id (False, str, None)

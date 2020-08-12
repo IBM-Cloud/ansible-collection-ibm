@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  capacity (False, int, 100)
+    Vloume capacity value
 
 
   name (True, str, None)
     (Required for new resource) Volume name
 
 
-  capacity (False, int, 100)
-    Vloume capacity value
-
-
   profile (True, str, None)
     (Required for new resource) Vloume profile name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   id (False, str, None)

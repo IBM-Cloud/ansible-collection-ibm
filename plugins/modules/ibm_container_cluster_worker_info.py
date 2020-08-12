@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_worker' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
@@ -24,29 +24,9 @@ options:
             - ID of the worker
         required: True
         type: str
-    space_guid:
-        description:
-            - The bluemix space guid this cluster belongs to
-        required: False
-        type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    region:
-        description:
-            - The cluster region
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
-        required: False
-        type: str
-    org_guid:
-        description:
-            - The bluemix organization guid this cluster belongs to
         required: False
         type: str
     ibmcloud_api_key:
@@ -68,14 +48,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'worker_id',
-    'space_guid',
-    'account_guid',
-    'region',
     'resource_group_id',
-    'org_guid',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -92,19 +68,7 @@ module_args = dict(
     worker_id=dict(
         required=True,
         type='str'),
-    space_guid=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
     resource_group_id=dict(
-        required=False,
-        type='str'),
-    org_guid=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -127,7 +91,7 @@ def run_module():
         resource_type='ibm_container_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -136,6 +100,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

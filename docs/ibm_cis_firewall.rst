@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id
+
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
@@ -38,10 +42,6 @@ Parameters
 
   lockdown (False, list, None)
     Lockdown json Data
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id
 
 
   id (False, str, None)

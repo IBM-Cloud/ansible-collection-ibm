@@ -16,39 +16,39 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    iv_value:
+    key_protect_id:
         description:
-            - Only for imported root key
-        required: False
+            - (Required for new resource) Key protect instance ID
+        required: True
         type: str
     key_name:
         description:
             - (Required for new resource) Key name
         required: True
         type: str
+    force_delete:
+        description:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
     encrypted_nonce:
         description:
             - Only for imported root key
         required: False
         type: str
-    key_protect_id:
+    iv_value:
         description:
-            - (Required for new resource) Key protect instance ID
-        required: True
+            - Only for imported root key
+        required: False
         type: str
     standard_key:
         description:
             - Standard key type
-        required: False
-        type: bool
-        default: False
-    force_delete:
-        description:
-            - set to true to force delete the key
         required: False
         type: bool
         default: False
@@ -98,21 +98,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key_name', 'str'),
     ('key_protect_id', 'str'),
+    ('key_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iv_value',
-    'key_name',
-    'encrypted_nonce',
     'key_protect_id',
-    'standard_key',
+    'key_name',
     'force_delete',
+    'encrypted_nonce',
+    'iv_value',
+    'standard_key',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('key_protect_id', 'str'),
 ]
@@ -128,26 +128,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iv_value=dict(
-        required= False,
+    key_protect_id=dict(
+        required=False,
         type='str'),
     key_name=dict(
-        required= False,
+        required=False,
         type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
     encrypted_nonce=dict(
-        required= False,
+        required=False,
         type='str'),
-    key_protect_id=dict(
-        required= False,
+    iv_value=dict(
+        required=False,
         type='str'),
     standard_key=dict(
-        required= False,
-        type='bool'),
-    force_delete=dict(
-        required= False,
+        required=False,
         type='bool'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -194,7 +194,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -206,22 +205,22 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.9.0',
+            ibm_provider_version='1.10.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
@@ -231,6 +230,7 @@ def run_module():
         module.exit_json(**result)
     else:
         module.exit_json(**result_ds)
+
 
 def main():
     run_module()

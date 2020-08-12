@@ -15,14 +15,14 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    org_guid:
+    cluster_name_id:
         description:
-            - The bluemix organization guid this cluster belongs to
-        required: False
+            - Name or id of the cluster
+        required: True
         type: str
     alb_type:
         description:
@@ -30,21 +30,6 @@ options:
         required: False
         type: str
         default: all
-    space_guid:
-        description:
-            - The bluemix space guid this cluster belongs to
-        required: False
-        type: str
-    account_guid:
-        description:
-            - The bluemix account guid this cluster belongs to
-        required: False
-        type: str
-    cluster_name_id:
-        description:
-            - Name or id of the cluster
-        required: True
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -63,14 +48,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'org_guid',
-    'alb_type',
-    'space_guid',
-    'account_guid',
     'cluster_name_id',
+    'alb_type',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -84,20 +66,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    org_guid=dict(
-        required=False,
+    cluster_name_id=dict(
+        required=True,
         type='str'),
     alb_type=dict(
         required=False,
-        type='str'),
-    space_guid=dict(
-        required=False,
-        type='str'),
-    account_guid=dict(
-        required=False,
-        type='str'),
-    cluster_name_id=dict(
-        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -119,7 +92,7 @@ def run_module():
         resource_type='ibm_container_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -128,6 +101,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

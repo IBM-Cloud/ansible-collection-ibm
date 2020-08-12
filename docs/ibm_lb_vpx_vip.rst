@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    List of tags
+
+
   name (True, str, None)
     (Required for new resource) Name
 
 
   source_port (True, int, None)
     (Required for new resource) Source Port number
-
-
-  type (True, str, None)
-    (Required for new resource) Type
 
 
   security_certificate_id (False, int, None)
@@ -56,8 +56,8 @@ Parameters
     (Required for new resource) Load balancing method
 
 
-  tags (False, list, None)
-    List of tags
+  type (True, str, None)
+    (Required for new resource) Type
 
 
   id (False, str, None)

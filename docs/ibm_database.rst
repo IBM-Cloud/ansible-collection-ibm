@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,64 +28,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
   service (True, str, None)
     (Required for new resource) The name of the Cloud Internet database service
 
 
-  remote_leader_id (False, str, None)
-    The CRN of leader database
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
   key_protect_instance (False, str, None)
     The CRN of Key protect instance
-
-
-  tags (False, list, None)
-    None
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  whitelist (False, list, None)
-    None
-
-
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
 
 
   point_in_time_recovery_deployment_id (False, str, None)
     The CRN of source instance
 
 
-  users (False, list, None)
-    None
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   adminpassword (False, str, None)
     The admin user password for the instance
 
 
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  remote_leader_id (False, str, None)
+    The CRN of leader database
+
+
+  tags (False, list, None)
+    None
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
+
+
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  whitelist (False, list, None)
+    None
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  users (False, list, None)
+    None
 
 
   id (False, str, None)

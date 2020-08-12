@@ -16,26 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_rate_limit' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - A note that you can use to describe the reason for a rate limiting rule.
-        required: False
-        type: str
-    bypass:
-        description:
-            - Bypass URL
-        required: False
-        type: list
-        elements: dict
-    threshold:
-        description:
-            - (Required for new resource) Rate Limiting Threshold
-        required: True
-        type: int
     period:
         description:
             - (Required for new resource) Rate Limiting Period
@@ -64,10 +48,10 @@ options:
         required: False
         type: bool
         default: False
-    cis_id:
+    description:
         description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
+            - A note that you can use to describe the reason for a rate limiting rule.
+        required: False
         type: str
     match:
         description:
@@ -75,6 +59,22 @@ options:
         required: False
         type: list
         elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: True
+        type: str
+    bypass:
+        description:
+            - Bypass URL
+        required: False
+        type: list
+        elements: dict
+    threshold:
+        description:
+            - (Required for new resource) Rate Limiting Threshold
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,28 +121,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('threshold', 'int'),
     ('period', 'int'),
     ('action', 'list'),
     ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('threshold', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'bypass',
-    'threshold',
     'period',
     'correlate',
     'action',
     'domain_id',
     'disabled',
-    'cis_id',
+    'description',
     'match',
+    'cis_id',
+    'bypass',
+    'threshold',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('cis_id', 'str'),
     ('domain_id', 'str'),
@@ -160,42 +160,42 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required= False,
-        type='str'),
-    bypass=dict(
-        required= False,
-        elements='',
-        type='list'),
-    threshold=dict(
-        required= False,
-        type='int'),
     period=dict(
-        required= False,
+        required=False,
         type='int'),
     correlate=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     action=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     domain_id=dict(
-        required= False,
+        required=False,
         type='str'),
     disabled=dict(
-        required= False,
+        required=False,
         type='bool'),
-    cis_id=dict(
-        required= False,
+    description=dict(
+        required=False,
         type='str'),
     match=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    bypass=dict(
+        required=False,
+        elements='',
+        type='list'),
+    threshold=dict(
+        required=False,
+        type='int'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -242,7 +242,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -254,22 +253,22 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_cis_rate_limit',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] != None or module.params['state'] == 'absent')):
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
             resource_type='ibm_cis_rate_limit',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.9.0',
+            ibm_provider_version='1.10.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
@@ -279,6 +278,7 @@ def run_module():
         module.exit_json(**result)
     else:
         module.exit_json(**result_ds)
+
 
 def main():
     run_module()

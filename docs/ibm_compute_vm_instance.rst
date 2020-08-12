@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  placement_group_name (False, str, None)
+    The placement group name
+
 
   secondary_ip_count (False, int, None)
     None
@@ -36,19 +40,7 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  bulk_vms (False, list, None)
+  hostname (False, str, None)
     None
 
 
@@ -56,27 +48,27 @@ Parameters
     None
 
 
-  transient (False, bool, None)
+  dedicated_host_name (False, str, None)
     None
 
 
-  os_reference_code (False, str, None)
+  wait_time_minutes (False, int, 90)
     None
 
 
-  network_speed (False, int, 100)
+  tags (False, list, None)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  ipv6_enabled (False, bool, False)
     None
 
 
   ssh_key_ids (False, list, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
     None
 
 
@@ -88,15 +80,15 @@ Parameters
     The placement group id
 
 
-  local_disk (False, bool, True)
+  bulk_vms (False, list, None)
     None
 
 
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
+  os_reference_code (False, str, None)
+    None
 
 
-  dedicated_host_id (False, int, None)
+  network_speed (False, int, 100)
     None
 
 
@@ -104,15 +96,11 @@ Parameters
     None
 
 
-  dedicated_host_name (False, str, None)
+  notes (False, str, None)
     None
 
 
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  hostname (False, str, None)
+  dedicated_host_id (False, int, None)
     None
 
 
@@ -120,15 +108,7 @@ Parameters
     None
 
 
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  evault (False, int, None)
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
@@ -136,8 +116,28 @@ Parameters
     None
 
 
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
+  transient (False, bool, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  image_id (False, int, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  evault (False, int, None)
+    None
 
 
   id (False, str, None)

@@ -16,27 +16,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
-    refresh_api_servers:
+    cluster:
         description:
-            - Boolean value true of API server to be refreshed in K8S cluster
-        required: False
-        type: bool
-        default: True
+            - (Required for new resource) Cluster name of ID
+        required: True
+        type: str
     reload_workers:
         description:
             - Boolean value set true if worker nodes to be reloaded
         required: False
         type: bool
         default: True
-    cluster:
+    refresh_api_servers:
         description:
-            - (Required for new resource) Cluster name of ID
-        required: True
-        type: str
+            - Boolean value true of API server to be refreshed in K8S cluster
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -68,12 +68,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'refresh_api_servers',
-    'reload_workers',
     'cluster',
+    'reload_workers',
+    'refresh_api_servers',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -87,17 +87,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    refresh_api_servers=dict(
-        required= False,
-        type='bool'),
-    reload_workers=dict(
-        required= False,
-        type='bool'),
     cluster=dict(
-        required= False,
+        required=False,
         type='str'),
+    reload_workers=dict(
+        required=False,
+        type='bool'),
+    refresh_api_servers=dict(
+        required=False,
+        type='bool'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -130,7 +130,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -142,13 +141,13 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result = ibmcloud_terraform(
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -157,6 +156,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

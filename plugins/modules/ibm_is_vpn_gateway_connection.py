@@ -16,33 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.9.0
+    - IBM-Cloud terraform-provider-ibm v1.10.0
     - Terraform v0.12.20
 
 options:
+    vpn_gateway:
+        description:
+            - (Required for new resource) VPN Gateway info
+        required: True
+        type: str
+    peer_address:
+        description:
+            - (Required for new resource) VPN gateway connection peer address
+        required: True
+        type: str
     preshared_key:
         description:
             - (Required for new resource) vpn gateway
         required: True
         type: str
-    peer_cidrs:
+    admin_state_up:
         description:
-            - VPN gateway connection peer CIDRs
+            - VPN gateway connection admin state
         required: False
-        type: list
-        elements: str
-    action:
-        description:
-            - Action detection for dead peer detection action
-        required: False
-        type: str
-        default: none
-    interval:
-        description:
-            - Interval for dead peer detection interval
-        required: False
-        type: int
-        default: 30
+        type: bool
+        default: False
     timeout:
         description:
             - Timeout for dead peer detection
@@ -64,22 +62,24 @@ options:
             - (Required for new resource) VPN Gateway connection name
         required: True
         type: str
-    vpn_gateway:
+    peer_cidrs:
         description:
-            - (Required for new resource) VPN Gateway info
-        required: True
-        type: str
-    peer_address:
-        description:
-            - (Required for new resource) VPN gateway connection peer address
-        required: True
-        type: str
-    admin_state_up:
-        description:
-            - VPN gateway connection admin state
+            - VPN gateway connection peer CIDRs
         required: False
-        type: bool
-        default: False
+        type: list
+        elements: str
+    action:
+        description:
+            - Action detection for dead peer detection action
+        required: False
+        type: str
+        default: none
+    interval:
+        description:
+            - Interval for dead peer detection interval
+        required: False
+        type: int
+        default: 30
     local_cidrs:
         description:
             - VPN gateway connection local CIDRs
@@ -132,29 +132,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('preshared_key', 'str'),
-    ('name', 'str'),
     ('vpn_gateway', 'str'),
     ('peer_address', 'str'),
+    ('preshared_key', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'vpn_gateway',
+    'peer_address',
     'preshared_key',
-    'peer_cidrs',
-    'action',
-    'interval',
+    'admin_state_up',
     'timeout',
     'ipsec_policy',
     'ike_policy',
     'name',
-    'vpn_gateway',
-    'peer_address',
-    'admin_state_up',
+    'peer_cidrs',
+    'action',
+    'interval',
     'local_cidrs',
 ]
 
-# Params for Data source 
+# Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
 ]
 
@@ -168,46 +168,46 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    vpn_gateway=dict(
+        required=False,
+        type='str'),
+    peer_address=dict(
+        required=False,
+        type='str'),
     preshared_key=dict(
-        required= False,
+        required=False,
+        type='str'),
+    admin_state_up=dict(
+        required=False,
+        type='bool'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    ipsec_policy=dict(
+        required=False,
+        type='str'),
+    ike_policy=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
         type='str'),
     peer_cidrs=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     action=dict(
-        required= False,
+        required=False,
         type='str'),
     interval=dict(
-        required= False,
+        required=False,
         type='int'),
-    timeout=dict(
-        required= False,
-        type='int'),
-    ipsec_policy=dict(
-        required= False,
-        type='str'),
-    ike_policy=dict(
-        required= False,
-        type='str'),
-    name=dict(
-        required= False,
-        type='str'),
-    vpn_gateway=dict(
-        required= False,
-        type='str'),
-    peer_address=dict(
-        required= False,
-        type='str'),
-    admin_state_up=dict(
-        required= False,
-        type='bool'),
     local_cidrs=dict(
-        required= False,
+        required=False,
         elements='',
         type='list'),
     id=dict(
-        required= False,
+        required=False,
         type='str'),
     state=dict(
         type='str',
@@ -249,7 +249,6 @@ def run_module():
             module.fail_json(msg=(
                 "missing required arguments: " + ", ".join(missing_args)))
 
-
     conflicts = {}
     if len(TL_CONFLICTS_MAP) != 0:
         for arg in TL_CONFLICTS_MAP:
@@ -261,7 +260,7 @@ def run_module():
                     except KeyError:
                         pass
     if len(conflicts):
-         module.fail_json(msg=("conflicts exists: {}".format(conflicts)))
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     # VPC required arguments checks
     if module.params['generation'] == 1:
@@ -284,7 +283,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.9.0',
+        ibm_provider_version='1.10.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
@@ -293,6 +292,7 @@ def run_module():
             msg=Terraform.parse_stderr(result['stderr']), **result)
 
     module.exit_json(**result)
+
 
 def main():
     run_module()

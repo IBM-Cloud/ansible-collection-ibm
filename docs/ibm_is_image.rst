@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Image name
-
-
   href (True, str, None)
     (Required for new resource) Image Href value
 
 
   operating_system (True, str, None)
     (Required for new resource) Image Operating system
+
+
+  name (True, str, None)
+    (Required for new resource) Image name
 
 
   id (False, str, None)

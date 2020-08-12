@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.9.0
+- IBM-Cloud terraform-provider-ibm v1.10.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  host (False, str, None)
+    The host of the route
+
 
   path (False, str, None)
     The path of the route
@@ -40,10 +44,6 @@ Parameters
 
   domain_guid (True, str, None)
     The guid of the domain
-
-
-  host (False, str, None)
-    The host of the route
 
 
   iaas_classic_username (False, any, None)
