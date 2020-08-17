@@ -1,0 +1,59 @@
+---
+- name: Create, manage gateways and connections and list available locations for gateways
+  hosts: localhost
+  collections:
+   - ibm.cloudcollection
+  tasks:
+    - name: Fetch the variables from var file
+      include_vars:
+        file: vars.yml
+
+    - name: Get resource group Details.
+      ibm_resource_group_info:
+        name: "{{ resource_group_name }}"
+      register: resource_group_output
+
+    - name: Save existing resource group info as fact
+      set_fact:
+        cacheable: True
+        rg: "{{ resource_group_output.resource }}"
+      when: resource_group_output.resource.id is defined
+    
+    - name: provision transit gateway resource instance
+      ibm_tg_gateway:
+        name: "{{ tg_gateway_name}}"
+        location: "{{ location }}"
+        global_: "{{ global }}"
+        resource_group: "{{ rg.id }}"
+      register: tg_gateway_output
+    
+    - name: Save tg-gateway resource instance as fact
+      set_fact:
+        cacheable: True
+        tg_gateway: "{{ tg_gateway_output.resource }}"
+      when: tg_gateway_output.rc==0
+
+    - name: provision vpc resource for tg connection
+      ibm_is_vpc:
+        name: "{{ vpc_name }}"
+      register: vpc_output
+
+    - name: Save vpc resource as fact
+      set_fact:
+        cacheable: True
+        vpc: "{{ vpc_output.resource }}"
+      when: vpc_output.rc==0
+
+    - name: provision connection resources for tg gateway
+      ibm_tg_connection:
+        gateway: "{{ tg_gateway.id }}"
+        network_type: "vpc"
+        name: "{{ connection_name }}"
+        network_id: "{{ vpc.resource_crn }}"
+      register: tg_connection_output 
+
+    - name: Save tg connection info as fact
+      set_fact:
+        cacheable: True
+        tg_connection: "{{ tg_connection_output.resource }}"
+      when: tg_connection_output.rc==0
