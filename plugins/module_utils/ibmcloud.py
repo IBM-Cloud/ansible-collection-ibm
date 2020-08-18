@@ -569,7 +569,9 @@ class Resource:
         # Terraform requires a name, if no 'name' paramter set use
         # timestamp
         if 'name' in self.parameters and self.parameters['name'] is not None:
-            self.tf_name = self.parameters['name']
+            # To avoid special characters in the resource name removing special character.
+            tfname = ''.join(e for e in self.parameters['name'] if e.isalnum())
+            self.tf_name = tfname
         else:
             self.tf_name = (
                 "ansible_" + datetime.now().strftime("%Y%m%d-%H%M%S"))
