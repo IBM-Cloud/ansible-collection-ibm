@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  preshared_key (False, str, None)
-    Preshared Key data
-
-
-  remote_subnet (False, list, None)
-    None
-
-
-  remote_subnet_id (False, int, None)
-    Remote subnet ID value
+  service_subnet_id (False, int, None)
+    Service subnet ID value
 
 
   datacenter (True, str, None)
@@ -45,14 +37,6 @@ Parameters
 
 
   phase_one (False, list, None)
-    None
-
-
-  phase_two (False, list, None)
-    None
-
-
-  address_translation (False, list, None)
     None
 
 
@@ -64,8 +48,24 @@ Parameters
     Internal subnet ID value
 
 
-  service_subnet_id (False, int, None)
-    Service subnet ID value
+  remote_subnet_id (False, int, None)
+    Remote subnet ID value
+
+
+  remote_subnet (False, list, None)
+    None
+
+
+  phase_two (False, list, None)
+    None
+
+
+  address_translation (False, list, None)
+    None
+
+
+  preshared_key (False, str, None)
+    Preshared Key data
 
 
   id (False, str, None)

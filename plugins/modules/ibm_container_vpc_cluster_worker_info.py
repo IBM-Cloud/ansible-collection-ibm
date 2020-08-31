@@ -15,24 +15,24 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    worker_id:
         description:
-            - ID of the resource group.
-        required: False
+            - ID of the worker
+        required: True
         type: str
     cluster_name_id:
         description:
             - Name or ID of the cluster
         required: True
         type: str
-    worker_id:
+    resource_group_id:
         description:
-            - ID of the worker
-        required: True
+            - ID of the resource group.
+        required: False
         type: str
     ibmcloud_api_key:
         description:
@@ -47,23 +47,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster_name_id', 'str'),
     ('worker_id', 'str'),
+    ('cluster_name_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'cluster_name_id',
     'worker_id',
+    'cluster_name_id',
+    'resource_group_id',
 ]
 
-# Params for Data source
-TL_REQUIRED_PARAMETERS_DS = [
-]
-
-TL_ALL_PARAMETERS_DS = [
-]
 
 TL_CONFLICTS_MAP = {
 }
@@ -72,14 +66,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
+    worker_id=dict(
+        required=True,
         type='str'),
     cluster_name_id=dict(
         required=True,
         type='str'),
-    worker_id=dict(
-        required=True,
+    resource_group_id=dict(
+        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -101,7 +95,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,13 +18,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  router_hostname (False, str, None)
+    None
+
+
+  name (False, str, None)
+    None
+
+
+  number (False, int, None)
+    None
+
 
   iaas_classic_username (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.

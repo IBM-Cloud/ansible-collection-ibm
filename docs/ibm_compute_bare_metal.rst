@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -32,19 +32,27 @@ Parameters
     None
 
 
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
+  datacenter (False, str, None)
+    None
 
 
   software_guard_extensions (False, bool, False)
     None
 
 
-  unbonded_network (False, bool, False)
+  restricted_network (False, bool, False)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  redundant_power_supply (False, bool, None)
     None
 
 
@@ -52,28 +60,56 @@ Parameters
     None
 
 
-  os_key_name (False, str, None)
+  gpu_secondary_key_name (False, str, None)
     None
 
 
-  storage_groups (False, list, None)
+  public_bandwidth (False, int, None)
     None
 
 
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
+  notes (False, str, None)
+    Optional notes info
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
 
 
   hourly_billing (False, bool, True)
     Enables hourly billing
 
 
-  package_key_name (False, str, None)
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  os_key_name (False, str, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
+  unbonded_network (False, bool, False)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
 
 
   hostname (False, str, None)
@@ -84,39 +120,15 @@ Parameters
     None
 
 
-  disk_key_names (False, list, None)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
+  os_reference_code (False, str, None)
+    OS refernece code value
 
 
   network_speed (False, int, 100)
     Network speed in MBPS
 
 
-  gpu_key_name (False, str, None)
-    None
-
-
-  gpu_secondary_key_name (False, str, None)
+  private_vlan_id (False, int, None)
     None
 
 
@@ -124,24 +136,56 @@ Parameters
     User metadata info
 
 
-  notes (False, str, None)
-    Optional notes info
+  redundant_network (False, bool, False)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  storage_groups (False, list, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
 
 
   image_template_id (False, int, None)
     OS image template ID
 
 
-  redundant_network (False, bool, False)
+  package_key_name (False, str, None)
     None
 
 
-  extended_hardware_testing (False, bool, False)
+  gpu_key_name (False, str, None)
     None
 
 
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  public_vlan_id (False, int, None)
+    None
 
 
   id (False, str, None)

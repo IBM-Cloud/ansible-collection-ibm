@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    service info
-
-
-  priority (False, int, 0)
-    priority info
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   host (True, str, None)
     (Required for new resource) Hostname
 
 
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  retry (False, int, None)
+    Retry count
+
+
   ttl (True, int, None)
     (Required for new resource) TTL configuration
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  service (False, str, None)
+    service info
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
   type (True, str, None)
@@ -60,20 +80,20 @@ Parameters
     protocol info
 
 
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
   port (False, int, None)
     port number
 
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
+  priority (False, int, 0)
+    priority info
 
 
   weight (False, int, 0)
     weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
 
 
   id (False, str, None)

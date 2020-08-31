@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_ha' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
             - (Required for new resource) Secondary ID
         required: True
         type: int
+    stay_secondary:
+        description:
+            - Boolean value for stay secondary
+        required: False
+        type: bool
     tags:
         description:
             - Tags set for the resource
@@ -90,6 +95,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'primary_id',
     'secondary_id',
+    'stay_secondary',
     'tags',
 ]
 
@@ -113,6 +119,9 @@ module_args = dict(
     secondary_id=dict(
         required=False,
         type='int'),
+    stay_secondary=dict(
+        required=False,
+        type='bool'),
     tags=dict(
         required=False,
         elements='',
@@ -182,7 +191,7 @@ def run_module():
         resource_type='ibm_lb_vpx_ha',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

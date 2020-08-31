@@ -16,10 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_rate_limit' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: True
+        type: str
+    description:
+        description:
+            - A note that you can use to describe the reason for a rate limiting rule.
+        required: False
+        type: str
     period:
         description:
             - (Required for new resource) Rate Limiting Period
@@ -48,22 +58,6 @@ options:
         required: False
         type: bool
         default: False
-    description:
-        description:
-            - A note that you can use to describe the reason for a rate limiting rule.
-        required: False
-        type: str
-    match:
-        description:
-            - Rate Limiting Match
-        required: False
-        type: list
-        elements: dict
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
-        type: str
     bypass:
         description:
             - Bypass URL
@@ -75,6 +69,12 @@ options:
             - (Required for new resource) Rate Limiting Threshold
         required: True
         type: int
+    match:
+        description:
+            - Rate Limiting Match
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,25 +121,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cis_id', 'str'),
     ('period', 'int'),
     ('action', 'list'),
     ('domain_id', 'str'),
-    ('cis_id', 'str'),
     ('threshold', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cis_id',
+    'description',
     'period',
     'correlate',
     'action',
     'domain_id',
     'disabled',
-    'description',
-    'match',
-    'cis_id',
     'bypass',
     'threshold',
+    'match',
 ]
 
 # Params for Data source
@@ -160,6 +160,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     period=dict(
         required=False,
         type='int'),
@@ -177,16 +183,6 @@ module_args = dict(
     disabled=dict(
         required=False,
         type='bool'),
-    description=dict(
-        required=False,
-        type='str'),
-    match=dict(
-        required=False,
-        elements='',
-        type='list'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     bypass=dict(
         required=False,
         elements='',
@@ -194,6 +190,10 @@ module_args = dict(
     threshold=dict(
         required=False,
         type='int'),
+    match=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -259,7 +259,7 @@ def run_module():
         resource_type='ibm_cis_rate_limit',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -268,7 +268,7 @@ def run_module():
             resource_type='ibm_cis_rate_limit',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.10.0',
+            ibm_provider_version='1.11.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

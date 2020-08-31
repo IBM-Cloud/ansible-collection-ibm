@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -26,11 +26,27 @@ options:
         required: False
         type: str
         default: unshare
+    service_instance_crn:
+        description:
+            - (Required for new resource) Api Gateway Service Instance Crn
+        required: True
+        type: str
+    open_api_doc_name:
+        description:
+            - (Required for new resource) Json File path
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Endpoint name
         required: True
         type: str
+    routes:
+        description:
+            - Invokable routes for an endpoint
+        required: False
+        type: list
+        elements: str
     managed:
         description:
             - Managed indicates if endpoint is online or offline.
@@ -43,22 +59,6 @@ options:
         required: False
         type: str
         default: user-defined
-    service_instance_crn:
-        description:
-            - (Required for new resource) Api Gateway Service Instance Crn
-        required: True
-        type: str
-    open_api_doc_name:
-        description:
-            - (Required for new resource) Json File path
-        required: True
-        type: str
-    routes:
-        description:
-            - Invokable routes for an endpoint
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,20 +105,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('service_instance_crn', 'str'),
     ('open_api_doc_name', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'name',
-    'managed',
-    'provider_id',
     'service_instance_crn',
     'open_api_doc_name',
+    'name',
     'routes',
+    'managed',
+    'provider_id',
 ]
 
 # Params for Data source
@@ -138,25 +138,25 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    managed=dict(
-        required=False,
-        type='bool'),
-    provider_id=dict(
-        required=False,
-        type='str'),
     service_instance_crn=dict(
         required=False,
         type='str'),
     open_api_doc_name=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     routes=dict(
         required=False,
         elements='',
         type='list'),
+    managed=dict(
+        required=False,
+        type='bool'),
+    provider_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

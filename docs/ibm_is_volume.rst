@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile (True, str, None)
+    (Required for new resource) Vloume profile name
+
+
   capacity (False, int, 100)
     Vloume capacity value
+
+
+  encryption_key (False, str, None)
+    Volume encryption key info
+
+
+  tags (False, list, None)
+    Tags for the volume instance
 
 
   name (True, str, None)
     (Required for new resource) Volume name
 
 
-  profile (True, str, None)
-    (Required for new resource) Vloume profile name
+  iops (False, int, None)
+    IOPS value for the Volume
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
+
+
+  resource_group (False, str, None)
+    Resource group name
 
 
   id (False, str, None)

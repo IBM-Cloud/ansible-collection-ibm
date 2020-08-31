@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -26,26 +26,27 @@ options:
         required: False
         type: str
         default: IngressReady
-    flavor:
+    entitlement:
         description:
-            - (Required for new resource) Cluster nodes flavour
-        required: True
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
         type: str
     cos_instance_crn:
         description:
             - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
         required: False
         type: str
-    entitlement:
+    kube_version:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - Kubernetes version
         required: False
         type: str
-    name:
+    worker_count:
         description:
-            - (Required for new resource) The cluster name
-        required: True
-        type: str
+            - Number of worker nodes in the cluster
+        required: False
+        type: int
+        default: 1
     zones:
         description:
             - (Required for new resource) Zone info
@@ -58,10 +59,25 @@ options:
         required: False
         type: bool
         default: False
-    vpc_id:
+    resource_group_id:
         description:
-            - (Required for new resource) The vpc id where the cluster is
+            - ID of the resource group.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The cluster name
         required: True
+        type: str
+    service_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for services
+        required: False
+        type: str
+    pod_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for pods
+        required: False
         type: str
     disable_public_service_endpoint:
         description:
@@ -69,12 +85,28 @@ options:
         required: False
         type: bool
         default: False
-    worker_count:
+    tags:
         description:
-            - Number of worker nodes in the cluster
+            - List of tags for the resources
         required: False
-        type: int
-        default: 1
+        type: list
+        elements: str
+    flavor:
+        description:
+            - (Required for new resource) Cluster nodes flavour
+        required: True
+        type: str
+    vpc_id:
+        description:
+            - (Required for new resource) The vpc id where the cluster is
+        required: True
+        type: str
+    worker_labels:
+        description:
+            - Labels for default worker pool
+        required: False
+        type: dict
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,24 +133,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('flavor', 'str'),
-    ('name', 'str'),
     ('zones', 'list'),
+    ('name', 'str'),
+    ('flavor', 'str'),
     ('vpc_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'wait_till',
-    'flavor',
-    'cos_instance_crn',
     'entitlement',
-    'name',
+    'cos_instance_crn',
+    'kube_version',
+    'worker_count',
     'zones',
     'update_all_workers',
-    'vpc_id',
+    'resource_group_id',
+    'name',
+    'service_subnet',
+    'pod_subnet',
     'disable_public_service_endpoint',
-    'worker_count',
+    'tags',
+    'flavor',
+    'vpc_id',
+    'worker_labels',
 ]
 
 # Params for Data source
@@ -127,6 +165,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'alb_type',
+    'resource_group_id',
     'cluster_name_id',
 ]
 
@@ -140,18 +180,18 @@ module_args = dict(
     wait_till=dict(
         required=False,
         type='str'),
-    flavor=dict(
+    entitlement=dict(
         required=False,
         type='str'),
     cos_instance_crn=dict(
         required=False,
         type='str'),
-    entitlement=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    name=dict(
+    worker_count=dict(
         required=False,
-        type='str'),
+        type='int'),
     zones=dict(
         required=False,
         elements='',
@@ -159,15 +199,35 @@ module_args = dict(
     update_all_workers=dict(
         required=False,
         type='bool'),
-    vpc_id=dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    service_subnet=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
         required=False,
         type='str'),
     disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
-    worker_count=dict(
+    tags=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
+    flavor=dict(
+        required=False,
+        type='str'),
+    vpc_id=dict(
+        required=False,
+        type='str'),
+    worker_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -219,7 +279,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -228,7 +288,7 @@ def run_module():
             resource_type='ibm_container_vpc_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.10.0',
+            ibm_provider_version='1.11.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

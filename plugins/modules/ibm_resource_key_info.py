@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -84,12 +84,6 @@ TL_ALL_PARAMETERS = [
     'resource_alias_id',
 ]
 
-# Params for Data source
-TL_REQUIRED_PARAMETERS_DS = [
-]
-
-TL_ALL_PARAMETERS_DS = [
-]
 
 TL_CONFLICTS_MAP = {
     'resource_instance_id': ['resource_alias_id'],
@@ -146,7 +140,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

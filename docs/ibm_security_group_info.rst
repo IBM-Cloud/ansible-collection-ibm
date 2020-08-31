@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,6 +28,10 @@ Parameters
 
   name (True, str, None)
     The name of the security group
+
+
+  description (False, str, None)
+    The description of the security group
 
 
   most_recent (False, bool, False)

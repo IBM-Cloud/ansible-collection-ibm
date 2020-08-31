@@ -20,13 +20,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_volume_shareable (False, bool, None)
+    None
+
+
+  volumeattachid (False, str, None)
+    Volume attachment ID
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+
 
   pi_volume_attach_name (True, str, None)
     (Required for new resource) Name of the volume to attach. Note these  volumes should have been created
@@ -36,8 +48,8 @@ Parameters
     (Required for new resource) PI Instance name
 
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+  status (False, str, None)
+    None
 
 
   id (False, str, None)

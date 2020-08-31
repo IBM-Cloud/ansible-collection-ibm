@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -32,20 +32,20 @@ Parameters
     wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   cos_instance_crn (False, str, None)
     A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  kube_version (False, str, None)
+    Kubernetes version
 
 
-  name (True, str, None)
-    (Required for new resource) The cluster name
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
 
 
   zones (True, list, None)
@@ -56,16 +56,40 @@ Parameters
     Updates all the woker nodes if sets to true
 
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
 
 
   disable_public_service_endpoint (False, bool, False)
     Boolean value true if Public service endpoint to be disabled
 
 
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
 
 
   id (False, str, None)

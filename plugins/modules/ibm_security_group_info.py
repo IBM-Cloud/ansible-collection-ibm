@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_security_group' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -23,6 +23,11 @@ options:
         description:
             - The name of the security group
         required: True
+        type: str
+    description:
+        description:
+            - The description of the security group
+        required: False
         type: str
     most_recent:
         description:
@@ -69,15 +74,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'description',
     'most_recent',
 ]
 
-# Params for Data source
-TL_REQUIRED_PARAMETERS_DS = [
-]
-
-TL_ALL_PARAMETERS_DS = [
-]
 
 TL_CONFLICTS_MAP = {
 }
@@ -88,6 +88,9 @@ from ansible.module_utils.basic import env_fallback
 module_args = dict(
     name=dict(
         required=True,
+        type='str'),
+    description=dict(
+        required=False,
         type='str'),
     most_recent=dict(
         required=False,
@@ -126,7 +129,7 @@ def run_module():
         resource_type='ibm_security_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

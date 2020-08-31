@@ -16,18 +16,44 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_global_load_balancer' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
-    name:
+    cis_id:
         description:
-            - (Required for new resource) name
+            - (Required for new resource) CIS instance crn
         required: True
         type: str
     fallback_pool_id:
         description:
             - (Required for new resource) fallback pool ID
+        required: True
+        type: str
+    ttl:
+        description:
+            - TTL value
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    description:
+        description:
+            - Description for the load balancer instance
+        required: False
+        type: str
+    pop_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
         required: True
         type: str
     default_pool_ids:
@@ -36,21 +62,6 @@ options:
         required: True
         type: list
         elements: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    description:
-        description:
-            - Description for the load balancer instance
-        required: False
-        type: str
-    ttl:
-        description:
-            - TTL value
-        required: False
-        type: int
     session_affinity:
         description:
             - Session affinity info
@@ -63,11 +74,6 @@ options:
         required: False
         type: bool
         default: True
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
     proxied:
         description:
             - set to true if proxy needs to be enabled
@@ -75,12 +81,6 @@ options:
         type: bool
         default: False
     region_pools:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    pop_pools:
         description:
             - None
         required: False
@@ -132,27 +132,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('fallback_pool_id', 'str'),
-    ('default_pool_ids', 'list'),
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('fallback_pool_id', 'str'),
+    ('name', 'str'),
+    ('domain_id', 'str'),
+    ('default_pool_ids', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'cis_id',
     'fallback_pool_id',
-    'default_pool_ids',
-    'domain_id',
-    'description',
     'ttl',
+    'name',
+    'description',
+    'pop_pools',
+    'domain_id',
+    'default_pool_ids',
     'session_affinity',
     'enabled',
-    'cis_id',
     'proxied',
     'region_pools',
-    'pop_pools',
 ]
 
 # Params for Data source
@@ -171,42 +171,42 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    cis_id=dict(
         required=False,
         type='str'),
     fallback_pool_id=dict(
         required=False,
         type='str'),
-    default_pool_ids=dict(
+    ttl=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    pop_pools=dict(
         required=False,
         elements='',
         type='list'),
     domain_id=dict(
         required=False,
         type='str'),
-    description=dict(
+    default_pool_ids=dict(
         required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
+        elements='',
+        type='list'),
     session_affinity=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     proxied=dict(
         required=False,
         type='bool'),
     region_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pop_pools=dict(
         required=False,
         elements='',
         type='list'),
@@ -275,7 +275,7 @@ def run_module():
         resource_type='ibm_cis_global_load_balancer',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
   lb (True, str, None)
     (Required for new resource) Load Balancer ID
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
-  session_persistence_cookie_name (False, str, None)
-    Load Balancer Pool session persisence cookie name
 
 
   algorithm (True, str, None)
@@ -48,24 +44,36 @@ Parameters
     (Required for new resource) Load Balancer health timeout interval
 
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
   health_type (True, str, None)
     (Required for new resource) Load Balancer health type
 
 
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
 
 
   name (True, str, None)
     (Required for new resource) Load Balancer Pool name
 
 
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
+
+
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
+
+
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
 
 
   id (False, str, None)

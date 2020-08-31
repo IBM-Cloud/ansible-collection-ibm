@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_alb' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -45,12 +45,6 @@ TL_ALL_PARAMETERS = [
     'alb_id',
 ]
 
-# Params for Data source
-TL_REQUIRED_PARAMETERS_DS = [
-]
-
-TL_ALL_PARAMETERS_DS = [
-]
 
 TL_CONFLICTS_MAP = {
 }
@@ -82,7 +76,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster_alb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

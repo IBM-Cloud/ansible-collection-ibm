@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zone (False, str, None)
+    Zone name
+
+
+  resource_group (False, str, None)
+    Resource group info
+
+
+  tags (False, list, None)
+    Floating IP tags
+
+
   name (True, str, None)
     (Required for new resource) Name of the floating IP
+
+
+  target (False, str, None)
+    Target info
 
 
   id (False, str, None)

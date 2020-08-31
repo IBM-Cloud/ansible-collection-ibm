@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.10.0
+    - IBM-Cloud terraform-provider-ibm v1.11.0
     - Terraform v0.12.20
 
 options:
@@ -25,15 +25,30 @@ options:
             - (Required for new resource) Cluster name of ID
         required: True
         type: str
-    reload_workers:
+    resource_group_id:
         description:
-            - Boolean value set true if worker nodes to be reloaded
+            - ID of the resource group.
+        required: False
+        type: str
+    public_service_endpoint:
+        description:
+            - None
         required: False
         type: bool
-        default: True
+    private_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
     refresh_api_servers:
         description:
             - Boolean value true of API server to be refreshed in K8S cluster
+        required: False
+        type: bool
+        default: True
+    reload_workers:
+        description:
+            - Boolean value set true if worker nodes to be reloaded
         required: False
         type: bool
         default: True
@@ -69,8 +84,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster',
-    'reload_workers',
+    'resource_group_id',
+    'public_service_endpoint',
+    'private_service_endpoint',
     'refresh_api_servers',
+    'reload_workers',
 ]
 
 # Params for Data source
@@ -90,10 +108,19 @@ module_args = dict(
     cluster=dict(
         required=False,
         type='str'),
-    reload_workers=dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    private_service_endpoint=dict(
         required=False,
         type='bool'),
     refresh_api_servers=dict(
+        required=False,
+        type='bool'),
+    reload_workers=dict(
         required=False,
         type='bool'),
     id=dict(
@@ -147,7 +174,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.10.0',
+        ibm_provider_version='1.11.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

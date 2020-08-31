@@ -1079,6 +1079,8 @@ def fmt_tf_block(
     for key, value in arg_dict.items():
         if len(validate_tl_params) > 0 and key not in validate_tl_params:
             continue
+        if key.endswith("_"):
+            key = key[:-1]
         if isinstance(value, dict):
             output += indent() + key + ' = {\n'
             output += fmt_tf_block(value, indent_count + 1, indent_spaces)

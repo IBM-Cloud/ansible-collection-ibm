@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.10.0
+- IBM-Cloud terraform-provider-ibm v1.11.0
 - Terraform v0.12.20
 
 
@@ -28,36 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_vlan_id (False, str, None)
-    Public VLAN ID
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
 
 
-  webhook (False, list, None)
-    None
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  private_vlan_id (False, str, None)
-    Private VLAN ID
+  kube_version (False, str, None)
+    Kubernetes version info
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
 
 
   machine_type (False, str, None)
@@ -68,20 +48,64 @@ Parameters
     List of subnet IDs
 
 
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
+  webhook (False, list, None)
+    None
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   disk_encryption (False, bool, True)
     disc encryption done, if set to true.
 
 
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
+  workers_info (False, list, None)
+    The IDs of the worker node
+
+
   update_all_workers (False, bool, False)
     Updates all the woker nodes if sets to true
 
 
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
   id (False, str, None)
