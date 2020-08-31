@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.0
+    - IBM-Cloud terraform-provider-ibm v1.11.1
     - Terraform v0.12.20
 
 options:
@@ -29,12 +29,12 @@ options:
             - None
         required: True
         type: str
-    resource_instance_id:
+    bucket_type:
         description:
             - None
         required: True
         type: str
-    bucket_type:
+    resource_instance_id:
         description:
             - None
         required: True
@@ -74,16 +74,16 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('bucket_name', 'str'),
     ('bucket_region', 'str'),
-    ('resource_instance_id', 'str'),
     ('bucket_type', 'str'),
+    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bucket_name',
     'bucket_region',
-    'resource_instance_id',
     'bucket_type',
+    'resource_instance_id',
 ]
 
 
@@ -100,10 +100,10 @@ module_args = dict(
     bucket_region=dict(
         required=True,
         type='str'),
-    resource_instance_id=dict(
+    bucket_type=dict(
         required=True,
         type='str'),
-    bucket_type=dict(
+    resource_instance_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.0',
+        ibm_provider_version='1.11.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

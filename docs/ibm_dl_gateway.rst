@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -28,56 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  customer_name (False, str, None)
-    Customer name
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  loa_reject_reason (False, str, None)
-    Loa reject reason
-
-
-  bgp_base_cidr (True, str, None)
-    (Required for new resource) BGP base CIDR
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
   metered (True, bool, None)
     (Required for new resource) Metered billing option
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
 
 
   carrier_name (False, str, None)
     Carrier name
 
 
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  type (True, str, None)
-    (Required for new resource) Gateway type
-
-
-  location_name (False, str, None)
-    Gateway location
+  customer_name (False, str, None)
+    Customer name
 
 
   bgp_cer_cidr (False, str, None)
@@ -86,6 +46,46 @@ Parameters
 
   global_ (True, bool, None)
     (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  loa_reject_reason (False, str, None)
+    Loa reject reason
+
+
+  resource_group (False, str, None)
+    Gateway resource group
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
+
+
+  bgp_base_cidr (True, str, None)
+    (Required for new resource) BGP base CIDR
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  type (True, str, None)
+    (Required for new resource) Gateway type
 
 
   bgp_ibm_cidr (False, str, None)

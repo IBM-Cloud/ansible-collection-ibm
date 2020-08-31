@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -32,36 +32,24 @@ Parameters
     Load Balancer Pool session persisence type.
 
 
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
   algorithm (True, str, None)
     (Required for new resource) Load Balancer Pool algorithm
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
 
 
   health_retries (True, int, None)
     (Required for new resource) Load Balancer health retry count
 
 
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
 
 
   health_monitor_port (False, int, None)
@@ -72,8 +60,20 @@ Parameters
     Load Balancer Pool session persisence cookie name
 
 
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
   id (False, str, None)

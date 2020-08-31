@@ -20,21 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name of ID
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
 
   public_service_endpoint (False, bool, None)
     None
@@ -50,6 +42,14 @@ Parameters
 
   reload_workers (False, bool, True)
     Boolean value set true if worker nodes to be reloaded
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name of ID
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

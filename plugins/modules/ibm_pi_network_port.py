@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network_port' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.0
+    - IBM-Cloud terraform-provider-ibm v1.11.1
     - Terraform v0.12.20
 
 options:
@@ -35,7 +35,7 @@ options:
             - None
         required: False
         type: str
-    ipaddress:
+    pi_network_port_ipaddress:
         description:
             - None
         required: False
@@ -91,7 +91,7 @@ TL_ALL_PARAMETERS = [
     'pi_network_name',
     'pi_cloud_instance_id',
     'pi_network_port_description',
-    'ipaddress',
+    'pi_network_port_ipaddress',
 ]
 
 # Params for Data source
@@ -121,7 +121,7 @@ module_args = dict(
     pi_network_port_description=dict(
         required=False,
         type='str'),
-    ipaddress=dict(
+    pi_network_port_ipaddress=dict(
         required=False,
         type='str'),
     id=dict(
@@ -182,7 +182,7 @@ def run_module():
         resource_type='ibm_pi_network_port',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.0',
+        ibm_provider_version='1.11.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -191,7 +191,7 @@ def run_module():
             resource_type='ibm_pi_network_port',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.0',
+            ibm_provider_version='1.11.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

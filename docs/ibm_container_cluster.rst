@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -32,56 +32,36 @@ Parameters
     (Required for new resource) The datacenter where this cluster will be deployed
 
 
-  kube_version (False, str, None)
-    Kubernetes version info
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  webhook (False, list, None)
-    None
+  workers_info (False, list, None)
+    The IDs of the worker node
 
 
   public_service_endpoint (False, bool, None)
     None
 
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
 
 
   hardware (True, str, None)
     (Required for new resource) Hardware type
 
 
-  tags (False, list, None)
-    Tags for the resource
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
   no_subnet (False, bool, False)
     Boolean value set to true when subnet creation is not required.
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  webhook (False, list, None)
+    None
 
 
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
+  machine_type (False, str, None)
+    Machine type
 
 
   private_vlan_id (False, str, None)
@@ -92,20 +72,40 @@ Parameters
     None
 
 
+  tags (False, list, None)
+    Tags for the resource
+
+
   name (True, str, None)
     (Required for new resource) The cluster name
 
 
-  workers_info (False, list, None)
-    The IDs of the worker node
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   public_vlan_id (False, str, None)
     Public VLAN ID
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
   id (False, str, None)

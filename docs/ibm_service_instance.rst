@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -36,20 +36,20 @@ Parameters
     (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
 
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass along to the service broker. Must be a JSON object
-
-
-  space_guid (True, str, None)
-    (Required for new resource) The guid of the space in which the instance will be created
-
-
   plan (True, str, None)
     (Required for new resource) The plan type of the service
 
 
   tags (False, list, None)
     None
+
+
+  space_guid (True, str, None)
+    (Required for new resource) The guid of the space in which the instance will be created
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass along to the service broker. Must be a JSON object
 
 
   wait_time_minutes (False, int, 10)

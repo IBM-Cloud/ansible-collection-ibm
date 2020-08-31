@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -28,39 +28,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  post_install_script_uri (False, str, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  software_guard_extensions (False, bool, False)
-    None
-
-
   restricted_network (False, bool, False)
     None
 
 
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  redundant_power_supply (False, bool, None)
-    None
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
 
 
   process_key_name (False, str, None)
     None
 
 
-  gpu_secondary_key_name (False, str, None)
+  unbonded_network (False, bool, False)
     None
 
 
@@ -68,12 +48,64 @@ Parameters
     None
 
 
-  notes (False, str, None)
-    Optional notes info
+  public_vlan_id (False, int, None)
+    None
 
 
-  private_network_only (False, bool, False)
-    only private network configured if is true
+  private_vlan_id (False, int, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  os_key_name (False, str, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  storage_groups (False, list, None)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
 
 
   private_subnet (False, str, None)
@@ -84,23 +116,11 @@ Parameters
     (Required for new resource) Domain name
 
 
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
+  user_metadata (False, str, None)
+    User metadata info
 
 
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  unbonded_network (False, bool, False)
+  file_storage_ids (False, list, None)
     None
 
 
@@ -112,11 +132,31 @@ Parameters
     Secondary IP addresses count
 
 
-  hostname (False, str, None)
-    Host name
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
 
 
-  tags (False, list, None)
+  post_install_script_uri (False, str, None)
+    None
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  redundant_network (False, bool, False)
     None
 
 
@@ -124,67 +164,27 @@ Parameters
     OS refernece code value
 
 
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
   network_speed (False, int, 100)
     Network speed in MBPS
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  redundant_network (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  disk_key_names (False, list, None)
-    None
-
-
-  storage_groups (False, list, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  image_template_id (False, int, None)
-    OS image template ID
 
 
   package_key_name (False, str, None)
     None
 
 
-  gpu_key_name (False, str, None)
+  gpu_secondary_key_name (False, str, None)
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
+  notes (False, str, None)
+    Optional notes info
 
 
-  public_vlan_id (False, int, None)
+  tags (False, list, None)
     None
 
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  firewall_type (True, str, None)
-    Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
-
-
   cis_id (True, str, None)
     CIS object id
 
 
   domain_id (True, str, None)
     Associated CIS domain
+
+
+  firewall_type (True, str, None)
+    Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
 
 
   iaas_classic_username (False, any, None)

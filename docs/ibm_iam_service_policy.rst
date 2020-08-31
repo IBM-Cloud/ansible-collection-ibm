@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  account_management (False, bool, False)
-    Give access to all account management services
-
 
   tags (False, list, None)
     None
@@ -46,6 +42,10 @@ Parameters
 
   resources (False, list, None)
     None
+
+
+  account_management (False, bool, False)
+    Give access to all account management services
 
 
   id (False, str, None)

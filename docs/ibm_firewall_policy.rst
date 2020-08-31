@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  firewall_id (True, int, None)
+    (Required for new resource) Firewall ID
+
+
   rules (True, list, None)
     (Required for new resource) Policy rules info
 
 
   tags (False, list, None)
     List of tags
-
-
-  firewall_id (True, int, None)
-    (Required for new resource) Firewall ID
 
 
   id (False, str, None)

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.0
+- IBM-Cloud terraform-provider-ibm v1.11.1
 - Terraform v0.12.20
 
 
@@ -28,24 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
-
-
   worker_count (True, int, None)
     (Required for new resource) The number of workers
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
   flavor (True, str, None)
     (Required for new resource) cluster node falvor
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
   zones (True, list, None)
@@ -60,8 +52,16 @@ Parameters
     ID of the resource group.
 
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   id (False, str, None)
