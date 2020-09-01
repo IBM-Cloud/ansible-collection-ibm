@@ -10,8 +10,8 @@
     proc_type: shared
     processors: "0.25"
     memory: "2"
-    pi_cloud_instance_id: "YOUR PI CLOUD INSTANCE ID"
-    ssh_public_key: "YOUR SSH PUBLIC KEY"
+    pi_cloud_instance_id: "11956c6d-f7e8-4120-a403-14428405d1fe"
+    ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0eZ4uNSH6rtxNM7MagrBtxwlASw0iKcxDdXq9eNu93xDpsvxdn6xE/JESlIHhf9/45oLw9AKpu/MZYwqQ0O+uedwgtLvorv++fyXI36cls4xmUCuNnEhoK1aXh26N+V+lxejqF3DJhMKHYprQCnyl/8RWkWIFc2Jo60ACZ98MY4rRHgBP/0t1tqmb0I4IdBaYLctVIdv16gYJ5zqGYKeJBMG7XtgkrtOeacVoArrmjHY6n2cNgE5jLt9n9MyyGLjzq1agIpwwsWJGfhzqo2I98UhGWtUlD2UeNHbuJZmbXeyibuoV7RhDZg9LafkOXOTojjZc9rUrd8BChoHhbW3X anil@Anils-MacBook-Pro.local"
   tasks:
     - name: Check for existing SSH Key
       ibm_pi_key_info:

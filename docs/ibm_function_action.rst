@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -34,10 +34,6 @@ Parameters
 
   limits (False, list, None)
     None
-
-
-  publish (False, bool, None)
-    Action visibilty.
 
 
   user_defined_annotations (False, str, [])
@@ -54,6 +50,10 @@ Parameters
 
   exec (True, list, None)
     (Required for new resource) Execution info
+
+
+  publish (False, bool, None)
+    Action visibilty.
 
 
   id (False, str, None)

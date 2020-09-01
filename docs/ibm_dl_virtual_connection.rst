@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway (True, str, None)
-    (Required for new resource) The Direct Link gateway identifier
+  type (True, str, None)
+    (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
 
 
   name (True, str, None)
     (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
 
 
-  type (True, str, None)
-    (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
+  gateway (True, str, None)
+    (Required for new resource) The Direct Link gateway identifier
 
 
   network_id (False, str, None)

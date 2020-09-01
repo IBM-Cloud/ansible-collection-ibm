@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,44 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  timeout (False, int, 120)
-    Timeout for dead peer detection
-
-
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
-
-
-  peer_address (True, str, None)
-    (Required for new resource) VPN gateway connection peer address
-
-
-  action (False, str, none)
-    Action detection for dead peer detection action
-
-
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
-
-
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
-
-
   name (True, str, None)
     (Required for new resource) VPN Gateway connection name
 
 
-  ipsec_policy (False, str, None)
-    IP security policy for vpn gateway connection
-
-
-  ike_policy (False, str, None)
-    VPN gateway connection IKE Policy
-
-
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
 
 
   local_cidrs (False, list, None)
@@ -74,6 +42,38 @@ Parameters
 
   interval (False, int, 30)
     Interval for dead peer detection interval
+
+
+  ike_policy (False, str, None)
+    VPN gateway connection IKE Policy
+
+
+  peer_address (True, str, None)
+    (Required for new resource) VPN gateway connection peer address
+
+
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
+
+
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
+
+
+  ipsec_policy (False, str, None)
+    IP security policy for vpn gateway connection
+
+
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
+
+
+  timeout (False, int, 120)
+    Timeout for dead peer detection
+
+
+  action (False, str, none)
+    Action detection for dead peer detection action
 
 
   id (False, str, None)

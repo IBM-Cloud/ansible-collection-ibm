@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,32 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
+  bucket_name (False, str, None)
+    Bucket name
 
 
-  cache_key_query_rule (False, str, include-all)
-    query rule info
+  protocol (False, str, HTTP)
+    Protocol name
 
 
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
-
-
-  path (False, str, /*)
-    Path details
-
-
-  vendor_name (False, str, akamai)
-    Vendor name
-
-
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
-  https_port (False, int, 443)
-    HTTPS port number
+  http_port (False, int, 80)
+    HTTP port number
 
 
   cname (False, str, None)
@@ -64,32 +48,48 @@ Parameters
     Header info
 
 
-  file_extension (False, str, None)
-    File extension info
-
-
-  host_name (True, str, None)
-    (Required for new resource) Host name
-
-
-  bucket_name (False, str, None)
-    Bucket name
-
-
-  http_port (False, int, 80)
-    HTTP port number
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
 
 
   respect_headers (False, bool, True)
     respect headers info
 
 
+  file_extension (False, str, None)
+    File extension info
+
+
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
+  host_name (True, str, None)
+    (Required for new resource) Host name
+
+
   certificate_type (False, str, None)
     Certificate type
 
 
-  protocol (False, str, HTTP)
-    Protocol name
+  vendor_name (False, str, akamai)
+    Vendor name
+
+
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  https_port (False, int, 443)
+    HTTPS port number
+
+
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
+  path (False, str, /*)
+    Path details
 
 
   id (False, str, None)

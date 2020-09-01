@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -32,20 +32,20 @@ Parameters
     (Required for new resource) Name of the floating IP
 
 
-  zone (False, str, None)
-    Zone name
+  target (False, str, None)
+    Target info
 
 
   tags (False, list, None)
     Floating IP tags
 
 
+  zone (False, str, None)
+    Zone name
+
+
   resource_group (False, str, None)
     Resource group info
-
-
-  target (False, str, None)
-    Target info
 
 
   id (False, str, None)

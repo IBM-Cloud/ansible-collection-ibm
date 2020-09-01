@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.1
+    - IBM-Cloud terraform-provider-ibm v1.11.2
     - Terraform v0.12.20
 
 options:
@@ -37,15 +37,15 @@ options:
         required: False
         type: list
         elements: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
     location:
         description:
             - (Required for new resource) Location of Transit Gateway Services
         required: True
+        type: str
+    resource_group:
+        description:
+            - None
+        required: False
         type: str
     id:
         description:
@@ -102,8 +102,8 @@ TL_ALL_PARAMETERS = [
     'name',
     'global_',
     'tags',
-    'resource_group',
     'location',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -132,10 +132,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    location=dict(
         required=False,
         type='str'),
-    location=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_tg_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.1',
+        ibm_provider_version='1.11.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_tg_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.1',
+            ibm_provider_version='1.11.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

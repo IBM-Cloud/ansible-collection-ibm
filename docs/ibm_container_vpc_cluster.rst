@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,48 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
-
-
-  worker_labels (False, dict, None)
-    Labels for default worker pool
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
   cos_instance_crn (False, str, None)
     A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
 
 
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
   worker_count (False, int, 1)
     Number of worker nodes in the cluster
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
 
 
   kube_version (False, str, None)
     Kubernetes version
 
 
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
   tags (False, list, None)
     List of tags for the resources
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
 
 
   resource_group_id (False, str, None)
@@ -80,16 +64,32 @@ Parameters
     (Required for new resource) The cluster name
 
 
-  zones (True, list, None)
-    (Required for new resource) Zone info
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
+  zones (True, list, None)
+    (Required for new resource) Zone info
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
 
 
   id (False, str, None)

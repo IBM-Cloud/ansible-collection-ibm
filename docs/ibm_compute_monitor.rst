@@ -20,25 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  ip_address (False, str, None)
-    IP Address
-
-
-  query_type_id (True, int, None)
-    (Required for new resource) Query Type ID
-
-
-  response_action_id (True, int, None)
-    (Required for new resource) Response action ID
-
 
   wait_cycles (False, int, None)
     wait cycles count
@@ -54,6 +42,18 @@ Parameters
 
   guest_id (True, int, None)
     (Required for new resource) Guest ID
+
+
+  ip_address (False, str, None)
+    IP Address
+
+
+  query_type_id (True, int, None)
+    (Required for new resource) Query Type ID
+
+
+  response_action_id (True, int, None)
+    (Required for new resource) Response action ID
 
 
   id (False, str, None)

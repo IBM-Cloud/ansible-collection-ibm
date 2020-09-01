@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,12 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ike_version (False, int, None)
-    IKE version
-
-
-  name (True, str, None)
-    (Required for new resource) IKE name
+  authentication_algorithm (True, str, None)
+    (Required for new resource) Authentication algorithm type
 
 
   dh_group (True, int, None)
@@ -44,16 +40,20 @@ Parameters
     IKE resource group ID
 
 
-  authentication_algorithm (True, str, None)
-    (Required for new resource) Authentication algorithm type
+  key_lifetime (False, int, 28800)
+    IKE Key lifetime
+
+
+  ike_version (False, int, None)
+    IKE version
+
+
+  name (True, str, None)
+    (Required for new resource) IKE name
 
 
   encryption_algorithm (True, str, None)
     (Required for new resource) Encryption alogorithm type
-
-
-  key_lifetime (False, int, 28800)
-    IKE Key lifetime
 
 
   id (False, str, None)

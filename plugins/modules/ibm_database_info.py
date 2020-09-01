@@ -15,26 +15,26 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.1
+    - IBM-Cloud terraform-provider-ibm v1.11.2
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
-        description:
-            - The id of the resource group in which the Database instance is present
-        required: False
-        type: str
-    name:
-        description:
-            - Resource instance name for example, my Database instance
-        required: True
-        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - Resource instance name for example, my Database instance
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The id of the resource group in which the Database instance is present
+        required: False
+        type: str
     location:
         description:
             - The location or the region in which the Database instance exists
@@ -83,9 +83,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'name',
     'tags',
+    'name',
+    'resource_group_id',
     'location',
     'service',
 ]
@@ -98,16 +98,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=True,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=True,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     location=dict(
         required=False,
         type='str'),
@@ -148,7 +148,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.1',
+        ibm_provider_version='1.11.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

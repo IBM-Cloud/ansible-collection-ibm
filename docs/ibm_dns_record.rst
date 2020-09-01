@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.1
+- IBM-Cloud terraform-provider-ibm v1.11.2
 - Terraform v0.12.20
 
 
@@ -28,12 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
   host (True, str, None)
     (Required for new resource) Hostname
 
 
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
   refresh (False, int, None)
     refresh rate
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  port (False, int, None)
+    port number
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   retry (False, int, None)
@@ -44,56 +92,8 @@ Parameters
     Minimun TTL configuration
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
   protocol (False, str, None)
     protocol info
-
-
-  port (False, int, None)
-    port number
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  service (False, str, None)
-    service info
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
 
 
   id (False, str, None)

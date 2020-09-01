@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.1
+    - IBM-Cloud terraform-provider-ibm v1.11.2
     - Terraform v0.12.20
 
 options:
@@ -25,16 +25,16 @@ options:
             - (Required for new resource) Destination IP Address
         required: True
         type: str
-    destination_port:
+    connection_limit:
         description:
-            - (Required for new resource) Destination Port number
+            - (Required for new resource) Number of connections limit
         required: True
         type: int
-    weight:
+    health_check:
         description:
-            - (Required for new resource) Weight value
+            - (Required for new resource) Health check info
         required: True
-        type: int
+        type: str
     usip:
         description:
             - usip info
@@ -57,16 +57,16 @@ options:
             - (Required for new resource) name
         required: True
         type: str
-    connection_limit:
+    destination_port:
         description:
-            - (Required for new resource) Number of connections limit
+            - (Required for new resource) Destination Port number
         required: True
         type: int
-    health_check:
+    weight:
         description:
-            - (Required for new resource) Health check info
+            - (Required for new resource) Weight value
         required: True
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,25 +114,25 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('destination_ip_address', 'str'),
-    ('destination_port', 'int'),
-    ('weight', 'int'),
-    ('vip_id', 'str'),
-    ('name', 'str'),
     ('connection_limit', 'int'),
     ('health_check', 'str'),
+    ('vip_id', 'str'),
+    ('name', 'str'),
+    ('destination_port', 'int'),
+    ('weight', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'destination_ip_address',
-    'destination_port',
-    'weight',
+    'connection_limit',
+    'health_check',
     'usip',
     'tags',
     'vip_id',
     'name',
-    'connection_limit',
-    'health_check',
+    'destination_port',
+    'weight',
 ]
 
 # Params for Data source
@@ -152,12 +152,12 @@ module_args = dict(
     destination_ip_address=dict(
         required=False,
         type='str'),
-    destination_port=dict(
+    connection_limit=dict(
         required=False,
         type='int'),
-    weight=dict(
+    health_check=dict(
         required=False,
-        type='int'),
+        type='str'),
     usip=dict(
         required=False,
         type='str'),
@@ -171,12 +171,12 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    connection_limit=dict(
+    destination_port=dict(
         required=False,
         type='int'),
-    health_check=dict(
+    weight=dict(
         required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.11.1',
+        ibm_provider_version='1.11.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
