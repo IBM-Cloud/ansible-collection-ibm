@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -26,7 +26,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  org (True, str, None)
+  name (False, str, None)
     Org name, for example myorg@domain
 
 

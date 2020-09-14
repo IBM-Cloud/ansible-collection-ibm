@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
 
   name (True, str, None)
     (Required for new resource) The name of the service key
@@ -38,10 +42,6 @@ Parameters
 
   parameters (False, dict, None)
     Arbitrary parameters to pass along to the service broker. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

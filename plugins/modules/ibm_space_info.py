@@ -15,19 +15,19 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_space' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
-    space:
-        description:
-            - Space name, for example dev
-        required: True
-        type: str
     org:
         description:
             - The org this space belongs to
         required: True
+        type: str
+    name:
+        description:
+            - Space name, for example dev
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -62,14 +62,13 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('space', 'str'),
     ('org', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'space',
     'org',
+    'name',
 ]
 
 
@@ -80,11 +79,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    space=dict(
-        required=True,
-        type='str'),
     org=dict(
         required=True,
+        type='str'),
+    name=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -120,7 +119,7 @@ def run_module():
         resource_type='ibm_space',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
+        ibm_provider_version='1.12.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

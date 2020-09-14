@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_cidr (False, str, None)
+    PI network CIDR
+
 
   pi_gateway (False, str, None)
     PI network gateway
@@ -46,10 +50,6 @@ Parameters
 
   pi_dns (False, list, None)
     List of PI network DNS name
-
-
-  pi_cidr (False, str, None)
-    PI network CIDR
 
 
   id (False, str, None)

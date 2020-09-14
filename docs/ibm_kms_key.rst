@@ -20,29 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  encrypted_nonce (False, str, None)
-    Only for imported root key
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
-  payload (False, str, None)
-    None
-
 
   instance_id (True, str, None)
     (Required for new resource) Key protect or hpcs instance GUID
@@ -52,12 +36,28 @@ Parameters
     (Required for new resource) Key name
 
 
+  endpoint_type (False, str, public)
+    public or private
+
+
+  standard_key (False, bool, False)
+    Standard key type
+
+
   iv_value (False, str, None)
+    Only for imported root key
+
+
+  encrypted_nonce (False, str, None)
     Only for imported root key
 
 
   force_delete (False, bool, False)
     set to true to force delete the key
+
+
+  payload (False, str, None)
+    None
 
 
   id (False, str, None)

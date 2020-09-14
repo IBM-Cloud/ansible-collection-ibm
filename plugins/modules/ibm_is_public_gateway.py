@@ -16,18 +16,34 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
+    floating_ip:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
+    vpc:
+        description:
+            - (Required for new resource) Public gateway VPC info
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the Public gateway instance
+        required: True
+        type: str
     resource_group:
         description:
             - Public gateway resource group info
         required: False
         type: str
-    vpc:
+    zone:
         description:
-            - (Required for new resource) Public gateway VPC info
+            - (Required for new resource) Public gateway zone info
         required: True
         type: str
     tags:
@@ -36,22 +52,6 @@ options:
         required: False
         type: list
         elements: str
-    floating_ip:
-        description:
-            - None
-        required: False
-        type: dict
-        elements: dict
-    zone:
-        description:
-            - (Required for new resource) Public gateway zone info
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the Public gateway instance
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,18 +99,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vpc', 'str'),
-    ('zone', 'str'),
     ('name', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'vpc',
-    'tags',
     'floating_ip',
-    'zone',
+    'vpc',
     'name',
+    'resource_group',
+    'zone',
+    'tags',
 ]
 
 # Params for Data source
@@ -119,8 +119,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'resource_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -130,26 +130,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    floating_ip=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    zone=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    floating_ip=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    zone=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
+        ibm_provider_version='1.12.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -236,7 +236,7 @@ def run_module():
             resource_type='ibm_is_public_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.2',
+            ibm_provider_version='1.12.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace_id (True, str, None)
-    (Required for new resource) namespace ID
-
-
-  key (False, str, None)
-    Key info
-
-
   role (False, str, None)
     Role info
 
 
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   service_instance_id (False, str, None)
     Service instance ID
-
-
-  tags (False, list, None)
-    List of tags for the resource
 
 
   cluster_name_id (True, str, None)
@@ -56,8 +48,16 @@ Parameters
     serivice instance name
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  key (False, str, None)
+    Key info
+
+
+  tags (False, list, None)
+    List of tags for the resource
+
+
+  namespace_id (True, str, None)
+    (Required for new resource) namespace ID
 
 
   id (False, str, None)

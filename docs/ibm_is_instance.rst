@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,56 +28,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_data (False, str, None)
-    User data given for the instance
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  tags (False, list, None)
-    list of tags for the instance
+  volumes (False, list, None)
+    List of volumes
 
 
   resource_group (False, str, None)
     Instance resource group
 
 
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
   zone (True, str, None)
     (Required for new resource) Zone name
 
 
-  volumes (False, list, None)
-    List of volumes
+  boot_volume (False, list, None)
+    None
 
 
   id (False, str, None)

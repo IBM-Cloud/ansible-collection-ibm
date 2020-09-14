@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Subscription name
+
+
+  type (True, str, None)
+    (Required for new resource) Subscription type. Allowable values are external, internal
+
 
   client_secret (False, str, None)
     Client Sercret of a Subscription
@@ -42,14 +50,6 @@ Parameters
 
   client_id (False, str, None)
     Subscription Id, API key that is used to create subscription
-
-
-  name (True, str, None)
-    (Required for new resource) Subscription name
-
-
-  type (True, str, None)
-    (Required for new resource) Subscription type. Allowable values are external, internal
 
 
   id (False, str, None)

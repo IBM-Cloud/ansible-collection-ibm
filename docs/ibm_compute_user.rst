@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,32 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  username (False, str, None)
-    user name
-
-
-  email (True, str, None)
-    (Required for new resource) email address of the user
-
-
   country (True, str, None)
     (Required for new resource) Country name
 
 
-  password (False, str, None)
-    password for the user
-
-
-  last_name (True, str, None)
-    (Required for new resource) Last name of the user
+  city (True, str, None)
+    (Required for new resource) City name
 
 
   company_name (True, str, None)
     (Required for new resource) comapany name
-
-
-  timezone (True, str, None)
-    (Required for new resource) time zone info
 
 
   has_api_key (False, bool, False)
@@ -68,20 +52,12 @@ Parameters
     Tags set for the resources
 
 
-  first_name (True, str, None)
-    (Required for new resource) First name of the user
+  username (False, str, None)
+    user name
 
 
-  state_ (True, str, None)
-    (Required for new resource) Satate name
-
-
-  user_status (False, str, ACTIVE)
-    user status info
-
-
-  permissions (False, list, None)
-    set of persmissions assigned for the user
+  email (True, str, None)
+    (Required for new resource) email address of the user
 
 
   address1 (True, str, None)
@@ -92,8 +68,32 @@ Parameters
     Address info of the user
 
 
-  city (True, str, None)
-    (Required for new resource) City name
+  state_ (True, str, None)
+    (Required for new resource) Satate name
+
+
+  timezone (True, str, None)
+    (Required for new resource) time zone info
+
+
+  user_status (False, str, ACTIVE)
+    user status info
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  last_name (True, str, None)
+    (Required for new resource) Last name of the user
+
+
+  password (False, str, None)
+    password for the user
+
+
+  first_name (True, str, None)
+    (Required for new resource) First name of the user
 
 
   id (False, str, None)

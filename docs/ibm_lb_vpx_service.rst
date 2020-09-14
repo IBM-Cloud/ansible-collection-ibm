@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  destination_ip_address (True, str, None)
-    (Required for new resource) Destination IP Address
+  weight (True, int, None)
+    (Required for new resource) Weight value
 
 
   connection_limit (True, int, None)
     (Required for new resource) Number of connections limit
-
-
-  health_check (True, str, None)
-    (Required for new resource) Health check info
 
 
   usip (False, str, False)
@@ -60,8 +56,12 @@ Parameters
     (Required for new resource) Destination Port number
 
 
-  weight (True, int, None)
-    (Required for new resource) Weight value
+  destination_ip_address (True, str, None)
+    (Required for new resource) Destination IP Address
+
+
+  health_check (True, str, None)
+    (Required for new resource) Health check info
 
 
   id (False, str, None)

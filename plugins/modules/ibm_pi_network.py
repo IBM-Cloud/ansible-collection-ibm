@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
+    pi_cidr:
+        description:
+            - PI network CIDR
+        required: False
+        type: str
     pi_gateway:
         description:
             - PI network gateway
@@ -46,11 +51,6 @@ options:
         required: False
         type: list
         elements: str
-    pi_cidr:
-        description:
-            - PI network CIDR
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,12 +100,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_cidr',
     'pi_gateway',
     'pi_cloud_instance_id',
     'pi_network_type',
     'pi_network_name',
     'pi_dns',
-    'pi_cidr',
 ]
 
 # Params for Data source
@@ -126,6 +126,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cidr=dict(
+        required=False,
+        type='str'),
     pi_gateway=dict(
         required=False,
         type='str'),
@@ -142,9 +145,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_cidr=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
+        ibm_provider_version='1.12.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_pi_network',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.2',
+            ibm_provider_version='1.12.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

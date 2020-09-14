@@ -14,9 +14,9 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
@@ -25,16 +25,16 @@ options:
             - (Required for new resource) ALB ID
         required: True
         type: str
-    user_ip:
-        description:
-            - IP assigned by the user
-        required: False
-        type: str
     disable_deployment:
         description:
             - Set to true if ALB needs to be disabled
         required: False
         type: bool
+    user_ip:
+        description:
+            - IP assigned by the user
+        required: False
+        type: str
     enable:
         description:
             - set to true if ALB needs to be enabled
@@ -72,16 +72,18 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'alb_id',
-    'user_ip',
     'disable_deployment',
+    'user_ip',
     'enable',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('alb_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'alb_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -96,12 +98,12 @@ module_args = dict(
     alb_id=dict(
         required=False,
         type='str'),
-    user_ip=dict(
-        required=False,
-        type='str'),
     disable_deployment=dict(
         required=False,
         type='bool'),
+    user_ip=dict(
+        required=False,
+        type='str'),
     enable=dict(
         required=False,
         type='bool'),
@@ -152,19 +154,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_container_alb',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.12.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_container_alb',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.12.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

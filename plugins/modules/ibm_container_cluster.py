@@ -16,18 +16,68 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
+    gateway_enabled:
+        description:
+            - Set true for gateway enabled clusters
+        required: False
+        type: bool
+        default: False
+    disk_encryption:
+        description:
+            - disc encryption done, if set to true.
+        required: False
+        type: bool
+        default: True
+    no_subnet:
+        description:
+            - Boolean value set to true when subnet creation is not required.
+        required: False
+        type: bool
+        default: False
+    public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    name:
+        description:
+            - (Required for new resource) The cluster name
+        required: True
+        type: str
     hardware:
         description:
             - (Required for new resource) Hardware type
         required: True
         type: str
-    entitlement:
+    machine_type:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - Machine type
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags for the resource
+        required: False
+        type: list
+        elements: str
+    kms_config:
+        description:
+            - Enables KMS on a given cluster
+        required: False
+        type: list
+        elements: dict
+    public_vlan_id:
+        description:
+            - Public VLAN ID
         required: False
         type: str
     webhook:
@@ -36,48 +86,14 @@ options:
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - Tags for the resource
-        required: False
-        type: list
-        elements: str
-    update_all_workers:
-        description:
-            - Updates all the woker nodes if sets to true
-        required: False
-        type: bool
-        default: False
-    public_vlan_id:
-        description:
-            - Public VLAN ID
-        required: False
-        type: str
     private_service_endpoint:
         description:
             - None
         required: False
         type: bool
-    disk_encryption:
+    entitlement:
         description:
-            - disc encryption done, if set to true.
-        required: False
-        type: bool
-        default: True
-    kube_version:
-        description:
-            - Kubernetes version info
-        required: False
-        type: str
-    default_pool_size:
-        description:
-            - The size of the default worker pool
-        required: False
-        type: int
-        default: 1
-    private_vlan_id:
-        description:
-            - Private VLAN ID
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
         type: str
     subnet_id:
@@ -86,49 +102,45 @@ options:
         required: False
         type: list
         elements: str
-    no_subnet:
+    datacenter:
         description:
-            - Boolean value set to true when subnet creation is not required.
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - (Required for new resource) The cluster name
+            - (Required for new resource) The datacenter where this cluster will be deployed
         required: True
         type: str
-    machine_type:
+    default_pool_size:
         description:
-            - Machine type
+            - The size of the default worker pool
         required: False
-        type: str
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    gateway_enabled:
-        description:
-            - Set true for gateway enabled clusters
-        required: False
-        type: bool
-        default: False
+        type: int
+        default: 1
     workers_info:
         description:
             - The IDs of the worker node
         required: False
         type: list
         elements: dict
-    resource_group_id:
+    kube_version:
         description:
-            - ID of the resource group.
+            - Kubernetes version info
         required: False
         type: str
-    datacenter:
+    private_vlan_id:
         description:
-            - (Required for new resource) The datacenter where this cluster will be deployed
-        required: True
+            - Private VLAN ID
+        required: False
         type: str
+    update_all_workers:
+        description:
+            - Updates all the woker nodes if sets to true
+        required: False
+        type: bool
+        default: False
+    force_delete_storage:
+        description:
+            - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -155,48 +167,50 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('hardware', 'str'),
     ('name', 'str'),
+    ('hardware', 'str'),
     ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hardware',
-    'entitlement',
-    'webhook',
-    'tags',
-    'update_all_workers',
-    'public_vlan_id',
-    'private_service_endpoint',
-    'disk_encryption',
-    'kube_version',
-    'default_pool_size',
-    'private_vlan_id',
-    'subnet_id',
-    'no_subnet',
-    'name',
-    'machine_type',
-    'public_service_endpoint',
     'gateway_enabled',
-    'workers_info',
+    'disk_encryption',
+    'no_subnet',
+    'public_service_endpoint',
+    'name',
+    'hardware',
+    'machine_type',
     'resource_group_id',
+    'tags',
+    'kms_config',
+    'public_vlan_id',
+    'webhook',
+    'private_service_endpoint',
+    'entitlement',
+    'subnet_id',
     'datacenter',
+    'default_pool_size',
+    'workers_info',
+    'kube_version',
+    'private_vlan_id',
+    'update_all_workers',
+    'force_delete_storage',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('cluster_name_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'region',
     'cluster_name_id',
+    'alb_type',
+    'region',
+    'org_guid',
+    'account_guid',
+    'name',
     'space_guid',
     'resource_group_id',
-    'alb_type',
-    'account_guid',
-    'org_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -206,70 +220,77 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    gateway_enabled=dict(
+        required=False,
+        type='bool'),
+    disk_encryption=dict(
+        required=False,
+        type='bool'),
+    no_subnet=dict(
+        required=False,
+        type='bool'),
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     hardware=dict(
         required=False,
         type='str'),
-    entitlement=dict(
+    machine_type=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    kms_config=dict(
+        required=False,
+        elements='',
+        type='list'),
+    public_vlan_id=dict(
         required=False,
         type='str'),
     webhook=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    update_all_workers=dict(
-        required=False,
-        type='bool'),
-    public_vlan_id=dict(
-        required=False,
-        type='str'),
     private_service_endpoint=dict(
         required=False,
         type='bool'),
-    disk_encryption=dict(
-        required=False,
-        type='bool'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    default_pool_size=dict(
-        required=False,
-        type='int'),
-    private_vlan_id=dict(
+    entitlement=dict(
         required=False,
         type='str'),
     subnet_id=dict(
         required=False,
         elements='',
         type='list'),
-    no_subnet=dict(
-        required=False,
-        type='bool'),
-    name=dict(
+    datacenter=dict(
         required=False,
         type='str'),
-    machine_type=dict(
+    default_pool_size=dict(
         required=False,
-        type='str'),
-    public_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    gateway_enabled=dict(
-        required=False,
-        type='bool'),
+        type='int'),
     workers_info=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    datacenter=dict(
+    private_vlan_id=dict(
         required=False,
         type='str'),
+    update_all_workers=dict(
+        required=False,
+        type='bool'),
+    force_delete_storage=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -321,7 +342,7 @@ def run_module():
         resource_type='ibm_container_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
+        ibm_provider_version='1.12.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -330,7 +351,7 @@ def run_module():
             resource_type='ibm_container_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.2',
+            ibm_provider_version='1.12.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

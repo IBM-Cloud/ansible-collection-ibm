@@ -14,27 +14,33 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
     type:
         description:
             - Load Balancer type
         required: False
         type: str
         default: public
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
+        required: True
+        type: str
     subnets:
         description:
             - (Required for new resource) Load Balancer subnets list
         required: True
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
         type: list
         elements: str
     resource_group:
@@ -42,12 +48,6 @@ options:
             - None
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,18 +100,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'type',
+    'name',
     'subnets',
-    'resource_group',
     'tags',
+    'resource_group',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -121,23 +123,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    type=dict(
         required=False,
         type='str'),
-    type=dict(
+    name=dict(
         required=False,
         type='str'),
     subnets=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -211,19 +213,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_lb',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.12.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_lb',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.12.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

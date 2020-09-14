@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
   worker_count (False, int, 1)
     Number of worker nodes in the cluster
 
 
-  worker_labels (False, dict, None)
-    Labels for default worker pool
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
 
 
   kube_version (False, str, None)
@@ -56,20 +52,20 @@ Parameters
     List of tags for the resources
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   name (True, str, None)
     (Required for new resource) The cluster name
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  worker_labels (False, dict, None)
+    Labels for default worker pool
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
 
 
   zones (True, list, None)
@@ -80,16 +76,28 @@ Parameters
     Boolean value true if Public service endpoint to be disabled
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
   pod_subnet (False, str, None)
     Custom subnet CIDR to provide private IP addresses for pods
+
+
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+
+
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

@@ -16,18 +16,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.11.2
+    - IBM-Cloud terraform-provider-ibm v1.12.0
     - Terraform v0.12.20
 
 options:
-    name:
+    zone:
         description:
-            - (Required for new resource) Name of the floating IP
-        required: True
+            - Zone name
+        required: False
         type: str
     target:
         description:
             - Target info
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group info
         required: False
         type: str
     tags:
@@ -36,15 +41,10 @@ options:
         required: False
         type: list
         elements: str
-    zone:
+    name:
         description:
-            - Zone name
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
-        required: False
+            - (Required for new resource) Name of the floating IP
+        required: True
         type: str
     id:
         description:
@@ -97,11 +97,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'target',
-    'tags',
     'zone',
+    'target',
     'resource_group',
+    'tags',
+    'name',
 ]
 
 # Params for Data source
@@ -114,28 +114,28 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'target': ['zone'],
     'zone': ['target'],
+    'target': ['zone'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    zone=dict(
         required=False,
         type='str'),
     target=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.11.2',
+        ibm_provider_version='1.12.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_is_floating_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.11.2',
+            ibm_provider_version='1.12.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

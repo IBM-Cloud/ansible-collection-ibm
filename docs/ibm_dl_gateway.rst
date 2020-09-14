@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  customer_name (False, str, None)
-    Customer name
-
-
-  metered (True, bool, None)
-    (Required for new resource) Metered billing option
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
   carrier_name (False, str, None)
     Carrier name
 
 
-  cross_connect_router (False, str, None)
-    Cross connect router
+  resource_group (False, str, None)
+    Gateway resource group
+
+
+  bgp_base_cidr (True, str, None)
+    (Required for new resource) BGP base CIDR
 
 
   bgp_ibm_cidr (False, str, None)
@@ -52,36 +52,12 @@ Parameters
     Tags for the direct link gateway
 
 
-  bgp_base_cidr (True, str, None)
-    (Required for new resource) BGP base CIDR
-
-
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
+  cross_connect_router (False, str, None)
+    Cross connect router
 
 
   type (True, str, None)
     (Required for new resource) Gateway type
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
 
 
   loa_reject_reason (False, str, None)
@@ -90,6 +66,30 @@ Parameters
 
   bgp_asn (True, int, None)
     (Required for new resource) BGP ASN
+
+
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  metered (True, bool, None)
+    (Required for new resource) Metered billing option
+
+
+  customer_name (False, str, None)
+    Customer name
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
 
 
   id (False, str, None)

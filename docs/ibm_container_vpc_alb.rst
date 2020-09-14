@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.11.2
+- IBM-Cloud terraform-provider-ibm v1.12.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disable_deployment (False, bool, None)
-    Disable the ALB instance in the cluster
-
-
   alb_id (True, str, None)
     (Required for new resource) ALB ID
+
+
+  disable_deployment (False, bool, None)
+    Disable the ALB instance in the cluster
 
 
   enable (False, bool, None)
