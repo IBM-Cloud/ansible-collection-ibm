@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
@@ -30,21 +30,9 @@ options:
             - (Required for new resource) Key name
         required: True
         type: str
-    endpoint_type:
+    payload:
         description:
-            - public or private
-        required: False
-        type: str
-        default: public
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
-    iv_value:
-        description:
-            - Only for imported root key
+            - None
         required: False
         type: str
     encrypted_nonce:
@@ -58,11 +46,23 @@ options:
         required: False
         type: bool
         default: False
-    payload:
+    iv_value:
         description:
-            - None
+            - Only for imported root key
         required: False
         type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,12 +117,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'instance_id',
     'key_name',
-    'endpoint_type',
-    'standard_key',
-    'iv_value',
+    'payload',
     'encrypted_nonce',
     'force_delete',
-    'payload',
+    'iv_value',
+    'endpoint_type',
+    'standard_key',
 ]
 
 # Params for Data source
@@ -150,13 +150,7 @@ module_args = dict(
     key_name=dict(
         required=False,
         type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
-    iv_value=dict(
+    payload=dict(
         required=False,
         type='str'),
     encrypted_nonce=dict(
@@ -165,9 +159,15 @@ module_args = dict(
     force_delete=dict(
         required=False,
         type='bool'),
-    payload=dict(
+    iv_value=dict(
         required=False,
         type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -242,7 +242,7 @@ def run_module():
             resource_type='ibm_kms_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.12.0',
+            ibm_provider_version='1.13.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

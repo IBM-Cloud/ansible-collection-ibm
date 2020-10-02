@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_space' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
@@ -126,9 +126,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'org',
     'space',
     'name',
+    'org',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_space',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_space',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.12.0',
+            ibm_provider_version='1.13.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

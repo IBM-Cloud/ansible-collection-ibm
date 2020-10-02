@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -28,48 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  weight (False, int, 0)
+    weight info
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   host (True, str, None)
     (Required for new resource) Hostname
 
 
-  refresh (False, int, None)
-    refresh rate
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  service (False, str, None)
-    service info
-
-
-  priority (False, int, 0)
-    priority info
-
-
   mx_priority (False, int, 0)
     Maximum priority
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  port (False, int, None)
-    port number
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
+  refresh (False, int, None)
+    refresh rate
 
 
   minimum_ttl (False, int, None)
@@ -80,20 +56,44 @@ Parameters
     protocol info
 
 
-  tags (False, list, None)
-    tags set for the resource
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
-  expire (False, int, None)
-    DNS record expiry info
+  retry (False, int, None)
+    Retry count
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
 
 
-  weight (False, int, 0)
-    weight info
+  tags (False, list, None)
+    tags set for the resource
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  service (False, str, None)
+    service info
+
+
+  port (False, int, None)
+    port number
+
+
+  priority (False, int, 0)
+    priority info
 
 
   id (False, str, None)

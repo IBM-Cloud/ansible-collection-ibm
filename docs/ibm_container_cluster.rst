@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -28,68 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  tags (False, list, None)
-    Tags for the resource
-
-
   kms_config (False, list, None)
     Enables KMS on a given cluster
-
-
-  public_vlan_id (False, str, None)
-    Public VLAN ID
-
-
-  webhook (False, list, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
 
 
   default_pool_size (False, int, 1)
@@ -100,12 +40,16 @@ Parameters
     The IDs of the worker node
 
 
-  kube_version (False, str, None)
-    Kubernetes version info
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  private_vlan_id (False, str, None)
-    Private VLAN ID
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  subnet_id (False, list, None)
+    List of subnet IDs
 
 
   update_all_workers (False, bool, False)
@@ -114,6 +58,62 @@ Parameters
 
   force_delete_storage (False, bool, False)
     Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  machine_type (False, str, None)
+    Machine type
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
+
+
+  public_vlan_id (False, str, None)
+    Public VLAN ID
+
+
+  webhook (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  private_service_endpoint (False, bool, None)
+    None
 
 
   id (False, str, None)

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, PUBLIC)
-    Specifies if a load balancer is public or private
-
-
   protocols (False, list, None)
     Protocols to be assigned to this load balancer.
-
-
-  description (False, str, None)
-    Description of a load balancer.
 
 
   wait_time_minutes (False, int, 90)
     None
 
 
-  ssl_ciphers (False, list, None)
-    None
+  subnets (True, list, None)
+    (Required for new resource) The subnet where this Load Balancer will be provisioned.
 
 
   use_system_public_ip_pool (False, bool, None)
@@ -56,8 +48,16 @@ Parameters
     (Required for new resource) The load balancer's name.
 
 
-  subnets (True, list, None)
-    (Required for new resource) The subnet where this Load Balancer will be provisioned.
+  description (False, str, None)
+    Description of a load balancer.
+
+
+  type (False, str, PUBLIC)
+    Specifies if a load balancer is public or private
+
+
+  ssl_ciphers (False, list, None)
+    None
 
 
   id (False, str, None)

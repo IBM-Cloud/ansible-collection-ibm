@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -30,14 +30,6 @@ Parameters
 
   connections (True, int, None)
     (Required for new resource) Connections value
-
-
-  dedicated (False, bool, False)
-    Boolena value true if Load balncer is dedicated type
-
-
-  ssl_offload (False, bool, False)
-    boolean value true if SSL offload is enabled
 
 
   tags (False, list, None)
@@ -54,6 +46,14 @@ Parameters
 
   security_certificate_id (False, int, None)
     Security certificate ID
+
+
+  dedicated (False, bool, False)
+    Boolena value true if Load balncer is dedicated type
+
+
+  ssl_offload (False, bool, False)
+    boolean value true if SSL offload is enabled
 
 
   id (False, str, None)

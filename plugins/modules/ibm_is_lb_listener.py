@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,6 @@ options:
             - Connection limit for Loadbalancer
         required: False
         type: int
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer listener ID
@@ -49,6 +44,11 @@ options:
         description:
             - (Required for new resource) Loadbalancer protocol
         required: True
+        type: str
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
         type: str
     id:
         description:
@@ -105,10 +105,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'certificate_instance',
     'connection_limit',
-    'default_pool',
     'lb',
     'port',
     'protocol',
+    'default_pool',
 ]
 
 # Params for Data source
@@ -131,9 +131,6 @@ module_args = dict(
     connection_limit=dict(
         required=False,
         type='int'),
-    default_pool=dict(
-        required=False,
-        type='str'),
     lb=dict(
         required=False,
         type='str'),
@@ -141,6 +138,9 @@ module_args = dict(
         required=False,
         type='int'),
     protocol=dict(
+        required=False,
+        type='str'),
+    default_pool=dict(
         required=False,
         type='str'),
     id=dict(
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

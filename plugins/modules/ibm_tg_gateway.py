@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
+    location:
+        description:
+            - (Required for new resource) Location of Transit Gateway Services
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Name Transit Gateway Services
@@ -31,11 +36,6 @@ options:
         required: False
         type: bool
         default: False
-    location:
-        description:
-            - (Required for new resource) Location of Transit Gateway Services
-        required: True
-        type: str
     tags:
         description:
             - Tags for the transit gateway instance
@@ -93,15 +93,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('location', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'location',
     'name',
     'global_',
-    'location',
     'tags',
     'resource_group',
 ]
@@ -122,15 +122,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    location=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     global_=dict(
         required=False,
         type='bool'),
-    location=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_tg_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_tg_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.12.0',
+            ibm_provider_version='1.13.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

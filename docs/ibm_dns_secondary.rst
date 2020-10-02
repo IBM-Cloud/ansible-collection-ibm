@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    List of tags
+
 
   master_ip_address (True, str, None)
     (Required for new resource) Master IP Address
@@ -38,10 +42,6 @@ Parameters
 
   zone_name (True, str, None)
     (Required for new resource) Zone name
-
-
-  tags (False, list, None)
-    List of tags
 
 
   id (False, str, None)

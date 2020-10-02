@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster Name or ID
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   addons (True, list, None)
     (Required for new resource)
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster Name or ID
 
 
   id (False, str, None)

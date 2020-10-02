@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
@@ -25,31 +25,9 @@ options:
             - (Required for new resource) VPC id
         required: True
         type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
     profile:
         description:
             - (Required for new resource) Profile info
-        required: True
-        type: str
-    volume_attachments:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) Instance Template name
         required: True
         type: str
     keys:
@@ -58,10 +36,10 @@ options:
         required: True
         type: list
         elements: str
-    primary_network_interface:
+    volume_attachments:
         description:
-            - (Required for new resource) Primary Network interface info
-        required: True
+            - None
+        required: False
         type: list
         elements: dict
     user_data:
@@ -69,6 +47,33 @@ options:
             - User data given for the instance
         required: False
         type: str
+    resource_group:
+        description:
+            - Instance template resource group
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Instance Template name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: True
+        type: list
+        elements: dict
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     image:
         description:
             - (Required for new resource) image name
@@ -80,11 +85,6 @@ options:
         required: False
         type: list
         elements: dict
-    resource_group:
-        description:
-            - Instance template resource group
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,10 +132,10 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vpc', 'str'),
-    ('zone', 'str'),
     ('profile', 'str'),
-    ('name', 'str'),
     ('keys', 'list'),
+    ('name', 'str'),
+    ('zone', 'str'),
     ('primary_network_interface', 'list'),
     ('image', 'str'),
 ]
@@ -143,17 +143,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
-    'zone',
     'profile',
-    'volume_attachments',
-    'network_interfaces',
-    'name',
     'keys',
-    'primary_network_interface',
+    'volume_attachments',
     'user_data',
+    'resource_group',
+    'name',
+    'zone',
+    'primary_network_interface',
+    'network_interfaces',
     'image',
     'boot_volume',
-    'resource_group',
 ]
 
 # Params for Data source
@@ -173,13 +173,30 @@ module_args = dict(
     vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
     profile=dict(
         required=False,
         type='str'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     volume_attachments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    primary_network_interface=dict(
         required=False,
         elements='',
         type='list'),
@@ -187,20 +204,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
-    user_data=dict(
-        required=False,
-        type='str'),
     image=dict(
         required=False,
         type='str'),
@@ -208,9 +211,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -288,7 +288,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

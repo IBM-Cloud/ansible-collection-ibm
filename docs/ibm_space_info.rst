@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  org (True, str, None)
-    The org this space belongs to
-
-
   name (False, str, None)
     Space name, for example dev
+
+
+  org (True, str, None)
+    The org this space belongs to
 
 
   iaas_classic_username (False, any, None)

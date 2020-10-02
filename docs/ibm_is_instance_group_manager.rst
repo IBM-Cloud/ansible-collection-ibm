@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.12.0
+- IBM-Cloud terraform-provider-ibm v1.13.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (False, str, None)
+    instance group manager name
+
+
+  instance_group (True, str, None)
+    (Required for new resource) instance group ID
+
+
   manager_type (False, str, autoscale)
     The type of instance group manager.
-
-
-  max_membership_count (True, int, None)
-    (Required for new resource) The maximum number of members in a managed instance group
 
 
   min_membership_count (False, int, 1)
     The minimum number of members in a managed instance group
 
 
-  name (False, str, None)
-    instance group manager name
-
-
   enable_manager (False, bool, True)
     enable instance group manager
-
-
-  instance_group (True, str, None)
-    (Required for new resource) instance group ID
 
 
   aggregation_window (False, int, 90)
@@ -58,6 +54,10 @@ Parameters
 
   cooldown (False, int, 300)
     The duration of time in seconds to pause further scale actions after scaling has taken place
+
+
+  max_membership_count (True, int, None)
+    (Required for new resource) The maximum number of members in a managed instance group
 
 
   id (False, str, None)

@@ -16,10 +16,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
+    force_recovery_time:
+        description:
+            - Define timeout to force the instances to start/stop in minutes.
+        required: False
+        type: int
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance
+        required: True
+        type: list
+        elements: str
     primary_network_interface:
         description:
             - (Required for new resource) Primary Network interface info
@@ -31,38 +42,42 @@ options:
             - (Required for new resource) image name
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) Instance name
+        required: True
+        type: str
+    resource_group:
+        description:
+            - Instance resource group
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
     volumes:
         description:
             - List of volumes
         required: False
         type: list
         elements: str
-    resource_group:
-        description:
-            - Instance resource group
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
-    keys:
-        description:
-            - (Required for new resource) SSH key Ids for the instance
-        required: True
-        type: list
-        elements: str
-    network_interfaces:
+    boot_volume:
         description:
             - None
         required: False
         type: list
         elements: dict
-    user_data:
+    vpc:
         description:
-            - User data given for the instance
-        required: False
+            - (Required for new resource) VPC id
+        required: True
         type: str
     profile:
         description:
@@ -75,17 +90,7 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) Instance name
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    boot_volume:
+    network_interfaces:
         description:
             - None
         required: False
@@ -137,30 +142,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('keys', 'list'),
     ('primary_network_interface', 'list'),
     ('image', 'str'),
-    ('vpc', 'str'),
-    ('keys', 'list'),
-    ('profile', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
+    ('vpc', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'force_recovery_time',
+    'keys',
     'primary_network_interface',
     'image',
-    'volumes',
+    'name',
     'resource_group',
-    'vpc',
-    'keys',
-    'network_interfaces',
+    'zone',
     'user_data',
+    'volumes',
+    'boot_volume',
+    'vpc',
     'profile',
     'tags',
-    'name',
-    'zone',
-    'boot_volume',
+    'network_interfaces',
 ]
 
 # Params for Data source
@@ -181,6 +187,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    force_recovery_time=dict(
+        required=False,
+        type='int'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     primary_network_interface=dict(
         required=False,
         elements='',
@@ -188,25 +201,27 @@ module_args = dict(
     image=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    user_data=dict(
+        required=False,
+        type='str'),
     volumes=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    boot_volume=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     vpc=dict(
-        required=False,
-        type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    user_data=dict(
         required=False,
         type='str'),
     profile=dict(
@@ -216,13 +231,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    boot_volume=dict(
+    network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
@@ -303,7 +312,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -312,7 +321,7 @@ def run_module():
             resource_type='ibm_is_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.12.0',
+            ibm_provider_version='1.13.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

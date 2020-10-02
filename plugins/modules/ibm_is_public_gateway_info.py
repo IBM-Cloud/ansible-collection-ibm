@@ -15,19 +15,19 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_public_gateway' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
-    resource_group:
-        description:
-            - Public gateway resource group info
-        required: False
-        type: str
     name:
         description:
             - Public gateway Name
         required: True
+        type: str
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
         type: str
     generation:
         description:
@@ -67,8 +67,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
     'name',
+    'resource_group',
 ]
 
 
@@ -79,11 +79,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
+        type='str'),
+    resource_group=dict(
+        required=False,
         type='str'),
     generation=dict(
         type='int',
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.12.0
+    - IBM-Cloud terraform-provider-ibm v1.13.0
     - Terraform v0.12.20
 
 options:
@@ -25,21 +25,33 @@ options:
             - (Required for new resource) name
         required: True
         type: str
-    notification_email:
-        description:
-            - Email address configured to recieve the notifications
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
     description:
         description:
             - Description of the CIS Origin Pool
         required: False
         type: str
+    notification_email:
+        description:
+            - Email address configured to recieve the notifications
+        required: False
+        type: str
+    origins:
+        description:
+            - (Required for new resource) Origins info
+        required: True
+        type: list
+        elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    check_regions:
+        description:
+            - (Required for new resource) List of regions
+        required: True
+        type: list
+        elements: str
     enabled:
         description:
             - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
@@ -56,18 +68,6 @@ options:
             - Monitor value
         required: False
         type: str
-    origins:
-        description:
-            - (Required for new resource) Origins info
-        required: True
-        type: list
-        elements: dict
-    check_regions:
-        description:
-            - (Required for new resource) List of regions
-        required: True
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,23 +115,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('cis_id', 'str'),
-    ('enabled', 'bool'),
     ('origins', 'list'),
+    ('cis_id', 'str'),
     ('check_regions', 'list'),
+    ('enabled', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'notification_email',
-    'cis_id',
     'description',
+    'notification_email',
+    'origins',
+    'cis_id',
+    'check_regions',
     'enabled',
     'minimum_origins',
     'monitor',
-    'origins',
-    'check_regions',
 ]
 
 # Params for Data source
@@ -151,15 +151,23 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    notification_email=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
+    notification_email=dict(
+        required=False,
+        type='str'),
+    origins=dict(
+        required=False,
+        elements='',
+        type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    check_regions=dict(
+        required=False,
+        elements='',
+        type='list'),
     enabled=dict(
         required=False,
         type='bool'),
@@ -169,14 +177,6 @@ module_args = dict(
     monitor=dict(
         required=False,
         type='str'),
-    origins=dict(
-        required=False,
-        elements='',
-        type='list'),
-    check_regions=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_cis_origin_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.12.0',
+        ibm_provider_version='1.13.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
