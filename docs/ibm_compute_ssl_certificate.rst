@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.0
+- IBM-Cloud terraform-provider-ibm v1.13.1
 - Terraform v0.12.20
 
 
@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_key (True, str, None)
-    (Required for new resource) SSL Private Key
-
-
   tags (False, list, None)
     Tags set for resource
+
+
+  private_key (True, str, None)
+    (Required for new resource) SSL Private Key
 
 
   certificate (True, str, None)

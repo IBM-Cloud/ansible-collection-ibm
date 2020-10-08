@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.0
+- IBM-Cloud terraform-provider-ibm v1.13.1
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  script (True, str, None)
-    (Required for new resource) Edge function action script
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
 
 
   action_name (True, str, None)
     (Required for new resource) Edge function action script name
+
+
+  script (True, str, None)
+    (Required for new resource) Edge function action script
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
   id (False, str, None)

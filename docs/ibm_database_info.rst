@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.0
+- IBM-Cloud terraform-provider-ibm v1.13.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    The name of the Cloud Internet database service
-
-
   tags (False, list, None)
     None
-
-
-  name (True, str, None)
-    Resource instance name for example, my Database instance
 
 
   resource_group_id (False, str, None)
@@ -44,6 +36,14 @@ Parameters
 
   location (False, str, None)
     The location or the region in which the Database instance exists
+
+
+  name (True, str, None)
+    Resource instance name for example, my Database instance
+
+
+  service (False, str, None)
+    The name of the Cloud Internet database service
 
 
   iaas_classic_username (False, any, None)

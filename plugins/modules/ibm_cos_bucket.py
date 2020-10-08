@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.0
+    - IBM-Cloud terraform-provider-ibm v1.13.1
     - Terraform v0.12.20
 
 options:
@@ -31,14 +31,14 @@ options:
             - (Required for new resource) COS Bucket name
         required: True
         type: str
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
     cross_region_location:
         description:
             - Cros region location info
+        required: False
+        type: str
+    region_location:
+        description:
+            - Region Location info.
         required: False
         type: str
     storage_class:
@@ -46,19 +46,20 @@ options:
             - (Required for new resource) Storage class info
         required: True
         type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
     resource_instance_id:
         description:
             - (Required for new resource) resource instance ID
         required: True
         type: str
-    single_site_location:
+    key_protect:
         description:
-            - single site location info
-        required: False
-        type: str
-    region_location:
-        description:
-            - Region Location info.
+            - CRN of the key you want to use data at rest encryption
         required: False
         type: str
     allowed_ip:
@@ -73,6 +74,11 @@ options:
         required: False
         type: list
         elements: dict
+    single_site_location:
+        description:
+            - single site location info
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -128,35 +134,37 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'activity_tracking',
     'bucket_name',
-    'key_protect',
     'cross_region_location',
-    'storage_class',
-    'resource_instance_id',
-    'single_site_location',
     'region_location',
+    'storage_class',
+    'endpoint_type',
+    'resource_instance_id',
+    'key_protect',
     'allowed_ip',
     'metrics_monitoring',
+    'single_site_location',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('bucket_name', 'str'),
     ('bucket_type', 'str'),
     ('bucket_region', 'str'),
+    ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bucket_name',
     'bucket_type',
     'bucket_region',
+    'bucket_name',
     'resource_instance_id',
+    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
     'cross_region_location': ['region_location', 'single_site_location'],
-    'single_site_location': ['region_location', 'cross_region_location'],
     'region_location': ['cross_region_location', 'single_site_location'],
+    'single_site_location': ['region_location', 'cross_region_location'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -170,22 +178,22 @@ module_args = dict(
     bucket_name=dict(
         required=False,
         type='str'),
-    key_protect=dict(
+    cross_region_location=dict(
         required=False,
         type='str'),
-    cross_region_location=dict(
+    region_location=dict(
         required=False,
         type='str'),
     storage_class=dict(
         required=False,
         type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     resource_instance_id=dict(
         required=False,
         type='str'),
-    single_site_location=dict(
-        required=False,
-        type='str'),
-    region_location=dict(
+    key_protect=dict(
         required=False,
         type='str'),
     allowed_ip=dict(
@@ -196,6 +204,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    single_site_location=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -261,7 +272,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.0',
+        ibm_provider_version='1.13.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +281,7 @@ def run_module():
             resource_type='ibm_cos_bucket',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.13.0',
+            ibm_provider_version='1.13.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.0
+    - IBM-Cloud terraform-provider-ibm v1.13.1
     - Terraform v0.12.20
 
 options:
@@ -25,17 +25,12 @@ options:
             - (Required for new resource) The user-defined name for this instance group
         required: True
         type: str
-    instance_count:
+    subnets:
         description:
-            - The number of instances in the instance group
-        required: False
-        type: int
-        default: 0
-    application_port:
-        description:
-            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
-        required: False
-        type: int
+            - (Required for new resource) list of subnet IDs
+        required: True
+        type: list
+        elements: str
     load_balancer:
         description:
             - load balancer ID
@@ -51,17 +46,22 @@ options:
             - (Required for new resource) instance template ID
         required: True
         type: str
+    instance_count:
+        description:
+            - The number of instances in the instance group
+        required: False
+        type: int
+        default: 0
     resource_group:
         description:
             - Resource group ID
         required: False
         type: str
-    subnets:
+    application_port:
         description:
-            - (Required for new resource) list of subnet IDs
-        required: True
-        type: list
-        elements: str
+            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,20 +109,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('instance_template', 'str'),
     ('subnets', 'list'),
+    ('instance_template', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'instance_count',
-    'application_port',
+    'subnets',
     'load_balancer',
     'load_balancer_pool',
     'instance_template',
+    'instance_count',
     'resource_group',
-    'subnets',
+    'application_port',
 ]
 
 # Params for Data source
@@ -144,12 +144,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    instance_count=dict(
+    subnets=dict(
         required=False,
-        type='int'),
-    application_port=dict(
-        required=False,
-        type='int'),
+        elements='',
+        type='list'),
     load_balancer=dict(
         required=False,
         type='str'),
@@ -159,13 +157,15 @@ module_args = dict(
     instance_template=dict(
         required=False,
         type='str'),
+    instance_count=dict(
+        required=False,
+        type='int'),
     resource_group=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    application_port=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -243,7 +243,7 @@ def run_module():
         resource_type='ibm_is_instance_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.0',
+        ibm_provider_version='1.13.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -252,7 +252,7 @@ def run_module():
             resource_type='ibm_is_instance_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.13.0',
+            ibm_provider_version='1.13.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
