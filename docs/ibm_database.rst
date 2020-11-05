@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.1
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
@@ -28,92 +28,92 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (True, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
   location (True, str, None)
     (Required for new resource) The location or the region in which Database instance exists
-
-
-  remote_leader_id (False, str, None)
-    The CRN of leader database
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  users (False, list, None)
-    None
-
-
-  whitelist (False, list, None)
-    None
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  adminpassword (False, str, None)
-    The admin user password for the instance
-
-
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  tags (False, list, None)
-    None
 
 
   point_in_time_recovery_deployment_id (False, str, None)
     The CRN of source instance
 
 
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
   point_in_time_recovery_time (False, str, None)
     The point in time recovery time stamp of the deployed instance
 
 
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
+  tags (False, list, None)
+    None
 
 
   members_memory_allocation_mb (False, int, None)
     Memory allocation required for cluster
 
 
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
 
 
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  whitelist (False, list, None)
+    None
 
 
-  version (False, str, None)
-    The database version to provision if specified
+  service (True, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
+
+
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
 
 
   backup_encryption_key_crn (False, str, None)
     The Backup Encryption Key CRN
 
 
-  backup_id (False, str, None)
-    The CRN of backup source database
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
+
+
+  remote_leader_id (False, str, None)
+    The CRN of leader database
+
+
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  users (False, list, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   id (False, str, None)

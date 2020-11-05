@@ -15,21 +15,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_ssh_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
+    label:
+        description:
+            - The label associated with the ssh key
+        required: True
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created key is used. If false, an error is returned
         required: False
         type: bool
         default: False
-    label:
-        description:
-            - The label associated with the ssh key
-        required: True
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -68,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'most_recent',
     'label',
+    'most_recent',
 ]
 
 
@@ -80,12 +80,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    most_recent=dict(
-        required=False,
-        type='bool'),
     label=dict(
         required=True,
         type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -120,7 +120,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

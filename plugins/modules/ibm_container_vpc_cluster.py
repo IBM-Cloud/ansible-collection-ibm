@@ -16,22 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
-    update_all_workers:
+    worker_count:
         description:
-            - Updates all the woker nodes if sets to true
+            - Number of worker nodes in the cluster
         required: False
-        type: bool
-        default: False
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
+        type: int
+        default: 1
     vpc_id:
         description:
             - (Required for new resource) The vpc id where the cluster is
@@ -47,23 +41,12 @@ options:
             - Custom subnet CIDR to provide private IP addresses for pods
         required: False
         type: str
-    force_delete_storage:
+    disable_public_service_endpoint:
         description:
-            - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+            - Boolean value true if Public service endpoint to be disabled
         required: False
         type: bool
         default: False
-    worker_labels:
-        description:
-            - Labels for default worker pool
-        required: False
-        type: dict
-        elements: str
-    cos_instance_crn:
-        description:
-            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -75,10 +58,22 @@ options:
         required: False
         type: list
         elements: dict
-    kube_version:
+    tags:
         description:
-            - Kubernetes version
+            - List of tags for the resources
         required: False
+        type: list
+        elements: str
+    force_delete_storage:
+        description:
+            - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+        required: False
+        type: bool
+        default: False
+    name:
+        description:
+            - (Required for new resource) The cluster name
+        required: True
         type: str
     zones:
         description:
@@ -86,39 +81,50 @@ options:
         required: True
         type: list
         elements: dict
-    entitlement:
+    update_all_workers:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - Updates all the woker nodes if sets to true
         required: False
-        type: str
-    flavor:
-        description:
-            - (Required for new resource) Cluster nodes flavour
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: True
-        type: str
-    worker_count:
-        description:
-            - Number of worker nodes in the cluster
-        required: False
-        type: int
-        default: 1
+        type: bool
+        default: False
     wait_till:
         description:
             - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
         required: False
         type: str
         default: IngressReady
-    tags:
+    flavor:
         description:
-            - List of tags for the resources
+            - (Required for new resource) Cluster nodes flavour
+        required: True
+        type: str
+    kube_version:
+        description:
+            - Kubernetes version
         required: False
-        type: list
+        type: str
+    worker_labels:
+        description:
+            - Labels for default worker pool
+        required: False
+        type: dict
         elements: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    wait_for_worker_update:
+        description:
+            - Wait for worker node to update during kube version update.
+        required: False
+        type: bool
+        default: True
+    cos_instance_crn:
+        description:
+            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -146,31 +152,32 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vpc_id', 'str'),
+    ('name', 'str'),
     ('zones', 'list'),
     ('flavor', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'update_all_workers',
-    'disable_public_service_endpoint',
+    'worker_count',
     'vpc_id',
     'service_subnet',
     'pod_subnet',
-    'force_delete_storage',
-    'worker_labels',
-    'cos_instance_crn',
+    'disable_public_service_endpoint',
     'resource_group_id',
     'kms_config',
-    'kube_version',
-    'zones',
-    'entitlement',
-    'flavor',
-    'name',
-    'worker_count',
-    'wait_till',
     'tags',
+    'force_delete_storage',
+    'name',
+    'zones',
+    'update_all_workers',
+    'wait_till',
+    'flavor',
+    'kube_version',
+    'worker_labels',
+    'entitlement',
+    'wait_for_worker_update',
+    'cos_instance_crn',
 ]
 
 # Params for Data source
@@ -178,8 +185,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'cluster_name_id',
     'alb_type',
+    'cluster_name_id',
     'name',
     'resource_group_id',
 ]
@@ -191,12 +198,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    update_all_workers=dict(
+    worker_count=dict(
         required=False,
-        type='bool'),
-    disable_public_service_endpoint=dict(
-        required=False,
-        type='bool'),
+        type='int'),
     vpc_id=dict(
         required=False,
         type='str'),
@@ -206,16 +210,9 @@ module_args = dict(
     pod_subnet=dict(
         required=False,
         type='str'),
-    force_delete_storage=dict(
+    disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
-    worker_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    cos_instance_crn=dict(
-        required=False,
-        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -223,32 +220,45 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    kube_version=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    force_delete_storage=dict(
+        required=False,
+        type='bool'),
+    name=dict(
         required=False,
         type='str'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
-    entitlement=dict(
+    update_all_workers=dict(
+        required=False,
+        type='bool'),
+    wait_till=dict(
         required=False,
         type='str'),
     flavor=dict(
         required=False,
         type='str'),
-    name=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    wait_till=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    worker_labels=dict(
         required=False,
         elements='',
-        type='list'),
+        type='dict'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    wait_for_worker_update=dict(
+        required=False,
+        type='bool'),
+    cos_instance_crn=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -300,7 +310,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -309,7 +319,7 @@ def run_module():
             resource_type='ibm_container_vpc_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.13.1',
+            ibm_provider_version='1.14.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

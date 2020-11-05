@@ -1054,7 +1054,7 @@ def fmt_tf_block(
         indent_count=0,
         indent_spaces=2,
         filter_None=True,
-        validate_tl_params=[]):
+        validate_tl_params=None):
     """
     Format a dictionary of configuration arguments into Terraform
     block syntax.
@@ -1077,8 +1077,10 @@ def fmt_tf_block(
         return ' ' * ((indent_count + extra_count) * indent_spaces)
 
     for key, value in arg_dict.items():
-        if len(validate_tl_params) > 0 and key not in validate_tl_params:
-            continue
+        if type(validate_tl_params) == list:
+            if key not in validate_tl_params:
+                continue
+
         if key.endswith("_"):
             key = key[:-1]
         if isinstance(value, dict):

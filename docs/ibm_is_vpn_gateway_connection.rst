@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.1
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
@@ -28,52 +28,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
-
-
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
-
-
   peer_address (True, str, None)
     (Required for new resource) VPN gateway connection peer address
-
-
-  interval (False, int, 30)
-    Interval for dead peer detection interval
-
-
-  timeout (False, int, 120)
-    Timeout for dead peer detection
-
-
-  ipsec_policy (False, str, None)
-    IP security policy for vpn gateway connection
-
-
-  ike_policy (False, str, None)
-    VPN gateway connection IKE Policy
-
-
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
-
-
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
 
 
   action (False, str, none)
     Action detection for dead peer detection action
 
 
+  interval (False, int, 30)
+    Interval for dead peer detection interval
+
+
+  ike_policy (False, str, None)
+    VPN gateway connection IKE Policy
+
+
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
+
+
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
+
+
   local_cidrs (False, list, None)
     VPN gateway connection local CIDRs
 
 
+  ipsec_policy (False, str, None)
+    IP security policy for vpn gateway connection
+
+
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
+
+
   peer_cidrs (False, list, None)
     VPN gateway connection peer CIDRs
+
+
+  timeout (False, int, 120)
+    Timeout for dead peer detection
+
+
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
 
 
   id (False, str, None)

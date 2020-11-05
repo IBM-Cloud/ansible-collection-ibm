@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
@@ -25,9 +25,9 @@ options:
         required: False
         type: list
         elements: str
-    resource_group_id:
+    service:
         description:
-            - The id of the resource group in which the Database instance is present
+            - The name of the Cloud Internet database service
         required: False
         type: str
     location:
@@ -40,9 +40,9 @@ options:
             - Resource instance name for example, my Database instance
         required: True
         type: str
-    service:
+    resource_group_id:
         description:
-            - The name of the Cloud Internet database service
+            - The id of the resource group in which the Database instance is present
         required: False
         type: str
     iaas_classic_username:
@@ -84,10 +84,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'tags',
-    'resource_group_id',
+    'service',
     'location',
     'name',
-    'service',
+    'resource_group_id',
 ]
 
 
@@ -102,7 +102,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
+    service=dict(
         required=False,
         type='str'),
     location=dict(
@@ -111,7 +111,7 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    service=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -148,7 +148,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

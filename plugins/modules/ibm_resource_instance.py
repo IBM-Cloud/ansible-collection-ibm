@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
@@ -25,41 +25,41 @@ options:
             - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
         required: True
         type: str
-    plan:
-        description:
-            - (Required for new resource) The plan type of the service
-        required: True
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     location:
         description:
             - (Required for new resource) The location where the instance available
         required: True
         type: str
-    resource_group_id:
+    name:
         description:
-            - The resource group id
-        required: False
+            - (Required for new resource) A name for the resource instance
+        required: True
         type: str
     parameters:
         description:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    name:
+    tags:
         description:
-            - (Required for new resource) A name for the resource instance
-        required: True
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
         type: str
     service_endpoints:
         description:
             - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
+        type: str
+    plan:
+        description:
+            - (Required for new resource) The plan type of the service
+        required: True
         type: str
     id:
         description:
@@ -108,21 +108,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('service', 'str'),
-    ('plan', 'str'),
     ('location', 'str'),
     ('name', 'str'),
+    ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'service',
-    'plan',
-    'tags',
     'location',
-    'resource_group_id',
-    'parameters',
     'name',
+    'parameters',
+    'tags',
+    'resource_group_id',
     'service_endpoints',
+    'plan',
 ]
 
 # Params for Data source
@@ -131,10 +131,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'location',
     'name',
     'resource_group_id',
     'service',
+    'location',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,26 +147,26 @@ module_args = dict(
     service=dict(
         required=False,
         type='str'),
-    plan=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     location=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    name=dict(
         required=False,
         type='str'),
     parameters=dict(
         required=False,
         type='dict'),
-    name=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     service_endpoints=dict(
+        required=False,
+        type='str'),
+    plan=dict(
         required=False,
         type='str'),
     id=dict(
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +243,7 @@ def run_module():
             resource_type='ibm_resource_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.13.1',
+            ibm_provider_version='1.14.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

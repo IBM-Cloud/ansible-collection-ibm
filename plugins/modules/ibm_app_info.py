@@ -15,18 +15,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The name for the app
-        required: True
-        type: str
     space_guid:
         description:
             - Define space guid to which app belongs
+        required: True
+        type: str
+    name:
+        description:
+            - The name for the app
         required: True
         type: str
     iaas_classic_username:
@@ -62,14 +62,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('space_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'space_guid',
+    'name',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    space_guid=dict(
         required=True,
         type='str'),
-    space_guid=dict(
+    name=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -120,7 +120,7 @@ def run_module():
         resource_type='ibm_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.1
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  boot_volume (False, list, None)
-    None
-
-
   volumes (False, list, None)
     List of volumes
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   keys (True, list, None)
     (Required for new resource) SSH key Ids for the instance
 
 
+  network_interfaces (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
   user_data (False, str, None)
     User data given for the instance
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   id (False, str, None)

@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.1
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (True, int, None)
+    (Required for new resource) Port number
+
+
+  routing_method (True, str, None)
+    (Required for new resource) Routing method
+
 
   timeout (False, int, None)
     Timeout value
@@ -46,14 +54,6 @@ Parameters
 
   routing_type (True, str, None)
     (Required for new resource) Routing type
-
-
-  port (True, int, None)
-    (Required for new resource) Port number
-
-
-  routing_method (True, str, None)
-    (Required for new resource) Routing method
 
 
   id (False, str, None)

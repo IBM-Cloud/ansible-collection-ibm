@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.13.1
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
@@ -28,31 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_vlan_id (False, int, None)
+  ssh_key_ids (False, list, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  network_speed (False, int, 100)
+  image_id (False, int, None)
     None
 
 
@@ -64,75 +44,15 @@ Parameters
     The user provided datacenter options
 
 
-  tags (False, list, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  datacenter (False, str, None)
-    None
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
 
 
   cores (False, int, None)
     None
 
 
-  transient (False, bool, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  disks (False, list, None)
-    None
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  notes (False, str, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  os_reference_code (False, str, None)
+  file_storage_ids (False, list, None)
     None
 
 
@@ -140,7 +60,19 @@ Parameters
     None
 
 
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
   post_install_script_uri (False, str, None)
+    None
+
+
+  os_reference_code (False, str, None)
     None
 
 
@@ -148,31 +80,15 @@ Parameters
     None
 
 
-  public_security_group_ids (False, list, None)
+  network_speed (False, int, 100)
     None
 
 
-  hourly_billing (False, bool, True)
+  bulk_vms (False, list, None)
     None
 
 
-  private_security_group_ids (False, list, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  local_disk (False, bool, True)
-    None
-
-
-  image_id (False, int, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
@@ -180,7 +96,75 @@ Parameters
     None
 
 
+  hourly_billing (False, bool, True)
+    None
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
   block_storage_ids (False, list, None)
+    None
+
+
+  domain (False, str, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
     None
 
 
@@ -188,7 +172,23 @@ Parameters
     None
 
 
-  memory (False, int, None)
+  transient (False, bool, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  private_security_group_ids (False, list, None)
+    None
+
+
+  local_disk (False, bool, True)
     None
 
 

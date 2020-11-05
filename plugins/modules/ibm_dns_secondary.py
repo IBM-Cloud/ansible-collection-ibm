@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_secondary' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.13.1
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
+    zone_name:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
     tags:
         description:
             - List of tags
@@ -36,11 +41,6 @@ options:
             - (Required for new resource) Transfer frequency value
         required: True
         type: int
-    zone_name:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,17 +87,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone_name', 'str'),
     ('master_ip_address', 'str'),
     ('transfer_frequency', 'int'),
-    ('zone_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zone_name',
     'tags',
     'master_ip_address',
     'transfer_frequency',
-    'zone_name',
 ]
 
 # Params for Data source
@@ -116,6 +116,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    zone_name=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -126,9 +129,6 @@ module_args = dict(
     transfer_frequency=dict(
         required=False,
         type='int'),
-    zone_name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -194,7 +194,7 @@ def run_module():
         resource_type='ibm_dns_secondary',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.13.1',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -203,7 +203,7 @@ def run_module():
             resource_type='ibm_dns_secondary',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.13.1',
+            ibm_provider_version='1.14.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

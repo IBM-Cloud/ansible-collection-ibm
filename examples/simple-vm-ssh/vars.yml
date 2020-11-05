@@ -1,7 +1,7 @@
 ---
 name_prefix: ansible-test
-vsi_image: ibm-ubuntu-18-04-64-ppc64le-minimal-for-vsi
-vsi_profile: cp2-2x4
+vsi_image: ibm-ubuntu-16-04-05-64-minimal-for-vsi
+vsi_profile: bx2-2x8
 ssh_public_key: '<ssh_public_key>'
 ipv4_cidr_block: 10.240.128.0/24
 zone: us-south-3
