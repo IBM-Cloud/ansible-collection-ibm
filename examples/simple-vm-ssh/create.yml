@@ -26,7 +26,7 @@
         state: available
         id: "{{ subnet.id | default(omit) }}"
         vpc: "{{ vpc.id }}"
-        ipv4_cidr_block: "{{ ipv4_cidr_block }}"
+        total_ipv4_address_count: "{{ total_ipv4_address_count }}"
         zone: "{{ zone }}"
       register: subnet_create_output
 
