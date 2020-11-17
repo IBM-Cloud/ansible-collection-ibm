@@ -1,0 +1,4 @@
+.facts/
+ansible.cfg
+hosts
+venv/
