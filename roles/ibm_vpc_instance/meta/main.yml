@@ -1,0 +1,12 @@
+galaxy_info:
+  author: jaywcarman
+  description: IBM Cloud VPC Virtual Server Instance
+  company: IBM
+  license:
+    - "MPL-2.0"
+  min_ansible_version: 2.9
+  galaxy_tags:
+    - ibm
+    - ibmcloud
+    - cloud
+dependencies: []

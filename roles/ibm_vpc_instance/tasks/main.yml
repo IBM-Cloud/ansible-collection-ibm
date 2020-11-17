@@ -1,0 +1,288 @@
+---
+- name: Retrieve image list
+  ibm.cloudcollection.ibm_is_images_info:
+  register: images_list
+
+- name: Build VM image name to ID map
+  set_fact:
+    cacheable: True
+    image_map: "{{ images_list.resource.images |
+                   items2dict(key_name='name', value_name='id') }}"
+
+- name: Lookup image ID
+  set_fact:
+    image_id: "{{ image_map[ibm_vpc_instance_image] }}"
+  when: ibm_vpc_instance_image is defined
+
+# TODO: [WARNING]: Module did not set no_log for passphrase
+# Need to investigate and submit PR to upstream TF provider
+- name: Check for existing virtual server instance
+  ibm.cloudcollection.ibm_is_instance_info:
+    name: "{{ ibm_vpc_instance_name }}"
+  failed_when:
+    - instance_existing.rc != 0
+    - '"No Instance found" not in instance_existing.stderr'
+  register: instance_existing
+
+- name: Check for existing VPC
+  ibm.cloudcollection.ibm_is_vpc_info:
+    name: "{{ ibm_vpc_instance_vpc }}"
+  failed_when:
+    - vpc_existing.rc != 0
+    - '"No VPC found" not in vpc_existing.stderr'
+  register: vpc_existing
+  when: ibm_vpc_instance_vpc is defined
+
+- name: Configure VPC
+  ibm.cloudcollection.ibm_is_vpc:
+    state: available
+    id: "{{ vpc_existing.resource.id | default(instance_existing.resource.vpc) | default(omit) }}"
+    name: "{{ ibm_vpc_instance_vpc | default(omit) }}"
+  register: vpc_config
+
+- name: Check for existing subnets
+  ibm.cloudcollection.ibm_is_subnet_info:
+    name: "{{ item.name }}"
+  loop: "{{ ibm_vpc_instance_subnets }}"
+  failed_when:
+    - subnet_existing.rc != 0
+    - False  # TODO: Terraform crash (bug) when subnet does not exist
+  register: subnet_existing
+  when: ibm_vpc_instance_subnets is defined
+
+- name: Configure subnets
+  ibm.cloudcollection.ibm_is_subnet:
+    state: available
+    id: "{{ subnet_existing.results[index].resource.id | default(omit) }}"
+    name: "{{ item.name }}"
+    vpc: "{{ vpc_config.resource.id }}"
+    ipv4_cidr_block: "{{ item.ipv4_cidr_block | default(omit) }}"
+    zone: "{{ ibm_vpc_instance_zone | default(instance_existing.resource.zone) }}"
+    network_acl: "{{ item.network_acl | default(omit) }}"
+    public_gateway: "{{ item.public_gateway | default(omit) }}"
+    total_ipv4_address_count: "{{ item.total_ipv4_address_count | default(omit) }}"
+  loop: "{{ ibm_vpc_instance_subnets }}"
+  loop_control:
+    index_var: index
+  register: subnet_config
+  when: ibm_vpc_instance_subnets is defined
+
+- name: Retrieve list of all subnets
+  ibm.cloudcollection.ibm_is_subnets_info:
+  register: subnets_all
+
+- name: Build subnet name to ID map
+  set_fact:
+    subnet_map: "{{ (subnet_map | default({})) | combine({item.name: item.id}) }}"
+  loop: "{{ subnets_all.resource.subnets }}"
+
+- name: Translate primary network interface subnet name to ID
+  set_fact:
+    primary_network_interface: "{{ (primary_network_interface | default([])) + [item | combine(name_to_id)]}}"
+  vars:
+    name_to_id:
+      subnet: "{{ subnet_map[item.subnet] | default(item.subnet) }}"
+  loop: "{{ ibm_vpc_instance_primary_network_interface }}"
+  when: ibm_vpc_instance_primary_network_interface is defined
+
+- name: Translate network interface(s) subnet name to ID
+  set_fact:
+    network_interfaces: "{{ (network_interfaces | default([])) + [item | combine(name_to_id)]}}"
+  vars:
+    name_to_id:
+      subnet: "{{ subnet_map[item.subnet] | default(item.subnet) }}"
+  loop: "{{ ibm_vpc_instance_network_interfaces }}"
+  when: ibm_vpc_instance_network_interfaces is defined
+
+- name: Build security group name to ID map
+  set_fact:
+    security_group_map: "{{ (security_group_map | default({})) | combine({item.group_name: item.group_id}) }}"
+  loop: "{{ vpc_config.resource.security_group }}"
+
+- name: Translate primary network interface security group name to ID
+  set_fact:
+    primary_network_interface_sgs: "{{ (primary_network_interface_sgs | default([])) + [name_to_id] }}"
+  loop: "{{ primary_network_interface.security_groups }}"
+  vars:
+    name_to_id: "{{ security_group_map[item] | default(item) }}"
+  when:
+    - primary_network_interface.security_groups is defined
+
+- name: Build primary network interface with security group IDs
+  set_fact:
+    primary_network_interface_with_ids: "{{ [primary_network_interface | combine({'security_groups': (primary_network_interface_sgs | default([vpc_config.resource.default_security_group]))})] }}"
+
+- name: Translate network interface(s) security group name(s) to ID
+  include_tasks: network_interfaces_sgs.yml
+  loop: "{{ network_interfaces }}"
+  loop_control:
+    index_var: interface_index
+    loop_var: interface
+  when: network_interfaces is defined
+
+- name: Build network interfaces list with security group IDs
+  set_fact:
+    network_interfaces_with_ids: "{{ (network_interfaces_with_ids | default([])) + [item | combine({'security_groups': (network_interfaces_sgs[interface_index] | default(vpc_config.resource.default_security_group))})] }}"
+  loop: "{{ network_interfaces }}"
+  loop_control:
+    index_var: interface_index
+  when: network_interfaces_sgs is defined
+
+- name: Check for existing keys
+  ibm.cloudcollection.ibm_is_ssh_key_info:
+    name: "{{ item.name }}"
+  loop: "{{ ibm_vpc_instance_keys }}"
+  failed_when:
+    - ssh_key_existing.rc != 0
+    - '"No SSH Key found" not in ssh_key_existing.stderr'
+  register: ssh_key_existing
+  when: ibm_vpc_instance_keys is defined
+
+- name: Configure keys
+  ibm.cloudcollection.ibm_is_ssh_key:
+    state: available
+    id: "{{ ssh_key_existing.results[index].resource.id | default(omit) }}"
+    name: "{{ item.name }}"
+    public_key: "{{ item.public_key | default(omit) }}"
+    tags: "{{ item.tags | default(omit) }}"
+  loop: "{{ ibm_vpc_instance_keys }}"
+  loop_control:
+    index_var: index
+  register: ssh_key_config
+  when: ibm_vpc_instance_keys is defined
+
+- name: Init list of key IDs
+  set_fact:
+    ssh_key_ids: []
+  when: ibm_vpc_instance_keys is defined
+
+- name: Build list of key IDs
+  set_fact:
+    ssh_key_ids: "{{ ssh_key_ids + [item.resource.id] }}"
+  loop: "{{ ssh_key_config.results }}"
+  when: ibm_vpc_instance_keys is defined
+
+- name: Check for existing block storage volumes
+  ibm.cloudcollection.ibm_is_volume_info:
+    name: "{{ item.name }}"
+  loop: "{{ ibm_vpc_instance_volumes }}"
+  failed_when:
+    - volume_existing.rc != 0
+    - '"No Volume found" not in volume_existing.stderr'
+  register: volume_existing
+  when: ibm_vpc_instance_volumes is defined
+
+- name: Configure block storage volumes
+  ibm.cloudcollection.ibm_is_volume:
+    state: available
+    id: "{{ volume_existing.results[index].resource.id | default(omit) }}"
+    name: "{{ item.name }}"
+    capacity: "{{ item.capacity | default(omit) }}"
+    iops: "{{ item.iops | default(omit) }}"
+    profile: "{{ item.profile | default(omit) }}"
+    tags: "{{ item.tags | default(omit) }}"
+    zone: "{{ ibm_vpc_instance_zone | default(instance_existing.resource.zone) }}"
+  loop: "{{ ibm_vpc_instance_volumes }}"
+  loop_control:
+    index_var: index
+  register: volume_config
+  when: ibm_vpc_instance_volumes is defined
+
+- name: Build volume name to ID map
+  set_fact:
+    volume_map: "{{ volume_map | default({}) | combine({item.resource.name: item.resource.id}) }}"
+  loop: "{{ volume_config.results }}"
+  when: ibm_vpc_instance_volumes is defined
+
+- name: Extract list of volume IDs
+  set_fact:
+    volume_ids: "{{ volume_map.values() | list }}"
+  when:
+    - ibm_vpc_instance_volumes is defined
+    - volume_map is defined
+
+- name: Set empty volume ID list
+  set_fact:
+    volume_ids: []
+  when:
+    - ibm_vpc_instance_volumes is defined
+    - volume_map is not defined
+
+# TODO: Bugin Ansible 'ibm_is_instance' module - >1 network interfaces not formatted correctly:
+# resource ibm_is_instance "instance1" {
+#   ...
+#   network_interfaces {
+#     subnet = "<subnet1_id>"
+#     name = "eth1"
+#     }
+#     subnet = "<subnet2_id>"
+#     name = "eth2"
+#     }
+# }
+- name: Configure virtual server instance
+  ibm.cloudcollection.ibm_is_instance:
+    state: available
+    id: "{{ instance_existing.resource.id | default(omit) }}"
+    name: "{{ ibm_vpc_instance_name }}"
+    vpc: "{{ vpc_config.resource.id }}"
+    profile: "{{ ibm_vpc_instance_profile | default(instance_existing.resource.profile) }}"
+    image: "{{ image_id | default(instance_existing.resource.image) }}"
+    keys: "{{ ssh_key_ids | default(instance_existing.resource.keys) | default([]) }}"
+    primary_network_interface: "{{ primary_network_interface_with_ids | default(instance_existing.resource.primary_network_interface) }}"
+    network_interfaces: "{{ network_interfaces_with_ids | default(instance_existing.resource.network_interface) | default(omit) }}"
+    zone: "{{ ibm_vpc_instance_zone | default(instance_existing.resource.zone) }}"
+    force_recovery_time: "{{ ibm_vpc_instance_force_recovery_time | default(omit) }}"
+    tags: "{{ ibm_vpc_instance_tags | default(omit) }}"
+    volumes: "{{ volume_ids | default(instance_existing.resource.volumes) | default(omit) }}"
+  register: instance_config
+
+- name: Check for existing floating IP address
+  ibm.cloudcollection.ibm_is_floating_ip_info:
+    name: "{{ ibm_vpc_instance_floating_ip.name }}"
+  failed_when:
+    - floating_ip_existing.rc != 0
+    - '"No floatingIP found" not in floating_ip_existing.stderr'
+  register: floating_ip_existing
+  when:
+    - ibm_vpc_instance_floating_ip is defined
+    - ibm_vpc_instance_floating_ip.name is defined
+    - ibm_vpc_instance_floating_ip.name != None
+
+# TODO: Lookup Floating IP target by interface name
+# "{{ instance_config.resource.network_interfaces + instance_config.resource.primary_network_interface }}
+- name: Configure floating IP address
+  ibm.cloudcollection.ibm_is_floating_ip:
+    state: "{{ ibm_vpc_instance_floating_ip.state | default('available') }}"
+    id: "{{ floating_ip_existing.resource.id | default(omit) }}"
+    name: "{{ ibm_vpc_instance_floating_ip.name }}"
+    target: "{{ ibm_vpc_instance_floating_ip.target | default(instance_config.resource.primary_network_interface[0]['id']) }}"
+    tags: "{{ ibm_vpc_instance_floating_ip.tags | default(omit) }}"
+  register: floating_ip_config
+  when:
+    - ibm_vpc_instance_floating_ip is defined
+    - ibm_vpc_instance_floating_ip.name is defined
+    - ibm_vpc_instance_floating_ip.name != None
+
+- name: Print floating IP address
+  debug:
+    msg: "Floating IP Address: {{ floating_ip_config.resource.address }}"
+  when:
+    - ibm_vpc_instance_floating_ip is defined
+    - ibm_vpc_instance_floating_ip.name is defined
+    - ibm_vpc_instance_floating_ip.name != None
+
+# TODO: Lookup security group ID by name
+- name: Configure security group rules
+  ibm.cloudcollection.ibm_is_security_group_rule:
+    state: "{{ item.state | default('available') }}"
+    icmp: "{{ item.icmp | default(omit) }}"
+    tcp: "{{ item.tcp | default(omit) }}"
+    group: "{{ item.group | default(vpc_config.resource.default_security_group) }}"
+    direction: "{{ item.direction | default(omit) }}"
+    ip_version: "{{ item.ip_version | default(omit) }}"
+    remote: "{{ item.remote | default(omit) }}"
+    udp: "{{ item.udp | default(omit) }}"
+  loop: "{{ ibm_vpc_instance_security_group_rules }}"
+  when:
+    - ibm_vpc_instance_security_group_rules is defined
+    - ibm_vpc_instance_security_group_rules != None
