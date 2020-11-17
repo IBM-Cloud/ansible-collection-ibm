@@ -1,0 +1,46 @@
+- hosts: localhost
+  collections:
+    - ibm.cloudcollection
+  roles:
+    - role: ibm_vpc_instance
+      vars:
+        ibm_vpc_instance_name: instance1
+        ibm_vpc_instance_profile: cx2-2x4
+        ibm_vpc_instance_image: ibm-redhat-7-6-amd64-sap-hana-1
+        ibm_vpc_instance_vpc: ansible-test
+        ibm_vpc_instance_primary_network_interface:
+          name: ansible-test-subnet
+          ipv4_cidr_block: 10.240.0.0/24
+          zone: us-south-1
+        ibm_vpc_instance_keys:
+          - name: testkey
+            public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDm+dD4O+oqKCNyh\
+                         pV0Qj5QRCerPBsCysunyw8WP14X/AwqG8iyg5z9C5k/gOc1zCN+FW\
+                         anQO2T+A6JfW8PZU02qhYC3mEzjiYhyAyFvfx74FGcBLdtbI9Qchj\
+                         wNLt2sZGy387mkW50+uroTLujZtGoF6xfX4mwxqYeDNC74YSF+gzc\
+                         qJGWwb7rTdKKSgWfXQFLiegC4GLFOuKNZ1DluUsQD/+dfrQ3SUzp4\
+                         84x/efDPf33hWEsqCbS210U1h/iUa7PQ489v4VC147oSxyiiWAHbE\
+                         ryZ8pW9JDDiPxaLM5LqSJFuJguPlTUsap8oL/zPiDDL7guCzswKzL\
+                         UOOxWtSBwv7XoGdKlYXNXSDZtaGIGKTpU+cHjz18q4xfuoR57j+rs\
+                         qQOIhyzDDt6KusKihMapRVceqJyz+HNunwN0mLJiFFvAtzOHoOneM\
+                         7bYZAXXzY9YgAI+x6CHFhg0VsyXWEtpL0b2iGL/XA3dXh8zV3Kw0H\
+                         RuUPjb02rhWJjuQLY3cpU= \
+                         jwcarman@li-a36b264c-2e6f-11b2-a85c-fdfb37238350.ibm.com"
+          - name: existing_key
+        ibm_vpc_instance_floating_ip:
+          name: instance1-fip
+        ibm_vpc_instance_security_group_rules:
+          - state: available
+            direction: inbound
+            remote: 0.0.0.0/0
+            tcp:
+              - port_max: 22
+                port_min: 22
+        ibm_vpc_instance_volumes:
+          - name: testvol0
+            capacity: 50
+            iops: 100
+            profile: custom
+            zone: us-south-1
+          - name: existingvolume1
+          - name: existingvolume2

@@ -1,0 +1,37 @@
+---
+- hosts: localhost
+  collections:
+    - ibm.cloudcollection
+  roles:
+    - role: ibm_vpc_instance
+      vars:
+        ibm_vpc_instance_name: hana-vm1
+        ibm_vpc_instance_profile: cx2-2x4
+        ibm_vpc_instance_image: ibm-redhat-7-6-amd64-sap-hana-1
+        ibm_vpc_instance_vpc: customer-vpc1
+        ibm_vpc_instance_zone: us-south-1
+        ibm_vpc_instance_subnets:
+          - name: subnet1-mzr1
+            ipv4_cidr_block: 172.30.255.128/28
+        ibm_vpc_instance_primary_network_interface:
+          - subnet: subnet1-mzr1
+            name: eth0
+            #security_groups:
+            #  - sg_1_name
+            #  - sg_2_name
+        ibm_vpc_instance_keys:
+          - name: jump
+            public_key: "ssh-rsa <YOUR PUBLIC KEY>"
+        ibm_vpc_instance_volumes:
+          - name: hana-d1
+            capacity: 500
+            iops: 10000
+            profile: custom
+          - name: hana-d2
+            capacity: 500
+            iops: 10000
+            profile: custom
+          - name: hana-d3
+            capacity: 500
+            iops: 10000
+            profile: custom
