@@ -233,6 +233,7 @@
     force_recovery_time: "{{ ibm_vpc_instance_force_recovery_time | default(omit) }}"
     tags: "{{ ibm_vpc_instance_tags | default(omit) }}"
     volumes: "{{ volume_ids | default(instance_existing.resource.volumes) | default(omit) }}"
+    user_data: "{{ ibm_vpc_instance_user_data | default(omit) }}"
   register: instance_config
 
 - name: Check for existing floating IP address
