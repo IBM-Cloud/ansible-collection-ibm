@@ -102,11 +102,10 @@
 - name: Translate primary network interface security group name to ID
   set_fact:
     primary_network_interface_sgs: "{{ (primary_network_interface_sgs | default([])) + [name_to_id] }}"
-  loop: "{{ primary_network_interface.security_groups }}"
+  loop: "{{ primary_network_interface[0].security_groups }}"
   vars:
     name_to_id: "{{ security_group_map[item] | default(item) }}"
-  when:
-    - primary_network_interface.security_groups is defined
+  when: primary_network_interface[0].security_groups is defined
 
 - name: Build primary network interface with security group IDs
   set_fact:
