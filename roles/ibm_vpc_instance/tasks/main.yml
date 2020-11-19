@@ -286,3 +286,7 @@
   when:
     - ibm_vpc_instance_security_group_rules is defined
     - ibm_vpc_instance_security_group_rules != None
+
+- name: Set 'ibm_vpc_instance_config' fact for use outside role
+  set_fact:
+    ibm_vpc_instance_config: "{{ instance_config.resource | combine({'floating_ip': (floating_ip_config.resource | default(None))}) }}"
