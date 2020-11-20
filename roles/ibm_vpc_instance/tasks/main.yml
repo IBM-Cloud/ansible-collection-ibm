@@ -40,6 +40,52 @@
     name: "{{ ibm_vpc_instance_vpc | default(omit) }}"
   register: vpc_config
 
+- name: Check for existing security groups
+  ibm.cloudcollection.ibm_is_security_group_info:
+    name: "{{ item.name }}"
+  loop: "{{ ibm_vpc_instance_security_groups }}"
+  failed_when:
+    - security_group_existing.rc != 0
+  register: security_group_existing
+  when: ibm_vpc_instance_security_groups is defined
+
+- name: Configure security groups
+  ibm.cloudcollection.ibm_is_security_group:
+    state: "{{ item.state | default('available') }}"
+    id: "{{ security_group_existing.results[index].resource.id | default(omit) }}"
+    name: "{{ item.name }}"
+    vpc: "{{ vpc_config.resource.id }}"
+  loop: "{{ ibm_vpc_instance_security_groups }}"
+  loop_control:
+    index_var: index
+  register: security_group_config
+  when: ibm_vpc_instance_security_groups is defined
+
+- name: Refresh VPC config with security groups
+  ibm.cloudcollection.ibm_is_vpc_info:
+    name: "{{ vpc_config.resource.name }}"
+  register: vpc_config
+
+- name: Build security group name to ID map
+  set_fact:
+    security_group_map: "{{ (security_group_map | default({})) | combine({item.group_name: item.group_id}) }}"
+  loop: "{{ vpc_config.resource.security_group }}"
+
+- name: Configure security group rules
+  ibm.cloudcollection.ibm_is_security_group_rule:
+    state: "{{ item.state | default('available') }}"
+    icmp: "{{ item.icmp | default(omit) }}"
+    tcp: "{{ item.tcp | default(omit) }}"
+    group: "{{ security_group_map[(item.name|default(None))] | default(vpc_config.resource.default_security_group) }}"
+    direction: "{{ item.direction | default(omit) }}"
+    ip_version: "{{ item.ip_version | default(omit) }}"
+    remote: "{{ item.remote | default(omit) }}"
+    udp: "{{ item.udp | default(omit) }}"
+  loop: "{{ ibm_vpc_instance_security_group_rules }}"
+  when:
+    - ibm_vpc_instance_security_group_rules is defined
+    - ibm_vpc_instance_security_group_rules != None
+
 - name: Check for existing subnets
   ibm.cloudcollection.ibm_is_subnet_info:
     name: "{{ item.name }}"
@@ -93,11 +139,6 @@
       subnet: "{{ subnet_map[item.subnet] | default(item.subnet) }}"
   loop: "{{ ibm_vpc_instance_network_interfaces }}"
   when: ibm_vpc_instance_network_interfaces is defined
-
-- name: Build security group name to ID map
-  set_fact:
-    security_group_map: "{{ (security_group_map | default({})) | combine({item.group_name: item.group_id}) }}"
-  loop: "{{ vpc_config.resource.security_group }}"
 
 - name: Translate primary network interface security group name to ID
   set_fact:
@@ -270,22 +311,6 @@
     - ibm_vpc_instance_floating_ip is defined
     - ibm_vpc_instance_floating_ip.name is defined
     - ibm_vpc_instance_floating_ip.name != None
-
-# TODO: Lookup security group ID by name
-- name: Configure security group rules
-  ibm.cloudcollection.ibm_is_security_group_rule:
-    state: "{{ item.state | default('available') }}"
-    icmp: "{{ item.icmp | default(omit) }}"
-    tcp: "{{ item.tcp | default(omit) }}"
-    group: "{{ item.group | default(vpc_config.resource.default_security_group) }}"
-    direction: "{{ item.direction | default(omit) }}"
-    ip_version: "{{ item.ip_version | default(omit) }}"
-    remote: "{{ item.remote | default(omit) }}"
-    udp: "{{ item.udp | default(omit) }}"
-  loop: "{{ ibm_vpc_instance_security_group_rules }}"
-  when:
-    - ibm_vpc_instance_security_group_rules is defined
-    - ibm_vpc_instance_security_group_rules != None
 
 - name: Set 'ibm_vpc_instance_config' fact for use outside role
   set_fact:
