@@ -162,7 +162,7 @@
 
 - name: Build network interfaces list with security group IDs
   set_fact:
-    network_interfaces_with_ids: "{{ (network_interfaces_with_ids | default([])) + [item | combine({'security_groups': (network_interfaces_sgs[interface_index] | default(vpc_config.resource.default_security_group))})] }}"
+    network_interfaces_with_ids: "{{ (network_interfaces_with_ids | default([])) + [item | combine({'security_groups': [(network_interfaces_sgs[interface_index] | default(vpc_config.resource.default_security_group))]})] }}"
   loop: "{{ network_interfaces }}"
   loop_control:
     index_var: interface_index
