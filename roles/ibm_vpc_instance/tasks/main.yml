@@ -86,6 +86,27 @@
     - ibm_vpc_instance_security_group_rules is defined
     - ibm_vpc_instance_security_group_rules != None
 
+- name: Check for existing public gateway
+  ibm.cloudcollection.ibm_is_public_gateway_info:
+    name: "{{ ibm_vpc_instance_public_gateway.name }}"
+  failed_when:
+    - public_gateway_existing.rc != 0
+    - '"No Public gateway found" not in public_gateway_existing.stderr'
+  register: public_gateway_existing
+  when: ibm_vpc_instance_public_gateway is defined
+
+- name: Configure public gateway
+  ibm.cloudcollection.ibm_is_public_gateway:
+    state: available
+    id: "{{ public_gateway_existing.resource.id | default(omit) }}"
+    name: "{{ ibm_vpc_instance_public_gateway.name }}"
+    floating_ip: "{{ ibm_vpc_instance_public_gateway.floating_ip | default(omit) }}"
+    tags: "{{ ibm_vpc_instance_public_gateway.tags | default(omit) }}"
+    vpc: "{{ vpc_config.resource.id }}"
+    zone: "{{ ibm_vpc_instance_zone | default(instance_existing.resource.zone) }}"
+  register: public_gateway_config
+  when: ibm_vpc_instance_public_gateway is defined
+
 - name: Check for existing subnets
   ibm.cloudcollection.ibm_is_subnet_info:
     name: "{{ item.name }}"
@@ -105,7 +126,7 @@
     ipv4_cidr_block: "{{ item.ipv4_cidr_block | default(omit) }}"
     zone: "{{ ibm_vpc_instance_zone | default(instance_existing.resource.zone) }}"
     network_acl: "{{ item.network_acl | default(omit) }}"
-    public_gateway: "{{ item.public_gateway | default(omit) }}"
+    public_gateway: "{{ public_gateway_config.resource.id | default(omit) }}"
     total_ipv4_address_count: "{{ item.total_ipv4_address_count | default(omit) }}"
   loop: "{{ ibm_vpc_instance_subnets }}"
   loop_control:
@@ -314,4 +335,4 @@
 
 - name: Set 'ibm_vpc_instance_config' fact for use outside role
   set_fact:
-    ibm_vpc_instance_config: "{{ instance_config.resource | combine({'floating_ip': (floating_ip_config.resource | default(None))}) }}"
+    ibm_vpc_instance_config: "{{ instance_config.resource | combine({'floating_ip': (floating_ip_config.resource | default(None))}) | combine({'public_gateway': (public_gateway_config.resource | default(None))}) }}"
