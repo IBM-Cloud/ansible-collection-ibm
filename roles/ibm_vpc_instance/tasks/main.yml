@@ -310,8 +310,6 @@
     - ibm_vpc_instance_floating_ip.name is defined
     - ibm_vpc_instance_floating_ip.name != None
 
-# TODO: Lookup Floating IP target by interface name
-# "{{ instance_config.resource.network_interfaces + instance_config.resource.primary_network_interface }}
 - name: Configure floating IP address
   ibm.cloudcollection.ibm_is_floating_ip:
     state: "{{ ibm_vpc_instance_floating_ip.state | default('available') }}"
