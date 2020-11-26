@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.14.0
+- IBM-Cloud terraform-provider-ibm v1.15.0
 - Terraform v0.12.20
 
 
@@ -30,6 +30,14 @@ Parameters
 
   zone (True, str, None)
     (Required for new resource) Zone name
+
+
+  worker_pool (True, str, None)
+    (Required for new resource) Workerpool name
+
+
+  private_vlan_id (False, str, None)
+    None
 
 
   public_vlan_id (False, str, None)
@@ -46,14 +54,6 @@ Parameters
 
   cluster (True, str, None)
     (Required for new resource) cluster name or ID
-
-
-  worker_pool (True, str, None)
-    (Required for new resource) Workerpool name
-
-
-  private_vlan_id (False, str, None)
-    None
 
 
   id (False, str, None)

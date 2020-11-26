@@ -16,20 +16,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    pi_volume_shareable:
-        description:
-            - Flag to indicate if the volume can be shared across multiple instances?
-        required: False
-        type: bool
     pi_volume_name:
         description:
             - (Required for new resource) Volume Name to create
         required: True
         type: str
+    pi_volume_shareable:
+        description:
+            - Flag to indicate if the volume can be shared across multiple instances?
+        required: False
+        type: bool
     pi_volume_size:
         description:
             - (Required for new resource) Size of the volume in GB
@@ -95,8 +95,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_volume_shareable',
     'pi_volume_name',
+    'pi_volume_shareable',
     'pi_volume_size',
     'pi_volume_type',
     'pi_cloud_instance_id',
@@ -120,12 +120,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_volume_shareable=dict(
-        required=False,
-        type='bool'),
     pi_volume_name=dict(
         required=False,
         type='str'),
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
     pi_volume_size=dict(
         required=False,
         type='float'),
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -202,7 +202,7 @@ def run_module():
             resource_type='ibm_pi_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.14.0',
+            ibm_provider_version='1.15.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

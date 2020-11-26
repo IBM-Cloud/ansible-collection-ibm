@@ -15,19 +15,19 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kp_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    key_protect_id:
-        description:
-            - None
-        required: True
-        type: str
     key_name:
         description:
             - None
         required: False
+        type: str
+    key_protect_id:
+        description:
+            - None
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -67,8 +67,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_protect_id',
     'key_name',
+    'key_protect_id',
 ]
 
 
@@ -79,11 +79,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_protect_id=dict(
-        required=True,
-        type='str'),
     key_name=dict(
         required=False,
+        type='str'),
+    key_protect_id=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -119,7 +119,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

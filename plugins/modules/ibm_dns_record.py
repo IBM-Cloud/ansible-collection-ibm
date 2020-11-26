@@ -16,41 +16,42 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    expire:
+    data:
         description:
-            - DNS record expiry info
-        required: False
-        type: int
+            - (Required for new resource) DNS record data
+        required: True
+        type: str
     host:
         description:
             - (Required for new resource) Hostname
         required: True
         type: str
+    minimum_ttl:
+        description:
+            - Minimun TTL configuration
+        required: False
+        type: int
+    protocol:
+        description:
+            - protocol info
+        required: False
+        type: str
+    priority:
+        description:
+            - priority info
+        required: False
+        type: int
+        default: 0
     mx_priority:
         description:
             - Maximum priority
         required: False
         type: int
         default: 0
-    port:
-        description:
-            - port number
-        required: False
-        type: int
-    data:
-        description:
-            - (Required for new resource) DNS record data
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Domain ID of dns record instance
-        required: True
-        type: int
     responsible_person:
         description:
             - Responsible person for DNS record
@@ -61,20 +62,19 @@ options:
             - Retry count
         required: False
         type: int
-    weight:
+    domain_id:
         description:
-            - weight info
+            - (Required for new resource) Domain ID of dns record instance
+        required: True
+        type: int
+    expire:
+        description:
+            - DNS record expiry info
         required: False
         type: int
-        default: 0
     refresh:
         description:
             - refresh rate
-        required: False
-        type: int
-    minimum_ttl:
-        description:
-            - Minimun TTL configuration
         required: False
         type: int
     ttl:
@@ -87,22 +87,22 @@ options:
             - (Required for new resource) DNS record type
         required: True
         type: str
+    weight:
+        description:
+            - weight info
+        required: False
+        type: int
+        default: 0
     service:
         description:
             - service info
         required: False
         type: str
-    protocol:
+    port:
         description:
-            - protocol info
-        required: False
-        type: str
-    priority:
-        description:
-            - priority info
+            - port number
         required: False
         type: int
-        default: 0
     tags:
         description:
             - tags set for the resource
@@ -155,8 +155,8 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host', 'str'),
     ('data', 'str'),
+    ('host', 'str'),
     ('domain_id', 'int'),
     ('ttl', 'int'),
     ('type', 'str'),
@@ -164,22 +164,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'expire',
-    'host',
-    'mx_priority',
-    'port',
     'data',
-    'domain_id',
-    'responsible_person',
-    'retry',
-    'weight',
-    'refresh',
+    'host',
     'minimum_ttl',
-    'ttl',
-    'type',
-    'service',
     'protocol',
     'priority',
+    'mx_priority',
+    'responsible_person',
+    'retry',
+    'domain_id',
+    'expire',
+    'refresh',
+    'ttl',
+    'type',
+    'weight',
+    'service',
+    'port',
     'tags',
 ]
 
@@ -197,22 +197,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expire=dict(
-        required=False,
-        type='int'),
-    host=dict(
-        required=False,
-        type='str'),
-    mx_priority=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
     data=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    host=dict(
+        required=False,
+        type='str'),
+    minimum_ttl=dict(
+        required=False,
+        type='int'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    priority=dict(
+        required=False,
+        type='int'),
+    mx_priority=dict(
         required=False,
         type='int'),
     responsible_person=dict(
@@ -221,13 +221,13 @@ module_args = dict(
     retry=dict(
         required=False,
         type='int'),
-    weight=dict(
+    domain_id=dict(
+        required=False,
+        type='int'),
+    expire=dict(
         required=False,
         type='int'),
     refresh=dict(
-        required=False,
-        type='int'),
-    minimum_ttl=dict(
         required=False,
         type='int'),
     ttl=dict(
@@ -236,13 +236,13 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
+    weight=dict(
+        required=False,
+        type='int'),
     service=dict(
         required=False,
         type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    priority=dict(
+    port=dict(
         required=False,
         type='int'),
     tags=dict(
@@ -314,7 +314,7 @@ def run_module():
         resource_type='ibm_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

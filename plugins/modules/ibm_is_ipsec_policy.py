@@ -16,13 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    authentication_algorithm:
+    encryption_algorithm:
         description:
-            - (Required for new resource) Authentication alorothm
+            - (Required for new resource) Encryption algorithm
         required: True
         type: str
     pfs:
@@ -46,9 +46,9 @@ options:
             - (Required for new resource) IPSEC name
         required: True
         type: str
-    encryption_algorithm:
+    authentication_algorithm:
         description:
-            - (Required for new resource) Encryption algorithm
+            - (Required for new resource) Authentication alorothm
         required: True
         type: str
     id:
@@ -97,20 +97,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('authentication_algorithm', 'str'),
+    ('encryption_algorithm', 'str'),
     ('pfs', 'str'),
     ('name', 'str'),
-    ('encryption_algorithm', 'str'),
+    ('authentication_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'authentication_algorithm',
+    'encryption_algorithm',
     'pfs',
     'resource_group',
     'key_lifetime',
     'name',
-    'encryption_algorithm',
+    'authentication_algorithm',
 ]
 
 # Params for Data source
@@ -127,7 +127,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    authentication_algorithm=dict(
+    encryption_algorithm=dict(
         required=False,
         type='str'),
     pfs=dict(
@@ -142,7 +142,7 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    encryption_algorithm=dict(
+    authentication_algorithm=dict(
         required=False,
         type='str'),
     id=dict(
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

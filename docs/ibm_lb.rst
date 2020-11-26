@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.14.0
+- IBM-Cloud terraform-provider-ibm v1.15.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    Tags associated with resource
+  connections (True, int, None)
+    (Required for new resource) Connections value
 
 
   datacenter (True, str, None)
@@ -52,8 +52,8 @@ Parameters
     boolean value true if SSL offload is enabled
 
 
-  connections (True, int, None)
-    (Required for new resource) Connections value
+  tags (False, list, None)
+    Tags associated with resource
 
 
   id (False, str, None)

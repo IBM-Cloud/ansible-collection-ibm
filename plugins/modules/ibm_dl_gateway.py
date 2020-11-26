@@ -16,35 +16,44 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    bgp_asn:
+    bgp_ibm_cidr:
         description:
-            - (Required for new resource) BGP ASN
+            - BGP IBM CIDR
+        required: False
+        type: str
+    loa_reject_reason:
+        description:
+            - Loa reject reason
+        required: False
+        type: str
+    port:
+        description:
+            - Gateway port
+        required: False
+        type: str
+    metered:
+        description:
+            - (Required for new resource) Metered billing option
         required: True
-        type: int
+        type: bool
+    carrier_name:
+        description:
+            - Carrier name
+        required: False
+        type: str
     customer_name:
         description:
             - Customer name
         required: False
         type: str
-    tags:
+    name:
         description:
-            - Tags for the direct link gateway
-        required: False
-        type: list
-        elements: str
-    bgp_base_cidr:
-        description:
-            - (Required for new resource) BGP base CIDR
+            - (Required for new resource) The unique user-defined name for this gateway
         required: True
-        type: str
-    location_name:
-        description:
-            - Gateway location
-        required: False
         type: str
     speed_mbps:
         description:
@@ -56,56 +65,53 @@ options:
             - (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
         required: True
         type: bool
-    type:
+    location_name:
         description:
-            - (Required for new resource) Gateway type
-        required: True
-        type: str
-    metered:
-        description:
-            - (Required for new resource) Metered billing option
-        required: True
-        type: bool
-    name:
-        description:
-            - (Required for new resource) The unique user-defined name for this gateway
-        required: True
-        type: str
-    carrier_name:
-        description:
-            - Carrier name
+            - Gateway location
         required: False
         type: str
+    macsec_config:
+        description:
+            - MACsec configuration information
+        required: False
+        type: list
+        elements: dict
+    resource_group:
+        description:
+            - Gateway resource group
+        required: False
+        type: str
+    bgp_asn:
+        description:
+            - (Required for new resource) BGP ASN
+        required: True
+        type: int
     bgp_cer_cidr:
         description:
             - BGP customer edge router CIDR
         required: False
         type: str
-    loa_reject_reason:
+    bgp_base_cidr:
         description:
-            - Loa reject reason
-        required: False
+            - (Required for new resource) BGP base CIDR
+        required: True
         type: str
     cross_connect_router:
         description:
             - Cross connect router
         required: False
         type: str
-    bgp_ibm_cidr:
+    type:
         description:
-            - BGP IBM CIDR
-        required: False
+            - (Required for new resource) Gateway type
+        required: True
         type: str
-    resource_group:
+    tags:
         description:
-            - Gateway resource group
+            - Tags for the direct link gateway
         required: False
-        type: str
-    port:
-        description:
-            - Gateway port
-        required: False
-        type: str
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -152,34 +158,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bgp_asn', 'int'),
-    ('bgp_base_cidr', 'str'),
-    ('speed_mbps', 'int'),
-    ('global_', 'bool'),
-    ('type', 'str'),
     ('metered', 'bool'),
     ('name', 'str'),
+    ('speed_mbps', 'int'),
+    ('global_', 'bool'),
+    ('bgp_asn', 'int'),
+    ('bgp_base_cidr', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bgp_asn',
+    'bgp_ibm_cidr',
+    'loa_reject_reason',
+    'port',
+    'metered',
+    'carrier_name',
     'customer_name',
-    'tags',
-    'bgp_base_cidr',
-    'location_name',
+    'name',
     'speed_mbps',
     'global_',
-    'type',
-    'metered',
-    'name',
-    'carrier_name',
-    'bgp_cer_cidr',
-    'loa_reject_reason',
-    'cross_connect_router',
-    'bgp_ibm_cidr',
+    'location_name',
+    'macsec_config',
     'resource_group',
-    'port',
+    'bgp_asn',
+    'bgp_cer_cidr',
+    'bgp_base_cidr',
+    'cross_connect_router',
+    'type',
+    'tags',
 ]
 
 # Params for Data source
@@ -199,20 +206,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bgp_asn=dict(
+    bgp_ibm_cidr=dict(
         required=False,
-        type='int'),
+        type='str'),
+    loa_reject_reason=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='str'),
+    metered=dict(
+        required=False,
+        type='bool'),
+    carrier_name=dict(
+        required=False,
+        type='str'),
     customer_name=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    bgp_base_cidr=dict(
-        required=False,
-        type='str'),
-    location_name=dict(
+    name=dict(
         required=False,
         type='str'),
     speed_mbps=dict(
@@ -221,36 +233,35 @@ module_args = dict(
     global_=dict(
         required=False,
         type='bool'),
-    type=dict(
+    location_name=dict(
         required=False,
         type='str'),
-    metered=dict(
+    macsec_config=dict(
         required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    carrier_name=dict(
+        elements='',
+        type='list'),
+    resource_group=dict(
         required=False,
         type='str'),
+    bgp_asn=dict(
+        required=False,
+        type='int'),
     bgp_cer_cidr=dict(
         required=False,
         type='str'),
-    loa_reject_reason=dict(
+    bgp_base_cidr=dict(
         required=False,
         type='str'),
     cross_connect_router=dict(
         required=False,
         type='str'),
-    bgp_ibm_cidr=dict(
+    type=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    tags=dict(
         required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -316,7 +327,7 @@ def run_module():
         resource_type='ibm_dl_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -325,7 +336,7 @@ def run_module():
             resource_type='ibm_dl_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.14.0',
+            ibm_provider_version='1.15.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

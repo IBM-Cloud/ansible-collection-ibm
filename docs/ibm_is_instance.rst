@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.14.0
+- IBM-Cloud terraform-provider-ibm v1.15.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  name (True, str, None)
+    (Required for new resource) Instance name
 
 
   vpc (True, str, None)
     (Required for new resource) VPC id
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   tags (False, list, None)
     list of tags for the instance
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  image (True, str, None)
+    (Required for new resource) image name
 
 
   boot_volume (False, list, None)
     None
 
 
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
   resource_group (False, str, None)
     Instance resource group
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

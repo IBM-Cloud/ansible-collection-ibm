@@ -16,15 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.14.0
+    - IBM-Cloud terraform-provider-ibm v1.15.0
     - Terraform v0.12.20
 
 options:
-    nad_controller_id:
+    tags:
         description:
-            - (Required for new resource) NAD controller ID
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    load_balancing_method:
+        description:
+            - (Required for new resource) Load balancing method
         required: True
-        type: int
+        type: str
+    virtual_ip_address:
+        description:
+            - (Required for new resource) Virtual IP address
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name
+        required: True
+        type: str
     source_port:
         description:
             - (Required for new resource) Source Port number
@@ -40,31 +56,15 @@ options:
             - security certificate ID
         required: False
         type: int
-    virtual_ip_address:
+    nad_controller_id:
         description:
-            - (Required for new resource) Virtual IP address
+            - (Required for new resource) NAD controller ID
         required: True
-        type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    load_balancing_method:
-        description:
-            - (Required for new resource) Load balancing method
-        required: True
-        type: str
+        type: int
     persistence:
         description:
             - Persistance value
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name
-        required: True
         type: str
     id:
         description:
@@ -112,25 +112,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('nad_controller_id', 'int'),
+    ('load_balancing_method', 'str'),
+    ('virtual_ip_address', 'str'),
+    ('name', 'str'),
     ('source_port', 'int'),
     ('type', 'str'),
-    ('virtual_ip_address', 'str'),
-    ('load_balancing_method', 'str'),
-    ('name', 'str'),
+    ('nad_controller_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'nad_controller_id',
+    'tags',
+    'load_balancing_method',
+    'virtual_ip_address',
+    'name',
     'source_port',
     'type',
     'security_certificate_id',
-    'virtual_ip_address',
-    'tags',
-    'load_balancing_method',
+    'nad_controller_id',
     'persistence',
-    'name',
 ]
 
 # Params for Data source
@@ -147,9 +147,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    nad_controller_id=dict(
+    tags=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
+    load_balancing_method=dict(
+        required=False,
+        type='str'),
+    virtual_ip_address=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     source_port=dict(
         required=False,
         type='int'),
@@ -159,20 +169,10 @@ module_args = dict(
     security_certificate_id=dict(
         required=False,
         type='int'),
-    virtual_ip_address=dict(
+    nad_controller_id=dict(
         required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    load_balancing_method=dict(
-        required=False,
-        type='str'),
+        type='int'),
     persistence=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.14.0',
+        ibm_provider_version='1.15.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
