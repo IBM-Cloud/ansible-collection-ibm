@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -32,44 +32,12 @@ Parameters
     Technical contact same as org address flag
 
 
-  organization_information (True, list, None)
-    (Required for new resource) Organization information
-
-
-  renewal_flag (False, bool, True)
-    Renewal flag
-
-
   technical_contact (True, list, None)
     (Required for new resource) Technical contact info
 
 
-  administrative_contact (False, list, None)
-    None
-
-
-  certificate_signing_request (True, str, None)
-    (Required for new resource) certificate signing request info
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    Administrative contact same as technical flag
-
-
-  server_count (True, int, None)
-    (Required for new resource) Server count
-
-
   server_type (True, str, None)
     (Required for new resource) server type
-
-
-  validity_months (True, int, None)
-    (Required for new resource) vslidity of the ssl certificate in month
-
-
-  ssl_type (True, str, None)
-    (Required for new resource) ssl type
 
 
   order_approver_email_address (True, str, None)
@@ -90,6 +58,38 @@ Parameters
 
   billing_contact (False, list, None)
     None
+
+
+  server_count (True, int, None)
+    (Required for new resource) Server count
+
+
+  renewal_flag (False, bool, True)
+    Renewal flag
+
+
+  ssl_type (True, str, None)
+    (Required for new resource) ssl type
+
+
+  certificate_signing_request (True, str, None)
+    (Required for new resource) certificate signing request info
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    Administrative contact same as technical flag
+
+
+  organization_information (True, list, None)
+    (Required for new resource) Organization information
+
+
+  administrative_contact (False, list, None)
+    None
+
+
+  validity_months (True, int, None)
+    (Required for new resource) vslidity of the ssl certificate in month
 
 
   id (False, str, None)

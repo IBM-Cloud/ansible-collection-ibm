@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.15.0
+    - IBM-Cloud terraform-provider-ibm v1.16.0
     - Terraform v0.12.20
 
 options:
@@ -35,6 +35,21 @@ options:
             - (Required for new resource) Destination Port number
         required: True
         type: int
+    weight:
+        description:
+            - (Required for new resource) Weight value
+        required: True
+        type: int
+    connection_limit:
+        description:
+            - (Required for new resource) Number of connections limit
+        required: True
+        type: int
+    health_check:
+        description:
+            - (Required for new resource) Health check info
+        required: True
+        type: str
     usip:
         description:
             - usip info
@@ -50,21 +65,6 @@ options:
     name:
         description:
             - (Required for new resource) name
-        required: True
-        type: str
-    weight:
-        description:
-            - (Required for new resource) Weight value
-        required: True
-        type: int
-    connection_limit:
-        description:
-            - (Required for new resource) Number of connections limit
-        required: True
-        type: int
-    health_check:
-        description:
-            - (Required for new resource) Health check info
         required: True
         type: str
     id:
@@ -116,10 +116,10 @@ TL_REQUIRED_PARAMETERS = [
     ('vip_id', 'str'),
     ('destination_ip_address', 'str'),
     ('destination_port', 'int'),
-    ('name', 'str'),
     ('weight', 'int'),
     ('connection_limit', 'int'),
     ('health_check', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -127,12 +127,12 @@ TL_ALL_PARAMETERS = [
     'vip_id',
     'destination_ip_address',
     'destination_port',
-    'usip',
-    'tags',
-    'name',
     'weight',
     'connection_limit',
     'health_check',
+    'usip',
+    'tags',
+    'name',
 ]
 
 # Params for Data source
@@ -158,6 +158,15 @@ module_args = dict(
     destination_port=dict(
         required=False,
         type='int'),
+    weight=dict(
+        required=False,
+        type='int'),
+    connection_limit=dict(
+        required=False,
+        type='int'),
+    health_check=dict(
+        required=False,
+        type='str'),
     usip=dict(
         required=False,
         type='str'),
@@ -166,15 +175,6 @@ module_args = dict(
         elements='',
         type='list'),
     name=dict(
-        required=False,
-        type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
-    connection_limit=dict(
-        required=False,
-        type='int'),
-    health_check=dict(
         required=False,
         type='str'),
     id=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.15.0',
+        ibm_provider_version='1.16.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

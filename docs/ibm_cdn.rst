@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -28,40 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  bucket_name (False, str, None)
-    Bucket name
-
-
-  https_port (False, int, 443)
-    HTTPS port number
-
-
-  cname (False, str, None)
-    cname info
-
-
-  header (False, str, None)
-    Header info
-
-
-  respect_headers (False, bool, True)
-    respect headers info
-
-
   file_extension (False, str, None)
     File extension info
 
 
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
+  certificate_type (False, str, None)
+    Certificate type
 
 
-  path (False, str, /*)
-    Path details
+  cache_key_query_rule (False, str, include-all)
+    query rule info
 
 
   host_name (True, str, None)
@@ -72,24 +48,48 @@ Parameters
     Vendor name
 
 
+  path (False, str, /*)
+    Path details
+
+
   origin_address (True, str, None)
     (Required for new resource) origin address info
 
 
-  http_port (False, int, 80)
-    HTTP port number
-
-
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
+  header (False, str, None)
+    Header info
 
 
   protocol (False, str, HTTP)
     Protocol name
 
 
-  cache_key_query_rule (False, str, include-all)
-    query rule info
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  https_port (False, int, 443)
+    HTTPS port number
+
+
+  cname (False, str, None)
+    cname info
+
+
+  respect_headers (False, bool, True)
+    respect headers info
+
+
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  bucket_name (False, str, None)
+    Bucket name
 
 
   id (False, str, None)

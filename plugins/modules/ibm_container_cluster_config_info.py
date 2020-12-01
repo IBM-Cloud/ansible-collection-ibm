@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.15.0
+    - IBM-Cloud terraform-provider-ibm v1.16.0
     - Terraform v0.12.20
 
 options:
@@ -29,11 +29,6 @@ options:
             - The directory where the cluster config to be downloaded. Default is home directory
         required: False
         type: str
-    cluster_name_id:
-        description:
-            - The name/id of the cluster
-        required: True
-        type: str
     download:
         description:
             - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
@@ -46,6 +41,11 @@ options:
         required: False
         type: bool
         default: False
+    cluster_name_id:
+        description:
+            - The name/id of the cluster
+        required: True
+        type: str
     network:
         description:
             - If set to true will download the Calico network config with the Admin config
@@ -72,9 +72,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'resource_group_id',
     'config_dir',
-    'cluster_name_id',
     'download',
     'admin',
+    'cluster_name_id',
     'network',
 ]
 
@@ -92,15 +92,15 @@ module_args = dict(
     config_dir=dict(
         required=False,
         type='str'),
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
     download=dict(
         required=False,
         type='bool'),
     admin=dict(
         required=False,
         type='bool'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
     network=dict(
         required=False,
         type='bool'),
@@ -124,7 +124,7 @@ def run_module():
         resource_type='ibm_container_cluster_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.15.0',
+        ibm_provider_version='1.16.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

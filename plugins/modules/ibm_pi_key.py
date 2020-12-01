@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.15.0
+    - IBM-Cloud terraform-provider-ibm v1.16.0
     - Terraform v0.12.20
 
 options:
-    pi_creation_date:
-        description:
-            - Date info
-        required: False
-        type: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
@@ -39,6 +34,11 @@ options:
         description:
             - (Required for new resource) PI instance key info
         required: True
+        type: str
+    pi_creation_date:
+        description:
+            - Date info
+        required: False
         type: str
     id:
         description:
@@ -89,10 +89,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_creation_date',
     'pi_cloud_instance_id',
     'pi_key_name',
     'pi_ssh_key',
+    'pi_creation_date',
 ]
 
 # Params for Data source
@@ -113,9 +113,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_creation_date=dict(
-        required=False,
-        type='str'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
@@ -123,6 +120,9 @@ module_args = dict(
         required=False,
         type='str'),
     pi_ssh_key=dict(
+        required=False,
+        type='str'),
+    pi_creation_date=dict(
         required=False,
         type='str'),
     id=dict(
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_pi_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.15.0',
+        ibm_provider_version='1.16.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -192,7 +192,7 @@ def run_module():
             resource_type='ibm_pi_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.15.0',
+            ibm_provider_version='1.16.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

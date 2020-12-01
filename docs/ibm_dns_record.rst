@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
+  service (False, str, None)
+    service info
 
 
   protocol (False, str, None)
     protocol info
 
 
-  priority (False, int, 0)
-    priority info
+  port (False, int, None)
+    port number
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   responsible_person (False, str, None)
@@ -60,40 +56,44 @@ Parameters
     Retry count
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
 
 
   weight (False, int, 0)
     weight info
 
 
-  service (False, str, None)
-    service info
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
-  port (False, int, None)
-    port number
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
   tags (False, list, None)
     tags set for the resource
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   id (False, str, None)

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.15.0
+    - IBM-Cloud terraform-provider-ibm v1.16.0
     - Terraform v0.12.20
 
 options:
@@ -37,7 +37,19 @@ options:
         type: str
     lockdown:
         description:
-            - Lockdown json Data
+            - Lockdown Data
+        required: False
+        type: list
+        elements: dict
+    access_rule:
+        description:
+            - Access Rule Data
+        required: False
+        type: list
+        elements: dict
+    ua_rule:
+        description:
+            - User Agent Rule Data
         required: False
         type: list
         elements: dict
@@ -98,6 +110,8 @@ TL_ALL_PARAMETERS = [
     'domain_id',
     'firewall_type',
     'lockdown',
+    'access_rule',
+    'ua_rule',
 ]
 
 # Params for Data source
@@ -130,6 +144,14 @@ module_args = dict(
         required=False,
         type='str'),
     lockdown=dict(
+        required=False,
+        elements='',
+        type='list'),
+    access_rule=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ua_rule=dict(
         required=False,
         elements='',
         type='list'),
@@ -198,7 +220,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.15.0',
+        ibm_provider_version='1.16.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -207,7 +229,7 @@ def run_module():
             resource_type='ibm_cis_firewall',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.15.0',
+            ibm_provider_version='1.16.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

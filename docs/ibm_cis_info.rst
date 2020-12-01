@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the cis instance is present
-
-
   name (True, str, None)
     Resource instance name for example, my cis instance
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the cis instance is present
 
 
   iaas_classic_username (False, any, None)

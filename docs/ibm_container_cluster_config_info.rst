@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -34,16 +34,16 @@ Parameters
     The directory where the cluster config to be downloaded. Default is home directory
 
 
-  cluster_name_id (True, str, None)
-    The name/id of the cluster
-
-
   download (False, bool, True)
     If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   admin (False, bool, False)
     If set to true will download the config for admin
+
+
+  cluster_name_id (True, str, None)
+    The name/id of the cluster
 
 
   network (False, bool, False)

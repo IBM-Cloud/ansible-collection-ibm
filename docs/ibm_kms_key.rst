@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -28,36 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  encrypted_nonce (False, str, None)
-    Only for imported root key
-
-
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  policies (False, list, None)
-    Creates or updates one or more policies for the specified key
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or hpcs instance GUID
+  endpoint_type (False, str, public)
+    public or private
 
 
   standard_key (False, bool, False)
     Standard key type
 
 
-  expiration_date (False, str, None)
-    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-
-
-  endpoint_type (False, str, public)
-    public or private
+  encrypted_nonce (False, str, None)
+    Only for imported root key
 
 
   force_delete (False, bool, False)
     set to true to force delete the key
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or hpcs instance GUID
+
+
+  iv_value (False, str, None)
+    Only for imported root key
+
+
+  expiration_date (False, str, None)
+    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
 
 
   key_name (True, str, None)
@@ -66,6 +62,10 @@ Parameters
 
   payload (False, str, None)
     None
+
+
+  policies (False, list, None)
+    Creates or updates one or more policies for the specified key
 
 
   id (False, str, None)

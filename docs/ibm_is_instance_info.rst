@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.15.0
+- IBM-Cloud terraform-provider-ibm v1.16.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Instance name
+  private_key (False, str, None)
+    Instance Private Key file
 
 
   passphrase (False, str, None)
     Passphrase for Instance Private Key file
 
 
-  private_key (False, str, None)
-    Instance Private Key file
+  name (True, str, None)
+    Instance name
 
 
   generation (False, int, 2)
