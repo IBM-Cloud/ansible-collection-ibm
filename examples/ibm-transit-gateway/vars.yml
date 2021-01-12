@@ -1,0 +1,7 @@
+---
+resource_group_name: "Default"
+location: "us-south"
+tg_gateway_name: "test-tg-gateway-1"
+global: True
+vpc_name: "test-vpc"
+connection_name: "tg-connection-name-2"
