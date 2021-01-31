@@ -10,19 +10,20 @@
     - name: Release Floating IP
       ibm_is_floating_ip:
         state: absent
-        id: "{{ fip.id }}"
+        id: "{{ fip }}"
       when: fip is defined
 
     - name: Remove VSI
       ibm_is_instance:
         state: absent
-        id: "{{ vsi.id }}"
+        id: "{{ vsi }}"
         keys: []
       when: vsi is defined
 
     - name: Get the ssh Key
       ibm_is_ssh_key_info:
         name: "{{ name_prefix }}-ssh-key"
+        region: "{{ zone }}"
       register: ssh_key_output
 
     - name: set ssh key in fact
@@ -39,12 +40,13 @@
     - name: Remove VPC Subnet
       ibm_is_subnet:
         state: absent
-        id: "{{ subnet.id }}"
+        id: "{{ subnet }}"
       when: subnet is defined
 
     - name: Get the vpc details
       ibm_is_vpc_info:
         name: "{{ name_prefix }}-vpc"
+        region: "{{ zone }}"
       register: vpc_output
 
     - name: set subnet in fact
