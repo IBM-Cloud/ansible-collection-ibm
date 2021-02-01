@@ -16,24 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
-    kube_version:
+    entitlement:
         description:
-            - Kubernetes version
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: True
         type: str
     zones:
         description:
@@ -41,18 +31,33 @@ options:
         required: True
         type: list
         elements: dict
-    wait_till:
+    cos_instance_crn:
         description:
-            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
         required: False
         type: str
-        default: IngressReady
     force_delete_storage:
         description:
             - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
         required: False
         type: bool
         default: False
+    kube_version:
+        description:
+            - Kubernetes version
+        required: False
+        type: str
+    wait_till:
+        description:
+            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+        required: False
+        type: str
+        default: IngressReady
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     flavor:
         description:
             - (Required for new resource) Cluster nodes flavour
@@ -74,27 +79,21 @@ options:
             - Custom subnet CIDR to provide private IP addresses for pods
         required: False
         type: str
-    worker_count:
+    tags:
         description:
-            - Number of worker nodes in the cluster
+            - List of tags for the resources
         required: False
-        type: int
-        default: 1
-    entitlement:
+        type: list
+        elements: str
+    service_subnet:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - Custom subnet CIDR to provide private IP addresses for services
         required: False
         type: str
-    worker_labels:
+    name:
         description:
-            - Labels for default worker pool
-        required: False
-        type: dict
-        elements: str
-    cos_instance_crn:
-        description:
-            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-        required: False
+            - (Required for new resource) The cluster name
+        required: True
         type: str
     kms_config:
         description:
@@ -102,29 +101,30 @@ options:
         required: False
         type: list
         elements: dict
-    service_subnet:
-        description:
-            - Custom subnet CIDR to provide private IP addresses for services
-        required: False
-        type: str
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
     update_all_workers:
         description:
             - Updates all the woker nodes if sets to true
         required: False
         type: bool
         default: False
-    tags:
+    worker_labels:
         description:
-            - List of tags for the resources
+            - Labels for default worker pool
         required: False
-        type: list
+        type: dict
         elements: str
+    disable_public_service_endpoint:
+        description:
+            - Boolean value true if Public service endpoint to be disabled
+        required: False
+        type: bool
+        default: False
+    worker_count:
+        description:
+            - Number of worker nodes in the cluster
+        required: False
+        type: int
+        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -151,33 +151,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('zones', 'list'),
     ('flavor', 'str'),
     ('vpc_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'kube_version',
-    'resource_group_id',
-    'name',
+    'entitlement',
     'zones',
-    'wait_till',
+    'cos_instance_crn',
     'force_delete_storage',
+    'kube_version',
+    'wait_till',
+    'resource_group_id',
     'flavor',
     'vpc_id',
     'wait_for_worker_update',
     'pod_subnet',
-    'worker_count',
-    'entitlement',
-    'worker_labels',
-    'cos_instance_crn',
-    'kms_config',
-    'service_subnet',
-    'disable_public_service_endpoint',
-    'update_all_workers',
     'tags',
+    'service_subnet',
+    'name',
+    'kms_config',
+    'update_all_workers',
+    'worker_labels',
+    'disable_public_service_endpoint',
+    'worker_count',
 ]
 
 # Params for Data source
@@ -185,10 +185,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'cluster_name_id',
-    'name',
-    'alb_type',
     'resource_group_id',
+    'cluster_name_id',
+    'alb_type',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -198,25 +198,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    kube_version=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    entitlement=dict(
         required=False,
         type='str'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
-    wait_till=dict(
+    cos_instance_crn=dict(
         required=False,
         type='str'),
     force_delete_storage=dict(
         required=False,
         type='bool'),
+    kube_version=dict(
+        required=False,
+        type='str'),
+    wait_till=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     flavor=dict(
         required=False,
         type='str'),
@@ -229,36 +232,33 @@ module_args = dict(
     pod_subnet=dict(
         required=False,
         type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    worker_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    cos_instance_crn=dict(
-        required=False,
-        type='str'),
-    kms_config=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
     service_subnet=dict(
         required=False,
         type='str'),
-    disable_public_service_endpoint=dict(
+    name=dict(
         required=False,
-        type='bool'),
-    update_all_workers=dict(
-        required=False,
-        type='bool'),
-    tags=dict(
+        type='str'),
+    kms_config=dict(
         required=False,
         elements='',
         type='list'),
+    update_all_workers=dict(
+        required=False,
+        type='bool'),
+    worker_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    disable_public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -310,7 +310,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -319,7 +319,7 @@ def run_module():
             resource_type='ibm_container_vpc_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

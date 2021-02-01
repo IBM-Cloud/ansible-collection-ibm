@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -31,11 +31,6 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
-    type:
-        description:
-            - (Required for new resource) VLAN type
-        required: True
-        type: str
     name:
         description:
             - VLAN name
@@ -45,6 +40,11 @@ options:
         description:
             - router host name
         required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) VLAN type
+        required: True
         type: str
     id:
         description:
@@ -100,9 +100,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'tags',
     'datacenter',
-    'type',
     'name',
     'router_hostname',
+    'type',
 ]
 
 # Params for Data source
@@ -129,13 +129,13 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     router_hostname=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_network_vlan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

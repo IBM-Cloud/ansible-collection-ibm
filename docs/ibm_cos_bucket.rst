@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -28,52 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  endpoint_type (False, str, public)
-    public or private
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
-
-
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  single_site_location (False, str, None)
-    single site location info
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
   region_location (False, str, None)
     Region Location info.
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
   allowed_ip (False, list, None)
     List of IPv4 or IPv6 addresses
+
+
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
+
+
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
+
+
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
 
 
   activity_tracking (False, list, None)
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  single_site_location (False, str, None)
+    single site location info
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
+
+
+  endpoint_type (False, str, public)
+    public or private
+
+
   metrics_monitoring (False, list, None)
     Enables sending metrics to IBM Cloud Monitoring.
 
 
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
 
 
   id (False, str, None)

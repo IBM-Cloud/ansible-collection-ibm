@@ -16,23 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
     namespace:
         description:
             - (Required for new resource) IBM Cloud function namespace.
-        required: True
-        type: str
-    publish:
-        description:
-            - Action visibilty.
-        required: False
-        type: bool
-    name:
-        description:
-            - (Required for new resource) Name of action.
         required: True
         type: str
     exec:
@@ -53,6 +43,16 @@ options:
         required: False
         type: str
         default: []
+    name:
+        description:
+            - (Required for new resource) Name of action.
+        required: True
+        type: str
+    publish:
+        description:
+            - Action visibilty.
+        required: False
+        type: bool
     limits:
         description:
             - None
@@ -92,30 +92,30 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('namespace', 'str'),
-    ('name', 'str'),
     ('exec', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'namespace',
-    'publish',
-    'name',
     'exec',
     'user_defined_annotations',
     'user_defined_parameters',
+    'name',
+    'publish',
     'limits',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('namespace', 'str'),
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'namespace',
     'name',
+    'namespace',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -128,12 +128,6 @@ module_args = dict(
     namespace=dict(
         required=False,
         type='str'),
-    publish=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     exec=dict(
         required=False,
         elements='',
@@ -144,6 +138,12 @@ module_args = dict(
     user_defined_parameters=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    publish=dict(
+        required=False,
+        type='bool'),
     limits=dict(
         required=False,
         elements='',
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_function_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_function_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

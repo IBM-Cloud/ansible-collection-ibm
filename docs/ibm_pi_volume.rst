@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -32,20 +32,20 @@ Parameters
     Flag to indicate if the volume can be shared across multiple instances?
 
 
-  pi_volume_size (True, float, None)
-    (Required for new resource) Size of the volume in GB
-
-
-  pi_volume_type (True, str, None)
-    (Required for new resource) Volume type
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
 
 
   pi_volume_name (True, str, None)
     (Required for new resource) Volume Name to create
 
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+  pi_volume_size (True, float, None)
+    (Required for new resource) Size of the volume in GB
+
+
+  pi_volume_type (True, str, None)
+    (Required for new resource) Volume type
 
 
   id (False, str, None)

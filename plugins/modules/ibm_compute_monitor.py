@@ -16,10 +16,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_monitor' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
+    notified_users:
+        description:
+            - List of users notified
+        required: False
+        type: list
+        elements: int
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    guest_id:
+        description:
+            - (Required for new resource) Guest ID
+        required: True
+        type: int
     ip_address:
         description:
             - IP Address
@@ -39,23 +56,6 @@ options:
         description:
             - wait cycles count
         required: False
-        type: int
-    notified_users:
-        description:
-            - List of users notified
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    guest_id:
-        description:
-            - (Required for new resource) Guest ID
-        required: True
         type: int
     id:
         description:
@@ -103,20 +103,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('guest_id', 'int'),
     ('query_type_id', 'int'),
     ('response_action_id', 'int'),
-    ('guest_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'notified_users',
+    'tags',
+    'guest_id',
     'ip_address',
     'query_type_id',
     'response_action_id',
     'wait_cycles',
-    'notified_users',
-    'tags',
-    'guest_id',
 ]
 
 # Params for Data source
@@ -133,6 +133,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    notified_users=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    guest_id=dict(
+        required=False,
+        type='int'),
     ip_address=dict(
         required=False,
         type='str'),
@@ -143,17 +154,6 @@ module_args = dict(
         required=False,
         type='int'),
     wait_cycles=dict(
-        required=False,
-        type='int'),
-    notified_users=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    guest_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_compute_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

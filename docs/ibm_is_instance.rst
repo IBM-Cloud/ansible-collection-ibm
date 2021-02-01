@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -28,32 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_interfaces (False, list, None)
-    None
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  volumes (False, list, None)
-    List of volumes
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   tags (False, list, None)
     list of tags for the instance
 
 
-  boot_volume (False, list, None)
-    None
+  resource_group (False, str, None)
+    Instance resource group
 
 
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  image (True, str, None)
-    (Required for new resource) image name
+  volumes (False, list, None)
+    List of volumes
 
 
   zone (True, str, None)
@@ -64,24 +52,36 @@ Parameters
     (Required for new resource) Profile info
 
 
-  name (True, str, None)
-    (Required for new resource) Instance name
+  network_interfaces (False, list, None)
+    None
 
 
   keys (True, list, None)
     (Required for new resource) SSH key Ids for the instance
 
 
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

@@ -16,15 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
-    security_certificate_id:
+    type:
         description:
-            - security certificate ID
-        required: False
-        type: int
+            - (Required for new resource) Type
+        required: True
+        type: str
     virtual_ip_address:
         description:
             - (Required for new resource) Virtual IP address
@@ -36,6 +36,11 @@ options:
         required: False
         type: list
         elements: str
+    nad_controller_id:
+        description:
+            - (Required for new resource) NAD controller ID
+        required: True
+        type: int
     load_balancing_method:
         description:
             - (Required for new resource) Load balancing method
@@ -56,16 +61,11 @@ options:
             - (Required for new resource) Source Port number
         required: True
         type: int
-    nad_controller_id:
+    security_certificate_id:
         description:
-            - (Required for new resource) NAD controller ID
-        required: True
+            - security certificate ID
+        required: False
         type: int
-    type:
-        description:
-            - (Required for new resource) Type
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,25 +112,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
     ('virtual_ip_address', 'str'),
+    ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
     ('name', 'str'),
     ('source_port', 'int'),
-    ('nad_controller_id', 'int'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'security_certificate_id',
+    'type',
     'virtual_ip_address',
     'tags',
+    'nad_controller_id',
     'load_balancing_method',
     'persistence',
     'name',
     'source_port',
-    'nad_controller_id',
-    'type',
+    'security_certificate_id',
 ]
 
 # Params for Data source
@@ -147,9 +147,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    security_certificate_id=dict(
+    type=dict(
         required=False,
-        type='int'),
+        type='str'),
     virtual_ip_address=dict(
         required=False,
         type='str'),
@@ -157,6 +157,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    nad_controller_id=dict(
+        required=False,
+        type='int'),
     load_balancing_method=dict(
         required=False,
         type='str'),
@@ -169,12 +172,9 @@ module_args = dict(
     source_port=dict(
         required=False,
         type='int'),
-    nad_controller_id=dict(
+    security_certificate_id=dict(
         required=False,
         type='int'),
-    type=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

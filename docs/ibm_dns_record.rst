@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -28,52 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  retry (False, int, None)
+    Retry count
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  priority (False, int, 0)
+    priority info
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
   expire (False, int, None)
     DNS record expiry info
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  service (False, str, None)
-    service info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  port (False, int, None)
-    port number
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
   weight (False, int, 0)
@@ -84,16 +56,44 @@ Parameters
     tags set for the resource
 
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
+  refresh (False, int, None)
+    refresh rate
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  port (False, int, None)
+    port number
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   protocol (False, str, None)
     protocol info
-
-
-  priority (False, int, 0)
-    priority info
 
 
   id (False, str, None)

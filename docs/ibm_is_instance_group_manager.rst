@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -36,16 +36,12 @@ Parameters
     (Required for new resource) instance group ID
 
 
-  manager_type (False, str, autoscale)
-    The type of instance group manager.
-
-
   aggregation_window (False, int, 90)
     The time window in seconds to aggregate metrics prior to evaluation
 
 
-  max_membership_count (True, int, None)
-    (Required for new resource) The maximum number of members in a managed instance group
+  min_membership_count (False, int, 1)
+    The minimum number of members in a managed instance group
 
 
   name (False, str, None)
@@ -56,8 +52,12 @@ Parameters
     The duration of time in seconds to pause further scale actions after scaling has taken place
 
 
-  min_membership_count (False, int, 1)
-    The minimum number of members in a managed instance group
+  max_membership_count (True, int, None)
+    (Required for new resource) The maximum number of members in a managed instance group
+
+
+  manager_type (False, str, autoscale)
+    The type of instance group manager.
 
 
   id (False, str, None)

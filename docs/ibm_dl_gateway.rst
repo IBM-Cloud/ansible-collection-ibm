@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -28,56 +28,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  carrier_name (False, str, None)
+    Carrier name
+
+
   port (False, str, None)
     Gateway port
-
-
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  customer_name (False, str, None)
-    Customer name
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  loa_reject_reason (False, str, None)
-    Loa reject reason
 
 
   resource_group (False, str, None)
     Gateway resource group
 
 
+  metered (True, bool, None)
+    (Required for new resource) Metered billing option
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
   global_ (True, bool, None)
     (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
 
 
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
-
-
-  bgp_base_cidr (True, str, None)
-    (Required for new resource) BGP base CIDR
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
   macsec_config (False, list, None)
     MACsec configuration information
+
+
+  loa_reject_reason (False, str, None)
+    Loa reject reason
+
+
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   speed_mbps (True, int, None)
@@ -88,16 +88,16 @@ Parameters
     (Required for new resource) Gateway type
 
 
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
 
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
+  customer_name (False, str, None)
+    Customer name
 
 
-  metered (True, bool, None)
-    (Required for new resource) Metered billing option
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
   id (False, str, None)

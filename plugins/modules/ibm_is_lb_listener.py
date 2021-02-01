@@ -16,10 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
+    port:
+        description:
+            - (Required for new resource) Loadbalancer listener port
+        required: True
+        type: int
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
+        type: str
     protocol:
         description:
             - (Required for new resource) Loadbalancer protocol
@@ -34,21 +49,6 @@ options:
         description:
             - Connection limit for Loadbalancer
         required: False
-        type: int
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
-        type: str
-    port:
-        description:
-            - (Required for new resource) Loadbalancer listener port
-        required: True
         type: int
     id:
         description:
@@ -96,19 +96,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
-    ('lb', 'str'),
     ('port', 'int'),
+    ('lb', 'str'),
+    ('protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'port',
+    'default_pool',
+    'lb',
     'protocol',
     'certificate_instance',
     'connection_limit',
-    'default_pool',
-    'lb',
-    'port',
 ]
 
 # Params for Data source
@@ -125,13 +125,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    protocol=dict(
-        required=False,
-        type='str'),
-    certificate_instance=dict(
-        required=False,
-        type='str'),
-    connection_limit=dict(
+    port=dict(
         required=False,
         type='int'),
     default_pool=dict(
@@ -140,7 +134,13 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    port=dict(
+    protocol=dict(
+        required=False,
+        type='str'),
+    certificate_instance=dict(
+        required=False,
+        type='str'),
+    connection_limit=dict(
         required=False,
         type='int'),
     id=dict(
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

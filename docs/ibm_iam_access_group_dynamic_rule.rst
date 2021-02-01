@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  access_group_id (True, str, None)
+    (Required for new resource) Unique identifier of the access group
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the Rule
+
 
   expiration (True, int, None)
     (Required for new resource) The expiration in hours
@@ -38,14 +46,6 @@ Parameters
 
   conditions (True, list, None)
     (Required for new resource) conditions info
-
-
-  access_group_id (True, str, None)
-    (Required for new resource) Unique identifier of the access group
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the Rule
 
 
   id (False, str, None)

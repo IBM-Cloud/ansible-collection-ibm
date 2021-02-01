@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.1
+- IBM-Cloud terraform-provider-ibm v1.17.0
 - Terraform v0.12.20
 
 
@@ -28,28 +28,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  webhook (False, list, None)
-    None
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  private_service_endpoint (False, bool, None)
-    None
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
+
+
+  workers_info (False, list, None)
+    The IDs of the worker node
 
 
   kube_version (False, str, None)
     Kubernetes version info
 
 
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
 
 
-  public_vlan_id (False, str, None)
-    Public VLAN ID
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
   private_vlan_id (False, str, None)
@@ -60,64 +76,48 @@ Parameters
     Set true for gateway enabled clusters
 
 
-  tags (False, list, None)
-    Tags for the resource
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
 
 
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  public_service_endpoint (False, bool, None)
+  webhook (False, list, None)
     None
-
-
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
 
 
   force_delete_storage (False, bool, False)
     Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
+  public_service_endpoint (False, bool, None)
+    None
 
 
   name (True, str, None)
     (Required for new resource) The cluster name
 
 
-  workers_info (False, list, None)
-    The IDs of the worker node
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
 
 
   machine_type (False, str, None)
     Machine type
+
+
+  private_service_endpoint (False, bool, None)
+    None
 
 
   id (False, str, None)

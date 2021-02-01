@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_attach' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_pi_volume_attach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

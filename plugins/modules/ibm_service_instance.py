@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
             - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
         required: True
         type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
+        required: False
+        type: dict
     wait_time_minutes:
         description:
             - Define timeout to wait for the service instances to succeeded/deleted etc.
@@ -41,11 +46,6 @@ options:
             - (Required for new resource) A name for the service instance
         required: True
         type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass along to the service broker. Must be a JSON object
-        required: False
-        type: dict
     plan:
         description:
             - (Required for new resource) The plan type of the service
@@ -113,22 +113,22 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'space_guid',
     'service',
+    'parameters',
     'wait_time_minutes',
     'name',
-    'parameters',
     'plan',
     'tags',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('space_guid', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'space_guid',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -144,15 +144,15 @@ module_args = dict(
     service=dict(
         required=False,
         type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
     wait_time_minutes=dict(
         required=False,
         type='int'),
     name=dict(
         required=False,
         type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
     plan=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_service_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +234,7 @@ def run_module():
             resource_type='ibm_service_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

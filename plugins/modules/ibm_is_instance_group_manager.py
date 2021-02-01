@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -31,23 +31,18 @@ options:
             - (Required for new resource) instance group ID
         required: True
         type: str
-    manager_type:
-        description:
-            - The type of instance group manager.
-        required: False
-        type: str
-        default: autoscale
     aggregation_window:
         description:
             - The time window in seconds to aggregate metrics prior to evaluation
         required: False
         type: int
         default: 90
-    max_membership_count:
+    min_membership_count:
         description:
-            - (Required for new resource) The maximum number of members in a managed instance group
-        required: True
+            - The minimum number of members in a managed instance group
+        required: False
         type: int
+        default: 1
     name:
         description:
             - instance group manager name
@@ -59,12 +54,17 @@ options:
         required: False
         type: int
         default: 300
-    min_membership_count:
+    max_membership_count:
         description:
-            - The minimum number of members in a managed instance group
-        required: False
+            - (Required for new resource) The maximum number of members in a managed instance group
+        required: True
         type: int
-        default: 1
+    manager_type:
+        description:
+            - The type of instance group manager.
+        required: False
+        type: str
+        default: autoscale
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -119,23 +119,23 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'enable_manager',
     'instance_group',
-    'manager_type',
     'aggregation_window',
-    'max_membership_count',
+    'min_membership_count',
     'name',
     'cooldown',
-    'min_membership_count',
+    'max_membership_count',
+    'manager_type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'instance_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -151,13 +151,10 @@ module_args = dict(
     instance_group=dict(
         required=False,
         type='str'),
-    manager_type=dict(
-        required=False,
-        type='str'),
     aggregation_window=dict(
         required=False,
         type='int'),
-    max_membership_count=dict(
+    min_membership_count=dict(
         required=False,
         type='int'),
     name=dict(
@@ -166,9 +163,12 @@ module_args = dict(
     cooldown=dict(
         required=False,
         type='int'),
-    min_membership_count=dict(
+    max_membership_count=dict(
         required=False,
         type='int'),
+    manager_type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

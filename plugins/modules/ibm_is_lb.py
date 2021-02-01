@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -25,32 +25,32 @@ options:
             - None
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
-    profile:
-        description:
-            - The profile to use for this load balancer.
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     type:
         description:
             - Load Balancer type
         required: False
         type: str
         default: public
+    profile:
+        description:
+            - The profile to use for this load balancer.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
+        required: True
+        type: str
     subnets:
         description:
             - (Required for new resource) Load Balancer subnets list
         required: True
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
         type: list
         elements: str
     id:
@@ -106,11 +106,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group',
-    'name',
-    'profile',
-    'tags',
     'type',
+    'profile',
+    'name',
     'subnets',
+    'tags',
 ]
 
 # Params for Data source
@@ -132,20 +132,20 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    type=dict(
         required=False,
         type='str'),
     profile=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    type=dict(
+    name=dict(
         required=False,
         type='str'),
     subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.1',
+            ibm_provider_version='1.17.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

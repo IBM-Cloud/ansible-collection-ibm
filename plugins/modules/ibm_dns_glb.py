@@ -16,10 +16,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Name of the load balancer
+        required: True
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer
+        required: False
+        type: str
+    ttl:
+        description:
+            - Time to live in second
+        required: False
+        type: int
+        default: 60
+    fallback_pool:
+        description:
+            - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
+        required: True
+        type: str
     default_pools:
         description:
             - (Required for new resource) A list of pool IDs ordered by their failover priority
@@ -32,36 +53,15 @@ options:
         required: False
         type: list
         elements: dict
-    zone_id:
-        description:
-            - (Required for new resource) Zone Id
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the load balancer
-        required: True
-        type: str
-    fallback_pool:
-        description:
-            - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
-        required: True
-        type: str
-    ttl:
-        description:
-            - Time to live in second
-        required: False
-        type: int
-        default: 60
     instance_id:
         description:
             - (Required for new resource) The GUID of the private DNS.
         required: True
         type: str
-    description:
+    zone_id:
         description:
-            - Descriptive text of the load balancer
-        required: False
+            - (Required for new resource) Zone Id
+        required: True
         type: str
     enabled:
         description:
@@ -114,23 +114,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('default_pools', 'list'),
-    ('zone_id', 'str'),
     ('name', 'str'),
     ('fallback_pool', 'str'),
+    ('default_pools', 'list'),
     ('instance_id', 'str'),
+    ('zone_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'description',
+    'ttl',
+    'fallback_pool',
     'default_pools',
     'az_pools',
-    'zone_id',
-    'name',
-    'fallback_pool',
-    'ttl',
     'instance_id',
-    'description',
+    'zone_id',
     'enabled',
 ]
 
@@ -148,6 +148,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    ttl=dict(
+        required=False,
+        type='int'),
+    fallback_pool=dict(
+        required=False,
+        type='str'),
     default_pools=dict(
         required=False,
         elements='',
@@ -156,22 +168,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    zone_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    fallback_pool=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
     instance_id=dict(
         required=False,
         type='str'),
-    description=dict(
+    zone_id=dict(
         required=False,
         type='str'),
     enabled=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_dns_glb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

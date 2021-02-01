@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.1
+    - IBM-Cloud terraform-provider-ibm v1.17.0
     - Terraform v0.12.20
 
 options:
@@ -26,27 +26,22 @@ options:
         required: False
         type: list
         elements: dict
-    address_translation:
+    preshared_key:
         description:
-            - None
+            - Preshared Key data
         required: False
-        type: list
-        elements: dict
+        type: str
     customer_peer_ip:
         description:
             - Customer Peer IP Address
         required: False
         type: str
-    internal_subnet_id:
+    remote_subnet:
         description:
-            - Internal subnet ID value
+            - None
         required: False
-        type: int
-    remote_subnet_id:
-        description:
-            - Remote subnet ID value
-        required: False
-        type: int
+        type: list
+        elements: dict
     service_subnet_id:
         description:
             - Service subnet ID value
@@ -63,17 +58,22 @@ options:
         required: False
         type: list
         elements: dict
-    preshared_key:
-        description:
-            - Preshared Key data
-        required: False
-        type: str
-    remote_subnet:
+    address_translation:
         description:
             - None
         required: False
         type: list
         elements: dict
+    internal_subnet_id:
+        description:
+            - Internal subnet ID value
+        required: False
+        type: int
+    remote_subnet_id:
+        description:
+            - Remote subnet ID value
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -126,15 +126,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'phase_two',
-    'address_translation',
+    'preshared_key',
     'customer_peer_ip',
-    'internal_subnet_id',
-    'remote_subnet_id',
+    'remote_subnet',
     'service_subnet_id',
     'datacenter',
     'phase_one',
-    'preshared_key',
-    'remote_subnet',
+    'address_translation',
+    'internal_subnet_id',
+    'remote_subnet_id',
 ]
 
 # Params for Data source
@@ -145,8 +145,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'remote_subnet_id': ['remote_subnet'],
     'remote_subnet': ['remote_subnet_id'],
+    'remote_subnet_id': ['remote_subnet'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -157,19 +157,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    address_translation=dict(
+    preshared_key=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     customer_peer_ip=dict(
         required=False,
         type='str'),
-    internal_subnet_id=dict(
+    remote_subnet=dict(
         required=False,
-        type='int'),
-    remote_subnet_id=dict(
-        required=False,
-        type='int'),
+        elements='',
+        type='list'),
     service_subnet_id=dict(
         required=False,
         type='int'),
@@ -180,13 +177,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    preshared_key=dict(
-        required=False,
-        type='str'),
-    remote_subnet=dict(
+    address_translation=dict(
         required=False,
         elements='',
         type='list'),
+    internal_subnet_id=dict(
+        required=False,
+        type='int'),
+    remote_subnet_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.1',
+        ibm_provider_version='1.17.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
