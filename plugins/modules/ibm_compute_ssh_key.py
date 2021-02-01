@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssh_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
@@ -194,7 +194,7 @@ def run_module():
         resource_type='ibm_compute_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -203,7 +203,7 @@ def run_module():
             resource_type='ibm_compute_ssh_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.17.0',
+            ibm_provider_version='1.18.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

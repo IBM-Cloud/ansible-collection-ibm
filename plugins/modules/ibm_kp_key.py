@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
@@ -25,20 +25,9 @@ options:
             - (Required for new resource) Key protect instance ID
         required: True
         type: str
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
     payload:
         description:
             - None
-        required: False
-        type: str
-    iv_value:
-        description:
-            - Only for imported root key
         required: False
         type: str
     key_name:
@@ -46,6 +35,17 @@ options:
             - (Required for new resource) Key name
         required: True
         type: str
+    iv_value:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
     force_delete:
         description:
             - set to true to force delete the key
@@ -110,10 +110,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'key_protect_id',
-    'standard_key',
     'payload',
-    'iv_value',
     'key_name',
+    'iv_value',
+    'standard_key',
     'force_delete',
     'encrypted_nonce',
 ]
@@ -124,8 +124,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'key_name',
     'key_protect_id',
+    'key_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,18 +138,18 @@ module_args = dict(
     key_protect_id=dict(
         required=False,
         type='str'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
     payload=dict(
-        required=False,
-        type='str'),
-    iv_value=dict(
         required=False,
         type='str'),
     key_name=dict(
         required=False,
         type='str'),
+    iv_value=dict(
+        required=False,
+        type='str'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
     force_delete=dict(
         required=False,
         type='bool'),
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -230,7 +230,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.17.0',
+            ibm_provider_version='1.18.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_name (False, str, None)
+  key_protect_id (True, str, None)
     None
 
 
-  key_protect_id (True, str, None)
+  key_name (False, str, None)
     None
 
 

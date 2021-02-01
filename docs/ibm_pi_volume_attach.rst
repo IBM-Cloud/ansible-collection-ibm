@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  status (False, str, None)
+    None
+
+
+  pi_volume_shareable (False, bool, None)
+    None
+
 
   volumeattachid (False, str, None)
     Volume attachment ID
@@ -42,14 +50,6 @@ Parameters
 
   pi_instance_name (True, str, None)
     (Required for new resource) PI Instance name
-
-
-  status (False, str, None)
-    None
-
-
-  pi_volume_shareable (False, bool, None)
-    None
 
 
   id (False, str, None)

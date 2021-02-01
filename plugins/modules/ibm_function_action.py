@@ -16,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
-    namespace:
-        description:
-            - (Required for new resource) IBM Cloud function namespace.
-        required: True
-        type: str
-    exec:
-        description:
-            - (Required for new resource) Execution info
-        required: True
-        type: list
-        elements: dict
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
@@ -43,22 +32,33 @@ options:
         required: False
         type: str
         default: []
+    namespace:
+        description:
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
+        type: str
+    exec:
+        description:
+            - (Required for new resource) Execution info
+        required: True
+        type: list
+        elements: dict
     name:
         description:
             - (Required for new resource) Name of action.
         required: True
         type: str
-    publish:
-        description:
-            - Action visibilty.
-        required: False
-        type: bool
     limits:
         description:
             - None
         required: False
         type: list
         elements: dict
+    publish:
+        description:
+            - Action visibilty.
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,24 +98,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'namespace',
-    'exec',
     'user_defined_annotations',
     'user_defined_parameters',
+    'namespace',
+    'exec',
     'name',
-    'publish',
     'limits',
+    'publish',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('namespace', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'namespace',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -125,6 +125,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    user_defined_annotations=dict(
+        required=False,
+        type='str'),
+    user_defined_parameters=dict(
+        required=False,
+        type='str'),
     namespace=dict(
         required=False,
         type='str'),
@@ -132,22 +138,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    user_defined_annotations=dict(
-        required=False,
-        type='str'),
-    user_defined_parameters=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    publish=dict(
-        required=False,
-        type='bool'),
     limits=dict(
         required=False,
         elements='',
         type='list'),
+    publish=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_function_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_function_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.17.0',
+            ibm_provider_version='1.18.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

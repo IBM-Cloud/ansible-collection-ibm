@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_type (False, str, all)
-    None
-
-
-  list_bounded_services (False, bool, True)
-    If set to false bounded services won't be listed.
+  name (False, str, None)
+    Name or id of the cluster
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  name (False, str, None)
-    Name or id of the cluster
+  list_bounded_services (False, bool, True)
+    If set to false bounded services won't be listed.
+
+
+  alb_type (False, str, all)
+    None
 
 
   ibmcloud_api_key (True, any, None)

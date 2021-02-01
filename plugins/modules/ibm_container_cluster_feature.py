@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_cluster_feature' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
@@ -31,11 +31,6 @@ options:
         required: False
         type: bool
         default: True
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name of ID
@@ -52,6 +47,11 @@ options:
         required: False
         type: bool
         default: True
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,10 +85,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'private_service_endpoint',
     'reload_workers',
-    'resource_group_id',
     'cluster',
     'public_service_endpoint',
     'refresh_api_servers',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -111,9 +111,6 @@ module_args = dict(
     reload_workers=dict(
         required=False,
         type='bool'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -123,6 +120,9 @@ module_args = dict(
     refresh_api_servers=dict(
         required=False,
         type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_container_cluster_feature',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

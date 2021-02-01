@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  route_vpc_zone_ingress (False, bool, False)
-    If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
-
-
-  vpc (True, str, None)
-    (Required for new resource) The VPC identifier.
+  name (False, str, None)
+    The user-defined name for this routing table.
 
 
   route_direct_link_ingress (False, bool, False)
@@ -44,8 +40,12 @@ Parameters
     If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
 
 
-  name (False, str, None)
-    The user-defined name for this routing table.
+  route_vpc_zone_ingress (False, bool, False)
+    If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+
+
+  vpc (True, str, None)
+    (Required for new resource) The VPC identifier.
 
 
   id (False, str, None)

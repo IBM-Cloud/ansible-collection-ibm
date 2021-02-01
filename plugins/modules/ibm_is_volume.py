@@ -16,25 +16,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
-    iops:
+    zone:
         description:
-            - IOPS value for the Volume
-        required: False
-        type: int
+            - (Required for new resource) Zone name
+        required: True
+        type: str
     tags:
         description:
             - Tags for the volume instance
         required: False
         type: list
         elements: str
-    zone:
+    resource_group:
         description:
-            - (Required for new resource) Zone name
-        required: True
+            - Resource group name
+        required: False
+        type: str
+    iops:
+        description:
+            - IOPS value for the Volume
+        required: False
+        type: int
+    encryption_key:
+        description:
+            - Volume encryption key info
+        required: False
         type: str
     capacity:
         description:
@@ -51,16 +61,6 @@ options:
         description:
             - (Required for new resource) Vloume profile name
         required: True
-        type: str
-    encryption_key:
-        description:
-            - Volume encryption key info
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group name
-        required: False
         type: str
     id:
         description:
@@ -115,14 +115,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iops',
-    'tags',
     'zone',
+    'tags',
+    'resource_group',
+    'iops',
+    'encryption_key',
     'capacity',
     'name',
     'profile',
-    'encryption_key',
-    'resource_group',
 ]
 
 # Params for Data source
@@ -142,14 +142,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iops=dict(
+    zone=dict(
         required=False,
-        type='int'),
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    zone=dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    iops=dict(
+        required=False,
+        type='int'),
+    encryption_key=dict(
         required=False,
         type='str'),
     capacity=dict(
@@ -159,12 +165,6 @@ module_args = dict(
         required=False,
         type='str'),
     profile=dict(
-        required=False,
-        type='str'),
-    encryption_key=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.17.0',
+            ibm_provider_version='1.18.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

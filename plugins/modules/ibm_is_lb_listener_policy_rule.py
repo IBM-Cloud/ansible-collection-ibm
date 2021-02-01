@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
@@ -25,15 +25,10 @@ options:
             - (Required for new resource) Condition info of the rule.
         required: True
         type: str
-    value:
+    type:
         description:
-            - (Required for new resource) policy rule value info
+            - (Required for new resource) Policy rule type.
         required: True
-        type: str
-    field:
-        description:
-            - None
-        required: False
         type: str
     lb:
         description:
@@ -50,10 +45,15 @@ options:
             - (Required for new resource) Listener Policy ID
         required: True
         type: str
-    type:
+    value:
         description:
-            - (Required for new resource) Policy rule type.
+            - (Required for new resource) policy rule value info
         required: True
+        type: str
+    field:
+        description:
+            - None
+        required: False
         type: str
     id:
         description:
@@ -102,22 +102,22 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('condition', 'str'),
-    ('value', 'str'),
+    ('type', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
     ('policy', 'str'),
-    ('type', 'str'),
+    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'condition',
-    'value',
-    'field',
+    'type',
     'lb',
     'listener',
     'policy',
-    'type',
+    'value',
+    'field',
 ]
 
 # Params for Data source
@@ -137,10 +137,7 @@ module_args = dict(
     condition=dict(
         required=False,
         type='str'),
-    value=dict(
-        required=False,
-        type='str'),
-    field=dict(
+    type=dict(
         required=False,
         type='str'),
     lb=dict(
@@ -152,7 +149,10 @@ module_args = dict(
     policy=dict(
         required=False,
         type='str'),
-    type=dict(
+    value=dict(
+        required=False,
+        type='str'),
+    field=dict(
         required=False,
         type='str'),
     id=dict(
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

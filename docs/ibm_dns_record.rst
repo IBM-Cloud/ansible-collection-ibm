@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,36 +28,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retry (False, int, None)
-    Retry count
+  port (False, int, None)
+    port number
 
 
-  priority (False, int, 0)
-    priority info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   mx_priority (False, int, 0)
     Maximum priority
 
 
-  weight (False, int, 0)
-    weight info
+  refresh (False, int, None)
+    refresh rate
 
 
   tags (False, list, None)
     tags set for the resource
 
 
-  refresh (False, int, None)
-    refresh rate
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   type (True, str, None)
@@ -66,34 +94,6 @@ Parameters
 
   service (False, str, None)
     service info
-
-
-  port (False, int, None)
-    port number
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  protocol (False, str, None)
-    protocol info
 
 
   id (False, str, None)

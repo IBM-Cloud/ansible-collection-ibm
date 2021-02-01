@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Name of the load balancer
+  ttl (False, int, 60)
+    Time to live in second
+
+
+  instance_id (True, str, None)
+    (Required for new resource) The GUID of the private DNS.
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone Id
 
 
   description (False, str, None)
     Descriptive text of the load balancer
-
-
-  ttl (False, int, 60)
-    Time to live in second
 
 
   fallback_pool (True, str, None)
@@ -52,12 +56,8 @@ Parameters
     Map availability zones to pool ID's.
 
 
-  instance_id (True, str, None)
-    (Required for new resource) The GUID of the private DNS.
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone Id
+  name (True, str, None)
+    (Required for new resource) Name of the load balancer
 
 
   enabled (False, bool, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -26,8 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  bucket_region (True, str, None)
+    None
+
+
   resource_instance_id (True, str, None)
     None
+
+
+  endpoint_type (False, str, public)
+    public or private
 
 
   bucket_name (True, str, None)
@@ -36,14 +44,6 @@ Parameters
 
   bucket_type (True, str, None)
     None
-
-
-  bucket_region (True, str, None)
-    None
-
-
-  endpoint_type (False, str, public)
-    public or private
 
 
   iaas_classic_username (False, any, None)

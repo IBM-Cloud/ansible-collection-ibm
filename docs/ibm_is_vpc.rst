@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) VPC name
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
 
 
   tags (False, list, None)
     List of tags
 
 
-  resource_group (False, str, None)
-    Resource group info
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
   classic_access (False, bool, False)
     Set to true if classic access needs to enabled to VPC
+
+
+  name (True, str, None)
+    (Required for new resource) VPC name
+
+
+  resource_group (False, str, None)
+    Resource group info
 
 
   id (False, str, None)

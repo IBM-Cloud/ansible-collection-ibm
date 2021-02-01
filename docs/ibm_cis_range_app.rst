@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  traffic_type (False, str, direct)
-    Configure how traffic is handled at the edge.
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
-  tls (False, str, False)
-    Configure if and how TLS connections are terminated at the edge.
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
 
 
   domain_id (True, str, None)
@@ -48,40 +48,40 @@ Parameters
     IP address and port of the origin for this Range application.
 
 
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
+  protocol (True, str, None)
+    (Required for new resource) Defines the protocol and port for this application
 
 
   dns_type (True, str, None)
     (Required for new resource) Type of the DNS record for this application
 
 
+  origin_dns (False, str, None)
+    DNS record pointing to the origin for this Range application.
+
+
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
+
+
   edge_ips_type (False, str, dynamic)
     The type of edge IP configuration.
 
 
-  edge_ips_connectivity (False, str, all)
-    Specifies the IP version.
-
-
-  protocol (True, str, None)
-    (Required for new resource) Defines the protocol and port for this application
-
-
-  origin_dns (False, str, None)
-    DNS record pointing to the origin for this Range application.
+  tls (False, str, False)
+    Configure if and how TLS connections are terminated at the edge.
 
 
   origin_port (False, int, None)
     Port at the origin that listens to traffic
 
 
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
+  edge_ips_connectivity (False, str, all)
+    Specifies the IP version.
+
+
+  traffic_type (False, str, direct)
+    Configure how traffic is handled at the edge.
 
 
   id (False, str, None)

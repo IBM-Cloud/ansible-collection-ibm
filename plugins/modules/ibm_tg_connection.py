@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.17.0
+    - IBM-Cloud terraform-provider-ibm v1.18.0
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
             - The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
         required: False
         type: str
+    gateway:
+        description:
+            - (Required for new resource) The Transit Gateway identifier
+        required: True
+        type: str
     name:
         description:
             - The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
@@ -39,11 +44,6 @@ options:
         description:
             - The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
         required: False
-        type: str
-    gateway:
-        description:
-            - (Required for new resource) The Transit Gateway identifier
-        required: True
         type: str
     id:
         description:
@@ -99,9 +99,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'network_type',
     'network_id',
+    'gateway',
     'name',
     'network_account_id',
-    'gateway',
 ]
 
 # Params for Data source
@@ -124,13 +124,13 @@ module_args = dict(
     network_id=dict(
         required=False,
         type='str'),
+    gateway=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     network_account_id=dict(
-        required=False,
-        type='str'),
-    gateway=dict(
         required=False,
         type='str'),
     id=dict(
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_tg_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.17.0',
+        ibm_provider_version='1.18.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

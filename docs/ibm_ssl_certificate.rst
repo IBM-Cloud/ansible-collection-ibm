@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  administrative_contact (False, list, None)
+    None
+
+
+  server_type (True, str, None)
+    (Required for new resource) server type
+
+
+  billing_contact (False, list, None)
+    None
+
+
   validity_months (True, int, None)
     (Required for new resource) vslidity of the ssl certificate in month
+
+
+  technical_contact (True, list, None)
+    (Required for new resource) Technical contact info
+
+
+  technical_contact_same_as_org_address_flag (False, bool, False)
+    Technical contact same as org address flag
 
 
   administrative_contact_same_as_technical_flag (False, bool, False)
     Administrative contact same as technical flag
 
 
-  order_approver_email_address (True, str, None)
-    (Required for new resource) Email address of the approver
+  billing_contact_same_as_technical_flag (False, bool, False)
+    billing contact
 
 
-  technical_contact_same_as_org_address_flag (False, bool, False)
-    Technical contact same as org address flag
+  administrative_address_same_as_organization_flag (False, bool, False)
+    administrative address same as organization flag
 
 
   billing_address_same_as_organization_flag (False, bool, False)
@@ -52,22 +72,6 @@ Parameters
     (Required for new resource) Organization information
 
 
-  technical_contact (True, list, None)
-    (Required for new resource) Technical contact info
-
-
-  billing_contact (False, list, None)
-    None
-
-
-  server_count (True, int, None)
-    (Required for new resource) Server count
-
-
-  ssl_type (True, str, None)
-    (Required for new resource) ssl type
-
-
   certificate_signing_request (True, str, None)
     (Required for new resource) certificate signing request info
 
@@ -76,20 +80,16 @@ Parameters
     Renewal flag
 
 
-  billing_contact_same_as_technical_flag (False, bool, False)
-    billing contact
+  order_approver_email_address (True, str, None)
+    (Required for new resource) Email address of the approver
 
 
-  server_type (True, str, None)
-    (Required for new resource) server type
+  server_count (True, int, None)
+    (Required for new resource) Server count
 
 
-  administrative_address_same_as_organization_flag (False, bool, False)
-    administrative address same as organization flag
-
-
-  administrative_contact (False, list, None)
-    None
+  ssl_type (True, str, None)
+    (Required for new resource) ssl type
 
 
   id (False, str, None)

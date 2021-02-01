@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.17.0
+- IBM-Cloud terraform-provider-ibm v1.18.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
   network_interfaces (False, list, None)
     None
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
+  user_data (False, str, None)
+    User data given for the instance
 
 
   force_recovery_time (False, int, None)
     Define timeout to force the instances to start/stop in minutes.
 
 
-  image (True, str, None)
-    (Required for new resource) image name
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
   boot_volume (False, list, None)
     None
 
 
+  volumes (False, list, None)
+    List of volumes
+
+
   name (True, str, None)
     (Required for new resource) Instance name
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  tags (False, list, None)
+    list of tags for the instance
 
 
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  resource_group (False, str, None)
+    Instance resource group
 
 
   id (False, str, None)
