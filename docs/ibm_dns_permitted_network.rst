@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  type (False, str, vpc)
-    Network Type
-
 
   vpc_crn (True, str, None)
     (Required for new resource) VPC CRN id
@@ -42,6 +38,10 @@ Parameters
 
   zone_id (True, str, None)
     (Required for new resource) Zone Id
+
+
+  type (False, str, vpc)
+    Network Type
 
 
   id (False, str, None)

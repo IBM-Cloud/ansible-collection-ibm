@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.0
+    - IBM-Cloud terraform-provider-ibm v1.16.1
     - Terraform v0.12.20
 
 options:
@@ -24,17 +24,12 @@ options:
             - None
         required: True
         type: str
-    bucket_region:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_type:
-        description:
-            - None
-        required: True
-        type: str
     resource_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_region:
         description:
             - None
         required: True
@@ -45,6 +40,11 @@ options:
         required: False
         type: str
         default: public
+    bucket_type:
+        description:
+            - None
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -79,18 +79,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bucket_name', 'str'),
+    ('resource_instance_id', 'str'),
     ('bucket_region', 'str'),
     ('bucket_type', 'str'),
-    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bucket_name',
-    'bucket_region',
-    'bucket_type',
     'resource_instance_id',
+    'bucket_region',
     'endpoint_type',
+    'bucket_type',
 ]
 
 
@@ -104,17 +104,17 @@ module_args = dict(
     bucket_name=dict(
         required=True,
         type='str'),
-    bucket_region=dict(
-        required=True,
-        type='str'),
-    bucket_type=dict(
-        required=True,
-        type='str'),
     resource_instance_id=dict(
+        required=True,
+        type='str'),
+    bucket_region=dict(
         required=True,
         type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    bucket_type=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -150,7 +150,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.0',
+        ibm_provider_version='1.16.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Org name, for example myorg@domain
+
 
   org_quota_definition_guid (False, str, None)
     Org quota guid
@@ -50,10 +54,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  name (True, str, None)
-    (Required for new resource) Org name, for example myorg@domain
 
 
   id (False, str, None)

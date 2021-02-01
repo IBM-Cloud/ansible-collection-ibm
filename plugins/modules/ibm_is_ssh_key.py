@@ -16,18 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ssh_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.0
+    - IBM-Cloud terraform-provider-ibm v1.16.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) SSH Key name
-        required: True
-        type: str
     public_key:
         description:
             - (Required for new resource) SSH Public key data
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) SSH Key name
         required: True
         type: str
     tags:
@@ -87,14 +87,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('public_key', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'public_key',
+    'name',
     'tags',
     'resource_group',
 ]
@@ -115,10 +115,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    public_key=dict(
         required=False,
         type='str'),
-    public_key=dict(
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.0',
+        ibm_provider_version='1.16.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -214,7 +214,7 @@ def run_module():
             resource_type='ibm_is_ssh_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.0',
+            ibm_provider_version='1.16.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

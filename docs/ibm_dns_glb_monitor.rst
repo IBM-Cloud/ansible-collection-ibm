@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,8 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  interval (False, int, 60)
-    The interval between each health check
+  port (False, int, None)
+    Port number to connect to for the health check
+
+
+  method (False, str, None)
+    The method to use for the health check
 
 
   path (False, str, None)
@@ -40,6 +44,26 @@ Parameters
     The HTTP request headers to send in the health check
 
 
+  expected_body (False, str, None)
+    A case-insensitive sub-string to look for in the response body
+
+
+  type (False, str, HTTP)
+    The protocol to use for the health check
+
+
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  retries (False, int, 1)
+    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
+
+
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
 
@@ -48,16 +72,8 @@ Parameters
     Descriptive text of the load balancer monitor
 
 
-  type (False, str, HTTP)
-    The protocol to use for the health check
-
-
-  port (False, int, None)
-    Port number to connect to for the health check
-
-
-  expected_body (False, str, None)
-    A case-insensitive sub-string to look for in the response body
+  expected_codes (False, str, None)
+    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
 
 
   timeout (False, int, 5)
@@ -66,22 +82,6 @@ Parameters
 
   allow_insecure (False, bool, None)
     Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
-
-
-  retries (False, int, 1)
-    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
-
-
-  expected_codes (False, str, None)
-    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  method (False, str, None)
-    The method to use for the health check
 
 
   id (False, str, None)

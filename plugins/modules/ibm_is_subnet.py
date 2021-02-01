@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.0
+    - IBM-Cloud terraform-provider-ibm v1.16.1
     - Terraform v0.12.20
 
 options:
@@ -25,32 +25,32 @@ options:
             - IPV4 subnet - CIDR block
         required: False
         type: str
-    routing_table:
+    vpc:
         description:
-            - routing table id that is associated with the subnet
-        required: False
+            - (Required for new resource) VPC instance ID
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Subnet zone info
+        required: True
         type: str
     total_ipv4_address_count:
         description:
             - The total number of IPv4 addresses in this subnet.
         required: False
         type: int
-    zone:
-        description:
-            - (Required for new resource) Subnet zone info
-        required: True
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC instance ID
-        required: True
-        type: str
     ip_version:
         description:
             - The IP version(s) to support for this subnet.
         required: False
         type: str
         default: ipv4
+    resource_group:
+        description:
+            - The resource group for this subnet
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Subnet name
@@ -66,9 +66,9 @@ options:
             - Public Gateway of the subnet
         required: False
         type: str
-    resource_group:
+    routing_table:
         description:
-            - The resource group for this subnet
+            - routing table id that is associated with the subnet
         required: False
         type: str
     id:
@@ -117,23 +117,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('vpc', 'str'),
+    ('zone', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'ipv4_cidr_block',
-    'routing_table',
-    'total_ipv4_address_count',
-    'zone',
     'vpc',
+    'zone',
+    'total_ipv4_address_count',
     'ip_version',
+    'resource_group',
     'name',
     'network_acl',
     'public_gateway',
-    'resource_group',
+    'routing_table',
 ]
 
 # Params for Data source
@@ -141,8 +141,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -157,19 +157,19 @@ module_args = dict(
     ipv4_cidr_block=dict(
         required=False,
         type='str'),
-    routing_table=dict(
+    vpc=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     total_ipv4_address_count=dict(
         required=False,
         type='int'),
-    zone=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
-        required=False,
-        type='str'),
     ip_version=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
@@ -181,7 +181,7 @@ module_args = dict(
     public_gateway=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    routing_table=dict(
         required=False,
         type='str'),
     id=dict(
@@ -261,7 +261,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.16.0',
+        ibm_provider_version='1.16.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +270,7 @@ def run_module():
             resource_type='ibm_is_subnet',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.16.0',
+            ibm_provider_version='1.16.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Flow Log Collector name
-
 
   storage_bucket (True, str, None)
     (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
@@ -50,6 +46,10 @@ Parameters
 
   active (False, bool, True)
     Indicates whether this collector is active
+
+
+  name (True, str, None)
+    (Required for new resource) Flow Log Collector name
 
 
   id (False, str, None)

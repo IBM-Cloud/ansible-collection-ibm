@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_attach' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.0
+    - IBM-Cloud terraform-provider-ibm v1.16.1
     - Terraform v0.12.20
 
 options:
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    pi_volume_shareable:
-        description:
-            - None
-        required: False
-        type: bool
     volumeattachid:
         description:
             - Volume attachment ID
@@ -50,6 +40,16 @@ options:
             - (Required for new resource) PI Instance name
         required: True
         type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    pi_volume_shareable:
+        description:
+            - None
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,12 +99,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'pi_volume_shareable',
     'volumeattachid',
     'pi_cloud_instance_id',
     'pi_volume_attach_name',
     'pi_instance_name',
+    'status',
+    'pi_volume_shareable',
 ]
 
 # Params for Data source
@@ -121,12 +121,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    pi_volume_shareable=dict(
-        required=False,
-        type='bool'),
     volumeattachid=dict(
         required=False,
         type='str'),
@@ -139,6 +133,12 @@ module_args = dict(
     pi_instance_name=dict(
         required=False,
         type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_pi_volume_attach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.0',
+        ibm_provider_version='1.16.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

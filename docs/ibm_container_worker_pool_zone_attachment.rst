@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  public_vlan_id (False, str, None)
+    None
+
+
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
-
-
-  cluster (True, str, None)
-    (Required for new resource) cluster name or ID
 
 
   worker_pool (True, str, None)
@@ -48,8 +48,8 @@ Parameters
     None
 
 
-  public_vlan_id (False, str, None)
-    None
+  cluster (True, str, None)
+    (Required for new resource) cluster name or ID
 
 
   wait_till_albs (False, bool, True)
