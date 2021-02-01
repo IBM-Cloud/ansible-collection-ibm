@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,28 +28,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    service info
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
-  protocol (False, str, None)
-    protocol info
-
-
-  port (False, int, None)
-    port number
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   domain_id (True, int, None)
     (Required for new resource) Domain ID of dns record instance
 
 
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
+  expire (False, int, None)
+    DNS record expiry info
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   retry (False, int, None)
@@ -60,40 +68,32 @@ Parameters
     Minimun TTL configuration
 
 
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  port (False, int, None)
+    port number
+
+
   weight (False, int, 0)
     weight info
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
 
 
   tags (False, list, None)
     tags set for the resource
 
 
-  refresh (False, int, None)
-    refresh rate
-
-
-  priority (False, int, 0)
-    priority info
-
-
   data (True, str, None)
     (Required for new resource) DNS record data
 
 
-  expire (False, int, None)
-    DNS record expiry info
+  protocol (False, str, None)
+    protocol info
+
+
+  priority (False, int, 0)
+    priority info
 
 
   id (False, str, None)

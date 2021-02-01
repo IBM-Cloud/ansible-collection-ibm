@@ -16,41 +16,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.16.0
+    - IBM-Cloud terraform-provider-ibm v1.16.1
     - Terraform v0.12.20
 
 options:
-    cis_id:
+    enabled:
         description:
-            - (Required for new resource) CIS instance crn
+            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
         required: True
-        type: str
+        type: bool
+    origins:
+        description:
+            - (Required for new resource) Origins info
+        required: True
+        type: list
+        elements: dict
     check_regions:
         description:
             - (Required for new resource) List of regions
         required: True
         type: list
         elements: str
-    enabled:
-        description:
-            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
-        required: True
-        type: bool
     minimum_origins:
         description:
             - Minimum number of Origins
         required: False
         type: int
         default: 1
-    notification_email:
+    cis_id:
         description:
-            - Email address configured to recieve the notifications
-        required: False
-        type: str
-    description:
-        description:
-            - Description of the CIS Origin Pool
-        required: False
+            - (Required for new resource) CIS instance crn
+        required: True
         type: str
     name:
         description:
@@ -62,12 +58,16 @@ options:
             - Monitor value
         required: False
         type: str
-    origins:
+    description:
         description:
-            - (Required for new resource) Origins info
-        required: True
-        type: list
-        elements: dict
+            - Description of the CIS Origin Pool
+        required: False
+        type: str
+    notification_email:
+        description:
+            - Email address configured to recieve the notifications
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,24 +114,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
-    ('check_regions', 'list'),
     ('enabled', 'bool'),
-    ('name', 'str'),
     ('origins', 'list'),
+    ('check_regions', 'list'),
+    ('cis_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'check_regions',
     'enabled',
+    'origins',
+    'check_regions',
     'minimum_origins',
-    'notification_email',
-    'description',
+    'cis_id',
     'name',
     'monitor',
-    'origins',
+    'description',
+    'notification_email',
 ]
 
 # Params for Data source
@@ -148,23 +148,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    enabled=dict(
         required=False,
-        type='str'),
+        type='bool'),
+    origins=dict(
+        required=False,
+        elements='',
+        type='list'),
     check_regions=dict(
         required=False,
         elements='',
         type='list'),
-    enabled=dict(
-        required=False,
-        type='bool'),
     minimum_origins=dict(
         required=False,
         type='int'),
-    notification_email=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    cis_id=dict(
         required=False,
         type='str'),
     name=dict(
@@ -173,10 +171,12 @@ module_args = dict(
     monitor=dict(
         required=False,
         type='str'),
-    origins=dict(
+    description=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    notification_email=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_cis_origin_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.16.0',
+        ibm_provider_version='1.16.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

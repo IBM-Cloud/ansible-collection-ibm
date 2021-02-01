@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,16 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Name of the Public gateway instance
-
-
   floating_ip (False, dict, None)
     None
-
-
-  resource_group (False, str, None)
-    Public gateway resource group info
 
 
   tags (False, list, None)
@@ -50,6 +42,14 @@ Parameters
 
   zone (True, str, None)
     (Required for new resource) Public gateway zone info
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the Public gateway instance
+
+
+  resource_group (False, str, None)
+    Public gateway resource group info
 
 
   id (False, str, None)

@@ -20,21 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
 
   firewall_type (True, str, None)
     (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
@@ -50,6 +42,14 @@ Parameters
 
   ua_rule (False, list, None)
     User Agent Rule Data
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)

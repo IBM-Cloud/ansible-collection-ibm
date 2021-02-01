@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_interface (True, str, None)
-    (Required for new resource) security group network interface attachment NIC ID
-
-
   security_group (True, str, None)
     (Required for new resource) security group network interface attachment group ID
+
+
+  network_interface (True, str, None)
+    (Required for new resource) security group network interface attachment NIC ID
 
 
   id (False, str, None)

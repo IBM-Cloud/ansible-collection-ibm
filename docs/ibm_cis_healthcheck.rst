@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.16.0
+- IBM-Cloud terraform-provider-ibm v1.16.1
 - Terraform v0.12.20
 
 
@@ -28,40 +28,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    description
-
-
   follow_redirects (False, bool, False)
     follow_redirects
 
 
-  expected_body (False, str, None)
-    expected_body
+  timeout (False, int, 5)
+    timeout
 
 
-  type (False, str, http)
-    type
+  allow_insecure (False, bool, False)
+    allow_insecure
 
 
-  method (False, str, GET)
-    method
+  interval (False, int, 60)
+    interval
 
 
   port (False, int, None)
     port number
 
 
+  headers (False, list, None)
+    None
+
+
   expected_codes (False, str, None)
     expected_codes
+
+
+  type (False, str, http)
+    type
 
 
   retries (False, int, 2)
     retries
 
 
-  headers (False, list, None)
-    None
+  expected_body (False, str, None)
+    expected_body
+
+
+  description (False, str, None)
+    description
+
+
+  method (False, str, GET)
+    method
 
 
   cis_id (True, str, None)
@@ -70,18 +82,6 @@ Parameters
 
   path (False, str, /)
     path
-
-
-  timeout (False, int, 5)
-    timeout
-
-
-  interval (False, int, 60)
-    interval
-
-
-  allow_insecure (False, bool, False)
-    allow_insecure
 
 
   id (False, str, None)
