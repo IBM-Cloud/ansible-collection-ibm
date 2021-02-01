@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,11 +28,51 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
   tags (False, list, None)
     None
 
 
   wait_time_minutes (False, int, 90)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  domain (False, str, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  evault (False, int, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
     None
 
 
@@ -44,11 +84,7 @@ Parameters
     None
 
 
-  disks (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
+  ipv6_enabled (False, bool, False)
     None
 
 
@@ -56,43 +92,7 @@ Parameters
     None
 
 
-  public_subnet (False, str, None)
-    None
-
-
-  public_security_group_ids (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
   file_storage_ids (False, list, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  private_subnet (False, str, None)
     None
 
 
@@ -100,19 +100,15 @@ Parameters
     None
 
 
-  public_bandwidth_unlimited (False, bool, False)
+  dedicated_host_id (False, int, None)
     None
 
 
-  hostname (False, str, None)
+  public_subnet (False, str, None)
     None
 
 
-  bulk_vms (False, list, None)
-    None
-
-
-  os_reference_code (False, str, None)
+  block_storage_ids (False, list, None)
     None
 
 
@@ -124,31 +120,7 @@ Parameters
     The placement group id
 
 
-  dedicated_host_id (False, int, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  memory (False, int, None)
-    None
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  block_storage_ids (False, list, None)
+  public_security_group_ids (False, list, None)
     None
 
 
@@ -156,11 +128,11 @@ Parameters
     None
 
 
-  image_id (False, int, None)
+  bulk_vms (False, list, None)
     None
 
 
-  public_vlan_id (False, int, None)
+  dedicated_host_name (False, str, None)
     None
 
 
@@ -168,15 +140,23 @@ Parameters
     None
 
 
+  image_id (False, int, None)
+    None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
   local_disk (False, bool, True)
     None
 
 
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  private_vlan_id (False, int, None)
+  hostname (False, str, None)
     None
 
 
@@ -188,7 +168,27 @@ Parameters
     None
 
 
-  dedicated_acct_host_only (False, bool, None)
+  datacenter (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
     None
 
 

@@ -16,16 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
-    private_vlan_id:
+    public_vlan_id:
         description:
             - None
         required: False
         type: str
-    public_vlan_id:
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    private_vlan_id:
         description:
             - None
         required: False
@@ -36,11 +46,6 @@ options:
         required: False
         type: bool
         default: True
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
     cluster:
         description:
             - (Required for new resource) cluster name or ID
@@ -50,11 +55,6 @@ options:
         description:
             - (Required for new resource) Workerpool name
         required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
         type: str
     id:
         description:
@@ -89,13 +89,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_vlan_id',
     'public_vlan_id',
-    'wait_till_albs',
+    'resource_group_id',
     'zone',
+    'private_vlan_id',
+    'wait_till_albs',
     'cluster',
     'worker_pool',
-    'resource_group_id',
 ]
 
 # Params for Data source
@@ -112,25 +112,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_vlan_id=dict(
+    public_vlan_id=dict(
         required=False,
         type='str'),
-    public_vlan_id=dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
         required=False,
         type='str'),
     wait_till_albs=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
     worker_pool=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

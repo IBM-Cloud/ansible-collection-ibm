@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -25,25 +25,10 @@ options:
             - The network ACL for this subnet
         required: False
         type: str
-    total_ipv4_address_count:
+    resource_group:
         description:
-            - The total number of IPv4 addresses in this subnet.
+            - The resource group for this subnet
         required: False
-        type: int
-    name:
-        description:
-            - (Required for new resource) Subnet name
-        required: True
-        type: str
-    ipv4_cidr_block:
-        description:
-            - IPV4 subnet - CIDR block
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC instance ID
-        required: True
         type: str
     ip_version:
         description:
@@ -56,20 +41,35 @@ options:
             - Public Gateway of the subnet
         required: False
         type: str
-    zone:
+    vpc:
         description:
-            - (Required for new resource) Subnet zone info
+            - (Required for new resource) VPC instance ID
         required: True
-        type: str
-    resource_group:
-        description:
-            - The resource group for this subnet
-        required: False
         type: str
     routing_table:
         description:
             - routing table id that is associated with the subnet
         required: False
+        type: str
+    ipv4_cidr_block:
+        description:
+            - IPV4 subnet - CIDR block
+        required: False
+        type: str
+    total_ipv4_address_count:
+        description:
+            - The total number of IPv4 addresses in this subnet.
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) Subnet name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Subnet zone info
+        required: True
         type: str
     id:
         description:
@@ -117,23 +117,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('vpc', 'str'),
+    ('name', 'str'),
     ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'network_acl',
-    'total_ipv4_address_count',
-    'name',
-    'ipv4_cidr_block',
-    'vpc',
+    'resource_group',
     'ip_version',
     'public_gateway',
-    'zone',
-    'resource_group',
+    'vpc',
     'routing_table',
+    'ipv4_cidr_block',
+    'total_ipv4_address_count',
+    'name',
+    'zone',
 ]
 
 # Params for Data source
@@ -146,8 +146,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'total_ipv4_address_count': ['ipv4_cidr_block'],
     'ipv4_cidr_block': ['total_ipv4_address_count'],
+    'total_ipv4_address_count': ['ipv4_cidr_block'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -157,16 +157,7 @@ module_args = dict(
     network_acl=dict(
         required=False,
         type='str'),
-    total_ipv4_address_count=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    ipv4_cidr_block=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     ip_version=dict(
@@ -175,13 +166,22 @@ module_args = dict(
     public_gateway=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    vpc=dict(
         required=False,
         type='str'),
     routing_table=dict(
+        required=False,
+        type='str'),
+    ipv4_cidr_block=dict(
+        required=False,
+        type='str'),
+    total_ipv4_address_count=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -261,7 +261,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +270,7 @@ def run_module():
             resource_type='ibm_is_subnet',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.20.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

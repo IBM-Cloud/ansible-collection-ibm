@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -25,19 +25,19 @@ options:
             - (Required for new resource) Cluster name or ID
         required: True
         type: str
-    namespace_id:
+    role:
         description:
-            - (Required for new resource) namespace ID
-        required: True
+            - Role info
+        required: False
+        type: str
+    service_instance_id:
+        description:
+            - Service instance ID
+        required: False
         type: str
     key:
         description:
             - Key info
-        required: False
-        type: str
-    role:
-        description:
-            - Role info
         required: False
         type: str
     tags:
@@ -51,10 +51,10 @@ options:
             - serivice instance name
         required: False
         type: str
-    service_instance_id:
+    namespace_id:
         description:
-            - Service instance ID
-        required: False
+            - (Required for new resource) namespace ID
+        required: True
         type: str
     resource_group_id:
         description:
@@ -94,12 +94,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_name_id',
-    'namespace_id',
-    'key',
     'role',
+    'service_instance_id',
+    'key',
     'tags',
     'service_instance_name',
-    'service_instance_id',
+    'namespace_id',
     'resource_group_id',
 ]
 
@@ -117,8 +117,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'service_instance_name': ['service_instance_id'],
     'service_instance_id': ['service_instance_name'],
+    'service_instance_name': ['service_instance_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -128,13 +128,13 @@ module_args = dict(
     cluster_name_id=dict(
         required=False,
         type='str'),
-    namespace_id=dict(
+    role=dict(
+        required=False,
+        type='str'),
+    service_instance_id=dict(
         required=False,
         type='str'),
     key=dict(
-        required=False,
-        type='str'),
-    role=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -144,7 +144,7 @@ module_args = dict(
     service_instance_name=dict(
         required=False,
         type='str'),
-    service_instance_id=dict(
+    namespace_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -210,7 +210,7 @@ def run_module():
             resource_type='ibm_container_bind_service',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.20.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

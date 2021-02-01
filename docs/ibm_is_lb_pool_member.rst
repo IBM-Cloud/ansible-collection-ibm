@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  target_address (False, str, None)
-    Load balancer pool member target address
-
 
   pool (True, str, None)
     (Required for new resource) Loadblancer Poold ID
@@ -42,6 +38,10 @@ Parameters
 
   port (True, int, None)
     (Required for new resource) Load Balancer Pool port
+
+
+  target_address (False, str, None)
+    Load balancer pool member target address
 
 
   target_id (False, str, None)

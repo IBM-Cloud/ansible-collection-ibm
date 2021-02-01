@@ -15,19 +15,19 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Instance name
-        required: True
-        type: str
     private_key:
         description:
             - Instance Private Key file
         required: False
+        type: str
+    name:
+        description:
+            - Instance name
+        required: True
         type: str
     passphrase:
         description:
@@ -72,8 +72,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'private_key',
+    'name',
     'passphrase',
 ]
 
@@ -85,11 +85,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=True,
-        type='str'),
     private_key=dict(
         required=False,
+        type='str'),
+    name=dict(
+        required=True,
         type='str'),
     passphrase=dict(
         required=False,
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

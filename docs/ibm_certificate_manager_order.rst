@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  renew_certificate (False, bool, False)
-    Invokes renew functionality
-
-
-  domain_validation_method (False, str, dns-01)
-    Domain validation methods
-
-
-  auto_renew_enabled (False, bool, False)
-    None
-
-
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
-
-
-  description (False, str, None)
-    Certicate description
+  name (True, str, None)
+    (Required for new resource) Certificate name
 
 
   dns_provider_instance_crn (False, str, None)
@@ -56,16 +40,32 @@ Parameters
     Keyalgorithm info
 
 
+  auto_renew_enabled (False, bool, False)
+    None
+
+
   certificate_manager_instance_id (True, str, None)
     (Required for new resource) Certificate manager instance ID
 
 
-  name (True, str, None)
-    (Required for new resource) Certificate name
-
-
   domains (True, list, None)
     (Required for new resource) List of domain names
+
+
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
+
+
+  renew_certificate (False, bool, False)
+    Invokes renew functionality
+
+
+  description (False, str, None)
+    Certicate description
+
+
+  domain_validation_method (False, str, dns-01)
+    Domain validation methods
 
 
   id (False, str, None)

@@ -16,13 +16,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
     key_name:
         description:
             - (Required for new resource) Key name
+        required: True
+        type: str
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
+    encrypted_nonce:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    iv_value:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    force_delete:
+        description:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
+    instance_id:
+        description:
+            - (Required for new resource) Key protect or hpcs instance GUID
         required: True
         type: str
     endpoint_type:
@@ -36,26 +63,9 @@ options:
             - None
         required: False
         type: str
-    encrypted_nonce:
+    expiration_date:
         description:
-            - Only for imported root key
-        required: False
-        type: str
-    force_delete:
-        description:
-            - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
-    iv_value:
-        description:
-            - Only for imported root key
+            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
         required: False
         type: str
     policies:
@@ -64,16 +74,6 @@ options:
         required: False
         type: list
         elements: dict
-    instance_id:
-        description:
-            - (Required for new resource) Key protect or hpcs instance GUID
-        required: True
-        type: str
-    expiration_date:
-        description:
-            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,15 +127,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'key_name',
+    'standard_key',
+    'encrypted_nonce',
+    'iv_value',
+    'force_delete',
+    'instance_id',
     'endpoint_type',
     'payload',
-    'encrypted_nonce',
-    'force_delete',
-    'standard_key',
-    'iv_value',
-    'policies',
-    'instance_id',
     'expiration_date',
+    'policies',
 ]
 
 # Params for Data source
@@ -145,9 +145,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'endpoint_type',
     'instance_id',
     'key_name',
-    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -160,34 +160,34 @@ module_args = dict(
     key_name=dict(
         required=False,
         type='str'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
+    encrypted_nonce=dict(
+        required=False,
+        type='str'),
+    iv_value=dict(
+        required=False,
+        type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
+    instance_id=dict(
+        required=False,
+        type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
     payload=dict(
         required=False,
         type='str'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
-    force_delete=dict(
-        required=False,
-        type='bool'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
-    iv_value=dict(
+    expiration_date=dict(
         required=False,
         type='str'),
     policies=dict(
         required=False,
         elements='',
         type='list'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    expiration_date=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -253,7 +253,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -262,7 +262,7 @@ def run_module():
             resource_type='ibm_kms_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.20.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    Resource group name
+
 
   tags (False, list, None)
     Tags for the volume instance
@@ -36,28 +40,24 @@ Parameters
     (Required for new resource) Volume name
 
 
+  profile (True, str, None)
+    (Required for new resource) Vloume profile name
+
+
   encryption_key (False, str, None)
     Volume encryption key info
 
 
-  capacity (False, int, 100)
-    Vloume capacity value
+  iops (False, int, None)
+    IOPS value for the Volume
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
 
 
-  profile (True, str, None)
-    (Required for new resource) Vloume profile name
-
-
-  resource_group (False, str, None)
-    Resource group name
-
-
-  iops (False, int, None)
-    IOPS value for the Volume
+  capacity (False, int, 100)
+    Vloume capacity value
 
 
   id (False, str, None)

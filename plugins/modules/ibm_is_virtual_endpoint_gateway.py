@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) Endpoint gateway name
+        required: True
+        type: str
     resource_group:
         description:
             - The resource group id
@@ -34,11 +39,6 @@ options:
     vpc:
         description:
             - (Required for new resource) The VPC id
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Endpoint gateway name
         required: True
         type: str
     ips:
@@ -99,17 +99,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
     ('name', 'str'),
+    ('vpc', 'str'),
     ('target', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'tags',
+    'name',
     'resource_group',
     'vpc',
-    'name',
     'ips',
     'target',
 ]
@@ -134,13 +134,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
     vpc=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     ips=dict(
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_is_virtual_endpoint_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.20.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

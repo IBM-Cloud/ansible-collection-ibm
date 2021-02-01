@@ -16,18 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.20.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
     certificate_manager_instance_id:
         description:
             - (Required for new resource) Instance ID of the certificate manager resource
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the instance
         required: True
         type: str
     data:
@@ -40,6 +35,11 @@ options:
         description:
             - Description of the certificate instance
         required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the instance
+        required: True
         type: str
     id:
         description:
@@ -88,16 +88,16 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('certificate_manager_instance_id', 'str'),
-    ('name', 'str'),
     ('data', 'dict'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'certificate_manager_instance_id',
-    'name',
     'data',
     'description',
+    'name',
 ]
 
 # Params for Data source
@@ -117,14 +117,14 @@ module_args = dict(
     certificate_manager_instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     data=dict(
         required=False,
         elements='',
         type='dict'),
     description=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_certificate_manager_import',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.20.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

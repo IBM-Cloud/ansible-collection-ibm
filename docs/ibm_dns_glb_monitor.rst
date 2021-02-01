@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, HTTP)
-    The protocol to use for the health check
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  description (False, str, None)
+    Descriptive text of the load balancer monitor
+
+
+  allow_insecure (False, bool, None)
+    Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+
+
+  expected_body (False, str, None)
+    A case-insensitive sub-string to look for in the response body
 
 
   port (False, int, None)
@@ -40,12 +52,12 @@ Parameters
     The number of retries to attempt in case of a timeout before marking the origin as unhealthy
 
 
-  path (False, str, None)
-    The endpoint path to health check against
+  headers (False, list, None)
+    The HTTP request headers to send in the health check
 
 
-  expected_codes (False, str, None)
-    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
+  type (False, str, HTTP)
+    The protocol to use for the health check
 
 
   timeout (False, int, 5)
@@ -56,32 +68,20 @@ Parameters
     The method to use for the health check
 
 
-  allow_insecure (False, bool, None)
-    Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+  path (False, str, None)
+    The endpoint path to health check against
+
+
+  expected_codes (False, str, None)
+    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
 
 
   instance_id (True, str, None)
     (Required for new resource) Instance Id
 
 
-  interval (False, int, 60)
-    The interval between each health check
-
-
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
-
-
-  description (False, str, None)
-    Descriptive text of the load balancer monitor
-
-
-  headers (False, list, None)
-    The HTTP request headers to send in the health check
-
-
-  expected_body (False, str, None)
-    A case-insensitive sub-string to look for in the response body
 
 
   id (False, str, None)

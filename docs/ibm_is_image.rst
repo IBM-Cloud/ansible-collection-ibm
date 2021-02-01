@@ -20,13 +20,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    Tags for the image
+
+
+  href (True, str, None)
+    (Required for new resource) Image Href value
+
+
+  name (True, str, None)
+    (Required for new resource) Image name
+
 
   encrypted_data_key (False, str, None)
     A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
@@ -42,18 +54,6 @@ Parameters
 
   resource_group (False, str, None)
     The resource group for this image
-
-
-  href (True, str, None)
-    (Required for new resource) Image Href value
-
-
-  tags (False, list, None)
-    Tags for the image
-
-
-  name (True, str, None)
-    (Required for new resource) Image name
 
 
   id (False, str, None)

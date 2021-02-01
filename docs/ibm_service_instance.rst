@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.20.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) A name for the service instance
-
 
   wait_time_minutes (False, int, 10)
     Define timeout to wait for the service instances to succeeded/deleted etc.
@@ -54,6 +50,10 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the service instance
 
 
   id (False, str, None)
