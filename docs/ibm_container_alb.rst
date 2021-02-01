@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_ip (False, str, None)
-    IP assigned by the user
-
-
-  enable (False, bool, None)
-    set to true if ALB needs to be enabled
+  alb_id (True, str, None)
+    (Required for new resource) ALB ID
 
 
   disable_deployment (False, bool, None)
     Set to true if ALB needs to be disabled
 
 
-  alb_id (True, str, None)
-    (Required for new resource) ALB ID
+  enable (False, bool, None)
+    set to true if ALB needs to be enabled
+
+
+  user_ip (False, str, None)
+    IP assigned by the user
 
 
   id (False, str, None)

@@ -16,16 +16,58 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
+    termination_policy:
+        description:
+            - (Required for new resource) Termination policy
+        required: True
+        type: str
+    port:
+        description:
+            - Port number
+        required: False
+        type: int
+    health_check:
+        description:
+            - None
+        required: False
+        type: dict
+        elements: dict
     network_vlan_ids:
         description:
             - List of network VLAN ids
         required: False
         type: list
         elements: int
+    maximum_member_count:
+        description:
+            - (Required for new resource) Maximum member count
+        required: True
+        type: int
+    cooldown:
+        description:
+            - (Required for new resource) Cooldown value
+        required: True
+        type: int
+    minimum_member_count:
+        description:
+            - (Required for new resource) Minimum member count
+        required: True
+        type: int
+    virtual_server_id:
+        description:
+            - virtual server ID
+        required: False
+        type: int
+    virtual_guest_member_template:
+        description:
+            - (Required for new resource) Virtual guest member template
+        required: True
+        type: list
+        elements: dict
     tags:
         description:
             - List of tags
@@ -42,48 +84,6 @@ options:
             - (Required for new resource) regional group
         required: True
         type: str
-    termination_policy:
-        description:
-            - (Required for new resource) Termination policy
-        required: True
-        type: str
-    virtual_server_id:
-        description:
-            - virtual server ID
-        required: False
-        type: int
-    port:
-        description:
-            - Port number
-        required: False
-        type: int
-    health_check:
-        description:
-            - None
-        required: False
-        type: dict
-        elements: dict
-    virtual_guest_member_template:
-        description:
-            - (Required for new resource) Virtual guest member template
-        required: True
-        type: list
-        elements: dict
-    minimum_member_count:
-        description:
-            - (Required for new resource) Minimum member count
-        required: True
-        type: int
-    maximum_member_count:
-        description:
-            - (Required for new resource) Maximum member count
-        required: True
-        type: int
-    cooldown:
-        description:
-            - (Required for new resource) Cooldown value
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -130,29 +130,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('regional_group', 'str'),
     ('termination_policy', 'str'),
-    ('virtual_guest_member_template', 'list'),
-    ('minimum_member_count', 'int'),
     ('maximum_member_count', 'int'),
     ('cooldown', 'int'),
+    ('minimum_member_count', 'int'),
+    ('virtual_guest_member_template', 'list'),
+    ('name', 'str'),
+    ('regional_group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'termination_policy',
+    'port',
+    'health_check',
     'network_vlan_ids',
+    'maximum_member_count',
+    'cooldown',
+    'minimum_member_count',
+    'virtual_server_id',
+    'virtual_guest_member_template',
     'tags',
     'name',
     'regional_group',
-    'termination_policy',
-    'virtual_server_id',
-    'port',
-    'health_check',
-    'virtual_guest_member_template',
-    'minimum_member_count',
-    'maximum_member_count',
-    'cooldown',
 ]
 
 # Params for Data source
@@ -169,7 +169,33 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    termination_policy=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
+    health_check=dict(
+        required=False,
+        elements='',
+        type='dict'),
     network_vlan_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    maximum_member_count=dict(
+        required=False,
+        type='int'),
+    cooldown=dict(
+        required=False,
+        type='int'),
+    minimum_member_count=dict(
+        required=False,
+        type='int'),
+    virtual_server_id=dict(
+        required=False,
+        type='int'),
+    virtual_guest_member_template=dict(
         required=False,
         elements='',
         type='list'),
@@ -183,32 +209,6 @@ module_args = dict(
     regional_group=dict(
         required=False,
         type='str'),
-    termination_policy=dict(
-        required=False,
-        type='str'),
-    virtual_server_id=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
-    health_check=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    virtual_guest_member_template=dict(
-        required=False,
-        elements='',
-        type='list'),
-    minimum_member_count=dict(
-        required=False,
-        type='int'),
-    maximum_member_count=dict(
-        required=False,
-        type='int'),
-    cooldown=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -274,7 +274,7 @@ def run_module():
         resource_type='ibm_compute_autoscale_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

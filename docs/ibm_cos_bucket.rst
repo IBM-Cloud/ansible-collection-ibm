@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,32 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  single_site_location (False, str, None)
-    single site location info
-
-
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   expire_rule (False, list, None)
     Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
 
 
-  endpoint_type (False, str, public)
-    public or private
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
 
 
   archive_rule (False, list, None)
@@ -68,20 +60,28 @@ Parameters
     Cros region location info
 
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-
-
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
-
-
   storage_class (True, str, None)
     (Required for new resource) Storage class info
 
 
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  single_site_location (False, str, None)
+    single site location info
+
+
+  endpoint_type (False, str, public)
+    public or private
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+
+
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
   id (False, str, None)

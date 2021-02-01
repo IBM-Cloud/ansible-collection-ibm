@@ -16,20 +16,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - list of tags associated with the resource
+        required: False
+        type: list
+        elements: str
     health_check:
         description:
             - (Required for new resource) Health check info
         required: True
         type: str
-    name:
+    usip:
         description:
-            - (Required for new resource) name
-        required: True
+            - usip info
+        required: False
         type: str
+        default: NO
     destination_ip_address:
         description:
             - (Required for new resource) Destination IP Address
@@ -38,6 +45,11 @@ options:
     destination_port:
         description:
             - (Required for new resource) Destination Port number
+        required: True
+        type: int
+    weight:
+        description:
+            - (Required for new resource) Weight value
         required: True
         type: int
     connection_limit:
@@ -50,23 +62,11 @@ options:
             - (Required for new resource) VIP id
         required: True
         type: str
-    weight:
+    name:
         description:
-            - (Required for new resource) Weight value
+            - (Required for new resource) name
         required: True
-        type: int
-    usip:
-        description:
-            - usip info
-        required: False
         type: str
-        default: NO
-    tags:
-        description:
-            - list of tags associated with the resource
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,25 +114,25 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('health_check', 'str'),
-    ('name', 'str'),
     ('destination_ip_address', 'str'),
     ('destination_port', 'int'),
+    ('weight', 'int'),
     ('connection_limit', 'int'),
     ('vip_id', 'str'),
-    ('weight', 'int'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'health_check',
-    'name',
+    'usip',
     'destination_ip_address',
     'destination_port',
+    'weight',
     'connection_limit',
     'vip_id',
-    'weight',
-    'usip',
-    'tags',
+    'name',
 ]
 
 # Params for Data source
@@ -149,10 +149,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     health_check=dict(
         required=False,
         type='str'),
-    name=dict(
+    usip=dict(
         required=False,
         type='str'),
     destination_ip_address=dict(
@@ -161,22 +165,18 @@ module_args = dict(
     destination_port=dict(
         required=False,
         type='int'),
+    weight=dict(
+        required=False,
+        type='int'),
     connection_limit=dict(
         required=False,
         type='int'),
     vip_id=dict(
         required=False,
         type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
-    usip=dict(
+    name=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

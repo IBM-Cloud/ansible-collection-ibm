@@ -16,10 +16,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
+    resources:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     account_management:
         description:
             - Give access to all account management services
@@ -43,12 +49,6 @@ options:
         required: True
         type: list
         elements: str
-    resources:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resources',
     'account_management',
     'tags',
     'access_group_id',
     'roles',
-    'resources',
 ]
 
 # Params for Data source
@@ -116,14 +116,18 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'account_management': ['resources'],
     'resources': ['account_management'],
+    'account_management': ['resources'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resources=dict(
+        required=False,
+        elements='',
+        type='list'),
     account_management=dict(
         required=False,
         type='bool'),
@@ -135,10 +139,6 @@ module_args = dict(
         required=False,
         type='str'),
     roles=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resources=dict(
         required=False,
         elements='',
         type='list'),
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

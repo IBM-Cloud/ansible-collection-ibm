@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -25,10 +25,15 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
-    cluster:
+    worker_pool:
         description:
-            - (Required for new resource) cluster name or ID
+            - (Required for new resource) Workerpool name
         required: True
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
         type: str
     wait_till_albs:
         description:
@@ -36,17 +41,12 @@ options:
         required: False
         type: bool
         default: True
-    worker_pool:
+    cluster:
         description:
-            - (Required for new resource) Workerpool name
+            - (Required for new resource) cluster name or ID
         required: True
         type: str
     private_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
-    public_vlan_id:
         description:
             - None
         required: False
@@ -83,18 +83,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('zone', 'str'),
-    ('cluster', 'str'),
     ('worker_pool', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'zone',
-    'cluster',
-    'wait_till_albs',
     'worker_pool',
-    'private_vlan_id',
     'public_vlan_id',
+    'wait_till_albs',
+    'cluster',
+    'private_vlan_id',
     'resource_group_id',
 ]
 
@@ -115,19 +115,19 @@ module_args = dict(
     zone=dict(
         required=False,
         type='str'),
-    cluster=dict(
+    worker_pool=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
         required=False,
         type='str'),
     wait_till_albs=dict(
         required=False,
         type='bool'),
-    worker_pool=dict(
+    cluster=dict(
         required=False,
         type='str'),
     private_vlan_id=dict(
-        required=False,
-        type='str'),
-    public_vlan_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

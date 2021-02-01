@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -25,36 +25,36 @@ options:
             - (Required for new resource) Image name
         required: True
         type: str
-    operating_system:
-        description:
-            - (Required for new resource) Image Operating system
-        required: True
-        type: str
-    resource_group:
-        description:
-            - The resource group for this image
-        required: False
-        type: str
-    encryption_key:
-        description:
-            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
-        required: False
-        type: str
-    encrypted_data_key:
-        description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
-        type: str
     tags:
         description:
             - Tags for the image
         required: False
         type: list
         elements: str
+    operating_system:
+        description:
+            - (Required for new resource) Image Operating system
+        required: True
+        type: str
     href:
         description:
             - (Required for new resource) Image Href value
         required: True
+        type: str
+    encryption_key:
+        description:
+            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+        required: False
+        type: str
+    resource_group:
+        description:
+            - The resource group for this image
+        required: False
+        type: str
+    encrypted_data_key:
+        description:
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
         type: str
     id:
         description:
@@ -110,12 +110,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'operating_system',
-    'resource_group',
-    'encryption_key',
-    'encrypted_data_key',
     'tags',
+    'operating_system',
     'href',
+    'encryption_key',
+    'resource_group',
+    'encrypted_data_key',
 ]
 
 # Params for Data source
@@ -138,23 +138,23 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     operating_system=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    href=dict(
         required=False,
         type='str'),
     encryption_key=dict(
         required=False,
         type='str'),
-    encrypted_data_key=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    href=dict(
+    encrypted_data_key=dict(
         required=False,
         type='str'),
     id=dict(
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +243,7 @@ def run_module():
             resource_type='ibm_is_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.18.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

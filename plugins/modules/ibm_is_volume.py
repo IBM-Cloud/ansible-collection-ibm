@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -31,16 +31,11 @@ options:
         required: False
         type: list
         elements: str
-    resource_group:
+    profile:
         description:
-            - Resource group name
-        required: False
+            - (Required for new resource) Vloume profile name
+        required: True
         type: str
-    iops:
-        description:
-            - IOPS value for the Volume
-        required: False
-        type: int
     encryption_key:
         description:
             - Volume encryption key info
@@ -57,11 +52,16 @@ options:
             - (Required for new resource) Volume name
         required: True
         type: str
-    profile:
+    resource_group:
         description:
-            - (Required for new resource) Vloume profile name
-        required: True
+            - Resource group name
+        required: False
         type: str
+    iops:
+        description:
+            - IOPS value for the Volume
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,20 +109,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('zone', 'str'),
-    ('name', 'str'),
     ('profile', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'zone',
     'tags',
-    'resource_group',
-    'iops',
+    'profile',
     'encryption_key',
     'capacity',
     'name',
-    'profile',
+    'resource_group',
+    'iops',
 ]
 
 # Params for Data source
@@ -131,8 +131,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'zone',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -149,12 +149,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    profile=dict(
         required=False,
         type='str'),
-    iops=dict(
-        required=False,
-        type='int'),
     encryption_key=dict(
         required=False,
         type='str'),
@@ -164,9 +161,12 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    profile=dict(
+    resource_group=dict(
         required=False,
         type='str'),
+    iops=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.18.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

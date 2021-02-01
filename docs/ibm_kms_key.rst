@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  policies (False, list, None)
+    Creates or updates one or more policies for the specified key
+
+
+  standard_key (False, bool, False)
+    Standard key type
+
+
+  expiration_date (False, str, None)
+    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
 
 
   endpoint_type (False, str, public)
@@ -40,32 +48,24 @@ Parameters
     Only for imported root key
 
 
-  expiration_date (False, str, None)
-    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-
-
-  policies (False, list, None)
-    Creates or updates one or more policies for the specified key
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or hpcs instance GUID
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
   payload (False, str, None)
     None
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
-
   iv_value (False, str, None)
     Only for imported root key
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or hpcs instance GUID
 
 
   id (False, str, None)

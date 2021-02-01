@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,52 +28,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
-
-
-  peer_address (True, str, None)
-    (Required for new resource) VPN gateway connection peer address
-
-
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
-
-
-  action (False, str, restart)
-    Action detection for dead peer detection action
-
-
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
-
-
-  timeout (False, int, 10)
-    Timeout for dead peer detection
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
 
 
   ipsec_policy (False, str, None)
     IP security policy for vpn gateway connection
 
 
-  interval (False, int, 2)
-    Interval for dead peer detection interval
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
 
 
-  ike_policy (False, str, None)
-    VPN gateway connection IKE Policy
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
 
 
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
 
 
   local_cidrs (False, list, None)
     VPN gateway connection local CIDRs
 
 
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
+  peer_address (True, str, None)
+    (Required for new resource) VPN gateway connection peer address
+
+
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
+
+
+  action (False, str, restart)
+    Action detection for dead peer detection action
+
+
+  timeout (False, int, 10)
+    Timeout for dead peer detection
+
+
+  ike_policy (False, str, None)
+    VPN gateway connection IKE Policy
+
+
+  interval (False, int, 2)
+    Interval for dead peer detection interval
 
 
   id (False, str, None)

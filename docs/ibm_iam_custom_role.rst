@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -30,10 +30,6 @@ Parameters
 
   display_name (True, str, None)
     (Required for new resource) Display Name of the Custom Role
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the custom Role
 
 
   description (False, str, None)
@@ -46,6 +42,10 @@ Parameters
 
   actions (True, list, None)
     (Required for new resource) The actions of the role
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the custom Role
 
 
   id (False, str, None)

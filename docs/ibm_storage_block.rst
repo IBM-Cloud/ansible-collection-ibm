@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags associated with the resource
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
+
+
+  allowed_hardware_ids (False, list, None)
+    List of allowe hardware IDs
 
 
   hourly_billing (False, bool, False)
@@ -40,40 +52,28 @@ Parameters
     (Required for new resource) Storage block type
 
 
+  notes (False, str, None)
+    Additional note info
+
+
+  tags (False, list, None)
+    List of tags associated with the resource
+
+
   iops (True, float, None)
     (Required for new resource) IOPS value required
-
-
-  os_format_type (True, str, None)
-    (Required for new resource) OS formatr type
 
 
   allowed_ip_addresses (False, list, None)
     Allowed IP addresses
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
   capacity (True, int, None)
     (Required for new resource) Storage block size
 
 
-  notes (False, str, None)
-    Additional note info
-
-
-  allowed_hardware_ids (False, list, None)
-    List of allowe hardware IDs
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    List of allowed virtual guest IDs
+  os_format_type (True, str, None)
+    (Required for new resource) OS formatr type
 
 
   id (False, str, None)

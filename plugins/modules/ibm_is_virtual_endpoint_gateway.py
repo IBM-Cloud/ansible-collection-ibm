@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.18.0
+    - IBM-Cloud terraform-provider-ibm v1.19.0
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,12 @@ options:
             - (Required for new resource) Endpoint gateway name
         required: True
         type: str
+    tags:
+        description:
+            - List of tags for VPE
+        required: False
+        type: list
+        elements: str
     resource_group:
         description:
             - The resource group id
@@ -36,23 +42,17 @@ options:
         required: False
         type: list
         elements: dict
-    vpc:
-        description:
-            - (Required for new resource) The VPC id
-        required: True
-        type: str
     target:
         description:
             - (Required for new resource) Endpoint gateway target
         required: True
         type: list
         elements: dict
-    tags:
+    vpc:
         description:
-            - List of tags for VPE
-        required: False
-        type: list
-        elements: str
+            - (Required for new resource) The VPC id
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,18 +100,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('vpc', 'str'),
     ('target', 'list'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'tags',
     'resource_group',
     'ips',
-    'vpc',
     'target',
-    'tags',
+    'vpc',
 ]
 
 # Params for Data source
@@ -133,6 +133,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -140,17 +144,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
     target=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    vpc=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.18.0',
+        ibm_provider_version='1.19.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_is_virtual_endpoint_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.18.0',
+            ibm_provider_version='1.19.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

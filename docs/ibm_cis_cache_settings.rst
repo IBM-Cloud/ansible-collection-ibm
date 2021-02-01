@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.18.0
+- IBM-Cloud terraform-provider-ibm v1.19.0
 - Terraform v0.12.20
 
 
@@ -28,32 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  purge_by_urls (False, list, None)
-    Purge by URLs
+  caching_level (False, str, None)
+    Cache level setting
+
+
+  purge_by_tags (False, list, None)
+    Purge by tags
 
 
   purge_by_hosts (False, list, None)
     Purge by hosts
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  caching_level (False, str, None)
-    Cache level setting
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   browser_expiration (False, int, None)
     Browser Expiration setting
-
-
-  purge_all (False, bool, None)
-    Purge all setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
 
 
   development_mode (False, str, None)
@@ -64,8 +56,16 @@ Parameters
     Query String sort setting
 
 
-  purge_by_tags (False, list, None)
-    Purge by tags
+  purge_all (False, bool, None)
+    Purge all setting
+
+
+  purge_by_urls (False, list, None)
+    Purge by URLs
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)
