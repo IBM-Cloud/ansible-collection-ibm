@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  iam_policy (False, list, None)
-    None
-
 
   classic_infra_roles (False, list, None)
     None
@@ -46,6 +42,10 @@ Parameters
 
   access_groups (False, list, None)
     access group ids to associate the inviting user
+
+
+  iam_policy (False, list, None)
+    None
 
 
   id (False, str, None)

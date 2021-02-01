@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.20.0
     - Terraform v0.12.20
 
 options:
-    instance_group:
-        description:
-            - (Required for new resource) instance group ID
-        required: True
-        type: str
-    instance_group_manager:
-        description:
-            - (Required for new resource) Instance group manager ID
-        required: True
-        type: str
     metric_type:
         description:
             - (Required for new resource) The type of metric to be evaluated
@@ -49,6 +39,16 @@ options:
         description:
             - instance group manager policy name
         required: False
+        type: str
+    instance_group:
+        description:
+            - (Required for new resource) instance group ID
+        required: True
+        type: str
+    instance_group_manager:
+        description:
+            - (Required for new resource) Instance group manager ID
+        required: True
         type: str
     id:
         description:
@@ -96,34 +96,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_group', 'str'),
-    ('instance_group_manager', 'str'),
     ('metric_type', 'str'),
     ('metric_value', 'int'),
     ('policy_type', 'str'),
+    ('instance_group', 'str'),
+    ('instance_group_manager', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_group',
-    'instance_group_manager',
     'metric_type',
     'metric_value',
     'policy_type',
     'name',
+    'instance_group',
+    'instance_group_manager',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
     ('instance_group_manager', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'instance_group',
     'instance_group_manager',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,12 +133,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_group=dict(
-        required=False,
-        type='str'),
-    instance_group_manager=dict(
-        required=False,
-        type='str'),
     metric_type=dict(
         required=False,
         type='str'),
@@ -149,6 +143,12 @@ module_args = dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    instance_group=dict(
+        required=False,
+        type='str'),
+    instance_group_manager=dict(
         required=False,
         type='str'),
     id=dict(
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.20.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.20.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

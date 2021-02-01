@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vendor_name (False, str, akamai)
-    Vendor name
-
-
   origin_type (False, str, HOST_SERVER)
     Origin type info
+
+
+  file_extension (False, str, None)
+    File extension info
+
+
+  host_name (True, str, None)
+    (Required for new resource) Host name
+
+
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
+  certificate_type (False, str, None)
+    Certificate type
+
+
+  path (False, str, /*)
+    Path details
+
+
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
 
 
   http_port (False, int, 80)
@@ -44,52 +64,32 @@ Parameters
     HTTPS port number
 
 
-  file_extension (False, str, None)
-    File extension info
-
-
-  cache_key_query_rule (False, str, include-all)
-    query rule info
-
-
-  host_name (True, str, None)
-    (Required for new resource) Host name
-
-
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
-  protocol (False, str, HTTP)
-    Protocol name
-
-
-  respect_headers (False, bool, True)
-    respect headers info
-
-
-  bucket_name (False, str, None)
-    Bucket name
+  header (False, str, None)
+    Header info
 
 
   cname (False, str, None)
     cname info
 
 
-  certificate_type (False, str, None)
-    Certificate type
+  respect_headers (False, bool, True)
+    respect headers info
 
 
   performance_configuration (False, str, General web delivery)
     performance configuration info
 
 
-  header (False, str, None)
-    Header info
+  vendor_name (False, str, akamai)
+    Vendor name
 
 
-  path (False, str, /*)
-    Path details
+  bucket_name (False, str, None)
+    Bucket name
+
+
+  protocol (False, str, HTTP)
+    Protocol name
 
 
   id (False, str, None)

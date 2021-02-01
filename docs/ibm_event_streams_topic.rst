@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  partitions (False, int, 1)
+    The number of partitions
+
 
   config (False, dict, None)
     The configuration parameters of a topic
@@ -38,10 +42,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) The name of the topic
-
-
-  partitions (False, int, 1)
-    The number of partitions
 
 
   id (False, str, None)

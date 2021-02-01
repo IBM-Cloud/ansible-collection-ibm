@@ -16,14 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.20.0
     - Terraform v0.12.20
 
 options:
-    service_instance_name:
+    cluster_name_id:
         description:
-            - serivice instance name
-        required: False
+            - (Required for new resource) Cluster name or ID
+        required: True
         type: str
     namespace_id:
         description:
@@ -40,21 +40,21 @@ options:
             - Role info
         required: False
         type: str
-    service_instance_id:
-        description:
-            - Service instance ID
-        required: False
-        type: str
     tags:
         description:
             - List of tags for the resource
         required: False
         type: list
         elements: str
-    cluster_name_id:
+    service_instance_name:
         description:
-            - (Required for new resource) Cluster name or ID
-        required: True
+            - serivice instance name
+        required: False
+        type: str
+    service_instance_id:
+        description:
+            - Service instance ID
+        required: False
         type: str
     resource_group_id:
         description:
@@ -87,19 +87,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace_id', 'str'),
     ('cluster_name_id', 'str'),
+    ('namespace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_instance_name',
+    'cluster_name_id',
     'namespace_id',
     'key',
     'role',
-    'service_instance_id',
     'tags',
-    'cluster_name_id',
+    'service_instance_name',
+    'service_instance_id',
     'resource_group_id',
 ]
 
@@ -125,7 +125,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_instance_name=dict(
+    cluster_name_id=dict(
         required=False,
         type='str'),
     namespace_id=dict(
@@ -137,14 +137,14 @@ module_args = dict(
     role=dict(
         required=False,
         type='str'),
-    service_instance_id=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    cluster_name_id=dict(
+    service_instance_name=dict(
+        required=False,
+        type='str'),
+    service_instance_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.20.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -210,7 +210,7 @@ def run_module():
             resource_type='ibm_container_bind_service',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.20.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  auditors (False, list, None)
-    The IBMID of the users who will have auditor role in this space, ex - user@example.com
-
 
   managers (False, list, None)
     The IBMID of the users who will have manager role in this space, ex - user@example.com
@@ -54,6 +50,10 @@ Parameters
 
   org (True, str, None)
     (Required for new resource) The org this space belongs to
+
+
+  auditors (False, list, None)
+    The IBMID of the users who will have auditor role in this space, ex - user@example.com
 
 
   id (False, str, None)

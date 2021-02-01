@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Endpoint name
+  service_instance_crn (True, str, None)
+    (Required for new resource) Api Gateway Service Instance Crn
 
 
   routes (False, list, None)
     Invokable routes for an endpoint
 
 
-  service_instance_crn (True, str, None)
-    (Required for new resource) Api Gateway Service Instance Crn
+  managed (False, bool, False)
+    Managed indicates if endpoint is online or offline.
 
 
   open_api_doc_name (True, str, None)
     (Required for new resource) Json File path
 
 
-  managed (False, bool, False)
-    Managed indicates if endpoint is online or offline.
+  name (True, str, None)
+    (Required for new resource) Endpoint name
 
 
   provider_id (False, str, user-defined)

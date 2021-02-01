@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,80 +28,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
-
-
-  kube_version (False, str, None)
-    Kubernetes version info
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
-
-
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
   name (True, str, None)
     (Required for new resource) The cluster name
-
-
-  public_vlan_id (False, str, None)
-    Public VLAN ID
-
-
-  webhook (False, list, None)
-    None
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
-
-
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
   datacenter (True, str, None)
     (Required for new resource) The datacenter where this cluster will be deployed
 
 
-  private_vlan_id (False, str, None)
-    Private VLAN ID
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  subnet_id (False, list, None)
+    List of subnet IDs
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  public_vlan_id (False, str, None)
+    Public VLAN ID
+
+
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
+
+
+  webhook (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
   labels (False, dict, None)
@@ -112,16 +80,60 @@ Parameters
     The IDs of the worker node
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
 
 
-  subnet_id (False, list, None)
-    List of subnet IDs
+  patch_version (False, str, None)
+    Kubernetes patch version
 
 
-  tags (False, list, None)
-    Tags for the resource
+  machine_type (False, str, None)
+    Machine type
+
+
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
+
+
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  public_service_endpoint (False, bool, None)
+    None
 
 
   id (False, str, None)

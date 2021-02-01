@@ -20,29 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  max_retries (False, int, 2)
-    Maximum retry counts
-
-
-  timeout (False, int, 2)
-    Timeout in seconds
-
-
-  url_path (False, str, /)
-    URL Path
-
-
-  monitor_id (True, str, None)
-    (Required for new resource) Monitor ID
-
 
   lbaas_id (True, str, None)
     (Required for new resource) LBAAS id
@@ -58,6 +42,22 @@ Parameters
 
   interval (False, int, 5)
     Interval value
+
+
+  max_retries (False, int, 2)
+    Maximum retry counts
+
+
+  timeout (False, int, 2)
+    Timeout in seconds
+
+
+  url_path (False, str, /)
+    URL Path
+
+
+  monitor_id (True, str, None)
+    (Required for new resource) Monitor ID
 
 
   id (False, str, None)

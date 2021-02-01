@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.20.0
     - Terraform v0.12.20
 
 options:
@@ -25,11 +25,6 @@ options:
             - Load balancer pool member target address
         required: False
         type: str
-    weight:
-        description:
-            - Load balcner pool member weight
-        required: False
-        type: int
     pool:
         description:
             - (Required for new resource) Loadblancer Poold ID
@@ -50,6 +45,11 @@ options:
             - Load balancer pool member target id
         required: False
         type: str
+    weight:
+        description:
+            - Load balcner pool member weight
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,11 +104,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'target_address',
-    'weight',
     'pool',
     'lb',
     'port',
     'target_id',
+    'weight',
 ]
 
 # Params for Data source
@@ -128,9 +128,6 @@ module_args = dict(
     target_address=dict(
         required=False,
         type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
     pool=dict(
         required=False,
         type='str'),
@@ -143,6 +140,9 @@ module_args = dict(
     target_id=dict(
         required=False,
         type='str'),
+    weight=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.20.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

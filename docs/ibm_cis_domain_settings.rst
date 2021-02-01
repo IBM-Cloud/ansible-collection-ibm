@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,48 +28,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  response_buffering (False, str, None)
-    response_buffering setting
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
   websockets (False, str, None)
     websockets setting
 
 
-  cipher (False, list, None)
-    Cipher settings
+  minify (False, list, None)
+    Minify setting
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
+  ssl (False, str, None)
+    SSL/TLS setting
 
 
   image_load_optimization (False, str, None)
     image_load_optimization setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
 
 
-  always_use_https (False, str, None)
-    always_use_https setting
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
 
 
-  hotlink_protection (False, str, None)
-    hotlink_protection setting
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
 
 
   tls_client_auth (False, str, None)
@@ -80,36 +72,32 @@ Parameters
     Security Header Setting
 
 
-  ssl (False, str, None)
-    SSL/TLS setting
+  browser_check (False, str, None)
+    browser_check setting
 
 
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
-
-
-  minify (False, list, None)
-    Minify setting
+  mobile_redirect (False, list, None)
+    None
 
 
   cname_flattening (False, str, None)
     cname_flattening setting
 
 
+  waf (False, str, None)
+    WAF setting
+
+
   ipv6 (False, str, None)
     ipv6 setting
 
 
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
 
 
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   brotli (False, str, None)
@@ -124,40 +112,52 @@ Parameters
     Challenge TTL setting
 
 
-  mobile_redirect (False, list, None)
-    None
-
-
   dnssec (False, str, None)
     DNS Sec setting
 
 
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  response_buffering (False, str, None)
+    response_buffering setting
 
 
   min_tls_version (False, str, 1.1)
     Minimum version of TLS required
 
 
-  browser_check (False, str, None)
-    browser_check setting
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
 
 
   http2 (False, str, None)
     http2 setting
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   id (False, str, None)

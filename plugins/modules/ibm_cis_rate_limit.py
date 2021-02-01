@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_rate_limit' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.20.0
     - Terraform v0.12.20
 
 options:
@@ -31,6 +31,23 @@ options:
         required: False
         type: bool
         default: False
+    bypass:
+        description:
+            - Bypass URL
+        required: False
+        type: list
+        elements: dict
+    correlate:
+        description:
+            - Ratelimiting Correlate
+        required: False
+        type: list
+        elements: dict
+    domain_id:
+        description:
+            - (Required for new resource) CIS Domain ID
+        required: True
+        type: str
     description:
         description:
             - A note that you can use to describe the reason for a rate limiting rule.
@@ -46,23 +63,6 @@ options:
             - (Required for new resource) Rate Limiting Period
         required: True
         type: int
-    correlate:
-        description:
-            - Ratelimiting Correlate
-        required: False
-        type: list
-        elements: dict
-    domain_id:
-        description:
-            - (Required for new resource) CIS Domain ID
-        required: True
-        type: str
-    bypass:
-        description:
-            - Bypass URL
-        required: False
-        type: list
-        elements: dict
     action:
         description:
             - (Required for new resource) Rate Limiting Action
@@ -122,9 +122,9 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
     ('threshold', 'int'),
     ('period', 'int'),
-    ('domain_id', 'str'),
     ('action', 'list'),
 ]
 
@@ -132,12 +132,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cis_id',
     'disabled',
+    'bypass',
+    'correlate',
+    'domain_id',
     'description',
     'threshold',
     'period',
-    'correlate',
-    'domain_id',
-    'bypass',
     'action',
     'match',
 ]
@@ -166,6 +166,17 @@ module_args = dict(
     disabled=dict(
         required=False,
         type='bool'),
+    bypass=dict(
+        required=False,
+        elements='',
+        type='list'),
+    correlate=dict(
+        required=False,
+        elements='',
+        type='list'),
+    domain_id=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -175,17 +186,6 @@ module_args = dict(
     period=dict(
         required=False,
         type='int'),
-    correlate=dict(
-        required=False,
-        elements='',
-        type='list'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    bypass=dict(
-        required=False,
-        elements='',
-        type='list'),
     action=dict(
         required=False,
         elements='',
@@ -259,7 +259,7 @@ def run_module():
         resource_type='ibm_cis_rate_limit',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.20.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -268,7 +268,7 @@ def run_module():
             resource_type='ibm_cis_rate_limit',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.20.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
