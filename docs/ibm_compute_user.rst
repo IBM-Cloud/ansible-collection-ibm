@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  first_name (True, str, None)
-    (Required for new resource) First name of the user
-
-
-  company_name (True, str, None)
-    (Required for new resource) comapany name
-
-
-  address1 (True, str, None)
-    (Required for new resource) Address info of the user
-
-
-  country (True, str, None)
-    (Required for new resource) Country name
-
-
-  user_status (False, str, ACTIVE)
-    user status info
-
-
-  password (False, str, None)
-    password for the user
-
-
   username (False, str, None)
     user name
-
-
-  tags (False, list, None)
-    Tags set for the resources
-
-
-  timezone (True, str, None)
-    (Required for new resource) time zone info
-
-
-  city (True, str, None)
-    (Required for new resource) City name
-
-
-  permissions (False, list, None)
-    set of persmissions assigned for the user
-
-
-  has_api_key (False, bool, False)
-    API Key info of the user
-
-
-  email (True, str, None)
-    (Required for new resource) email address of the user
-
-
-  address2 (False, str, None)
-    Address info of the user
 
 
   state_ (True, str, None)
@@ -92,8 +40,60 @@ Parameters
     API key for the user
 
 
+  tags (False, list, None)
+    Tags set for the resources
+
+
   last_name (True, str, None)
     (Required for new resource) Last name of the user
+
+
+  email (True, str, None)
+    (Required for new resource) email address of the user
+
+
+  address1 (True, str, None)
+    (Required for new resource) Address info of the user
+
+
+  address2 (False, str, None)
+    Address info of the user
+
+
+  first_name (True, str, None)
+    (Required for new resource) First name of the user
+
+
+  company_name (True, str, None)
+    (Required for new resource) comapany name
+
+
+  city (True, str, None)
+    (Required for new resource) City name
+
+
+  timezone (True, str, None)
+    (Required for new resource) time zone info
+
+
+  password (False, str, None)
+    password for the user
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  country (True, str, None)
+    (Required for new resource) Country name
+
+
+  user_status (False, str, ACTIVE)
+    user status info
+
+
+  has_api_key (False, bool, False)
+    API Key info of the user
 
 
   id (False, str, None)

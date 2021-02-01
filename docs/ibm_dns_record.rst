@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  service (False, str, None)
-    service info
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  weight (False, int, 0)
-    weight info
-
-
   domain_id (True, int, None)
     (Required for new resource) Domain ID of dns record instance
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
 
 
   refresh (False, int, None)
@@ -92,8 +40,60 @@ Parameters
     Responsible person for DNS record
 
 
+  retry (False, int, None)
+    Retry count
+
+
+  service (False, str, None)
+    service info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  protocol (False, str, None)
+    protocol info
+
+
   port (False, int, None)
     port number
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  tags (False, list, None)
+    tags set for the resource
 
 
   id (False, str, None)

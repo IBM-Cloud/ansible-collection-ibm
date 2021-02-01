@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.20.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  expire_rule (False, list, None)
-    Enable configuration expire_rule to COS Bucket after a defined period of time
-
-
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
-
-
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  region_location (False, str, None)
-    Region Location info.
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
 
 
   cross_region_location (False, str, None)
     Cros region location info
 
 
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
 
 
   single_site_location (False, str, None)
     single site location info
 
 
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
+
+
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  region_location (False, str, None)
+    Region Location info.
+
+
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+
+
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
+
+
   endpoint_type (False, str, public)
     public or private
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
 
 
   activity_tracking (False, list, None)
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
 
 
   id (False, str, None)

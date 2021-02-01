@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.20.0
     - Terraform v0.12.20
 
 options:
@@ -26,27 +26,17 @@ options:
         required: False
         type: str
         default: PUBLIC
-    name:
-        description:
-            - (Required for new resource) The load balancer's name.
-        required: True
-        type: str
-    wait_time_minutes:
-        description:
-            - None
-        required: False
-        type: int
-        default: 90
-    description:
-        description:
-            - Description of a load balancer.
-        required: False
-        type: str
     use_system_public_ip_pool:
         description:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
+    subnets:
+        description:
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: True
+        type: list
+        elements: int
     protocols:
         description:
             - Protocols to be assigned to this load balancer.
@@ -59,12 +49,22 @@ options:
         required: False
         type: list
         elements: str
-    subnets:
+    name:
         description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+            - (Required for new resource) The load balancer's name.
         required: True
-        type: list
-        elements: int
+        type: str
+    description:
+        description:
+            - Description of a load balancer.
+        required: False
+        type: str
+    wait_time_minutes:
+        description:
+            - None
+        required: False
+        type: int
+        default: 90
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +111,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnets', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'name',
-    'wait_time_minutes',
-    'description',
     'use_system_public_ip_pool',
+    'subnets',
     'protocols',
     'ssl_ciphers',
-    'subnets',
+    'name',
+    'description',
+    'wait_time_minutes',
 ]
 
 # Params for Data source
@@ -146,18 +146,13 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    wait_time_minutes=dict(
-        required=False,
-        type='int'),
-    description=dict(
-        required=False,
-        type='str'),
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     protocols=dict(
         required=False,
         elements='',
@@ -166,10 +161,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    subnets=dict(
+    name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    wait_time_minutes=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -235,7 +235,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.20.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -244,7 +244,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.20.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
