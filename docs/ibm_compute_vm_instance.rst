@@ -20,61 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  evault (False, int, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
 
   hourly_billing (False, bool, True)
     None
@@ -84,19 +36,35 @@ Parameters
     None
 
 
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  transient (False, bool, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
   public_bandwidth_limited (False, int, None)
+    None
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  memory (False, int, None)
     None
 
 
@@ -104,8 +72,92 @@ Parameters
     None
 
 
-  public_subnet (False, str, None)
+  ipv6_static_enabled (False, bool, False)
     None
+
+
+  domain (False, str, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  transient (False, bool, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  evault (False, int, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  notes (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
 
 
   block_storage_ids (False, list, None)
@@ -120,39 +172,11 @@ Parameters
     The placement group id
 
 
-  public_security_group_ids (False, list, None)
+  post_install_script_uri (False, str, None)
     None
 
 
-  notes (False, str, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  local_disk (False, bool, True)
+  public_subnet (False, str, None)
     None
 
 
@@ -160,35 +184,11 @@ Parameters
     None
 
 
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
   cores (False, int, None)
     None
 
 
-  datacenter (False, str, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  disks (False, list, None)
-    None
-
-
-  memory (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
+  image_id (False, int, None)
     None
 
 

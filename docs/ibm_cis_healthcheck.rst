@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  follow_redirects (False, bool, False)
-    follow_redirects
-
-
-  allow_insecure (False, bool, False)
-    allow_insecure
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  path (False, str, /)
-    path
-
-
-  expected_codes (False, str, None)
-    expected_codes
-
-
-  timeout (False, int, 5)
-    timeout
+  description (False, str, None)
+    description
 
 
   retries (False, int, 2)
     retries
 
 
-  type (False, str, http)
-    type
+  headers (False, list, None)
+    None
 
 
-  port (False, int, None)
-    port number
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  expected_codes (False, str, None)
+    expected_codes
+
+
+  interval (False, int, 60)
+    interval
+
+
+  path (False, str, /)
+    path
 
 
   expected_body (False, str, None)
     expected_body
 
 
-  description (False, str, None)
-    description
+  timeout (False, int, 5)
+    timeout
+
+
+  allow_insecure (False, bool, False)
+    allow_insecure
+
+
+  port (False, int, None)
+    port number
+
+
+  type (False, str, http)
+    type
 
 
   method (False, str, GET)
     method
 
 
-  headers (False, list, None)
-    None
-
-
-  interval (False, int, 60)
-    interval
+  follow_redirects (False, bool, False)
+    follow_redirects
 
 
   id (False, str, None)

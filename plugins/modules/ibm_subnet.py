@@ -16,26 +16,32 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
+    vlan_id:
+        description:
+            - VLAN ID for the subnet
+        required: False
+        type: int
+    endpoint_ip:
+        description:
+            - endpoint IP
+        required: False
+        type: str
     tags:
         description:
             - tags set for the resource
         required: False
         type: list
         elements: str
-    notes:
+    private:
         description:
-            - Notes
+            - private subnet
         required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) subnet type
-        required: True
-        type: str
+        type: bool
+        default: False
     ip_version:
         description:
             - ip version
@@ -47,22 +53,16 @@ options:
             - (Required for new resource) number of ip addresses in the subnet
         required: True
         type: int
-    vlan_id:
+    type:
         description:
-            - VLAN ID for the subnet
-        required: False
-        type: int
-    endpoint_ip:
+            - (Required for new resource) subnet type
+        required: True
+        type: str
+    notes:
         description:
-            - endpoint IP
+            - Notes
         required: False
         type: str
-    private:
-        description:
-            - private subnet
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,20 +109,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'notes',
-    'type',
-    'ip_version',
-    'capacity',
     'vlan_id',
     'endpoint_ip',
+    'tags',
     'private',
+    'ip_version',
+    'capacity',
+    'type',
+    'notes',
 ]
 
 # Params for Data source
@@ -141,31 +141,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    ip_version=dict(
-        required=False,
-        type='int'),
-    capacity=dict(
-        required=False,
-        type='int'),
     vlan_id=dict(
         required=False,
         type='int'),
     endpoint_ip=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     private=dict(
         required=False,
         type='bool'),
+    ip_version=dict(
+        required=False,
+        type='int'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    type=dict(
+        required=False,
+        type='str'),
+    notes=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +231,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  interval (False, int, 60)
-    The interval between each health check
-
-
-  description (False, str, None)
-    Descriptive text of the load balancer monitor
-
-
   allow_insecure (False, bool, None)
     Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
-
-
-  expected_body (False, str, None)
-    A case-insensitive sub-string to look for in the response body
-
-
-  port (False, int, None)
-    Port number to connect to for the health check
-
-
-  retries (False, int, 1)
-    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
-
-
-  headers (False, list, None)
-    The HTTP request headers to send in the health check
-
-
-  type (False, str, HTTP)
-    The protocol to use for the health check
-
-
-  timeout (False, int, 5)
-    The timeout (in seconds) before marking the health check as failed
-
-
-  method (False, str, None)
-    The method to use for the health check
-
-
-  path (False, str, None)
-    The endpoint path to health check against
-
-
-  expected_codes (False, str, None)
-    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
 
 
   instance_id (True, str, None)
     (Required for new resource) Instance Id
 
 
+  description (False, str, None)
+    Descriptive text of the load balancer monitor
+
+
+  retries (False, int, 1)
+    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+
+
+  timeout (False, int, 5)
+    The timeout (in seconds) before marking the health check as failed
+
+
+  path (False, str, None)
+    The endpoint path to health check against
+
+
+  headers (False, list, None)
+    The HTTP request headers to send in the health check
+
+
+  port (False, int, None)
+    Port number to connect to for the health check
+
+
+  expected_codes (False, str, None)
+    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
+
+
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
+
+
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  method (False, str, None)
+    The method to use for the health check
+
+
+  type (False, str, HTTP)
+    The protocol to use for the health check
+
+
+  expected_body (False, str, None)
+    A case-insensitive sub-string to look for in the response body
 
 
   id (False, str, None)

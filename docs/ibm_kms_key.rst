@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or hpcs instance GUID
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  endpoint_type (False, str, public)
+    public or private
 
 
   standard_key (False, bool, False)
     Standard key type
+
+
+  payload (False, str, None)
+    None
 
 
   encrypted_nonce (False, str, None)
@@ -44,24 +56,12 @@ Parameters
     Only for imported root key
 
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or hpcs instance GUID
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
-  payload (False, str, None)
-    None
-
-
   expiration_date (False, str, None)
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+
+
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
   policies (False, list, None)

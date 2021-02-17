@@ -16,32 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
-    service_instance_guid:
+    health_check_timeout:
         description:
-            - Define the service instance guids that should be bound to this application.
-        required: False
-        type: list
-        elements: str
-    command:
-        description:
-            - The initial command for the app
-        required: False
-        type: str
-    wait_time_minutes:
-        description:
-            - Define timeout to wait for the app instances to start/update/restage etc.
+            - Timeout in seconds for health checking of an staged app when starting up.
         required: False
         type: int
-        default: 20
-    buildpack:
-        description:
-            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
-        required: False
-        type: str
     route_guid:
         description:
             - Define the route guids which should be bound to the application.
@@ -53,15 +36,41 @@ options:
             - (Required for new resource) Define the  path of the zip file of the application.
         required: True
         type: str
+    app_version:
+        description:
+            - Version of the application
+        required: False
+        type: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    service_instance_guid:
+        description:
+            - Define the service instance guids that should be bound to this application.
+        required: False
+        type: list
+        elements: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    memory:
+    command:
         description:
-            - The amount of memory each instance should have. In megabytes.
+            - The initial command for the app
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name for the app
+        required: True
+        type: str
+    disk_quota:
+        description:
+            - The maximum amount of disk available to an instance of an app. In megabytes.
         required: False
         type: int
     space_guid:
@@ -69,14 +78,9 @@ options:
             - (Required for new resource) Define space guid to which app belongs
         required: True
         type: str
-    environment_json:
+    buildpack:
         description:
-            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
-        required: False
-        type: dict
-    app_version:
-        description:
-            - Version of the application
+            - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
         required: False
         type: str
     health_check_type:
@@ -85,32 +89,28 @@ options:
         required: False
         type: str
         default: port
-    name:
+    memory:
         description:
-            - (Required for new resource) The name for the app
-        required: True
-        type: str
+            - The amount of memory each instance should have. In megabytes.
+        required: False
+        type: int
     instances:
         description:
             - The number of instances
         required: False
         type: int
         default: 1
-    health_check_timeout:
+    environment_json:
         description:
-            - Timeout in seconds for health checking of an staged app when starting up.
+            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
+        required: False
+        type: dict
+    wait_time_minutes:
+        description:
+            - Define timeout to wait for the app instances to start/update/restage etc.
         required: False
         type: int
-    disk_quota:
-        description:
-            - The maximum amount of disk available to an instance of an app. In megabytes.
-        required: False
-        type: int
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
-        required: False
-        type: str
+        default: 20
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -158,29 +158,29 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('app_path', 'str'),
-    ('space_guid', 'str'),
     ('name', 'str'),
+    ('space_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_instance_guid',
-    'command',
-    'wait_time_minutes',
-    'buildpack',
+    'health_check_timeout',
     'route_guid',
     'app_path',
-    'tags',
-    'memory',
-    'space_guid',
-    'environment_json',
     'app_version',
-    'health_check_type',
-    'name',
-    'instances',
-    'health_check_timeout',
-    'disk_quota',
     'health_check_http_endpoint',
+    'service_instance_guid',
+    'tags',
+    'command',
+    'name',
+    'disk_quota',
+    'space_guid',
+    'buildpack',
+    'health_check_type',
+    'memory',
+    'instances',
+    'environment_json',
+    'wait_time_minutes',
 ]
 
 # Params for Data source
@@ -201,19 +201,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_instance_guid=dict(
-        required=False,
-        elements='',
-        type='list'),
-    command=dict(
-        required=False,
-        type='str'),
-    wait_time_minutes=dict(
+    health_check_timeout=dict(
         required=False,
         type='int'),
-    buildpack=dict(
-        required=False,
-        type='str'),
     route_guid=dict(
         required=False,
         elements='',
@@ -221,40 +211,50 @@ module_args = dict(
     app_path=dict(
         required=False,
         type='str'),
+    app_version=dict(
+        required=False,
+        type='str'),
+    health_check_http_endpoint=dict(
+        required=False,
+        type='str'),
+    service_instance_guid=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    memory=dict(
-        required=False,
-        type='int'),
-    space_guid=dict(
-        required=False,
-        type='str'),
-    environment_json=dict(
-        required=False,
-        type='dict'),
-    app_version=dict(
-        required=False,
-        type='str'),
-    health_check_type=dict(
+    command=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    instances=dict(
-        required=False,
-        type='int'),
-    health_check_timeout=dict(
-        required=False,
-        type='int'),
     disk_quota=dict(
         required=False,
         type='int'),
-    health_check_http_endpoint=dict(
+    space_guid=dict(
         required=False,
         type='str'),
+    buildpack=dict(
+        required=False,
+        type='str'),
+    health_check_type=dict(
+        required=False,
+        type='str'),
+    memory=dict(
+        required=False,
+        type='int'),
+    instances=dict(
+        required=False,
+        type='int'),
+    environment_json=dict(
+        required=False,
+        type='dict'),
+    wait_time_minutes=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -320,7 +320,7 @@ def run_module():
         resource_type='ibm_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -329,7 +329,7 @@ def run_module():
             resource_type='ibm_app',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.21.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

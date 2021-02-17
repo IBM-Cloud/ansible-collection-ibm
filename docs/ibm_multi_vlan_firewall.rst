@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  firewall_type (True, str, None)
+    (Required for new resource) Firewall type
+
+
+  addon_configuration (False, list, None)
+    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
@@ -38,14 +46,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) name
-
-
-  firewall_type (True, str, None)
-    (Required for new resource) Firewall type
-
-
-  addon_configuration (False, list, None)
-    High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
 
 
   id (False, str, None)

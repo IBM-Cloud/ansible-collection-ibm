@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,44 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
   host (True, str, None)
     (Required for new resource) Hostname
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  protocol (False, str, None)
-    protocol info
 
 
   port (False, int, None)
     port number
 
 
-  tags (False, list, None)
-    tags set for the resource
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  retry (False, int, None)
-    Retry count
+  priority (False, int, 0)
+    priority info
 
 
   service (False, str, None)
@@ -76,24 +48,52 @@ Parameters
     weight info
 
 
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
+  tags (False, list, None)
+    tags set for the resource
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
 
 
-  expire (False, int, None)
-    DNS record expiry info
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
 
 
   ttl (True, int, None)
     (Required for new resource) TTL configuration
 
 
-  priority (False, int, 0)
-    priority info
+  protocol (False, str, None)
+    protocol info
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   id (False, str, None)

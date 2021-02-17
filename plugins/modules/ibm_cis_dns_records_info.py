@@ -15,15 +15,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cis_dns_records' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
-    file:
-        description:
-            - file to be exported
-        required: False
-        type: str
     cis_id:
         description:
             - DNS Zone CRN
@@ -33,6 +28,11 @@ options:
         description:
             - Zone Id
         required: True
+        type: str
+    file:
+        description:
+            - file to be exported
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'file',
     'cis_id',
     'domain_id',
+    'file',
 ]
 
 
@@ -86,14 +86,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    file=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=True,
         type='str'),
     domain_id=dict(
         required=True,
+        type='str'),
+    file=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -129,7 +129,7 @@ def run_module():
         resource_type='ibm_cis_dns_records',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

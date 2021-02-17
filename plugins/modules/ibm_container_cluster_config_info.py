@@ -15,27 +15,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
-    cluster_name_id:
-        description:
-            - The name/id of the cluster
-        required: True
-        type: str
-    network:
-        description:
-            - If set to true will download the Calico network config with the Admin config
-        required: False
-        type: bool
-        default: False
     download:
         description:
             - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
         required: False
         type: bool
         default: True
+    cluster_name_id:
+        description:
+            - The name/id of the cluster
+        required: True
+        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -46,6 +40,12 @@ options:
             - The directory where the cluster config to be downloaded. Default is home directory
         required: False
         type: str
+    network:
+        description:
+            - If set to true will download the Calico network config with the Admin config
+        required: False
+        type: bool
+        default: False
     admin:
         description:
             - If set to true will download the config for admin
@@ -70,11 +70,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster_name_id',
-    'network',
     'download',
+    'cluster_name_id',
     'resource_group_id',
     'config_dir',
+    'network',
     'admin',
 ]
 
@@ -86,21 +86,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
-    network=dict(
-        required=False,
-        type='bool'),
     download=dict(
         required=False,
         type='bool'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     config_dir=dict(
         required=False,
         type='str'),
+    network=dict(
+        required=False,
+        type='bool'),
     admin=dict(
         required=False,
         type='bool'),
@@ -124,7 +124,7 @@ def run_module():
         resource_type='ibm_container_cluster_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

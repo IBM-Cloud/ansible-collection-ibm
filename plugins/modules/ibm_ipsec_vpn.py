@@ -16,18 +16,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    customer_peer_ip:
         description:
-            - (Required for new resource) Datacenter name
-        required: True
+            - Customer Peer IP Address
+        required: False
         type: str
     remote_subnet_id:
         description:
             - Remote subnet ID value
+        required: False
+        type: int
+    remote_subnet:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    service_subnet_id:
+        description:
+            - Service subnet ID value
         required: False
         type: int
     phase_one:
@@ -53,27 +64,16 @@ options:
             - Preshared Key data
         required: False
         type: str
-    customer_peer_ip:
-        description:
-            - Customer Peer IP Address
-        required: False
-        type: str
     internal_subnet_id:
         description:
             - Internal subnet ID value
         required: False
         type: int
-    remote_subnet:
+    datacenter:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    service_subnet_id:
-        description:
-            - Service subnet ID value
-        required: False
-        type: int
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,16 +125,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
+    'customer_peer_ip',
     'remote_subnet_id',
+    'remote_subnet',
+    'service_subnet_id',
     'phase_one',
     'phase_two',
     'address_translation',
     'preshared_key',
-    'customer_peer_ip',
     'internal_subnet_id',
-    'remote_subnet',
-    'service_subnet_id',
+    'datacenter',
 ]
 
 # Params for Data source
@@ -153,10 +153,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    customer_peer_ip=dict(
         required=False,
         type='str'),
     remote_subnet_id=dict(
+        required=False,
+        type='int'),
+    remote_subnet=dict(
+        required=False,
+        elements='',
+        type='list'),
+    service_subnet_id=dict(
         required=False,
         type='int'),
     phase_one=dict(
@@ -174,19 +181,12 @@ module_args = dict(
     preshared_key=dict(
         required=False,
         type='str'),
-    customer_peer_ip=dict(
-        required=False,
-        type='str'),
     internal_subnet_id=dict(
         required=False,
         type='int'),
-    remote_subnet=dict(
+    datacenter=dict(
         required=False,
-        elements='',
-        type='list'),
-    service_subnet_id=dict(
-        required=False,
-        type='int'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

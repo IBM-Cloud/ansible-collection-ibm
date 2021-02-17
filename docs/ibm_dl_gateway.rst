@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,32 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  type (True, str, None)
-    (Required for new resource) Gateway type
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
   macsec_config (False, list, None)
     MACsec configuration information
 
 
-  tags (False, list, None)
-    Tags for the direct link gateway
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
 
 
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+  carrier_name (False, str, None)
+    Carrier name
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
 
 
   location_name (False, str, None)
@@ -64,40 +52,52 @@ Parameters
     (Required for new resource) The unique user-defined name for this gateway
 
 
-  customer_name (False, str, None)
-    Customer name
+  type (True, str, None)
+    (Required for new resource) Gateway type
 
 
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  port (False, str, None)
-    Gateway port
-
-
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
 
 
   loa_reject_reason (False, str, None)
     Loa reject reason
 
 
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
+
+
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  port (False, str, None)
+    Gateway port
 
 
   metered (True, bool, None)
     (Required for new resource) Metered billing option
 
 
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  customer_name (False, str, None)
+    Customer name
+
+
+  resource_group (False, str, None)
+    Gateway resource group
 
 
   id (False, str, None)
