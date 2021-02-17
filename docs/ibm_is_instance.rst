@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.19.0
+- IBM-Cloud terraform-provider-ibm v1.21.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  volumes (False, list, None)
-    List of volumes
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  tags (False, list, None)
-    list of tags for the instance
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
   network_interfaces (False, list, None)
@@ -48,40 +40,56 @@ Parameters
     (Required for new resource) image name
 
 
+  volumes (False, list, None)
+    List of volumes
+
+
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
+
+
   resource_group (False, str, None)
     Instance resource group
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  user_data (False, str, None)
-    User data given for the instance
 
 
   force_recovery_time (False, int, None)
     Define timeout to force the instances to start/stop in minutes.
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  boot_volume (False, list, None)
-    None
+  name (True, str, None)
+    (Required for new resource) Instance name
 
 
   vpc (True, str, None)
     (Required for new resource) VPC id
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  boot_volume (False, list, None)
+    None
 
 
   id (False, str, None)

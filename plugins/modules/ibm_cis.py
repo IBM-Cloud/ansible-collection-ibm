@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
@@ -25,15 +25,20 @@ options:
             - (Required for new resource) The plan type of the service
         required: True
         type: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    name:
+    location:
         description:
-            - (Required for new resource) A name for the resource instance
+            - (Required for new resource) The location where the instance available
         required: True
         type: str
     parameters:
@@ -41,14 +46,9 @@ options:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    resource_group_id:
+    name:
         description:
-            - The resource group id
-        required: False
-        type: str
-    location:
-        description:
-            - (Required for new resource) The location where the instance available
+            - (Required for new resource) A name for the resource instance
         required: True
         type: str
     id:
@@ -98,18 +98,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('plan', 'str'),
-    ('name', 'str'),
     ('location', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'plan',
-    'tags',
-    'name',
-    'parameters',
     'resource_group_id',
+    'tags',
     'location',
+    'parameters',
+    'name',
 ]
 
 # Params for Data source
@@ -132,20 +132,20 @@ module_args = dict(
     plan=dict(
         required=False,
         type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    location=dict(
         required=False,
         type='str'),
     parameters=dict(
         required=False,
         type='dict'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    location=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -222,7 +222,7 @@ def run_module():
             resource_type='ibm_cis',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.19.0',
+            ibm_provider_version='1.21.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

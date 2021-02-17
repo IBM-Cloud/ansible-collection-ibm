@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
@@ -25,49 +25,48 @@ options:
             - (Required for new resource) CIS object id or CRN
         required: True
         type: str
-    proxied:
-        description:
-            - Boolean value true if proxied else flase
-        required: False
-        type: bool
-        default: False
-    type:
-        description:
-            - (Required for new resource) Record type
-        required: True
-        type: str
-    priority:
-        description:
-            - Priority Value
-        required: False
-        type: int
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
     name:
         description:
             - DNS record name
         required: False
         type: str
-    content:
+    type:
         description:
-            - DNS record content
-        required: False
+            - (Required for new resource) Record type
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
         type: str
     data:
         description:
             - None
         required: False
         type: dict
-        elements: dict
     ttl:
         description:
             - TTL value
         required: False
         type: int
         default: 1
+    proxied:
+        description:
+            - Boolean value true if proxied else flase
+        required: False
+        type: bool
+        default: False
+    content:
+        description:
+            - DNS record content
+        required: False
+        type: str
+    priority:
+        description:
+            - Priority Value
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,14 +121,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
-    'proxied',
-    'type',
-    'priority',
-    'domain_id',
     'name',
-    'content',
+    'type',
+    'domain_id',
     'data',
     'ttl',
+    'proxied',
+    'content',
+    'priority',
 ]
 
 # Params for Data source
@@ -140,8 +139,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'content': ['data'],
     'data': ['content'],
+    'content': ['data'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -151,29 +150,28 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    proxied=dict(
-        required=False,
-        type='bool'),
-    type=dict(
-        required=False,
-        type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    content=dict(
+    type=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
         required=False,
         type='str'),
     data=dict(
         required=False,
-        elements='',
         type='dict'),
     ttl=dict(
+        required=False,
+        type='int'),
+    proxied=dict(
+        required=False,
+        type='bool'),
+    content=dict(
+        required=False,
+        type='str'),
+    priority=dict(
         required=False,
         type='int'),
     id=dict(
@@ -241,7 +239,7 @@ def run_module():
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

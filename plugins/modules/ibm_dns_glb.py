@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.19.0
+    - IBM-Cloud terraform-provider-ibm v1.21.0
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - Descriptive text of the load balancer
-        required: False
-        type: str
     fallback_pool:
         description:
             - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
@@ -36,17 +31,6 @@ options:
         required: True
         type: list
         elements: str
-    az_pools:
-        description:
-            - Map availability zones to pool ID's.
-        required: False
-        type: list
-        elements: dict
-    zone_id:
-        description:
-            - (Required for new resource) Zone Id
-        required: True
-        type: str
     instance_id:
         description:
             - (Required for new resource) The GUID of the private DNS.
@@ -56,6 +40,11 @@ options:
         description:
             - (Required for new resource) Name of the load balancer
         required: True
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer
+        required: False
         type: str
     enabled:
         description:
@@ -68,6 +57,17 @@ options:
         required: False
         type: int
         default: 60
+    zone_id:
+        description:
+            - (Required for new resource) Zone Id
+        required: True
+        type: str
+    az_pools:
+        description:
+            - Map availability zones to pool ID's.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -116,22 +116,22 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('fallback_pool', 'str'),
     ('default_pools', 'list'),
-    ('zone_id', 'str'),
     ('instance_id', 'str'),
     ('name', 'str'),
+    ('zone_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'fallback_pool',
     'default_pools',
-    'az_pools',
-    'zone_id',
     'instance_id',
     'name',
+    'description',
     'enabled',
     'ttl',
+    'zone_id',
+    'az_pools',
 ]
 
 # Params for Data source
@@ -148,9 +148,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     fallback_pool=dict(
         required=False,
         type='str'),
@@ -158,17 +155,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    az_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
-    zone_id=dict(
-        required=False,
-        type='str'),
     instance_id=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     enabled=dict(
@@ -177,6 +170,13 @@ module_args = dict(
     ttl=dict(
         required=False,
         type='int'),
+    zone_id=dict(
+        required=False,
+        type='str'),
+    az_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_dns_glb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.19.0',
+        ibm_provider_version='1.21.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
