@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
@@ -28,60 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  macsec_config (False, list, None)
-    MACsec configuration information
-
-
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  type (True, str, None)
-    (Required for new resource) Gateway type
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
-
-
-  loa_reject_reason (False, str, None)
-    Loa reject reason
-
-
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
-
-
   speed_mbps (True, int, None)
     (Required for new resource) Gateway speed in megabits per second
 
 
   tags (False, list, None)
     Tags for the direct link gateway
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   port (False, str, None)
@@ -92,8 +52,48 @@ Parameters
     (Required for new resource) Metered billing option
 
 
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  macsec_config (False, list, None)
+    MACsec configuration information
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  type (True, str, None)
+    (Required for new resource) Gateway type
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
+  carrier_name (False, str, None)
+    Carrier name
+
+
   customer_name (False, str, None)
     Customer name
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  loa_reject_reason (False, str, None)
+    Loa reject reason
 
 
   resource_group (False, str, None)

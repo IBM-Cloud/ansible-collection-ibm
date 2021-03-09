@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -24,17 +24,17 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    name:
+        description:
+            - Name or id of the cluster
+        required: False
+        type: str
     alb_type:
         description:
             - None
         required: False
         type: str
         default: all
-    name:
-        description:
-            - Name or id of the cluster
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -53,8 +53,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'alb_type',
     'name',
+    'alb_type',
 ]
 
 
@@ -68,10 +68,10 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    alb_type=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    alb_type=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -94,7 +94,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
-    pfs:
-        description:
-            - (Required for new resource) PFS info
-        required: True
-        type: str
-    key_lifetime:
-        description:
-            - IPSEC key lifetime
-        required: False
-        type: int
-        default: 3600
     name:
         description:
             - (Required for new resource) IPSEC name
@@ -46,11 +35,22 @@ options:
             - (Required for new resource) Encryption algorithm
         required: True
         type: str
+    pfs:
+        description:
+            - (Required for new resource) PFS info
+        required: True
+        type: str
     resource_group:
         description:
             - Resource group info
         required: False
         type: str
+    key_lifetime:
+        description:
+            - IPSEC key lifetime
+        required: False
+        type: int
+        default: 3600
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,20 +97,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pfs', 'str'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
+    ('pfs', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pfs',
-    'key_lifetime',
     'name',
     'authentication_algorithm',
     'encryption_algorithm',
+    'pfs',
     'resource_group',
+    'key_lifetime',
 ]
 
 # Params for Data source
@@ -127,12 +127,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pfs=dict(
-        required=False,
-        type='str'),
-    key_lifetime=dict(
-        required=False,
-        type='int'),
     name=dict(
         required=False,
         type='str'),
@@ -142,9 +136,15 @@ module_args = dict(
     encryption_algorithm=dict(
         required=False,
         type='str'),
+    pfs=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    key_lifetime=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,32 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
-    group:
-        description:
-            - (Required for new resource) Security group id
-        required: True
-        type: str
-    ip_version:
-        description:
-            - IP version: ipv4 or ipv6
-        required: False
-        type: str
-        default: ipv4
-    remote:
-        description:
-            - Security group id: an IP address, a CIDR block, or a single security group identifier
-        required: False
-        type: str
-    icmp:
-        description:
-            - protocol=icmp
-        required: False
-        type: list
-        elements: dict
     tcp:
         description:
             - protocol=tcp
@@ -54,11 +32,33 @@ options:
         required: False
         type: list
         elements: dict
+    group:
+        description:
+            - (Required for new resource) Security group id
+        required: True
+        type: str
+    remote:
+        description:
+            - Security group id: an IP address, a CIDR block, or a single security group identifier
+        required: False
+        type: str
     direction:
         description:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
+    ip_version:
+        description:
+            - IP version: ipv4 or ipv6
+        required: False
+        type: str
+        default: ipv4
+    icmp:
+        description:
+            - protocol=icmp
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,13 +111,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'group',
-    'ip_version',
-    'remote',
-    'icmp',
     'tcp',
     'udp',
+    'group',
+    'remote',
     'direction',
+    'ip_version',
+    'icmp',
 ]
 
 # Params for Data source
@@ -128,28 +128,15 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'icmp': ['tcp', 'udp'],
     'tcp': ['udp', 'icmp'],
     'udp': ['tcp', 'icmp'],
+    'icmp': ['tcp', 'udp'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    group=dict(
-        required=False,
-        type='str'),
-    ip_version=dict(
-        required=False,
-        type='str'),
-    remote=dict(
-        required=False,
-        type='str'),
-    icmp=dict(
-        required=False,
-        elements='',
-        type='list'),
     tcp=dict(
         required=False,
         elements='',
@@ -158,9 +145,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    group=dict(
+        required=False,
+        type='str'),
+    remote=dict(
+        required=False,
+        type='str'),
     direction=dict(
         required=False,
         type='str'),
+    ip_version=dict(
+        required=False,
+        type='str'),
+    icmp=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -238,7 +238,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

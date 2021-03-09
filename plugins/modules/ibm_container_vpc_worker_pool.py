@@ -16,29 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - (Required for new resource) Cluster name
-        required: True
-        type: str
-    zones:
-        description:
-            - (Required for new resource) Zones info
-        required: True
-        type: list
-        elements: dict
     vpc_id:
         description:
             - (Required for new resource) The vpc id where the cluster is
         required: True
         type: str
-    flavor:
+    cluster:
         description:
-            - (Required for new resource) cluster node falvor
+            - (Required for new resource) Cluster name
         required: True
         type: str
     worker_pool_name:
@@ -67,6 +56,17 @@ options:
             - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
         type: str
+    flavor:
+        description:
+            - (Required for new resource) cluster node falvor
+        required: True
+        type: str
+    zones:
+        description:
+            - (Required for new resource) Zones info
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,25 +93,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
-    ('zones', 'list'),
     ('vpc_id', 'str'),
-    ('flavor', 'str'),
+    ('cluster', 'str'),
     ('worker_pool_name', 'str'),
     ('worker_count', 'int'),
+    ('flavor', 'str'),
+    ('zones', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
-    'zones',
     'vpc_id',
-    'flavor',
+    'cluster',
     'worker_pool_name',
     'labels',
     'resource_group_id',
     'worker_count',
     'entitlement',
+    'flavor',
+    'zones',
 ]
 
 # Params for Data source
@@ -132,17 +132,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
     vpc_id=dict(
         required=False,
         type='str'),
-    flavor=dict(
+    cluster=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
@@ -161,6 +154,13 @@ module_args = dict(
     entitlement=dict(
         required=False,
         type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -221,7 +221,7 @@ def run_module():
             resource_type='ibm_container_vpc_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.0',
+            ibm_provider_version='1.21.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -25,12 +25,12 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
-    keys:
+    boot_volume:
         description:
-            - (Required for new resource) SSH key Ids for the instance template
-        required: True
+            - None
+        required: False
         type: list
-        elements: str
+        elements: dict
     primary_network_interface:
         description:
             - (Required for new resource) Primary Network interface info
@@ -48,17 +48,6 @@ options:
             - User data given for the instance
         required: False
         type: str
-    image:
-        description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     name:
         description:
             - (Required for new resource) Instance Template name
@@ -74,12 +63,23 @@ options:
             - (Required for new resource) Profile info
         required: True
         type: str
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance template
+        required: True
+        type: list
+        elements: str
     volume_attachments:
         description:
             - None
         required: False
         type: list
         elements: dict
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
     resource_group:
         description:
             - Instance template resource group
@@ -132,27 +132,27 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('zone', 'str'),
-    ('keys', 'list'),
     ('primary_network_interface', 'list'),
-    ('image', 'str'),
     ('name', 'str'),
     ('vpc', 'str'),
     ('profile', 'str'),
+    ('keys', 'list'),
+    ('image', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'zone',
-    'keys',
+    'boot_volume',
     'primary_network_interface',
     'network_interfaces',
     'user_data',
-    'image',
-    'boot_volume',
     'name',
     'vpc',
     'profile',
+    'keys',
     'volume_attachments',
+    'image',
     'resource_group',
 ]
 
@@ -173,7 +173,7 @@ module_args = dict(
     zone=dict(
         required=False,
         type='str'),
-    keys=dict(
+    boot_volume=dict(
         required=False,
         elements='',
         type='list'),
@@ -188,13 +188,6 @@ module_args = dict(
     user_data=dict(
         required=False,
         type='str'),
-    image=dict(
-        required=False,
-        type='str'),
-    boot_volume=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -204,10 +197,17 @@ module_args = dict(
     profile=dict(
         required=False,
         type='str'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     volume_attachments=dict(
         required=False,
         elements='',
         type='list'),
+    image=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -288,7 +288,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  conditions (True, list, None)
+    (Required for new resource) conditions info
+
 
   access_group_id (True, str, None)
     (Required for new resource) Unique identifier of the access group
@@ -42,10 +46,6 @@ Parameters
 
   identity_provider (True, str, None)
     (Required for new resource) The realm name or identity proivider url
-
-
-  conditions (True, list, None)
-    (Required for new resource) conditions info
 
 
   id (False, str, None)

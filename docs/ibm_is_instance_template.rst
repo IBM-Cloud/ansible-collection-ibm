@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
@@ -32,8 +32,8 @@ Parameters
     (Required for new resource) Zone name
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
+  boot_volume (False, list, None)
+    None
 
 
   primary_network_interface (True, list, None)
@@ -48,14 +48,6 @@ Parameters
     User data given for the instance
 
 
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  boot_volume (False, list, None)
-    None
-
-
   name (True, str, None)
     (Required for new resource) Instance Template name
 
@@ -68,8 +60,16 @@ Parameters
     (Required for new resource) Profile info
 
 
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
   volume_attachments (False, list, None)
     None
+
+
+  image (True, str, None)
+    (Required for new resource) image name
 
 
   resource_group (False, str, None)

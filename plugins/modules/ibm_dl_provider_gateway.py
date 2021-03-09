@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -30,30 +30,9 @@ options:
             - (Required for new resource) BGP ASN
         required: True
         type: int
-    customer_account_id:
-        description:
-            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
-        required: True
-        type: str
-    tags:
-        description:
-            - Tags for the direct link gateway
-        required: False
-        type: list
-        elements: str
     bgp_cer_cidr:
         description:
             - BGP customer edge router CIDR
-        required: False
-        type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
         required: False
         type: str
     name:
@@ -61,6 +40,27 @@ options:
             - (Required for new resource) The unique user-defined name for this gateway
         required: True
         type: str
+    customer_account_id:
+        description:
+            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+        required: True
+        type: str
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
+        type: str
+    speed_mbps:
+        description:
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
+    tags:
+        description:
+            - Tags for the direct link gateway
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,21 +109,21 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('port', 'str'),
     ('bgp_asn', 'int'),
+    ('name', 'str'),
     ('customer_account_id', 'str'),
     ('speed_mbps', 'int'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'port',
     'bgp_asn',
-    'customer_account_id',
-    'tags',
     'bgp_cer_cidr',
-    'speed_mbps',
-    'bgp_ibm_cidr',
     'name',
+    'customer_account_id',
+    'bgp_ibm_cidr',
+    'speed_mbps',
+    'tags',
 ]
 
 # Params for Data source
@@ -146,25 +146,25 @@ module_args = dict(
     bgp_asn=dict(
         required=False,
         type='int'),
-    customer_account_id=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     bgp_cer_cidr=dict(
-        required=False,
-        type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
-    bgp_ibm_cidr=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    customer_account_id=dict(
+        required=False,
+        type='str'),
+    bgp_ibm_cidr=dict(
+        required=False,
+        type='str'),
+    speed_mbps=dict(
+        required=False,
+        type='int'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -230,7 +230,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

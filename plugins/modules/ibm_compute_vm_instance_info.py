@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_vm_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -25,14 +25,14 @@ options:
         required: False
         type: bool
         default: False
-    hostname:
-        description:
-            - The hostname of the virtual guest
-        required: True
-        type: str
     domain:
         description:
             - The domain of the virtual guest
+        required: True
+        type: str
+    hostname:
+        description:
+            - The hostname of the virtual guest
         required: True
         type: str
     iaas_classic_username:
@@ -68,15 +68,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('hostname', 'str'),
     ('domain', 'str'),
+    ('hostname', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'most_recent',
-    'hostname',
     'domain',
+    'hostname',
 ]
 
 
@@ -90,10 +90,10 @@ module_args = dict(
     most_recent=dict(
         required=False,
         type='bool'),
-    hostname=dict(
+    domain=dict(
         required=True,
         type='str'),
-    domain=dict(
+    hostname=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -130,7 +130,7 @@ def run_module():
         resource_type='ibm_compute_vm_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

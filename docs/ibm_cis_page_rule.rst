@@ -20,25 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  priority (False, int, 1)
-    Page rule priority
-
-
-  status (False, str, disabled)
-    Page Rule status
-
-
-  targets (True, list, None)
-    (Required for new resource) Page rule targets
-
 
   actions (True, list, None)
     (Required for new resource) Page rule actions
@@ -50,6 +38,18 @@ Parameters
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  priority (False, int, 1)
+    Page rule priority
+
+
+  status (False, str, disabled)
+    Page Rule status
+
+
+  targets (True, list, None)
+    (Required for new resource) Page rule targets
 
 
   id (False, str, None)

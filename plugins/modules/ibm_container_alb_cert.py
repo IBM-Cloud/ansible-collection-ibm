@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,17 @@ options:
             - (Required for new resource) Certificate CRN id
         required: True
         type: str
+    namespace:
+        description:
+            - Namespace of the secret
+        required: False
+        type: str
+        default: ibm-cert-store
+    persistence:
+        description:
+            - Persistence of secret
+        required: False
+        type: bool
     cluster_id:
         description:
             - (Required for new resource) Cluster ID
@@ -35,17 +46,6 @@ options:
             - (Required for new resource) Secret name
         required: True
         type: str
-    persistence:
-        description:
-            - Persistence of secret
-        required: False
-        type: bool
-    namespace:
-        description:
-            - Namespace of the secret
-        required: False
-        type: str
-        default: ibm-cert-store
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -80,22 +80,22 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cert_crn',
+    'namespace',
+    'persistence',
     'cluster_id',
     'secret_name',
-    'persistence',
-    'namespace',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('cluster_id', 'str'),
     ('secret_name', 'str'),
+    ('cluster_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'namespace',
-    'cluster_id',
     'secret_name',
+    'cluster_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -108,16 +108,16 @@ module_args = dict(
     cert_crn=dict(
         required=False,
         type='str'),
-    cluster_id=dict(
-        required=False,
-        type='str'),
-    secret_name=dict(
+    namespace=dict(
         required=False,
         type='str'),
     persistence=dict(
         required=False,
         type='bool'),
-    namespace=dict(
+    cluster_id=dict(
+        required=False,
+        type='str'),
+    secret_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -171,7 +171,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -180,7 +180,7 @@ def run_module():
             resource_type='ibm_container_alb_cert',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.0',
+            ibm_provider_version='1.21.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

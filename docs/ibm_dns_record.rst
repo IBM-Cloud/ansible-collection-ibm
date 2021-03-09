@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
@@ -28,48 +28,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  port (False, int, None)
-    port number
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  service (False, str, None)
-    service info
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
   data (True, str, None)
     (Required for new resource) DNS record data
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
 
 
   domain_id (True, int, None)
     (Required for new resource) Domain ID of dns record instance
 
 
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
   retry (False, int, None)
     Retry count
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  protocol (False, str, None)
+    protocol info
 
 
   minimum_ttl (False, int, None)
@@ -80,20 +88,12 @@ Parameters
     (Required for new resource) TTL configuration
 
 
-  protocol (False, str, None)
-    protocol info
+  port (False, int, None)
+    port number
 
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
+  weight (False, int, 0)
+    weight info
 
 
   id (False, str, None)

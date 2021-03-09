@@ -20,13 +20,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  development_mode (False, str, None)
+    Development mode setting
+
+
+  purge_by_hosts (False, list, None)
+    Purge by hosts
+
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -48,10 +56,6 @@ Parameters
     Query String sort setting
 
 
-  development_mode (False, str, None)
-    Development mode setting
-
-
   purge_all (False, bool, None)
     Purge all setting
 
@@ -62,10 +66,6 @@ Parameters
 
   purge_by_tags (False, list, None)
     Purge by tags
-
-
-  purge_by_hosts (False, list, None)
-    Purge by hosts
 
 
   id (False, str, None)

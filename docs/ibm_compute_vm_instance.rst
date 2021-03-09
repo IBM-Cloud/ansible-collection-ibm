@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
@@ -28,15 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hourly_billing (False, bool, True)
+  file_storage_ids (False, list, None)
     None
 
 
-  private_security_group_ids (False, list, None)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
+  evault (False, int, None)
     None
 
 
@@ -44,15 +40,11 @@ Parameters
     None
 
 
-  ssh_key_ids (False, list, None)
+  post_install_script_uri (False, str, None)
     None
 
 
-  private_vlan_id (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
+  public_vlan_id (False, int, None)
     None
 
 
@@ -60,15 +52,11 @@ Parameters
     None
 
 
-  os_reference_code (False, str, None)
+  private_network_only (False, bool, False)
     None
 
 
-  memory (False, int, None)
-    None
-
-
-  dedicated_host_id (False, int, None)
+  datacenter (False, str, None)
     None
 
 
@@ -76,19 +64,15 @@ Parameters
     None
 
 
-  domain (False, str, None)
+  secondary_ip_count (False, int, None)
     None
 
 
-  dedicated_acct_host_only (False, bool, None)
-    None
+  placement_group_id (False, int, None)
+    The placement group id
 
 
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  local_disk (False, bool, True)
+  block_storage_ids (False, list, None)
     None
 
 
@@ -96,7 +80,11 @@ Parameters
     None
 
 
-  secondary_ip_count (False, int, None)
+  bulk_vms (False, list, None)
+    None
+
+
+  os_reference_code (False, str, None)
     None
 
 
@@ -104,12 +92,92 @@ Parameters
     None
 
 
+  cores (False, int, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
   public_security_group_ids (False, list, None)
+    None
+
+
+  notes (False, str, None)
     None
 
 
   disks (False, list, None)
     None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  private_security_group_ids (False, list, None)
+    None
+
+
+  image_id (False, int, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  memory (False, int, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
 
 
   ipv6_enabled (False, bool, False)
@@ -120,75 +188,7 @@ Parameters
     None
 
 
-  public_vlan_id (False, int, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  notes (False, str, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  cores (False, int, None)
-    None
-
-
-  image_id (False, int, None)
+  domain (False, str, None)
     None
 
 

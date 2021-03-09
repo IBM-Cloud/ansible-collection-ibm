@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.0
+- IBM-Cloud terraform-provider-ibm v1.21.1
 - Terraform v0.12.20
 
 
@@ -28,28 +28,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  notes (False, str, None)
-    Notes
+  capacity (True, int, None)
+    (Required for new resource) Storage capacity
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
+
+
+  snapshot_schedule (False, list, None)
+    None
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
-  iops (True, float, None)
-    (Required for new resource) iops rate
-
-
-  capacity (True, int, None)
-    (Required for new resource) Storage capacity
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
   allowed_hardware_ids (False, list, None)
     Hardaware ID
+
+
+  notes (False, str, None)
+    Notes
+
+
+  tags (False, list, None)
+    Tags set for the storage volume
 
 
   hourly_billing (False, bool, False)
@@ -60,24 +68,16 @@ Parameters
     (Required for new resource) Storage type
 
 
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
-
-
-  tags (False, list, None)
-    Tags set for the storage volume
-
-
   allowed_subnets (False, list, None)
     Allowed network subnets
 
 
-  snapshot_schedule (False, list, None)
-    None
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
+
+
+  iops (True, float, None)
+    (Required for new resource) iops rate
 
 
   id (False, str, None)

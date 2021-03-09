@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
             - (Required for new resource) The name of the custom Role
         required: True
         type: str
+    description:
+        description:
+            - The description of the role
+        required: False
+        type: str
     service:
         description:
             - (Required for new resource) The Service Name
@@ -41,11 +46,6 @@ options:
         required: True
         type: list
         elements: str
-    description:
-        description:
-            - The description of the role
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,9 +102,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'display_name',
     'name',
+    'description',
     'service',
     'actions',
-    'description',
 ]
 
 # Params for Data source
@@ -127,6 +127,9 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     service=dict(
         required=False,
         type='str'),
@@ -134,9 +137,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_iam_custom_role',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

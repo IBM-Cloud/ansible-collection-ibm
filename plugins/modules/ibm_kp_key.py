@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -42,11 +42,6 @@ options:
         required: False
         type: bool
         default: False
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
     iv_value:
         description:
             - Only for imported root key
@@ -55,6 +50,11 @@ options:
     payload:
         description:
             - None
+        required: False
+        type: str
+    encrypted_nonce:
+        description:
+            - Only for imported root key
         required: False
         type: str
     id:
@@ -113,9 +113,9 @@ TL_ALL_PARAMETERS = [
     'force_delete',
     'key_name',
     'standard_key',
-    'encrypted_nonce',
     'iv_value',
     'payload',
+    'encrypted_nonce',
 ]
 
 # Params for Data source
@@ -124,8 +124,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'key_protect_id',
     'key_name',
+    'key_protect_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,13 +147,13 @@ module_args = dict(
     standard_key=dict(
         required=False,
         type='bool'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
     iv_value=dict(
         required=False,
         type='str'),
     payload=dict(
+        required=False,
+        type='str'),
+    encrypted_nonce=dict(
         required=False,
         type='str'),
     id=dict(
@@ -221,7 +221,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -230,7 +230,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.0',
+            ibm_provider_version='1.21.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

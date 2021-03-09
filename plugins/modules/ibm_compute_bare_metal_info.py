@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
@@ -25,11 +25,6 @@ options:
         required: False
         type: bool
         default: False
-    global_identifier:
-        description:
-            - The unique global identifier of the bare metal server
-        required: False
-        type: str
     hostname:
         description:
             - The hostname of the bare metal server
@@ -38,6 +33,11 @@ options:
     domain:
         description:
             - The domain of the bare metal server
+        required: False
+        type: str
+    global_identifier:
+        description:
+            - The unique global identifier of the bare metal server
         required: False
         type: str
     iaas_classic_username:
@@ -78,17 +78,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'most_recent',
-    'global_identifier',
     'hostname',
     'domain',
+    'global_identifier',
 ]
 
 
 TL_CONFLICTS_MAP = {
     'most_recent': ['global_identifier'],
-    'global_identifier': ['hostname', 'domain', 'most_recent'],
     'hostname': ['global_identifier'],
     'domain': ['global_identifier'],
+    'global_identifier': ['hostname', 'domain', 'most_recent'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -98,13 +98,13 @@ module_args = dict(
     most_recent=dict(
         required=False,
         type='bool'),
-    global_identifier=dict(
-        required=False,
-        type='str'),
     hostname=dict(
         required=False,
         type='str'),
     domain=dict(
+        required=False,
+        type='str'),
+    global_identifier=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

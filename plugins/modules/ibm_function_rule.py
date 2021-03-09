@@ -16,20 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.0
+    - IBM-Cloud terraform-provider-ibm v1.21.1
     - Terraform v0.12.20
 
 options:
-    namespace:
-        description:
-            - (Required for new resource) IBM Cloud function namespace.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of rule.
-        required: True
-        type: str
     trigger_name:
         description:
             - (Required for new resource) Name of trigger.
@@ -38,6 +28,16 @@ options:
     action_name:
         description:
             - (Required for new resource) Name of action.
+        required: True
+        type: str
+    namespace:
+        description:
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of rule.
         required: True
         type: str
     id:
@@ -72,29 +72,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace', 'str'),
-    ('name', 'str'),
     ('trigger_name', 'str'),
     ('action_name', 'str'),
+    ('namespace', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'namespace',
-    'name',
     'trigger_name',
     'action_name',
+    'namespace',
+    'name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('namespace', 'str'),
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'namespace',
     'name',
+    'namespace',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -104,16 +104,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    namespace=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     trigger_name=dict(
         required=False,
         type='str'),
     action_name=dict(
+        required=False,
+        type='str'),
+    namespace=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -171,7 +171,7 @@ def run_module():
         resource_type='ibm_function_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.0',
+        ibm_provider_version='1.21.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -180,7 +180,7 @@ def run_module():
             resource_type='ibm_function_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.0',
+            ibm_provider_version='1.21.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
