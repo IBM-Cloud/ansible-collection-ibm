@@ -571,7 +571,7 @@ class Resource:
         if 'name' in self.parameters and self.parameters['name'] is not None:
             # To avoid special characters in the resource name removing special character.
             tfname = ''.join(e for e in self.parameters['name'] if e.isalnum())
-            self.tf_name = tfname
+            self.tf_name = tfname            
         else:
             self.tf_name = (
                 "ansible_" + datetime.now().strftime("%Y%m%d-%H%M%S"))
@@ -1054,7 +1054,7 @@ def fmt_tf_block(
         indent_count=0,
         indent_spaces=2,
         filter_None=True,
-        validate_tl_params=None):
+        validate_tl_params=[]):
     """
     Format a dictionary of configuration arguments into Terraform
     block syntax.
@@ -1077,20 +1077,18 @@ def fmt_tf_block(
         return ' ' * ((indent_count + extra_count) * indent_spaces)
 
     for key, value in arg_dict.items():
-        if type(validate_tl_params) == list:
-            if key not in validate_tl_params:
-                continue
-
+        if len(validate_tl_params) > 0 and key not in validate_tl_params:
+            continue
         if key.endswith("_"):
             key = key[:-1]
         if isinstance(value, dict):
-            output += indent() + key + ' = {\n'
+            output += indent() + key + ' {\n'
             output += fmt_tf_block(value, indent_count + 1, indent_spaces)
             output += indent(-1) + '}\n'
         elif isinstance(value, list):
             if len(value) >= 1 and isinstance(value[0], dict):
-                output += indent() + key + ' {\n'
                 for item in value:
+                    output += indent() + key + ' {\n'
                     output += fmt_tf_block(
                         item, indent_count + 1, indent_spaces)
                     output += indent(1) + '}\n'
