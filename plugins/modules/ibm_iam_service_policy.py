@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
@@ -28,8 +28,13 @@ options:
         elements: str
     iam_service_id:
         description:
-            - (Required for new resource) UUID of ServiceID
-        required: True
+            - UUID of ServiceID
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of ServiceID
+        required: False
         type: str
     roles:
         description:
@@ -95,7 +100,6 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('iam_service_id', 'str'),
     ('roles', 'list'),
 ]
 
@@ -103,6 +107,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'tags',
     'iam_service_id',
+    'iam_id',
     'roles',
     'resources',
     'account_management',
@@ -110,11 +115,11 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('iam_service_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'iam_service_id',
+    'iam_id',
     'sort',
 ]
 
@@ -132,6 +137,9 @@ module_args = dict(
         elements='',
         type='list'),
     iam_service_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
         required=False,
         type='str'),
     roles=dict(
@@ -210,7 +218,7 @@ def run_module():
         resource_type='ibm_iam_service_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -219,7 +227,7 @@ def run_module():
             resource_type='ibm_iam_service_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.1',
+            ibm_provider_version='1.21.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

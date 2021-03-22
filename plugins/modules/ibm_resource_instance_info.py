@@ -15,18 +15,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - Resource instance name for example, myobjectstorage
+        required: True
+        type: str
     location:
         description:
             - The location or the environment in which instance exists
-        required: False
-        type: str
-    service:
-        description:
-            - The service type of the instance
         required: False
         type: str
     resource_group_id:
@@ -34,10 +34,10 @@ options:
             - The id of the resource group in which the instance is present
         required: False
         type: str
-    name:
+    service:
         description:
-            - Resource instance name for example, myobjectstorage
-        required: True
+            - The service type of the instance
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -77,10 +77,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'service',
-    'resource_group_id',
     'name',
+    'location',
+    'resource_group_id',
+    'service',
 ]
 
 
@@ -91,17 +91,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
-        required=False,
+    name=dict(
+        required=True,
         type='str'),
-    service=dict(
+    location=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=True,
+    service=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -137,7 +137,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

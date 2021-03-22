@@ -15,16 +15,16 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_zone' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    region_:
+    name:
         description:
             - None
         required: True
         type: str
-    name:
+    region_:
         description:
             - None
         required: True
@@ -62,14 +62,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('region_', 'str'),
     ('name', 'str'),
+    ('region_', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region_',
     'name',
+    'region_',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region_=dict(
+    name=dict(
         required=True,
         type='str'),
-    name=dict(
+    region_=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_is_zone',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

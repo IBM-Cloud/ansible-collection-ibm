@@ -16,23 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    service_instance_id:
+    resource_group_id:
         description:
-            - Service instance ID
-        required: False
-        type: str
-    namespace_id:
-        description:
-            - (Required for new resource) namespace ID
-        required: True
-        type: str
-    role:
-        description:
-            - Role info
+            - ID of the resource group.
         required: False
         type: str
     cluster_name_id:
@@ -45,16 +35,26 @@ options:
             - serivice instance name
         required: False
         type: str
+    role:
+        description:
+            - Role info
+        required: False
+        type: str
     tags:
         description:
             - List of tags for the resource
         required: False
         type: list
         elements: str
-    resource_group_id:
+    service_instance_id:
         description:
-            - ID of the resource group.
+            - Service instance ID
         required: False
+        type: str
+    namespace_id:
+        description:
+            - (Required for new resource) namespace ID
+        required: True
         type: str
     key:
         description:
@@ -87,19 +87,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace_id', 'str'),
     ('cluster_name_id', 'str'),
+    ('namespace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_instance_id',
-    'namespace_id',
-    'role',
+    'resource_group_id',
     'cluster_name_id',
     'service_instance_name',
+    'role',
     'tags',
-    'resource_group_id',
+    'service_instance_id',
+    'namespace_id',
     'key',
 ]
 
@@ -117,21 +117,15 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'service_instance_id': ['service_instance_name'],
     'service_instance_name': ['service_instance_id'],
+    'service_instance_id': ['service_instance_name'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_instance_id=dict(
-        required=False,
-        type='str'),
-    namespace_id=dict(
-        required=False,
-        type='str'),
-    role=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
     cluster_name_id=dict(
@@ -140,11 +134,17 @@ module_args = dict(
     service_instance_name=dict(
         required=False,
         type='str'),
+    role=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
+    service_instance_id=dict(
+        required=False,
+        type='str'),
+    namespace_id=dict(
         required=False,
         type='str'),
     key=dict(
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -210,7 +210,7 @@ def run_module():
             resource_type='ibm_container_bind_service',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.1',
+            ibm_provider_version='1.21.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

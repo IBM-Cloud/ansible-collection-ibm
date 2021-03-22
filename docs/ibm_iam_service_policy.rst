@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -32,8 +32,12 @@ Parameters
     None
 
 
-  iam_service_id (True, str, None)
-    (Required for new resource) UUID of ServiceID
+  iam_service_id (False, str, None)
+    UUID of ServiceID
+
+
+  iam_id (False, str, None)
+    IAM ID of ServiceID
 
 
   roles (True, list, None)

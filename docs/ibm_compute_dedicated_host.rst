@@ -20,17 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    None
-
 
   hostname (True, str, None)
     (Required for new resource) The host name of dedicatated host.
@@ -40,23 +36,27 @@ Parameters
     (Required for new resource) The domain of dedicatated host.
 
 
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
+
+
   hourly_billing (False, bool, True)
     The billing type for the dedicatated host.
+
+
+  wait_time_minutes (False, int, 90)
+    None
 
 
   datacenter (True, str, None)
     (Required for new resource) The data center in which the dedicatated host is to be provisioned.
 
 
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
-
-
   router_hostname (True, str, None)
     (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
 
 
-  wait_time_minutes (False, int, 90)
+  tags (False, list, None)
     None
 
 

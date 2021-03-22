@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  user_data (False, str, None)
+    User data given for the instance
 
 
   boot_volume (False, list, None)
     None
 
 
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  user_data (False, str, None)
-    User data given for the instance
+  resource_group (False, str, None)
+    Instance template resource group
 
 
   name (True, str, None)
@@ -56,15 +56,11 @@ Parameters
     (Required for new resource) VPC id
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  volume_attachments (False, list, None)
+  network_interfaces (False, list, None)
     None
 
 
@@ -72,8 +68,12 @@ Parameters
     (Required for new resource) image name
 
 
-  resource_group (False, str, None)
-    Instance template resource group
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   id (False, str, None)

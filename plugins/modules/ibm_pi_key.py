@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
@@ -29,11 +29,6 @@ options:
         description:
             - (Required for new resource) PI instance key info
         required: True
-        type: str
-    pi_creation_date:
-        description:
-            - Date info
-        required: False
         type: str
     pi_cloud_instance_id:
         description:
@@ -91,7 +86,6 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_key_name',
     'pi_ssh_key',
-    'pi_creation_date',
     'pi_cloud_instance_id',
 ]
 
@@ -117,9 +111,6 @@ module_args = dict(
         required=False,
         type='str'),
     pi_ssh_key=dict(
-        required=False,
-        type='str'),
-    pi_creation_date=dict(
         required=False,
         type='str'),
     pi_cloud_instance_id=dict(
@@ -183,7 +174,7 @@ def run_module():
         resource_type='ibm_pi_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -192,7 +183,7 @@ def run_module():
             resource_type='ibm_pi_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.1',
+            ibm_provider_version='1.21.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

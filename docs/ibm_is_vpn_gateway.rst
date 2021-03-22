@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -32,16 +32,16 @@ Parameters
     mode in VPN gateway(route/policy)
 
 
-  name (True, str, None)
-    (Required for new resource) VPN Gateway instance name
-
-
   subnet (True, str, None)
     (Required for new resource) VPNGateway subnet info
 
 
   resource_group (False, str, None)
     The resource group for this VPN gateway
+
+
+  name (True, str, None)
+    (Required for new resource) VPN Gateway instance name
 
 
   tags (False, list, None)

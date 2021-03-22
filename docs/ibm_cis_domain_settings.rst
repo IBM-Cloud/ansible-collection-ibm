@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -28,96 +28,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  http2 (False, str, None)
-    http2 setting
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
 
 
   image_size_optimization (False, str, None)
     image_size_optimization setting
 
 
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
+  brotli (False, str, None)
+    brotli setting
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  always_use_https (False, str, None)
-    always_use_https setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
   minify (False, list, None)
     Minify setting
 
 
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
+  security_header (False, list, None)
+    Security Header Setting
 
 
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
-  mobile_redirect (False, list, None)
-    None
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
   pseudo_ipv4 (False, str, None)
     pseudo_ipv4 setting
-
-
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
-
-
-  brotli (False, str, None)
-    brotli setting
 
 
   response_buffering (False, str, None)
@@ -128,36 +72,92 @@ Parameters
     tls_client_auth setting
 
 
-  websockets (False, str, None)
-    websockets setting
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
 
 
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
-
-
-  cipher (False, list, None)
-    Cipher settings
-
-
-  hotlink_protection (False, str, None)
-    hotlink_protection setting
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
 
 
   ip_geolocation (False, str, None)
     ip_geolocation setting
 
 
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  mobile_redirect (False, list, None)
+    None
+
+
   dnssec (False, str, None)
     DNS Sec setting
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
 
 
   id (False, str, None)

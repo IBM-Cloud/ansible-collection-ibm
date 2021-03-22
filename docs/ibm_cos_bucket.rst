@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -32,24 +32,16 @@ Parameters
     (Required for new resource) Storage class info
 
 
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
   activity_tracking (False, list, None)
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
-
-
-  region_location (False, str, None)
-    Region Location info.
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
   single_site_location (False, str, None)
@@ -68,8 +60,8 @@ Parameters
     Enables sending metrics to IBM Cloud Monitoring.
 
 
-  expire_rule (False, list, None)
-    Enable configuration expire_rule to COS Bucket after a defined period of time
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
   resource_instance_id (True, str, None)
@@ -82,6 +74,14 @@ Parameters
 
   endpoint_type (False, str, public)
     public or private
+
+
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
+
+
+  region_location (False, str, None)
+    Region Location info.
 
 
   id (False, str, None)

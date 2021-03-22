@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_manager_instance_id (True, str, None)
-    (Required for new resource) Instance ID of the certificate manager resource
+  name (True, str, None)
+    (Required for new resource) Name of the instance
 
 
   data (True, dict, None)
     (Required for new resource) certificate data
 
 
+  certificate_manager_instance_id (True, str, None)
+    (Required for new resource) Instance ID of the certificate manager resource
+
+
   description (False, str, None)
     Description of the certificate instance
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the instance
 
 
   id (False, str, None)

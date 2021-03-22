@@ -20,21 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  guest_id (True, int, None)
-    (Required for new resource) Guest ID
-
-
-  ip_address (False, str, None)
-    IP Address
-
 
   query_type_id (True, int, None)
     (Required for new resource) Query Type ID
@@ -54,6 +46,14 @@ Parameters
 
   tags (False, list, None)
     List of tags
+
+
+  guest_id (True, int, None)
+    (Required for new resource) Guest ID
+
+
+  ip_address (False, str, None)
+    IP Address
 
 
   id (False, str, None)

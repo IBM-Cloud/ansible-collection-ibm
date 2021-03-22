@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  metric_value (True, int, None)
+    (Required for new resource) The metric value to be evaluated
+
 
   policy_type (True, str, None)
     (Required for new resource) The type of Policy for the Instance Group
@@ -46,10 +50,6 @@ Parameters
 
   metric_type (True, str, None)
     (Required for new resource) The type of metric to be evaluated
-
-
-  metric_value (True, int, None)
-    (Required for new resource) The metric value to be evaluated
 
 
   id (False, str, None)

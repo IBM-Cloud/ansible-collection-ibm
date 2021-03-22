@@ -20,65 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  service (False, str, None)
-    service info
-
-
-  protocol (False, str, None)
-    protocol info
-
 
   minimum_ttl (False, int, None)
     Minimun TTL configuration
@@ -88,12 +36,64 @@ Parameters
     (Required for new resource) TTL configuration
 
 
-  port (False, int, None)
-    port number
+  protocol (False, str, None)
+    protocol info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
   weight (False, int, 0)
     weight info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  port (False, int, None)
+    port number
+
+
+  service (False, str, None)
+    service info
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   id (False, str, None)

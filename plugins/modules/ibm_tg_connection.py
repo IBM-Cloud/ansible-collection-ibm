@@ -16,34 +16,34 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    gateway:
+    name:
         description:
-            - (Required for new resource) The Transit Gateway identifier
-        required: True
+            - The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
+        required: False
         type: str
     network_type:
         description:
             - (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc)
         required: True
         type: str
+    network_id:
+        description:
+            - The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
+        required: False
+        type: str
     network_account_id:
         description:
             - The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
         required: False
         type: str
-    name:
+    gateway:
         description:
-            - The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
-        required: False
-        type: str
-    network_id:
-        description:
-            - The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
-        required: False
+            - (Required for new resource) The Transit Gateway identifier
+        required: True
         type: str
     id:
         description:
@@ -91,17 +91,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('gateway', 'str'),
     ('network_type', 'str'),
+    ('gateway', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'gateway',
-    'network_type',
-    'network_account_id',
     'name',
+    'network_type',
     'network_id',
+    'network_account_id',
+    'gateway',
 ]
 
 # Params for Data source
@@ -118,19 +118,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    gateway=dict(
+    name=dict(
         required=False,
         type='str'),
     network_type=dict(
         required=False,
         type='str'),
+    network_id=dict(
+        required=False,
+        type='str'),
     network_account_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    network_id=dict(
+    gateway=dict(
         required=False,
         type='str'),
     id=dict(
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_tg_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

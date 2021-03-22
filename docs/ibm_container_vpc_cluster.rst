@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -28,68 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
-
-
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  zones (True, list, None)
-    (Required for new resource) Zone info
-
-
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
   kms_config (False, list, None)
     Enables KMS on a given cluster
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
-  worker_labels (False, dict, None)
-    Labels for default worker pool
-
-
   service_subnet (False, str, None)
     Custom subnet CIDR to provide private IP addresses for services
 
 
-  tags (False, list, None)
-    List of tags for the resources
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
 
 
   patch_version (False, str, None)
     Kubernetes patch version
 
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
 
 
   kube_version (False, str, None)
@@ -100,12 +64,48 @@ Parameters
     Updates all the woker nodes if sets to true
 
 
+  zones (True, list, None)
+    (Required for new resource) Zone info
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   force_delete_storage (False, bool, False)
     Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
-  name (True, str, None)
-    (Required for new resource) The cluster name
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
+
+
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+
+
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
+
+
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
   id (False, str, None)

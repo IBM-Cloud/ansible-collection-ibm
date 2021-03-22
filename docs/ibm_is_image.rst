@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.1
+- IBM-Cloud terraform-provider-ibm v1.21.2
 - Terraform v0.12.20
 
 
@@ -28,28 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  href (True, str, None)
-    (Required for new resource) Image Href value
-
-
-  encrypted_data_key (False, str, None)
-    A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-
-
   encryption_key (False, str, None)
     The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
 
 
-  resource_group (False, str, None)
-    The resource group for this image
+  operating_system (True, str, None)
+    (Required for new resource) Image Operating system
 
 
   name (True, str, None)
     (Required for new resource) Image name
 
 
-  operating_system (True, str, None)
-    (Required for new resource) Image Operating system
+  encrypted_data_key (False, str, None)
+    A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+
+
+  resource_group (False, str, None)
+    The resource group for this image
+
+
+  href (True, str, None)
+    (Required for new resource) Image Href value
 
 
   tags (False, list, None)

@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     hostname:
         description:
             - (Required for new resource) The host name of dedicatated host.
@@ -36,34 +30,40 @@ options:
             - (Required for new resource) The domain of dedicatated host.
         required: True
         type: str
-    hourly_billing:
-        description:
-            - The billing type for the dedicatated host.
-        required: False
-        type: bool
-        default: True
-    datacenter:
-        description:
-            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-        required: True
-        type: str
     flavor:
         description:
             - The flavor of the dedicatated host.
         required: False
         type: str
         default: 56_CORES_X_242_RAM_X_1_4_TB
-    router_hostname:
+    hourly_billing:
         description:
-            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-        required: True
-        type: str
+            - The billing type for the dedicatated host.
+        required: False
+        type: bool
+        default: True
     wait_time_minutes:
         description:
             - None
         required: False
         type: int
         default: 90
+    datacenter:
+        description:
+            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+        required: True
+        type: str
+    router_hostname:
+        description:
+            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+        required: True
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,14 +118,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
     'hostname',
     'domain',
-    'hourly_billing',
-    'datacenter',
     'flavor',
-    'router_hostname',
+    'hourly_billing',
     'wait_time_minutes',
+    'datacenter',
+    'router_hostname',
+    'tags',
 ]
 
 # Params for Data source
@@ -142,31 +142,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     hostname=dict(
         required=False,
         type='str'),
     domain=dict(
         required=False,
         type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
     hourly_billing=dict(
         required=False,
         type='bool'),
-    datacenter=dict(
+    wait_time_minutes=dict(
         required=False,
-        type='str'),
-    flavor=dict(
+        type='int'),
+    datacenter=dict(
         required=False,
         type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
-    wait_time_minutes=dict(
+    tags=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

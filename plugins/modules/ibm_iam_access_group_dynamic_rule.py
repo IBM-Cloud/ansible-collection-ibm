@@ -16,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_dynamic_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    conditions:
-        description:
-            - (Required for new resource) conditions info
-        required: True
-        type: list
-        elements: dict
-    access_group_id:
-        description:
-            - (Required for new resource) Unique identifier of the access group
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) The name of the Rule
@@ -44,6 +33,17 @@ options:
     identity_provider:
         description:
             - (Required for new resource) The realm name or identity proivider url
+        required: True
+        type: str
+    conditions:
+        description:
+            - (Required for new resource) conditions info
+        required: True
+        type: list
+        elements: dict
+    access_group_id:
+        description:
+            - (Required for new resource) Unique identifier of the access group
         required: True
         type: str
     id:
@@ -92,20 +92,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('conditions', 'list'),
-    ('access_group_id', 'str'),
     ('name', 'str'),
     ('expiration', 'int'),
     ('identity_provider', 'str'),
+    ('conditions', 'list'),
+    ('access_group_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'conditions',
-    'access_group_id',
     'name',
     'expiration',
     'identity_provider',
+    'conditions',
+    'access_group_id',
 ]
 
 # Params for Data source
@@ -122,13 +122,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    conditions=dict(
-        required=False,
-        elements='',
-        type='list'),
-    access_group_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -136,6 +129,13 @@ module_args = dict(
         required=False,
         type='int'),
     identity_provider=dict(
+        required=False,
+        type='str'),
+    conditions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    access_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_iam_access_group_dynamic_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

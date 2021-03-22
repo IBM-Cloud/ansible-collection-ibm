@@ -15,24 +15,20 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.1
+    - IBM-Cloud terraform-provider-ibm v1.21.2
     - Terraform v0.12.20
 
 options:
-    config_dir:
+    admin:
         description:
-            - The directory where the cluster config to be downloaded. Default is home directory
+            - If set to true will download the config for admin
         required: False
-        type: str
+        type: bool
+        default: False
     resource_group_id:
         description:
             - ID of the resource group.
         required: False
-        type: str
-    cluster_name_id:
-        description:
-            - The name/id of the cluster
-        required: True
         type: str
     download:
         description:
@@ -40,18 +36,22 @@ options:
         required: False
         type: bool
         default: True
-    admin:
+    cluster_name_id:
         description:
-            - If set to true will download the config for admin
-        required: False
-        type: bool
-        default: False
+            - The name/id of the cluster
+        required: True
+        type: str
     network:
         description:
             - If set to true will download the Calico network config with the Admin config
         required: False
         type: bool
         default: False
+    config_dir:
+        description:
+            - The directory where the cluster config to be downloaded. Default is home directory
+        required: False
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -70,12 +70,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'config_dir',
-    'resource_group_id',
-    'cluster_name_id',
-    'download',
     'admin',
+    'resource_group_id',
+    'download',
+    'cluster_name_id',
     'network',
+    'config_dir',
 ]
 
 
@@ -86,24 +86,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    config_dir=dict(
+    admin=dict(
         required=False,
-        type='str'),
+        type='bool'),
     resource_group_id=dict(
         required=False,
-        type='str'),
-    cluster_name_id=dict(
-        required=True,
         type='str'),
     download=dict(
         required=False,
         type='bool'),
-    admin=dict(
-        required=False,
-        type='bool'),
+    cluster_name_id=dict(
+        required=True,
+        type='str'),
     network=dict(
         required=False,
         type='bool'),
+    config_dir=dict(
+        required=False,
+        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -124,7 +124,7 @@ def run_module():
         resource_type='ibm_container_cluster_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.1',
+        ibm_provider_version='1.21.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
