@@ -585,6 +585,9 @@ class Resource:
         self.id_ = None
         if 'id' in parameters:
             self.id_ = parameters['id']
+            if (self.resource_type.startswith('ibm_pi') and
+                    'pi_cloud_instance_id' in parameters):
+                self.id_ = parameters['pi_cloud_instance_id'] + '/' + self.id_
 
 
 class Terraform:
