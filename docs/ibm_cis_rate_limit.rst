@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,44 +28,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  correlate (False, list, None)
-    Ratelimiting Correlate
-
-
-  match (False, list, None)
-    Rate Limiting Match
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
   disabled (False, bool, False)
     Whether this rate limiting rule is currently disabled.
-
-
-  period (True, int, None)
-    (Required for new resource) Rate Limiting Period
-
-
-  threshold (True, int, None)
-    (Required for new resource) Rate Limiting Threshold
-
-
-  action (True, list, None)
-    (Required for new resource) Rate Limiting Action
-
-
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
 
 
   description (False, str, None)
     A note that you can use to describe the reason for a rate limiting rule.
 
 
+  correlate (False, list, None)
+    Ratelimiting Correlate
+
+
+  action (True, list, None)
+    (Required for new resource) Rate Limiting Action
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
+
+
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
   bypass (False, list, None)
     Bypass URL
+
+
+  threshold (True, int, None)
+    (Required for new resource) Rate Limiting Threshold
+
+
+  period (True, int, None)
+    (Required for new resource) Rate Limiting Period
+
+
+  match (False, list, None)
+    Rate Limiting Match
 
 
   id (False, str, None)

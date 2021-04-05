@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  subnet (True, str, None)
-    (Required for new resource) The subnet identifier
-
-
   network_acl (True, str, None)
     (Required for new resource) The unique identifier of network ACL
+
+
+  subnet (True, str, None)
+    (Required for new resource) The subnet identifier
 
 
   id (False, str, None)

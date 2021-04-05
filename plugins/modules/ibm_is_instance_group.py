@@ -16,35 +16,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
-    subnets:
+    load_balancer_pool:
         description:
-            - (Required for new resource) list of subnet IDs
-        required: True
-        type: list
-        elements: str
-    application_port:
-        description:
-            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+            - load balancer pool ID
         required: False
-        type: int
-    load_balancer:
-        description:
-            - load balancer ID
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The user-defined name for this instance group
-        required: True
-        type: str
-    instance_template:
-        description:
-            - (Required for new resource) instance template ID
-        required: True
         type: str
     instance_count:
         description:
@@ -57,9 +36,15 @@ options:
             - Resource group ID
         required: False
         type: str
-    load_balancer_pool:
+    subnets:
         description:
-            - load balancer pool ID
+            - (Required for new resource) list of subnet IDs
+        required: True
+        type: list
+        elements: str
+    load_balancer:
+        description:
+            - load balancer ID
         required: False
         type: str
     tags:
@@ -68,6 +53,21 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) The user-defined name for this instance group
+        required: True
+        type: str
+    instance_template:
+        description:
+            - (Required for new resource) instance template ID
+        required: True
+        type: str
+    application_port:
+        description:
+            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,15 +121,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnets',
-    'application_port',
-    'load_balancer',
-    'name',
-    'instance_template',
+    'load_balancer_pool',
     'instance_count',
     'resource_group',
-    'load_balancer_pool',
+    'subnets',
+    'load_balancer',
     'tags',
+    'name',
+    'instance_template',
+    'application_port',
 ]
 
 # Params for Data source
@@ -148,20 +148,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    application_port=dict(
-        required=False,
-        type='int'),
-    load_balancer=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    instance_template=dict(
+    load_balancer_pool=dict(
         required=False,
         type='str'),
     instance_count=dict(
@@ -170,13 +157,26 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    load_balancer_pool=dict(
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    load_balancer=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    instance_template=dict(
+        required=False,
+        type='str'),
+    application_port=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_is_instance_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -263,7 +263,7 @@ def run_module():
             resource_type='ibm_is_instance_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.2',
+            ibm_provider_version='1.23.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

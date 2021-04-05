@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cm_offering_instance' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,8 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
 
 
   version (True, str, None)
@@ -40,16 +40,12 @@ Parameters
     (Required for new resource) Cluster region (e.g., us-south).
 
 
-  cluster_namespaces (True, list, None)
-    (Required for new resource) List of target namespaces to install into.
-
-
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
 
 
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
 
 
   offering_id (True, str, None)
@@ -62,6 +58,10 @@ Parameters
 
   cluster_id (True, str, None)
     (Required for new resource) Cluster ID.
+
+
+  cluster_namespaces (True, list, None)
+    (Required for new resource) List of target namespaces to install into.
 
 
   id (False, str, None)

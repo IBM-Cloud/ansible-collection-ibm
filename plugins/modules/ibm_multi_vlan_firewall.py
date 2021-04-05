@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
         required: False
         type: list
         elements: str
+    pod:
+        description:
+            - (Required for new resource) POD name
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) name
@@ -39,11 +44,6 @@ options:
     datacenter:
         description:
             - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    pod:
-        description:
-            - (Required for new resource) POD name
         required: True
         type: str
     id:
@@ -92,19 +92,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pod', 'str'),
     ('name', 'str'),
     ('firewall_type', 'str'),
     ('datacenter', 'str'),
-    ('pod', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'addon_configuration',
+    'pod',
     'name',
     'firewall_type',
     'datacenter',
-    'pod',
 ]
 
 # Params for Data source
@@ -125,6 +125,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    pod=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -132,9 +135,6 @@ module_args = dict(
         required=False,
         type='str'),
     datacenter=dict(
-        required=False,
-        type='str'),
-    pod=dict(
         required=False,
         type='str'),
     id=dict(
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

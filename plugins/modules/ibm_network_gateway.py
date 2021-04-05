@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
@@ -31,17 +31,17 @@ options:
         required: False
         type: list
         elements: int
+    post_install_script_uri:
+        description:
+            - None
+        required: False
+        type: str
     members:
         description:
             - (Required for new resource) The hardware members of this network Gateway
         required: True
         type: list
         elements: dict
-    post_install_script_uri:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,8 +96,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'ssh_key_ids',
-    'members',
     'post_install_script_uri',
+    'members',
 ]
 
 # Params for Data source
@@ -121,13 +121,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    post_install_script_uri=dict(
+        required=False,
+        type='str'),
     members=dict(
         required=False,
         elements='',
         type='list'),
-    post_install_script_uri=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_network_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

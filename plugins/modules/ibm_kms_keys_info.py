@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_keys' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,11 @@ options:
         required: True
         type: str
     key_name:
+        description:
+            - The name of the key to be fetched
+        required: False
+        type: str
+    alias:
         description:
             - The name of the key to be fetched
         required: False
@@ -75,11 +80,14 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'instance_id',
     'key_name',
+    'alias',
     'endpoint_type',
 ]
 
 
 TL_CONFLICTS_MAP = {
+    'key_name': ['alias'],
+    'alias': ['key_name'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -90,6 +98,9 @@ module_args = dict(
         required=True,
         type='str'),
     key_name=dict(
+        required=False,
+        type='str'),
+    alias=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
@@ -129,7 +140,7 @@ def run_module():
         resource_type='ibm_kms_keys',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

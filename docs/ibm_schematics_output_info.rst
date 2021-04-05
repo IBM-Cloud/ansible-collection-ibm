@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -31,7 +31,7 @@ Parameters
 
 
   workspace_id (True, str, None)
-    The id of workspace
+    The ID of the workspace for which you want to retrieve output values. To find the workspace ID, use the `GET /workspaces` API.
 
 
   template_id (True, str, None)

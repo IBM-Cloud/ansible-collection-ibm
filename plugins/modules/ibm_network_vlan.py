@@ -16,13 +16,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
-    router_hostname:
+    type:
         description:
-            - router host name
+            - (Required for new resource) VLAN type
+        required: True
+        type: str
+    name:
+        description:
+            - VLAN name
         required: False
         type: str
     tags:
@@ -36,14 +41,9 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
-    type:
+    router_hostname:
         description:
-            - (Required for new resource) VLAN type
-        required: True
-        type: str
-    name:
-        description:
-            - VLAN name
+            - router host name
         required: False
         type: str
     id:
@@ -92,17 +92,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('type', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'router_hostname',
-    'tags',
-    'datacenter',
     'type',
     'name',
+    'tags',
+    'datacenter',
+    'router_hostname',
 ]
 
 # Params for Data source
@@ -122,7 +122,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    router_hostname=dict(
+    type=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -132,10 +135,7 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    router_hostname=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_network_vlan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.2',
+            ibm_provider_version='1.23.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

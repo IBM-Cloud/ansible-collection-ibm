@@ -15,18 +15,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_worker_pool' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - Cluster name
-        required: True
-        type: str
     worker_pool_name:
         description:
             - worker pool name
+        required: True
+        type: str
+    cluster:
+        description:
+            - Cluster name
         required: True
         type: str
     ibmcloud_api_key:
@@ -42,14 +42,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('worker_pool_name', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'worker_pool_name',
+    'cluster',
 ]
 
 
@@ -60,10 +60,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
+    worker_pool_name=dict(
         required=True,
         type='str'),
-    worker_pool_name=dict(
+    cluster=dict(
         required=True,
         type='str'),
     ibmcloud_api_key=dict(
@@ -86,7 +86,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

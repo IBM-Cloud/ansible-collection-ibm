@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -32,28 +32,48 @@ Parameters
     (Required for new resource) Instance name
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
+  volumes (False, list, None)
+    List of volumes
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  network_interfaces (False, list, None)
+    None
+
+
   auto_delete_volume (False, bool, None)
     Auto delete volume along with instance
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   keys (True, list, None)
     (Required for new resource) SSH key Ids for the instance
 
 
-  boot_volume (False, list, None)
-    None
+  tags (False, list, None)
+    list of tags for the instance
 
 
-  resource_group (False, str, None)
-    Instance resource group
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   user_data (False, str, None)
@@ -68,28 +88,8 @@ Parameters
     (Required for new resource) Zone name
 
 
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
+  boot_volume (False, list, None)
     None
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
 
 
   id (False, str, None)

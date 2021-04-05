@@ -15,18 +15,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_state' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
     workspace_id:
         description:
-            - The id of workspace
+            - The ID of the workspace for which you want to retrieve the Terraform statefile. To find the workspace ID, use the `GET /v1/workspaces` API.
         required: True
         type: str
     template_id:
         description:
-            - The id of template
+            - The ID of the Terraform template for which you want to retrieve the Terraform statefile. When you create a workspace, the Terraform template that your workspace points to is assigned a unique ID. To find this ID, use the `GET /v1/workspaces` API and review the `template_data.id` value.
         required: True
         type: str
     iaas_classic_username:
@@ -120,7 +120,7 @@ def run_module():
         resource_type='ibm_schematics_state',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

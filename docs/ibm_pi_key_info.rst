@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    None
-
-
   pi_key_name (True, str, None)
     SSHKey Name to be used for pvminstances
+
+
+  pi_cloud_instance_id (True, str, None)
+    None
 
 
   zone (False, str, None)

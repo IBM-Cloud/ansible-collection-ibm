@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 
@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,16 +28,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  development_mode (False, str, None)
-    Development mode setting
-
-
-  purge_by_urls (False, list, None)
-    Purge by URLs
+  purge_by_hosts (False, list, None)
+    Purge by hosts
 
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  serve_stale_content (False, str, True)
+    Serve Stale Content
+
+
+  browser_expiration (False, int, None)
+    Browser Expiration setting
+
+
+  development_mode (False, str, None)
+    Development mode setting
+
+
+  purge_all (False, bool, None)
+    Purge all setting
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   caching_level (False, str, None)
@@ -48,24 +64,12 @@ Parameters
     Query String sort setting
 
 
-  purge_all (False, bool, None)
-    Purge all setting
+  purge_by_urls (False, list, None)
+    Purge by URLs
 
 
   purge_by_tags (False, list, None)
     Purge by tags
-
-
-  purge_by_hosts (False, list, None)
-    Purge by hosts
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  browser_expiration (False, int, None)
-    Browser Expiration setting
 
 
   id (False, str, None)

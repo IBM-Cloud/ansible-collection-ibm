@@ -18,13 +18,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_instance_id (False, str, None)
+    The id of the resource instance
+
 
   resource_alias_id (False, str, None)
     The id of the resource alias
@@ -36,10 +40,6 @@ Parameters
 
   name (True, str, None)
     The name of the resource key
-
-
-  resource_instance_id (False, str, None)
-    The id of the resource instance
 
 
   iaas_classic_username (False, any, None)

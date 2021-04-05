@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
@@ -25,30 +25,30 @@ options:
             - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
         required: False
         type: str
-    operating_system:
+    resource_group:
         description:
-            - (Required for new resource) Image Operating system
-        required: True
+            - The resource group for this image
+        required: False
         type: str
     name:
         description:
             - (Required for new resource) Image name
         required: True
         type: str
-    encrypted_data_key:
+    operating_system:
         description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
-        type: str
-    resource_group:
-        description:
-            - The resource group for this image
-        required: False
+            - (Required for new resource) Image Operating system
+        required: True
         type: str
     href:
         description:
             - (Required for new resource) Image Href value
         required: True
+        type: str
+    encrypted_data_key:
+        description:
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
         type: str
     tags:
         description:
@@ -102,19 +102,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('operating_system', 'str'),
     ('name', 'str'),
+    ('operating_system', 'str'),
     ('href', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'encryption_key',
-    'operating_system',
-    'name',
-    'encrypted_data_key',
     'resource_group',
+    'name',
+    'operating_system',
     'href',
+    'encrypted_data_key',
     'tags',
 ]
 
@@ -124,8 +124,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'visibility',
     'name',
+    'visibility',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,19 +138,19 @@ module_args = dict(
     encryption_key=dict(
         required=False,
         type='str'),
-    operating_system=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    encrypted_data_key=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    operating_system=dict(
         required=False,
         type='str'),
     href=dict(
+        required=False,
+        type='str'),
+    encrypted_data_key=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +243,7 @@ def run_module():
             resource_type='ibm_is_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.2',
+            ibm_provider_version='1.23.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

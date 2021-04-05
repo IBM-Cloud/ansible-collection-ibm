@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,52 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
   minimum_ttl (False, int, None)
     Minimun TTL configuration
 
 
   ttl (True, int, None)
     (Required for new resource) TTL configuration
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  port (False, int, None)
-    port number
-
-
-  service (False, str, None)
-    service info
 
 
   type (True, str, None)
@@ -84,16 +52,48 @@ Parameters
     tags set for the resource
 
 
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  port (False, int, None)
+    port number
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
+
+
   domain_id (True, int, None)
     (Required for new resource) Domain ID of dns record instance
 
 
-  refresh (False, int, None)
-    refresh rate
+  expire (False, int, None)
+    DNS record expiry info
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  service (False, str, None)
+    service info
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   id (False, str, None)

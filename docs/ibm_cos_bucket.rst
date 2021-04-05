@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,60 +28,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
   archive_rule (False, list, None)
     Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
-  expire_rule (False, list, None)
-    Enable configuration expire_rule to COS Bucket after a defined period of time
-
-
-  single_site_location (False, str, None)
-    single site location info
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
 
 
   metrics_monitoring (False, list, None)
     Enables sending metrics to IBM Cloud Monitoring.
 
 
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
+
+
   force_delete (False, bool, True)
     COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  endpoint_type (False, str, public)
-    public or private
 
 
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
 
 
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
   region_location (False, str, None)
     Region Location info.
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
+  single_site_location (False, str, None)
+    single site location info
+
+
+  endpoint_type (False, str, public)
+    public or private
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
   id (False, str, None)

@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
@@ -24,9 +24,9 @@ options:
             - Resource instance name for example, myobjectstorage
         required: True
         type: str
-    location:
+    service:
         description:
-            - The location or the environment in which instance exists
+            - The service type of the instance
         required: False
         type: str
     resource_group_id:
@@ -34,9 +34,9 @@ options:
             - The id of the resource group in which the instance is present
         required: False
         type: str
-    service:
+    location:
         description:
-            - The service type of the instance
+            - The location or the environment in which instance exists
         required: False
         type: str
     iaas_classic_username:
@@ -78,9 +78,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'location',
-    'resource_group_id',
     'service',
+    'resource_group_id',
+    'location',
 ]
 
 
@@ -94,13 +94,13 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    location=dict(
+    service=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    service=dict(
+    location=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -137,7 +137,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

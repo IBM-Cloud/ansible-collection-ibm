@@ -14,26 +14,47 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
-    development_mode:
+    purge_by_hosts:
         description:
-            - Development mode setting
-        required: False
-        type: str
-    purge_by_urls:
-        description:
-            - Purge by URLs
+            - Purge by hosts
         required: False
         type: list
         elements: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    serve_stale_content:
+        description:
+            - Serve Stale Content
+        required: False
+        type: str
+        default: on
+    browser_expiration:
+        description:
+            - Browser Expiration setting
+        required: False
+        type: int
+    development_mode:
+        description:
+            - Development mode setting
+        required: False
+        type: str
+    purge_all:
+        description:
+            - Purge all setting
+        required: False
+        type: bool
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
         required: True
         type: str
     caching_level:
@@ -46,33 +67,18 @@ options:
             - Query String sort setting
         required: False
         type: str
-    purge_all:
+    purge_by_urls:
         description:
-            - Purge all setting
+            - Purge by URLs
         required: False
-        type: bool
+        type: list
+        elements: str
     purge_by_tags:
         description:
             - Purge by tags
         required: False
         type: list
         elements: str
-    purge_by_hosts:
-        description:
-            - Purge by hosts
-        required: False
-        type: list
-        elements: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    browser_expiration:
-        description:
-            - Browser Expiration setting
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,44 +131,61 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'development_mode',
-    'purge_by_urls',
+    'purge_by_hosts',
     'domain_id',
+    'serve_stale_content',
+    'browser_expiration',
+    'development_mode',
+    'purge_all',
+    'cis_id',
     'caching_level',
     'query_string_sort',
-    'purge_all',
+    'purge_by_urls',
     'purge_by_tags',
-    'purge_by_hosts',
-    'cis_id',
-    'browser_expiration',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'cis_id',
+    'domain_id',
 ]
 
 TL_CONFLICTS_MAP = {
-    'purge_by_urls': ['purge_all', 'purge_by_tags', 'purge_by_hosts'],
-    'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
-    'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
     'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
+    'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
+    'purge_by_urls': ['purge_all', 'purge_by_tags', 'purge_by_hosts'],
+    'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    development_mode=dict(
-        required=False,
-        type='str'),
-    purge_by_urls=dict(
+    purge_by_hosts=dict(
         required=False,
         elements='',
         type='list'),
     domain_id=dict(
+        required=False,
+        type='str'),
+    serve_stale_content=dict(
+        required=False,
+        type='str'),
+    browser_expiration=dict(
+        required=False,
+        type='int'),
+    development_mode=dict(
+        required=False,
+        type='str'),
+    purge_all=dict(
+        required=False,
+        type='bool'),
+    cis_id=dict(
         required=False,
         type='str'),
     caching_level=dict(
@@ -171,23 +194,14 @@ module_args = dict(
     query_string_sort=dict(
         required=False,
         type='str'),
-    purge_all=dict(
+    purge_by_urls=dict(
         required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     purge_by_tags=dict(
         required=False,
         elements='',
         type='list'),
-    purge_by_hosts=dict(
-        required=False,
-        elements='',
-        type='list'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    browser_expiration=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -249,19 +263,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_cis_cache_settings',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.23.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_cis_cache_settings',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.23.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

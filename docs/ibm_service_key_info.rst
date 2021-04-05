@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  space_guid (True, str, None)
+    The guid of the space in which the service instance is present
+
+
   name (True, str, None)
     The name of the service key
 
 
   service_instance_name (True, str, None)
     Service instance name for example, speech_to_text
-
-
-  space_guid (True, str, None)
-    The guid of the space in which the service instance is present
 
 
   iaas_classic_username (False, any, None)

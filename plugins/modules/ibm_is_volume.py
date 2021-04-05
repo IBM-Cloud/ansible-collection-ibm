@@ -16,24 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.21.2
+    - IBM-Cloud terraform-provider-ibm v1.23.0
     - Terraform v0.12.20
 
 options:
     profile:
         description:
-            - (Required for new resource) Vloume profile name
-        required: True
-        type: str
-    capacity:
-        description:
-            - Vloume capacity value
-        required: False
-        type: int
-        default: 100
-    name:
-        description:
-            - (Required for new resource) Volume name
+            - (Required for new resource) Volume profile name
         required: True
         type: str
     encryption_key:
@@ -41,27 +30,38 @@ options:
             - Volume encryption key info
         required: False
         type: str
-    iops:
+    resource_group:
         description:
-            - IOPS value for the Volume
+            - Resource group name
         required: False
-        type: int
+        type: str
+    name:
+        description:
+            - (Required for new resource) Volume name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
     tags:
         description:
             - Tags for the volume instance
         required: False
         type: list
         elements: str
-    zone:
+    capacity:
         description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Resource group name
+            - Vloume capacity value
         required: False
-        type: str
+        type: int
+        default: 100
+    iops:
+        description:
+            - IOPS value for the Volume
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -116,13 +116,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'profile',
-    'capacity',
-    'name',
     'encryption_key',
-    'iops',
-    'tags',
-    'zone',
     'resource_group',
+    'name',
+    'zone',
+    'tags',
+    'capacity',
+    'iops',
 ]
 
 # Params for Data source
@@ -145,28 +145,28 @@ module_args = dict(
     profile=dict(
         required=False,
         type='str'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
     encryption_key=dict(
-        required=False,
-        type='str'),
-    iops=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    zone=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    iops=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.21.2',
+        ibm_provider_version='1.23.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.21.2',
+            ibm_provider_version='1.23.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

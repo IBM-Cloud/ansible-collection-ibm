@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -30,6 +30,10 @@ Parameters
 
   addon_configuration (False, list, None)
     High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+
+
+  pod (True, str, None)
+    (Required for new resource) POD name
 
 
   name (True, str, None)
@@ -42,10 +46,6 @@ Parameters
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
-
-
-  pod (True, str, None)
-    (Required for new resource) POD name
 
 
   id (False, str, None)

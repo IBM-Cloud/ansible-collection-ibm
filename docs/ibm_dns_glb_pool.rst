@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.21.2
+- IBM-Cloud terraform-provider-ibm v1.23.0
 - Terraform v0.12.20
 
 
@@ -28,44 +28,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The unique identifier of a service instance.
-
-
-  healthcheck_region (False, str, None)
-    Health check region of VSIs
-
-
-  origins (True, list, None)
-    (Required for new resource) Origins info
-
-
-  monitor (False, str, None)
-    The ID of the load balancer monitor to be associated to this pool
-
-
-  description (False, str, None)
-    Descriptive text of the load balancer pool
-
-
-  healthy_origins_threshold (False, int, None)
-    The minimum number of origins that must be healthy for this pool to serve traffic
-
-
-  enabled (False, bool, None)
-    Whether the load balancer pool is enabled
-
-
-  healthcheck_subnets (False, list, None)
-    Health check subnet crn of VSIs
+  notification_channel (False, str, None)
+    The notification channel,It is a webhook url
 
 
   instance_id (True, str, None)
     (Required for new resource) Instance Id
 
 
-  notification_channel (False, str, None)
-    The notification channel,It is a webhook url
+  name (True, str, None)
+    (Required for new resource) The unique identifier of a service instance.
+
+
+  description (False, str, None)
+    Descriptive text of the load balancer pool
+
+
+  enabled (False, bool, None)
+    Whether the load balancer pool is enabled
+
+
+  origins (True, list, None)
+    (Required for new resource) Origins info
+
+
+  healthcheck_subnets (False, list, None)
+    Health check subnet crn of VSIs
+
+
+  healthy_origins_threshold (False, int, None)
+    The minimum number of origins that must be healthy for this pool to serve traffic
+
+
+  monitor (False, str, None)
+    The ID of the load balancer monitor to be associated to this pool
+
+
+  healthcheck_region (False, str, None)
+    Health check region of VSIs
 
 
   id (False, str, None)
