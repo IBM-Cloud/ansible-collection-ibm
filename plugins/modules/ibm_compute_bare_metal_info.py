@@ -24,22 +24,22 @@ options:
             - The hostname of the bare metal server
         required: False
         type: str
+    domain:
+        description:
+            - The domain of the bare metal server
+        required: False
+        type: str
+    global_identifier:
+        description:
+            - The unique global identifier of the bare metal server
+        required: False
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
         required: False
         type: bool
         default: False
-    global_identifier:
-        description:
-            - The unique global identifier of the bare metal server
-        required: False
-        type: str
-    domain:
-        description:
-            - The domain of the bare metal server
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -78,17 +78,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'hostname',
-    'most_recent',
-    'global_identifier',
     'domain',
+    'global_identifier',
+    'most_recent',
 ]
 
 
 TL_CONFLICTS_MAP = {
     'hostname': ['global_identifier'],
-    'most_recent': ['global_identifier'],
-    'global_identifier': ['hostname', 'domain', 'most_recent'],
     'domain': ['global_identifier'],
+    'global_identifier': ['hostname', 'domain', 'most_recent'],
+    'most_recent': ['global_identifier'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -98,15 +98,15 @@ module_args = dict(
     hostname=dict(
         required=False,
         type='str'),
-    most_recent=dict(
-        required=False,
-        type='bool'),
-    global_identifier=dict(
-        required=False,
-        type='str'),
     domain=dict(
         required=False,
         type='str'),
+    global_identifier=dict(
+        required=False,
+        type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

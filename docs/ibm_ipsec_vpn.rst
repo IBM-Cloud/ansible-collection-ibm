@@ -28,12 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  preshared_key (False, str, None)
-    Preshared Key data
-
-
   customer_peer_ip (False, str, None)
     Customer Peer IP Address
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
+  phase_two (False, list, None)
+    None
 
 
   remote_subnet_id (False, int, None)
@@ -52,20 +56,16 @@ Parameters
     None
 
 
-  phase_two (False, list, None)
-    None
-
-
   address_translation (False, list, None)
     None
 
 
+  preshared_key (False, str, None)
+    Preshared Key data
+
+
   internal_subnet_id (False, int, None)
     Internal subnet ID value
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
 
 
   id (False, str, None)

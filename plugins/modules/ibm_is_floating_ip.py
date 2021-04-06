@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    target:
+    resource_group:
         description:
-            - Target info
+            - Resource group info
         required: False
         type: str
     zone:
@@ -30,14 +30,9 @@ options:
             - Zone name
         required: False
         type: str
-    name:
+    target:
         description:
-            - (Required for new resource) Name of the floating IP
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Resource group info
+            - Target info
         required: False
         type: str
     tags:
@@ -46,6 +41,11 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) Name of the floating IP
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,11 +97,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target',
-    'zone',
-    'name',
     'resource_group',
+    'zone',
+    'target',
     'tags',
+    'name',
 ]
 
 # Params for Data source
@@ -114,30 +114,30 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'target': ['zone'],
     'zone': ['target'],
+    'target': ['zone'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    target=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

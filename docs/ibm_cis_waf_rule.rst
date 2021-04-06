@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  rule_id (True, str, None)
+    (Required for new resource) CIS WAF Rule id
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
-
-
-  package_id (True, str, None)
-    (Required for new resource) CIS WAF Rule package id
 
 
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
 
 
-  rule_id (True, str, None)
-    (Required for new resource) CIS WAF Rule id
+  package_id (True, str, None)
+    (Required for new resource) CIS WAF Rule package id
 
 
   mode (True, str, None)

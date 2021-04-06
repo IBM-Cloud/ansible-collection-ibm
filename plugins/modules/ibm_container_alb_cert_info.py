@@ -24,17 +24,17 @@ options:
             - Cluster ID
         required: True
         type: str
-    secret_name:
-        description:
-            - Secret name
-        required: True
-        type: str
     namespace:
         description:
             - Namespace of the secret
         required: False
         type: str
         default: ibm-cert-store
+    secret_name:
+        description:
+            - Secret name
+        required: True
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -55,8 +55,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_id',
-    'secret_name',
     'namespace',
+    'secret_name',
 ]
 
 
@@ -70,11 +70,11 @@ module_args = dict(
     cluster_id=dict(
         required=True,
         type='str'),
-    secret_name=dict(
-        required=True,
-        type='str'),
     namespace=dict(
         required=False,
+        type='str'),
+    secret_name=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',

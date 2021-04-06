@@ -28,6 +28,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  ip_address (False, str, None)
+    IP Address
+
+
+  query_type_id (True, int, None)
+    (Required for new resource) Query Type ID
+
+
   response_action_id (True, int, None)
     (Required for new resource) Response action ID
 
@@ -46,14 +54,6 @@ Parameters
 
   guest_id (True, int, None)
     (Required for new resource) Guest ID
-
-
-  ip_address (False, str, None)
-    IP Address
-
-
-  query_type_id (True, int, None)
-    (Required for new resource) Query Type ID
 
 
   id (False, str, None)

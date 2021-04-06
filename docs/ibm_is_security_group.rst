@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) Security group's resource group id
-
-
-  tags (False, list, None)
-    List of tags
+  name (False, str, None)
+    Security group name
 
 
   resource_group (False, str, None)
     Resource Group ID
 
 
-  name (False, str, None)
-    Security group name
+  vpc (True, str, None)
+    (Required for new resource) Security group's resource group id
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

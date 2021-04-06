@@ -28,32 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  interval (False, int, 60)
-    The interval between each health check
-
-
-  retries (False, int, 1)
-    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
-
-
   timeout (False, int, 5)
     The timeout (in seconds) before marking the health check as failed
-
-
-  method (False, str, None)
-    The method to use for the health check
-
-
-  port (False, int, None)
-    Port number to connect to for the health check
-
-
-  path (False, str, None)
-    The endpoint path to health check against
 
 
   allow_insecure (False, bool, None)
@@ -64,8 +40,40 @@ Parameters
     The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
 
 
+  type (False, str, HTTP)
+    The protocol to use for the health check
+
+
+  port (False, int, None)
+    Port number to connect to for the health check
+
+
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  method (False, str, None)
+    The method to use for the health check
+
+
+  path (False, str, None)
+    The endpoint path to health check against
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
+
+
   description (False, str, None)
     Descriptive text of the load balancer monitor
+
+
+  retries (False, int, 1)
+    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+
+
+  name (True, str, None)
+    (Required for new resource) The unique identifier of a service instance.
 
 
   headers (False, list, None)
@@ -74,14 +82,6 @@ Parameters
 
   expected_body (False, str, None)
     A case-insensitive sub-string to look for in the response body
-
-
-  name (True, str, None)
-    (Required for new resource) The unique identifier of a service instance.
-
-
-  type (False, str, HTTP)
-    The protocol to use for the health check
 
 
   id (False, str, None)

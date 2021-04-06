@@ -20,27 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    service:
+    location:
         description:
-            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
+            - (Required for new resource) The location where the instance available
         required: True
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) A name for the resource instance
-        required: True
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     resource_group_id:
         description:
             - The resource group id
@@ -61,9 +45,25 @@ options:
             - (Required for new resource) The plan type of the service
         required: True
         type: str
-    location:
+    parameters:
         description:
-            - (Required for new resource) The location where the instance available
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
+    name:
+        description:
+            - (Required for new resource) A name for the resource instance
+        required: True
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    service:
+        description:
+            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
         required: True
         type: str
     id:
@@ -112,23 +112,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('service', 'str'),
-    ('name', 'str'),
-    ('plan', 'str'),
     ('location', 'str'),
+    ('plan', 'str'),
+    ('name', 'str'),
+    ('service', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service',
-    'tags',
-    'name',
-    'parameters',
+    'location',
     'resource_group_id',
     'service_endpoints',
     'last_operation',
     'plan',
-    'location',
+    'parameters',
+    'name',
+    'tags',
+    'service',
 ]
 
 # Params for Data source
@@ -137,10 +137,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'service',
-    'resource_group_id',
     'location',
+    'name',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -150,19 +150,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service=dict(
+    location=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -175,7 +165,17 @@ module_args = dict(
     plan=dict(
         required=False,
         type='str'),
-    location=dict(
+    parameters=dict(
+        required=False,
+        type='dict'),
+    name=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    service=dict(
         required=False,
         type='str'),
     id=dict(

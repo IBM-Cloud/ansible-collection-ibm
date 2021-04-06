@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - instance group manager policy name
-        required: False
-        type: str
     instance_group:
         description:
             - (Required for new resource) instance group ID
@@ -49,6 +44,11 @@ options:
         description:
             - (Required for new resource) The type of Policy for the Instance Group
         required: True
+        type: str
+    name:
+        description:
+            - instance group manager policy name
+        required: False
         type: str
     id:
         description:
@@ -105,12 +105,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'instance_group',
     'instance_group_manager',
     'metric_type',
     'metric_value',
     'policy_type',
+    'name',
 ]
 
 # Params for Data source
@@ -133,9 +133,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     instance_group=dict(
         required=False,
         type='str'),
@@ -149,6 +146,9 @@ module_args = dict(
         required=False,
         type='int'),
     policy_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(

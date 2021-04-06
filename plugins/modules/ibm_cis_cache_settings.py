@@ -20,17 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    purge_by_hosts:
-        description:
-            - Purge by hosts
-        required: False
-        type: list
-        elements: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
     serve_stale_content:
         description:
             - Serve Stale Content
@@ -42,26 +31,6 @@ options:
             - Browser Expiration setting
         required: False
         type: int
-    development_mode:
-        description:
-            - Development mode setting
-        required: False
-        type: str
-    purge_all:
-        description:
-            - Purge all setting
-        required: False
-        type: bool
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    caching_level:
-        description:
-            - Cache level setting
-        required: False
-        type: str
     query_string_sort:
         description:
             - Query String sort setting
@@ -79,6 +48,37 @@ options:
         required: False
         type: list
         elements: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    caching_level:
+        description:
+            - Cache level setting
+        required: False
+        type: str
+    purge_all:
+        description:
+            - Purge all setting
+        required: False
+        type: bool
+    purge_by_hosts:
+        description:
+            - Purge by hosts
+        required: False
+        type: list
+        elements: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    development_mode:
+        description:
+            - Development mode setting
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -131,17 +131,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'purge_by_hosts',
-    'domain_id',
     'serve_stale_content',
     'browser_expiration',
-    'development_mode',
-    'purge_all',
-    'cis_id',
-    'caching_level',
     'query_string_sort',
     'purge_by_urls',
     'purge_by_tags',
+    'domain_id',
+    'caching_level',
+    'purge_all',
+    'purge_by_hosts',
+    'cis_id',
+    'development_mode',
 ]
 
 # Params for Data source
@@ -156,41 +156,22 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
-    'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
     'purge_by_urls': ['purge_all', 'purge_by_tags', 'purge_by_hosts'],
     'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
+    'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
+    'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    purge_by_hosts=dict(
-        required=False,
-        elements='',
-        type='list'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     serve_stale_content=dict(
         required=False,
         type='str'),
     browser_expiration=dict(
         required=False,
         type='int'),
-    development_mode=dict(
-        required=False,
-        type='str'),
-    purge_all=dict(
-        required=False,
-        type='bool'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    caching_level=dict(
-        required=False,
-        type='str'),
     query_string_sort=dict(
         required=False,
         type='str'),
@@ -202,6 +183,25 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    caching_level=dict(
+        required=False,
+        type='str'),
+    purge_all=dict(
+        required=False,
+        type='bool'),
+    purge_by_hosts=dict(
+        required=False,
+        elements='',
+        type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    development_mode=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

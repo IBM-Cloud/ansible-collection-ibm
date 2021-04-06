@@ -20,12 +20,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_network_ids:
+    pi_volume_ids:
         description:
-            - (Required for new resource) List of Networks that have been configured for the account
-        required: True
+            - List of PI volumes
+        required: False
         type: list
         elements: str
+    pi_sys_type:
+        description:
+            - (Required for new resource) PI Instance system type
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) This is the Power Instance id that is assigned to the account
+        required: True
+        type: str
     pi_image_id:
         description:
             - (Required for new resource) PI instance image name
@@ -36,82 +46,72 @@ options:
             - (Required for new resource) Processors count
         required: True
         type: float
-    pi_key_pair_name:
-        description:
-            - (Required for new resource) SSH key name
-        required: True
-        type: str
     pi_replication_policy:
         description:
             - Replication policy for the PI Instance
         required: False
         type: str
         default: none
-    pi_health_status:
-        description:
-            - Allow the user to set the status of the lpar so that they can connect to it faster
-        required: False
-        type: str
-        default: OK
-    pi_virtual_cores_assigned:
-        description:
-            - Virtual Cores Assigned to the PVMInstance
-        required: False
-        type: int
-    pi_pin_policy:
-        description:
-            - Pin Policy of the instance
-        required: False
-        type: str
-        default: none
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) This is the Power Instance id that is assigned to the account
-        required: True
-        type: str
-    pi_sys_type:
-        description:
-            - (Required for new resource) PI Instance system type
-        required: True
-        type: str
     pi_replication_scheme:
         description:
             - Replication scheme
         required: False
         type: str
         default: suffix
-    pi_volume_ids:
+    pi_pin_policy:
         description:
-            - List of PI volumes
-        required: False
-        type: list
-        elements: str
-    pi_user_data:
-        description:
-            - Base64 encoded data to be passed in for invoking a cloud init script
+            - Pin Policy of the instance
         required: False
         type: str
-    pi_instance_name:
+        default: none
+    pi_virtual_cores_assigned:
         description:
-            - (Required for new resource) PI Instance name
-        required: True
-        type: str
-    pi_proc_type:
-        description:
-            - (Required for new resource) Instance processor type
-        required: True
-        type: str
+            - Virtual Cores Assigned to the PVMInstance
+        required: False
+        type: int
     pi_memory:
         description:
             - (Required for new resource) Memory size
         required: True
         type: float
+    pi_user_data:
+        description:
+            - Base64 encoded data to be passed in for invoking a cloud init script
+        required: False
+        type: str
+    pi_key_pair_name:
+        description:
+            - (Required for new resource) SSH key name
+        required: True
+        type: str
     pi_replicants:
         description:
             - PI Instance replicas count
         required: False
         type: float
         default: 1
+    pi_health_status:
+        description:
+            - Allow the user to set the status of the lpar so that they can connect to it faster
+        required: False
+        type: str
+        default: OK
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI Instance name
+        required: True
+        type: str
+    pi_network_ids:
+        description:
+            - (Required for new resource) List of Networks that have been configured for the account
+        required: True
+        type: list
+        elements: str
+    pi_proc_type:
+        description:
+            - (Required for new resource) Instance processor type
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -154,47 +154,47 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_network_ids', 'list'),
+    ('pi_sys_type', 'str'),
+    ('pi_cloud_instance_id', 'str'),
     ('pi_image_id', 'str'),
     ('pi_processors', 'float'),
-    ('pi_key_pair_name', 'str'),
-    ('pi_cloud_instance_id', 'str'),
-    ('pi_sys_type', 'str'),
-    ('pi_instance_name', 'str'),
-    ('pi_proc_type', 'str'),
     ('pi_memory', 'float'),
+    ('pi_key_pair_name', 'str'),
+    ('pi_instance_name', 'str'),
+    ('pi_network_ids', 'list'),
+    ('pi_proc_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_network_ids',
+    'pi_volume_ids',
+    'pi_sys_type',
+    'pi_cloud_instance_id',
     'pi_image_id',
     'pi_processors',
-    'pi_key_pair_name',
     'pi_replication_policy',
-    'pi_health_status',
-    'pi_virtual_cores_assigned',
-    'pi_pin_policy',
-    'pi_cloud_instance_id',
-    'pi_sys_type',
     'pi_replication_scheme',
-    'pi_volume_ids',
-    'pi_user_data',
-    'pi_instance_name',
-    'pi_proc_type',
+    'pi_pin_policy',
+    'pi_virtual_cores_assigned',
     'pi_memory',
+    'pi_user_data',
+    'pi_key_pair_name',
     'pi_replicants',
+    'pi_health_status',
+    'pi_instance_name',
+    'pi_network_ids',
+    'pi_proc_type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_cloud_instance_id',
     'pi_instance_name',
+    'pi_cloud_instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -204,59 +204,59 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_network_ids=dict(
+    pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
+    pi_sys_type=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_image_id=dict(
         required=False,
         type='str'),
     pi_processors=dict(
         required=False,
         type='float'),
-    pi_key_pair_name=dict(
-        required=False,
-        type='str'),
     pi_replication_policy=dict(
-        required=False,
-        type='str'),
-    pi_health_status=dict(
-        required=False,
-        type='str'),
-    pi_virtual_cores_assigned=dict(
-        required=False,
-        type='int'),
-    pi_pin_policy=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_sys_type=dict(
         required=False,
         type='str'),
     pi_replication_scheme=dict(
         required=False,
         type='str'),
-    pi_volume_ids=dict(
+    pi_pin_policy=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    pi_virtual_cores_assigned=dict(
+        required=False,
+        type='int'),
+    pi_memory=dict(
+        required=False,
+        type='float'),
     pi_user_data=dict(
+        required=False,
+        type='str'),
+    pi_key_pair_name=dict(
+        required=False,
+        type='str'),
+    pi_replicants=dict(
+        required=False,
+        type='float'),
+    pi_health_status=dict(
         required=False,
         type='str'),
     pi_instance_name=dict(
         required=False,
         type='str'),
+    pi_network_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
     pi_proc_type=dict(
         required=False,
         type='str'),
-    pi_memory=dict(
-        required=False,
-        type='float'),
-    pi_replicants=dict(
-        required=False,
-        type='float'),
     id=dict(
         required=False,
         type='str'),

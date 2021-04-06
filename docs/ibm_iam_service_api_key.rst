@@ -28,6 +28,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  description (False, str, None)
+    description of the API key
+
+
+  file (False, str, None)
+    File where api key is to be stored
+
+
   name (True, str, None)
     (Required for new resource) Name of the Service API key
 
@@ -46,14 +54,6 @@ Parameters
 
   store_value (False, bool, None)
     Boolean value deciding whether API key value is retrievable in the future
-
-
-  file (False, str, None)
-    File where api key is to be stored
-
-
-  description (False, str, None)
-    description of the API key
 
 
   id (False, str, None)

@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    description:
+        description:
+            - description of the API key
+        required: False
+        type: str
+    file:
+        description:
+            - File where api key is to be stored
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Name of the Service API key
@@ -45,16 +55,6 @@ options:
             - Boolean value deciding whether API key value is retrievable in the future
         required: False
         type: bool
-    file:
-        description:
-            - File where api key is to be stored
-        required: False
-        type: str
-    description:
-        description:
-            - description of the API key
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,13 +107,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'description',
+    'file',
     'name',
     'iam_service_id',
     'apikey',
     'locked',
     'store_value',
-    'file',
-    'description',
 ]
 
 # Params for Data source
@@ -130,6 +130,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    description=dict(
+        required=False,
+        type='str'),
+    file=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -145,12 +151,6 @@ module_args = dict(
     store_value=dict(
         required=False,
         type='bool'),
-    file=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

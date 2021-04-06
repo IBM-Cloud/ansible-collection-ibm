@@ -32,12 +32,12 @@ Parameters
     (Required for new resource) Certificate manager instance ID
 
 
+  rotate_keys (False, bool, False)
+    Keys are sorated if set to true
+
+
   renew_certificate (False, bool, False)
     Invokes renew functionality
-
-
-  description (False, str, None)
-    Certicate description
 
 
   dns_provider_instance_crn (False, str, None)
@@ -52,6 +52,10 @@ Parameters
     (Required for new resource) List of domain names
 
 
+  description (False, str, None)
+    Certicate description
+
+
   domain_validation_method (False, str, dns-01)
     Domain validation methods
 
@@ -62,10 +66,6 @@ Parameters
 
   auto_renew_enabled (False, bool, False)
     None
-
-
-  rotate_keys (False, bool, False)
-    Keys are sorated if set to true
 
 
   id (False, str, None)

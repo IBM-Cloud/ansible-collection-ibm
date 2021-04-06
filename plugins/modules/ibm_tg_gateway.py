@@ -30,23 +30,23 @@ options:
             - (Required for new resource) Name Transit Gateway Services
         required: True
         type: str
-    tags:
-        description:
-            - Tags for the transit gateway instance
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
     global_:
         description:
             - Allow global routing for a Transit Gateway. If unspecified, the default value is false
         required: False
         type: bool
         default: False
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,9 +101,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'location',
     'name',
-    'tags',
-    'resource_group',
     'global_',
+    'resource_group',
+    'tags',
 ]
 
 # Params for Data source
@@ -128,16 +128,16 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    global_=dict(
+        required=False,
+        type='bool'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    global_=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

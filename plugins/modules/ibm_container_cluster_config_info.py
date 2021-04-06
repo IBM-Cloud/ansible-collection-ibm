@@ -19,22 +19,32 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    download:
+    config_dir:
         description:
-            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+            - The directory where the cluster config to be downloaded. Default is home directory
         required: False
-        type: bool
-        default: True
+        type: str
     admin:
         description:
             - If set to true will download the config for admin
         required: False
         type: bool
         default: False
-    config_dir:
+    download:
         description:
-            - The directory where the cluster config to be downloaded. Default is home directory
+            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
         required: False
+        type: bool
+        default: True
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    cluster_name_id:
+        description:
+            - The name/id of the cluster
+        required: True
         type: str
     network:
         description:
@@ -42,16 +52,6 @@ options:
         required: False
         type: bool
         default: False
-    cluster_name_id:
-        description:
-            - The name/id of the cluster
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -70,12 +70,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'download',
-    'admin',
     'config_dir',
-    'network',
-    'cluster_name_id',
+    'admin',
+    'download',
     'resource_group_id',
+    'cluster_name_id',
+    'network',
 ]
 
 
@@ -86,24 +86,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    download=dict(
+    config_dir=dict(
         required=False,
-        type='bool'),
+        type='str'),
     admin=dict(
         required=False,
         type='bool'),
-    config_dir=dict(
+    download=dict(
         required=False,
+        type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    cluster_name_id=dict(
+        required=True,
         type='str'),
     network=dict(
         required=False,
         type='bool'),
-    cluster_name_id=dict(
-        required=True,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,

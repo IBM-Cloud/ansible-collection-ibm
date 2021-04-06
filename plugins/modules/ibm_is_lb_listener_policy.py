@@ -20,26 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    listener:
-        description:
-            - (Required for new resource) Listener ID
-        required: True
-        type: str
-    action:
-        description:
-            - (Required for new resource) Policy Action
-        required: True
-        type: str
-    target_id:
-        description:
-            - Listener Policy Target ID
-        required: False
-        type: str
-    target_http_status_code:
-        description:
-            - Listener Policy target HTTPS Status code.
-        required: False
-        type: int
     lb:
         description:
             - (Required for new resource) Load Balancer Listener Policy
@@ -50,6 +30,31 @@ options:
             - (Required for new resource) Listener Policy Priority
         required: True
         type: int
+    target_id:
+        description:
+            - Listener Policy Target ID
+        required: False
+        type: str
+    target_http_status_code:
+        description:
+            - Listener Policy target HTTPS Status code.
+        required: False
+        type: int
+    target_url:
+        description:
+            - Policy Target URL
+        required: False
+        type: str
+    listener:
+        description:
+            - (Required for new resource) Listener ID
+        required: True
+        type: str
+    action:
+        description:
+            - (Required for new resource) Policy Action
+        required: True
+        type: str
     name:
         description:
             - Policy name
@@ -61,11 +66,6 @@ options:
         required: False
         type: list
         elements: dict
-    target_url:
-        description:
-            - Policy Target URL
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,23 +112,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('listener', 'str'),
-    ('action', 'str'),
     ('lb', 'str'),
     ('priority', 'int'),
+    ('listener', 'str'),
+    ('action', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'listener',
-    'action',
-    'target_id',
-    'target_http_status_code',
     'lb',
     'priority',
+    'target_id',
+    'target_http_status_code',
+    'target_url',
+    'listener',
+    'action',
     'name',
     'rules',
-    'target_url',
 ]
 
 # Params for Data source
@@ -145,24 +145,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    listener=dict(
-        required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
-    target_id=dict(
-        required=False,
-        type='str'),
-    target_http_status_code=dict(
-        required=False,
-        type='int'),
     lb=dict(
         required=False,
         type='str'),
     priority=dict(
         required=False,
         type='int'),
+    target_id=dict(
+        required=False,
+        type='str'),
+    target_http_status_code=dict(
+        required=False,
+        type='int'),
+    target_url=dict(
+        required=False,
+        type='str'),
+    listener=dict(
+        required=False,
+        type='str'),
+    action=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -170,9 +173,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    target_url=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -20,9 +20,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    content:
+    target_kinds:
         description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
+            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        required: False
+        type: list
+        elements: str
+    catalog_identifier:
+        description:
+            - (Required for new resource) Catalog identifier.
+        required: True
+        type: str
+    zipurl:
+        description:
+            - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
     tags:
@@ -31,17 +42,6 @@ options:
         required: False
         type: list
         elements: str
-    target_kinds:
-        description:
-            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-        required: False
-        type: list
-        elements: str
-    zipurl:
-        description:
-            - URL path to zip location.  If not specified, must provide content in the body of this call.
-        required: False
-        type: str
     target_version:
         description:
             - The semver value for this new version, if not found in the zip url package content.
@@ -52,10 +52,10 @@ options:
             - (Required for new resource) Offering identification.
         required: True
         type: str
-    catalog_identifier:
+    content:
         description:
-            - (Required for new resource) Catalog identifier.
-        required: True
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
+        required: False
         type: str
     id:
         description:
@@ -103,19 +103,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('offering_id', 'str'),
     ('catalog_identifier', 'str'),
+    ('offering_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'content',
-    'tags',
     'target_kinds',
+    'catalog_identifier',
     'zipurl',
+    'tags',
     'target_version',
     'offering_id',
-    'catalog_identifier',
+    'content',
 ]
 
 # Params for Data source
@@ -134,27 +134,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    content=dict(
+    target_kinds=dict(
+        required=False,
+        elements='',
+        type='list'),
+    catalog_identifier=dict(
+        required=False,
+        type='str'),
+    zipurl=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    target_kinds=dict(
-        required=False,
-        elements='',
-        type='list'),
-    zipurl=dict(
-        required=False,
-        type='str'),
     target_version=dict(
         required=False,
         type='str'),
     offering_id=dict(
         required=False,
         type='str'),
-    catalog_identifier=dict(
+    content=dict(
         required=False,
         type='str'),
     id=dict(

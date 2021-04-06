@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) The name of the service key
+        required: True
+        type: str
+    service_instance_guid:
+        description:
+            - (Required for new resource) The guid of the service instance for which to create service key
+        required: True
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -31,16 +41,6 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) The name of the service key
-        required: True
-        type: str
-    service_instance_guid:
-        description:
-            - (Required for new resource) The guid of the service instance for which to create service key
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,23 +93,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameters',
-    'tags',
     'name',
     'service_instance_guid',
+    'parameters',
+    'tags',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('space_guid', 'str'),
     ('name', 'str'),
     ('service_instance_name', 'str'),
+    ('space_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'space_guid',
     'name',
     'service_instance_name',
+    'space_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -119,6 +119,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    service_instance_guid=dict(
+        required=False,
+        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
@@ -126,12 +132,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    service_instance_guid=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

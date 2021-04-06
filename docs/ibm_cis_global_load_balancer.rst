@@ -28,42 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pop_pools (False, list, None)
-    None
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  description (False, str, None)
-    Description for the load balancer instance
-
-
-  ttl (False, int, 60)
-    TTL value
-
-
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
-
-
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  name (True, str, None)
-    (Required for new resource) name
-
-
-  fallback_pool_id (True, str, None)
-    (Required for new resource) fallback pool ID
-
-
   session_affinity (False, str, none)
     Session affinity info
 
@@ -72,8 +36,44 @@ Parameters
     set to true of LB needs to enabled
 
 
+  fallback_pool_id (True, str, None)
+    (Required for new resource) fallback pool ID
+
+
+  description (False, str, None)
+    Description for the load balancer instance
+
+
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
+
+
   region_pools (False, list, None)
     None
+
+
+  name (True, str, None)
+    (Required for new resource) name
+
+
+  pop_pools (False, list, None)
+    None
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
+
+
+  ttl (False, int, 60)
+    TTL value
 
 
   id (False, str, None)

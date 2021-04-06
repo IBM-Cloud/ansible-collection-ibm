@@ -19,11 +19,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    location:
+        description:
+            - The location or the region in which the Database instance exists
+        required: False
+        type: str
     name:
         description:
             - Resource instance name for example, my Database instance
         required: True
         type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     service:
         description:
             - The name of the Cloud Internet database service
@@ -34,17 +45,6 @@ options:
             - The id of the resource group in which the Database instance is present
         required: False
         type: str
-    location:
-        description:
-            - The location or the region in which the Database instance exists
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -83,11 +83,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'location',
     'name',
+    'tags',
     'service',
     'resource_group_id',
-    'location',
-    'tags',
 ]
 
 
@@ -98,22 +98,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    location=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     service=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

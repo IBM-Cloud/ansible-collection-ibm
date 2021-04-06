@@ -25,20 +25,10 @@ options:
             - (Required for new resource) Name of destination to store the image capture to
         required: True
         type: str
-    pi_capture_cloud_storage_region:
+    pi_capture_volume_ids:
         description:
-            - List of Regions to use
+            - List of volume names that need to be passed in the input
         required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
-    pi_capture_name:
-        description:
-            - (Required for new resource) Name of the capture to create. Note : this must be unique
-        required: True
         type: str
     pi_capture_cloud_storage_access_key:
         description:
@@ -55,14 +45,24 @@ options:
             - Name of the Image Path
         required: False
         type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
     pi_instance_name:
         description:
             - (Required for new resource) Instance Name of the Power VM
         required: True
         type: str
-    pi_capture_volume_ids:
+    pi_capture_name:
         description:
-            - List of volume names that need to be passed in the input
+            - (Required for new resource) Name of the capture to create. Note : this must be unique
+        required: True
+        type: str
+    pi_capture_cloud_storage_region:
+        description:
+            - List of Regions to use
         required: False
         type: str
     id:
@@ -109,21 +109,21 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('pi_capture_destination', 'str'),
     ('pi_cloud_instance_id', 'str'),
-    ('pi_capture_name', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_capture_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_capture_destination',
-    'pi_capture_cloud_storage_region',
-    'pi_cloud_instance_id',
-    'pi_capture_name',
+    'pi_capture_volume_ids',
     'pi_capture_cloud_storage_access_key',
     'pi_capture_cloud_storage_secret_key',
     'pi_capture_storage_image_path',
+    'pi_cloud_instance_id',
     'pi_instance_name',
-    'pi_capture_volume_ids',
+    'pi_capture_name',
+    'pi_capture_cloud_storage_region',
 ]
 
 # Params for Data source
@@ -143,13 +143,7 @@ module_args = dict(
     pi_capture_destination=dict(
         required=False,
         type='str'),
-    pi_capture_cloud_storage_region=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_capture_name=dict(
+    pi_capture_volume_ids=dict(
         required=False,
         type='str'),
     pi_capture_cloud_storage_access_key=dict(
@@ -161,10 +155,16 @@ module_args = dict(
     pi_capture_storage_image_path=dict(
         required=False,
         type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_instance_name=dict(
         required=False,
         type='str'),
-    pi_capture_volume_ids=dict(
+    pi_capture_name=dict(
+        required=False,
+        type='str'),
+    pi_capture_cloud_storage_region=dict(
         required=False,
         type='str'),
     id=dict(

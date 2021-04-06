@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    trigger_name:
-        description:
-            - (Required for new resource) Name of trigger.
-        required: True
-        type: str
     action_name:
         description:
             - (Required for new resource) Name of action.
@@ -38,6 +33,11 @@ options:
     name:
         description:
             - (Required for new resource) Name of rule.
+        required: True
+        type: str
+    trigger_name:
+        description:
+            - (Required for new resource) Name of trigger.
         required: True
         type: str
     id:
@@ -72,18 +72,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('trigger_name', 'str'),
     ('action_name', 'str'),
     ('namespace', 'str'),
     ('name', 'str'),
+    ('trigger_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'trigger_name',
     'action_name',
     'namespace',
     'name',
+    'trigger_name',
 ]
 
 # Params for Data source
@@ -104,9 +104,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    trigger_name=dict(
-        required=False,
-        type='str'),
     action_name=dict(
         required=False,
         type='str'),
@@ -114,6 +111,9 @@ module_args = dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    trigger_name=dict(
         required=False,
         type='str'),
     id=dict(

@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    label:
+        description:
+            - (Required for new resource) SSH Key label
+        required: True
+        type: str
     public_key:
         description:
             - (Required for new resource) Plublic Key info
@@ -36,11 +41,6 @@ options:
         required: False
         type: list
         elements: str
-    label:
-        description:
-            - (Required for new resource) SSH Key label
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,16 +87,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('public_key', 'str'),
     ('label', 'str'),
+    ('public_key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'label',
     'public_key',
     'notes',
     'tags',
-    'label',
 ]
 
 # Params for Data source
@@ -116,6 +116,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    label=dict(
+        required=False,
+        type='str'),
     public_key=dict(
         required=False,
         type='str'),
@@ -126,9 +129,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    label=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -20,30 +20,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) VLAN type
-        required: True
-        type: str
-    name:
-        description:
-            - VLAN name
-        required: False
-        type: str
     tags:
         description:
             - List of tags
         required: False
         type: list
         elements: str
-    datacenter:
+    type:
         description:
-            - (Required for new resource) Datacenter name
+            - (Required for new resource) VLAN type
         required: True
         type: str
     router_hostname:
         description:
             - router host name
+        required: False
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    name:
+        description:
+            - VLAN name
         required: False
         type: str
     id:
@@ -98,11 +98,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'name',
     'tags',
-    'datacenter',
+    'type',
     'router_hostname',
+    'datacenter',
+    'name',
 ]
 
 # Params for Data source
@@ -110,9 +110,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'number',
     'router_hostname',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -122,20 +122,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    datacenter=dict(
+    type=dict(
         required=False,
         type='str'),
     router_hostname=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(

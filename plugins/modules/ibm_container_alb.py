@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    alb_id:
-        description:
-            - (Required for new resource) ALB ID
-        required: True
-        type: str
-    disable_deployment:
-        description:
-            - Set to true if ALB needs to be disabled
-        required: False
-        type: bool
     user_ip:
         description:
             - IP assigned by the user
@@ -40,6 +30,16 @@ options:
             - set to true if ALB needs to be enabled
         required: False
         type: bool
+    disable_deployment:
+        description:
+            - Set to true if ALB needs to be disabled
+        required: False
+        type: bool
+    alb_id:
+        description:
+            - (Required for new resource) ALB ID
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -71,10 +71,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'alb_id',
-    'disable_deployment',
     'user_ip',
     'enable',
+    'disable_deployment',
+    'alb_id',
 ]
 
 # Params for Data source
@@ -87,26 +87,26 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'disable_deployment': ['enable'],
     'enable': ['disable_deployment'],
+    'disable_deployment': ['enable'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    alb_id=dict(
-        required=False,
-        type='str'),
-    disable_deployment=dict(
-        required=False,
-        type='bool'),
     user_ip=dict(
         required=False,
         type='str'),
     enable=dict(
         required=False,
         type='bool'),
+    disable_deployment=dict(
+        required=False,
+        type='bool'),
+    alb_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

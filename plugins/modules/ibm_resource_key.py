@@ -31,6 +31,16 @@ options:
             - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
         required: True
         type: str
+    resource_instance_id:
+        description:
+            - The id of the resource instance for which to create resource key
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name of the resource key
+        required: True
+        type: str
     resource_alias_id:
         description:
             - The id of the resource alias for which to create resource key
@@ -41,16 +51,6 @@ options:
             - Arbitrary parameters to pass. Must be a JSON object
         required: False
         type: dict
-    name:
-        description:
-            - (Required for new resource) The name of the resource key
-        required: True
-        type: str
-    resource_instance_id:
-        description:
-            - The id of the resource instance for which to create resource key
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,10 +105,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'tags',
     'role',
+    'resource_instance_id',
+    'name',
     'resource_alias_id',
     'parameters',
-    'name',
-    'resource_instance_id',
 ]
 
 # Params for Data source
@@ -117,15 +117,15 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'resource_instance_id',
-    'resource_alias_id',
     'most_recent',
     'name',
+    'resource_instance_id',
+    'resource_alias_id',
 ]
 
 TL_CONFLICTS_MAP = {
-    'resource_alias_id': ['resource_instance_id'],
     'resource_instance_id': ['resource_alias_id'],
+    'resource_alias_id': ['resource_instance_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -139,18 +139,18 @@ module_args = dict(
     role=dict(
         required=False,
         type='str'),
+    resource_instance_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     resource_alias_id=dict(
         required=False,
         type='str'),
     parameters=dict(
         required=False,
         type='dict'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

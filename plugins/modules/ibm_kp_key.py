@@ -20,18 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
     force_delete:
         description:
             - set to true to force delete the key
         required: False
         type: bool
         default: False
+    encrypted_nonce:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
     iv_value:
         description:
             - Only for imported root key
@@ -42,6 +41,12 @@ options:
             - (Required for new resource) Key protect instance ID
         required: True
         type: str
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
     key_name:
         description:
             - (Required for new resource) Key name
@@ -50,11 +55,6 @@ options:
     payload:
         description:
             - None
-        required: False
-        type: str
-    encrypted_nonce:
-        description:
-            - Only for imported root key
         required: False
         type: str
     id:
@@ -109,13 +109,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'standard_key',
     'force_delete',
+    'encrypted_nonce',
     'iv_value',
     'key_protect_id',
+    'standard_key',
     'key_name',
     'payload',
-    'encrypted_nonce',
 ]
 
 # Params for Data source
@@ -135,25 +135,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    standard_key=dict(
-        required=False,
-        type='bool'),
     force_delete=dict(
         required=False,
         type='bool'),
+    encrypted_nonce=dict(
+        required=False,
+        type='str'),
     iv_value=dict(
         required=False,
         type='str'),
     key_protect_id=dict(
         required=False,
         type='str'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
     key_name=dict(
         required=False,
         type='str'),
     payload=dict(
-        required=False,
-        type='str'),
-    encrypted_nonce=dict(
         required=False,
         type='str'),
     id=dict(

@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  auto_delete (False, bool, None)
-    If set to true, this reserved IP will be automatically deleted
+  subnet (True, str, None)
+    (Required for new resource) The subnet identifier.
 
 
   name (False, str, None)
     The user-defined or system-provided name for this reserved IP.
 
 
+  auto_delete (False, bool, None)
+    If set to true, this reserved IP will be automatically deleted
+
+
   address (False, str, None)
     The user-defined or system-provided name for this reserved IP.
-
-
-  subnet (True, str, None)
-    (Required for new resource) The subnet identifier.
 
 
   id (False, str, None)

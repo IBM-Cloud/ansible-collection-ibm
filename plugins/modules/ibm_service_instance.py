@@ -20,17 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    wait_time_minutes:
-        description:
-            - Define timeout to wait for the service instances to succeeded/deleted etc.
-        required: False
-        type: int
-        default: 10
-    space_guid:
-        description:
-            - (Required for new resource) The guid of the space in which the instance will be created
-        required: True
-        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -47,14 +36,25 @@ options:
         required: False
         type: list
         elements: str
-    name:
+    wait_time_minutes:
         description:
-            - (Required for new resource) A name for the service instance
-        required: True
-        type: str
+            - Define timeout to wait for the service instances to succeeded/deleted etc.
+        required: False
+        type: int
+        default: 10
     service:
         description:
             - (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
+        required: True
+        type: str
+    space_guid:
+        description:
+            - (Required for new resource) The guid of the space in which the instance will be created
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) A name for the service instance
         required: True
         type: str
     id:
@@ -103,21 +103,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('space_guid', 'str'),
     ('plan', 'str'),
-    ('name', 'str'),
     ('service', 'str'),
+    ('space_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'wait_time_minutes',
-    'space_guid',
     'parameters',
     'plan',
     'tags',
-    'name',
+    'wait_time_minutes',
     'service',
+    'space_guid',
+    'name',
 ]
 
 # Params for Data source
@@ -138,12 +138,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    wait_time_minutes=dict(
-        required=False,
-        type='int'),
-    space_guid=dict(
-        required=False,
-        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
@@ -154,10 +148,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    wait_time_minutes=dict(
+        required=False,
+        type='int'),
+    service=dict(
         required=False,
         type='str'),
-    service=dict(
+    space_guid=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(

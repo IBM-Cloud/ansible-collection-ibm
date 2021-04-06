@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
-
-
   pi_image_name (True, str, None)
     (Required for new resource) Image name
 
 
   pi_image_id (True, str, None)
     (Required for new resource) Instance image name
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

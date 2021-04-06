@@ -25,14 +25,14 @@ options:
             - (Required for new resource) CIS instance crn
         required: True
         type: str
-    page_id:
-        description:
-            - (Required for new resource) Custom page identifier
-        required: True
-        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    page_id:
+        description:
+            - (Required for new resource) Custom page identifier
         required: True
         type: str
     url:
@@ -87,16 +87,16 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('page_id', 'str'),
     ('domain_id', 'str'),
+    ('page_id', 'str'),
     ('url', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
-    'page_id',
     'domain_id',
+    'page_id',
     'url',
 ]
 
@@ -117,10 +117,10 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    page_id=dict(
+    domain_id=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    page_id=dict(
         required=False,
         type='str'),
     url=dict(

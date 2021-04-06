@@ -26,6 +26,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  service_instance_id (False, str, None)
+    Service instance ID
+
+
   service_instance_name (False, str, None)
     serivice instance name
 
@@ -36,10 +40,6 @@ Parameters
 
   cluster_name_id (True, str, None)
     Cluster name or ID
-
-
-  service_instance_id (False, str, None)
-    Service instance ID
 
 
   ibmcloud_api_key (True, any, None)

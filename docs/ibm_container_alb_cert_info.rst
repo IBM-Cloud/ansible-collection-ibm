@@ -30,12 +30,12 @@ Parameters
     Cluster ID
 
 
-  secret_name (True, str, None)
-    Secret name
-
-
   namespace (False, str, ibm-cert-store)
     Namespace of the secret
+
+
+  secret_name (True, str, None)
+    Secret name
 
 
   ibmcloud_api_key (True, any, None)

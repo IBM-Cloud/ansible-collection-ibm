@@ -20,10 +20,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    load_balancer_pool:
+    instance_template:
         description:
-            - load balancer pool ID
+            - (Required for new resource) instance template ID
+        required: True
+        type: str
+    application_port:
+        description:
+            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
         required: False
+        type: int
+    load_balancer:
+        description:
+            - load balancer ID
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags for instance group
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) The user-defined name for this instance group
+        required: True
         type: str
     instance_count:
         description:
@@ -42,32 +63,11 @@ options:
         required: True
         type: list
         elements: str
-    load_balancer:
+    load_balancer_pool:
         description:
-            - load balancer ID
+            - load balancer pool ID
         required: False
         type: str
-    tags:
-        description:
-            - List of tags for instance group
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) The user-defined name for this instance group
-        required: True
-        type: str
-    instance_template:
-        description:
-            - (Required for new resource) instance template ID
-        required: True
-        type: str
-    application_port:
-        description:
-            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,22 +114,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
-    ('name', 'str'),
     ('instance_template', 'str'),
+    ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'load_balancer_pool',
-    'instance_count',
-    'resource_group',
-    'subnets',
+    'instance_template',
+    'application_port',
     'load_balancer',
     'tags',
     'name',
-    'instance_template',
-    'application_port',
+    'instance_count',
+    'resource_group',
+    'subnets',
+    'load_balancer_pool',
 ]
 
 # Params for Data source
@@ -148,7 +148,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    load_balancer_pool=dict(
+    instance_template=dict(
+        required=False,
+        type='str'),
+    application_port=dict(
+        required=False,
+        type='int'),
+    load_balancer=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     instance_count=dict(
@@ -161,22 +174,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    load_balancer=dict(
+    load_balancer_pool=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    instance_template=dict(
-        required=False,
-        type='str'),
-    application_port=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),

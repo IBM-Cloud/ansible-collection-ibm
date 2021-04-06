@@ -30,12 +30,12 @@ Parameters
     A list of input variables that are associated with the workspace.
 
 
-  template_git_has_uploadedgitrepotar (False, bool, None)
-    Has uploaded git repo tar.
-
-
   workspace_id (True, str, None)
     The ID of the workspace for which you want to retrieve detailed information. To find the workspace ID, use the `GET /v1/workspaces` API.
+
+
+  template_git_has_uploadedgitrepotar (False, bool, None)
+    Has uploaded git repo tar.
 
 
   iaas_classic_username (False, any, None)

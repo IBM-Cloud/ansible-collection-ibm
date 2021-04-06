@@ -28,24 +28,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  technical_contact_same_as_org_address_flag (False, bool, False)
-    Technical contact same as org address flag
+  organization_information (True, list, None)
+    (Required for new resource) Organization information
+
+
+  administrative_contact (False, list, None)
+    None
+
+
+  server_count (True, int, None)
+    (Required for new resource) Server count
+
+
+  certificate_signing_request (True, str, None)
+    (Required for new resource) certificate signing request info
 
 
   administrative_address_same_as_organization_flag (False, bool, False)
     administrative address same as organization flag
 
 
-  organization_information (True, list, None)
-    (Required for new resource) Organization information
+  technical_contact (True, list, None)
+    (Required for new resource) Technical contact info
 
 
-  renewal_flag (False, bool, True)
-    Renewal flag
+  billing_contact (False, list, None)
+    None
 
 
-  order_approver_email_address (True, str, None)
-    (Required for new resource) Email address of the approver
+  server_type (True, str, None)
+    (Required for new resource) server type
+
+
+  validity_months (True, int, None)
+    (Required for new resource) vslidity of the ssl certificate in month
+
+
+  ssl_type (True, str, None)
+    (Required for new resource) ssl type
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    billing contact
+
+
+  technical_contact_same_as_org_address_flag (False, bool, False)
+    Technical contact same as org address flag
 
 
   administrative_contact_same_as_technical_flag (False, bool, False)
@@ -56,40 +84,12 @@ Parameters
     billing address same as organization flag
 
 
-  validity_months (True, int, None)
-    (Required for new resource) vslidity of the ssl certificate in month
+  renewal_flag (False, bool, True)
+    Renewal flag
 
 
-  certificate_signing_request (True, str, None)
-    (Required for new resource) certificate signing request info
-
-
-  billing_contact_same_as_technical_flag (False, bool, False)
-    billing contact
-
-
-  technical_contact (True, list, None)
-    (Required for new resource) Technical contact info
-
-
-  server_count (True, int, None)
-    (Required for new resource) Server count
-
-
-  server_type (True, str, None)
-    (Required for new resource) server type
-
-
-  administrative_contact (False, list, None)
-    None
-
-
-  ssl_type (True, str, None)
-    (Required for new resource) ssl type
-
-
-  billing_contact (False, list, None)
-    None
+  order_approver_email_address (True, str, None)
+    (Required for new resource) Email address of the approver
 
 
   id (False, str, None)

@@ -20,17 +20,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    dns_registration_id:
+        description:
+            - (Required for new resource) DNS registration ID
+        required: True
+        type: str
     name_servers:
         description:
             - (Required for new resource) Custom name servers for the domain registration
         required: True
         type: list
         elements: str
-    dns_registration_id:
-        description:
-            - (Required for new resource) DNS registration ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -77,14 +77,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name_servers', 'list'),
     ('dns_registration_id', 'str'),
+    ('name_servers', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name_servers',
     'dns_registration_id',
+    'name_servers',
 ]
 
 # Params for Data source
@@ -101,13 +101,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    dns_registration_id=dict(
+        required=False,
+        type='str'),
     name_servers=dict(
         required=False,
         elements='',
         type='list'),
-    dns_registration_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

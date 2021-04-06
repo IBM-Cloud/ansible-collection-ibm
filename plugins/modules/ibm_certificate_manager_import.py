@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    description:
+        description:
+            - Description of the certificate instance
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Name of the instance
@@ -34,11 +39,6 @@ options:
         description:
             - (Required for new resource) Instance ID of the certificate manager resource
         required: True
-        type: str
-    description:
-        description:
-            - Description of the certificate instance
-        required: False
         type: str
     id:
         description:
@@ -93,10 +93,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'description',
     'name',
     'data',
     'certificate_manager_instance_id',
-    'description',
 ]
 
 # Params for Data source
@@ -113,6 +113,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    description=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -120,9 +123,6 @@ module_args = dict(
         required=False,
         type='dict'),
     certificate_manager_instance_id=dict(
-        required=False,
-        type='str'),
-    description=dict(
         required=False,
         type='str'),
     id=dict(

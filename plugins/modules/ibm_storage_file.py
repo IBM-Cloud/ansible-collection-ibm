@@ -20,39 +20,29 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) Storage type
-        required: True
-        type: str
-    iops:
-        description:
-            - (Required for new resource) iops rate
-        required: True
-        type: float
-    allowed_virtual_guest_ids:
-        description:
-            - Virtual guest ID
-        required: False
-        type: list
-        elements: int
-    capacity:
-        description:
-            - (Required for new resource) Storage capacity
-        required: True
-        type: int
-    allowed_subnets:
-        description:
-            - Allowed network subnets
-        required: False
-        type: list
-        elements: str
     allowed_ip_addresses:
         description:
             - Allowed range of IP addresses
         required: False
         type: list
         elements: str
+    tags:
+        description:
+            - Tags set for the storage volume
+        required: False
+        type: list
+        elements: str
+    iops:
+        description:
+            - (Required for new resource) iops rate
+        required: True
+        type: float
+    allowed_hardware_ids:
+        description:
+            - Hardaware ID
+        required: False
+        type: list
+        elements: int
     snapshot_schedule:
         description:
             - None
@@ -65,33 +55,43 @@ options:
         required: False
         type: bool
         default: False
-    datacenter:
+    allowed_virtual_guest_ids:
         description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    allowed_hardware_ids:
-        description:
-            - Hardaware ID
+            - Virtual guest ID
         required: False
         type: list
         elements: int
-    notes:
+    allowed_subnets:
         description:
-            - Notes
+            - Allowed network subnets
         required: False
-        type: str
+        type: list
+        elements: str
     snapshot_capacity:
         description:
             - Snapshot capacity
         required: False
         type: int
-    tags:
+    datacenter:
         description:
-            - Tags set for the storage volume
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    capacity:
+        description:
+            - (Required for new resource) Storage capacity
+        required: True
+        type: int
+    notes:
+        description:
+            - Notes
         required: False
-        type: list
-        elements: str
+        type: str
+    type:
+        description:
+            - (Required for new resource) Storage type
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -138,27 +138,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('iops', 'float'),
-    ('capacity', 'int'),
     ('datacenter', 'str'),
+    ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'iops',
-    'allowed_virtual_guest_ids',
-    'capacity',
-    'allowed_subnets',
     'allowed_ip_addresses',
+    'tags',
+    'iops',
+    'allowed_hardware_ids',
     'snapshot_schedule',
     'hourly_billing',
-    'datacenter',
-    'allowed_hardware_ids',
-    'notes',
+    'allowed_virtual_guest_ids',
+    'allowed_subnets',
     'snapshot_capacity',
-    'tags',
+    'datacenter',
+    'capacity',
+    'notes',
+    'type',
 ]
 
 # Params for Data source
@@ -175,24 +175,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
+    allowed_ip_addresses=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     iops=dict(
         required=False,
         type='float'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    allowed_subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_ip_addresses=dict(
+    allowed_hardware_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -203,23 +197,29 @@ module_args = dict(
     hourly_billing=dict(
         required=False,
         type='bool'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    allowed_hardware_ids=dict(
+    allowed_virtual_guest_ids=dict(
         required=False,
         elements='',
         type='list'),
-    notes=dict(
+    allowed_subnets=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     snapshot_capacity=dict(
         required=False,
         type='int'),
-    tags=dict(
+    datacenter=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    notes=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

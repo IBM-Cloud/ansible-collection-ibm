@@ -20,15 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    az_pools:
+    zone_id:
         description:
-            - Map availability zones to pool ID's.
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) Name of the load balancer
+            - (Required for new resource) Zone Id
         required: True
         type: str
     description:
@@ -36,6 +30,18 @@ options:
             - Descriptive text of the load balancer
         required: False
         type: str
+    default_pools:
+        description:
+            - (Required for new resource) A list of pool IDs ordered by their failover priority
+        required: True
+        type: list
+        elements: str
+    az_pools:
+        description:
+            - Map availability zones to pool ID's.
+        required: False
+        type: list
+        elements: dict
     ttl:
         description:
             - Time to live in second
@@ -47,20 +53,14 @@ options:
             - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
         required: True
         type: str
-    default_pools:
-        description:
-            - (Required for new resource) A list of pool IDs ordered by their failover priority
-        required: True
-        type: list
-        elements: str
     instance_id:
         description:
             - (Required for new resource) The GUID of the private DNS.
         required: True
         type: str
-    zone_id:
+    name:
         description:
-            - (Required for new resource) Zone Id
+            - (Required for new resource) Name of the load balancer
         required: True
         type: str
     enabled:
@@ -114,23 +114,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('fallback_pool', 'str'),
-    ('default_pools', 'list'),
-    ('instance_id', 'str'),
     ('zone_id', 'str'),
+    ('default_pools', 'list'),
+    ('fallback_pool', 'str'),
+    ('instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'az_pools',
-    'name',
+    'zone_id',
     'description',
+    'default_pools',
+    'az_pools',
     'ttl',
     'fallback_pool',
-    'default_pools',
     'instance_id',
-    'zone_id',
+    'name',
     'enabled',
 ]
 
@@ -148,30 +148,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    az_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
+    zone_id=dict(
         required=False,
         type='str'),
     description=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
-    fallback_pool=dict(
         required=False,
         type='str'),
     default_pools=dict(
         required=False,
         elements='',
         type='list'),
+    az_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ttl=dict(
+        required=False,
+        type='int'),
+    fallback_pool=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=False,
         type='str'),
-    zone_id=dict(
+    name=dict(
         required=False,
         type='str'),
     enabled=dict(

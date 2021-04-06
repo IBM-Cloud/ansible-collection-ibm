@@ -20,6 +20,18 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    access_groups:
+        description:
+            - access group ids to associate the inviting user
+        required: False
+        type: list
+        elements: str
+    iam_policy:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     classic_infra_roles:
         description:
             - None
@@ -38,18 +50,6 @@ options:
         required: True
         type: list
         elements: str
-    access_groups:
-        description:
-            - access group ids to associate the inviting user
-        required: False
-        type: list
-        elements: str
-    iam_policy:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'access_groups',
+    'iam_policy',
     'classic_infra_roles',
     'cloud_foundry_roles',
     'users',
-    'access_groups',
-    'iam_policy',
 ]
 
 # Params for Data source
@@ -122,6 +122,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    access_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    iam_policy=dict(
+        required=False,
+        elements='',
+        type='list'),
     classic_infra_roles=dict(
         required=False,
         elements='',
@@ -131,14 +139,6 @@ module_args = dict(
         elements='',
         type='list'),
     users=dict(
-        required=False,
-        elements='',
-        type='list'),
-    access_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    iam_policy=dict(
         required=False,
         elements='',
         type='list'),

@@ -20,18 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    icmp:
-        description:
-            - protocol=icmp
-        required: False
-        type: list
-        elements: dict
-    udp:
-        description:
-            - protocol=udp
-        required: False
-        type: list
-        elements: dict
     direction:
         description:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
@@ -43,16 +31,28 @@ options:
         required: False
         type: str
         default: ipv4
-    remote:
+    udp:
         description:
-            - Security group id: an IP address, a CIDR block, or a single security group identifier
+            - protocol=udp
         required: False
-        type: str
+        type: list
+        elements: dict
     group:
         description:
             - (Required for new resource) Security group id
         required: True
         type: str
+    remote:
+        description:
+            - Security group id: an IP address, a CIDR block, or a single security group identifier
+        required: False
+        type: str
+    icmp:
+        description:
+            - protocol=icmp
+        required: False
+        type: list
+        elements: dict
     tcp:
         description:
             - protocol=tcp
@@ -111,12 +111,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'icmp',
-    'udp',
     'direction',
     'ip_version',
-    'remote',
+    'udp',
     'group',
+    'remote',
+    'icmp',
     'tcp',
 ]
 
@@ -128,8 +128,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'icmp': ['tcp', 'udp'],
     'udp': ['tcp', 'icmp'],
+    'icmp': ['tcp', 'udp'],
     'tcp': ['udp', 'icmp'],
 }
 
@@ -137,26 +137,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    icmp=dict(
-        required=False,
-        elements='',
-        type='list'),
-    udp=dict(
-        required=False,
-        elements='',
-        type='list'),
     direction=dict(
         required=False,
         type='str'),
     ip_version=dict(
         required=False,
         type='str'),
-    remote=dict(
+    udp=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     group=dict(
         required=False,
         type='str'),
+    remote=dict(
+        required=False,
+        type='str'),
+    icmp=dict(
+        required=False,
+        elements='',
+        type='list'),
     tcp=dict(
         required=False,
         elements='',

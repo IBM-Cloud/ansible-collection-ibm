@@ -20,14 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    service:
-        description:
-            - (Required for new resource) The Service Name
-        required: True
-        type: str
     display_name:
         description:
             - (Required for new resource) Display Name of the Custom Role
+        required: True
+        type: str
+    service:
+        description:
+            - (Required for new resource) The Service Name
         required: True
         type: str
     name:
@@ -92,16 +92,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('service', 'str'),
     ('display_name', 'str'),
+    ('service', 'str'),
     ('name', 'str'),
     ('actions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service',
     'display_name',
+    'service',
     'name',
     'description',
     'actions',
@@ -121,10 +121,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service=dict(
+    display_name=dict(
         required=False,
         type='str'),
-    display_name=dict(
+    service=dict(
         required=False,
         type='str'),
     name=dict(

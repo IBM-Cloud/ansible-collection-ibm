@@ -26,9 +26,19 @@ options:
         required: True
         type: list
         elements: str
+    enabled:
+        description:
+            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+        required: True
+        type: bool
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) name
         required: True
         type: str
     minimum_origins:
@@ -42,11 +52,11 @@ options:
             - Monitor value
         required: False
         type: str
-    enabled:
+    notification_email:
         description:
-            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
-        required: True
-        type: bool
+            - Email address configured to recieve the notifications
+        required: False
+        type: str
     origins:
         description:
             - (Required for new resource) Origins info
@@ -57,16 +67,6 @@ options:
         description:
             - Description of the CIS Origin Pool
         required: False
-        type: str
-    notification_email:
-        description:
-            - Email address configured to recieve the notifications
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
         type: str
     id:
         description:
@@ -115,23 +115,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('check_regions', 'list'),
-    ('cis_id', 'str'),
     ('enabled', 'bool'),
-    ('origins', 'list'),
+    ('cis_id', 'str'),
     ('name', 'str'),
+    ('origins', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'check_regions',
+    'enabled',
     'cis_id',
+    'name',
     'minimum_origins',
     'monitor',
-    'enabled',
+    'notification_email',
     'origins',
     'description',
-    'notification_email',
-    'name',
 ]
 
 # Params for Data source
@@ -152,7 +152,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     cis_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     minimum_origins=dict(
@@ -161,20 +167,14 @@ module_args = dict(
     monitor=dict(
         required=False,
         type='str'),
-    enabled=dict(
+    notification_email=dict(
         required=False,
-        type='bool'),
+        type='str'),
     origins=dict(
         required=False,
         elements='',
         type='list'),
     description=dict(
-        required=False,
-        type='str'),
-    notification_email=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(

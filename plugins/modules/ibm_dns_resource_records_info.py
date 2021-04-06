@@ -19,14 +19,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    zone_id:
-        description:
-            - Zone Id
-        required: True
-        type: str
     instance_id:
         description:
             - Instance ID
+        required: True
+        type: str
+    zone_id:
+        description:
+            - Zone Id
         required: True
         type: str
     iaas_classic_username:
@@ -62,14 +62,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone_id', 'str'),
     ('instance_id', 'str'),
+    ('zone_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone_id',
     'instance_id',
+    'zone_id',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone_id=dict(
+    instance_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
+    zone_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

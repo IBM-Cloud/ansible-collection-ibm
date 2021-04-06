@@ -36,6 +36,18 @@ Parameters
     (Required for new resource) Gateway port
 
 
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
   tags (False, list, None)
     Tags for the direct link gateway
 
@@ -46,18 +58,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) The unique user-defined name for this gateway
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
 
 
   id (False, str, None)

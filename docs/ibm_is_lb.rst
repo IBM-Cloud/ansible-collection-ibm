@@ -28,14 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  security_groups (False, list, None)
-    Load Balancer securitygroups list
-
-
   profile (False, str, None)
     The profile to use for this load balancer.
 
@@ -44,20 +36,28 @@ Parameters
     None
 
 
-  type (False, str, public)
-    Load Balancer type
+  logging (False, bool, False)
+    Logging of Load Balancer
 
 
-  subnets (True, list, None)
-    (Required for new resource) Load Balancer subnets list
+  security_groups (False, list, None)
+    Load Balancer securitygroups list
+
+
+  tags (False, list, None)
+    None
 
 
   name (True, str, None)
     (Required for new resource) Load Balancer name
 
 
-  logging (False, bool, False)
-    Logging of Load Balancer
+  type (False, str, public)
+    Load Balancer type
+
+
+  subnets (True, list, None)
+    (Required for new resource) Load Balancer subnets list
 
 
   id (False, str, None)

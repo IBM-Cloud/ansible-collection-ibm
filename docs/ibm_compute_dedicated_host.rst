@@ -28,18 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain (True, str, None)
-    (Required for new resource) The domain of dedicatated host.
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
   hostname (True, str, None)
     (Required for new resource) The host name of dedicatated host.
 
@@ -48,12 +36,24 @@ Parameters
     The flavor of the dedicatated host.
 
 
+  router_hostname (True, str, None)
+    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+
+
+  domain (True, str, None)
+    (Required for new resource) The domain of dedicatated host.
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+
+
   hourly_billing (False, bool, True)
     The billing type for the dedicatated host.
 
 
-  router_hostname (True, str, None)
-    (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+  wait_time_minutes (False, int, 90)
+    None
 
 
   tags (False, list, None)

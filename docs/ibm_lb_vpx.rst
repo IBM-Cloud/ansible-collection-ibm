@@ -28,12 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  public_subnet (False, str, None)
-    Public subnet
+  speed (True, int, None)
+    (Required for new resource) Speed value
 
 
   private_vlan_id (False, int, None)
@@ -44,16 +40,20 @@ Parameters
     Private subnet
 
 
-  tags (False, list, None)
-    List of the tags
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  speed (True, int, None)
-    (Required for new resource) Speed value
+  public_subnet (False, str, None)
+    Public subnet
 
 
   plan (True, str, None)
     (Required for new resource) Plan info
+
+
+  version (True, str, None)
+    (Required for new resource) version info
 
 
   ip_count (True, int, None)
@@ -64,8 +64,8 @@ Parameters
     Piblic VLAN id
 
 
-  version (True, str, None)
-    (Required for new resource) version info
+  tags (False, list, None)
+    List of the tags
 
 
   id (False, str, None)

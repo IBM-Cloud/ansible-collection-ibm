@@ -28,6 +28,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id or CRN
+
+
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
@@ -38,10 +42,6 @@ Parameters
 
   hosts (True, list, None)
     (Required for new resource) Hosts which certificate need to be ordered
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id or CRN
 
 
   id (False, str, None)

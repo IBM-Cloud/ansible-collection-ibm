@@ -25,15 +25,15 @@ options:
             - (Required for new resource) The dedicated host profile class for hosts in this group.
         required: True
         type: str
-    name:
-        description:
-            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
     family:
         description:
             - (Required for new resource) The dedicated host profile family for hosts in this group.
         required: True
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
         type: str
     resource_group:
         description:
@@ -99,8 +99,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'class_',
-    'name',
     'family',
+    'name',
     'resource_group',
     'zone',
 ]
@@ -124,10 +124,10 @@ module_args = dict(
     class_=dict(
         required=False,
         type='str'),
-    name=dict(
+    family=dict(
         required=False,
         type='str'),
-    family=dict(
+    name=dict(
         required=False,
         type='str'),
     resource_group=dict(

@@ -28,8 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  zones (True, list, None)
+    (Required for new resource) Zones info
 
 
   worker_count (True, int, None)
@@ -40,8 +40,8 @@ Parameters
     (Required for new resource) Cluster name
 
 
-  zones (True, list, None)
-    (Required for new resource) Zones info
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   labels (False, dict, None)
@@ -52,16 +52,16 @@ Parameters
     ID of the resource group.
 
 
-  flavor (True, str, None)
-    (Required for new resource) cluster node falvor
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  flavor (True, str, None)
+    (Required for new resource) cluster node falvor
 
 
   id (False, str, None)

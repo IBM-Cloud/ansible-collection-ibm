@@ -28,136 +28,136 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  waf (False, str, None)
-    WAF setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  http2 (False, str, None)
-    http2 setting
-
-
-  brotli (False, str, None)
-    brotli setting
-
-
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  websockets (False, str, None)
-    websockets setting
-
-
-  cipher (False, list, None)
-    Cipher settings
-
-
-  mobile_redirect (False, list, None)
-    None
-
-
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  max_upload (False, int, None)
-    Maximum upload
-
-
   ssl (False, str, None)
     SSL/TLS setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
 
 
   hotlink_protection (False, str, None)
     hotlink_protection setting
 
 
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
-
-
-  minify (False, list, None)
-    Minify setting
-
-
-  response_buffering (False, str, None)
-    response_buffering setting
+  websockets (False, str, None)
+    websockets setting
 
 
   challenge_ttl (False, int, None)
     Challenge TTL setting
 
 
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  dnssec (False, str, None)
-    DNS Sec setting
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
   always_use_https (False, str, None)
     always_use_https setting
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
   image_size_optimization (False, str, None)
     image_size_optimization setting
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  minify (False, list, None)
+    Minify setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  dnssec (False, str, None)
+    DNS Sec setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
 
 
   origin_error_page_pass_thru (False, str, None)
     origin_error_page_pass_thru setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  mobile_redirect (False, list, None)
+    None
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  security_header (False, list, None)
+    Security Header Setting
 
 
   id (False, str, None)

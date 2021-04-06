@@ -28,6 +28,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    None
+
+
   access_group_id (True, str, None)
     (Required for new resource) ID of access group
 
@@ -42,10 +46,6 @@ Parameters
 
   account_management (False, bool, False)
     Give access to all account management services
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

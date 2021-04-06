@@ -28,6 +28,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  org_quota_definition_guid (False, str, None)
+    Org quota guid
+
+
+  billing_managers (False, list, None)
+    The IBMID of the users who will have billing manager role in this org, ex - user@example.com
+
+
   managers (False, list, None)
     The IBMID of the users who will have manager role in this org, ex - user@example.com
 
@@ -46,14 +54,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Org name, for example myorg@domain
-
-
-  org_quota_definition_guid (False, str, None)
-    Org quota guid
-
-
-  billing_managers (False, list, None)
-    The IBMID of the users who will have billing manager role in this org, ex - user@example.com
 
 
   id (False, str, None)

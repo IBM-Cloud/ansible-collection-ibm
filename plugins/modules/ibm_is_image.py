@@ -30,25 +30,10 @@ options:
             - The resource group for this image
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) Image name
-        required: True
-        type: str
-    operating_system:
-        description:
-            - (Required for new resource) Image Operating system
-        required: True
-        type: str
     href:
         description:
             - (Required for new resource) Image Href value
         required: True
-        type: str
-    encrypted_data_key:
-        description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
         type: str
     tags:
         description:
@@ -56,6 +41,21 @@ options:
         required: False
         type: list
         elements: str
+    operating_system:
+        description:
+            - (Required for new resource) Image Operating system
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Image name
+        required: True
+        type: str
+    encrypted_data_key:
+        description:
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,20 +102,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('operating_system', 'str'),
     ('href', 'str'),
+    ('operating_system', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'encryption_key',
     'resource_group',
-    'name',
-    'operating_system',
     'href',
-    'encrypted_data_key',
     'tags',
+    'operating_system',
+    'name',
+    'encrypted_data_key',
 ]
 
 # Params for Data source
@@ -141,22 +141,22 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    operating_system=dict(
-        required=False,
-        type='str'),
     href=dict(
-        required=False,
-        type='str'),
-    encrypted_data_key=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    operating_system=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    encrypted_data_key=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

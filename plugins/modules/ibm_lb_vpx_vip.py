@@ -20,6 +20,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    nad_controller_id:
+        description:
+            - (Required for new resource) NAD controller ID
+        required: True
+        type: int
+    load_balancing_method:
+        description:
+            - (Required for new resource) Load balancing method
+        required: True
+        type: str
     persistence:
         description:
             - Persistance value
@@ -35,16 +45,12 @@ options:
             - (Required for new resource) Virtual IP address
         required: True
         type: str
-    nad_controller_id:
+    tags:
         description:
-            - (Required for new resource) NAD controller ID
-        required: True
-        type: int
-    load_balancing_method:
-        description:
-            - (Required for new resource) Load balancing method
-        required: True
-        type: str
+            - List of tags
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - (Required for new resource) Name
@@ -60,12 +66,6 @@ options:
             - security certificate ID
         required: False
         type: int
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,25 +112,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('source_port', 'int'),
-    ('virtual_ip_address', 'str'),
     ('nad_controller_id', 'int'),
     ('load_balancing_method', 'str'),
+    ('source_port', 'int'),
+    ('virtual_ip_address', 'str'),
     ('name', 'str'),
     ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'nad_controller_id',
+    'load_balancing_method',
     'persistence',
     'source_port',
     'virtual_ip_address',
-    'nad_controller_id',
-    'load_balancing_method',
+    'tags',
     'name',
     'type',
     'security_certificate_id',
-    'tags',
 ]
 
 # Params for Data source
@@ -147,6 +147,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    nad_controller_id=dict(
+        required=False,
+        type='int'),
+    load_balancing_method=dict(
+        required=False,
+        type='str'),
     persistence=dict(
         required=False,
         type='str'),
@@ -156,12 +162,10 @@ module_args = dict(
     virtual_ip_address=dict(
         required=False,
         type='str'),
-    nad_controller_id=dict(
+    tags=dict(
         required=False,
-        type='int'),
-    load_balancing_method=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -171,10 +175,6 @@ module_args = dict(
     security_certificate_id=dict(
         required=False,
         type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),

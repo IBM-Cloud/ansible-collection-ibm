@@ -30,6 +30,21 @@ options:
             - (Required for new resource) Gateway port
         required: True
         type: str
+    speed_mbps:
+        description:
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
+        type: str
+    bgp_cer_cidr:
+        description:
+            - BGP customer edge router CIDR
+        required: False
+        type: str
     tags:
         description:
             - Tags for the direct link gateway
@@ -45,21 +60,6 @@ options:
         description:
             - (Required for new resource) The unique user-defined name for this gateway
         required: True
-        type: str
-    bgp_cer_cidr:
-        description:
-            - BGP customer edge router CIDR
-        required: False
-        type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
-        required: False
         type: str
     id:
         description:
@@ -109,21 +109,21 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('customer_account_id', 'str'),
     ('port', 'str'),
+    ('speed_mbps', 'int'),
     ('bgp_asn', 'int'),
     ('name', 'str'),
-    ('speed_mbps', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'customer_account_id',
     'port',
+    'speed_mbps',
+    'bgp_ibm_cidr',
+    'bgp_cer_cidr',
     'tags',
     'bgp_asn',
     'name',
-    'bgp_cer_cidr',
-    'speed_mbps',
-    'bgp_ibm_cidr',
 ]
 
 # Params for Data source
@@ -146,6 +146,15 @@ module_args = dict(
     port=dict(
         required=False,
         type='str'),
+    speed_mbps=dict(
+        required=False,
+        type='int'),
+    bgp_ibm_cidr=dict(
+        required=False,
+        type='str'),
+    bgp_cer_cidr=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -154,15 +163,6 @@ module_args = dict(
         required=False,
         type='int'),
     name=dict(
-        required=False,
-        type='str'),
-    bgp_cer_cidr=dict(
-        required=False,
-        type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
-    bgp_ibm_cidr=dict(
         required=False,
         type='str'),
     id=dict(

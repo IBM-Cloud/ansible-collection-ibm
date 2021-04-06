@@ -28,40 +28,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  edge_ips_connectivity (False, str, all)
-    Specifies the IP version.
-
-
-  protocol (True, str, None)
-    (Required for new resource) Defines the protocol and port for this application
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
   dns (True, str, None)
     (Required for new resource) Name of the DNS record for this application
 
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
 
 
-  origin_direct (False, list, None)
-    IP address and port of the origin for this Range application.
-
-
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
-
-
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
+  edge_ips_connectivity (False, str, all)
+    Specifies the IP version.
 
 
   traffic_type (False, str, direct)
     Configure how traffic is handled at the edge.
 
 
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
+  protocol (True, str, None)
+    (Required for new resource) Defines the protocol and port for this application
+
+
   dns_type (True, str, None)
     (Required for new resource) Type of the DNS record for this application
+
+
+  origin_direct (False, list, None)
+    IP address and port of the origin for this Range application.
 
 
   origin_dns (False, str, None)
@@ -72,16 +72,16 @@ Parameters
     Port at the origin that listens to traffic
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
 
 
   tls (False, str, False)
     Configure if and how TLS connections are terminated at the edge.
+
+
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
 
 
   id (False, str, None)

@@ -28,20 +28,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  minimum_member_count (True, int, None)
-    (Required for new resource) Minimum member count
+  termination_policy (True, str, None)
+    (Required for new resource) Termination policy
+
+
+  health_check (False, dict, None)
+    None
+
+
+  network_vlan_ids (False, list, None)
+    List of network VLAN ids
+
+
+  regional_group (True, str, None)
+    (Required for new resource) regional group
 
 
   cooldown (True, int, None)
     (Required for new resource) Cooldown value
 
 
+  maximum_member_count (True, int, None)
+    (Required for new resource) Maximum member count
+
+
+  virtual_server_id (False, int, None)
+    virtual server ID
+
+
   port (False, int, None)
     Port number
-
-
-  health_check (False, dict, None)
-    None
 
 
   virtual_guest_member_template (True, list, None)
@@ -56,24 +72,8 @@ Parameters
     (Required for new resource) Name
 
 
-  regional_group (True, str, None)
-    (Required for new resource) regional group
-
-
-  maximum_member_count (True, int, None)
-    (Required for new resource) Maximum member count
-
-
-  termination_policy (True, str, None)
-    (Required for new resource) Termination policy
-
-
-  virtual_server_id (False, int, None)
-    virtual server ID
-
-
-  network_vlan_ids (False, list, None)
-    List of network VLAN ids
+  minimum_member_count (True, int, None)
+    (Required for new resource) Minimum member count
 
 
   id (False, str, None)

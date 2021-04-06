@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    List of tags
+
+
   type (True, str, None)
     (Required for new resource) VLAN type
 
 
-  name (False, str, None)
-    VLAN name
-
-
-  tags (False, list, None)
-    List of tags
+  router_hostname (False, str, None)
+    router host name
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
-  router_hostname (False, str, None)
-    router host name
+  name (False, str, None)
+    VLAN name
 
 
   id (False, str, None)

@@ -28,28 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_lifetime (False, int, 3600)
-    IPSEC key lifetime
+  authentication_algorithm (True, str, None)
+    (Required for new resource) Authentication alorothm
+
+
+  pfs (True, str, None)
+    (Required for new resource) PFS info
 
 
   name (True, str, None)
     (Required for new resource) IPSEC name
 
 
-  authentication_algorithm (True, str, None)
-    (Required for new resource) Authentication alorothm
-
-
   resource_group (False, str, None)
     Resource group info
 
 
+  key_lifetime (False, int, 3600)
+    IPSEC key lifetime
+
+
   encryption_algorithm (True, str, None)
     (Required for new resource) Encryption algorithm
-
-
-  pfs (True, str, None)
-    (Required for new resource) PFS info
 
 
   id (False, str, None)

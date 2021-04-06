@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
+  port (False, str, None)
+    Gateway port
 
 
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  type (True, str, None)
+    (Required for new resource) Gateway type
 
 
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
+  tags (False, list, None)
+    Tags for the direct link gateway
 
 
-  resource_group (False, str, None)
-    Gateway resource group
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
 
 
   location_name (False, str, None)
@@ -52,12 +52,12 @@ Parameters
     Carrier name
 
 
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
   customer_name (False, str, None)
     Customer name
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
 
 
   macsec_config (False, list, None)
@@ -68,36 +68,36 @@ Parameters
     Loa reject reason
 
 
-  type (True, str, None)
-    (Required for new resource) Gateway type
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
-  port (False, str, None)
-    Gateway port
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
 
 
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   metered (True, bool, None)
     (Required for new resource) Metered billing option
 
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
+  resource_group (False, str, None)
+    Gateway resource group
 
 
   id (False, str, None)

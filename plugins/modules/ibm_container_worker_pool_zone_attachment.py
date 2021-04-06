@@ -20,7 +20,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    cluster:
+        description:
+            - (Required for new resource) cluster name or ID
+        required: True
+        type: str
     public_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    private_vlan_id:
         description:
             - None
         required: False
@@ -36,25 +51,10 @@ options:
         required: False
         type: bool
         default: True
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) cluster name or ID
-        required: True
-        type: str
     worker_pool:
         description:
             - (Required for new resource) Workerpool name
         required: True
-        type: str
-    private_vlan_id:
-        description:
-            - None
-        required: False
         type: str
     id:
         description:
@@ -82,20 +82,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('cluster', 'str'),
+    ('zone', 'str'),
     ('worker_pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cluster',
     'public_vlan_id',
+    'zone',
+    'private_vlan_id',
     'resource_group_id',
     'wait_till_albs',
-    'zone',
-    'cluster',
     'worker_pool',
-    'private_vlan_id',
 ]
 
 # Params for Data source
@@ -112,7 +112,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cluster=dict(
+        required=False,
+        type='str'),
     public_vlan_id=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -121,16 +130,7 @@ module_args = dict(
     wait_till_albs=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     worker_pool=dict(
-        required=False,
-        type='str'),
-    private_vlan_id=dict(
         required=False,
         type='str'),
     id=dict(

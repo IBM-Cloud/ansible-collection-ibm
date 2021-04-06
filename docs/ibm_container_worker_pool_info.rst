@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_pool_name (True, str, None)
-    worker pool name
-
-
   cluster (True, str, None)
     Name or ID of the cluster
+
+
+  worker_pool_name (True, str, None)
+    worker pool name
 
 
   ibmcloud_api_key (True, any, None)

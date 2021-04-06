@@ -25,20 +25,10 @@ options:
             - (Required for new resource) Volume profile name
         required: True
         type: str
-    encryption_key:
-        description:
-            - Volume encryption key info
-        required: False
-        type: str
     resource_group:
         description:
             - Resource group name
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Volume name
-        required: True
         type: str
     zone:
         description:
@@ -51,17 +41,27 @@ options:
         required: False
         type: list
         elements: str
+    iops:
+        description:
+            - IOPS value for the Volume
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) Volume name
+        required: True
+        type: str
+    encryption_key:
+        description:
+            - Volume encryption key info
+        required: False
+        type: str
     capacity:
         description:
             - Vloume capacity value
         required: False
         type: int
         default: 100
-    iops:
-        description:
-            - IOPS value for the Volume
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,20 +109,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('profile', 'str'),
-    ('name', 'str'),
     ('zone', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'profile',
-    'encryption_key',
     'resource_group',
-    'name',
     'zone',
     'tags',
-    'capacity',
     'iops',
+    'name',
+    'encryption_key',
+    'capacity',
 ]
 
 # Params for Data source
@@ -145,13 +145,7 @@ module_args = dict(
     profile=dict(
         required=False,
         type='str'),
-    encryption_key=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     zone=dict(
@@ -161,10 +155,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    capacity=dict(
+    iops=dict(
         required=False,
         type='int'),
-    iops=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    encryption_key=dict(
+        required=False,
+        type='str'),
+    capacity=dict(
         required=False,
         type='int'),
     id=dict(

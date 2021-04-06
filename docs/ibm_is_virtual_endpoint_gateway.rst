@@ -32,16 +32,8 @@ Parameters
     Endpoint gateway resource group
 
 
-  target (True, list, None)
-    (Required for new resource) Endpoint gateway target
-
-
   tags (False, list, None)
     List of tags for VPE
-
-
-  vpc (True, str, None)
-    (Required for new resource) The VPC id
 
 
   name (True, str, None)
@@ -50,6 +42,14 @@ Parameters
 
   resource_group (False, str, None)
     The resource group id
+
+
+  target (True, list, None)
+    (Required for new resource) Endpoint gateway target
+
+
+  vpc (True, str, None)
+    (Required for new resource) The VPC id
 
 
   id (False, str, None)

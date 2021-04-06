@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  mode (True, str, None)
+    (Required for new resource) WAF Rule group mode on/off
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
 
 
-  group_id (True, str, None)
-    (Required for new resource) WAF Rule group id
-
-
-  mode (True, str, None)
-    (Required for new resource) WAF Rule group mode on/off
+  package_id (True, str, None)
+    (Required for new resource) WAF Rule package id
 
 
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
 
 
-  package_id (True, str, None)
-    (Required for new resource) WAF Rule package id
+  group_id (True, str, None)
+    (Required for new resource) WAF Rule group id
 
 
   id (False, str, None)

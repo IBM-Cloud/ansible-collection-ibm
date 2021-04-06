@@ -20,14 +20,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    network_acl:
-        description:
-            - (Required for new resource) The unique identifier of network ACL
-        required: True
-        type: str
     subnet:
         description:
             - (Required for new resource) The subnet identifier
+        required: True
+        type: str
+    network_acl:
+        description:
+            - (Required for new resource) The unique identifier of network ACL
         required: True
         type: str
     id:
@@ -76,14 +76,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('network_acl', 'str'),
     ('subnet', 'str'),
+    ('network_acl', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'network_acl',
     'subnet',
+    'network_acl',
 ]
 
 # Params for Data source
@@ -100,10 +100,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    network_acl=dict(
+    subnet=dict(
         required=False,
         type='str'),
-    subnet=dict(
+    network_acl=dict(
         required=False,
         type='str'),
     id=dict(

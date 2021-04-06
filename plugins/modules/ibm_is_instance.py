@@ -20,33 +20,29 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    vpc:
         description:
-            - (Required for new resource) Instance name
+            - (Required for new resource) VPC id
         required: True
         type: str
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance
+        required: True
+        type: list
+        elements: str
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: True
+        type: list
+        elements: dict
     wait_before_delete:
         description:
             - Enables stopping of instance before deleting and waits till deletion is complete
         required: False
         type: bool
         default: True
-    image:
-        description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    volumes:
-        description:
-            - List of volumes
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - Instance resource group
-        required: False
-        type: str
     network_interfaces:
         description:
             - None
@@ -58,48 +54,46 @@ options:
             - Auto delete volume along with instance
         required: False
         type: bool
-    force_recovery_time:
+    image:
         description:
-            - Define timeout to force the instances to start/stop in minutes.
-        required: False
-        type: int
+            - (Required for new resource) image name
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Instance name
+        required: True
+        type: str
     profile:
         description:
             - (Required for new resource) Profile info
         required: True
         type: str
-    keys:
-        description:
-            - (Required for new resource) SSH key Ids for the instance
-        required: True
-        type: list
-        elements: str
     tags:
         description:
             - list of tags for the instance
         required: False
         type: list
         elements: str
-    primary_network_interface:
+    force_recovery_time:
         description:
-            - (Required for new resource) Primary Network interface info
-        required: True
-        type: list
-        elements: dict
-    user_data:
-        description:
-            - User data given for the instance
+            - Define timeout to force the instances to start/stop in minutes.
         required: False
-        type: str
-    vpc:
+        type: int
+    resource_group:
         description:
-            - (Required for new resource) VPC id
-        required: True
+            - Instance resource group
+        required: False
         type: str
     zone:
         description:
             - (Required for new resource) Zone name
         required: True
+        type: str
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
         type: str
     boot_volume:
         description:
@@ -107,6 +101,12 @@ options:
         required: False
         type: list
         elements: dict
+    volumes:
+        description:
+            - List of volumes
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,33 +153,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('image', 'str'),
-    ('profile', 'str'),
+    ('vpc', 'str'),
     ('keys', 'list'),
     ('primary_network_interface', 'list'),
-    ('vpc', 'str'),
+    ('image', 'str'),
+    ('name', 'str'),
+    ('profile', 'str'),
     ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'vpc',
+    'keys',
+    'primary_network_interface',
     'wait_before_delete',
-    'image',
-    'volumes',
-    'resource_group',
     'network_interfaces',
     'auto_delete_volume',
-    'force_recovery_time',
+    'image',
+    'name',
     'profile',
-    'keys',
     'tags',
-    'primary_network_interface',
-    'user_data',
-    'vpc',
+    'force_recovery_time',
+    'resource_group',
     'zone',
+    'user_data',
     'boot_volume',
+    'volumes',
 ]
 
 # Params for Data source
@@ -188,9 +188,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'private_key',
-    'name',
     'passphrase',
+    'name',
+    'private_key',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -200,40 +200,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    wait_before_delete=dict(
-        required=False,
-        type='bool'),
-    image=dict(
-        required=False,
-        type='str'),
-    volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    auto_delete_volume=dict(
-        required=False,
-        type='bool'),
-    force_recovery_time=dict(
-        required=False,
-        type='int'),
-    profile=dict(
+    vpc=dict(
         required=False,
         type='str'),
     keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -241,16 +211,46 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    user_data=dict(
+    wait_before_delete=dict(
+        required=False,
+        type='bool'),
+    network_interfaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    auto_delete_volume=dict(
+        required=False,
+        type='bool'),
+    image=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    force_recovery_time=dict(
+        required=False,
+        type='int'),
+    resource_group=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
+    user_data=dict(
+        required=False,
+        type='str'),
     boot_volume=dict(
+        required=False,
+        elements='',
+        type='list'),
+    volumes=dict(
         required=False,
         elements='',
         type='list'),

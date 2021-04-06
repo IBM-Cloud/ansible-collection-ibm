@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (True, str, None)
-    Service name for example, cloudantNoSQLDB
-
-
   plan (True, str, None)
     The plan type ex- shared
+
+
+  service (True, str, None)
+    Service name for example, cloudantNoSQLDB
 
 
   iaas_classic_username (False, any, None)

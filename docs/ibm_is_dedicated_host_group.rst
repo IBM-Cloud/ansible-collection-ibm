@@ -32,12 +32,12 @@ Parameters
     (Required for new resource) The dedicated host profile class for hosts in this group.
 
 
-  name (False, str, None)
-    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-
-
   family (True, str, None)
     (Required for new resource) The dedicated host profile family for hosts in this group.
+
+
+  name (False, str, None)
+    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   resource_group (False, str, None)

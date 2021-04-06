@@ -20,51 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    email:
+    state_:
         description:
-            - (Required for new resource) email address of the user
-        required: True
-        type: str
-    address1:
-        description:
-            - (Required for new resource) Address info of the user
-        required: True
-        type: str
-    address2:
-        description:
-            - Address info of the user
-        required: False
-        type: str
-    password:
-        description:
-            - password for the user
-        required: False
-        type: str
-    has_api_key:
-        description:
-            - API Key info of the user
-        required: False
-        type: bool
-        default: False
-    username:
-        description:
-            - user name
-        required: False
-        type: str
-    city:
-        description:
-            - (Required for new resource) City name
-        required: True
-        type: str
-    user_status:
-        description:
-            - user status info
-        required: False
-        type: str
-        default: ACTIVE
-    company_name:
-        description:
-            - (Required for new resource) comapany name
+            - (Required for new resource) Satate name
         required: True
         type: str
     country:
@@ -77,14 +35,50 @@ options:
             - (Required for new resource) time zone info
         required: True
         type: str
+    user_status:
+        description:
+            - user status info
+        required: False
+        type: str
+        default: ACTIVE
+    username:
+        description:
+            - user name
+        required: False
+        type: str
+    first_name:
+        description:
+            - (Required for new resource) First name of the user
+        required: True
+        type: str
+    address1:
+        description:
+            - (Required for new resource) Address info of the user
+        required: True
+        type: str
+    city:
+        description:
+            - (Required for new resource) City name
+        required: True
+        type: str
+    address2:
+        description:
+            - Address info of the user
+        required: False
+        type: str
+    api_key:
+        description:
+            - API key for the user
+        required: False
+        type: str
     last_name:
         description:
             - (Required for new resource) Last name of the user
         required: True
         type: str
-    state_:
+    email:
         description:
-            - (Required for new resource) Satate name
+            - (Required for new resource) email address of the user
         required: True
         type: str
     permissions:
@@ -93,22 +87,28 @@ options:
         required: False
         type: list
         elements: str
-    api_key:
-        description:
-            - API key for the user
-        required: False
-        type: str
     tags:
         description:
             - Tags set for the resources
         required: False
         type: list
         elements: str
-    first_name:
+    company_name:
         description:
-            - (Required for new resource) First name of the user
+            - (Required for new resource) comapany name
         required: True
         type: str
+    password:
+        description:
+            - password for the user
+        required: False
+        type: str
+    has_api_key:
+        description:
+            - API Key info of the user
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -155,36 +155,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('email', 'str'),
-    ('address1', 'str'),
-    ('city', 'str'),
-    ('company_name', 'str'),
+    ('state_', 'str'),
     ('country', 'str'),
     ('timezone', 'str'),
-    ('last_name', 'str'),
-    ('state_', 'str'),
     ('first_name', 'str'),
+    ('address1', 'str'),
+    ('city', 'str'),
+    ('last_name', 'str'),
+    ('email', 'str'),
+    ('company_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'email',
-    'address1',
-    'address2',
-    'password',
-    'has_api_key',
-    'username',
-    'city',
-    'user_status',
-    'company_name',
+    'state_',
     'country',
     'timezone',
-    'last_name',
-    'state_',
-    'permissions',
-    'api_key',
-    'tags',
+    'user_status',
+    'username',
     'first_name',
+    'address1',
+    'city',
+    'address2',
+    'api_key',
+    'last_name',
+    'email',
+    'permissions',
+    'tags',
+    'company_name',
+    'password',
+    'has_api_key',
 ]
 
 # Params for Data source
@@ -201,31 +201,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    email=dict(
-        required=False,
-        type='str'),
-    address1=dict(
-        required=False,
-        type='str'),
-    address2=dict(
-        required=False,
-        type='str'),
-    password=dict(
-        required=False,
-        type='str'),
-    has_api_key=dict(
-        required=False,
-        type='bool'),
-    username=dict(
-        required=False,
-        type='str'),
-    city=dict(
-        required=False,
-        type='str'),
-    user_status=dict(
-        required=False,
-        type='str'),
-    company_name=dict(
+    state_=dict(
         required=False,
         type='str'),
     country=dict(
@@ -234,26 +210,50 @@ module_args = dict(
     timezone=dict(
         required=False,
         type='str'),
+    user_status=dict(
+        required=False,
+        type='str'),
+    username=dict(
+        required=False,
+        type='str'),
+    first_name=dict(
+        required=False,
+        type='str'),
+    address1=dict(
+        required=False,
+        type='str'),
+    city=dict(
+        required=False,
+        type='str'),
+    address2=dict(
+        required=False,
+        type='str'),
+    api_key=dict(
+        required=False,
+        type='str'),
     last_name=dict(
         required=False,
         type='str'),
-    state_=dict(
+    email=dict(
         required=False,
         type='str'),
     permissions=dict(
         required=False,
         elements='',
         type='list'),
-    api_key=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    first_name=dict(
+    company_name=dict(
         required=False,
         type='str'),
+    password=dict(
+        required=False,
+        type='str'),
+    has_api_key=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),

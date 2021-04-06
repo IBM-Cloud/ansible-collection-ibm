@@ -20,48 +20,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    http_port:
+    host_name:
         description:
-            - HTTP port number
-        required: False
-        type: int
-        default: 80
-    respect_headers:
+            - (Required for new resource) Host name
+        required: True
+        type: str
+    origin_address:
         description:
-            - respect headers info
-        required: False
-        type: bool
-        default: True
-    bucket_name:
+            - (Required for new resource) origin address info
+        required: True
+        type: str
+    protocol:
         description:
-            - Bucket name
+            - Protocol name
         required: False
         type: str
-    path:
+        default: HTTP
+    origin_type:
         description:
-            - Path details
+            - Origin type info
         required: False
         type: str
-        default: /*
-    performance_configuration:
+        default: HOST_SERVER
+    cname:
         description:
-            - performance configuration info
+            - cname info
         required: False
         type: str
-        default: General web delivery
     header:
         description:
             - Header info
-        required: False
-        type: str
-    file_extension:
-        description:
-            - File extension info
-        required: False
-        type: str
-    certificate_type:
-        description:
-            - Certificate type
         required: False
         type: str
     cache_key_query_rule:
@@ -70,44 +58,56 @@ options:
         required: False
         type: str
         default: include-all
-    origin_address:
+    path:
         description:
-            - (Required for new resource) origin address info
-        required: True
+            - Path details
+        required: False
         type: str
+        default: /*
+    certificate_type:
+        description:
+            - Certificate type
+        required: False
+        type: str
+    performance_configuration:
+        description:
+            - performance configuration info
+        required: False
+        type: str
+        default: General web delivery
     vendor_name:
         description:
             - Vendor name
         required: False
         type: str
         default: akamai
-    origin_type:
+    bucket_name:
         description:
-            - Origin type info
+            - Bucket name
         required: False
         type: str
-        default: HOST_SERVER
-    protocol:
+    http_port:
         description:
-            - Protocol name
+            - HTTP port number
         required: False
-        type: str
-        default: HTTP
+        type: int
+        default: 80
     https_port:
         description:
             - HTTPS port number
         required: False
         type: int
         default: 443
-    cname:
+    respect_headers:
         description:
-            - cname info
+            - respect headers info
         required: False
-        type: str
-    host_name:
+        type: bool
+        default: True
+    file_extension:
         description:
-            - (Required for new resource) Host name
-        required: True
+            - File extension info
+        required: False
         type: str
     id:
         description:
@@ -155,28 +155,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('origin_address', 'str'),
     ('host_name', 'str'),
+    ('origin_address', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'http_port',
-    'respect_headers',
-    'bucket_name',
-    'path',
-    'performance_configuration',
-    'header',
-    'file_extension',
-    'certificate_type',
-    'cache_key_query_rule',
-    'origin_address',
-    'vendor_name',
-    'origin_type',
-    'protocol',
-    'https_port',
-    'cname',
     'host_name',
+    'origin_address',
+    'protocol',
+    'origin_type',
+    'cname',
+    'header',
+    'cache_key_query_rule',
+    'path',
+    'certificate_type',
+    'performance_configuration',
+    'vendor_name',
+    'bucket_name',
+    'http_port',
+    'https_port',
+    'respect_headers',
+    'file_extension',
 ]
 
 # Params for Data source
@@ -193,52 +193,52 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    http_port=dict(
-        required=False,
-        type='int'),
-    respect_headers=dict(
-        required=False,
-        type='bool'),
-    bucket_name=dict(
-        required=False,
-        type='str'),
-    path=dict(
-        required=False,
-        type='str'),
-    performance_configuration=dict(
-        required=False,
-        type='str'),
-    header=dict(
-        required=False,
-        type='str'),
-    file_extension=dict(
-        required=False,
-        type='str'),
-    certificate_type=dict(
-        required=False,
-        type='str'),
-    cache_key_query_rule=dict(
+    host_name=dict(
         required=False,
         type='str'),
     origin_address=dict(
         required=False,
         type='str'),
-    vendor_name=dict(
+    protocol=dict(
         required=False,
         type='str'),
     origin_type=dict(
         required=False,
         type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    https_port=dict(
-        required=False,
-        type='int'),
     cname=dict(
         required=False,
         type='str'),
-    host_name=dict(
+    header=dict(
+        required=False,
+        type='str'),
+    cache_key_query_rule=dict(
+        required=False,
+        type='str'),
+    path=dict(
+        required=False,
+        type='str'),
+    certificate_type=dict(
+        required=False,
+        type='str'),
+    performance_configuration=dict(
+        required=False,
+        type='str'),
+    vendor_name=dict(
+        required=False,
+        type='str'),
+    bucket_name=dict(
+        required=False,
+        type='str'),
+    http_port=dict(
+        required=False,
+        type='int'),
+    https_port=dict(
+        required=False,
+        type='int'),
+    respect_headers=dict(
+        required=False,
+        type='bool'),
+    file_extension=dict(
         required=False,
         type='str'),
     id=dict(

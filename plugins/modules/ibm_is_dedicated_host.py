@@ -20,12 +20,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    host_group:
+        description:
+            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
+        required: True
+        type: str
     instance_placement_enabled:
         description:
             - If set to true, instances can be placed on this dedicated host.
         required: False
         type: bool
         default: True
+    name:
+        description:
+            - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
     profile:
         description:
             - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
@@ -34,16 +44,6 @@ options:
     resource_group:
         description:
             - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
-    host_group:
-        description:
-            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
-        required: True
-        type: str
-    name:
-        description:
-            - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
         type: str
     id:
@@ -92,17 +92,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
     ('host_group', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'host_group',
     'instance_placement_enabled',
+    'name',
     'profile',
     'resource_group',
-    'host_group',
-    'name',
 ]
 
 # Params for Data source
@@ -124,19 +124,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    host_group=dict(
+        required=False,
+        type='str'),
     instance_placement_enabled=dict(
         required=False,
         type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     profile=dict(
         required=False,
         type='str'),
     resource_group=dict(
-        required=False,
-        type='str'),
-    host_group=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(

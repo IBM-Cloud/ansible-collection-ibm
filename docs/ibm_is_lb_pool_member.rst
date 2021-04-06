@@ -36,10 +36,6 @@ Parameters
     Load balcner pool member weight
 
 
-  pool (True, str, None)
-    (Required for new resource) Loadblancer Poold ID
-
-
   lb (True, str, None)
     (Required for new resource) Load balancer ID
 
@@ -50,6 +46,10 @@ Parameters
 
   target_address (False, str, None)
     Load balancer pool member target address
+
+
+  pool (True, str, None)
+    (Required for new resource) Loadblancer Poold ID
 
 
   id (False, str, None)

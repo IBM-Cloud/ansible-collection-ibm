@@ -32,6 +32,10 @@ Parameters
     (Required for new resource) Certificate CRN id
 
 
+  persistence (False, bool, None)
+    Persistence of secret
+
+
   cluster_id (True, str, None)
     (Required for new resource) Cluster ID
 
@@ -42,10 +46,6 @@ Parameters
 
   namespace (False, str, ibm-cert-store)
     Namespace of the secret
-
-
-  persistence (False, bool, None)
-    Persistence of secret
 
 
   id (False, str, None)

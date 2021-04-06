@@ -25,14 +25,14 @@ options:
             - (Required for new resource) ALB ID
         required: True
         type: str
-    disable_deployment:
-        description:
-            - Disable the ALB instance in the cluster
-        required: False
-        type: bool
     enable:
         description:
             - Enable the ALB instance in the cluster
+        required: False
+        type: bool
+    disable_deployment:
+        description:
+            - Disable the ALB instance in the cluster
         required: False
         type: bool
     id:
@@ -67,8 +67,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'alb_id',
-    'disable_deployment',
     'enable',
+    'disable_deployment',
 ]
 
 # Params for Data source
@@ -81,8 +81,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'disable_deployment': ['enable'],
     'enable': ['disable_deployment'],
+    'disable_deployment': ['enable'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -92,10 +92,10 @@ module_args = dict(
     alb_id=dict(
         required=False,
         type='str'),
-    disable_deployment=dict(
+    enable=dict(
         required=False,
         type='bool'),
-    enable=dict(
+    disable_deployment=dict(
         required=False,
         type='bool'),
     id=dict(

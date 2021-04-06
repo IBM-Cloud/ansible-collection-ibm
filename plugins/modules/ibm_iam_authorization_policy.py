@@ -20,19 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    target_resource_instance_id:
-        description:
-            - The target resource instance Id
-        required: False
-        type: str
     source_resource_group_id:
         description:
             - The source resource group Id
-        required: False
-        type: str
-    target_resource_group_id:
-        description:
-            - The target resource group Id
         required: False
         type: str
     source_resource_type:
@@ -50,9 +40,14 @@ options:
             - Account GUID of source service
         required: False
         type: str
-    source_service_name:
+    source_resource_instance_id:
         description:
-            - (Required for new resource) The source service name
+            - The source resource instance Id
+        required: False
+        type: str
+    target_service_name:
+        description:
+            - (Required for new resource) The target service name
         required: True
         type: str
     roles:
@@ -61,15 +56,20 @@ options:
         required: True
         type: list
         elements: str
-    target_service_name:
+    target_resource_instance_id:
         description:
-            - (Required for new resource) The target service name
-        required: True
-        type: str
-    source_resource_instance_id:
-        description:
-            - The source resource instance Id
+            - The target resource instance Id
         required: False
+        type: str
+    target_resource_group_id:
+        description:
+            - The target resource group Id
+        required: False
+        type: str
+    source_service_name:
+        description:
+            - (Required for new resource) The source service name
+        required: True
         type: str
     id:
         description:
@@ -117,23 +117,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('source_service_name', 'str'),
-    ('roles', 'list'),
     ('target_service_name', 'str'),
+    ('roles', 'list'),
+    ('source_service_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_resource_instance_id',
     'source_resource_group_id',
-    'target_resource_group_id',
     'source_resource_type',
     'target_resource_type',
     'source_service_account',
-    'source_service_name',
-    'roles',
-    'target_service_name',
     'source_resource_instance_id',
+    'target_service_name',
+    'roles',
+    'target_resource_instance_id',
+    'target_resource_group_id',
+    'source_service_name',
 ]
 
 # Params for Data source
@@ -150,13 +150,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_resource_instance_id=dict(
-        required=False,
-        type='str'),
     source_resource_group_id=dict(
-        required=False,
-        type='str'),
-    target_resource_group_id=dict(
         required=False,
         type='str'),
     source_resource_type=dict(
@@ -168,17 +162,23 @@ module_args = dict(
     source_service_account=dict(
         required=False,
         type='str'),
-    source_service_name=dict(
+    source_resource_instance_id=dict(
+        required=False,
+        type='str'),
+    target_service_name=dict(
         required=False,
         type='str'),
     roles=dict(
         required=False,
         elements='',
         type='list'),
-    target_service_name=dict(
+    target_resource_instance_id=dict(
         required=False,
         type='str'),
-    source_resource_instance_id=dict(
+    target_resource_group_id=dict(
+        required=False,
+        type='str'),
+    source_service_name=dict(
         required=False,
         type='str'),
     id=dict(

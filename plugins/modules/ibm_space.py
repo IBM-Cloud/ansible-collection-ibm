@@ -20,22 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) The name for the space
-        required: True
-        type: str
-    org:
-        description:
-            - (Required for new resource) The org this space belongs to
-        required: True
-        type: str
     auditors:
         description:
             - The IBMID of the users who will have auditor role in this space, ex - user@example.com
@@ -58,6 +42,22 @@ options:
         description:
             - The name of the Space Quota Definition
         required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) The name for the space
+        required: True
+        type: str
+    org:
+        description:
+            - (Required for new resource) The org this space belongs to
+        required: True
         type: str
     id:
         description:
@@ -111,13 +111,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'name',
-    'org',
     'auditors',
     'managers',
     'developers',
     'space_quota',
+    'tags',
+    'name',
+    'org',
 ]
 
 # Params for Data source
@@ -126,9 +126,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'space',
     'name',
     'org',
-    'space',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,16 +138,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    org=dict(
-        required=False,
-        type='str'),
     auditors=dict(
         required=False,
         elements='',
@@ -161,6 +151,16 @@ module_args = dict(
         elements='',
         type='list'),
     space_quota=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    org=dict(
         required=False,
         type='str'),
     id=dict(

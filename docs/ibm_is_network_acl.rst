@@ -32,20 +32,20 @@ Parameters
     (Required for new resource) Network ACL name
 
 
-  resource_group (False, str, None)
-    Resource group ID for the network ACL
-
-
-  tags (False, list, None)
-    List of tags
-
-
   vpc (False, str, None)
     Network ACL VPC name
 
 
   rules (False, list, None)
     None
+
+
+  resource_group (False, str, None)
+    Resource group ID for the network ACL
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

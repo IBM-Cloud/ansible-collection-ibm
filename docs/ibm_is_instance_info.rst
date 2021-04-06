@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_key (False, str, None)
-    Instance Private Key file
+  passphrase (False, str, None)
+    Passphrase for Instance Private Key file
 
 
   name (True, str, None)
     Instance name
 
 
-  passphrase (False, str, None)
-    Passphrase for Instance Private Key file
+  private_key (False, str, None)
+    Instance Private Key file
 
 
   generation (False, int, 2)

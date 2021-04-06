@@ -28,15 +28,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  post_install_script_uri (False, str, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) The name of the gateway
 
 
   ssh_key_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
     None
 
 

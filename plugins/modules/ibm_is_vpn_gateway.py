@@ -20,20 +20,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    subnet:
+    mode:
         description:
-            - (Required for new resource) VPNGateway subnet info
-        required: True
+            - mode in VPN gateway(route/policy)
+        required: False
+        type: str
+        default: route
+    resource_group:
+        description:
+            - The resource group for this VPN gateway
+        required: False
         type: str
     name:
         description:
             - (Required for new resource) VPN Gateway instance name
         required: True
         type: str
-    resource_group:
+    subnet:
         description:
-            - The resource group for this VPN gateway
-        required: False
+            - (Required for new resource) VPNGateway subnet info
+        required: True
         type: str
     tags:
         description:
@@ -41,12 +47,6 @@ options:
         required: False
         type: list
         elements: str
-    mode:
-        description:
-            - mode in VPN gateway(route/policy)
-        required: False
-        type: str
-        default: route
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,17 +93,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnet', 'str'),
     ('name', 'str'),
+    ('subnet', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnet',
-    'name',
-    'resource_group',
-    'tags',
     'mode',
+    'resource_group',
+    'name',
+    'subnet',
+    'tags',
 ]
 
 # Params for Data source
@@ -120,22 +120,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnet=dict(
+    mode=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    subnet=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    mode=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -20,10 +20,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    lb:
+    policy:
         description:
-            - (Required for new resource) Loadbalancer ID
+            - (Required for new resource) Listener Policy ID
         required: True
+        type: str
+    field:
+        description:
+            - None
+        required: False
         type: str
     listener:
         description:
@@ -35,16 +40,6 @@ options:
             - (Required for new resource) Condition info of the rule.
         required: True
         type: str
-    field:
-        description:
-            - None
-        required: False
-        type: str
-    policy:
-        description:
-            - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
     type:
         description:
             - (Required for new resource) Policy rule type.
@@ -53,6 +48,11 @@ options:
     value:
         description:
             - (Required for new resource) policy rule value info
+        required: True
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer ID
         required: True
         type: str
     id:
@@ -101,23 +101,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
+    ('policy', 'str'),
     ('listener', 'str'),
     ('condition', 'str'),
-    ('policy', 'str'),
     ('type', 'str'),
     ('value', 'str'),
+    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
+    'policy',
+    'field',
     'listener',
     'condition',
-    'field',
-    'policy',
     'type',
     'value',
+    'lb',
 ]
 
 # Params for Data source
@@ -134,7 +134,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
+    policy=dict(
+        required=False,
+        type='str'),
+    field=dict(
         required=False,
         type='str'),
     listener=dict(
@@ -143,16 +146,13 @@ module_args = dict(
     condition=dict(
         required=False,
         type='str'),
-    field=dict(
-        required=False,
-        type='str'),
-    policy=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
     value=dict(
+        required=False,
+        type='str'),
+    lb=dict(
         required=False,
         type='str'),
     id=dict(

@@ -32,16 +32,16 @@ Parameters
     List of tags for SSH key
 
 
-  public_key (True, str, None)
-    (Required for new resource) SSH Public key data
-
-
   resource_group (False, str, None)
     Resource group ID
 
 
   name (True, str, None)
     (Required for new resource) SSH Key name
+
+
+  public_key (True, str, None)
+    (Required for new resource) SSH Public key data
 
 
   id (False, str, None)

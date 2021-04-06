@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  sysdig_access_key (False, str, None)
+    Sysdig ingestion key
+
+
   cluster (True, str, None)
     (Required for new resource) Name or ID of the cluster to be used.
 
 
   instance_id (True, str, None)
     (Required for new resource) ID of the Sysdig service instance to latch
-
-
-  sysdig_access_key (False, str, None)
-    Sysdig ingestion key
 
 
   private_endpoint (False, bool, None)

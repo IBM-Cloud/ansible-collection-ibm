@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags associated with this catalog.
-
-
   catalog_id (True, str, None)
     (Required for new resource) The id of the catalog containing this offering.
 
 
   label (True, str, None)
     (Required for new resource) Display Name in the requested language.
+
+
+  tags (False, list, None)
+    List of tags associated with this catalog.
 
 
   id (False, str, None)

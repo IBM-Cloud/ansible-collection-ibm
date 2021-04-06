@@ -19,11 +19,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    package_id:
-        description:
-            - WAF Rule package id
-        required: True
-        type: str
     cis_id:
         description:
             - CIS Intance CRN
@@ -32,6 +27,11 @@ options:
     domain_id:
         description:
             - CIS Domain ID
+        required: True
+        type: str
+    package_id:
+        description:
+            - WAF Rule package id
         required: True
         type: str
     iaas_classic_username:
@@ -67,16 +67,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('package_id', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('package_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'package_id',
     'cis_id',
     'domain_id',
+    'package_id',
 ]
 
 
@@ -87,13 +87,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    package_id=dict(
-        required=True,
-        type='str'),
     cis_id=dict(
         required=True,
         type='str'),
     domain_id=dict(
+        required=True,
+        type='str'),
+    package_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

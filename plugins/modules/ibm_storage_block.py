@@ -20,6 +20,54 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    allowed_ip_addresses:
+        description:
+            - Allowed IP addresses
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - List of tags associated with the resource
+        required: False
+        type: list
+        elements: str
+    capacity:
+        description:
+            - (Required for new resource) Storage block size
+        required: True
+        type: int
+    iops:
+        description:
+            - (Required for new resource) IOPS value required
+        required: True
+        type: float
+    snapshot_capacity:
+        description:
+            - Snapshot capacity in GB
+        required: False
+        type: int
+    type:
+        description:
+            - (Required for new resource) Storage block type
+        required: True
+        type: str
+    os_format_type:
+        description:
+            - (Required for new resource) OS formatr type
+        required: True
+        type: str
+    hourly_billing:
+        description:
+            - Billing done hourly, if set to true
+        required: False
+        type: bool
+        default: False
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
     allowed_virtual_guest_ids:
         description:
             - List of allowed virtual guest IDs
@@ -31,60 +79,12 @@ options:
             - Additional note info
         required: False
         type: str
-    hourly_billing:
-        description:
-            - Billing done hourly, if set to true
-        required: False
-        type: bool
-        default: False
-    capacity:
-        description:
-            - (Required for new resource) Storage block size
-        required: True
-        type: int
     allowed_hardware_ids:
         description:
             - List of allowe hardware IDs
         required: False
         type: list
         elements: int
-    tags:
-        description:
-            - List of tags associated with the resource
-        required: False
-        type: list
-        elements: str
-    snapshot_capacity:
-        description:
-            - Snapshot capacity in GB
-        required: False
-        type: int
-    os_format_type:
-        description:
-            - (Required for new resource) OS formatr type
-        required: True
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    iops:
-        description:
-            - (Required for new resource) IOPS value required
-        required: True
-        type: float
-    allowed_ip_addresses:
-        description:
-            - Allowed IP addresses
-        required: False
-        type: list
-        elements: str
-    type:
-        description:
-            - (Required for new resource) Storage block type
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,26 +132,26 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('capacity', 'int'),
-    ('os_format_type', 'str'),
-    ('datacenter', 'str'),
     ('iops', 'float'),
     ('type', 'str'),
+    ('os_format_type', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'allowed_ip_addresses',
+    'tags',
+    'capacity',
+    'iops',
+    'snapshot_capacity',
+    'type',
+    'os_format_type',
+    'hourly_billing',
+    'datacenter',
     'allowed_virtual_guest_ids',
     'notes',
-    'hourly_billing',
-    'capacity',
     'allowed_hardware_ids',
-    'tags',
-    'snapshot_capacity',
-    'os_format_type',
-    'datacenter',
-    'iops',
-    'allowed_ip_addresses',
-    'type',
 ]
 
 # Params for Data source
@@ -168,20 +168,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
-    hourly_billing=dict(
-        required=False,
-        type='bool'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    allowed_hardware_ids=dict(
+    allowed_ip_addresses=dict(
         required=False,
         elements='',
         type='list'),
@@ -189,25 +176,38 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    snapshot_capacity=dict(
+    capacity=dict(
         required=False,
         type='int'),
-    os_format_type=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     iops=dict(
         required=False,
         type='float'),
-    allowed_ip_addresses=dict(
+    snapshot_capacity=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
     type=dict(
         required=False,
         type='str'),
+    os_format_type=dict(
+        required=False,
+        type='str'),
+    hourly_billing=dict(
+        required=False,
+        type='bool'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    allowed_virtual_guest_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    notes=dict(
+        required=False,
+        type='str'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),

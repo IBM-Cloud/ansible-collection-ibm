@@ -25,16 +25,16 @@ options:
         required: False
         type: list
         elements: dict
-    template_git_has_uploadedgitrepotar:
-        description:
-            - Has uploaded git repo tar.
-        required: False
-        type: bool
     workspace_id:
         description:
             - The ID of the workspace for which you want to retrieve detailed information. To find the workspace ID, use the `GET /v1/workspaces` API.
         required: True
         type: str
+    template_git_has_uploadedgitrepotar:
+        description:
+            - Has uploaded git repo tar.
+        required: False
+        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -74,8 +74,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'template_values_metadata',
-    'template_git_has_uploadedgitrepotar',
     'workspace_id',
+    'template_git_has_uploadedgitrepotar',
 ]
 
 
@@ -90,12 +90,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    template_git_has_uploadedgitrepotar=dict(
-        required=False,
-        type='bool'),
     workspace_id=dict(
         required=True,
         type='str'),
+    template_git_has_uploadedgitrepotar=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

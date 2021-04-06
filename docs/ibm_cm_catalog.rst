@@ -28,20 +28,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  label (True, str, None)
-    (Required for new resource) Display Name in the requested language.
-
-
-  short_description (False, str, None)
-    Description in the requested language.
-
-
   catalog_icon_url (False, str, None)
     URL for an icon associated with this catalog.
 
 
   tags (False, list, None)
     List of tags associated with this catalog.
+
+
+  label (True, str, None)
+    (Required for new resource) Display Name in the requested language.
+
+
+  short_description (False, str, None)
+    Description in the requested language.
 
 
   id (False, str, None)

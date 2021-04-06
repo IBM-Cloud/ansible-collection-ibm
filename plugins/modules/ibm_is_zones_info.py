@@ -19,15 +19,15 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    region_:
-        description:
-            - None
-        required: True
-        type: str
     status:
         description:
             - None
         required: False
+        type: str
+    region_:
+        description:
+            - None
+        required: True
         type: str
     generation:
         description:
@@ -67,8 +67,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region_',
     'status',
+    'region_',
 ]
 
 
@@ -79,11 +79,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region_=dict(
-        required=True,
-        type='str'),
     status=dict(
         required=False,
+        type='str'),
+    region_=dict(
+        required=True,
         type='str'),
     generation=dict(
         type='int',

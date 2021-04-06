@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    resource_instance_id:
+        description:
+            - (Required for new resource) The CRN of the Event Streams instance
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) The name of the topic
@@ -36,11 +41,6 @@ options:
             - The configuration parameters of a topic
         required: False
         type: dict
-    resource_instance_id:
-        description:
-            - (Required for new resource) The CRN of the Event Streams instance
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,27 +87,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('resource_instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_instance_id',
     'name',
     'partitions',
     'config',
-    'resource_instance_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('resource_instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'resource_instance_id',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -117,6 +117,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_instance_id=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -126,9 +129,6 @@ module_args = dict(
     config=dict(
         required=False,
         type='dict'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

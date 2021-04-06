@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - instance group manager name
-        required: False
-        type: str
     enable_manager:
         description:
             - enable instance group manager
@@ -42,12 +37,16 @@ options:
         required: False
         type: int
         default: 90
-    min_membership_count:
+    max_membership_count:
         description:
-            - The minimum number of members in a managed instance group
-        required: False
+            - (Required for new resource) The maximum number of members in a managed instance group
+        required: True
         type: int
-        default: 1
+    name:
+        description:
+            - instance group manager name
+        required: False
+        type: str
     manager_type:
         description:
             - The type of instance group manager.
@@ -60,11 +59,12 @@ options:
         required: False
         type: int
         default: 300
-    max_membership_count:
+    min_membership_count:
         description:
-            - (Required for new resource) The maximum number of members in a managed instance group
-        required: True
+            - The minimum number of members in a managed instance group
+        required: False
         type: int
+        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,25 +117,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'enable_manager',
     'instance_group',
     'aggregation_window',
-    'min_membership_count',
+    'max_membership_count',
+    'name',
     'manager_type',
     'cooldown',
-    'max_membership_count',
+    'min_membership_count',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'instance_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -145,9 +145,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     enable_manager=dict(
         required=False,
         type='bool'),
@@ -157,16 +154,19 @@ module_args = dict(
     aggregation_window=dict(
         required=False,
         type='int'),
-    min_membership_count=dict(
+    max_membership_count=dict(
         required=False,
         type='int'),
+    name=dict(
+        required=False,
+        type='str'),
     manager_type=dict(
         required=False,
         type='str'),
     cooldown=dict(
         required=False,
         type='int'),
-    max_membership_count=dict(
+    min_membership_count=dict(
         required=False,
         type='int'),
     id=dict(

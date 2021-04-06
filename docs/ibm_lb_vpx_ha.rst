@@ -28,10 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  primary_id (True, int, None)
-    (Required for new resource) primary ID
-
-
   secondary_id (True, int, None)
     (Required for new resource) Secondary ID
 
@@ -42,6 +38,10 @@ Parameters
 
   tags (False, list, None)
     Tags set for the resource
+
+
+  primary_id (True, int, None)
+    (Required for new resource) primary ID
 
 
   id (False, str, None)

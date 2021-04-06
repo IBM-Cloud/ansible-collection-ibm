@@ -30,12 +30,12 @@ Parameters
     ID of the resource group.
 
 
-  cluster_name_id (True, str, None)
-    Name or ID of the cluster
-
-
   worker_id (True, str, None)
     ID of the worker
+
+
+  cluster_name_id (True, str, None)
+    Name or ID of the cluster
 
 
   ibmcloud_api_key (True, any, None)

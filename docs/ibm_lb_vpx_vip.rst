@@ -28,6 +28,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  nad_controller_id (True, int, None)
+    (Required for new resource) NAD controller ID
+
+
+  load_balancing_method (True, str, None)
+    (Required for new resource) Load balancing method
+
+
   persistence (False, str, None)
     Persistance value
 
@@ -40,12 +48,8 @@ Parameters
     (Required for new resource) Virtual IP address
 
 
-  nad_controller_id (True, int, None)
-    (Required for new resource) NAD controller ID
-
-
-  load_balancing_method (True, str, None)
-    (Required for new resource) Load balancing method
+  tags (False, list, None)
+    List of tags
 
 
   name (True, str, None)
@@ -58,10 +62,6 @@ Parameters
 
   security_certificate_id (False, int, None)
     security certificate ID
-
-
-  tags (False, list, None)
-    List of tags
 
 
   id (False, str, None)

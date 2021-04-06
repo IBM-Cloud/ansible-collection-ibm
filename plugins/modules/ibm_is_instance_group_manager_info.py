@@ -19,14 +19,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Name of the instance group manager.
-        required: True
-        type: str
     instance_group:
         description:
             - instance group ID
+        required: True
+        type: str
+    name:
+        description:
+            - Name of the instance group manager.
         required: True
         type: str
     generation:
@@ -62,14 +62,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'instance_group',
+    'name',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    instance_group=dict(
         required=True,
         type='str'),
-    instance_group=dict(
+    name=dict(
         required=True,
         type='str'),
     generation=dict(

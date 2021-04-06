@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Name of Trigger.
-
-
   namespace (True, str, None)
     Name of the namespace.
+
+
+  name (True, str, None)
+    Name of Trigger.
 
 
   function_namespace (True, any, None)

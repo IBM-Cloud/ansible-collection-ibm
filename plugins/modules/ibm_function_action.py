@@ -32,6 +32,22 @@ options:
         required: True
         type: list
         elements: dict
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+        required: False
+        type: str
+        default: []
+    name:
+        description:
+            - (Required for new resource) Name of action.
+        required: True
+        type: str
+    namespace:
+        description:
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
+        type: str
     publish:
         description:
             - Action visibilty.
@@ -43,22 +59,6 @@ options:
         required: False
         type: str
         default: []
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-        required: False
-        type: str
-        default: []
-    namespace:
-        description:
-            - (Required for new resource) IBM Cloud function namespace.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of action.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,19 +92,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('exec', 'list'),
-    ('namespace', 'str'),
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'limits',
     'exec',
+    'user_defined_parameters',
+    'name',
+    'namespace',
     'publish',
     'user_defined_annotations',
-    'user_defined_parameters',
-    'namespace',
-    'name',
 ]
 
 # Params for Data source
@@ -133,19 +133,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    publish=dict(
-        required=False,
-        type='bool'),
-    user_defined_annotations=dict(
+    user_defined_parameters=dict(
         required=False,
         type='str'),
-    user_defined_parameters=dict(
+    name=dict(
         required=False,
         type='str'),
     namespace=dict(
         required=False,
         type='str'),
-    name=dict(
+    publish=dict(
+        required=False,
+        type='bool'),
+    user_defined_annotations=dict(
         required=False,
         type='str'),
     id=dict(

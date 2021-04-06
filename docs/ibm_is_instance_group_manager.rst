@@ -28,10 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    instance group manager name
-
-
   enable_manager (False, bool, True)
     enable instance group manager
 
@@ -44,8 +40,12 @@ Parameters
     The time window in seconds to aggregate metrics prior to evaluation
 
 
-  min_membership_count (False, int, 1)
-    The minimum number of members in a managed instance group
+  max_membership_count (True, int, None)
+    (Required for new resource) The maximum number of members in a managed instance group
+
+
+  name (False, str, None)
+    instance group manager name
 
 
   manager_type (False, str, autoscale)
@@ -56,8 +56,8 @@ Parameters
     The duration of time in seconds to pause further scale actions after scaling has taken place
 
 
-  max_membership_count (True, int, None)
-    (Required for new resource) The maximum number of members in a managed instance group
+  min_membership_count (False, int, 1)
+    The minimum number of members in a managed instance group
 
 
   id (False, str, None)

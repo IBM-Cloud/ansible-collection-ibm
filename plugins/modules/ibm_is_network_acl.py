@@ -25,17 +25,6 @@ options:
             - (Required for new resource) Network ACL name
         required: True
         type: str
-    resource_group:
-        description:
-            - Resource group ID for the network ACL
-        required: False
-        type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     vpc:
         description:
             - Network ACL VPC name
@@ -47,6 +36,17 @@ options:
         required: False
         type: list
         elements: dict
+    resource_group:
+        description:
+            - Resource group ID for the network ACL
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,10 +99,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'resource_group',
-    'tags',
     'vpc',
     'rules',
+    'resource_group',
+    'tags',
 ]
 
 # Params for Data source
@@ -122,17 +122,17 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     vpc=dict(
         required=False,
         type='str'),
     rules=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),

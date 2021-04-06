@@ -28,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_acl (True, str, None)
-    (Required for new resource) The unique identifier of network ACL
-
-
   subnet (True, str, None)
     (Required for new resource) The subnet identifier
+
+
+  network_acl (True, str, None)
+    (Required for new resource) The unique identifier of network ACL
 
 
   id (False, str, None)

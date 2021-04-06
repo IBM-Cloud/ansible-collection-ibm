@@ -20,9 +20,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
+    ttl:
         description:
-            - (Required for new resource) DNS record Type
+            - DNS record TTL
+        required: False
+        type: int
+        default: 900
+    instance_id:
+        description:
+            - (Required for new resource) Instance ID
+        required: True
+        type: str
+    weight:
+        description:
+            - DNS server weight
+        required: False
+        type: int
+        default: 0
+    rdata:
+        description:
+            - (Required for new resource) DNS record Data
         required: True
         type: str
     preference:
@@ -31,39 +48,21 @@ options:
         required: False
         type: int
         default: 0
-    protocol:
-        description:
-            - Protocol
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) Instance ID
-        required: True
-        type: str
-    ttl:
-        description:
-            - DNS record TTL
-        required: False
-        type: int
-        default: 900
     port:
         description:
             - DNS server Port
         required: False
         type: int
-    priority:
+    protocol:
         description:
-            - DNS server Priority
+            - Protocol
         required: False
-        type: int
-        default: 0
-    weight:
+        type: str
+    type:
         description:
-            - DNS server weight
-        required: False
-        type: int
-        default: 0
+            - (Required for new resource) DNS record Type
+        required: True
+        type: str
     zone_id:
         description:
             - (Required for new resource) Zone ID
@@ -74,11 +73,12 @@ options:
             - (Required for new resource) DNS record name
         required: True
         type: str
-    rdata:
+    priority:
         description:
-            - (Required for new resource) DNS record Data
-        required: True
-        type: str
+            - DNS server Priority
+        required: False
+        type: int
+        default: 0
     service:
         description:
             - Service info
@@ -130,26 +130,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('instance_id', 'str'),
+    ('rdata', 'str'),
+    ('type', 'str'),
     ('zone_id', 'str'),
     ('name', 'str'),
-    ('rdata', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'preference',
-    'protocol',
-    'instance_id',
     'ttl',
-    'port',
-    'priority',
+    'instance_id',
     'weight',
+    'rdata',
+    'preference',
+    'port',
+    'protocol',
+    'type',
     'zone_id',
     'name',
-    'rdata',
+    'priority',
     'service',
 ]
 
@@ -167,39 +167,39 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
+    ttl=dict(
+        required=False,
+        type='int'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    weight=dict(
+        required=False,
+        type='int'),
+    rdata=dict(
         required=False,
         type='str'),
     preference=dict(
         required=False,
         type='int'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
     port=dict(
         required=False,
         type='int'),
-    priority=dict(
+    protocol=dict(
         required=False,
-        type='int'),
-    weight=dict(
+        type='str'),
+    type=dict(
         required=False,
-        type='int'),
+        type='str'),
     zone_id=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    rdata=dict(
+    priority=dict(
         required=False,
-        type='str'),
+        type='int'),
     service=dict(
         required=False,
         type='str'),

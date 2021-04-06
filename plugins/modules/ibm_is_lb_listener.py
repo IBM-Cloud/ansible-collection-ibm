@@ -20,6 +20,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
+        type: str
+    port:
+        description:
+            - (Required for new resource) Loadbalancer listener port
+        required: True
+        type: int
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: True
+        type: str
     certificate_instance:
         description:
             - certificate instance for the Loadbalancer
@@ -30,30 +45,15 @@ options:
             - Listener will forward proxy protocol
         required: False
         type: bool
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
-    protocol:
-        description:
-            - (Required for new resource) Loadbalancer protocol
-        required: True
-        type: str
-    port:
-        description:
-            - (Required for new resource) Loadbalancer listener port
-        required: True
-        type: int
     connection_limit:
         description:
             - Connection limit for Loadbalancer
         required: False
         type: int
-    lb:
+    default_pool:
         description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
+            - Loadbalancer default pool info
+        required: False
         type: str
     id:
         description:
@@ -101,20 +101,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
-    ('port', 'int'),
     ('lb', 'str'),
+    ('port', 'int'),
+    ('protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'lb',
+    'port',
+    'protocol',
     'certificate_instance',
     'accept_proxy_protocol',
-    'default_pool',
-    'protocol',
-    'port',
     'connection_limit',
-    'lb',
+    'default_pool',
 ]
 
 # Params for Data source
@@ -131,25 +131,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    lb=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
+    protocol=dict(
+        required=False,
+        type='str'),
     certificate_instance=dict(
         required=False,
         type='str'),
     accept_proxy_protocol=dict(
         required=False,
         type='bool'),
-    default_pool=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
     connection_limit=dict(
         required=False,
         type='int'),
-    lb=dict(
+    default_pool=dict(
         required=False,
         type='str'),
     id=dict(

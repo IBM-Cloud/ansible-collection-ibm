@@ -36,6 +36,11 @@ options:
         required: False
         type: list
         elements: str
+    zone:
+        description:
+            - (Required for new resource) Public gateway zone info
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Name of the Public gateway instance
@@ -44,11 +49,6 @@ options:
     vpc:
         description:
             - (Required for new resource) Public gateway VPC info
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Public gateway zone info
         required: True
         type: str
     id:
@@ -97,9 +97,9 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone', 'str'),
     ('name', 'str'),
     ('vpc', 'str'),
-    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -107,9 +107,9 @@ TL_ALL_PARAMETERS = [
     'floating_ip',
     'resource_group',
     'tags',
+    'zone',
     'name',
     'vpc',
-    'zone',
 ]
 
 # Params for Data source
@@ -139,13 +139,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    zone=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     vpc=dict(
-        required=False,
-        type='str'),
-    zone=dict(
         required=False,
         type='str'),
     id=dict(

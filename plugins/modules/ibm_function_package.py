@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    bind_package_name:
-        description:
-            - Name of package to be binded.
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of package.
@@ -36,6 +31,17 @@ options:
         required: False
         type: bool
         default: False
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
+        required: False
+        type: str
+        default: []
+    bind_package_name:
+        description:
+            - Name of package to be binded.
+        required: False
+        type: str
     namespace:
         description:
             - (Required for new resource) IBM Cloud function namespace.
@@ -44,12 +50,6 @@ options:
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
-        required: False
-        type: str
-        default: []
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
         required: False
         type: str
         default: []
@@ -91,12 +91,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bind_package_name',
     'name',
     'publish',
+    'user_defined_parameters',
+    'bind_package_name',
     'namespace',
     'user_defined_annotations',
-    'user_defined_parameters',
 ]
 
 # Params for Data source
@@ -117,22 +117,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bind_package_name=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     publish=dict(
         required=False,
         type='bool'),
+    user_defined_parameters=dict(
+        required=False,
+        type='str'),
+    bind_package_name=dict(
+        required=False,
+        type='str'),
     namespace=dict(
         required=False,
         type='str'),
     user_defined_annotations=dict(
-        required=False,
-        type='str'),
-    user_defined_parameters=dict(
         required=False,
         type='str'),
     id=dict(

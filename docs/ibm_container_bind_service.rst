@@ -28,12 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key (False, str, None)
-    Key info
-
-
-  tags (False, list, None)
-    List of tags for the resource
+  role (False, str, None)
+    Role info
 
 
   cluster_name_id (True, str, None)
@@ -44,20 +40,24 @@ Parameters
     serivice instance name
 
 
-  service_instance_id (False, str, None)
-    Service instance ID
-
-
   namespace_id (True, str, None)
     (Required for new resource) namespace ID
 
 
-  role (False, str, None)
-    Role info
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  tags (False, list, None)
+    List of tags for the resource
+
+
+  service_instance_id (False, str, None)
+    Service instance ID
+
+
+  key (False, str, None)
+    Key info
 
 
   id (False, str, None)

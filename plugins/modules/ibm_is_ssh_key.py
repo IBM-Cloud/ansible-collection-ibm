@@ -26,11 +26,6 @@ options:
         required: False
         type: list
         elements: str
-    public_key:
-        description:
-            - (Required for new resource) SSH Public key data
-        required: True
-        type: str
     resource_group:
         description:
             - Resource group ID
@@ -39,6 +34,11 @@ options:
     name:
         description:
             - (Required for new resource) SSH Key name
+        required: True
+        type: str
+    public_key:
+        description:
+            - (Required for new resource) SSH Public key data
         required: True
         type: str
     id:
@@ -87,16 +87,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('public_key', 'str'),
     ('name', 'str'),
+    ('public_key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'tags',
-    'public_key',
     'resource_group',
     'name',
+    'public_key',
 ]
 
 # Params for Data source
@@ -119,13 +119,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    public_key=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    public_key=dict(
         required=False,
         type='str'),
     id=dict(

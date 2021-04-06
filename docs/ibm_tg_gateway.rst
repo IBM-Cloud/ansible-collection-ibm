@@ -36,16 +36,16 @@ Parameters
     (Required for new resource) Name Transit Gateway Services
 
 
-  tags (False, list, None)
-    Tags for the transit gateway instance
+  global_ (False, bool, False)
+    Allow global routing for a Transit Gateway. If unspecified, the default value is false
 
 
   resource_group (False, str, None)
     None
 
 
-  global_ (False, bool, False)
-    Allow global routing for a Transit Gateway. If unspecified, the default value is false
+  tags (False, list, None)
+    Tags for the transit gateway instance
 
 
   id (False, str, None)

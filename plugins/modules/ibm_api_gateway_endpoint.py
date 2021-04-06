@@ -20,17 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
-        required: False
-        type: str
-        default: unshare
-    service_instance_crn:
-        description:
-            - (Required for new resource) Api Gateway Service Instance Crn
-        required: True
-        type: str
     routes:
         description:
             - Invokable routes for an endpoint
@@ -43,6 +32,17 @@ options:
         required: False
         type: str
         default: user-defined
+    type:
+        description:
+            - Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+        required: False
+        type: str
+        default: unshare
+    service_instance_crn:
+        description:
+            - (Required for new resource) Api Gateway Service Instance Crn
+        required: True
+        type: str
     open_api_doc_name:
         description:
             - (Required for new resource) Json File path
@@ -112,10 +112,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'service_instance_crn',
     'routes',
     'provider_id',
+    'type',
+    'service_instance_crn',
     'open_api_doc_name',
     'name',
     'managed',
@@ -135,17 +135,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
-    service_instance_crn=dict(
-        required=False,
-        type='str'),
     routes=dict(
         required=False,
         elements='',
         type='list'),
     provider_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    service_instance_crn=dict(
         required=False,
         type='str'),
     open_api_doc_name=dict(

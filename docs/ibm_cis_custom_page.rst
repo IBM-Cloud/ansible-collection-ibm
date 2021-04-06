@@ -32,12 +32,12 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
-  page_id (True, str, None)
-    (Required for new resource) Custom page identifier
-
-
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  page_id (True, str, None)
+    (Required for new resource) Custom page identifier
 
 
   url (True, str, None)

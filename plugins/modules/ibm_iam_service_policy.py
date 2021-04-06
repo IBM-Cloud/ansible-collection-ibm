@@ -20,11 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    iam_service_id:
-        description:
-            - UUID of ServiceID
-        required: False
-        type: str
     iam_id:
         description:
             - IAM ID of ServiceID
@@ -54,6 +49,11 @@ options:
         required: False
         type: list
         elements: str
+    iam_service_id:
+        description:
+            - UUID of ServiceID
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,12 +105,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iam_service_id',
     'iam_id',
     'roles',
     'resources',
     'account_management',
     'tags',
+    'iam_service_id',
 ]
 
 # Params for Data source
@@ -132,9 +132,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iam_service_id=dict(
-        required=False,
-        type='str'),
     iam_id=dict(
         required=False,
         type='str'),
@@ -153,6 +150,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    iam_service_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

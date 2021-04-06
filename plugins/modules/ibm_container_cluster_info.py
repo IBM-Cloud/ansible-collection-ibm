@@ -24,18 +24,18 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    list_bounded_services:
-        description:
-            - If set to false bounded services won't be listed.
-        required: False
-        type: bool
-        default: True
     alb_type:
         description:
             - None
         required: False
         type: str
         default: all
+    list_bounded_services:
+        description:
+            - If set to false bounded services won't be listed.
+        required: False
+        type: bool
+        default: True
     name:
         description:
             - Name or id of the cluster
@@ -59,8 +59,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'list_bounded_services',
     'alb_type',
+    'list_bounded_services',
     'name',
 ]
 
@@ -75,12 +75,12 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    list_bounded_services=dict(
-        required=False,
-        type='bool'),
     alb_type=dict(
         required=False,
         type='str'),
+    list_bounded_services=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),

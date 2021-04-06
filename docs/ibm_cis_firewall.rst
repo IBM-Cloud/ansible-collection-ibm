@@ -28,18 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ua_rule (False, list, None)
-    User Agent Rule Data
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
   firewall_type (True, str, None)
     (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
 
@@ -50,6 +38,18 @@ Parameters
 
   access_rule (False, list, None)
     Access Rule Data
+
+
+  ua_rule (False, list, None)
+    User Agent Rule Data
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)

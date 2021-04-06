@@ -28,20 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (True, str, None)
-    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
-
-
-  tags (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) A name for the resource instance
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
 
 
   resource_group_id (False, str, None)
@@ -60,8 +48,20 @@ Parameters
     (Required for new resource) The plan type of the service
 
 
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the resource instance
+
+
+  tags (False, list, None)
+    None
+
+
+  service (True, str, None)
+    (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
   id (False, str, None)

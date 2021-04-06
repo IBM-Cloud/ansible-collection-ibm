@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
+  identifier (False, str, None)
     None
 
 
-  identifier (False, str, None)
+  name (False, str, None)
     None
 
 

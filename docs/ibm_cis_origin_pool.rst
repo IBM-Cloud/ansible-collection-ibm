@@ -32,8 +32,16 @@ Parameters
     (Required for new resource) List of regions
 
 
+  enabled (True, bool, None)
+    (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
+
+
+  name (True, str, None)
+    (Required for new resource) name
 
 
   minimum_origins (False, int, 1)
@@ -44,8 +52,8 @@ Parameters
     Monitor value
 
 
-  enabled (True, bool, None)
-    (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+  notification_email (False, str, None)
+    Email address configured to recieve the notifications
 
 
   origins (True, list, None)
@@ -54,14 +62,6 @@ Parameters
 
   description (False, str, None)
     Description of the CIS Origin Pool
-
-
-  notification_email (False, str, None)
-    Email address configured to recieve the notifications
-
-
-  name (True, str, None)
-    (Required for new resource) name
 
 
   id (False, str, None)

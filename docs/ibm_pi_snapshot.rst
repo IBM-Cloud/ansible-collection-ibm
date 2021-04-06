@@ -36,16 +36,16 @@ Parameters
     List of PI volumes
 
 
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+
+
   description (False, str, None)
     Snapshot description
 
 
   pi_snap_shot_name (True, str, None)
     (Required for new resource) Unique name of the snapshot
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
 
 
   id (False, str, None)

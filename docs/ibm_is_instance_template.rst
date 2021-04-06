@@ -28,20 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  image (True, str, None)
+    (Required for new resource) image name
+
+
   boot_volume (False, list, None)
     None
 
 
-  name (True, str, None)
-    (Required for new resource) Instance Template name
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  network_interfaces (False, list, None)
+    None
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  user_data (False, str, None)
+    User data given for the instance
 
 
   keys (True, list, None)
@@ -56,24 +60,20 @@ Parameters
     (Required for new resource) Primary Network interface info
 
 
-  network_interfaces (False, list, None)
-    None
-
-
   resource_group (False, str, None)
     Instance template resource group
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  name (True, str, None)
+    (Required for new resource) Instance Template name
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
-  image (True, str, None)
-    (Required for new resource) image name
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   id (False, str, None)

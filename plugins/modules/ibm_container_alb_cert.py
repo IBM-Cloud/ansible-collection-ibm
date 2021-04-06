@@ -25,6 +25,11 @@ options:
             - (Required for new resource) Certificate CRN id
         required: True
         type: str
+    persistence:
+        description:
+            - Persistence of secret
+        required: False
+        type: bool
     cluster_id:
         description:
             - (Required for new resource) Cluster ID
@@ -41,11 +46,6 @@ options:
         required: False
         type: str
         default: ibm-cert-store
-    persistence:
-        description:
-            - Persistence of secret
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -80,10 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cert_crn',
+    'persistence',
     'cluster_id',
     'secret_name',
     'namespace',
-    'persistence',
 ]
 
 # Params for Data source
@@ -94,8 +94,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'cluster_id',
-    'secret_name',
     'namespace',
+    'secret_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -108,6 +108,9 @@ module_args = dict(
     cert_crn=dict(
         required=False,
         type='str'),
+    persistence=dict(
+        required=False,
+        type='bool'),
     cluster_id=dict(
         required=False,
         type='str'),
@@ -117,9 +120,6 @@ module_args = dict(
     namespace=dict(
         required=False,
         type='str'),
-    persistence=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

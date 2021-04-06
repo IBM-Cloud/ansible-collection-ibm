@@ -20,15 +20,24 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    catalog_ref:
+    frozen_by:
         description:
-            - Information about the software template that you chose from the IBM Cloud catalog. This information is returned for IBM Cloud catalog offerings only.
+            - The user ID that froze the workspace.
         required: False
-        type: list
-        elements: dict
-    template_git_branch:
+        type: str
+    status_msg:
         description:
-            - The branch in GitHub where your Terraform template is stored.
+            - The success or error message that was returned for the last plan, apply, or destroy action that ran against your workspace.
+        required: False
+        type: str
+    template_uninstall_script_name:
+        description:
+            - Uninstall script name.
+        required: False
+        type: str
+    template_git_repo_url:
+        description:
+            - The URL to the repository where the IBM Cloud catalog software template is stored.
         required: False
         type: str
     template_git_has_uploadedgitrepotar:
@@ -36,40 +45,9 @@ options:
             - Has uploaded git repo tar
         required: False
         type: bool
-    template_values_metadata:
+    catalog_ref:
         description:
-            - List of values metadata.
-        required: False
-        type: list
-        elements: dict
-    template_git_url:
-        description:
-            - The URL to the GitHub or GitLab repository where your Terraform and public bit bucket template is stored. For more information of the environment variable syntax, see [Create workspace new](/docs/schematics?topic=schematics-schematics-cli-reference#schematics-workspace-new).
-        required: False
-        type: str
-    frozen:
-        description:
-            - If set to true, the workspace is frozen and changes to the workspace are disabled.
-        required: False
-        type: bool
-    locked:
-        description:
-            - If set to true, the workspace is locked and disabled for changes.
-        required: False
-        type: bool
-    name:
-        description:
-            - (Required for new resource) The name of your workspace. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores. When you create a workspace for your own Terraform template, consider including the microservice component that you set up with your Terraform template and the IBM Cloud environment where you want to deploy your resources in your name.
-        required: True
-        type: str
-    template_init_state_file:
-        description:
-            - The content of an existing Terraform statefile that you want to import in to your workspace. To get the content of a Terraform statefile for a specific Terraform template in an existing workspace, run `ibmcloud terraform state pull --id <workspace_id> --template <template_id>`.
-        required: False
-        type: str
-    template_inputs:
-        description:
-            - VariablesRequest -.
+            - Information about the software template that you chose from the IBM Cloud catalog. This information is returned for IBM Cloud catalog offerings only.
         required: False
         type: list
         elements: dict
@@ -78,56 +56,26 @@ options:
             - Repo SHA value.
         required: False
         type: str
-    template_ref:
+    frozen:
         description:
-            - Workspace template ref.
+            - If set to true, the workspace is frozen and changes to the workspace are disabled.
         required: False
-        type: str
-    template_git_release:
-        description:
-            - The release tag in GitHub of your Terraform template.
-        required: False
-        type: str
-    resource_group:
-        description:
-            - The ID of the resource group where you want to provision the workspace.
-        required: False
-        type: str
-    tags:
-        description:
-            - A list of tags that are associated with the workspace.
-        required: False
-        type: list
-        elements: str
-    template_uninstall_script_name:
-        description:
-            - Uninstall script name.
-        required: False
-        type: str
-    x_github_token:
-        description:
-            - The personal access token to authenticate with your private GitHub or GitLab repository and access your Terraform template.
-        required: False
-        type: str
+        type: bool
     applied_shareddata_ids:
         description:
             - List of applied shared dataset id.
         required: False
         type: list
         elements: str
-    location:
+    tags:
         description:
-            - The location where you want to create your Schematics workspace and run Schematics actions. The location that you enter must match the API endpoint that you use. For example, if you use the Frankfurt API endpoint, you must specify `eu-de` as your location. If you use an API endpoint for a geography and you do not specify a location, Schematics determines the location based on availability.
+            - A list of tags that are associated with the workspace.
         required: False
-        type: str
-    template_values:
+        type: list
+        elements: str
+    template_git_branch:
         description:
-            - A list of variable values that you want to apply during the Helm chart installation. The list must be provided in JSON format, such as `"autoscaling:  enabled: true  minReplicas: 2"`. The values that you define here override the default Helm chart values. This field is supported only for IBM Cloud catalog offerings that are provisioned by using the Terraform Helm provider.
-        required: False
-        type: str
-    template_git_repo_url:
-        description:
-            - The URL to the repository where the IBM Cloud catalog software template is stored.
+            - The branch in GitHub where your Terraform template is stored.
         required: False
         type: str
     frozen_at:
@@ -135,9 +83,39 @@ options:
             - The timestamp when the workspace was frozen.
         required: False
         type: str
-    status_msg:
+    locked_time:
         description:
-            - The success or error message that was returned for the last plan, apply, or destroy action that ran against your workspace.
+            - The timestamp when the workspace was locked.
+        required: False
+        type: str
+    description:
+        description:
+            - The description of the workspace.
+        required: False
+        type: str
+    location:
+        description:
+            - The location where you want to create your Schematics workspace and run Schematics actions. The location that you enter must match the API endpoint that you use. For example, if you use the Frankfurt API endpoint, you must specify `eu-de` as your location. If you use an API endpoint for a geography and you do not specify a location, Schematics determines the location based on availability.
+        required: False
+        type: str
+    template_git_release:
+        description:
+            - The release tag in GitHub of your Terraform template.
+        required: False
+        type: str
+    template_git_url:
+        description:
+            - The URL to the GitHub or GitLab repository where your Terraform and public bit bucket template is stored. For more information of the environment variable syntax, see [Create workspace new](/docs/schematics?topic=schematics-schematics-cli-reference#schematics-workspace-new).
+        required: False
+        type: str
+    locked:
+        description:
+            - If set to true, the workspace is locked and disabled for changes.
+        required: False
+        type: bool
+    resource_group:
+        description:
+            - The ID of the resource group where you want to provision the workspace.
         required: False
         type: str
     template_env_settings:
@@ -146,25 +124,21 @@ options:
         required: False
         type: list
         elements: dict
-    frozen_by:
+    template_values_metadata:
         description:
-            - The user ID that froze the workspace.
+            - List of values metadata.
         required: False
-        type: str
-    locked_by:
-        description:
-            - The user ID that initiated a resource-related action, such as applying or destroying resources, that locked the workspace.
-        required: False
-        type: str
+        type: list
+        elements: dict
     status_code:
         description:
             - The success or error code that was returned for the last plan, apply, or destroy action that ran against your workspace.
         required: False
         type: str
-    description:
+    name:
         description:
-            - The description of the workspace.
-        required: False
+            - (Required for new resource) The name of your workspace. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores. When you create a workspace for your own Terraform template, consider including the microservice component that you set up with your Terraform template and the IBM Cloud environment where you want to deploy your resources in your name.
+        required: True
         type: str
     shared_data:
         description:
@@ -172,20 +146,46 @@ options:
         required: False
         type: list
         elements: dict
+    template_ref:
+        description:
+            - Workspace template ref.
+        required: False
+        type: str
+    template_inputs:
+        description:
+            - VariablesRequest -.
+        required: False
+        type: list
+        elements: dict
+    locked_by:
+        description:
+            - The user ID that initiated a resource-related action, such as applying or destroying resources, that locked the workspace.
+        required: False
+        type: str
+    x_github_token:
+        description:
+            - The personal access token to authenticate with your private GitHub or GitLab repository and access your Terraform template.
+        required: False
+        type: str
+    template_values:
+        description:
+            - A list of variable values that you want to apply during the Helm chart installation. The list must be provided in JSON format, such as `"autoscaling:  enabled: true  minReplicas: 2"`. The values that you define here override the default Helm chart values. This field is supported only for IBM Cloud catalog offerings that are provisioned by using the Terraform Helm provider.
+        required: False
+        type: str
     template_git_folder:
         description:
             - The subfolder in your GitHub or GitLab repository where your Terraform template is stored.
+        required: False
+        type: str
+    template_init_state_file:
+        description:
+            - The content of an existing Terraform statefile that you want to import in to your workspace. To get the content of a Terraform statefile for a specific Terraform template in an existing workspace, run `ibmcloud terraform state pull --id <workspace_id> --template <template_id>`.
         required: False
         type: str
     template_type:
         description:
             - (Required for new resource) The Terraform version that you want to use to run your Terraform code. Enter `terraform_v0.12` to use Terraform version 0.12, and `terraform_v0.11` to use Terraform version 0.11. Make sure that your Terraform config files are compatible with the Terraform version that you select.
         required: True
-        type: str
-    locked_time:
-        description:
-            - The timestamp when the workspace was locked.
-        required: False
         type: str
     id:
         description:
@@ -239,38 +239,38 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'catalog_ref',
-    'template_git_branch',
-    'template_git_has_uploadedgitrepotar',
-    'template_values_metadata',
-    'template_git_url',
-    'frozen',
-    'locked',
-    'name',
-    'template_init_state_file',
-    'template_inputs',
-    'template_git_repo_sha_value',
-    'template_ref',
-    'template_git_release',
-    'resource_group',
-    'tags',
-    'template_uninstall_script_name',
-    'x_github_token',
-    'applied_shareddata_ids',
-    'location',
-    'template_values',
-    'template_git_repo_url',
-    'frozen_at',
-    'status_msg',
-    'template_env_settings',
     'frozen_by',
-    'locked_by',
-    'status_code',
-    'description',
-    'shared_data',
-    'template_git_folder',
-    'template_type',
+    'status_msg',
+    'template_uninstall_script_name',
+    'template_git_repo_url',
+    'template_git_has_uploadedgitrepotar',
+    'catalog_ref',
+    'template_git_repo_sha_value',
+    'frozen',
+    'applied_shareddata_ids',
+    'tags',
+    'template_git_branch',
+    'frozen_at',
     'locked_time',
+    'description',
+    'location',
+    'template_git_release',
+    'template_git_url',
+    'locked',
+    'resource_group',
+    'template_env_settings',
+    'template_values_metadata',
+    'status_code',
+    'name',
+    'shared_data',
+    'template_ref',
+    'template_inputs',
+    'locked_by',
+    'x_github_token',
+    'template_values',
+    'template_git_folder',
+    'template_init_state_file',
+    'template_type',
 ]
 
 # Params for Data source
@@ -280,8 +280,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'template_values_metadata',
-    'template_git_has_uploadedgitrepotar',
     'workspace_id',
+    'template_git_has_uploadedgitrepotar',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -291,107 +291,107 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    catalog_ref=dict(
+    frozen_by=dict(
         required=False,
-        elements='',
-        type='list'),
-    template_git_branch=dict(
+        type='str'),
+    status_msg=dict(
+        required=False,
+        type='str'),
+    template_uninstall_script_name=dict(
+        required=False,
+        type='str'),
+    template_git_repo_url=dict(
         required=False,
         type='str'),
     template_git_has_uploadedgitrepotar=dict(
         required=False,
         type='bool'),
-    template_values_metadata=dict(
-        required=False,
-        elements='',
-        type='list'),
-    template_git_url=dict(
-        required=False,
-        type='str'),
-    frozen=dict(
-        required=False,
-        type='bool'),
-    locked=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    template_init_state_file=dict(
-        required=False,
-        type='str'),
-    template_inputs=dict(
+    catalog_ref=dict(
         required=False,
         elements='',
         type='list'),
     template_git_repo_sha_value=dict(
         required=False,
         type='str'),
-    template_ref=dict(
+    frozen=dict(
         required=False,
-        type='str'),
-    template_git_release=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    template_uninstall_script_name=dict(
-        required=False,
-        type='str'),
-    x_github_token=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     applied_shareddata_ids=dict(
         required=False,
         elements='',
         type='list'),
-    location=dict(
+    tags=dict(
         required=False,
-        type='str'),
-    template_values=dict(
-        required=False,
-        type='str'),
-    template_git_repo_url=dict(
+        elements='',
+        type='list'),
+    template_git_branch=dict(
         required=False,
         type='str'),
     frozen_at=dict(
         required=False,
         type='str'),
-    status_msg=dict(
+    locked_time=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    template_git_release=dict(
+        required=False,
+        type='str'),
+    template_git_url=dict(
+        required=False,
+        type='str'),
+    locked=dict(
+        required=False,
+        type='bool'),
+    resource_group=dict(
         required=False,
         type='str'),
     template_env_settings=dict(
         required=False,
         elements='',
         type='list'),
-    frozen_by=dict(
+    template_values_metadata=dict(
         required=False,
-        type='str'),
-    locked_by=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     status_code=dict(
         required=False,
         type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
     shared_data=dict(
         required=False,
         elements='',
         type='list'),
+    template_ref=dict(
+        required=False,
+        type='str'),
+    template_inputs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    locked_by=dict(
+        required=False,
+        type='str'),
+    x_github_token=dict(
+        required=False,
+        type='str'),
+    template_values=dict(
+        required=False,
+        type='str'),
     template_git_folder=dict(
         required=False,
         type='str'),
-    template_type=dict(
+    template_init_state_file=dict(
         required=False,
         type='str'),
-    locked_time=dict(
+    template_type=dict(
         required=False,
         type='str'),
     id=dict(

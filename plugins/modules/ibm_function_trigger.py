@@ -20,9 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    namespace:
+    name:
         description:
-            - (Required for new resource) IBM Cloud function namespace.
+            - (Required for new resource) Name of Trigger.
         required: True
         type: str
     user_defined_annotations:
@@ -31,9 +31,9 @@ options:
         required: False
         type: str
         default: []
-    name:
+    namespace:
         description:
-            - (Required for new resource) Name of Trigger.
+            - (Required for new resource) IBM Cloud function namespace.
         required: True
         type: str
     feed:
@@ -80,28 +80,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace', 'str'),
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'namespace',
-    'user_defined_annotations',
     'name',
+    'user_defined_annotations',
+    'namespace',
     'feed',
     'user_defined_parameters',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('namespace', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'namespace',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -111,13 +111,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    namespace=dict(
+    name=dict(
         required=False,
         type='str'),
     user_defined_annotations=dict(
         required=False,
         type='str'),
-    name=dict(
+    namespace=dict(
         required=False,
         type='str'),
     feed=dict(

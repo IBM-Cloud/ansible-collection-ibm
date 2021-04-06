@@ -20,26 +20,32 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
     boot_volume:
         description:
             - None
         required: False
         type: list
         elements: dict
-    name:
+    vpc:
         description:
-            - (Required for new resource) Instance Template name
+            - (Required for new resource) VPC id
         required: True
         type: str
-    zone:
+    network_interfaces:
         description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    profile:
+            - None
+        required: False
+        type: list
+        elements: dict
+    user_data:
         description:
-            - (Required for new resource) Profile info
-        required: True
+            - User data given for the instance
+        required: False
         type: str
     keys:
         description:
@@ -59,30 +65,24 @@ options:
         required: True
         type: list
         elements: dict
-    network_interfaces:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     resource_group:
         description:
             - Instance template resource group
         required: False
         type: str
-    vpc:
+    name:
         description:
-            - (Required for new resource) VPC id
+            - (Required for new resource) Instance Template name
         required: True
         type: str
-    user_data:
+    zone:
         description:
-            - User data given for the instance
-        required: False
+            - (Required for new resource) Zone name
+        required: True
         type: str
-    image:
+    profile:
         description:
-            - (Required for new resource) image name
+            - (Required for new resource) Profile info
         required: True
         type: str
     id:
@@ -131,29 +131,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('image', 'str'),
+    ('vpc', 'str'),
+    ('keys', 'list'),
+    ('primary_network_interface', 'list'),
     ('name', 'str'),
     ('zone', 'str'),
     ('profile', 'str'),
-    ('keys', 'list'),
-    ('primary_network_interface', 'list'),
-    ('vpc', 'str'),
-    ('image', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'image',
     'boot_volume',
-    'name',
-    'zone',
-    'profile',
+    'vpc',
+    'network_interfaces',
+    'user_data',
     'keys',
     'volume_attachments',
     'primary_network_interface',
-    'network_interfaces',
     'resource_group',
-    'vpc',
-    'user_data',
-    'image',
+    'name',
+    'zone',
+    'profile',
 ]
 
 # Params for Data source
@@ -170,17 +170,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    image=dict(
+        required=False,
+        type='str'),
     boot_volume=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
+    network_interfaces=dict(
         required=False,
-        type='str'),
-    profile=dict(
+        elements='',
+        type='list'),
+    user_data=dict(
         required=False,
         type='str'),
     keys=dict(
@@ -195,20 +199,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    name=dict(
         required=False,
         type='str'),
-    user_data=dict(
+    zone=dict(
         required=False,
         type='str'),
-    image=dict(
+    profile=dict(
         required=False,
         type='str'),
     id=dict(

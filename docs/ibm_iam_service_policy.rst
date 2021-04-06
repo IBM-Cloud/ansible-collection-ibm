@@ -28,10 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  iam_service_id (False, str, None)
-    UUID of ServiceID
-
-
   iam_id (False, str, None)
     IAM ID of ServiceID
 
@@ -50,6 +46,10 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  iam_service_id (False, str, None)
+    UUID of ServiceID
 
 
   id (False, str, None)

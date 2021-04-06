@@ -26,10 +26,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  labels (False, list, None)
-    List of labels for the attach host
-
-
   host_provider (True, str, None)
     None
 
@@ -40,6 +36,10 @@ Parameters
 
   location (True, str, None)
     A unique name for the new Satellite location
+
+
+  labels (False, list, None)
+    List of labels for the attach host
 
 
   iaas_classic_username (False, any, None)

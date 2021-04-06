@@ -20,18 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    security_groups:
-        description:
-            - Load Balancer securitygroups list
-        required: False
-        type: list
-        elements: str
     profile:
         description:
             - The profile to use for this load balancer.
@@ -41,6 +29,29 @@ options:
         description:
             - None
         required: False
+        type: str
+    logging:
+        description:
+            - Logging of Load Balancer
+        required: False
+        type: bool
+        default: False
+    security_groups:
+        description:
+            - Load Balancer securitygroups list
+        required: False
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
+        required: True
         type: str
     type:
         description:
@@ -54,17 +65,6 @@ options:
         required: True
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
-    logging:
-        description:
-            - Logging of Load Balancer
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +111,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'security_groups',
     'profile',
     'resource_group',
+    'logging',
+    'security_groups',
+    'tags',
+    'name',
     'type',
     'subnets',
-    'name',
-    'logging',
 ]
 
 # Params for Data source
@@ -137,27 +137,33 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'security_groups': ['profile'],
     'profile': ['logging'],
     'logging': ['profile'],
+    'security_groups': ['profile'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
     profile=dict(
         required=False,
         type='str'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    logging=dict(
+        required=False,
+        type='bool'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     type=dict(
@@ -167,12 +173,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    logging=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

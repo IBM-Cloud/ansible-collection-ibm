@@ -20,16 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
-    pi_volume_shareable:
-        description:
-            - Flag to indicate if the volume can be shared across multiple instances?
-        required: False
-        type: bool
     pi_volume_size:
         description:
             - (Required for new resource) Size of the volume in GB
@@ -40,11 +30,21 @@ options:
             - (Required for new resource) Volume type
         required: True
         type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
     pi_volume_name:
         description:
             - (Required for new resource) Volume Name to create
         required: True
         type: str
+    pi_volume_shareable:
+        description:
+            - Flag to indicate if the volume can be shared across multiple instances?
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,30 +87,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_size', 'float'),
     ('pi_volume_type', 'str'),
+    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
-    'pi_volume_shareable',
     'pi_volume_size',
     'pi_volume_type',
+    'pi_cloud_instance_id',
     'pi_volume_name',
+    'pi_volume_shareable',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_volume_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_volume_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_volume_name',
     'pi_cloud_instance_id',
+    'pi_volume_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -120,21 +120,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_volume_shareable=dict(
-        required=False,
-        type='bool'),
     pi_volume_size=dict(
         required=False,
         type='float'),
     pi_volume_type=dict(
         required=False,
         type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_volume_name=dict(
         required=False,
         type='str'),
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),

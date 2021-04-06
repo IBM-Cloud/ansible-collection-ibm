@@ -20,6 +20,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    sysdig_access_key:
+        description:
+            - Sysdig ingestion key
+        required: False
+        type: str
     cluster:
         description:
             - (Required for new resource) Name or ID of the cluster to be used.
@@ -29,11 +34,6 @@ options:
         description:
             - (Required for new resource) ID of the Sysdig service instance to latch
         required: True
-        type: str
-    sysdig_access_key:
-        description:
-            - Sysdig ingestion key
-        required: False
         type: str
     private_endpoint:
         description:
@@ -92,9 +92,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'sysdig_access_key',
     'cluster',
     'instance_id',
-    'sysdig_access_key',
     'private_endpoint',
 ]
 
@@ -112,13 +112,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    sysdig_access_key=dict(
+        required=False,
+        type='str'),
     cluster=dict(
         required=False,
         type='str'),
     instance_id=dict(
-        required=False,
-        type='str'),
-    sysdig_access_key=dict(
         required=False,
         type='str'),
     private_endpoint=dict(

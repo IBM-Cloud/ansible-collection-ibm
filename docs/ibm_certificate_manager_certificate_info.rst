@@ -26,11 +26,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_manager_instance_id (True, str, None)
+  name (True, str, None)
     None
 
 
-  name (True, str, None)
+  certificate_manager_instance_id (True, str, None)
     None
 
 

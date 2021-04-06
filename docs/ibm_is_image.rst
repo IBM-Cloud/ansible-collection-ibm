@@ -36,24 +36,24 @@ Parameters
     The resource group for this image
 
 
-  name (True, str, None)
-    (Required for new resource) Image name
+  href (True, str, None)
+    (Required for new resource) Image Href value
+
+
+  tags (False, list, None)
+    Tags for the image
 
 
   operating_system (True, str, None)
     (Required for new resource) Image Operating system
 
 
-  href (True, str, None)
-    (Required for new resource) Image Href value
+  name (True, str, None)
+    (Required for new resource) Image name
 
 
   encrypted_data_key (False, str, None)
     A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-
-
-  tags (False, list, None)
-    Tags for the image
 
 
   id (False, str, None)

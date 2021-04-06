@@ -32,12 +32,12 @@ Parameters
     (Required for new resource) ALB ID
 
 
-  disable_deployment (False, bool, None)
-    Disable the ALB instance in the cluster
-
-
   enable (False, bool, None)
     Enable the ALB instance in the cluster
+
+
+  disable_deployment (False, bool, None)
+    Disable the ALB instance in the cluster
 
 
   id (False, str, None)

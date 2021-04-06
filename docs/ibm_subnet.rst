@@ -28,22 +28,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vlan_id (False, int, None)
-    VLAN ID for the subnet
-
-
-  ip_version (False, int, 4)
-    ip version
-
-
-  capacity (True, int, None)
-    (Required for new resource) number of ip addresses in the subnet
-
-
-  endpoint_ip (False, str, None)
-    endpoint IP
-
-
   notes (False, str, None)
     Notes
 
@@ -52,12 +36,28 @@ Parameters
     tags set for the resource
 
 
+  type (True, str, None)
+    (Required for new resource) subnet type
+
+
+  ip_version (False, int, 4)
+    ip version
+
+
+  vlan_id (False, int, None)
+    VLAN ID for the subnet
+
+
   private (False, bool, False)
     private subnet
 
 
-  type (True, str, None)
-    (Required for new resource) subnet type
+  capacity (True, int, None)
+    (Required for new resource) number of ip addresses in the subnet
+
+
+  endpoint_ip (False, str, None)
+    endpoint IP
 
 
   id (False, str, None)

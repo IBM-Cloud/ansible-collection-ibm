@@ -28,7 +28,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cluster (True, str, None)
+    (Required for new resource) cluster name or ID
+
+
   public_vlan_id (False, str, None)
+    None
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  private_vlan_id (False, str, None)
     None
 
 
@@ -40,20 +52,8 @@ Parameters
     wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  cluster (True, str, None)
-    (Required for new resource) cluster name or ID
-
-
   worker_pool (True, str, None)
     (Required for new resource) Workerpool name
-
-
-  private_vlan_id (False, str, None)
-    None
 
 
   id (False, str, None)

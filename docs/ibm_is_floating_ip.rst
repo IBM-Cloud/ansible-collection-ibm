@@ -28,24 +28,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  target (False, str, None)
-    Target info
+  resource_group (False, str, None)
+    Resource group info
 
 
   zone (False, str, None)
     Zone name
 
 
-  name (True, str, None)
-    (Required for new resource) Name of the floating IP
-
-
-  resource_group (False, str, None)
-    Resource group info
+  target (False, str, None)
+    Target info
 
 
   tags (False, list, None)
     Floating IP tags
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the floating IP
 
 
   id (False, str, None)

@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags
-
-
   firewall_id (True, int, None)
     (Required for new resource) Firewall ID
 
 
   rules (True, list, None)
     (Required for new resource) Policy rules info
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

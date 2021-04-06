@@ -20,25 +20,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    addon_configuration:
-        description:
-            - High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
-        required: False
-        type: list
-        elements: str
-    pod:
-        description:
-            - (Required for new resource) POD name
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) name
-        required: True
-        type: str
-    firewall_type:
-        description:
-            - (Required for new resource) Firewall type
         required: True
         type: str
     datacenter:
@@ -46,6 +30,22 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
+    pod:
+        description:
+            - (Required for new resource) POD name
+        required: True
+        type: str
+    firewall_type:
+        description:
+            - (Required for new resource) Firewall type
+        required: True
+        type: str
+    addon_configuration:
+        description:
+            - High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,19 +92,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pod', 'str'),
     ('name', 'str'),
-    ('firewall_type', 'str'),
     ('datacenter', 'str'),
+    ('pod', 'str'),
+    ('firewall_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'addon_configuration',
-    'pod',
     'name',
-    'firewall_type',
     'datacenter',
+    'pod',
+    'firewall_type',
+    'addon_configuration',
 ]
 
 # Params for Data source
@@ -121,22 +121,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    addon_configuration=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pod=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    firewall_type=dict(
         required=False,
         type='str'),
     datacenter=dict(
         required=False,
         type='str'),
+    pod=dict(
+        required=False,
+        type='str'),
+    firewall_type=dict(
+        required=False,
+        type='str'),
+    addon_configuration=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),

@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_volume_name (True, str, None)
-    Volume Name to be used for pvminstances
-
-
   pi_cloud_instance_id (True, str, None)
     None
+
+
+  pi_volume_name (True, str, None)
+    Volume Name to be used for pvminstances
 
 
   zone (False, str, None)

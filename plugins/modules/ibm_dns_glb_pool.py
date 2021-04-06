@@ -20,24 +20,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    notification_channel:
+    healthcheck_subnets:
         description:
-            - The notification channel,It is a webhook url
+            - Health check subnet crn of VSIs
         required: False
-        type: str
+        type: list
+        elements: str
     instance_id:
         description:
             - (Required for new resource) Instance Id
         required: True
         type: str
-    name:
+    healthy_origins_threshold:
         description:
-            - (Required for new resource) The unique identifier of a service instance.
+            - The minimum number of origins that must be healthy for this pool to serve traffic
+        required: False
+        type: int
+    origins:
+        description:
+            - (Required for new resource) Origins info
         required: True
-        type: str
-    description:
+        type: list
+        elements: dict
+    notification_channel:
         description:
-            - Descriptive text of the load balancer pool
+            - The notification channel,It is a webhook url
         required: False
         type: str
     enabled:
@@ -45,32 +52,25 @@ options:
             - Whether the load balancer pool is enabled
         required: False
         type: bool
-    origins:
+    healthcheck_region:
         description:
-            - (Required for new resource) Origins info
-        required: True
-        type: list
-        elements: dict
-    healthcheck_subnets:
-        description:
-            - Health check subnet crn of VSIs
+            - Health check region of VSIs
         required: False
-        type: list
-        elements: str
-    healthy_origins_threshold:
+        type: str
+    description:
         description:
-            - The minimum number of origins that must be healthy for this pool to serve traffic
+            - Descriptive text of the load balancer pool
         required: False
-        type: int
+        type: str
     monitor:
         description:
             - The ID of the load balancer monitor to be associated to this pool
         required: False
         type: str
-    healthcheck_region:
+    name:
         description:
-            - Health check region of VSIs
-        required: False
+            - (Required for new resource) The unique identifier of a service instance.
+        required: True
         type: str
     id:
         description:
@@ -119,22 +119,22 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('name', 'str'),
     ('origins', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'notification_channel',
-    'instance_id',
-    'name',
-    'description',
-    'enabled',
-    'origins',
     'healthcheck_subnets',
+    'instance_id',
     'healthy_origins_threshold',
-    'monitor',
+    'origins',
+    'notification_channel',
+    'enabled',
     'healthcheck_region',
+    'description',
+    'monitor',
+    'name',
 ]
 
 # Params for Data source
@@ -151,36 +151,36 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    notification_channel=dict(
+    healthcheck_subnets=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    healthy_origins_threshold=dict(
         required=False,
-        type='str'),
-    description=dict(
+        type='int'),
+    origins=dict(
+        required=False,
+        elements='',
+        type='list'),
+    notification_channel=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    origins=dict(
+    healthcheck_region=dict(
         required=False,
-        elements='',
-        type='list'),
-    healthcheck_subnets=dict(
+        type='str'),
+    description=dict(
         required=False,
-        elements='',
-        type='list'),
-    healthy_origins_threshold=dict(
-        required=False,
-        type='int'),
+        type='str'),
     monitor=dict(
         required=False,
         type='str'),
-    healthcheck_region=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(

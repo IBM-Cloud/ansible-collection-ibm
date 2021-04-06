@@ -20,27 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vlan_id:
-        description:
-            - VLAN ID for the subnet
-        required: False
-        type: int
-    ip_version:
-        description:
-            - ip version
-        required: False
-        type: int
-        default: 4
-    capacity:
-        description:
-            - (Required for new resource) number of ip addresses in the subnet
-        required: True
-        type: int
-    endpoint_ip:
-        description:
-            - endpoint IP
-        required: False
-        type: str
     notes:
         description:
             - Notes
@@ -52,16 +31,37 @@ options:
         required: False
         type: list
         elements: str
+    type:
+        description:
+            - (Required for new resource) subnet type
+        required: True
+        type: str
+    ip_version:
+        description:
+            - ip version
+        required: False
+        type: int
+        default: 4
+    vlan_id:
+        description:
+            - VLAN ID for the subnet
+        required: False
+        type: int
     private:
         description:
             - private subnet
         required: False
         type: bool
         default: False
-    type:
+    capacity:
         description:
-            - (Required for new resource) subnet type
+            - (Required for new resource) number of ip addresses in the subnet
         required: True
+        type: int
+    endpoint_ip:
+        description:
+            - endpoint IP
+        required: False
         type: str
     id:
         description:
@@ -109,20 +109,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('capacity', 'int'),
     ('type', 'str'),
+    ('capacity', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vlan_id',
-    'ip_version',
-    'capacity',
-    'endpoint_ip',
     'notes',
     'tags',
-    'private',
     'type',
+    'ip_version',
+    'vlan_id',
+    'private',
+    'capacity',
+    'endpoint_ip',
 ]
 
 # Params for Data source
@@ -141,18 +141,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vlan_id=dict(
-        required=False,
-        type='int'),
-    ip_version=dict(
-        required=False,
-        type='int'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    endpoint_ip=dict(
-        required=False,
-        type='str'),
     notes=dict(
         required=False,
         type='str'),
@@ -160,10 +148,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    type=dict(
+        required=False,
+        type='str'),
+    ip_version=dict(
+        required=False,
+        type='int'),
+    vlan_id=dict(
+        required=False,
+        type='int'),
     private=dict(
         required=False,
         type='bool'),
-    type=dict(
+    capacity=dict(
+        required=False,
+        type='int'),
+    endpoint_ip=dict(
         required=False,
         type='str'),
     id=dict(

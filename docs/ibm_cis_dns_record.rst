@@ -28,40 +28,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id or CRN
-
-
-  name (False, str, None)
-    DNS record name
-
-
-  proxied (False, bool, False)
-    Boolean value true if proxied else flase
-
-
   type (True, str, None)
     (Required for new resource) Record type
-
-
-  priority (False, int, None)
-    Priority Value
-
-
-  content (False, str, None)
-    DNS record content
 
 
   data (False, dict, None)
     None
 
 
+  ttl (False, int, 1)
+    TTL value
+
+
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
 
-  ttl (False, int, 1)
-    TTL value
+  name (False, str, None)
+    DNS record name
+
+
+  content (False, str, None)
+    DNS record content
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id or CRN
+
+
+  priority (False, int, None)
+    Priority Value
+
+
+  proxied (False, bool, False)
+    Boolean value true if proxied else flase
 
 
   id (False, str, None)

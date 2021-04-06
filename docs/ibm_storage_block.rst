@@ -28,6 +28,42 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
+
+
+  tags (False, list, None)
+    List of tags associated with the resource
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
+
+
+  iops (True, float, None)
+    (Required for new resource) IOPS value required
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
+
+
+  type (True, str, None)
+    (Required for new resource) Storage block type
+
+
+  os_format_type (True, str, None)
+    (Required for new resource) OS formatr type
+
+
+  hourly_billing (False, bool, False)
+    Billing done hourly, if set to true
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
   allowed_virtual_guest_ids (False, list, None)
     List of allowed virtual guest IDs
 
@@ -36,44 +72,8 @@ Parameters
     Additional note info
 
 
-  hourly_billing (False, bool, False)
-    Billing done hourly, if set to true
-
-
-  capacity (True, int, None)
-    (Required for new resource) Storage block size
-
-
   allowed_hardware_ids (False, list, None)
     List of allowe hardware IDs
-
-
-  tags (False, list, None)
-    List of tags associated with the resource
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
-
-
-  os_format_type (True, str, None)
-    (Required for new resource) OS formatr type
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  iops (True, float, None)
-    (Required for new resource) IOPS value required
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
-
-
-  type (True, str, None)
-    (Required for new resource) Storage block type
 
 
   id (False, str, None)

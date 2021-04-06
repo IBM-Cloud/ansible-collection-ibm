@@ -28,48 +28,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ip_version (False, str, ipv4)
-    The IP version(s) to support for this subnet.
+  resource_group (False, str, None)
+    The resource group for this subnet
 
 
   zone (True, str, None)
     (Required for new resource) Subnet zone info
 
 
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
+
   routing_table (False, str, None)
     routing table id that is associated with the subnet
+
+
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
 
 
   total_ipv4_address_count (False, int, None)
     The total number of IPv4 addresses in this subnet.
 
 
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
-
-
-  tags (False, list, None)
-    List of tags
+  name (True, str, None)
+    (Required for new resource) Subnet name
 
 
   network_acl (False, str, None)
     The network ACL for this subnet
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
+  ip_version (False, str, ipv4)
+    The IP version(s) to support for this subnet.
 
 
-  resource_group (False, str, None)
-    The resource group for this subnet
+  tags (False, list, None)
+    List of tags
 
 
-  name (True, str, None)
-    (Required for new resource) Subnet name
-
-
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
 
 
   id (False, str, None)

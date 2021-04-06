@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
+  name (True, str, None)
+    (Required for new resource) Name of Trigger.
 
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
 
 
-  name (True, str, None)
-    (Required for new resource) Name of Trigger.
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
 
 
   feed (False, list, None)

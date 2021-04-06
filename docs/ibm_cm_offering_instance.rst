@@ -28,8 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
+
+
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
+
+
+  cluster_namespaces (True, list, None)
+    (Required for new resource) List of target namespaces to install into.
+
+
   label (True, str, None)
     (Required for new resource) the label for this instance.
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
+  kind_format (True, str, None)
+    (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
   version (True, str, None)
@@ -42,26 +62,6 @@ Parameters
 
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
-
-
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
-
-
-  kind_format (True, str, None)
-    (Required for new resource) the format this instance has (helm, operator, ova...).
-
-
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
-  cluster_namespaces (True, list, None)
-    (Required for new resource) List of target namespaces to install into.
 
 
   id (False, str, None)

@@ -32,16 +32,8 @@ Parameters
     (Required for new resource) Volume profile name
 
 
-  encryption_key (False, str, None)
-    Volume encryption key info
-
-
   resource_group (False, str, None)
     Resource group name
-
-
-  name (True, str, None)
-    (Required for new resource) Volume name
 
 
   zone (True, str, None)
@@ -52,12 +44,20 @@ Parameters
     Tags for the volume instance
 
 
-  capacity (False, int, 100)
-    Vloume capacity value
-
-
   iops (False, int, None)
     IOPS value for the Volume
+
+
+  name (True, str, None)
+    (Required for new resource) Volume name
+
+
+  encryption_key (False, str, None)
+    Volume encryption key info
+
+
+  capacity (False, int, 100)
+    Vloume capacity value
 
 
   id (False, str, None)

@@ -20,25 +20,25 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    auto_delete:
+    subnet:
         description:
-            - If set to true, this reserved IP will be automatically deleted
-        required: False
-        type: bool
+            - (Required for new resource) The subnet identifier.
+        required: True
+        type: str
     name:
         description:
             - The user-defined or system-provided name for this reserved IP.
         required: False
         type: str
+    auto_delete:
+        description:
+            - If set to true, this reserved IP will be automatically deleted
+        required: False
+        type: bool
     address:
         description:
             - The user-defined or system-provided name for this reserved IP.
         required: False
-        type: str
-    subnet:
-        description:
-            - (Required for new resource) The subnet identifier.
-        required: True
         type: str
     id:
         description:
@@ -91,10 +91,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'auto_delete',
-    'name',
-    'address',
     'subnet',
+    'name',
+    'auto_delete',
+    'address',
 ]
 
 # Params for Data source
@@ -115,16 +115,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    auto_delete=dict(
+    subnet=dict(
         required=False,
-        type='bool'),
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    address=dict(
+    auto_delete=dict(
         required=False,
-        type='str'),
-    subnet=dict(
+        type='bool'),
+    address=dict(
         required=False,
         type='str'),
     id=dict(

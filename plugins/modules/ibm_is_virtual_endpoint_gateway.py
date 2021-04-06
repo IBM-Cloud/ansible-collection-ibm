@@ -26,23 +26,12 @@ options:
         required: False
         type: list
         elements: dict
-    target:
-        description:
-            - (Required for new resource) Endpoint gateway target
-        required: True
-        type: list
-        elements: dict
     tags:
         description:
             - List of tags for VPE
         required: False
         type: list
         elements: str
-    vpc:
-        description:
-            - (Required for new resource) The VPC id
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) Endpoint gateway name
@@ -52,6 +41,17 @@ options:
         description:
             - The resource group id
         required: False
+        type: str
+    target:
+        description:
+            - (Required for new resource) Endpoint gateway target
+        required: True
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - (Required for new resource) The VPC id
+        required: True
         type: str
     id:
         description:
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('target', 'list'),
     ('vpc', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'ips',
-    'target',
     'tags',
-    'vpc',
     'name',
     'resource_group',
+    'target',
+    'vpc',
 ]
 
 # Params for Data source
@@ -134,21 +134,21 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    target=dict(
-        required=False,
-        elements='',
-        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    target=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc=dict(
         required=False,
         type='str'),
     id=dict(

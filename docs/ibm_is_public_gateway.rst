@@ -40,16 +40,16 @@ Parameters
     Service tags for the public gateway instance
 
 
+  zone (True, str, None)
+    (Required for new resource) Public gateway zone info
+
+
   name (True, str, None)
     (Required for new resource) Name of the Public gateway instance
 
 
   vpc (True, str, None)
     (Required for new resource) Public gateway VPC info
-
-
-  zone (True, str, None)
-    (Required for new resource) Public gateway zone info
 
 
   id (False, str, None)

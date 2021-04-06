@@ -20,9 +20,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - Tags for the VPC Flow logs
+        required: False
+        type: list
+        elements: str
+    active:
+        description:
+            - Indicates whether this collector is active
+        required: False
+        type: bool
+        default: True
+    resource_group:
+        description:
+            - The resource group of flow log
+        required: False
+        type: str
     storage_bucket:
         description:
             - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+        required: True
+        type: str
+    target:
+        description:
+            - (Required for new resource) The target id that the flow log collector is to collect flow logs
         required: True
         type: str
     name:
@@ -30,28 +52,6 @@ options:
             - (Required for new resource) Flow Log Collector name
         required: True
         type: str
-    resource_group:
-        description:
-            - The resource group of flow log
-        required: False
-        type: str
-    target:
-        description:
-            - (Required for new resource) The target id that the flow log collector is to collect flow logs
-        required: True
-        type: str
-    active:
-        description:
-            - Indicates whether this collector is active
-        required: False
-        type: bool
-        default: True
-    tags:
-        description:
-            - Tags for the VPC Flow logs
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,18 +99,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('storage_bucket', 'str'),
-    ('name', 'str'),
     ('target', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'storage_bucket',
-    'name',
-    'resource_group',
-    'target',
-    'active',
     'tags',
+    'active',
+    'resource_group',
+    'storage_bucket',
+    'target',
+    'name',
 ]
 
 # Params for Data source
@@ -127,25 +127,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    storage_bucket=dict(
+    tags=dict(
         required=False,
-        type='str'),
-    name=dict(
+        elements='',
+        type='list'),
+    active=dict(
         required=False,
-        type='str'),
+        type='bool'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    storage_bucket=dict(
         required=False,
         type='str'),
     target=dict(
         required=False,
         type='str'),
-    active=dict(
+    name=dict(
         required=False,
-        type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -20,17 +20,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) Dataceneter name
-        required: True
-        type: str
     pod:
         description:
             - (Required for new resource) Pod name
@@ -47,6 +36,17 @@ options:
         required: False
         type: str
         default: SPREAD
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    datacenter:
+        description:
+            - (Required for new resource) Dataceneter name
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,18 +93,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
     ('pod', 'str'),
     ('name', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'datacenter',
     'pod',
     'name',
     'rule',
+    'tags',
+    'datacenter',
 ]
 
 # Params for Data source
@@ -123,13 +123,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    datacenter=dict(
-        required=False,
-        type='str'),
     pod=dict(
         required=False,
         type='str'),
@@ -137,6 +130,13 @@ module_args = dict(
         required=False,
         type='str'),
     rule=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    datacenter=dict(
         required=False,
         type='str'),
     id=dict(

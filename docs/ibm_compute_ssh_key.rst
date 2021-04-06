@@ -28,6 +28,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  label (True, str, None)
+    (Required for new resource) SSH Key label
+
+
   public_key (True, str, None)
     (Required for new resource) Plublic Key info
 
@@ -38,10 +42,6 @@ Parameters
 
   tags (False, list, None)
     List of tags for the resource
-
-
-  label (True, str, None)
-    (Required for new resource) SSH Key label
 
 
   id (False, str, None)

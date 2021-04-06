@@ -25,17 +25,18 @@ options:
             - (Required for new resource) Certificate manager instance ID
         required: True
         type: str
+    rotate_keys:
+        description:
+            - Keys are sorated if set to true
+        required: False
+        type: bool
+        default: False
     renew_certificate:
         description:
             - Invokes renew functionality
         required: False
         type: bool
         default: False
-    description:
-        description:
-            - Certicate description
-        required: False
-        type: str
     dns_provider_instance_crn:
         description:
             - DNS provider instance CRN
@@ -52,6 +53,11 @@ options:
         required: True
         type: list
         elements: str
+    description:
+        description:
+            - Certicate description
+        required: False
+        type: str
     domain_validation_method:
         description:
             - Domain validation methods
@@ -67,12 +73,6 @@ options:
     auto_renew_enabled:
         description:
             - None
-        required: False
-        type: bool
-        default: False
-    rotate_keys:
-        description:
-            - Keys are sorated if set to true
         required: False
         type: bool
         default: False
@@ -130,15 +130,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'certificate_manager_instance_id',
+    'rotate_keys',
     'renew_certificate',
-    'description',
     'dns_provider_instance_crn',
     'name',
     'domains',
+    'description',
     'domain_validation_method',
     'key_algorithm',
     'auto_renew_enabled',
-    'rotate_keys',
 ]
 
 # Params for Data source
@@ -158,12 +158,12 @@ module_args = dict(
     certificate_manager_instance_id=dict(
         required=False,
         type='str'),
+    rotate_keys=dict(
+        required=False,
+        type='bool'),
     renew_certificate=dict(
         required=False,
         type='bool'),
-    description=dict(
-        required=False,
-        type='str'),
     dns_provider_instance_crn=dict(
         required=False,
         type='str'),
@@ -174,6 +174,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    description=dict(
+        required=False,
+        type='str'),
     domain_validation_method=dict(
         required=False,
         type='str'),
@@ -181,9 +184,6 @@ module_args = dict(
         required=False,
         type='str'),
     auto_renew_enabled=dict(
-        required=False,
-        type='bool'),
-    rotate_keys=dict(
         required=False,
         type='bool'),
     id=dict(
