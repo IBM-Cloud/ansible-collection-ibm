@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,15 +28,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  payload (False, str, None)
+    None
+
+
   force_delete (False, bool, False)
     set to true to force delete the key
 
 
-  encrypted_nonce (False, str, None)
+  iv_value (False, str, None)
     Only for imported root key
 
 
-  iv_value (False, str, None)
+  encrypted_nonce (False, str, None)
     Only for imported root key
 
 
@@ -44,16 +48,12 @@ Parameters
     (Required for new resource) Key protect instance ID
 
 
-  standard_key (False, bool, False)
-    Standard key type
-
-
   key_name (True, str, None)
     (Required for new resource) Key name
 
 
-  payload (False, str, None)
-    None
+  standard_key (False, bool, False)
+    Standard key type
 
 
   id (False, str, None)

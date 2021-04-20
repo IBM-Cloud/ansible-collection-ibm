@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_domain_registration_nameservers' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
@@ -173,7 +173,7 @@ def run_module():
         resource_type='ibm_dns_domain_registration_nameservers',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

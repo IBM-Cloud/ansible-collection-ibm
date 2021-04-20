@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,12 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  expire (False, int, None)
+    DNS record expiry info
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   ttl (True, int, None)
@@ -44,56 +48,52 @@ Parameters
     priority info
 
 
-  service (False, str, None)
-    service info
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  port (False, int, None)
-    port number
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   weight (False, int, 0)
     weight info
 
 
+  tags (False, list, None)
+    tags set for the resource
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  port (False, int, None)
+    port number
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
   retry (False, int, None)
     Retry count
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  service (False, str, None)
+    service info
 
 
   id (False, str, None)

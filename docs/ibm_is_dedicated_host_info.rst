@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -26,16 +26,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group (False, str, None)
+    The unique identifier of the resource group this dedicated host belongs to
+
+
   name (True, str, None)
     The unique name of this dedicated host
 
 
   host_group (True, str, None)
     The unique identifier of the dedicated host group this dedicated host belongs to
-
-
-  resource_group (False, str, None)
-    The unique identifier of the resource group this dedicated host belongs to
 
 
   generation (False, int, 2)

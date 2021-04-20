@@ -16,26 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssl_certificate' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
-    certificate:
-        description:
-            - (Required for new resource) SSL Certifcate
-        required: True
-        type: str
-    private_key:
-        description:
-            - (Required for new resource) SSL Private Key
-        required: True
-        type: str
     tags:
         description:
             - Tags set for resource
         required: False
         type: list
         elements: str
+    private_key:
+        description:
+            - (Required for new resource) SSL Private Key
+        required: True
+        type: str
+    certificate:
+        description:
+            - (Required for new resource) SSL Certifcate
+        required: True
+        type: str
     intermediate_certificate:
         description:
             - Intermediate certificate value
@@ -87,15 +87,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate', 'str'),
     ('private_key', 'str'),
+    ('certificate', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate',
-    'private_key',
     'tags',
+    'private_key',
+    'certificate',
     'intermediate_certificate',
 ]
 
@@ -113,16 +113,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate=dict(
-        required=False,
-        type='str'),
-    private_key=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    private_key=dict(
+        required=False,
+        type='str'),
+    certificate=dict(
+        required=False,
+        type='str'),
     intermediate_certificate=dict(
         required=False,
         type='str'),
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_compute_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

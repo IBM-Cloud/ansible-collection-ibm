@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,24 +28,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  state_ (True, str, None)
-    (Required for new resource) Satate name
+  last_name (True, str, None)
+    (Required for new resource) Last name of the user
 
 
-  country (True, str, None)
-    (Required for new resource) Country name
+  company_name (True, str, None)
+    (Required for new resource) comapany name
+
+
+  city (True, str, None)
+    (Required for new resource) City name
+
+
+  password (False, str, None)
+    password for the user
+
+
+  tags (False, list, None)
+    Tags set for the resources
+
+
+  email (True, str, None)
+    (Required for new resource) email address of the user
 
 
   timezone (True, str, None)
     (Required for new resource) time zone info
 
 
-  user_status (False, str, ACTIVE)
-    user status info
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  has_api_key (False, bool, False)
+    API Key info of the user
+
+
+  api_key (False, str, None)
+    API key for the user
 
 
   username (False, str, None)
     user name
+
+
+  state_ (True, str, None)
+    (Required for new resource) Satate name
+
+
+  user_status (False, str, ACTIVE)
+    user status info
 
 
   first_name (True, str, None)
@@ -56,44 +88,12 @@ Parameters
     (Required for new resource) Address info of the user
 
 
-  city (True, str, None)
-    (Required for new resource) City name
-
-
   address2 (False, str, None)
     Address info of the user
 
 
-  api_key (False, str, None)
-    API key for the user
-
-
-  last_name (True, str, None)
-    (Required for new resource) Last name of the user
-
-
-  email (True, str, None)
-    (Required for new resource) email address of the user
-
-
-  permissions (False, list, None)
-    set of persmissions assigned for the user
-
-
-  tags (False, list, None)
-    Tags set for the resources
-
-
-  company_name (True, str, None)
-    (Required for new resource) comapany name
-
-
-  password (False, str, None)
-    password for the user
-
-
-  has_api_key (False, bool, False)
-    API Key info of the user
+  country (True, str, None)
+    (Required for new resource) Country name
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -30,19 +30,23 @@ Parameters
     None
 
 
-  bucket_name (True, str, None)
-    None
-
-
-  bucket_region (True, str, None)
-    None
-
-
   endpoint_type (False, str, public)
     public or private
 
 
+  retention_rule (False, list, None)
+    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+
+
+  bucket_name (True, str, None)
+    None
+
+
   bucket_type (True, str, None)
+    None
+
+
+  bucket_region (True, str, None)
     None
 
 

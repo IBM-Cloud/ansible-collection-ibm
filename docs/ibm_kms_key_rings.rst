@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Key protect Instance GUID
-
-
   key_ring_id (True, str, None)
     (Required for new resource) User defined unique ID for the key ring
 
 
   endpoint_type (False, str, public)
     public or private
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect Instance GUID
 
 
   id (False, str, None)

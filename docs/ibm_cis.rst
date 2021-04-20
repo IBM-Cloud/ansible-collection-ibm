@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,20 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) A name for the resource instance
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
   location (True, str, None)
     (Required for new resource) The location where the instance available
 
 
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
+  name (True, str, None)
+    (Required for new resource) A name for the resource instance
 
 
   parameters (False, dict, None)
@@ -50,6 +46,10 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  resource_group_id (False, str, None)
+    The resource group id
 
 
   id (False, str, None)

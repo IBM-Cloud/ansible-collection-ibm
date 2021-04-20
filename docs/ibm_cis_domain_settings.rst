@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,132 +28,132 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
-  hotlink_protection (False, str, None)
-    hotlink_protection setting
-
-
-  websockets (False, str, None)
-    websockets setting
-
-
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  always_use_https (False, str, None)
-    always_use_https setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  minify (False, list, None)
-    Minify setting
+  waf (False, str, None)
+    WAF setting
 
 
   min_tls_version (False, str, 1.1)
     Minimum version of TLS required
 
 
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
-
-
-  dnssec (False, str, None)
-    DNS Sec setting
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
-
-
-  brotli (False, str, None)
-    brotli setting
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
   response_buffering (False, str, None)
     response_buffering setting
 
 
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
   tls_client_auth (False, str, None)
     tls_client_auth setting
-
-
-  cipher (False, list, None)
-    Cipher settings
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  mobile_redirect (False, list, None)
-    None
 
 
   cname_flattening (False, str, None)
     cname_flattening setting
 
 
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
+
+
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  minify (False, list, None)
+    Minify setting
+
+
+  dnssec (False, str, None)
+    DNS Sec setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
   http2 (False, str, None)
     http2 setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  mobile_redirect (False, list, None)
+    None
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
 
 
   true_client_ip_header (False, str, None)
     true_client_ip_header setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
   security_header (False, list, None)

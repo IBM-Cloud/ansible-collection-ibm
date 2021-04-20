@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,24 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
-
-
-  job_env_settings (False, list, None)
-    Environment variables used by the job while performing an action.
-
-
   command_object_id (True, str, None)
     (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
-
-
-  job_inputs (False, list, None)
-    Job inputs used by an action.
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
 
 
   location (False, str, None)
@@ -56,16 +40,16 @@ Parameters
     Job log summary record.
 
 
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
-
-
   command_parameter (True, str, None)
     (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+
+
+  job_env_settings (False, list, None)
+    Environment variables used by the job while performing an action.
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
   data (False, list, None)
@@ -74,6 +58,22 @@ Parameters
 
   bastion (False, list, None)
     Complete target details with the user inputs and the system generated data.
+
+
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  command_options (False, list, None)
+    Command line options for the command.
+
+
+  job_inputs (False, list, None)
+    Job inputs used by an action.
 
 
   id (False, str, None)

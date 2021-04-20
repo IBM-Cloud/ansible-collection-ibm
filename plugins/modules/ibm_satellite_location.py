@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
-    logging_account_id:
-        description:
-            - The account ID for IBM Log Analysis with LogDNA log forwarding
-        required: False
-        type: str
     cos_config:
         description:
             - COSBucket - IBM Cloud Object Storage bucket configuration details
@@ -56,6 +51,11 @@ options:
     description:
         description:
             - A description of the new Satellite location
+        required: False
+        type: str
+    logging_account_id:
+        description:
+            - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
         type: str
     id:
@@ -110,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'logging_account_id',
     'cos_config',
     'cos_credentials',
     'zones',
     'location',
     'managed_from',
     'description',
+    'logging_account_id',
 ]
 
 # Params for Data source
@@ -135,9 +135,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    logging_account_id=dict(
-        required=False,
-        type='str'),
     cos_config=dict(
         required=False,
         elements='',
@@ -157,6 +154,9 @@ module_args = dict(
         required=False,
         type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    logging_account_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +233,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.0',
+            ibm_provider_version='1.23.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

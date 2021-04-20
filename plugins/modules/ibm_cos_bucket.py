@@ -16,10 +16,75 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
+    resource_instance_id:
+        description:
+            - (Required for new resource) resource instance ID
+        required: True
+        type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
+    activity_tracking:
+        description:
+            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+        required: False
+        type: list
+        elements: dict
+    single_site_location:
+        description:
+            - single site location info
+        required: False
+        type: str
+    allowed_ip:
+        description:
+            - List of IPv4 or IPv6 addresses
+        required: False
+        type: list
+        elements: str
+    expire_rule:
+        description:
+            - Enable configuration expire_rule to COS Bucket after a defined period of time
+        required: False
+        type: list
+        elements: dict
+    bucket_name:
+        description:
+            - (Required for new resource) COS Bucket name
+        required: True
+        type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    force_delete:
+        description:
+            - COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+        required: False
+        type: bool
+        default: True
+    region_location:
+        description:
+            - Region Location info.
+        required: False
+        type: str
+    cross_region_location:
+        description:
+            - Cros region location info
+        required: False
+        type: str
+    storage_class:
+        description:
+            - (Required for new resource) Storage class info
+        required: True
+        type: str
     metrics_monitoring:
         description:
             - Enables sending metrics to IBM Cloud Monitoring.
@@ -32,71 +97,12 @@ options:
         required: False
         type: list
         elements: dict
-    region_location:
+    retention_rule:
         description:
-            - Region Location info.
-        required: False
-        type: str
-    resource_instance_id:
-        description:
-            - (Required for new resource) resource instance ID
-        required: True
-        type: str
-    cross_region_location:
-        description:
-            - Cros region location info
-        required: False
-        type: str
-    allowed_ip:
-        description:
-            - List of IPv4 or IPv6 addresses
-        required: False
-        type: list
-        elements: str
-    bucket_name:
-        description:
-            - (Required for new resource) COS Bucket name
-        required: True
-        type: str
-    activity_tracking:
-        description:
-            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+            - A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
         required: False
         type: list
         elements: dict
-    expire_rule:
-        description:
-            - Enable configuration expire_rule to COS Bucket after a defined period of time
-        required: False
-        type: list
-        elements: dict
-    force_delete:
-        description:
-            - COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-        required: False
-        type: bool
-        default: True
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
-    single_site_location:
-        description:
-            - single site location info
-        required: False
-        type: str
-    storage_class:
-        description:
-            - (Required for new resource) Storage class info
-        required: True
-        type: str
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -150,48 +156,89 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_instance_id',
+    'endpoint_type',
+    'activity_tracking',
+    'single_site_location',
+    'allowed_ip',
+    'expire_rule',
+    'bucket_name',
+    'key_protect',
+    'force_delete',
+    'region_location',
+    'cross_region_location',
+    'storage_class',
     'metrics_monitoring',
     'archive_rule',
-    'region_location',
-    'resource_instance_id',
-    'cross_region_location',
-    'allowed_ip',
-    'bucket_name',
-    'activity_tracking',
-    'expire_rule',
-    'force_delete',
-    'endpoint_type',
-    'single_site_location',
-    'storage_class',
-    'key_protect',
+    'retention_rule',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
-    ('bucket_region', 'str'),
     ('bucket_type', 'str'),
+    ('bucket_region', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'resource_instance_id',
-    'bucket_name',
-    'bucket_region',
     'endpoint_type',
+    'retention_rule',
+    'bucket_name',
     'bucket_type',
+    'bucket_region',
 ]
 
 TL_CONFLICTS_MAP = {
+    'single_site_location': ['region_location', 'cross_region_location'],
     'region_location': ['cross_region_location', 'single_site_location'],
     'cross_region_location': ['region_location', 'single_site_location'],
-    'single_site_location': ['region_location', 'cross_region_location'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_instance_id=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    activity_tracking=dict(
+        required=False,
+        elements='',
+        type='list'),
+    single_site_location=dict(
+        required=False,
+        type='str'),
+    allowed_ip=dict(
+        required=False,
+        elements='',
+        type='list'),
+    expire_rule=dict(
+        required=False,
+        elements='',
+        type='list'),
+    bucket_name=dict(
+        required=False,
+        type='str'),
+    key_protect=dict(
+        required=False,
+        type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
+    region_location=dict(
+        required=False,
+        type='str'),
+    cross_region_location=dict(
+        required=False,
+        type='str'),
+    storage_class=dict(
+        required=False,
+        type='str'),
     metrics_monitoring=dict(
         required=False,
         elements='',
@@ -200,45 +247,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    region_location=dict(
-        required=False,
-        type='str'),
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
-    cross_region_location=dict(
-        required=False,
-        type='str'),
-    allowed_ip=dict(
+    retention_rule=dict(
         required=False,
         elements='',
         type='list'),
-    bucket_name=dict(
-        required=False,
-        type='str'),
-    activity_tracking=dict(
-        required=False,
-        elements='',
-        type='list'),
-    expire_rule=dict(
-        required=False,
-        elements='',
-        type='list'),
-    force_delete=dict(
-        required=False,
-        type='bool'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    single_site_location=dict(
-        required=False,
-        type='str'),
-    storage_class=dict(
-        required=False,
-        type='str'),
-    key_protect=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -304,7 +316,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -313,7 +325,7 @@ def run_module():
             resource_type='ibm_cos_bucket',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.0',
+            ibm_provider_version='1.23.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

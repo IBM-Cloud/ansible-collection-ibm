@@ -16,41 +16,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
-    hardware:
+    cluster:
         description:
-            - Hardware type
-        required: False
+            - (Required for new resource) Cluster name
+        required: True
         type: str
-        default: shared
     labels:
         description:
             - list of labels to worker pool
         required: False
         type: dict
         elements: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) Cluster name
-        required: True
-        type: str
     machine_type:
         description:
             - (Required for new resource) worker nodes machine type
         required: True
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
         type: str
     worker_pool_name:
         description:
@@ -62,12 +46,28 @@ options:
             - (Required for new resource) Number of nodes per zone
         required: True
         type: int
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    hardware:
+        description:
+            - Hardware type
+        required: False
+        type: str
+        default: shared
     disk_encryption:
         description:
             - worker node disk encrypted if set to true
         required: False
         type: bool
         default: True
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,15 +102,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hardware',
-    'labels',
-    'resource_group_id',
     'cluster',
+    'labels',
     'machine_type',
-    'entitlement',
     'worker_pool_name',
     'size_per_zone',
+    'entitlement',
+    'hardware',
     'disk_encryption',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -131,23 +131,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hardware=dict(
+    cluster=dict(
         required=False,
         type='str'),
     labels=dict(
         required=False,
         elements='',
         type='dict'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     machine_type=dict(
-        required=False,
-        type='str'),
-    entitlement=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
@@ -156,9 +147,18 @@ module_args = dict(
     size_per_zone=dict(
         required=False,
         type='int'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    hardware=dict(
+        required=False,
+        type='str'),
     disk_encryption=dict(
         required=False,
         type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -210,7 +210,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -219,7 +219,7 @@ def run_module():
             resource_type='ibm_container_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.0',
+            ibm_provider_version='1.23.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

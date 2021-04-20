@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,51 +28,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_security_group_ids (False, list, None)
-    None
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
 
 
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  cores (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  hourly_billing (False, bool, True)
-    None
-
-
-  private_network_only (False, bool, False)
+  dedicated_host_name (False, str, None)
     None
 
 
@@ -80,7 +40,7 @@ Parameters
     None
 
 
-  domain (False, str, None)
+  disks (False, list, None)
     None
 
 
@@ -88,11 +48,11 @@ Parameters
     None
 
 
-  bulk_vms (False, list, None)
+  file_storage_ids (False, list, None)
     None
 
 
-  network_speed (False, int, 100)
+  local_disk (False, bool, True)
     None
 
 
@@ -100,27 +60,43 @@ Parameters
     None
 
 
-  notes (False, str, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
   placement_group_id (False, int, None)
     The placement group id
 
 
-  memory (False, int, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
-  dedicated_host_name (False, str, None)
+  cores (False, int, None)
     None
 
 
-  user_metadata (False, str, None)
+  public_vlan_id (False, int, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  image_id (False, int, None)
     None
 
 
@@ -128,7 +104,63 @@ Parameters
     None
 
 
-  file_storage_ids (False, list, None)
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  domain (False, str, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  transient (False, bool, None)
     None
 
 
@@ -136,7 +168,15 @@ Parameters
     None
 
 
-  public_vlan_id (False, int, None)
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  evault (False, int, None)
+    None
+
+
+  memory (False, int, None)
     None
 
 
@@ -148,48 +188,8 @@ Parameters
     Flavor key name used to provision vm.
 
 
-  public_subnet (False, str, None)
+  private_security_group_ids (False, list, None)
     None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  transient (False, bool, None)
-    None
-
-
-  local_disk (False, bool, True)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  disks (False, list, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
 
 
   id (False, str, None)

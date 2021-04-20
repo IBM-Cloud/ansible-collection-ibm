@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,8 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  post_install_script_uri (False, str, None)
-    None
+  members (True, list, None)
+    (Required for new resource) The hardware members of this network Gateway
 
 
   name (True, str, None)
@@ -40,8 +40,8 @@ Parameters
     None
 
 
-  members (True, list, None)
-    (Required for new resource) The hardware members of this network Gateway
+  post_install_script_uri (False, str, None)
+    None
 
 
   id (False, str, None)

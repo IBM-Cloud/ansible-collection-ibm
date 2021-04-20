@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,68 +28,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
   network_interfaces (False, list, None)
     None
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
 
 
   user_data (False, str, None)
     User data given for the instance
 
 
+  image (True, str, None)
+    (Required for new resource) image name
+
+
   boot_volume (False, list, None)
     None
 
 
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
   volumes (False, list, None)
     List of volumes
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
 
 
   id (False, str, None)

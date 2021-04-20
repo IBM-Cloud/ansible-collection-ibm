@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.0
+    - IBM-Cloud terraform-provider-ibm v1.23.1
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
             - (Required for new resource) Loadbalancer listener port
         required: True
         type: int
+    accept_proxy_protocol:
+        description:
+            - Listener will forward proxy protocol
+        required: False
+        type: bool
     protocol:
         description:
             - (Required for new resource) Loadbalancer protocol
@@ -40,11 +45,6 @@ options:
             - certificate instance for the Loadbalancer
         required: False
         type: str
-    accept_proxy_protocol:
-        description:
-            - Listener will forward proxy protocol
-        required: False
-        type: bool
     connection_limit:
         description:
             - Connection limit for Loadbalancer
@@ -110,9 +110,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'lb',
     'port',
+    'accept_proxy_protocol',
     'protocol',
     'certificate_instance',
-    'accept_proxy_protocol',
     'connection_limit',
     'default_pool',
 ]
@@ -137,15 +137,15 @@ module_args = dict(
     port=dict(
         required=False,
         type='int'),
+    accept_proxy_protocol=dict(
+        required=False,
+        type='bool'),
     protocol=dict(
         required=False,
         type='str'),
     certificate_instance=dict(
         required=False,
         type='str'),
-    accept_proxy_protocol=dict(
-        required=False,
-        type='bool'),
     connection_limit=dict(
         required=False,
         type='int'),
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.0',
+        ibm_provider_version='1.23.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

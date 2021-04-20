@@ -20,21 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  source_resource_group_id (False, str, None)
-    The source resource group Id
-
-
-  source_resource_type (False, str, None)
-    Resource type of source service
-
 
   target_resource_type (False, str, None)
     Resource type of target service
@@ -44,8 +36,8 @@ Parameters
     Account GUID of source service
 
 
-  source_resource_instance_id (False, str, None)
-    The source resource instance Id
+  source_service_name (True, str, None)
+    (Required for new resource) The source service name
 
 
   target_service_name (True, str, None)
@@ -60,12 +52,20 @@ Parameters
     The target resource instance Id
 
 
+  source_resource_instance_id (False, str, None)
+    The source resource instance Id
+
+
+  source_resource_group_id (False, str, None)
+    The source resource group Id
+
+
   target_resource_group_id (False, str, None)
     The target resource group Id
 
 
-  source_service_name (True, str, None)
-    (Required for new resource) The source service name
+  source_resource_type (False, str, None)
+    Resource type of source service
 
 
   id (False, str, None)

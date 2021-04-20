@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.0
+- IBM-Cloud terraform-provider-ibm v1.23.1
 - Terraform v0.12.20
 
 
@@ -28,24 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
-
-
   tags (False, list, None)
     List of tags associated with the resource
-
-
-  capacity (True, int, None)
-    (Required for new resource) Storage block size
-
-
-  iops (True, float, None)
-    (Required for new resource) IOPS value required
-
-
-  snapshot_capacity (False, int, None)
-    Snapshot capacity in GB
 
 
   type (True, str, None)
@@ -56,24 +40,40 @@ Parameters
     (Required for new resource) OS formatr type
 
 
-  hourly_billing (False, bool, False)
-    Billing done hourly, if set to true
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    List of allowed virtual guest IDs
+  snapshot_capacity (False, int, None)
+    Snapshot capacity in GB
 
 
   notes (False, str, None)
     Additional note info
 
 
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
+
+
+  iops (True, float, None)
+    (Required for new resource) IOPS value required
+
+
   allowed_hardware_ids (False, list, None)
     List of allowe hardware IDs
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
+
+
+  hourly_billing (False, bool, False)
+    Billing done hourly, if set to true
 
 
   id (False, str, None)
