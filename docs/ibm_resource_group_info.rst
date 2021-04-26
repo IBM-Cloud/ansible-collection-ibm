@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -26,12 +26,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  is_default (False, bool, None)
-    Default Resource group
-
-
   name (False, str, None)
     Resource group name
+
+
+  is_default (False, bool, None)
+    Default Resource group
 
 
   iaas_classic_username (False, any, None)

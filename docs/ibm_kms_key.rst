@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,16 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or hpcs instance GUID
+  key_ring_id (False, str, default)
+    Key Ring for the Key
 
 
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  endpoint_type (False, str, public)
-    public or private
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
   payload (False, str, None)
@@ -48,16 +44,24 @@ Parameters
     Only for imported root key
 
 
-  policies (False, list, None)
-    Creates or updates one or more policies for the specified key
+  iv_value (False, str, None)
+    Only for imported root key
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
+  endpoint_type (False, str, public)
+    public or private
 
 
   standard_key (False, bool, False)
     Standard key type
+
+
+  policies (False, list, None)
+    Creates or updates one or more policies for the specified key
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or hpcs instance GUID
 
 
   force_delete (False, bool, False)
@@ -66,10 +70,6 @@ Parameters
 
   expiration_date (False, str, None)
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-
-
-  key_ring_id (False, str, default)
-    Key Ring for the Key
 
 
   id (False, str, None)

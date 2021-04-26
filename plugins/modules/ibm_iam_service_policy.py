@@ -16,7 +16,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_iam_service_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_iam_service_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.1',
+            ibm_provider_version='1.23.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

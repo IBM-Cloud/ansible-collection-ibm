@@ -15,11 +15,11 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    resource_instance_id:
+    bucket_name:
         description:
             - None
         required: True
@@ -30,13 +30,7 @@ options:
         required: False
         type: str
         default: public
-    retention_rule:
-        description:
-            - A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
-        required: False
-        type: list
-        elements: dict
-    bucket_name:
+    resource_instance_id:
         description:
             - None
         required: True
@@ -84,18 +78,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
+    ('resource_instance_id', 'str'),
     ('bucket_type', 'str'),
     ('bucket_region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
-    'endpoint_type',
-    'retention_rule',
     'bucket_name',
+    'endpoint_type',
+    'resource_instance_id',
     'bucket_type',
     'bucket_region',
 ]
@@ -108,17 +101,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_instance_id=dict(
+    bucket_name=dict(
         required=True,
         type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
-    retention_rule=dict(
-        required=False,
-        elements='',
-        type='list'),
-    bucket_name=dict(
+    resource_instance_id=dict(
         required=True,
         type='str'),
     bucket_type=dict(
@@ -161,7 +150,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

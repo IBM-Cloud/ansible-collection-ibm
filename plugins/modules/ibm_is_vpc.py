@@ -16,26 +16,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) VPC name
-        required: True
-        type: str
     address_prefix_management:
         description:
             - Address Prefix management value
         required: False
         type: str
         default: auto
+    name:
+        description:
+            - (Required for new resource) VPC name
+        required: True
+        type: str
+    default_network_acl_name:
+        description:
+            - Default Network ACL name
+        required: False
+        type: str
     classic_access:
         description:
             - Set to true if classic access needs to enabled to VPC
@@ -47,15 +47,9 @@ options:
             - Default routing table name
         required: False
         type: str
-    tags:
+    resource_group:
         description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    default_network_acl_name:
-        description:
-            - Default Network ACL name
+            - Resource group info
         required: False
         type: str
     default_security_group_name:
@@ -63,6 +57,12 @@ options:
             - Default security group name
         required: False
         type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,14 +114,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'name',
     'address_prefix_management',
+    'name',
+    'default_network_acl_name',
     'classic_access',
     'default_routing_table_name',
-    'tags',
-    'default_network_acl_name',
+    'resource_group',
     'default_security_group_name',
+    'tags',
 ]
 
 # Params for Data source
@@ -140,13 +140,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
+    address_prefix_management=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    address_prefix_management=dict(
+    default_network_acl_name=dict(
         required=False,
         type='str'),
     classic_access=dict(
@@ -155,16 +155,16 @@ module_args = dict(
     default_routing_table_name=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    default_network_acl_name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     default_security_group_name=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -251,7 +251,7 @@ def run_module():
             resource_type='ibm_is_vpc',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.1',
+            ibm_provider_version='1.23.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -16,28 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    location:
-        description:
-            - (Required for new resource) The location where the instance available
-        required: True
-        type: str
     resource_group_id:
         description:
             - The resource group id
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
         type: str
     name:
@@ -45,27 +30,42 @@ options:
             - (Required for new resource) A name for the resource instance
         required: True
         type: str
+    last_operation:
+        description:
+            - The status of the last operation requested on the instance
+        required: False
+        type: dict
+    service:
+        description:
+            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
+        required: True
+        type: str
     plan:
         description:
             - (Required for new resource) The plan type of the service
         required: True
         type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    service:
+    service_endpoints:
         description:
-            - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+        required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) The location where the instance available
         required: True
         type: str
-    last_operation:
-        description:
-            - The status of the last operation requested on the instance
-        required: False
-        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,23 +112,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('name', 'str'),
-    ('plan', 'str'),
     ('service', 'str'),
+    ('plan', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
     'resource_group_id',
-    'parameters',
-    'service_endpoints',
     'name',
-    'plan',
-    'tags',
-    'service',
     'last_operation',
+    'service',
+    'plan',
+    'parameters',
+    'tags',
+    'service_endpoints',
+    'location',
 ]
 
 # Params for Data source
@@ -137,10 +137,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'location',
     'name',
-    'resource_group_id',
+    'location',
     'service',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -150,34 +150,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
-        required=False,
-        type='str'),
     resource_group_id=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
-    service_endpoints=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    last_operation=dict(
+        required=False,
+        type='dict'),
+    service=dict(
+        required=False,
+        type='str'),
     plan=dict(
         required=False,
         type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    service=dict(
+    service_endpoints=dict(
         required=False,
         type='str'),
-    last_operation=dict(
+    location=dict(
         required=False,
-        type='dict'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -243,7 +243,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -252,7 +252,7 @@ def run_module():
             resource_type='ibm_resource_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.1',
+            ibm_provider_version='1.23.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

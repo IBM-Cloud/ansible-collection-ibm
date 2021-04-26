@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,40 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
   point_in_time_recovery_deployment_id (False, str, None)
     The CRN of source instance
 
 
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  users (False, list, None)
+  whitelist (False, list, None)
     None
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  remote_leader_id (False, str, None)
-    The CRN of leader database
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   version (False, str, None)
@@ -72,6 +48,22 @@ Parameters
     Disk allocation required for cluster
 
 
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
+
+
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
+
+
   key_protect_key (False, str, None)
     The CRN of Key protect key
 
@@ -80,16 +72,8 @@ Parameters
     None
 
 
-  whitelist (False, list, None)
-    None
-
-
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
 
 
   service (True, str, None)
@@ -100,20 +84,36 @@ Parameters
     The admin user password for the instance
 
 
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
+
+
+  remote_leader_id (False, str, None)
+    The CRN of leader database
+
+
   name (True, str, None)
     (Required for new resource) Resource instance name for example, my Database instance
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
 
 
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
 
 
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
+
+
+  users (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,16 +28,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (True, str, None)
-    (Required for new resource) Unique guid of the push notification instance.
-
-
   server_key (True, str, None)
     (Required for new resource) A server key that gives the push service an authorized access to Google services that is used for Chrome Web Push.
 
 
   web_site_url (True, str, None)
     (Required for new resource) The URL of the WebSite / WebApp that should be permitted to subscribe to WebPush.
+
+
+  guid (True, str, None)
+    (Required for new resource) Unique guid of the push notification instance.
 
 
   id (False, str, None)

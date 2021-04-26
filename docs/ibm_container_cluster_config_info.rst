@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -30,12 +30,16 @@ Parameters
     ID of the resource group.
 
 
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
-
-
   network (False, bool, False)
     If set to true will download the Calico network config with the Admin config
+
+
+  admin (False, bool, False)
+    If set to true will download the config for admin
+
+
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   cluster_name_id (True, str, None)
@@ -44,10 +48,6 @@ Parameters
 
   config_dir (False, str, None)
     The directory where the cluster config to be downloaded. Default is home directory
-
-
-  admin (False, bool, False)
-    If set to true will download the config for admin
 
 
   ibmcloud_api_key (True, any, None)

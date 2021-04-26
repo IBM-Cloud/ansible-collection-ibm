@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_virtual_endpoint_gateways' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
@@ -112,7 +112,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateways',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -26,20 +26,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    The location or the environment in which instance exists
-
-
   name (True, str, None)
     Resource instance name for example, myobjectstorage
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the instance is present
+  location (False, str, None)
+    The location or the environment in which instance exists
 
 
   service (False, str, None)
     The service type of the instance
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the instance is present
 
 
   iaas_classic_username (False, any, None)

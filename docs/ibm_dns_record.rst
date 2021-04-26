@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,56 +28,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
   mx_priority (False, int, 0)
     Maximum priority
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  port (False, int, None)
-    port number
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
 
 
   responsible_person (False, str, None)
@@ -88,12 +40,60 @@ Parameters
     Retry count
 
 
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
   service (False, str, None)
     service info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  port (False, int, None)
+    port number
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
 
 
   id (False, str, None)

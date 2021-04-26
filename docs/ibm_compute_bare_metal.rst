@@ -20,13 +20,121 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  memory (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  redundant_network (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
+
+
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  notes (False, str, None)
+    Optional notes info
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  package_key_name (False, str, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    OS refernece code value
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  gpu_secondary_key_name (False, str, None)
+    None
+
 
   disk_key_names (False, list, None)
     None
@@ -36,115 +144,7 @@ Parameters
     None
 
 
-  public_subnet (False, str, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  os_reference_code (False, str, None)
-    OS refernece code value
-
-
-  gpu_key_name (False, str, None)
-    None
-
-
-  software_guard_extensions (False, bool, False)
-    None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  hostname (False, str, None)
-    Host name
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  image_template_id (False, int, None)
-    OS image template ID
-
-
-  datacenter (False, str, None)
-    None
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  process_key_name (False, str, None)
-    None
-
-
-  redundant_network (False, bool, False)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  package_key_name (False, str, None)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  block_storage_ids (False, list, None)
+  storage_groups (False, list, None)
     None
 
 
@@ -156,36 +156,36 @@ Parameters
     Network speed in MBPS
 
 
-  storage_groups (False, list, None)
+  software_guard_extensions (False, bool, False)
     None
 
 
-  file_storage_ids (False, list, None)
+  os_key_name (False, str, None)
     None
 
 
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  redundant_power_supply (False, bool, None)
+  public_vlan_id (False, int, None)
     None
 
 
-  memory (False, int, None)
+  public_bandwidth (False, int, None)
     None
 
 
-  notes (False, str, None)
-    Optional notes info
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
 
 
-  gpu_secondary_key_name (False, str, None)
+  datacenter (False, str, None)
     None
 
 
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
+  process_key_name (False, str, None)
+    None
 
 
   id (False, str, None)

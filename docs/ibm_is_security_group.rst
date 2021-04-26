@@ -20,13 +20,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    Security group name
+
 
   resource_group (False, str, None)
     Resource Group ID
@@ -38,10 +42,6 @@ Parameters
 
   tags (False, list, None)
     List of tags
-
-
-  name (False, str, None)
-    Security group name
 
 
   id (False, str, None)

@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,52 +28,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
   network_interfaces (False, list, None)
     None
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  tags (False, list, None)
-    list of tags for the instance
 
 
   volumes (False, list, None)
     List of volumes
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
 
 
   auto_delete_volume (False, bool, None)
@@ -84,12 +60,36 @@ Parameters
     Instance resource group
 
 
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  boot_volume (False, list, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) Instance name
 
 
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
   id (False, str, None)

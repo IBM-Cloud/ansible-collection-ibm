@@ -16,26 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - The name or ID of a Satellite location or cluster to assign the host to
-        required: False
-        type: str
-    host_id:
-        description:
-            - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
-        required: True
-        type: str
-    labels:
-        description:
-            - List of labels for the host
-        required: False
-        type: list
-        elements: str
     zone:
         description:
             - The zone within the cluster to assign the host to
@@ -56,6 +40,22 @@ options:
             - (Required for new resource) The name or ID of the Satellite location
         required: True
         type: str
+    cluster:
+        description:
+            - The name or ID of a Satellite location or cluster to assign the host to
+        required: False
+        type: str
+    host_id:
+        description:
+            - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
+        required: True
+        type: str
+    labels:
+        description:
+            - List of labels for the host
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,19 +102,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_id', 'str'),
     ('location', 'str'),
+    ('host_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
-    'host_id',
-    'labels',
     'zone',
     'worker_pool',
     'host_provider',
     'location',
+    'cluster',
+    'host_id',
+    'labels',
 ]
 
 # Params for Data source
@@ -131,16 +131,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
-    host_id=dict(
-        required=False,
-        type='str'),
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
     zone=dict(
         required=False,
         type='str'),
@@ -153,6 +143,16 @@ module_args = dict(
     location=dict(
         required=False,
         type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    host_id=dict(
+        required=False,
+        type='str'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_satellite_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

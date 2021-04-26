@@ -20,7 +20,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
@@ -28,56 +28,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  session_persistence_cookie_name (False, str, None)
-    Load Balancer Pool session persisence cookie name
-
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
   name (True, str, None)
     (Required for new resource) Load Balancer Pool name
-
-
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
 
 
   algorithm (True, str, None)
     (Required for new resource) Load Balancer Pool algorithm
 
 
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
   health_timeout (True, int, None)
     (Required for new resource) Load Balancer health timeout interval
+
+
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
 
 
   id (False, str, None)

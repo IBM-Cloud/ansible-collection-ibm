@@ -16,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_evault' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    hardware_instance_id:
-        description:
-            - Hardware instance ID
-        required: False
-        type: int
     tags:
         description:
             - Tags set for the resource
@@ -44,6 +39,11 @@ options:
     virtual_instance_id:
         description:
             - Virtual instance ID
+        required: False
+        type: int
+    hardware_instance_id:
+        description:
+            - Hardware instance ID
         required: False
         type: int
     id:
@@ -98,11 +98,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hardware_instance_id',
     'tags',
     'datacenter',
     'capacity',
     'virtual_instance_id',
+    'hardware_instance_id',
 ]
 
 # Params for Data source
@@ -113,17 +113,14 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'hardware_instance_id': ['virtual_instance_id'],
     'virtual_instance_id': ['hardware_instance_id'],
+    'hardware_instance_id': ['virtual_instance_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hardware_instance_id=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -135,6 +132,9 @@ module_args = dict(
         required=False,
         type='int'),
     virtual_instance_id=dict(
+        required=False,
+        type='int'),
+    hardware_instance_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_storage_evault',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

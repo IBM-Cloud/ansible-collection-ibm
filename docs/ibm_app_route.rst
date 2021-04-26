@@ -20,21 +20,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  domain_guid (True, str, None)
-    (Required for new resource) The guid of the associated domain
-
-
-  port (False, int, None)
-    The port of the route. Supported for domains of TCP router groups only.
-
 
   path (False, str, None)
     The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
@@ -50,6 +42,14 @@ Parameters
 
   space_guid (True, str, None)
     (Required for new resource) The guid of the associated space
+
+
+  domain_guid (True, str, None)
+    (Required for new resource) The guid of the associated domain
+
+
+  port (False, int, None)
+    The port of the route. Supported for domains of TCP router groups only.
 
 
   id (False, str, None)

@@ -16,10 +16,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
+    service_instance_guid:
+        description:
+            - (Required for new resource) The guid of the service instance for which to create service key
+        required: True
+        type: str
     parameters:
         description:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
@@ -34,11 +39,6 @@ options:
     name:
         description:
             - (Required for new resource) The name of the service key
-        required: True
-        type: str
-    service_instance_guid:
-        description:
-            - (Required for new resource) The guid of the service instance for which to create service key
         required: True
         type: str
     id:
@@ -87,16 +87,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('service_instance_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'service_instance_guid',
     'parameters',
     'tags',
     'name',
-    'service_instance_guid',
 ]
 
 # Params for Data source
@@ -119,6 +119,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    service_instance_guid=dict(
+        required=False,
+        type='str'),
     parameters=dict(
         required=False,
         type='dict'),
@@ -127,9 +130,6 @@ module_args = dict(
         elements='',
         type='list'),
     name=dict(
-        required=False,
-        type='str'),
-    service_instance_guid=dict(
         required=False,
         type='str'),
     id=dict(
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_service_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -206,7 +206,7 @@ def run_module():
             resource_type='ibm_service_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.1',
+            ibm_provider_version='1.23.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

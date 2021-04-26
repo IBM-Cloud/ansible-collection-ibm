@@ -15,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_dedicated_host' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
@@ -24,14 +24,14 @@ options:
             - The unique identifier of the resource group this dedicated host belongs to
         required: False
         type: str
-    name:
-        description:
-            - The unique name of this dedicated host
-        required: True
-        type: str
     host_group:
         description:
             - The unique identifier of the dedicated host group this dedicated host belongs to
+        required: True
+        type: str
+    name:
+        description:
+            - The unique name of this dedicated host
         required: True
         type: str
     generation:
@@ -67,15 +67,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('host_group', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group',
-    'name',
     'host_group',
+    'name',
 ]
 
 
@@ -89,10 +89,10 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    host_group=dict(
         required=True,
         type='str'),
-    host_group=dict(
+    name=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

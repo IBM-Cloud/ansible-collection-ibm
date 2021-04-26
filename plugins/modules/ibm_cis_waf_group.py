@@ -16,18 +16,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
-        required: True
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
         required: True
         type: str
     package_id:
@@ -38,6 +33,11 @@ options:
     group_id:
         description:
             - (Required for new resource) WAF Rule group id
+        required: True
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
         required: True
         type: str
     mode:
@@ -92,18 +92,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('domain_id', 'str'),
-    ('cis_id', 'str'),
     ('package_id', 'str'),
     ('group_id', 'str'),
+    ('cis_id', 'str'),
     ('mode', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain_id',
-    'cis_id',
     'package_id',
     'group_id',
+    'cis_id',
     'mode',
 ]
 
@@ -124,13 +124,13 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     package_id=dict(
         required=False,
         type='str'),
     group_id=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
         required=False,
         type='str'),
     mode=dict(
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_cis_waf_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

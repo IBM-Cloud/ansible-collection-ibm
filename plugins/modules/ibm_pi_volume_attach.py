@@ -16,25 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_attach' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI Instance name
-        required: True
-        type: str
-    status:
-        description:
-            - None
-        required: False
-        type: str
-    pi_volume_shareable:
-        description:
-            - None
-        required: False
-        type: bool
     volumeattachid:
         description:
             - Volume attachment ID
@@ -50,6 +35,21 @@ options:
             - (Required for new resource) Name of the volume to attach. Note these  volumes should have been created
         required: True
         type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI Instance name
+        required: True
+        type: str
+    status:
+        description:
+            - None
+        required: False
+        type: str
+    pi_volume_shareable:
+        description:
+            - None
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -92,19 +92,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_volume_attach_name', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
-    'status',
-    'pi_volume_shareable',
     'volumeattachid',
     'pi_cloud_instance_id',
     'pi_volume_attach_name',
+    'pi_instance_name',
+    'status',
+    'pi_volume_shareable',
 ]
 
 # Params for Data source
@@ -121,15 +121,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
-    status=dict(
-        required=False,
-        type='str'),
-    pi_volume_shareable=dict(
-        required=False,
-        type='bool'),
     volumeattachid=dict(
         required=False,
         type='str'),
@@ -139,6 +130,15 @@ module_args = dict(
     pi_volume_attach_name=dict(
         required=False,
         type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
+    status=dict(
+        required=False,
+        type='str'),
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_pi_volume_attach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

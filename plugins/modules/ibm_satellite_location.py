@@ -16,16 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.1
+    - IBM-Cloud terraform-provider-ibm v1.23.2
     - Terraform v0.12.20
 
 options:
-    cos_config:
-        description:
-            - COSBucket - IBM Cloud Object Storage bucket configuration details
-        required: False
-        type: list
-        elements: dict
     cos_credentials:
         description:
             - COSAuthorization - IBM Cloud Object Storage authorization keys
@@ -38,6 +32,11 @@ options:
         required: False
         type: list
         elements: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     location:
         description:
             - (Required for new resource) A unique name for the new Satellite location
@@ -58,6 +57,12 @@ options:
             - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
         type: str
+    cos_config:
+        description:
+            - COSBucket - IBM Cloud Object Storage bucket configuration details
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,13 +115,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cos_config',
     'cos_credentials',
     'zones',
+    'resource_group_id',
     'location',
     'managed_from',
     'description',
     'logging_account_id',
+    'cos_config',
 ]
 
 # Params for Data source
@@ -135,10 +141,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cos_config=dict(
-        required=False,
-        elements='',
-        type='list'),
     cos_credentials=dict(
         required=False,
         elements='',
@@ -147,6 +149,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     location=dict(
         required=False,
         type='str'),
@@ -159,6 +164,10 @@ module_args = dict(
     logging_account_id=dict(
         required=False,
         type='str'),
+    cos_config=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -224,7 +233,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.1',
+        ibm_provider_version='1.23.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +242,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.1',
+            ibm_provider_version='1.23.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

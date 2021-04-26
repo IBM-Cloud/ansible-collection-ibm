@@ -20,13 +20,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.1
+- IBM-Cloud terraform-provider-ibm v1.23.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  traffic_type (False, str, direct)
+    Configure how traffic is handled at the edge.
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
+
+
+  dns_type (True, str, None)
+    (Required for new resource) Type of the DNS record for this application
+
 
   protocol (True, str, None)
     (Required for new resource) Defines the protocol and port for this application
@@ -40,32 +52,24 @@ Parameters
     IP address and port of the origin for this Range application.
 
 
-  traffic_type (False, str, direct)
-    Configure how traffic is handled at the edge.
-
-
-  dns_type (True, str, None)
-    (Required for new resource) Type of the DNS record for this application
-
-
-  origin_dns (False, str, None)
-    DNS record pointing to the origin for this Range application.
-
-
   proxy_protocol (False, str, None)
     Allows for the true client IP to be passed to the service.
+
+
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
 
 
   tls (False, str, False)
     Configure if and how TLS connections are terminated at the edge.
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
+
+
+  origin_dns (False, str, None)
+    DNS record pointing to the origin for this Range application.
 
 
   origin_port (False, int, None)
@@ -74,10 +78,6 @@ Parameters
 
   ip_firewall (False, bool, None)
     Enables the IP Firewall for this application. Only available for TCP applications.
-
-
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
 
 
   edge_ips_connectivity (False, str, all)
