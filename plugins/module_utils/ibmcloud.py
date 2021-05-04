@@ -728,7 +728,7 @@ class Terraform:
     def _install_ibmcloud_tf_provider(self):
         filename = 'terraform-provider-ibm_v' + self.ibm_provider_version
         self._download_extract_zip(
-            "{0}v{1}/{2}_amd64.zip".format(
+            "{0}v{1}/terraform-provider-ibm_{1}_{2}_amd64.zip".format(
                 self.IBM_PROVIDER_BASE_URL, self.ibm_provider_version, self.platform))
         os.chmod(os.path.join(self.terraform_dir, filename), 0o755)
 
