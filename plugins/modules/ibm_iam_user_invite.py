@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_iam_user_invite
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_user_invite
+
 short_description: Configure IBM Cloud 'ibm_iam_user_invite' resource
 
 version_added: "2.8"
@@ -16,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_invite' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    users:
-        description:
-            - (Required for new resource) List of ibm id or email of user
-        required: True
-        type: list
-        elements: str
     access_groups:
         description:
             - access group ids to associate the inviting user
@@ -50,6 +46,12 @@ options:
         required: False
         type: list
         elements: dict
+    users:
+        description:
+            - (Required for new resource) List of ibm id or email of user
+        required: True
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +103,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'users',
     'access_groups',
     'iam_policy',
     'classic_infra_roles',
     'cloud_foundry_roles',
+    'users',
 ]
 
 # Params for Data source
@@ -122,10 +124,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    users=dict(
-        required=False,
-        elements='',
-        type='list'),
     access_groups=dict(
         required=False,
         elements='',
@@ -139,6 +137,10 @@ module_args = dict(
         elements='',
         type='list'),
     cloud_foundry_roles=dict(
+        required=False,
+        elements='',
+        type='list'),
+    users=dict(
         required=False,
         elements='',
         type='list'),
@@ -207,7 +209,7 @@ def run_module():
         resource_type='ibm_iam_user_invite',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

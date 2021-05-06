@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_vpc
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  classic_access (False, bool, False)
+    Set to true if classic access needs to enabled to VPC
+
 
   address_prefix_management (False, str, auto)
     Address Prefix management value
@@ -36,28 +43,24 @@ Parameters
     (Required for new resource) VPC name
 
 
-  default_network_acl_name (False, str, None)
-    Default Network ACL name
-
-
-  classic_access (False, bool, False)
-    Set to true if classic access needs to enabled to VPC
-
-
-  default_routing_table_name (False, str, None)
-    Default routing table name
-
-
   resource_group (False, str, None)
     Resource group info
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  default_network_acl_name (False, str, None)
+    Default Network ACL name
 
 
   default_security_group_name (False, str, None)
     Default security group name
 
 
-  tags (False, list, None)
-    List of tags
+  default_routing_table_name (False, str, None)
+    Default routing table name
 
 
   id (False, str, None)

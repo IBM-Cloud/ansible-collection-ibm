@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_container_addons_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_addons
+
 short_description: Retrieve IBM Cloud 'ibm_container_addons' resource
 
 version_added: "2.8"
@@ -15,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_addons' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -76,7 +78,7 @@ def run_module():
         resource_type='ibm_container_addons',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

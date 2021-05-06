@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_pi_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/pi_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_image_id (True, str, None)
-    (Required for new resource) PI instance image name
+  pi_pin_policy (False, str, none)
+    Pin Policy of the instance
 
 
   pi_user_data (False, str, None)
@@ -40,8 +43,24 @@ Parameters
     PI Instance replicas count
 
 
+  pi_health_status (False, str, OK)
+    Allow the user to set the status of the lpar so that they can connect to it faster
+
+
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) This is the Power Instance id that is assigned to the account
+
+
+  pi_virtual_cores_assigned (False, int, None)
+    Virtual Cores Assigned to the PVMInstance
+
+
+  pi_network_ids (True, list, None)
+    (Required for new resource) List of Networks that have been configured for the account
+
+
+  pi_processors (True, float, None)
+    (Required for new resource) Processors count
 
 
   pi_instance_name (True, str, None)
@@ -52,48 +71,32 @@ Parameters
     (Required for new resource) SSH key name
 
 
-  pi_pin_policy (False, str, none)
-    Pin Policy of the instance
-
-
-  pi_network_ids (True, list, None)
-    (Required for new resource) List of Networks that have been configured for the account
-
-
-  pi_proc_type (True, str, None)
-    (Required for new resource) Instance processor type
+  pi_sys_type (True, str, None)
+    (Required for new resource) PI Instance system type
 
 
   pi_replication_policy (False, str, none)
     Replication policy for the PI Instance
 
 
-  pi_virtual_cores_assigned (False, int, None)
-    Virtual Cores Assigned to the PVMInstance
+  pi_replication_scheme (False, str, suffix)
+    Replication scheme
+
+
+  pi_image_id (True, str, None)
+    (Required for new resource) PI instance image name
+
+
+  pi_proc_type (True, str, None)
+    (Required for new resource) Instance processor type
 
 
   pi_memory (True, float, None)
     (Required for new resource) Memory size
 
 
-  pi_sys_type (True, str, None)
-    (Required for new resource) PI Instance system type
-
-
-  pi_replication_scheme (False, str, suffix)
-    Replication scheme
-
-
   pi_volume_ids (False, list, None)
     List of PI volumes
-
-
-  pi_processors (True, float, None)
-    (Required for new resource) Processors count
-
-
-  pi_health_status (False, str, OK)
-    Allow the user to set the status of the lpar so that they can connect to it faster
 
 
   id (False, str, None)

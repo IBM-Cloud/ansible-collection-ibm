@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_iam_service_api_key' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_api_key
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  store_value (False, bool, None)
-    Boolean value deciding whether API key value is retrievable in the future
-
-
-  file (False, str, None)
-    File where api key is to be stored
-
-
   name (True, str, None)
     (Required for new resource) Name of the Service API key
-
-
-  iam_service_id (True, str, None)
-    (Required for new resource) The service iam_id that this API key authenticates
-
-
-  locked (False, bool, None)
-    The API key cannot be changed if set to true
 
 
   description (False, str, None)
     description of the API key
 
 
+  iam_service_id (True, str, None)
+    (Required for new resource) The service iam_id that this API key authenticates
+
+
   apikey (False, str, None)
     API key value for this API key
+
+
+  locked (False, bool, None)
+    The API key cannot be changed if set to true
+
+
+  store_value (False, bool, None)
+    Boolean value deciding whether API key value is retrievable in the future
+
+
+  file (False, str, None)
+    File where api key is to be stored
 
 
   id (False, str, None)

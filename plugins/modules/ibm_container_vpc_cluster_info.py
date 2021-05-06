@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_container_vpc_cluster_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_vpc_cluster
+
 short_description: Retrieve IBM Cloud 'ibm_container_vpc_cluster' resource
 
 version_added: "2.8"
@@ -15,16 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    alb_type:
-        description:
-            - None
-        required: False
-        type: str
-        default: all
     name:
         description:
             - Name or id of the cluster
@@ -35,6 +31,12 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    alb_type:
+        description:
+            - None
+        required: False
+        type: str
+        default: all
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -52,9 +54,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'alb_type',
     'name',
     'resource_group_id',
+    'alb_type',
 ]
 
 
@@ -65,13 +67,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    alb_type=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
+        required=False,
+        type='str'),
+    alb_type=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -94,7 +96,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

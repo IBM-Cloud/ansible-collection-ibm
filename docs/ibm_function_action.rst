@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_function_action' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/function_action
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
-
-
-  limits (False, list, None)
-    None
-
 
   exec (True, list, None)
     (Required for new resource) Execution info
@@ -52,8 +47,16 @@ Parameters
     (Required for new resource) Name of action.
 
 
+  limits (False, list, None)
+    None
+
+
   user_defined_parameters (False, str, [])
     Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
+
+
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
 
 
   id (False, str, None)

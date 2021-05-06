@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager_policy' re
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_instance_group_manager_policy
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  policy_type (True, str, None)
-    (Required for new resource) The type of Policy for the Instance Group
-
-
-  name (False, str, None)
-    instance group manager policy name
-
 
   instance_group (True, str, None)
     (Required for new resource) instance group ID
@@ -50,6 +45,14 @@ Parameters
 
   metric_value (True, int, None)
     (Required for new resource) The metric value to be evaluated
+
+
+  policy_type (True, str, None)
+    (Required for new resource) The type of Policy for the Instance Group
+
+
+  name (False, str, None)
+    instance group manager policy name
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_function_rule' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/function_rule
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  trigger_name (True, str, None)
-    (Required for new resource) Name of trigger.
-
-
-  action_name (True, str, None)
-    (Required for new resource) Name of action.
-
-
   namespace (True, str, None)
     (Required for new resource) IBM Cloud function namespace.
 
 
   name (True, str, None)
     (Required for new resource) Name of rule.
+
+
+  trigger_name (True, str, None)
+    (Required for new resource) Name of trigger.
+
+
+  action_name (True, str, None)
+    (Required for new resource) Name of action.
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kp_key
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  standard_key (False, bool, False)
+    Standard key type
 
 
   encrypted_nonce (False, str, None)
@@ -44,12 +47,12 @@ Parameters
     (Required for new resource) Key name
 
 
-  standard_key (False, bool, False)
-    Standard key type
-
-
   payload (False, str, None)
     None
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
 
 
   key_protect_id (True, str, None)

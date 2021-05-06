@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/storage_file
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,36 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  notes (False, str, None)
+    Notes
+
+
+  capacity (True, int, None)
+    (Required for new resource) Storage capacity
 
 
   snapshot_capacity (False, int, None)
     Snapshot capacity
 
 
-  hourly_billing (False, bool, False)
-    Hourly based billing type
-
-
-  iops (True, float, None)
-    (Required for new resource) iops rate
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
 
 
   allowed_subnets (False, list, None)
     Allowed network subnets
 
 
-  notes (False, str, None)
-    Notes
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
+  iops (True, float, None)
+    (Required for new resource) iops rate
 
 
   allowed_ip_addresses (False, list, None)
@@ -68,16 +67,20 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    Tags set for the storage volume
+  hourly_billing (False, bool, False)
+    Hourly based billing type
 
 
   type (True, str, None)
     (Required for new resource) Storage type
 
 
-  capacity (True, int, None)
-    (Required for new resource) Storage capacity
+  tags (False, list, None)
+    Tags set for the storage volume
+
+
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
 
 
   id (False, str, None)

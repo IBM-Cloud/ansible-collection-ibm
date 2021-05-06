@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/container_worker_pool
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,24 +35,12 @@ Parameters
     (Required for new resource) Cluster name
 
 
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
-
-
   size_per_zone (True, int, None)
     (Required for new resource) Number of nodes per zone
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
   hardware (False, str, shared)
     Hardware type
-
-
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
 
 
   resource_group_id (False, str, None)
@@ -58,6 +49,18 @@ Parameters
 
   machine_type (True, str, None)
     (Required for new resource) worker nodes machine type
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
 
 
   labels (False, dict, None)

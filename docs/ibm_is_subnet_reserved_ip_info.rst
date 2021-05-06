@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_subnet_reserved_ip
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  reserved_ip (True, str, None)
-    The reserved IP identifier.
-
-
   subnet (True, str, None)
     The subnet identifier.
+
+
+  reserved_ip (True, str, None)
+    The reserved IP identifier.
 
 
   generation (False, int, 2)

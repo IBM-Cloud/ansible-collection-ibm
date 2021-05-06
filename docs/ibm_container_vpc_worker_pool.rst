@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/container_vpc_worker_pool
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -36,6 +39,14 @@ Parameters
     (Required for new resource) cluster node falvor
 
 
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
+
+
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
 
@@ -48,16 +59,8 @@ Parameters
     Labels
 
 
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
 
 
   entitlement (False, str, None)

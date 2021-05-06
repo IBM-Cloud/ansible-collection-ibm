@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_dl_provider_gateway
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_provider_gateway
+
 short_description: Configure IBM Cloud 'ibm_dl_provider_gateway' resource
 
 version_added: "2.8"
@@ -16,31 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    bgp_asn:
-        description:
-            - (Required for new resource) BGP ASN
-        required: True
-        type: int
-    tags:
-        description:
-            - Tags for the direct link gateway
-        required: False
-        type: list
-        elements: str
     bgp_cer_cidr:
         description:
             - BGP customer edge router CIDR
         required: False
         type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
     port:
         description:
             - (Required for new resource) Gateway port
@@ -51,6 +37,16 @@ options:
             - (Required for new resource) The unique user-defined name for this gateway
         required: True
         type: str
+    bgp_asn:
+        description:
+            - (Required for new resource) BGP ASN
+        required: True
+        type: int
+    speed_mbps:
+        description:
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
     bgp_ibm_cidr:
         description:
             - BGP IBM CIDR
@@ -61,6 +57,12 @@ options:
             - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
         required: True
         type: str
+    tags:
+        description:
+            - Tags for the direct link gateway
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,23 +109,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bgp_asn', 'int'),
-    ('speed_mbps', 'int'),
     ('port', 'str'),
     ('name', 'str'),
+    ('bgp_asn', 'int'),
+    ('speed_mbps', 'int'),
     ('customer_account_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bgp_asn',
-    'tags',
     'bgp_cer_cidr',
-    'speed_mbps',
     'port',
     'name',
+    'bgp_asn',
+    'speed_mbps',
     'bgp_ibm_cidr',
     'customer_account_id',
+    'tags',
 ]
 
 # Params for Data source
@@ -140,31 +142,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bgp_asn=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     bgp_cer_cidr=dict(
         required=False,
         type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
     port=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    bgp_asn=dict(
+        required=False,
+        type='int'),
+    speed_mbps=dict(
+        required=False,
+        type='int'),
     bgp_ibm_cidr=dict(
         required=False,
         type='str'),
     customer_account_id=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -230,7 +232,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

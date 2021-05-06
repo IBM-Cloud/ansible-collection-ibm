@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_dns_glb_pool' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dns_glb_pool
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  monitor (False, str, None)
-    The ID of the load balancer monitor to be associated to this pool
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
+
+
+  origins (True, list, None)
+    (Required for new resource) Origins info
+
+
+  healthy_origins_threshold (False, int, None)
+    The minimum number of origins that must be healthy for this pool to serve traffic
 
 
   name (True, str, None)
@@ -40,28 +51,20 @@ Parameters
     Descriptive text of the load balancer pool
 
 
-  healthcheck_subnets (False, list, None)
-    Health check subnet crn of VSIs
-
-
-  origins (True, list, None)
-    (Required for new resource) Origins info
+  monitor (False, str, None)
+    The ID of the load balancer monitor to be associated to this pool
 
 
   notification_channel (False, str, None)
     The notification channel,It is a webhook url
 
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  healthy_origins_threshold (False, int, None)
-    The minimum number of origins that must be healthy for this pool to serve traffic
-
-
   healthcheck_region (False, str, None)
     Health check region of VSIs
+
+
+  healthcheck_subnets (False, list, None)
+    Health check subnet crn of VSIs
 
 
   enabled (False, bool, None)

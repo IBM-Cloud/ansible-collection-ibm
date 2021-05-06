@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_public_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zone (True, str, None)
+    (Required for new resource) Public gateway zone info
+
+
   name (True, str, None)
     (Required for new resource) Name of the Public gateway instance
 
 
-  resource_group (False, str, None)
-    Public gateway resource group info
-
-
-  zone (True, str, None)
-    (Required for new resource) Public gateway zone info
+  floating_ip (False, dict, None)
+    None
 
 
   tags (False, list, None)
     Service tags for the public gateway instance
 
 
-  floating_ip (False, dict, None)
-    None
+  resource_group (False, str, None)
+    Public gateway resource group info
 
 
   vpc (True, str, None)

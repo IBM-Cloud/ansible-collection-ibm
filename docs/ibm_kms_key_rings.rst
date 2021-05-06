@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_kms_key_rings' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key_rings
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Key protect Instance GUID
-
-
   key_ring_id (True, str, None)
     (Required for new resource) User defined unique ID for the key ring
 
 
   endpoint_type (False, str, public)
     public or private
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect Instance GUID
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_instance_template
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  user_data (False, str, None)
+    User data given for the instance
 
 
   image (True, str, None)
     (Required for new resource) image name
-
-
-  boot_volume (False, list, None)
-    None
 
 
   resource_group (False, str, None)
@@ -60,20 +51,32 @@ Parameters
     (Required for new resource) SSH key Ids for the instance template
 
 
-  volume_attachments (False, list, None)
-    None
-
-
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
+
+
+  volume_attachments (False, list, None)
+    None
 
 
   network_interfaces (False, list, None)
     None
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  boot_volume (False, list, None)
+    None
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   id (False, str, None)

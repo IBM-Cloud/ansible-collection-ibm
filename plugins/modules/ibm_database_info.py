@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_database_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/database
+
 short_description: Retrieve IBM Cloud 'ibm_database' resource
 
 version_added: "2.8"
@@ -15,19 +17,20 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - Resource instance name for example, my Database instance
         required: True
-        type: str
-    location:
-        description:
-            - The location or the region in which the Database instance exists
-        required: False
         type: str
     service:
         description:
@@ -39,12 +42,11 @@ options:
             - The id of the resource group in which the Database instance is present
         required: False
         type: str
-    tags:
+    location:
         description:
-            - None
+            - The location or the region in which the Database instance exists
         required: False
-        type: list
-        elements: str
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -83,11 +85,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'name',
-    'location',
     'service',
     'resource_group_id',
-    'tags',
+    'location',
 ]
 
 
@@ -98,11 +100,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     name=dict(
         required=True,
-        type='str'),
-    location=dict(
-        required=False,
         type='str'),
     service=dict(
         required=False,
@@ -110,10 +113,9 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    tags=dict(
+    location=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -148,7 +150,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

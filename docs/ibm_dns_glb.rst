@@ -15,34 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_dns_glb' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dns_glb
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Name of the load balancer
-
-
-  enabled (False, bool, None)
-    Whether the load balancer is enabled
-
-
-  az_pools (False, list, None)
-    Map availability zones to pool ID's.
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone Id
-
 
   description (False, str, None)
     Descriptive text of the load balancer
@@ -52,16 +39,32 @@ Parameters
     Time to live in second
 
 
-  fallback_pool (True, str, None)
-    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
-
-
   default_pools (True, list, None)
     (Required for new resource) A list of pool IDs ordered by their failover priority
 
 
   instance_id (True, str, None)
     (Required for new resource) The GUID of the private DNS.
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone Id
+
+
+  az_pools (False, list, None)
+    Map availability zones to pool ID's.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the load balancer
+
+
+  enabled (False, bool, None)
+    Whether the load balancer is enabled
+
+
+  fallback_pool (True, str, None)
+    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
 
 
   id (False, str, None)

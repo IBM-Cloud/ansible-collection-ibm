@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_cm_catalog' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cm_catalog
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  short_description (False, str, None)
+    Description in the requested language.
+
 
   catalog_icon_url (False, str, None)
     URL for an icon associated with this catalog.
@@ -38,10 +45,6 @@ Parameters
 
   label (True, str, None)
     (Required for new resource) Display Name in the requested language.
-
-
-  short_description (False, str, None)
-    Description in the requested language.
 
 
   id (False, str, None)

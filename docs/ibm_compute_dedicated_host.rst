@@ -15,18 +15,37 @@ Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_dedicated_host
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  wait_time_minutes (False, int, 90)
+    None
+
+
+  domain (True, str, None)
+    (Required for new resource) The domain of dedicatated host.
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+
+
+  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
+    The flavor of the dedicatated host.
+
 
   hourly_billing (False, bool, True)
     The billing type for the dedicatated host.
@@ -36,28 +55,12 @@ Parameters
     (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
 
 
-  hostname (True, str, None)
-    (Required for new resource) The host name of dedicatated host.
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
   tags (False, list, None)
     None
 
 
-  domain (True, str, None)
-    (Required for new resource) The domain of dedicatated host.
-
-
-  flavor (False, str, 56_CORES_X_242_RAM_X_1_4_TB)
-    The flavor of the dedicatated host.
+  hostname (True, str, None)
+    (Required for new resource) The host name of dedicatated host.
 
 
   id (False, str, None)

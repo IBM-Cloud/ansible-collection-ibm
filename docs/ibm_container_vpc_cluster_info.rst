@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_container_vpc_cluster' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_vpc_cluster
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_type (False, str, all)
-    None
-
-
   name (False, str, None)
     Name or id of the cluster
 
 
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  alb_type (False, str, all)
+    None
 
 
   ibmcloud_api_key (True, any, None)

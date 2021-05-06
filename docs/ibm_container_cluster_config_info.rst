@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_cluster_config
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,20 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   network (False, bool, False)
     If set to true will download the Calico network config with the Admin config
 
 
-  admin (False, bool, False)
-    If set to true will download the config for admin
-
-
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   cluster_name_id (True, str, None)
@@ -48,6 +47,10 @@ Parameters
 
   config_dir (False, str, None)
     The directory where the cluster config to be downloaded. Default is home directory
+
+
+  admin (False, bool, False)
+    If set to true will download the config for admin
 
 
   ibmcloud_api_key (True, any, None)

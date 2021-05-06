@@ -15,18 +15,29 @@ Create, update or destroy an IBM Cloud 'ibm_cis_page_rule' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_page_rule
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  targets (True, list, None)
+    (Required for new resource) Page rule targets
+
+
+  actions (True, list, None)
+    (Required for new resource) Page rule actions
+
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -42,14 +53,6 @@ Parameters
 
   status (False, str, disabled)
     Page Rule status
-
-
-  targets (True, list, None)
-    (Required for new resource) Page rule targets
-
-
-  actions (True, list, None)
-    (Required for new resource) Page rule actions
 
 
   id (False, str, None)

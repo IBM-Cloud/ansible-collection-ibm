@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cm_offering_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cm_offering_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  kind_format (True, str, None)
+    (Required for new resource) the format this instance has (helm, operator, ova...).
+
+
   cluster_id (True, str, None)
     (Required for new resource) Cluster ID.
 
 
-  cluster_namespaces (True, list, None)
-    (Required for new resource) List of target namespaces to install into.
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
 
 
   cluster_all_namespaces (True, bool, None)
@@ -44,6 +51,10 @@ Parameters
     (Required for new resource) the label for this instance.
 
 
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
   catalog_id (True, str, None)
     (Required for new resource) Catalog ID this instance was created from.
 
@@ -52,16 +63,8 @@ Parameters
     (Required for new resource) The version this instance was installed from (not version id).
 
 
-  kind_format (True, str, None)
-    (Required for new resource) the format this instance has (helm, operator, ova...).
-
-
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
-
-
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
+  cluster_namespaces (True, list, None)
+    (Required for new resource) List of target namespaces to install into.
 
 
   id (False, str, None)

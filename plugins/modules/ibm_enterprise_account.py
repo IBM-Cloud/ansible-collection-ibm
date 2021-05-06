@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_enterprise_account
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/enterprise_account
+
 short_description: Configure IBM Cloud 'ibm_enterprise_account' resource
 
 version_added: "2.8"
@@ -16,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
     name:
         description:
             - The name of the account. This field must have 3 - 60 characters.
-        required: False
-        type: str
-    enterprise_id:
-        description:
-            - The enterprise ID that the account is a part of.
         required: False
         type: str
     account_id:
@@ -40,15 +37,20 @@ options:
             - The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
         required: False
         type: str
+    parent:
+        description:
+            - (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
+        required: True
+        type: str
     enterprise_account_id:
         description:
             - The enterprise account ID.
         required: False
         type: str
-    parent:
+    enterprise_id:
         description:
-            - (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
-        required: True
+            - The enterprise ID that the account is a part of.
+        required: False
         type: str
     id:
         description:
@@ -102,11 +104,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'enterprise_id',
     'account_id',
     'owner_iam_id',
-    'enterprise_account_id',
     'parent',
+    'enterprise_account_id',
+    'enterprise_id',
 ]
 
 # Params for Data source
@@ -126,19 +128,19 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    enterprise_id=dict(
-        required=False,
-        type='str'),
     account_id=dict(
         required=False,
         type='str'),
     owner_iam_id=dict(
         required=False,
         type='str'),
+    parent=dict(
+        required=False,
+        type='str'),
     enterprise_account_id=dict(
         required=False,
         type='str'),
-    parent=dict(
+    enterprise_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -206,7 +208,7 @@ def run_module():
         resource_type='ibm_enterprise_account',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

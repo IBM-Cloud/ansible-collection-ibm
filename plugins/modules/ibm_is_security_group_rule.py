@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_security_group_rule
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_security_group_rule
+
 short_description: Configure IBM Cloud 'ibm_is_security_group_rule' resource
 
 version_added: "2.8"
@@ -16,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
+    group:
+        description:
+            - (Required for new resource) Security group id
+        required: True
+        type: str
     direction:
         description:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
@@ -35,11 +42,6 @@ options:
         description:
             - Security group id: an IP address, a CIDR block, or a single security group identifier
         required: False
-        type: str
-    group:
-        description:
-            - (Required for new resource) Security group id
-        required: True
         type: str
     icmp:
         description:
@@ -105,16 +107,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('direction', 'str'),
     ('group', 'str'),
+    ('direction', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'group',
     'direction',
     'ip_version',
     'remote',
-    'group',
     'icmp',
     'tcp',
     'udp',
@@ -137,6 +139,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    group=dict(
+        required=False,
+        type='str'),
     direction=dict(
         required=False,
         type='str'),
@@ -144,9 +149,6 @@ module_args = dict(
         required=False,
         type='str'),
     remote=dict(
-        required=False,
-        type='str'),
-    group=dict(
         required=False,
         type='str'),
     icmp=dict(
@@ -238,7 +240,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

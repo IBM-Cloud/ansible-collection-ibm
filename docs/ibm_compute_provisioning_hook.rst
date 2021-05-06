@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_compute_provisioning_hook' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_provisioning_hook
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Provision hook name
-
-
   uri (True, str, None)
     (Required for new resource) URI of the hook
 
 
   tags (False, list, None)
     Tags associated with resource
+
+
+  name (True, str, None)
+    (Required for new resource) Provision hook name
 
 
   id (False, str, None)

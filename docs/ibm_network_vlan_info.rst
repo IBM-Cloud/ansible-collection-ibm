@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_network_vlan' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/network_vlan
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,15 +29,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    None
-
-
   number (False, int, None)
     None
 
 
   router_hostname (False, str, None)
+    None
+
+
+  name (False, str, None)
     None
 
 

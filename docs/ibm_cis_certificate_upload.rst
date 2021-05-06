@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_certificate_upload' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_certificate_upload
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,14 +35,6 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  private_key (True, str, None)
-    (Required for new resource) Certificate private key
-
-
   priority (False, int, None)
     Certificate priority
 
@@ -48,8 +43,16 @@ Parameters
     (Required for new resource) Certificate key
 
 
+  private_key (True, str, None)
+    (Required for new resource) Certificate private key
+
+
   bundle_method (False, str, ubiquitous)
     Certificate bundle method
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)

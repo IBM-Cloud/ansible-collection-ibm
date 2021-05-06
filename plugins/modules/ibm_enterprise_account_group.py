@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_enterprise_account_group
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/enterprise_account_group
+
 short_description: Configure IBM Cloud 'ibm_enterprise_account_group' resource
 
 version_added: "2.8"
@@ -16,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    name:
+    primary_contact_iam_id:
         description:
-            - (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
+            - (Required for new resource) The IAM ID of the primary contact for this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
         required: True
         type: str
     parent:
@@ -30,9 +32,9 @@ options:
             - (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
         required: True
         type: str
-    primary_contact_iam_id:
+    name:
         description:
-            - (Required for new resource) The IAM ID of the primary contact for this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
+            - (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
         required: True
         type: str
     id:
@@ -81,16 +83,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('parent', 'str'),
     ('primary_contact_iam_id', 'str'),
+    ('parent', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'parent',
     'primary_contact_iam_id',
+    'parent',
+    'name',
 ]
 
 # Params for Data source
@@ -107,13 +109,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    primary_contact_iam_id=dict(
         required=False,
         type='str'),
     parent=dict(
         required=False,
         type='str'),
-    primary_contact_iam_id=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -181,7 +183,7 @@ def run_module():
         resource_type='ibm_enterprise_account_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

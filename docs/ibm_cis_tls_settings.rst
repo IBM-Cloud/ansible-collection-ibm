@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_cis_tls_settings' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_tls_settings
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -42,10 +49,6 @@ Parameters
 
   tls_1_3 (False, str, None)
     TLS 1.3 setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
 
 
   id (False, str, None)

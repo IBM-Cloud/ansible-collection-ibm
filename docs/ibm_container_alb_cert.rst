@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/container_alb_cert
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cert_crn (True, str, None)
-    (Required for new resource) Certificate CRN id
-
-
-  secret_name (True, str, None)
-    (Required for new resource) Secret name
-
 
   persistence (False, bool, None)
     Persistence of secret
@@ -46,6 +41,14 @@ Parameters
 
   namespace (False, str, ibm-cert-store)
     Namespace of the secret
+
+
+  cert_crn (True, str, None)
+    (Required for new resource) Certificate CRN id
+
+
+  secret_name (True, str, None)
+    (Required for new resource) Secret name
 
 
   id (False, str, None)

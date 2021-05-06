@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,15 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    None
-
-
   logging (False, bool, False)
     Logging of Load Balancer
 
 
+  name (True, str, None)
+    (Required for new resource) Load Balancer name
+
+
   tags (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
     None
 
 
@@ -44,20 +51,16 @@ Parameters
     The profile to use for this load balancer.
 
 
-  name (True, str, None)
-    (Required for new resource) Load Balancer name
-
-
   type (False, str, public)
     Load Balancer type
 
 
-  security_groups (False, list, None)
-    Load Balancer securitygroups list
-
-
   subnets (True, list, None)
     (Required for new resource) Load Balancer subnets list
+
+
+  security_groups (False, list, None)
+    Load Balancer securitygroups list
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_enterprise_account' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/enterprise_account
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,10 +35,6 @@ Parameters
     The name of the account. This field must have 3 - 60 characters.
 
 
-  enterprise_id (False, str, None)
-    The enterprise ID that the account is a part of.
-
-
   account_id (False, str, None)
     The source account id of account to be imported
 
@@ -44,12 +43,16 @@ Parameters
     The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
 
+  parent (True, str, None)
+    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
+
+
   enterprise_account_id (False, str, None)
     The enterprise account ID.
 
 
-  parent (True, str, None)
-    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
+  enterprise_id (False, str, None)
+    The enterprise ID that the account is a part of.
 
 
   id (False, str, None)

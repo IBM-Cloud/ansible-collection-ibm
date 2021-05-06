@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_compute_vm_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_vm_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,55 +31,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  file_storage_ids (False, list, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  network_speed (False, int, 100)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  hourly_billing (False, bool, True)
+  os_reference_code (False, str, None)
     None
 
 
@@ -84,87 +39,11 @@ Parameters
     None
 
 
-  post_install_script_uri (False, str, None)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  memory (False, int, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  cores (False, int, None)
-    None
-
-
   public_security_group_ids (False, list, None)
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  transient (False, bool, None)
-    None
-
-
-  local_disk (False, bool, True)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  disks (False, list, None)
+  network_speed (False, int, 100)
     None
 
 
@@ -172,11 +51,103 @@ Parameters
     None
 
 
-  datacenter (False, str, None)
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  user_metadata (False, str, None)
     None
 
 
-  private_vlan_id (False, int, None)
+  notes (False, str, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  transient (False, bool, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  cores (False, int, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  domain (False, str, None)
+    None
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
@@ -184,11 +155,43 @@ Parameters
     None
 
 
+  image_id (False, int, None)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  hostname (False, str, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
   tags (False, list, None)
     None
 
 
-  public_bandwidth_unlimited (False, bool, False)
+  bulk_vms (False, list, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  private_vlan_id (False, int, None)
     None
 
 

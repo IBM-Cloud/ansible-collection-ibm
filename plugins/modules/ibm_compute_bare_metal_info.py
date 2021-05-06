@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_compute_bare_metal_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/compute_bare_metal
+
 short_description: Retrieve IBM Cloud 'ibm_compute_bare_metal' resource
 
 version_added: "2.8"
@@ -15,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    hostname:
-        description:
-            - The hostname of the bare metal server
-        required: False
-        type: str
     domain:
         description:
             - The domain of the bare metal server
+        required: False
+        type: str
+    global_identifier:
+        description:
+            - The unique global identifier of the bare metal server
         required: False
         type: str
     most_recent:
@@ -35,9 +37,9 @@ options:
         required: False
         type: bool
         default: False
-    global_identifier:
+    hostname:
         description:
-            - The unique global identifier of the bare metal server
+            - The hostname of the bare metal server
         required: False
         type: str
     iaas_classic_username:
@@ -77,34 +79,34 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hostname',
     'domain',
-    'most_recent',
     'global_identifier',
+    'most_recent',
+    'hostname',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'hostname': ['global_identifier'],
     'domain': ['global_identifier'],
-    'most_recent': ['global_identifier'],
     'global_identifier': ['hostname', 'domain', 'most_recent'],
+    'most_recent': ['global_identifier'],
+    'hostname': ['global_identifier'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hostname=dict(
+    domain=dict(
         required=False,
         type='str'),
-    domain=dict(
+    global_identifier=dict(
         required=False,
         type='str'),
     most_recent=dict(
         required=False,
         type='bool'),
-    global_identifier=dict(
+    hostname=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -141,7 +143,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

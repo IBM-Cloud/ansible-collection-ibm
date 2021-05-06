@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_container_vpc_cluster_worker_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_vpc_cluster_worker
+
 short_description: Retrieve IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 
 version_added: "2.8"
@@ -15,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_vpc_cluster_worker' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    worker_id:
-        description:
-            - ID of the worker
-        required: True
-        type: str
     cluster_name_id:
         description:
             - Name or ID of the cluster
@@ -33,6 +30,11 @@ options:
         description:
             - ID of the resource group.
         required: False
+        type: str
+    worker_id:
+        description:
+            - ID of the worker
+        required: True
         type: str
     ibmcloud_api_key:
         description:
@@ -47,15 +49,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker_id', 'str'),
     ('cluster_name_id', 'str'),
+    ('worker_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_id',
     'cluster_name_id',
     'resource_group_id',
+    'worker_id',
 ]
 
 
@@ -66,14 +68,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_id=dict(
-        required=True,
-        type='str'),
     cluster_name_id=dict(
         required=True,
         type='str'),
     resource_group_id=dict(
         required=False,
+        type='str'),
+    worker_id=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -95,7 +97,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster_worker',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

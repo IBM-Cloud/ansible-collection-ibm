@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/compute_bare_metal
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hostname (False, str, None)
-    The hostname of the bare metal server
-
-
   domain (False, str, None)
     The domain of the bare metal server
+
+
+  global_identifier (False, str, None)
+    The unique global identifier of the bare metal server
 
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
 
 
-  global_identifier (False, str, None)
-    The unique global identifier of the bare metal server
+  hostname (False, str, None)
+    The hostname of the bare metal server
 
 
   iaas_classic_username (False, any, None)

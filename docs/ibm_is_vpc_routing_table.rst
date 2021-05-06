@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_vpc_routing_table
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  route_direct_link_ingress (False, bool, False)
+    If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
+
 
   route_transit_gateway_ingress (False, bool, False)
     If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
@@ -36,16 +43,12 @@ Parameters
     If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
 
 
-  vpc (True, str, None)
-    (Required for new resource) The VPC identifier.
-
-
-  route_direct_link_ingress (False, bool, False)
-    If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
-
-
   name (False, str, None)
     The user-defined name for this routing table.
+
+
+  vpc (True, str, None)
+    (Required for new resource) The VPC identifier.
 
 
   id (False, str, None)

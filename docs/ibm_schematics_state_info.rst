@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_schematics_state' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/schematics_state
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  workspace_id (True, str, None)
-    The ID of the workspace for which you want to retrieve the Terraform statefile. To find the workspace ID, use the `GET /v1/workspaces` API.
-
-
   template_id (True, str, None)
     The ID of the Terraform template for which you want to retrieve the Terraform statefile. When you create a workspace, the Terraform template that your workspace points to is assigned a unique ID. To find this ID, use the `GET /v1/workspaces` API and review the `template_data.id` value.
+
+
+  workspace_id (True, str, None)
+    The ID of the workspace for which you want to retrieve the Terraform statefile. To find the workspace ID, use the `GET /v1/workspaces` API.
 
 
   iaas_classic_username (False, any, None)

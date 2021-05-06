@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_function_package' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/function_package
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Name of package.
-
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
-
 
   bind_package_name (False, str, None)
     Name of package to be binded.
@@ -44,12 +39,20 @@ Parameters
     (Required for new resource) IBM Cloud function namespace.
 
 
-  publish (False, bool, False)
-    Package visibilty.
-
-
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of package.
+
+
+  publish (False, bool, False)
+    Package visibilty.
 
 
   id (False, str, None)

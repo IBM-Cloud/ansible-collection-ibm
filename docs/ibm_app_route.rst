@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_app_route' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/app_route
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  path (False, str, None)
-    The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
-
-
-  tags (False, list, None)
-    None
-
 
   host (False, str, None)
     The host portion of the route. Required for shared-domains.
@@ -50,6 +45,14 @@ Parameters
 
   port (False, int, None)
     The port of the route. Supported for domains of TCP router groups only.
+
+
+  path (False, str, None)
+    The path for a route as raw text.Paths must be between 2 and 128 characters.Paths must start with a forward slash '/'.Paths must not contain a '?'
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

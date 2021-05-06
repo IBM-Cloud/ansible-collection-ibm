@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_compute_placement_group
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_placement_group
+
 short_description: Configure IBM Cloud 'ibm_compute_placement_group' resource
 
 version_added: "2.8"
@@ -16,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -204,7 +206,7 @@ def run_module():
         resource_type='ibm_compute_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -213,7 +215,7 @@ def run_module():
             resource_type='ibm_compute_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

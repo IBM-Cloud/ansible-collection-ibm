@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_pi_key' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/pi_key
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
   pi_key_name (True, str, None)
     (Required for new resource) Key name in the PI instance
 
 
   pi_ssh_key (True, str, None)
     (Required for new resource) PI instance key info
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

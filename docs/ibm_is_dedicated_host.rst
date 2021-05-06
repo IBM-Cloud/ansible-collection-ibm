@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_dedicated_host
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  instance_placement_enabled (False, bool, True)
+    If set to true, instances can be placed on this dedicated host.
+
 
   profile (True, str, None)
     (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
@@ -38,10 +45,6 @@ Parameters
 
   resource_group (False, str, None)
     The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-
-
-  instance_placement_enabled (False, bool, True)
-    If set to true, instances can be placed on this dedicated host.
 
 
   name (False, str, None)

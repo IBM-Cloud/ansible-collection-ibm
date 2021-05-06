@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_network_acl
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_network_acl
+
 short_description: Configure IBM Cloud 'ibm_is_network_acl' resource
 
 version_added: "2.8"
@@ -16,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -26,17 +28,6 @@ options:
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - Resource group ID for the network ACL
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Network ACL name
@@ -47,6 +38,17 @@ options:
             - Network ACL VPC name
         required: False
         type: str
+    resource_group:
+        description:
+            - Resource group ID for the network ACL
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,10 +101,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'rules',
-    'tags',
-    'resource_group',
     'name',
     'vpc',
+    'resource_group',
+    'tags',
 ]
 
 # Params for Data source
@@ -123,19 +125,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     vpc=dict(
         required=False,
         type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +215,7 @@ def run_module():
         resource_type='ibm_is_network_acl',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

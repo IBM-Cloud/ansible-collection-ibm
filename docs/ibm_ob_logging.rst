@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_ob_logging' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/ob_logging
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  instance_id (True, str, None)
+    (Required for new resource) ID of the LogDNA service instance to latch
+
+
   logdna_ingestion_key (False, str, None)
     LogDNA ingestion key
 
 
   cluster (True, str, None)
     (Required for new resource) Name or ID of the cluster to be used.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) ID of the LogDNA service instance to latch
 
 
   private_endpoint (False, bool, None)

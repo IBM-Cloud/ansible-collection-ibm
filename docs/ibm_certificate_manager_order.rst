@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_certificate_manager_order' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/certificate_manager_order
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,14 +35,6 @@ Parameters
     (Required for new resource) List of domain names
 
 
-  domain_validation_method (False, str, dns-01)
-    Domain validation methods
-
-
-  key_algorithm (False, str, rsaEncryption 2048 bit)
-    Keyalgorithm info
-
-
   rotate_keys (False, bool, False)
     Keys are sorated if set to true
 
@@ -48,24 +43,32 @@ Parameters
     Certicate description
 
 
-  auto_renew_enabled (False, bool, False)
-    None
-
-
-  renew_certificate (False, bool, False)
-    Invokes renew functionality
-
-
-  certificate_manager_instance_id (True, str, None)
-    (Required for new resource) Certificate manager instance ID
+  key_algorithm (False, str, rsaEncryption 2048 bit)
+    Keyalgorithm info
 
 
   name (True, str, None)
     (Required for new resource) Certificate name
 
 
+  domain_validation_method (False, str, dns-01)
+    Domain validation methods
+
+
   dns_provider_instance_crn (False, str, None)
     DNS provider instance CRN
+
+
+  renew_certificate (False, bool, False)
+    Invokes renew functionality
+
+
+  auto_renew_enabled (False, bool, False)
+    None
+
+
+  certificate_manager_instance_id (True, str, None)
+    (Required for new resource) Certificate manager instance ID
 
 
   id (False, str, None)

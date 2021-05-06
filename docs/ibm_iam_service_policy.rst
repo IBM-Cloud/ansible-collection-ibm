@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_iam_service_policy' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  iam_service_id (False, str, None)
-    UUID of ServiceID
-
-
-  iam_id (False, str, None)
-    IAM ID of ServiceID
-
 
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
@@ -50,6 +45,14 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  iam_service_id (False, str, None)
+    UUID of ServiceID
+
+
+  iam_id (False, str, None)
+    IAM ID of ServiceID
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_network_interface_sg_attachment' res
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/network_interface_sg_attachment
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  soft_reboot (False, bool, True)
-    Boolean value set to true, if soft reboot needs to be done.
-
-
   security_group_id (True, int, None)
     (Required for new resource) Security group ID
 
 
   network_interface_id (True, int, None)
     (Required for new resource) Network interface ID
+
+
+  soft_reboot (False, bool, True)
+    Boolean value set to true, if soft reboot needs to be done.
 
 
   id (False, str, None)

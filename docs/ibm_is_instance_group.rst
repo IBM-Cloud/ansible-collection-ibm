@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_instance_group
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  load_balancer_pool (False, str, None)
-    load balancer pool ID
-
-
-  tags (False, list, None)
-    List of tags for instance group
-
-
-  subnets (True, list, None)
-    (Required for new resource) list of subnet IDs
-
-
-  application_port (False, int, None)
-    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+  instance_template (True, str, None)
+    (Required for new resource) instance template ID
 
 
   instance_count (False, int, 0)
@@ -52,16 +43,28 @@ Parameters
     Resource group ID
 
 
-  load_balancer (False, str, None)
-    load balancer ID
+  subnets (True, list, None)
+    (Required for new resource) list of subnet IDs
+
+
+  application_port (False, int, None)
+    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
 
 
   name (True, str, None)
     (Required for new resource) The user-defined name for this instance group
 
 
-  instance_template (True, str, None)
-    (Required for new resource) instance template ID
+  load_balancer (False, str, None)
+    load balancer ID
+
+
+  load_balancer_pool (False, str, None)
+    load balancer pool ID
+
+
+  tags (False, list, None)
+    List of tags for instance group
 
 
   id (False, str, None)

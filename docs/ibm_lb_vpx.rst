@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/lb_vpx
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,16 +35,28 @@ Parameters
     (Required for new resource) IP address count
 
 
-  public_vlan_id (False, int, None)
-    Piblic VLAN id
+  tags (False, list, None)
+    List of the tags
+
+
+  private_subnet (False, str, None)
+    Private subnet
+
+
+  version (True, str, None)
+    (Required for new resource) version info
 
 
   private_vlan_id (False, int, None)
     Private VLAN id
 
 
-  version (True, str, None)
-    (Required for new resource) version info
+  public_subnet (False, str, None)
+    Public subnet
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
   speed (True, int, None)
@@ -52,20 +67,8 @@ Parameters
     (Required for new resource) Plan info
 
 
-  tags (False, list, None)
-    List of the tags
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  public_subnet (False, str, None)
-    Public subnet
-
-
-  private_subnet (False, str, None)
-    Private subnet
+  public_vlan_id (False, int, None)
+    Piblic VLAN id
 
 
   id (False, str, None)

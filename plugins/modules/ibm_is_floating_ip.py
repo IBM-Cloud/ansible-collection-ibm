@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_floating_ip
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_floating_ip
+
 short_description: Configure IBM Cloud 'ibm_is_floating_ip' resource
 
 version_added: "2.8"
@@ -16,28 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of the floating IP
         required: True
+        type: str
+    target:
+        description:
+            - Target info
+        required: False
         type: str
     zone:
         description:
             - Zone name
         required: False
         type: str
-    target:
+    resource_group:
         description:
-            - Target info
+            - Resource group info
         required: False
         type: str
     tags:
@@ -97,10 +99,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
     'name',
-    'zone',
     'target',
+    'zone',
+    'resource_group',
     'tags',
 ]
 
@@ -114,24 +116,24 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'zone': ['target'],
     'target': ['zone'],
+    'zone': ['target'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    target=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
-    target=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -215,7 +217,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +226,7 @@ def run_module():
             resource_type='ibm_is_floating_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

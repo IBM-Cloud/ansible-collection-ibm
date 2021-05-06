@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_origin_pool' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_origin_pool
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -36,16 +39,8 @@ Parameters
     Description of the CIS Origin Pool
 
 
-  minimum_origins (False, int, 1)
-    Minimum number of Origins
-
-
   origins (True, list, None)
     (Required for new resource) Origins info
-
-
-  notification_email (False, str, None)
-    Email address configured to recieve the notifications
 
 
   cis_id (True, str, None)
@@ -62,6 +57,14 @@ Parameters
 
   monitor (False, str, None)
     Monitor value
+
+
+  minimum_origins (False, int, 1)
+    Minimum number of Origins
+
+
+  notification_email (False, str, None)
+    Email address configured to recieve the notifications
 
 
   id (False, str, None)

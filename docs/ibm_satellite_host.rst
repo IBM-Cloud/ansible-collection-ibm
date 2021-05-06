@@ -15,30 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/satellite_host
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  zone (False, str, None)
-    The zone within the cluster to assign the host to
-
-
-  worker_pool (False, str, None)
-    The name or ID of the worker pool within the cluster to assign the host to
-
-
-  host_provider (False, str, None)
-    Host Provider
-
 
   location (True, str, None)
     (Required for new resource) The name or ID of the Satellite location
@@ -54,6 +45,18 @@ Parameters
 
   labels (False, list, None)
     List of labels for the host
+
+
+  zone (False, str, None)
+    The zone within the cluster to assign the host to
+
+
+  worker_pool (False, str, None)
+    The name or ID of the worker pool within the cluster to assign the host to
+
+
+  host_provider (False, str, None)
+    Host Provider
 
 
   id (False, str, None)

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_floating_ip
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Resource group info
-
-
   name (True, str, None)
     (Required for new resource) Name of the floating IP
+
+
+  target (False, str, None)
+    Target info
 
 
   zone (False, str, None)
     Zone name
 
 
-  target (False, str, None)
-    Target info
+  resource_group (False, str, None)
+    Resource group info
 
 
   tags (False, list, None)

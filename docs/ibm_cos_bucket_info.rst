@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/cos_bucket
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,15 +29,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bucket_name (True, str, None)
-    None
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
-  resource_instance_id (True, str, None)
+  bucket_region (True, str, None)
     None
 
 
@@ -42,8 +37,16 @@ Parameters
     None
 
 
-  bucket_region (True, str, None)
+  resource_instance_id (True, str, None)
     None
+
+
+  bucket_name (True, str, None)
+    None
+
+
+  endpoint_type (False, str, public)
+    public or private
 
 
   iaas_classic_username (False, any, None)

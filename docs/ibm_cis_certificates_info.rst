@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_cis_certificates' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/cis_certificates
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    Associated CIS domain
-
-
   cis_id (True, str, None)
     CIS object id
+
+
+  domain_id (True, str, None)
+    Associated CIS domain
 
 
   iaas_classic_username (False, any, None)

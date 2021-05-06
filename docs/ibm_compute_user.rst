@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_compute_user' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_user
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -30,6 +33,26 @@ Parameters
 
   username (False, str, None)
     user name
+
+
+  company_name (True, str, None)
+    (Required for new resource) comapany name
+
+
+  timezone (True, str, None)
+    (Required for new resource) time zone info
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
+  city (True, str, None)
+    (Required for new resource) City name
+
+
+  user_status (False, str, ACTIVE)
+    user status info
 
 
   first_name (True, str, None)
@@ -44,20 +67,8 @@ Parameters
     (Required for new resource) email address of the user
 
 
-  state_ (True, str, None)
-    (Required for new resource) Satate name
-
-
-  timezone (True, str, None)
-    (Required for new resource) time zone info
-
-
-  user_status (False, str, ACTIVE)
-    user status info
-
-
-  password (False, str, None)
-    password for the user
+  address2 (False, str, None)
+    Address info of the user
 
 
   api_key (False, str, None)
@@ -68,32 +79,24 @@ Parameters
     (Required for new resource) Address info of the user
 
 
-  has_api_key (False, bool, False)
-    API Key info of the user
-
-
-  tags (False, list, None)
-    Tags set for the resources
-
-
-  company_name (True, str, None)
-    (Required for new resource) comapany name
-
-
-  address2 (False, str, None)
-    Address info of the user
-
-
-  city (True, str, None)
-    (Required for new resource) City name
-
-
   country (True, str, None)
     (Required for new resource) Country name
 
 
-  permissions (False, list, None)
-    set of persmissions assigned for the user
+  password (False, str, None)
+    password for the user
+
+
+  has_api_key (False, bool, False)
+    API Key info of the user
+
+
+  state_ (True, str, None)
+    (Required for new resource) Satate name
+
+
+  tags (False, list, None)
+    Tags set for the resources
 
 
   id (False, str, None)

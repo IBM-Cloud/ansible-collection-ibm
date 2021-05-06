@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_iam_service_policy
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_service_policy
+
 short_description: Configure IBM Cloud 'ibm_iam_service_policy' resource
 
 version_added: "2.8"
@@ -16,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    iam_service_id:
-        description:
-            - UUID of ServiceID
-        required: False
-        type: str
-    iam_id:
-        description:
-            - IAM ID of ServiceID
-        required: False
-        type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -54,6 +46,16 @@ options:
         required: False
         type: list
         elements: str
+    iam_service_id:
+        description:
+            - UUID of ServiceID
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of ServiceID
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,12 +107,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iam_service_id',
-    'iam_id',
     'roles',
     'resources',
     'account_management',
     'tags',
+    'iam_service_id',
+    'iam_id',
 ]
 
 # Params for Data source
@@ -132,12 +134,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iam_service_id=dict(
-        required=False,
-        type='str'),
-    iam_id=dict(
-        required=False,
-        type='str'),
     roles=dict(
         required=False,
         elements='',
@@ -153,6 +149,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    iam_service_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +220,7 @@ def run_module():
         resource_type='ibm_iam_service_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +229,7 @@ def run_module():
             resource_type='ibm_iam_service_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_service_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/service_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -30,6 +33,10 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) A name for the service instance
+
+
+  service (True, str, None)
+    (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
 
 
   parameters (False, dict, None)
@@ -42,10 +49,6 @@ Parameters
 
   space_guid (True, str, None)
     (Required for new resource) The guid of the space in which the instance will be created
-
-
-  service (True, str, None)
-    (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
 
 
   plan (True, str, None)

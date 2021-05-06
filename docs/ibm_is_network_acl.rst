@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_network_acl' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_network_acl
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,20 +35,20 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    List of tags
-
-
-  resource_group (False, str, None)
-    Resource group ID for the network ACL
-
-
   name (True, str, None)
     (Required for new resource) Network ACL name
 
 
   vpc (False, str, None)
     Network ACL VPC name
+
+
+  resource_group (False, str, None)
+    Resource group ID for the network ACL
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

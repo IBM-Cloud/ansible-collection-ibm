@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_range_app' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_range_app
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
+
+
   traffic_type (False, str, direct)
     Configure how traffic is handled at the edge.
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
-  dns_type (True, str, None)
-    (Required for new resource) Type of the DNS record for this application
-
-
-  protocol (True, str, None)
-    (Required for new resource) Defines the protocol and port for this application
 
 
   dns (True, str, None)
@@ -52,20 +51,24 @@ Parameters
     IP address and port of the origin for this Range application.
 
 
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
 
 
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
+  edge_ips_connectivity (False, str, all)
+    Specifies the IP version.
 
 
-  tls (False, str, False)
-    Configure if and how TLS connections are terminated at the edge.
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
+  protocol (True, str, None)
+    (Required for new resource) Defines the protocol and port for this application
+
+
+  dns_type (True, str, None)
+    (Required for new resource) Type of the DNS record for this application
 
 
   origin_dns (False, str, None)
@@ -76,12 +79,12 @@ Parameters
     Port at the origin that listens to traffic
 
 
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
 
 
-  edge_ips_connectivity (False, str, all)
-    Specifies the IP version.
+  tls (False, str, False)
+    Configure if and how TLS connections are terminated at the edge.
 
 
   id (False, str, None)

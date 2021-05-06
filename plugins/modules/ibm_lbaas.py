@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_lbaas
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/lbaas
+
 short_description: Configure IBM Cloud 'ibm_lbaas' resource
 
 version_added: "2.8"
@@ -16,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -25,46 +27,46 @@ options:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
-    ssl_ciphers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    subnets:
-        description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: True
-        type: list
-        elements: int
-    type:
-        description:
-            - Specifies if a load balancer is public or private
-        required: False
-        type: str
-        default: PUBLIC
     protocols:
         description:
             - Protocols to be assigned to this load balancer.
         required: False
         type: list
         elements: dict
+    ssl_ciphers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     wait_time_minutes:
         description:
             - None
         required: False
         type: int
         default: 90
-    name:
-        description:
-            - (Required for new resource) The load balancer's name.
-        required: True
-        type: str
     description:
         description:
             - Description of a load balancer.
         required: False
         type: str
+    name:
+        description:
+            - (Required for new resource) The load balancer's name.
+        required: True
+        type: str
+    type:
+        description:
+            - Specifies if a load balancer is public or private
+        required: False
+        type: str
+        default: PUBLIC
+    subnets:
+        description:
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: True
+        type: list
+        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +113,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'use_system_public_ip_pool',
-    'ssl_ciphers',
-    'subnets',
-    'type',
     'protocols',
+    'ssl_ciphers',
     'wait_time_minutes',
-    'name',
     'description',
+    'name',
+    'type',
+    'subnets',
 ]
 
 # Params for Data source
@@ -146,30 +148,30 @@ module_args = dict(
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
-    ssl_ciphers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    type=dict(
-        required=False,
-        type='str'),
     protocols=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ssl_ciphers=dict(
         required=False,
         elements='',
         type='list'),
     wait_time_minutes=dict(
         required=False,
         type='int'),
-    name=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -235,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -244,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

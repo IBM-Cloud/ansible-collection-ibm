@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_iam_access_group' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_access_group
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Name of the access group
-
-
   description (False, str, None)
     Description of the access group
 
 
   tags (False, list, None)
     None
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the access group
 
 
   id (False, str, None)

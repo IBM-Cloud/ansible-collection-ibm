@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_subnet_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_subnet
+
 short_description: Retrieve IBM Cloud 'ibm_is_subnet' resource
 
 version_added: "2.8"
@@ -15,16 +17,16 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_subnet' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    name:
+    identifier:
         description:
             - None
         required: False
         type: str
-    identifier:
+    name:
         description:
             - None
         required: False
@@ -66,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 
@@ -78,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    identifier=dict(
         required=False,
         type='str'),
-    identifier=dict(
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -130,7 +132,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

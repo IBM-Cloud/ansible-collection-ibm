@@ -15,22 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_compute_ssh_key' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_ssh_key
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  public_key (True, str, None)
-    (Required for new resource) Plublic Key info
-
 
   notes (False, str, None)
     Additional notes
@@ -42,6 +41,10 @@ Parameters
 
   label (True, str, None)
     (Required for new resource) SSH Key label
+
+
+  public_key (True, str, None)
+    (Required for new resource) Plublic Key info
 
 
   id (False, str, None)

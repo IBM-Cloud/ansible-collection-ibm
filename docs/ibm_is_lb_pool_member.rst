@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb_pool_member
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  lb (True, str, None)
-    (Required for new resource) Load balancer ID
-
-
-  target_address (False, str, None)
-    Load balancer pool member target address
-
 
   target_id (False, str, None)
     Load balancer pool member target id
@@ -48,8 +43,16 @@ Parameters
     (Required for new resource) Loadblancer Poold ID
 
 
+  lb (True, str, None)
+    (Required for new resource) Load balancer ID
+
+
   port (True, int, None)
     (Required for new resource) Load Balancer Pool port
+
+
+  target_address (False, str, None)
+    Load balancer pool member target address
 
 
   id (False, str, None)

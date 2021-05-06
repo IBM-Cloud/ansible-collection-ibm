@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_database' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/database
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,76 +31,88 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
-
-
-  whitelist (False, list, None)
-    None
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
   location (True, str, None)
     (Required for new resource) The location or the region in which Database instance exists
-
-
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  tags (False, list, None)
-    None
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  service (True, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  adminpassword (False, str, None)
-    The admin user password for the instance
 
 
   members_memory_allocation_mb (False, int, None)
     Memory allocation required for cluster
 
 
-  remote_leader_id (False, str, None)
-    The CRN of leader database
+  tags (False, list, None)
+    None
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
+
+
+  node_cpu_allocation_count (False, int, None)
+    CPU allocation per node
+
+
+  users (False, list, None)
+    None
 
 
   name (True, str, None)
     (Required for new resource) Resource instance name for example, my Database instance
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
+
+
+  node_memory_allocation_mb (False, int, None)
+    Memory allocation per node
+
+
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
+
+
+  plan_validation (False, bool, True)
+    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  node_disk_allocation_mb (False, int, None)
+    Disk allocation per node
+
+
+  whitelist (False, list, None)
+    None
+
+
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
+
+
+  node_count (False, int, None)
+    Total number of nodes in the cluster
+
+
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
+
+
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
   backup_encryption_key_crn (False, str, None)
@@ -108,12 +123,20 @@ Parameters
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
-  backup_id (False, str, None)
-    The CRN of backup source database
+  remote_leader_id (False, str, None)
+    The CRN of leader database
 
 
-  users (False, list, None)
-    None
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  service (True, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
+
+
+  version (False, str, None)
+    The database version to provision if specified
 
 
   id (False, str, None)

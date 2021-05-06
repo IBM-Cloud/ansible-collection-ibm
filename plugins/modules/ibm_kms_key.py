@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_kms_key
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key
+
 short_description: Configure IBM Cloud 'ibm_kms_key' resource
 
 version_added: "2.8"
@@ -16,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -31,33 +33,11 @@ options:
             - (Required for new resource) Key name
         required: True
         type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
     encrypted_nonce:
         description:
             - Only for imported root key
         required: False
         type: str
-    iv_value:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
     policies:
         description:
             - Creates or updates one or more policies for the specified key
@@ -78,6 +58,28 @@ options:
     expiration_date:
         description:
             - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+        required: False
+        type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    iv_value:
+        description:
+            - Only for imported root key
         required: False
         type: str
     id:
@@ -134,15 +136,15 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'key_ring_id',
     'key_name',
-    'payload',
     'encrypted_nonce',
-    'iv_value',
-    'endpoint_type',
-    'standard_key',
     'policies',
     'instance_id',
     'force_delete',
     'expiration_date',
+    'endpoint_type',
+    'standard_key',
+    'payload',
+    'iv_value',
 ]
 
 # Params for Data source
@@ -151,10 +153,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'endpoint_type',
     'instance_id',
     'key_name',
     'alias',
-    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -170,21 +172,9 @@ module_args = dict(
     key_name=dict(
         required=False,
         type='str'),
-    payload=dict(
-        required=False,
-        type='str'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
-    iv_value=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
     policies=dict(
         required=False,
         elements='',
@@ -196,6 +186,18 @@ module_args = dict(
         required=False,
         type='bool'),
     expiration_date=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
+    payload=dict(
+        required=False,
+        type='str'),
+    iv_value=dict(
         required=False,
         type='str'),
     id=dict(
@@ -263,7 +265,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -272,7 +274,7 @@ def run_module():
             resource_type='ibm_kms_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cdn' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cdn
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
   host_name (True, str, None)
     (Required for new resource) Host name
 
 
-  vendor_name (False, str, akamai)
-    Vendor name
+  header (False, str, None)
+    Header info
 
 
-  protocol (False, str, HTTP)
-    Protocol name
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  https_port (False, int, 443)
+    HTTPS port number
 
 
   file_extension (False, str, None)
@@ -48,12 +59,20 @@ Parameters
     Path details
 
 
-  http_port (False, int, 80)
-    HTTP port number
+  vendor_name (False, str, akamai)
+    Vendor name
 
 
-  header (False, str, None)
-    Header info
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
+  protocol (False, str, HTTP)
+    Protocol name
+
+
+  cname (False, str, None)
+    cname info
 
 
   certificate_type (False, str, None)
@@ -64,10 +83,6 @@ Parameters
     Origin type info
 
 
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
   bucket_name (False, str, None)
     Bucket name
 
@@ -76,20 +91,8 @@ Parameters
     respect headers info
 
 
-  https_port (False, int, 443)
-    HTTPS port number
-
-
-  cname (False, str, None)
-    cname info
-
-
   cache_key_query_rule (False, str, include-all)
     query rule info
-
-
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
 
 
   id (False, str, None)

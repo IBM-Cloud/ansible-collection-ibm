@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_cache_settings
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  browser_expiration (False, int, None)
-    Browser Expiration setting
+  purge_all (False, bool, None)
+    Purge all setting
+
+
+  purge_by_hosts (False, list, None)
+    Purge by hosts
 
 
   query_string_sort (False, str, None)
@@ -48,8 +55,8 @@ Parameters
     Purge by tags
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   caching_level (False, str, None)
@@ -60,16 +67,12 @@ Parameters
     Serve Stale Content
 
 
+  browser_expiration (False, int, None)
+    Browser Expiration setting
+
+
   development_mode (False, str, None)
     Development mode setting
-
-
-  purge_all (False, bool, None)
-    Purge all setting
-
-
-  purge_by_hosts (False, list, None)
-    Purge by hosts
 
 
   id (False, str, None)

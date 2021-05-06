@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_resource_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    The resource group id
-
-
   name (True, str, None)
     (Required for new resource) A name for the resource instance
-
-
-  last_operation (False, dict, None)
-    The status of the last operation requested on the instance
 
 
   service (True, str, None)
     (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
   plan (True, str, None)
     (Required for new resource) The plan type of the service
+
+
+  resource_group_id (False, str, None)
+    The resource group id
 
 
   parameters (False, dict, None)
@@ -54,14 +61,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
 
 
   id (False, str, None)

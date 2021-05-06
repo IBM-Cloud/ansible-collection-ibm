@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_security_group
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_security_group
+
 short_description: Configure IBM Cloud 'ibm_is_security_group' resource
 
 version_added: "2.8"
@@ -16,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -25,15 +27,15 @@ options:
             - Security group name
         required: False
         type: str
-    resource_group:
-        description:
-            - Resource Group ID
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) Security group's resource group id
         required: True
+        type: str
+    resource_group:
+        description:
+            - Resource Group ID
+        required: False
         type: str
     tags:
         description:
@@ -93,8 +95,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'resource_group',
     'vpc',
+    'resource_group',
     'tags',
 ]
 
@@ -117,10 +119,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    vpc=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -204,7 +206,7 @@ def run_module():
         resource_type='ibm_is_security_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -213,7 +215,7 @@ def run_module():
             resource_type='ibm_is_security_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

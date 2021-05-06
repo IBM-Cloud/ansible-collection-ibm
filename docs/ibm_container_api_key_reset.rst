@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_container_api_key_reset' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/container_api_key_reset
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  region (True, str, None)
+    (Required for new resource) Region which api key has to be reset
+
+
   resource_group_id (False, str, None)
     ID of Resource Group
 
 
   reset_api_key (False, int, 1)
     Determines if apikey has to be reset or not
-
-
-  region (True, str, None)
-    (Required for new resource) Region which api key has to be reset
 
 
   id (False, str, None)

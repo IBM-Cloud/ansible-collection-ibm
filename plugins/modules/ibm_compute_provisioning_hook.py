@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_compute_provisioning_hook
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_provisioning_hook
+
 short_description: Configure IBM Cloud 'ibm_compute_provisioning_hook' resource
 
 version_added: "2.8"
@@ -16,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_provisioning_hook' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Provision hook name
-        required: True
-        type: str
     uri:
         description:
             - (Required for new resource) URI of the hook
@@ -36,6 +33,11 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) Provision hook name
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -82,15 +84,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('uri', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'uri',
     'tags',
+    'name',
 ]
 
 # Params for Data source
@@ -107,9 +109,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     uri=dict(
         required=False,
         type='str'),
@@ -117,6 +116,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -182,7 +184,7 @@ def run_module():
         resource_type='ibm_compute_provisioning_hook',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

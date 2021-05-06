@@ -15,30 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb_listener_policy_rule
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  field (False, str, None)
-    None
-
-
-  type (True, str, None)
-    (Required for new resource) Policy rule type.
-
-
-  value (True, str, None)
-    (Required for new resource) policy rule value info
-
 
   lb (True, str, None)
     (Required for new resource) Loadbalancer ID
@@ -54,6 +45,18 @@ Parameters
 
   condition (True, str, None)
     (Required for new resource) Condition info of the rule.
+
+
+  type (True, str, None)
+    (Required for new resource) Policy rule type.
+
+
+  field (False, str, None)
+    None
+
+
+  value (True, str, None)
+    (Required for new resource) policy rule value info
 
 
   id (False, str, None)

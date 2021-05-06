@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_cis_waf_rule
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_waf_rule
+
 short_description: Configure IBM Cloud 'ibm_cis_waf_rule' resource
 
 version_added: "2.8"
@@ -16,13 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
+        required: True
+        type: str
+    rule_id:
+        description:
+            - (Required for new resource) CIS WAF Rule id
+        required: True
+        type: str
+    mode:
+        description:
+            - (Required for new resource) CIS WAF Rule mode
         required: True
         type: str
     cis_id:
@@ -33,16 +45,6 @@ options:
     package_id:
         description:
             - (Required for new resource) CIS WAF Rule package id
-        required: True
-        type: str
-    mode:
-        description:
-            - (Required for new resource) CIS WAF Rule mode
-        required: True
-        type: str
-    rule_id:
-        description:
-            - (Required for new resource) CIS WAF Rule id
         required: True
         type: str
     id:
@@ -92,19 +94,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('domain_id', 'str'),
+    ('rule_id', 'str'),
+    ('mode', 'str'),
     ('cis_id', 'str'),
     ('package_id', 'str'),
-    ('mode', 'str'),
-    ('rule_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain_id',
+    'rule_id',
+    'mode',
     'cis_id',
     'package_id',
-    'mode',
-    'rule_id',
 ]
 
 # Params for Data source
@@ -124,16 +126,16 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    package_id=dict(
+    rule_id=dict(
         required=False,
         type='str'),
     mode=dict(
         required=False,
         type='str'),
-    rule_id=dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
+    package_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -201,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

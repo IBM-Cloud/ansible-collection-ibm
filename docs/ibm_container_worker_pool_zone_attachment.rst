@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachmen
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/container_worker_pool_zone_attachment
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,12 +35,12 @@ Parameters
     (Required for new resource) Zone name
 
 
-  public_vlan_id (False, str, None)
+  worker_pool (True, str, None)
+    (Required for new resource) Workerpool name
+
+
+  private_vlan_id (False, str, None)
     None
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   wait_till_albs (False, bool, True)
@@ -48,12 +51,12 @@ Parameters
     (Required for new resource) cluster name or ID
 
 
-  worker_pool (True, str, None)
-    (Required for new resource) Workerpool name
-
-
-  private_vlan_id (False, str, None)
+  public_vlan_id (False, str, None)
     None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

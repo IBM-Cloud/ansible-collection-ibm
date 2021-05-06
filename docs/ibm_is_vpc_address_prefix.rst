@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_is_vpc_address_prefix' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_vpc_address_prefix
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
 
   name (True, str, None)
     (Required for new resource) Name
@@ -40,8 +47,8 @@ Parameters
     (Required for new resource) CIDIR address prefix
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  is_default (False, bool, False)
+    Is default prefix for this zone in this VPC
 
 
   id (False, str, None)

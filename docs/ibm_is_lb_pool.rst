@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb_pool
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
-
-
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
   health_delay (True, int, None)
     (Required for new resource) Load Blancer health delay time period
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
 
 
   health_monitor_url (False, str, None)
     Health monitor URL of LB Pool
 
 
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
   session_persistence_cookie_name (False, str, None)
     Load Balancer Pool session persisence cookie name
+
+
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
   id (False, str, None)

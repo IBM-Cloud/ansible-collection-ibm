@@ -15,38 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cos_bucket
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  region_location (False, str, None)
-    Region Location info.
-
-
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  single_site_location (False, str, None)
-    single site location info
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
 
   endpoint_type (False, str, public)
     public or private
@@ -60,8 +43,24 @@ Parameters
     COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  region_location (False, str, None)
+    Region Location info.
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
+
+
   resource_instance_id (True, str, None)
     (Required for new resource) resource instance ID
+
+
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
 
 
   activity_tracking (False, list, None)
@@ -76,16 +75,20 @@ Parameters
     (Required for new resource) COS Bucket name
 
 
+  single_site_location (False, str, None)
+    single site location info
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
   metrics_monitoring (False, list, None)
     Enables sending metrics to IBM Cloud Monitoring.
 
 
   archive_rule (False, list, None)
     Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
 
 
   id (False, str, None)

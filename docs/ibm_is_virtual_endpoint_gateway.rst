@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resourc
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_virtual_endpoint_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ips (False, list, None)
-    Endpoint gateway resource group
-
-
   tags (False, list, None)
     List of tags for VPE
 
 
-  name (True, str, None)
-    (Required for new resource) Endpoint gateway name
+  resource_group (False, str, None)
+    The resource group id
+
+
+  ips (False, list, None)
+    Endpoint gateway resource group
 
 
   target (True, list, None)
@@ -48,8 +51,8 @@ Parameters
     (Required for new resource) The VPC id
 
 
-  resource_group (False, str, None)
-    The resource group id
+  name (True, str, None)
+    (Required for new resource) Endpoint gateway name
 
 
   id (False, str, None)

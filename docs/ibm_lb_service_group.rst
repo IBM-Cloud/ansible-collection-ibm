@@ -15,22 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/lb_service_group
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  routing_type (True, str, None)
-    (Required for new resource) Routing type
-
 
   load_balancer_id (True, int, None)
     (Required for new resource) Loadbalancer ID
@@ -40,20 +39,24 @@ Parameters
     (Required for new resource) Allocation type
 
 
-  port (True, int, None)
-    (Required for new resource) Port number
-
-
   routing_method (True, str, None)
     (Required for new resource) Routing method
 
 
-  timeout (False, int, None)
-    Timeout value
-
-
   tags (False, list, None)
     List of tags
+
+
+  port (True, int, None)
+    (Required for new resource) Port number
+
+
+  routing_type (True, str, None)
+    (Required for new resource) Routing type
+
+
+  timeout (False, int, None)
+    Timeout value
 
 
   id (False, str, None)

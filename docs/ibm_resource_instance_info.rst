@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_resource_instance' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Resource instance name for example, myobjectstorage
-
-
   location (False, str, None)
     The location or the environment in which instance exists
+
+
+  name (True, str, None)
+    Resource instance name for example, myobjectstorage
 
 
   service (False, str, None)

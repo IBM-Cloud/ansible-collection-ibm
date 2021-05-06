@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -36,24 +39,8 @@ Parameters
     (Required for new resource) Key name
 
 
-  payload (False, str, None)
-    None
-
-
   encrypted_nonce (False, str, None)
     Only for imported root key
-
-
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
-  standard_key (False, bool, False)
-    Standard key type
 
 
   policies (False, list, None)
@@ -70,6 +57,22 @@ Parameters
 
   expiration_date (False, str, None)
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+
+
+  endpoint_type (False, str, public)
+    public or private
+
+
+  standard_key (False, bool, False)
+    Standard key type
+
+
+  payload (False, str, None)
+    None
+
+
+  iv_value (False, str, None)
+    Only for imported root key
 
 
   id (False, str, None)

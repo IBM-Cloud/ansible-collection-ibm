@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_space' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/space
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  org (True, str, None)
-    (Required for new resource) The org this space belongs to
-
-
-  auditors (False, list, None)
-    The IBMID of the users who will have auditor role in this space, ex - user@example.com
-
 
   managers (False, list, None)
     The IBMID of the users who will have manager role in this space, ex - user@example.com
@@ -54,6 +49,14 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) The name for the space
+
+
+  org (True, str, None)
+    (Required for new resource) The org this space belongs to
+
+
+  auditors (False, list, None)
+    The IBMID of the users who will have auditor role in this space, ex - user@example.com
 
 
   id (False, str, None)

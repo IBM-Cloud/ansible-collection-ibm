@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_dl_virtual_connection' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_virtual_connection
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway (True, str, None)
-    (Required for new resource) The Direct Link gateway identifier
-
-
-  name (True, str, None)
-    (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
+  type (True, str, None)
+    (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
 
 
   network_id (False, str, None)
     Unique identifier of the target network. For type=vpc virtual connections this is the CRN of the target VPC. This field does not apply to type=classic connections.
 
 
-  type (True, str, None)
-    (Required for new resource) The type of virtual connection.Allowable values (classic,vpc)
+  gateway (True, str, None)
+    (Required for new resource) The Direct Link gateway identifier
+
+
+  name (True, str, None)
+    (Required for new resource) The user-defined name for this virtual connection. Virtualconnection names are unique within a gateway. This is the name of thevirtual connection itself, the network being connected may have its ownname attribute
 
 
   id (False, str, None)

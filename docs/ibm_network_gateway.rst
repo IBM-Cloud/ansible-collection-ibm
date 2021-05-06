@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/network_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,7 +31,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ssh_key_ids (False, list, None)
+  post_install_script_uri (False, str, None)
     None
 
 
@@ -36,7 +39,7 @@ Parameters
     (Required for new resource) The name of the gateway
 
 
-  post_install_script_uri (False, str, None)
+  ssh_key_ids (False, list, None)
     None
 
 

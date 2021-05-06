@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_healthcheck
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retries (False, int, 2)
-    retries
+  port (False, int, None)
+    port number
+
+
+  expected_body (False, str, None)
+    expected_body
+
+
+  expected_codes (False, str, None)
+    expected_codes
+
+
+  type (False, str, http)
+    type
+
+
+  interval (False, int, 60)
+    interval
 
 
   follow_redirects (False, bool, False)
     follow_redirects
-
-
-  allow_insecure (False, bool, False)
-    allow_insecure
 
 
   cis_id (True, str, None)
@@ -52,36 +67,24 @@ Parameters
     method
 
 
-  timeout (False, int, 5)
-    timeout
-
-
-  port (False, int, None)
-    port number
+  allow_insecure (False, bool, False)
+    allow_insecure
 
 
   headers (False, list, None)
     None
 
 
-  expected_body (False, str, None)
-    expected_body
-
-
-  type (False, str, http)
-    type
-
-
-  interval (False, int, 60)
-    interval
-
-
   path (False, str, /)
     path
 
 
-  expected_codes (False, str, None)
-    expected_codes
+  timeout (False, int, 5)
+    timeout
+
+
+  retries (False, int, 2)
+    retries
 
 
   id (False, str, None)

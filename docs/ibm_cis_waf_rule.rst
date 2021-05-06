@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cis_waf_rule' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_waf_rule
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -32,20 +35,20 @@ Parameters
     (Required for new resource) CIS Domain ID
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
-  package_id (True, str, None)
-    (Required for new resource) CIS WAF Rule package id
+  rule_id (True, str, None)
+    (Required for new resource) CIS WAF Rule id
 
 
   mode (True, str, None)
     (Required for new resource) CIS WAF Rule mode
 
 
-  rule_id (True, str, None)
-    (Required for new resource) CIS WAF Rule id
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
+
+
+  package_id (True, str, None)
+    (Required for new resource) CIS WAF Rule package id
 
 
   id (False, str, None)

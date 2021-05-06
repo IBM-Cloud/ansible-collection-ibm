@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_compute_dedicated_host
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/compute_dedicated_host
+
 short_description: Configure IBM Cloud 'ibm_compute_dedicated_host' resource
 
 version_added: "2.8"
@@ -16,10 +18,32 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
+    wait_time_minutes:
+        description:
+            - None
+        required: False
+        type: int
+        default: 90
+    domain:
+        description:
+            - (Required for new resource) The domain of dedicatated host.
+        required: True
+        type: str
+    datacenter:
+        description:
+            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+        required: True
+        type: str
+    flavor:
+        description:
+            - The flavor of the dedicatated host.
+        required: False
+        type: str
+        default: 56_CORES_X_242_RAM_X_1_4_TB
     hourly_billing:
         description:
             - The billing type for the dedicatated host.
@@ -31,39 +55,17 @@ options:
             - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
         required: True
         type: str
-    hostname:
-        description:
-            - (Required for new resource) The host name of dedicatated host.
-        required: True
-        type: str
-    datacenter:
-        description:
-            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
-        required: True
-        type: str
-    wait_time_minutes:
-        description:
-            - None
-        required: False
-        type: int
-        default: 90
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    domain:
+    hostname:
         description:
-            - (Required for new resource) The domain of dedicatated host.
+            - (Required for new resource) The host name of dedicatated host.
         required: True
         type: str
-    flavor:
-        description:
-            - The flavor of the dedicatated host.
-        required: False
-        type: str
-        default: 56_CORES_X_242_RAM_X_1_4_TB
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,22 +112,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('domain', 'str'),
+    ('datacenter', 'str'),
     ('router_hostname', 'str'),
     ('hostname', 'str'),
-    ('datacenter', 'str'),
-    ('domain', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'wait_time_minutes',
+    'domain',
+    'datacenter',
+    'flavor',
     'hourly_billing',
     'router_hostname',
-    'hostname',
-    'datacenter',
-    'wait_time_minutes',
     'tags',
-    'domain',
-    'flavor',
+    'hostname',
 ]
 
 # Params for Data source
@@ -142,29 +144,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    wait_time_minutes=dict(
+        required=False,
+        type='int'),
+    domain=dict(
+        required=False,
+        type='str'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
     hourly_billing=dict(
         required=False,
         type='bool'),
     router_hostname=dict(
         required=False,
         type='str'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    datacenter=dict(
-        required=False,
-        type='str'),
-    wait_time_minutes=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    domain=dict(
-        required=False,
-        type='str'),
-    flavor=dict(
+    hostname=dict(
         required=False,
         type='str'),
     id=dict(
@@ -232,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

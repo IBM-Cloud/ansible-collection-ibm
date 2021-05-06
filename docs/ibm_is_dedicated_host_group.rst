@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host_group' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_dedicated_host_group
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-
-
-  class_ (True, str, None)
-    (Required for new resource) The dedicated host profile class for hosts in this group.
-
-
-  name (False, str, None)
-    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+  zone (True, str, None)
+    (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
 
 
   family (True, str, None)
     (Required for new resource) The dedicated host profile family for hosts in this group.
 
 
-  zone (True, str, None)
-    (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
+  name (False, str, None)
+    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+
+
+  resource_group (False, str, None)
+    The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+
+
+  class_ (True, str, None)
+    (Required for new resource) The dedicated host profile class for hosts in this group.
 
 
   id (False, str, None)

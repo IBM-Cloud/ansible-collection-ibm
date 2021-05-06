@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cm_version
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  offering_id (True, str, None)
-    (Required for new resource) Offering identification.
-
-
-  content (False, str, None)
-    byte array representing the content to be imported.  Only supported for OVA images at this time.
+  tags (False, list, None)
+    Tags array.
 
 
   target_kinds (False, list, None)
     Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-
-
-  zipurl (False, str, None)
-    URL path to zip location.  If not specified, must provide content in the body of this call.
-
-
-  tags (False, list, None)
-    Tags array.
 
 
   target_version (False, str, None)
@@ -54,6 +45,18 @@ Parameters
 
   catalog_identifier (True, str, None)
     (Required for new resource) Catalog identifier.
+
+
+  content (False, str, None)
+    byte array representing the content to be imported.  Only supported for OVA images at this time.
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering identification.
+
+
+  zipurl (False, str, None)
+    URL path to zip location.  If not specified, must provide content in the body of this call.
 
 
   id (False, str, None)

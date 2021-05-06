@@ -15,18 +15,33 @@ Create, update or destroy an IBM Cloud 'ibm_lb_service' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/lb_service
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  service_group_id (True, int, None)
+    (Required for new resource) service group ID
+
+
+  ip_address_id (True, int, None)
+    (Required for new resource) IP Address ID
+
+
+  port (True, int, None)
+    (Required for new resource) Port number
+
 
   enabled (True, bool, None)
     (Required for new resource) Boolean value true, if enabled else false
@@ -42,18 +57,6 @@ Parameters
 
   tags (False, list, None)
     Tags for the resource
-
-
-  service_group_id (True, int, None)
-    (Required for new resource) service group ID
-
-
-  ip_address_id (True, int, None)
-    (Required for new resource) IP Address ID
-
-
-  port (True, int, None)
-    (Required for new resource) Port number
 
 
   id (False, str, None)

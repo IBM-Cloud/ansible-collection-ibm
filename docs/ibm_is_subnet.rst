@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_subnet' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_subnet
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
+  tags (False, list, None)
+    List of tags
+
+
+  routing_table (False, str, None)
+    routing table id that is associated with the subnet
+
+
+  ip_version (False, str, ipv4)
+    The IP version(s) to support for this subnet.
+
+
+  name (True, str, None)
+    (Required for new resource) Subnet name
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
+
+  total_ipv4_address_count (False, int, None)
+    The total number of IPv4 addresses in this subnet.
 
 
   network_acl (False, str, None)
     The network ACL for this subnet
 
 
-  tags (False, list, None)
-    List of tags
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
+
+
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
 
 
   zone (True, str, None)
@@ -46,30 +73,6 @@ Parameters
 
   resource_group (False, str, None)
     The resource group for this subnet
-
-
-  ip_version (False, str, ipv4)
-    The IP version(s) to support for this subnet.
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
-
-
-  routing_table (False, str, None)
-    routing table id that is associated with the subnet
-
-
-  total_ipv4_address_count (False, int, None)
-    The total number of IPv4 addresses in this subnet.
-
-
-  name (True, str, None)
-    (Required for new resource) Subnet name
-
-
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
 
 
   id (False, str, None)

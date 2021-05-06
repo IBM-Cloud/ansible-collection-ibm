@@ -15,18 +15,25 @@ Create, update or destroy an IBM Cloud 'ibm_cis_certificate_order' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cis_certificate_order
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id or CRN
+
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
@@ -38,10 +45,6 @@ Parameters
 
   hosts (True, list, None)
     (Required for new resource) Hosts which certificate need to be ordered
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id or CRN
 
 
   id (False, str, None)

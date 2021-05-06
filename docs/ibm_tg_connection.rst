@@ -15,26 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_tg_connection' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/tg_connection
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  network_type (True, str, None)
-    (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc)
-
-
-  network_account_id (False, str, None)
-    The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
-
 
   gateway (True, str, None)
     (Required for new resource) The Transit Gateway identifier
@@ -46,6 +41,14 @@ Parameters
 
   network_id (False, str, None)
     The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
+
+
+  network_account_id (False, str, None)
+    The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
+
+
+  network_type (True, str, None)
+    (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc)
 
 
   id (False, str, None)

@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_dns_reverse_record
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dns_reverse_record
+
 short_description: Configure IBM Cloud 'ibm_dns_reverse_record' resource
 
 version_added: "2.8"
@@ -16,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_reverse_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    ipaddress:
-        description:
-            - (Required for new resource) IP Address
-        required: True
-        type: str
     hostname:
         description:
             - (Required for new resource) Host name
@@ -35,6 +32,11 @@ options:
             - TTL value
         required: False
         type: int
+    ipaddress:
+        description:
+            - (Required for new resource) IP Address
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -81,15 +83,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('ipaddress', 'str'),
     ('hostname', 'str'),
+    ('ipaddress', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ipaddress',
     'hostname',
     'ttl',
+    'ipaddress',
 ]
 
 # Params for Data source
@@ -106,15 +108,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ipaddress=dict(
-        required=False,
-        type='str'),
     hostname=dict(
         required=False,
         type='str'),
     ttl=dict(
         required=False,
         type='int'),
+    ipaddress=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -180,7 +182,7 @@ def run_module():
         resource_type='ibm_dns_reverse_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_image' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_image
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    Tags for the image
-
-
-  resource_group (False, str, None)
-    The resource group for this image
-
-
   href (True, str, None)
     (Required for new resource) Image Href value
-
-
-  operating_system (True, str, None)
-    (Required for new resource) Image Operating system
 
 
   encrypted_data_key (False, str, None)
     A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
 
 
+  encryption_key (False, str, None)
+    The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+
+
+  operating_system (True, str, None)
+    (Required for new resource) Image Operating system
+
+
+  tags (False, list, None)
+    Tags for the image
+
+
   name (True, str, None)
     (Required for new resource) Image name
 
 
-  encryption_key (False, str, None)
-    The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+  resource_group (False, str, None)
+    The resource group for this image
 
 
   id (False, str, None)

@@ -15,22 +15,21 @@ Create, update or destroy an IBM Cloud 'ibm_dns_permitted_network' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dns_permitted_network
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vpc_crn (True, str, None)
-    (Required for new resource) VPC CRN id
-
 
   instance_id (True, str, None)
     (Required for new resource) Instance Id
@@ -42,6 +41,10 @@ Parameters
 
   type (False, str, vpc)
     Network Type
+
+
+  vpc_crn (True, str, None)
+    (Required for new resource) VPC CRN id
 
 
   id (False, str, None)

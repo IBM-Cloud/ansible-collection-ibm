@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_provider_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
   bgp_cer_cidr (False, str, None)
     BGP customer edge router CIDR
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
 
 
   port (True, str, None)
@@ -52,12 +43,24 @@ Parameters
     (Required for new resource) The unique user-defined name for this gateway
 
 
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
   bgp_ibm_cidr (False, str, None)
     BGP IBM CIDR
 
 
   customer_account_id (True, str, None)
     (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
 
 
   id (False, str, None)

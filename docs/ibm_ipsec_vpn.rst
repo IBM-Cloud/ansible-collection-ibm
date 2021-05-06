@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/ipsec_vpn
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,23 +31,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  address_translation (False, list, None)
-    None
-
-
   internal_subnet_id (False, int, None)
     Internal subnet ID value
 
 
-  remote_subnet (False, list, None)
-    None
+  remote_subnet_id (False, int, None)
+    Remote subnet ID value
 
 
-  phase_one (False, list, None)
-    None
+  service_subnet_id (False, int, None)
+    Service subnet ID value
 
 
   phase_two (False, list, None)
+    None
+
+
+  address_translation (False, list, None)
     None
 
 
@@ -56,16 +59,16 @@ Parameters
     Customer Peer IP Address
 
 
-  remote_subnet_id (False, int, None)
-    Remote subnet ID value
-
-
-  service_subnet_id (False, int, None)
-    Service subnet ID value
+  remote_subnet (False, list, None)
+    None
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
+
+
+  phase_one (False, list, None)
+    None
 
 
   id (False, str, None)

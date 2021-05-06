@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_schematics_job' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/schematics_job
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
-  command_parameter (True, str, None)
-    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
-
-
-  data (False, list, None)
-    Job data.
+  bastion (False, list, None)
+    Complete target details with the user inputs and the system generated data.
 
 
   job_log_summary (False, list, None)
@@ -52,12 +51,8 @@ Parameters
     Environment variables used by the job while performing an action.
 
 
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  bastion (False, list, None)
-    Complete target details with the user inputs and the system generated data.
+  location (False, str, None)
+    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
 
 
   command_object (True, str, None)
@@ -68,12 +63,20 @@ Parameters
     (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
 
 
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
   job_inputs (False, list, None)
     Job inputs used by an action.
 
 
-  location (False, str, None)
-    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
+  command_parameter (True, str, None)
+    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+
+
+  data (False, list, None)
+    Job data.
 
 
   id (False, str, None)

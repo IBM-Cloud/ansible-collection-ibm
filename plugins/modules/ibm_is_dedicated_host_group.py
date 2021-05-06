@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_dedicated_host_group
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_dedicated_host_group
+
 short_description: Configure IBM Cloud 'ibm_is_dedicated_host_group' resource
 
 version_added: "2.8"
@@ -16,10 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
+    zone:
+        description:
+            - (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
+        required: True
+        type: str
+    family:
+        description:
+            - (Required for new resource) The dedicated host profile family for hosts in this group.
+        required: True
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
     resource_group:
         description:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
@@ -28,21 +45,6 @@ options:
     class_:
         description:
             - (Required for new resource) The dedicated host profile class for hosts in this group.
-        required: True
-        type: str
-    name:
-        description:
-            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
-    family:
-        description:
-            - (Required for new resource) The dedicated host profile family for hosts in this group.
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
         required: True
         type: str
     id:
@@ -91,18 +93,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('class_', 'str'),
-    ('family', 'str'),
     ('zone', 'str'),
+    ('family', 'str'),
+    ('class_', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zone',
+    'family',
+    'name',
     'resource_group',
     'class_',
-    'name',
-    'family',
-    'zone',
 ]
 
 # Params for Data source
@@ -121,19 +123,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
-        required=False,
-        type='str'),
-    class_=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    zone=dict(
         required=False,
         type='str'),
     family=dict(
         required=False,
         type='str'),
-    zone=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    class_=dict(
         required=False,
         type='str'),
     id=dict(
@@ -213,7 +215,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -222,7 +224,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

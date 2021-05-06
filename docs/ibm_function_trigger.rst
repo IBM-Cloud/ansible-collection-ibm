@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/function_trigger
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Name of Trigger.
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
-
-
   namespace (True, str, None)
     (Required for new resource) IBM Cloud function namespace.
 
 
   feed (False, list, None)
     Trigger feed
+
+
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of Trigger.
 
 
   user_defined_parameters (False, str, [])

@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_dl_gateway' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,48 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  loa_reject_reason (False, str, None)
-    Loa reject reason
-
-
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
-
-
   bgp_base_cidr (False, str, None)
     BGP base CIDR
 
 
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
   speed_mbps (True, int, None)
     (Required for new resource) Gateway speed in megabits per second
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
-  macsec_config (False, list, None)
-    MACsec configuration information
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  port (False, str, None)
-    Gateway port
 
 
   type (True, str, None)
@@ -80,24 +51,56 @@ Parameters
     Customer name
 
 
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+  macsec_config (False, list, None)
+    MACsec configuration information
 
 
   bgp_asn (True, int, None)
     (Required for new resource) BGP ASN
 
 
-  cross_connect_router (False, str, None)
-    Cross connect router
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  loa_reject_reason (False, str, None)
+    Loa reject reason
+
+
+  port (False, str, None)
+    Gateway port
 
 
   location_name (False, str, None)
     Gateway location
 
 
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  carrier_name (False, str, None)
+    Carrier name
+
+
+  resource_group (False, str, None)
+    Gateway resource group
+
+
   metered (True, bool, None)
     (Required for new resource) Metered billing option
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
 
 
   id (False, str, None)

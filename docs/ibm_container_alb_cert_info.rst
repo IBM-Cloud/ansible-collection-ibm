@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_container_alb_cert' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_alb_cert
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_id (True, str, None)
-    Cluster ID
+  secret_name (True, str, None)
+    Secret name
 
 
   namespace (False, str, ibm-cert-store)
     Namespace of the secret
 
 
-  secret_name (True, str, None)
-    Secret name
+  cluster_id (True, str, None)
+    Cluster ID
 
 
   ibmcloud_api_key (True, any, None)

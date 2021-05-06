@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_pi_instance_ip_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/pi_instance_ip
+
 short_description: Retrieve IBM Cloud 'ibm_pi_instance_ip' resource
 
 version_added: "2.8"
@@ -15,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
@@ -24,12 +26,12 @@ options:
             - Server Name to be used for pvminstances
         required: True
         type: str
-    pi_network_name:
+    pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
-    pi_cloud_instance_id:
+    pi_network_name:
         description:
             - None
         required: True
@@ -64,15 +66,15 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_instance_name', 'str'),
-    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_network_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_instance_name',
-    'pi_network_name',
     'pi_cloud_instance_id',
+    'pi_network_name',
 ]
 
 
@@ -86,10 +88,10 @@ module_args = dict(
     pi_instance_name=dict(
         required=True,
         type='str'),
-    pi_network_name=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_network_name=dict(
         required=True,
         type='str'),
     zone=dict(
@@ -119,7 +121,7 @@ def run_module():
         resource_type='ibm_pi_instance_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

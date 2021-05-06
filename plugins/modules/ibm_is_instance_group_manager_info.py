@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_instance_group_manager_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_instance_group_manager
+
 short_description: Retrieve IBM Cloud 'ibm_is_instance_group_manager' resource
 
 version_added: "2.8"
@@ -15,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instance_group_manager' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    instance_group:
-        description:
-            - instance group ID
-        required: True
-        type: str
     name:
         description:
             - Name of the instance group manager.
+        required: True
+        type: str
+    instance_group:
+        description:
+            - instance group ID
         required: True
         type: str
     generation:
@@ -62,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_group', 'str'),
     ('name', 'str'),
+    ('instance_group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_group',
     'name',
+    'instance_group',
 ]
 
 
@@ -80,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_group=dict(
+    name=dict(
         required=True,
         type='str'),
-    name=dict(
+    instance_group=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -132,7 +134,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

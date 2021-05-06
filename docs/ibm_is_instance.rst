@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
 This module supports idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_instance
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,8 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
 
 
   primary_network_interface (True, list, None)
@@ -40,56 +83,16 @@ Parameters
     None
 
 
-  volumes (False, list, None)
-    List of volumes
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  user_data (False, str, None)
-    User data given for the instance
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
 
 
   id (False, str, None)

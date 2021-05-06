@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_cm_version
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/cm_version
+
 short_description: Configure IBM Cloud 'ibm_cm_version' resource
 
 version_added: "2.8"
@@ -16,34 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    offering_id:
-        description:
-            - (Required for new resource) Offering identification.
-        required: True
-        type: str
-    content:
-        description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
-        required: False
-        type: str
-    target_kinds:
-        description:
-            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-        required: False
-        type: list
-        elements: str
-    zipurl:
-        description:
-            - URL path to zip location.  If not specified, must provide content in the body of this call.
-        required: False
-        type: str
     tags:
         description:
             - Tags array.
+        required: False
+        type: list
+        elements: str
+    target_kinds:
+        description:
+            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
         required: False
         type: list
         elements: str
@@ -56,6 +43,21 @@ options:
         description:
             - (Required for new resource) Catalog identifier.
         required: True
+        type: str
+    content:
+        description:
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
+        required: False
+        type: str
+    offering_id:
+        description:
+            - (Required for new resource) Offering identification.
+        required: True
+        type: str
+    zipurl:
+        description:
+            - URL path to zip location.  If not specified, must provide content in the body of this call.
+        required: False
         type: str
     id:
         description:
@@ -103,19 +105,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('offering_id', 'str'),
     ('catalog_identifier', 'str'),
+    ('offering_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'offering_id',
-    'content',
-    'target_kinds',
-    'zipurl',
     'tags',
+    'target_kinds',
     'target_version',
     'catalog_identifier',
+    'content',
+    'offering_id',
+    'zipurl',
 ]
 
 # Params for Data source
@@ -134,20 +136,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    offering_id=dict(
-        required=False,
-        type='str'),
-    content=dict(
-        required=False,
-        type='str'),
-    target_kinds=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    zipurl=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    target_kinds=dict(
         required=False,
         elements='',
         type='list'),
@@ -155,6 +148,15 @@ module_args = dict(
         required=False,
         type='str'),
     catalog_identifier=dict(
+        required=False,
+        type='str'),
+    content=dict(
+        required=False,
+        type='str'),
+    offering_id=dict(
+        required=False,
+        type='str'),
+    zipurl=dict(
         required=False,
         type='str'),
     id=dict(
@@ -222,7 +224,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -231,7 +233,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.23.2',
+            ibm_provider_version='1.24.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

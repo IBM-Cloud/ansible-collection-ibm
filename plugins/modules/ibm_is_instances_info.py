@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_instances_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_instances
+
 short_description: Retrieve IBM Cloud 'ibm_is_instances' resource
 
 version_added: "2.8"
@@ -15,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instances' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    vpc_name:
-        description:
-            - Name of the vpc to filter the instances attached to it
-        required: False
-        type: str
     vpc:
         description:
             - VPC ID to filter the instances attached to it
+        required: False
+        type: str
+    vpc_name:
+        description:
+            - Name of the vpc to filter the instances attached to it
         required: False
         type: str
     generation:
@@ -66,24 +68,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc_name',
     'vpc',
+    'vpc_name',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'vpc_name': ['vpc'],
     'vpc': ['vpc_name'],
+    'vpc_name': ['vpc'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc_name=dict(
+    vpc=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    vpc_name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -132,7 +134,7 @@ def run_module():
         resource_type='ibm_is_instances',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

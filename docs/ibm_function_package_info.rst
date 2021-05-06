@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_function_package' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/function_package
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -26,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Name of the package.
-
-
   namespace (True, str, None)
     Name of the namespace.
+
+
+  name (True, str, None)
+    Name of the package.
 
 
   function_namespace (True, any, None)

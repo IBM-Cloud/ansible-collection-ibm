@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_vpn_gateway
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The resource group for this VPN gateway
-
-
-  mode (False, str, route)
-    mode in VPN gateway(route/policy)
-
-
   name (True, str, None)
     (Required for new resource) VPN Gateway instance name
+
+
+  subnet (True, str, None)
+    (Required for new resource) VPNGateway subnet info
 
 
   tags (False, list, None)
     VPN Gateway tags list
 
 
-  subnet (True, str, None)
-    (Required for new resource) VPNGateway subnet info
+  resource_group (False, str, None)
+    The resource group for this VPN gateway
+
+
+  mode (False, str, route)
+    mode in VPN gateway(route/policy)
 
 
   id (False, str, None)

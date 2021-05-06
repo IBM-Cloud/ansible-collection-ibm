@@ -8,6 +8,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_is_subnet_reserved_ip_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_subnet_reserved_ip
+
 short_description: Retrieve IBM Cloud 'ibm_is_subnet_reserved_ip' resource
 
 version_added: "2.8"
@@ -15,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.23.2
+    - IBM-Cloud terraform-provider-ibm v1.24.0
     - Terraform v0.12.20
 
 options:
-    reserved_ip:
-        description:
-            - The reserved IP identifier.
-        required: True
-        type: str
     subnet:
         description:
             - The subnet identifier.
+        required: True
+        type: str
+    reserved_ip:
+        description:
+            - The reserved IP identifier.
         required: True
         type: str
     generation:
@@ -62,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('reserved_ip', 'str'),
     ('subnet', 'str'),
+    ('reserved_ip', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'reserved_ip',
     'subnet',
+    'reserved_ip',
 ]
 
 
@@ -80,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    reserved_ip=dict(
+    subnet=dict(
         required=True,
         type='str'),
-    subnet=dict(
+    reserved_ip=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -132,7 +134,7 @@ def run_module():
         resource_type='ibm_is_subnet_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.23.2',
+        ibm_provider_version='1.24.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

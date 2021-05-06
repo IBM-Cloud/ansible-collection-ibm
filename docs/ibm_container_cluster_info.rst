@@ -13,12 +13,15 @@ Synopsis
 Retrieve an IBM Cloud 'ibm_container_cluster' resource
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/container_cluster
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -30,12 +33,12 @@ Parameters
     Name or id of the cluster
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   alb_type (False, str, all)
     None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   list_bounded_services (False, bool, True)

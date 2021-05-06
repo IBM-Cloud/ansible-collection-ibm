@@ -15,12 +15,15 @@ Create, update or destroy an IBM Cloud 'ibm_network_gateway_vlan_association' re
 This module does not support idempotency
 
 
+ForMoreInfoRefer
+----------------
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/network_gateway_vlan_association
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.23.2
+- IBM-Cloud terraform-provider-ibm v1.24.0
 - Terraform v0.12.20
 
 
@@ -28,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_vlan_id (True, int, None)
-    (Required for new resource) The Identifier of the VLAN to be associated
-
-
   bypass (False, bool, True)
     Indicates if the VLAN should be in bypass or routed modes
 
 
   gateway_id (True, int, None)
     (Required for new resource) Gateway instance ID
+
+
+  network_vlan_id (True, int, None)
+    (Required for new resource) The Identifier of the VLAN to be associated
 
 
   id (False, str, None)
