@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  ua_rule (False, list, None)
-    User Agent Rule Data
-
 
   cis_id (True, str, None)
     (Required for new resource) CIS object id
@@ -53,6 +49,10 @@ Parameters
 
   access_rule (False, list, None)
     Access Rule Data
+
+
+  ua_rule (False, list, None)
+    User Agent Rule Data
 
 
   id (False, str, None)

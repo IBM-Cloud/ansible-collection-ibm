@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_keys' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
-    alias:
-        description:
-            - The name of the key to be fetched
-        required: False
-        type: str
     endpoint_type:
         description:
             - public or private
@@ -38,6 +33,11 @@ options:
         required: True
         type: str
     key_name:
+        description:
+            - The name of the key to be fetched
+        required: False
+        type: str
+    alias:
         description:
             - The name of the key to be fetched
         required: False
@@ -80,25 +80,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'alias',
     'endpoint_type',
     'instance_id',
     'key_name',
+    'alias',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'alias': ['key_name'],
     'key_name': ['alias'],
+    'alias': ['key_name'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    alias=dict(
-        required=False,
-        type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
@@ -106,6 +103,9 @@ module_args = dict(
         required=True,
         type='str'),
     key_name=dict(
+        required=False,
+        type='str'),
+    alias=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_kms_keys',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

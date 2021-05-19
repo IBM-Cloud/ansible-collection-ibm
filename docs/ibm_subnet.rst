@@ -23,13 +23,29 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  endpoint_ip (False, str, None)
+    endpoint IP
+
+
+  type (True, str, None)
+    (Required for new resource) subnet type
+
+
+  ip_version (False, int, 4)
+    ip version
+
 
   capacity (True, int, None)
     (Required for new resource) number of ip addresses in the subnet
@@ -41,22 +57,6 @@ Parameters
 
   notes (False, str, None)
     Notes
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  ip_version (False, int, 4)
-    ip version
-
-
-  type (True, str, None)
-    (Required for new resource) subnet type
-
-
-  endpoint_ip (False, str, None)
-    endpoint IP
 
 
   private (False, bool, False)

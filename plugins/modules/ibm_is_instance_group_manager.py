@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
@@ -38,11 +38,12 @@ options:
         required: False
         type: str
         default: autoscale
-    max_membership_count:
+    min_membership_count:
         description:
-            - (Required for new resource) The maximum number of members in a managed instance group
-        required: True
+            - The minimum number of members in a managed instance group
+        required: False
         type: int
+        default: 1
     enable_manager:
         description:
             - enable instance group manager
@@ -61,12 +62,11 @@ options:
         required: False
         type: int
         default: 300
-    min_membership_count:
+    max_membership_count:
         description:
-            - The minimum number of members in a managed instance group
-        required: False
+            - (Required for new resource) The maximum number of members in a managed instance group
+        required: True
         type: int
-        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,22 +122,22 @@ TL_ALL_PARAMETERS = [
     'name',
     'instance_group',
     'manager_type',
-    'max_membership_count',
+    'min_membership_count',
     'enable_manager',
     'aggregation_window',
     'cooldown',
-    'min_membership_count',
+    'max_membership_count',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'instance_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -156,7 +156,7 @@ module_args = dict(
     manager_type=dict(
         required=False,
         type='str'),
-    max_membership_count=dict(
+    min_membership_count=dict(
         required=False,
         type='int'),
     enable_manager=dict(
@@ -168,7 +168,7 @@ module_args = dict(
     cooldown=dict(
         required=False,
         type='int'),
-    min_membership_count=dict(
+    max_membership_count=dict(
         required=False,
         type='int'),
     id=dict(
@@ -248,7 +248,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -257,7 +257,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.24.0',
+            ibm_provider_version='1.25.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

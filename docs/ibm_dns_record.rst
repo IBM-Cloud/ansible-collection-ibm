@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,64 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  protocol (False, str, None)
-    protocol info
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
   mx_priority (False, int, 0)
     Maximum priority
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  retry (False, int, None)
-    Retry count
 
 
   service (False, str, None)
     service info
 
 
+  protocol (False, str, None)
+    protocol info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
   host (True, str, None)
     (Required for new resource) Hostname
-
-
-  refresh (False, int, None)
-    refresh rate
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
 
 
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
   port (False, int, None)
     port number
 
 
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
   domain_id (True, int, None)
@@ -97,6 +81,22 @@ Parameters
 
   expire (False, int, None)
     DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
 
 
   id (False, str, None)

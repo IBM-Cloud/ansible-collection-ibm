@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_certificate_upload' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
@@ -27,32 +27,32 @@ options:
             - (Required for new resource) CIS instance crn
         required: True
         type: str
-    priority:
-        description:
-            - Certificate priority
-        required: False
-        type: int
-    certificate:
-        description:
-            - (Required for new resource) Certificate key
-        required: True
-        type: str
-    private_key:
-        description:
-            - (Required for new resource) Certificate private key
-        required: True
-        type: str
     bundle_method:
         description:
             - Certificate bundle method
         required: False
         type: str
         default: ubiquitous
+    private_key:
+        description:
+            - (Required for new resource) Certificate private key
+        required: True
+        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
         required: True
         type: str
+    certificate:
+        description:
+            - (Required for new resource) Certificate key
+        required: True
+        type: str
+    priority:
+        description:
+            - Certificate priority
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,19 +100,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('certificate', 'str'),
     ('private_key', 'str'),
     ('domain_id', 'str'),
+    ('certificate', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
-    'priority',
-    'certificate',
-    'private_key',
     'bundle_method',
+    'private_key',
     'domain_id',
+    'certificate',
+    'priority',
 ]
 
 # Params for Data source
@@ -132,21 +132,21 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
-    certificate=dict(
+    bundle_method=dict(
         required=False,
         type='str'),
     private_key=dict(
         required=False,
         type='str'),
-    bundle_method=dict(
-        required=False,
-        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
+    certificate=dict(
+        required=False,
+        type='str'),
+    priority=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_cis_certificate_upload',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
@@ -32,9 +32,24 @@ options:
             - (Required for new resource) Allocation type
         required: True
         type: int
+    port:
+        description:
+            - (Required for new resource) Port number
+        required: True
+        type: int
+    timeout:
+        description:
+            - Timeout value
+        required: False
+        type: int
     routing_method:
         description:
             - (Required for new resource) Routing method
+        required: True
+        type: str
+    routing_type:
+        description:
+            - (Required for new resource) Routing type
         required: True
         type: str
     tags:
@@ -43,21 +58,6 @@ options:
         required: False
         type: list
         elements: str
-    port:
-        description:
-            - (Required for new resource) Port number
-        required: True
-        type: int
-    routing_type:
-        description:
-            - (Required for new resource) Routing type
-        required: True
-        type: str
-    timeout:
-        description:
-            - Timeout value
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,8 +106,8 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('load_balancer_id', 'int'),
     ('allocation', 'int'),
-    ('routing_method', 'str'),
     ('port', 'int'),
+    ('routing_method', 'str'),
     ('routing_type', 'str'),
 ]
 
@@ -115,11 +115,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'load_balancer_id',
     'allocation',
-    'routing_method',
-    'tags',
     'port',
-    'routing_type',
     'timeout',
+    'routing_method',
+    'routing_type',
+    'tags',
 ]
 
 # Params for Data source
@@ -142,22 +142,22 @@ module_args = dict(
     allocation=dict(
         required=False,
         type='int'),
+    port=dict(
+        required=False,
+        type='int'),
+    timeout=dict(
+        required=False,
+        type='int'),
     routing_method=dict(
+        required=False,
+        type='str'),
+    routing_type=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    port=dict(
-        required=False,
-        type='int'),
-    routing_type=dict(
-        required=False,
-        type='str'),
-    timeout=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

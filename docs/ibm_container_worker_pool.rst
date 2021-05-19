@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -33,18 +33,6 @@ Parameters
 
   cluster (True, str, None)
     (Required for new resource) Cluster name
-
-
-  size_per_zone (True, int, None)
-    (Required for new resource) Number of nodes per zone
-
-
-  hardware (False, str, shared)
-    Hardware type
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   machine_type (True, str, None)
@@ -63,8 +51,20 @@ Parameters
     worker node disk encrypted if set to true
 
 
+  size_per_zone (True, int, None)
+    (Required for new resource) Number of nodes per zone
+
+
+  hardware (False, str, shared)
+    Hardware type
+
+
   labels (False, dict, None)
     list of labels to worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) Provision hook name
+
+
   uri (True, str, None)
     (Required for new resource) URI of the hook
 
 
   tags (False, list, None)
     Tags associated with resource
-
-
-  name (True, str, None)
-    (Required for new resource) Provision hook name
 
 
   id (False, str, None)

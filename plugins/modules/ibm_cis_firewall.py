@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
-    ua_rule:
-        description:
-            - User Agent Rule Data
-        required: False
-        type: list
-        elements: dict
     cis_id:
         description:
             - (Required for new resource) CIS object id
@@ -52,6 +46,12 @@ options:
     access_rule:
         description:
             - Access Rule Data
+        required: False
+        type: list
+        elements: dict
+    ua_rule:
+        description:
+            - User Agent Rule Data
         required: False
         type: list
         elements: dict
@@ -108,12 +108,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ua_rule',
     'cis_id',
     'domain_id',
     'firewall_type',
     'lockdown',
     'access_rule',
+    'ua_rule',
 ]
 
 # Params for Data source
@@ -136,10 +136,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ua_rule=dict(
-        required=False,
-        elements='',
-        type='list'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -154,6 +150,10 @@ module_args = dict(
         elements='',
         type='list'),
     access_rule=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ua_rule=dict(
         required=False,
         elements='',
         type='list'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -231,7 +231,7 @@ def run_module():
             resource_type='ibm_cis_firewall',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.24.0',
+            ibm_provider_version='1.25.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

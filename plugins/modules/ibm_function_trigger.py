@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,17 @@ options:
             - (Required for new resource) IBM Cloud function namespace.
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) Name of Trigger.
+        required: True
+        type: str
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
+        required: False
+        type: str
+        default: []
     feed:
         description:
             - Trigger feed
@@ -36,17 +47,6 @@ options:
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
-        required: False
-        type: str
-        default: []
-    name:
-        description:
-            - (Required for new resource) Name of Trigger.
-        required: True
-        type: str
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
         required: False
         type: str
         default: []
@@ -89,10 +89,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'namespace',
-    'feed',
-    'user_defined_annotations',
     'name',
     'user_defined_parameters',
+    'feed',
+    'user_defined_annotations',
 ]
 
 # Params for Data source
@@ -116,17 +116,17 @@ module_args = dict(
     namespace=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    user_defined_parameters=dict(
+        required=False,
+        type='str'),
     feed=dict(
         required=False,
         elements='',
         type='list'),
     user_defined_annotations=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    user_defined_parameters=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_function_trigger',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_function_trigger',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.24.0',
+            ibm_provider_version='1.25.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

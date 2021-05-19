@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
@@ -27,30 +27,42 @@ options:
             - (Required for new resource) vpn gateway
         required: True
         type: str
+    peer_cidrs:
+        description:
+            - VPN gateway connection peer CIDRs
+        required: False
+        type: list
+        elements: str
     ipsec_policy:
         description:
             - IP security policy for vpn gateway connection
         required: False
         type: str
-    name:
+    admin_state_up:
         description:
-            - (Required for new resource) VPN Gateway connection name
-        required: True
-        type: str
+            - VPN gateway connection admin state
+        required: False
+        type: bool
+        default: False
     vpn_gateway:
         description:
             - (Required for new resource) VPN Gateway info
         required: True
         type: str
-    interval:
-        description:
-            - Interval for dead peer detection interval
-        required: False
-        type: int
-        default: 2
     peer_address:
         description:
             - (Required for new resource) VPN gateway connection peer address
+        required: True
+        type: str
+    timeout:
+        description:
+            - Timeout for dead peer detection
+        required: False
+        type: int
+        default: 10
+    name:
+        description:
+            - (Required for new resource) VPN Gateway connection name
         required: True
         type: str
     local_cidrs:
@@ -65,29 +77,17 @@ options:
         required: False
         type: str
         default: restart
+    interval:
+        description:
+            - Interval for dead peer detection interval
+        required: False
+        type: int
+        default: 2
     ike_policy:
         description:
             - VPN gateway connection IKE Policy
         required: False
         type: str
-    admin_state_up:
-        description:
-            - VPN gateway connection admin state
-        required: False
-        type: bool
-        default: False
-    peer_cidrs:
-        description:
-            - VPN gateway connection peer CIDRs
-        required: False
-        type: list
-        elements: str
-    timeout:
-        description:
-            - Timeout for dead peer detection
-        required: False
-        type: int
-        default: 10
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,25 +135,25 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('preshared_key', 'str'),
-    ('name', 'str'),
     ('vpn_gateway', 'str'),
     ('peer_address', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'preshared_key',
+    'peer_cidrs',
     'ipsec_policy',
-    'name',
+    'admin_state_up',
     'vpn_gateway',
-    'interval',
     'peer_address',
+    'timeout',
+    'name',
     'local_cidrs',
     'action',
+    'interval',
     'ike_policy',
-    'admin_state_up',
-    'peer_cidrs',
-    'timeout',
 ]
 
 # Params for Data source
@@ -173,19 +173,26 @@ module_args = dict(
     preshared_key=dict(
         required=False,
         type='str'),
+    peer_cidrs=dict(
+        required=False,
+        elements='',
+        type='list'),
     ipsec_policy=dict(
         required=False,
         type='str'),
-    name=dict(
+    admin_state_up=dict(
         required=False,
-        type='str'),
+        type='bool'),
     vpn_gateway=dict(
         required=False,
         type='str'),
-    interval=dict(
+    peer_address=dict(
+        required=False,
+        type='str'),
+    timeout=dict(
         required=False,
         type='int'),
-    peer_address=dict(
+    name=dict(
         required=False,
         type='str'),
     local_cidrs=dict(
@@ -195,19 +202,12 @@ module_args = dict(
     action=dict(
         required=False,
         type='str'),
+    interval=dict(
+        required=False,
+        type='int'),
     ike_policy=dict(
         required=False,
         type='str'),
-    admin_state_up=dict(
-        required=False,
-        type='bool'),
-    peer_cidrs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    timeout=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -285,7 +285,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

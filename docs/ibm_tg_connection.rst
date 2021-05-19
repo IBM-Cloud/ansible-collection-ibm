@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (False, str, None)
+    The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
+
+
   gateway (True, str, None)
     (Required for new resource) The Transit Gateway identifier
 
 
-  name (False, str, None)
-    The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
+  network_type (True, str, None)
+    (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc)
 
 
   network_id (False, str, None)
@@ -45,10 +49,6 @@ Parameters
 
   network_account_id (False, str, None)
     The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
-
-
-  network_type (True, str, None)
-    (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc)
 
 
   id (False, str, None)

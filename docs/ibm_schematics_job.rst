@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,52 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  bastion (False, list, None)
-    Complete target details with the user inputs and the system generated data.
+  data (False, list, None)
+    Job data.
 
 
   job_log_summary (False, list, None)
     Job log summary record.
 
 
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  job_env_settings (False, list, None)
-    Environment variables used by the job while performing an action.
-
-
-  location (False, str, None)
-    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
-
-
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
-
-
-  command_object_id (True, str, None)
-    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
-
-
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  command_parameter (True, str, None)
+    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
 
 
   job_inputs (False, list, None)
     Job inputs used by an action.
 
 
-  command_parameter (True, str, None)
-    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+  job_env_settings (False, list, None)
+    Environment variables used by the job while performing an action.
 
 
-  data (False, list, None)
-    Job data.
+  command_object_id (True, str, None)
+    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
+
+
+  bastion (False, list, None)
+    Complete target details with the user inputs and the system generated data.
+
+
+  location (False, str, None)
+    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  command_options (False, list, None)
+    Command line options for the command.
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
+
+
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
 
 
   id (False, str, None)

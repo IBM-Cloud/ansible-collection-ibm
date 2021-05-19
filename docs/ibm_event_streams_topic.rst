@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) The name of the topic
-
 
   partitions (False, int, 1)
     The number of partitions
@@ -45,6 +41,10 @@ Parameters
 
   resource_instance_id (True, str, None)
     (Required for new resource) The CRN of the Event Streams instance
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the topic
 
 
   id (False, str, None)

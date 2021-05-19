@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -35,12 +35,16 @@ Parameters
     (Required for new resource) OS formatr type
 
 
-  notes (False, str, None)
-    Additional note info
-
-
   tags (False, list, None)
     List of tags associated with the resource
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    List of allowed virtual guest IDs
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed IP addresses
 
 
   hourly_billing (False, bool, False)
@@ -51,16 +55,16 @@ Parameters
     (Required for new resource) Datacenter name
 
 
-  capacity (True, int, None)
-    (Required for new resource) Storage block size
+  iops (True, float, None)
+    (Required for new resource) IOPS value required
 
 
   type (True, str, None)
     (Required for new resource) Storage block type
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    List of allowed virtual guest IDs
+  capacity (True, int, None)
+    (Required for new resource) Storage block size
 
 
   allowed_hardware_ids (False, list, None)
@@ -71,12 +75,8 @@ Parameters
     Snapshot capacity in GB
 
 
-  allowed_ip_addresses (False, list, None)
-    Allowed IP addresses
-
-
-  iops (True, float, None)
-    (Required for new resource) IOPS value required
+  notes (False, str, None)
+    Additional note info
 
 
   id (False, str, None)

@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instances' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
-    vpc:
-        description:
-            - VPC ID to filter the instances attached to it
-        required: False
-        type: str
     vpc_name:
         description:
             - Name of the vpc to filter the instances attached to it
+        required: False
+        type: str
+    vpc:
+        description:
+            - VPC ID to filter the instances attached to it
         required: False
         type: str
     generation:
@@ -68,24 +68,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
     'vpc_name',
+    'vpc',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'vpc': ['vpc_name'],
     'vpc_name': ['vpc'],
+    'vpc': ['vpc_name'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
+    vpc_name=dict(
         required=False,
         type='str'),
-    vpc_name=dict(
+    vpc=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -134,7 +134,7 @@ def run_module():
         resource_type='ibm_is_instances',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

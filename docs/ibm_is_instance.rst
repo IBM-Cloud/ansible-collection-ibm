@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
 
 
   wait_before_delete (False, bool, True)
@@ -51,48 +47,60 @@ Parameters
     User data given for the instance
 
 
-  boot_volume (False, list, None)
-    None
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   volumes (False, list, None)
     List of volumes
 
 
-  tags (False, list, None)
-    list of tags for the instance
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
 
 
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
+  boot_volume (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
 
 
   id (False, str, None)

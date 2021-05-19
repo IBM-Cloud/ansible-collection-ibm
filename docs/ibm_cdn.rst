@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
@@ -31,68 +31,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
-
-
-  host_name (True, str, None)
-    (Required for new resource) Host name
+  path (False, str, /*)
+    Path details
 
 
   header (False, str, None)
     Header info
 
 
-  http_port (False, int, 80)
-    HTTP port number
+  certificate_type (False, str, None)
+    Certificate type
 
 
-  https_port (False, int, 443)
-    HTTPS port number
+  cache_key_query_rule (False, str, include-all)
+    query rule info
 
 
-  file_extension (False, str, None)
-    File extension info
-
-
-  path (False, str, /*)
-    Path details
-
-
-  vendor_name (False, str, akamai)
-    Vendor name
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
 
 
   origin_address (True, str, None)
     (Required for new resource) origin address info
 
 
+  bucket_name (False, str, None)
+    Bucket name
+
+
   protocol (False, str, HTTP)
     Protocol name
 
 
-  cname (False, str, None)
-    cname info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
-
-
-  bucket_name (False, str, None)
-    Bucket name
+  https_port (False, int, 443)
+    HTTPS port number
 
 
   respect_headers (False, bool, True)
     respect headers info
 
 
-  cache_key_query_rule (False, str, include-all)
-    query rule info
+  host_name (True, str, None)
+    (Required for new resource) Host name
+
+
+  vendor_name (False, str, akamai)
+    Vendor name
+
+
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  cname (False, str, None)
+    cname info
+
+
+  file_extension (False, str, None)
+    File extension info
 
 
   id (False, str, None)

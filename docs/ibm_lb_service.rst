@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  service_group_id (True, int, None)
-    (Required for new resource) service group ID
-
 
   ip_address_id (True, int, None)
     (Required for new resource) IP Address ID
@@ -57,6 +53,10 @@ Parameters
 
   tags (False, list, None)
     Tags for the resource
+
+
+  service_group_id (True, int, None)
+    (Required for new resource) service group ID
 
 
   id (False, str, None)

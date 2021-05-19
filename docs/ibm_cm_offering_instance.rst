@@ -23,13 +23,33 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  version (True, str, None)
+    (Required for new resource) The version this instance was installed from (not version id).
+
+
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
+
+
+  cluster_namespaces (True, list, None)
+    (Required for new resource) List of target namespaces to install into.
+
+
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
 
   kind_format (True, str, None)
     (Required for new resource) the format this instance has (helm, operator, ova...).
@@ -39,32 +59,12 @@ Parameters
     (Required for new resource) Cluster ID.
 
 
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
-
-
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
 
 
   label (True, str, None)
     (Required for new resource) the label for this instance.
-
-
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
-
-
-  version (True, str, None)
-    (Required for new resource) The version this instance was installed from (not version id).
-
-
-  cluster_namespaces (True, list, None)
-    (Required for new resource) List of target namespaces to install into.
 
 
   id (False, str, None)

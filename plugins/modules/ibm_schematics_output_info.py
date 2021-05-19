@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_output' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
+    template_id:
+        description:
+            - The id of template
+        required: True
+        type: str
     output_json:
         description:
             - The json output in string
@@ -29,11 +34,6 @@ options:
     workspace_id:
         description:
             - The ID of the workspace for which you want to retrieve output values. To find the workspace ID, use the `GET /workspaces` API.
-        required: True
-        type: str
-    template_id:
-        description:
-            - The id of template
         required: True
         type: str
     iaas_classic_username:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('workspace_id', 'str'),
     ('template_id', 'str'),
+    ('workspace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'template_id',
     'output_json',
     'workspace_id',
-    'template_id',
 ]
 
 
@@ -88,13 +88,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    template_id=dict(
+        required=True,
+        type='str'),
     output_json=dict(
         required=False,
         type='str'),
     workspace_id=dict(
-        required=True,
-        type='str'),
-    template_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_schematics_output',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

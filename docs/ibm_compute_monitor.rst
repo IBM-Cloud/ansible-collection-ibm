@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  notified_users (False, list, None)
+    List of users notified
+
 
   tags (False, list, None)
     List of tags
@@ -53,10 +57,6 @@ Parameters
 
   wait_cycles (False, int, None)
     wait cycles count
-
-
-  notified_users (False, list, None)
-    List of users notified
 
 
   id (False, str, None)

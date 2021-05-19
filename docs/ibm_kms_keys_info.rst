@@ -21,17 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.24.0
+- IBM-Cloud terraform-provider-ibm v1.25.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  alias (False, str, None)
-    The name of the key to be fetched
-
 
   endpoint_type (False, str, public)
     public or private
@@ -42,6 +38,10 @@ Parameters
 
 
   key_name (False, str, None)
+    The name of the key to be fetched
+
+
+  alias (False, str, None)
     The name of the key to be fetched
 
 

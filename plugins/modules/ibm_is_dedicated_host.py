@@ -18,36 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.24.0
+    - IBM-Cloud terraform-provider-ibm v1.25.0
     - Terraform v0.12.20
 
 options:
-    instance_placement_enabled:
+    resource_group:
         description:
-            - If set to true, instances can be placed on this dedicated host.
+            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
         required: False
-        type: bool
-        default: True
-    profile:
-        description:
-            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
-        required: True
         type: str
     host_group:
         description:
             - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
         required: True
         type: str
-    resource_group:
-        description:
-            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
     name:
         description:
             - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
         type: str
+    profile:
+        description:
+            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
+        required: True
+        type: str
+    instance_placement_enabled:
+        description:
+            - If set to true, instances can be placed on this dedicated host.
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,29 +94,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
     ('host_group', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_placement_enabled',
-    'profile',
-    'host_group',
     'resource_group',
+    'host_group',
     'name',
+    'profile',
+    'instance_placement_enabled',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('host_group', 'str'),
     ('name', 'str'),
+    ('host_group', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'resource_group',
-    'host_group',
     'name',
+    'host_group',
+    'resource_group',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -126,21 +126,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_placement_enabled=dict(
-        required=False,
-        type='bool'),
-    profile=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     host_group=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    instance_placement_enabled=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.24.0',
+        ibm_provider_version='1.25.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.24.0',
+            ibm_provider_version='1.25.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
