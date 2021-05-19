@@ -373,6 +373,8 @@ from ansible.module_utils.six import string_types
 
 DEFAULT_TF_DIR = '/var/tmp/ansible/ibmcloud/'
 RM_OBJECT_SUBDIRS = True
+TERRAFORM_VERSION_MINIMUM = '0.12.20'
+TERRAFORM_VERSION_LATEST = '0.12.31'
 
 
 def ibmcloud_terraform(
@@ -611,9 +613,7 @@ class Terraform:
         parameters (dict): Resource parameter dictionary
         terraform_dir (str): Terraform working directory
         ibm_provider_version (str): IBM Cloud Terraform provider version
-        terraform_version (str, optional): Terraform version. TODO: If
-                                           not specified version is set
-                                           via table lookup.
+        terraform_version (str, optional): Terraform version.
         env (dict, optional): Mapping of environment variables
     """
     IBM_PROVIDER_BASE_URL = (
@@ -643,7 +643,7 @@ class Terraform:
             parameters,
             terraform_dir,
             ibm_provider_version,
-            terraform_version='0.12.20',
+            terraform_version=None,
             env=None):
 
         self.generation = None
@@ -689,6 +689,7 @@ class Terraform:
         self._render_provider_file()
 
         # Check for existing Terraform executable
+        existing_version = None
         if os.path.isfile(self.executable):
             returncode, stdout, stderr = run_process(
                 '{} version'.format(self.executable))
@@ -697,6 +698,10 @@ class Terraform:
                     r"Terraform v(\d+\.\d+\.\d+)\n", stdout)[0]
             except IndexError:
                 existing_version = None
+
+        # If terraform_version wasn't set directly as a method argument
+        # then set the version based on existing, minimum and latest values
+        self._determine_tf_version(existing_version)
 
         # Download and install Terraform if desired version not found
         if (not os.path.isfile(self.executable) or
@@ -720,6 +725,27 @@ class Terraform:
         # Initialize Terraform
         self.init()
         self.refresh()
+
+    def _determine_tf_version(self, existing_version):
+        if existing_version is None:
+            self.terraform_version = TERRAFORM_VERSION_LATEST
+        else:
+            # Create [major, minor, patch] arrays of ints for easy comparing
+            exists = [int(x) for x in existing_version.split(".")]
+            min = [int(x) for x in TERRAFORM_VERSION_MINIMUM.split(".")]
+            max = [int(x) for x in TERRAFORM_VERSION_LATEST.split(".")]
+
+            if (
+                    (exists[0] < min[0]) or
+                    (exists[0] == min[0] and exists[1] < min[1]) or
+                    (exists[0] == min[0] and exists[1] == min[1] and exists[2] < min[2]) or
+                    (exists[0] > max[0]) or
+                    (exists[0] == max[0] and exists[1] > max[1]) or
+                    (exists[0] == max[0] and exists[1] == max[1] and exists[2] > max[2])
+                    ):
+                self.terraform_version = TERRAFORM_VERSION_LATEST
+            else:
+                self.terraform_version = existing_version
 
     def _download_extract_zip(self, url):
         from ansible.module_utils.urls import open_url
