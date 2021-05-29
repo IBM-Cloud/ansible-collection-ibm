@@ -1082,9 +1082,9 @@ def fmt_tf_block(
         if key.endswith("_"):
             key = key[:-1]
         if isinstance(value, dict):
-            output += indent() + key + ' {\n'
+            output += indent() + key + ' = {\n'
             output += fmt_tf_block(value, indent_count + 1, indent_spaces)
-            output += indent(-1) + '}\n'
+            output += indent() + '}\n'
         elif isinstance(value, list):
             if len(value) >= 1 and isinstance(value[0], dict):
                 for item in value:
