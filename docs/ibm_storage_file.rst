@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
   tags (False, list, None)
     Tags set for the storage volume
-
-
-  snapshot_schedule (False, list, None)
-    None
-
-
-  iops (True, float, None)
-    (Required for new resource) iops rate
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
-  hourly_billing (False, bool, False)
-    Hourly based billing type
 
 
   allowed_subnets (False, list, None)
     Allowed network subnets
 
 
-  notes (False, str, None)
-    Notes
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
 
 
-  type (True, str, None)
-    (Required for new resource) Storage type
+  snapshot_schedule (False, list, None)
+    None
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
+
+
+  iops (True, float, None)
+    (Required for new resource) iops rate
+
+
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
 
 
   capacity (True, int, None)
     (Required for new resource) Storage capacity
 
 
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
+
+
   snapshot_capacity (False, int, None)
     Snapshot capacity
 
 
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
+  notes (False, str, None)
+    Notes
+
+
+  hourly_billing (False, bool, False)
+    Hourly based billing type
+
+
+  type (True, str, None)
+    (Required for new resource) Storage type
 
 
   id (False, str, None)

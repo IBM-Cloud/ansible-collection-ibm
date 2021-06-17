@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -35,32 +35,32 @@ Parameters
     BGP IBM CIDR
 
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   customer_account_id (True, str, None)
     (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
 
 
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  port (True, str, None)
+    (Required for new resource) Gateway port
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
   speed_mbps (True, int, None)
     (Required for new resource) Gateway speed in megabits per second
 
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  port (True, str, None)
-    (Required for new resource) Gateway port
-
-
   tags (False, list, None)
     Tags for the direct link gateway
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
 
 
   id (False, str, None)

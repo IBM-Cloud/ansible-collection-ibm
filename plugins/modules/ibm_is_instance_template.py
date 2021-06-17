@@ -18,18 +18,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     resource_group:
         description:
             - Instance template resource group
         required: False
         type: str
-    name:
+    vpc:
         description:
-            - (Required for new resource) Instance Template name
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    dedicated_host:
+        description:
+            - Unique Identifier of the Dedicated Host where the instance will be placed
+        required: False
+        type: str
+    dedicated_host_group:
+        description:
+            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    profile:
+        description:
+            - (Required for new resource) Profile info
         required: True
         type: str
     keys:
@@ -44,59 +75,28 @@ options:
         required: False
         type: list
         elements: dict
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Instance Template name
+        required: True
+        type: str
     network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    dedicated_host_group:
-        description:
-            - Unique Identifier of the Dedicated Host Group where the instance will be placed
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
-        type: str
     primary_network_interface:
         description:
             - (Required for new resource) Primary Network interface info
         required: True
         type: list
         elements: dict
-    image:
-        description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    dedicated_host:
-        description:
-            - Unique Identifier of the Dedicated Host where the instance will be placed
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -143,31 +143,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('keys', 'list'),
-    ('vpc', 'str'),
-    ('profile', 'str'),
-    ('primary_network_interface', 'list'),
     ('image', 'str'),
+    ('vpc', 'str'),
     ('zone', 'str'),
+    ('profile', 'str'),
+    ('keys', 'list'),
+    ('name', 'str'),
+    ('primary_network_interface', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'image',
+    'boot_volume',
     'resource_group',
-    'name',
+    'vpc',
+    'dedicated_host',
+    'dedicated_host_group',
+    'zone',
+    'profile',
     'keys',
     'volume_attachments',
-    'network_interfaces',
-    'boot_volume',
-    'dedicated_host_group',
-    'vpc',
-    'profile',
-    'primary_network_interface',
-    'image',
-    'dedicated_host',
-    'zone',
     'user_data',
+    'name',
+    'network_interfaces',
+    'primary_network_interface',
 ]
 
 # Params for Data source
@@ -178,18 +178,37 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'dedicated_host_group': ['dedicated_host'],
     'dedicated_host': ['dedicated_host_group'],
+    'dedicated_host_group': ['dedicated_host'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    image=dict(
+        required=False,
+        type='str'),
+    boot_volume=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    vpc=dict(
+        required=False,
+        type='str'),
+    dedicated_host=dict(
+        required=False,
+        type='str'),
+    dedicated_host_group=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     keys=dict(
@@ -200,39 +219,20 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
-    boot_volume=dict(
-        required=False,
-        elements='',
-        type='list'),
-    dedicated_host_group=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
     primary_network_interface=dict(
         required=False,
         elements='',
         type='list'),
-    image=dict(
-        required=False,
-        type='str'),
-    dedicated_host=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    user_data=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -310,7 +310,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

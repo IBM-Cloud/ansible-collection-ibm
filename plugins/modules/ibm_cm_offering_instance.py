@@ -18,13 +18,43 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_offering_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
     version:
         description:
             - (Required for new resource) The version this instance was installed from (not version id).
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - id of the resource group
+        required: False
+        type: str
+    kind_format:
+        description:
+            - (Required for new resource) the format this instance has (helm, operator, ova...).
+        required: True
+        type: str
+    cluster_id:
+        description:
+            - (Required for new resource) Cluster ID.
+        required: True
+        type: str
+    label:
+        description:
+            - (Required for new resource) the label for this instance.
+        required: True
+        type: str
+    catalog_id:
+        description:
+            - (Required for new resource) Catalog ID this instance was created from.
+        required: True
+        type: str
+    offering_id:
+        description:
+            - (Required for new resource) Offering ID this instance was created from.
         required: True
         type: str
     cluster_region:
@@ -38,36 +68,11 @@ options:
         required: True
         type: list
         elements: str
-    catalog_id:
-        description:
-            - (Required for new resource) Catalog ID this instance was created from.
-        required: True
-        type: str
-    offering_id:
-        description:
-            - (Required for new resource) Offering ID this instance was created from.
-        required: True
-        type: str
-    kind_format:
-        description:
-            - (Required for new resource) the format this instance has (helm, operator, ova...).
-        required: True
-        type: str
-    cluster_id:
-        description:
-            - (Required for new resource) Cluster ID.
-        required: True
-        type: str
     cluster_all_namespaces:
         description:
             - (Required for new resource) designate to install into all namespaces.
         required: True
         type: bool
-    label:
-        description:
-            - (Required for new resource) the label for this instance.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,27 +120,28 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('version', 'str'),
-    ('cluster_region', 'str'),
-    ('cluster_namespaces', 'list'),
-    ('catalog_id', 'str'),
-    ('offering_id', 'str'),
     ('kind_format', 'str'),
     ('cluster_id', 'str'),
-    ('cluster_all_namespaces', 'bool'),
     ('label', 'str'),
+    ('catalog_id', 'str'),
+    ('offering_id', 'str'),
+    ('cluster_region', 'str'),
+    ('cluster_namespaces', 'list'),
+    ('cluster_all_namespaces', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'version',
-    'cluster_region',
-    'cluster_namespaces',
-    'catalog_id',
-    'offering_id',
+    'resource_group_id',
     'kind_format',
     'cluster_id',
-    'cluster_all_namespaces',
     'label',
+    'catalog_id',
+    'offering_id',
+    'cluster_region',
+    'cluster_namespaces',
+    'cluster_all_namespaces',
 ]
 
 # Params for Data source
@@ -157,17 +163,7 @@ module_args = dict(
     version=dict(
         required=False,
         type='str'),
-    cluster_region=dict(
-        required=False,
-        type='str'),
-    cluster_namespaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    catalog_id=dict(
-        required=False,
-        type='str'),
-    offering_id=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
     kind_format=dict(
@@ -176,12 +172,25 @@ module_args = dict(
     cluster_id=dict(
         required=False,
         type='str'),
-    cluster_all_namespaces=dict(
-        required=False,
-        type='bool'),
     label=dict(
         required=False,
         type='str'),
+    catalog_id=dict(
+        required=False,
+        type='str'),
+    offering_id=dict(
+        required=False,
+        type='str'),
+    cluster_region=dict(
+        required=False,
+        type='str'),
+    cluster_namespaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    cluster_all_namespaces=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -247,7 +256,7 @@ def run_module():
         resource_type='ibm_cm_offering_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -256,7 +265,7 @@ def run_module():
             resource_type='ibm_cm_offering_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.25.0',
+            ibm_provider_version='1.26.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

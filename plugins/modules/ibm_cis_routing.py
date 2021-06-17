@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_routing' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: True
+        type: str
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
@@ -31,11 +36,6 @@ options:
         description:
             - Smart Routing value
         required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
         type: str
     id:
         description:
@@ -83,15 +83,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cis_id',
     'domain_id',
     'smart_routing',
-    'cis_id',
 ]
 
 # Params for Data source
@@ -108,13 +108,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
     smart_routing=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -182,7 +182,7 @@ def run_module():
         resource_type='ibm_cis_routing',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

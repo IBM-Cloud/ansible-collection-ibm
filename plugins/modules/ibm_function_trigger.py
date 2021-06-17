@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
@@ -32,18 +32,18 @@ options:
             - (Required for new resource) Name of Trigger.
         required: True
         type: str
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
-        required: False
-        type: str
-        default: []
     feed:
         description:
             - Trigger feed
         required: False
         type: list
         elements: dict
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
+        required: False
+        type: str
+        default: []
     user_defined_annotations:
         description:
             - Annotation values in KEY VALUE format.
@@ -90,8 +90,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'namespace',
     'name',
-    'user_defined_parameters',
     'feed',
+    'user_defined_parameters',
     'user_defined_annotations',
 ]
 
@@ -119,13 +119,13 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    user_defined_parameters=dict(
-        required=False,
-        type='str'),
     feed=dict(
         required=False,
         elements='',
         type='list'),
+    user_defined_parameters=dict(
+        required=False,
+        type='str'),
     user_defined_annotations=dict(
         required=False,
         type='str'),
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_function_trigger',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_function_trigger',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.25.0',
+            ibm_provider_version='1.26.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

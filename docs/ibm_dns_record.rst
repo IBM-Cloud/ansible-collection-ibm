@@ -23,53 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  service (False, str, None)
-    service info
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  port (False, int, None)
-    port number
-
 
   data (True, str, None)
     (Required for new resource) DNS record data
@@ -79,24 +39,64 @@ Parameters
     (Required for new resource) Domain ID of dns record instance
 
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   priority (False, int, 0)
     priority info
 
 
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  port (False, int, None)
+    port number
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
   weight (False, int, 0)
     weight info
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
 
 
   id (False, str, None)

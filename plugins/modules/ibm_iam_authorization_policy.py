@@ -18,28 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
-    target_resource_group_id:
-        description:
-            - The target resource group Id
-        required: False
-        type: str
     target_service_name:
         description:
             - (Required for new resource) The target service name
         required: True
         type: str
-    source_resource_instance_id:
+    source_resource_group_id:
         description:
-            - The source resource instance Id
-        required: False
-        type: str
-    target_resource_instance_id:
-        description:
-            - The target resource instance Id
+            - The source resource group Id
         required: False
         type: str
     source_resource_type:
@@ -68,9 +58,19 @@ options:
         required: True
         type: list
         elements: str
-    source_resource_group_id:
+    source_resource_instance_id:
         description:
-            - The source resource group Id
+            - The source resource instance Id
+        required: False
+        type: str
+    target_resource_instance_id:
+        description:
+            - The target resource instance Id
+        required: False
+        type: str
+    target_resource_group_id:
+        description:
+            - The target resource group Id
         required: False
         type: str
     id:
@@ -126,16 +126,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_resource_group_id',
     'target_service_name',
-    'source_resource_instance_id',
-    'target_resource_instance_id',
+    'source_resource_group_id',
     'source_resource_type',
     'target_resource_type',
     'source_service_account',
     'source_service_name',
     'roles',
-    'source_resource_group_id',
+    'source_resource_instance_id',
+    'target_resource_instance_id',
+    'target_resource_group_id',
 ]
 
 # Params for Data source
@@ -152,16 +152,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_resource_group_id=dict(
-        required=False,
-        type='str'),
     target_service_name=dict(
         required=False,
         type='str'),
-    source_resource_instance_id=dict(
-        required=False,
-        type='str'),
-    target_resource_instance_id=dict(
+    source_resource_group_id=dict(
         required=False,
         type='str'),
     source_resource_type=dict(
@@ -180,7 +174,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    source_resource_group_id=dict(
+    source_resource_instance_id=dict(
+        required=False,
+        type='str'),
+    target_resource_instance_id=dict(
+        required=False,
+        type='str'),
+    target_resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -248,7 +248,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

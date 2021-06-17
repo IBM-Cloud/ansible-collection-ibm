@@ -7,55 +7,73 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_resource_tag
-for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_tag
+module: ibm_app_config_features_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/app_config_features
 
-short_description: Configure IBM Cloud 'ibm_resource_tag' resource
+short_description: Retrieve IBM Cloud 'ibm_app_config_features' resource
 
 version_added: "2.8"
 
 description:
-    - Create, update or destroy an IBM Cloud 'ibm_resource_tag' resource
-    - This module supports idempotency
+    - Retrieve an IBM Cloud 'ibm_app_config_features' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
+    offset:
+        description:
+            - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
+        required: False
+        type: int
+    sort:
+        description:
+            - Sort the feature details based on the specified attribute.
+        required: False
+        type: str
     tags:
         description:
-            - List of tags associated with resource instance
+            - Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
+        required: False
+        type: str
+    expand:
+        description:
+            - If set to `true`, returns expanded view of the resource details.
+        required: False
+        type: bool
+    environment_id:
+        description:
+            - Environment Id.
+        required: True
+        type: str
+    segments:
+        description:
+            - Filter features by a list of comma separated segments.
         required: False
         type: list
         elements: str
-    resource_type:
+    includes:
         description:
-            - Resource type on which the tags should be attached
+            - Include the associated collections or targeting rules details in the response.
         required: False
-        type: str
-    tag_type:
+        type: list
+        elements: str
+    limit:
         description:
-            - Type of the tag. Only allowed values are: user, or service or access (default value : user)
+            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
         required: False
-        type: str
-    resource_id:
+        type: int
+    guid:
         description:
-            - (Required for new resource) CRN of the resource on which the tags should be attached
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    id:
+    collections:
         description:
-            - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
+            - Filter features by a list of comma separated collections.
         required: False
-        type: str
-    state:
-        description:
-            - State of resource
-        choices:
-            - available
-            - absent
-        default: available
-        required: False
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -89,26 +107,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_id', 'str'),
+    ('environment_id', 'str'),
+    ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'offset',
+    'sort',
     'tags',
-    'resource_type',
-    'tag_type',
-    'resource_id',
+    'expand',
+    'environment_id',
+    'segments',
+    'includes',
+    'limit',
+    'guid',
+    'collections',
 ]
 
-# Params for Data source
-TL_REQUIRED_PARAMETERS_DS = [
-    ('resource_id', 'str'),
-]
-
-TL_ALL_PARAMETERS_DS = [
-    'resource_id',
-    'resource_type',
-]
 
 TL_CONFLICTS_MAP = {
 }
@@ -117,27 +133,39 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    offset=dict(
+        required=False,
+        type='int'),
+    sort=dict(
+        required=False,
+        type='str'),
     tags=dict(
+        required=False,
+        type='str'),
+    expand=dict(
+        required=False,
+        type='bool'),
+    environment_id=dict(
+        required=True,
+        type='str'),
+    segments=dict(
         required=False,
         elements='',
         type='list'),
-    resource_type=dict(
+    includes=dict(
         required=False,
+        elements='',
+        type='list'),
+    limit=dict(
+        required=False,
+        type='int'),
+    guid=dict(
+        required=True,
         type='str'),
-    tag_type=dict(
+    collections=dict(
         required=False,
-        type='str'),
-    resource_id=dict(
-        required=False,
-        type='str'),
-    id=dict(
-        required=False,
-        type='str'),
-    state=dict(
-        type='str',
-        required=False,
-        default='available',
-        choices=(['available', 'absent'])),
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -168,52 +196,19 @@ def run_module():
         supports_check_mode=False
     )
 
-    # New resource required arguments checks
-    missing_args = []
-    if module.params['id'] is None:
-        for arg, _ in TL_REQUIRED_PARAMETERS:
-            if module.params[arg] is None:
-                missing_args.append(arg)
-        if missing_args:
-            module.fail_json(msg=(
-                "missing required arguments: " + ", ".join(missing_args)))
-
-    conflicts = {}
-    if len(TL_CONFLICTS_MAP) != 0:
-        for arg in TL_CONFLICTS_MAP:
-            if module.params[arg]:
-                for conflict in TL_CONFLICTS_MAP[arg]:
-                    try:
-                        if module.params[conflict]:
-                            conflicts[arg] = conflict
-                    except KeyError:
-                        pass
-    if len(conflicts):
-        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
-
-    result_ds = ibmcloud_terraform(
-        resource_type='ibm_resource_tag',
+    result = ibmcloud_terraform(
+        resource_type='ibm_app_config_features',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
-        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
-        tl_all_params=TL_ALL_PARAMETERS_DS)
+        ibm_provider_version='1.26.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS,
+        tl_all_params=TL_ALL_PARAMETERS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
-        result = ibmcloud_terraform(
-            resource_type='ibm_resource_tag',
-            tf_type='resource',
-            parameters=module.params,
-            ibm_provider_version='1.25.0',
-            tl_required_params=TL_REQUIRED_PARAMETERS,
-            tl_all_params=TL_ALL_PARAMETERS)
-        if result['rc'] > 0:
-            module.fail_json(
-                msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result['rc'] > 0:
+        module.fail_json(
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
-        module.exit_json(**result)
-    else:
-        module.exit_json(**result_ds)
+    module.exit_json(**result)
 
 
 def main():

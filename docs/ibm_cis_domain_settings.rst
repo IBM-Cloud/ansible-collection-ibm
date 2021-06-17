@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -31,80 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  http2 (False, str, None)
-    http2 setting
+  waf (False, str, None)
+    WAF setting
 
 
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
+  response_buffering (False, str, None)
+    response_buffering setting
 
 
   tls_client_auth (False, str, None)
     tls_client_auth setting
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
 
 
   ssl (False, str, None)
     SSL/TLS setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
+  http2 (False, str, None)
+    http2 setting
 
 
-  websockets (False, str, None)
-    websockets setting
-
-
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  brotli (False, str, None)
-    brotli setting
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
 
 
   cipher (False, list, None)
     Cipher settings
 
 
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  mobile_redirect (False, list, None)
-    None
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
 
 
   opportunistic_encryption (False, str, None)
@@ -115,20 +75,24 @@ Parameters
     browser_check setting
 
 
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
 
 
-  waf (False, str, None)
-    WAF setting
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
-  minify (False, list, None)
-    Minify setting
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  dnssec (False, str, None)
+    DNS Sec setting
 
 
   automatic_https_rewrites (False, str, None)
@@ -139,28 +103,64 @@ Parameters
     hotlink_protection setting
 
 
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
+  minify (False, list, None)
+    Minify setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  mobile_redirect (False, list, None)
+    None
 
 
-  dnssec (False, str, None)
-    DNS Sec setting
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
-  always_use_https (False, str, None)
-    always_use_https setting
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
 
 
   prefetch_preload (False, str, None)
     prefetch_preload setting
 
 
-  response_buffering (False, str, None)
-    response_buffering setting
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
 
 
   id (False, str, None)

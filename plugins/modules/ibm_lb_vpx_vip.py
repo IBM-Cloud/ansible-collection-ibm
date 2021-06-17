@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     persistence:
         description:
             - Persistance value
@@ -32,6 +38,11 @@ options:
             - (Required for new resource) Name
         required: True
         type: str
+    source_port:
+        description:
+            - (Required for new resource) Source Port number
+        required: True
+        type: int
     type:
         description:
             - (Required for new resource) Type
@@ -47,20 +58,9 @@ options:
             - (Required for new resource) Virtual IP address
         required: True
         type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     nad_controller_id:
         description:
             - (Required for new resource) NAD controller ID
-        required: True
-        type: int
-    source_port:
-        description:
-            - (Required for new resource) Source Port number
         required: True
         type: int
     load_balancing_method:
@@ -115,23 +115,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
+    ('source_port', 'int'),
     ('type', 'str'),
     ('virtual_ip_address', 'str'),
     ('nad_controller_id', 'int'),
-    ('source_port', 'int'),
     ('load_balancing_method', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'persistence',
     'name',
+    'source_port',
     'type',
     'security_certificate_id',
     'virtual_ip_address',
-    'tags',
     'nad_controller_id',
-    'source_port',
     'load_balancing_method',
 ]
 
@@ -149,12 +149,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     persistence=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    source_port=dict(
+        required=False,
+        type='int'),
     type=dict(
         required=False,
         type='str'),
@@ -164,14 +171,7 @@ module_args = dict(
     virtual_ip_address=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     nad_controller_id=dict(
-        required=False,
-        type='int'),
-    source_port=dict(
         required=False,
         type='int'),
     load_balancing_method=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

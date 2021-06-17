@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  catalog_identifier (True, str, None)
-    Catalog identifier.
-
-
   offering_id (True, str, None)
     The id of the catalog containing this offering.
+
+
+  catalog_identifier (True, str, None)
+    Catalog identifier.
 
 
   iaas_classic_username (False, any, None)

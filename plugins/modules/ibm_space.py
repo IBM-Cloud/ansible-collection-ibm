@@ -18,22 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_space' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
-    managers:
-        description:
-            - The IBMID of the users who will have manager role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    developers:
-        description:
-            - The IBMID of the users who will have developer role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
     space_quota:
         description:
             - The name of the Space Quota Definition
@@ -58,6 +46,18 @@ options:
     auditors:
         description:
             - The IBMID of the users who will have auditor role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    managers:
+        description:
+            - The IBMID of the users who will have manager role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    developers:
+        description:
+            - The IBMID of the users who will have developer role in this space, ex - user@example.com
         required: False
         type: list
         elements: str
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'managers',
-    'developers',
     'space_quota',
     'tags',
     'name',
     'org',
     'auditors',
+    'managers',
+    'developers',
 ]
 
 # Params for Data source
@@ -128,9 +128,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'org',
     'space',
     'name',
+    'org',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,14 +140,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    developers=dict(
-        required=False,
-        elements='',
-        type='list'),
     space_quota=dict(
         required=False,
         type='str'),
@@ -162,6 +154,14 @@ module_args = dict(
         required=False,
         type='str'),
     auditors=dict(
+        required=False,
+        elements='',
+        type='list'),
+    managers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    developers=dict(
         required=False,
         elements='',
         type='list'),
@@ -230,7 +230,7 @@ def run_module():
         resource_type='ibm_space',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -239,7 +239,7 @@ def run_module():
             resource_type='ibm_space',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.25.0',
+            ibm_provider_version='1.26.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

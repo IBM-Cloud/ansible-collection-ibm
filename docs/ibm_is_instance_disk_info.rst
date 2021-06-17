@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance (True, str, None)
-    The instance identifier.
-
-
   disk (True, str, None)
     The instance disk identifier.
+
+
+  instance (True, str, None)
+    The instance identifier.
 
 
   generation (False, int, 2)

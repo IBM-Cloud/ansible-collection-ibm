@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_pin_policy (False, str, none)
-    Pin Policy of the instance
+  pi_key_pair_name (True, str, None)
+    (Required for new resource) SSH key name
+
+
+  pi_network_ids (True, list, None)
+    (Required for new resource) List of Networks that have been configured for the account
+
+
+  pi_health_status (False, str, OK)
+    Allow the user to set the status of the lpar so that they can connect to it faster
+
+
+  pi_instance_name (True, str, None)
+    (Required for new resource) PI Instance name
+
+
+  pi_replication_policy (False, str, none)
+    Replication policy for the PI Instance
+
+
+  pi_processors (True, float, None)
+    (Required for new resource) Processors count
+
+
+  pi_volume_ids (False, list, None)
+    List of PI volumes
+
+
+  pi_proc_type (True, str, None)
+    (Required for new resource) Instance processor type
+
+
+  pi_sys_type (True, str, None)
+    (Required for new resource) PI Instance system type
+
+
+  pi_replicants (False, float, 1)
+    PI Instance replicas count
+
+
+  pi_replication_scheme (False, str, suffix)
+    Replication scheme
 
 
   pi_user_data (False, str, None)
@@ -43,32 +83,8 @@ Parameters
     (Required for new resource) Memory size
 
 
-  pi_volume_ids (False, list, None)
-    List of PI volumes
-
-
-  pi_replication_scheme (False, str, suffix)
-    Replication scheme
-
-
-  pi_network_ids (True, list, None)
-    (Required for new resource) List of Networks that have been configured for the account
-
-
-  pi_proc_type (True, str, None)
-    (Required for new resource) Instance processor type
-
-
-  pi_replicants (False, float, 1)
-    PI Instance replicas count
-
-
-  pi_key_pair_name (True, str, None)
-    (Required for new resource) SSH key name
-
-
-  pi_sys_type (True, str, None)
-    (Required for new resource) PI Instance system type
+  pi_pin_policy (False, str, none)
+    Pin Policy of the instance
 
 
   pi_virtual_cores_assigned (False, int, None)
@@ -81,22 +97,6 @@ Parameters
 
   pi_image_id (True, str, None)
     (Required for new resource) PI instance image name
-
-
-  pi_replication_policy (False, str, none)
-    Replication policy for the PI Instance
-
-
-  pi_health_status (False, str, OK)
-    Allow the user to set the status of the lpar so that they can connect to it faster
-
-
-  pi_processors (True, float, None)
-    (Required for new resource) Processors count
-
-
-  pi_instance_name (True, str, None)
-    (Required for new resource) PI Instance name
 
 
   id (False, str, None)

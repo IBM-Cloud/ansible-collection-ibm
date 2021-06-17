@@ -18,65 +18,65 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
-    instance_id:
-        description:
-            - (Required for new resource) Key protect or hpcs instance GUID
-        required: True
-        type: str
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
     key_name:
         description:
             - (Required for new resource) Key name
         required: True
-        type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
-    force_delete:
-        description:
-            - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
-    policies:
-        description:
-            - Creates or updates one or more policies for the specified key
-        required: False
-        type: list
-        elements: dict
-    key_ring_id:
-        description:
-            - Key Ring for the Key
-        required: False
-        type: str
-        default: default
-    payload:
-        description:
-            - None
-        required: False
-        type: str
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
         type: str
     iv_value:
         description:
             - Only for imported root key
         required: False
         type: str
+    force_delete:
+        description:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    policies:
+        description:
+            - Creates or updates one or more policies for the specified key
+        required: False
+        type: list
+        elements: dict
+    standard_key:
+        description:
+            - Standard key type
+        required: False
+        type: bool
+        default: False
+    encrypted_nonce:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) Key protect or hpcs instance GUID
+        required: True
+        type: str
+    key_ring_id:
+        description:
+            - Key Ring for the Key
+        required: False
+        type: str
+        default: default
     expiration_date:
         description:
             - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
@@ -128,22 +128,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('key_name', 'str'),
+    ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'standard_key',
     'key_name',
-    'endpoint_type',
-    'force_delete',
-    'policies',
-    'key_ring_id',
-    'payload',
-    'encrypted_nonce',
     'iv_value',
+    'force_delete',
+    'endpoint_type',
+    'payload',
+    'policies',
+    'standard_key',
+    'encrypted_nonce',
+    'instance_id',
+    'key_ring_id',
     'expiration_date',
 ]
 
@@ -153,10 +153,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'key_name',
-    'alias',
     'endpoint_type',
     'instance_id',
+    'key_name',
+    'alias',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -166,35 +166,35 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
-        required=False,
-        type='str'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
     key_name=dict(
         required=False,
         type='str'),
-    endpoint_type=dict(
+    iv_value=dict(
         required=False,
         type='str'),
     force_delete=dict(
         required=False,
         type='bool'),
-    policies=dict(
-        required=False,
-        elements='',
-        type='list'),
-    key_ring_id=dict(
+    endpoint_type=dict(
         required=False,
         type='str'),
     payload=dict(
         required=False,
         type='str'),
+    policies=dict(
+        required=False,
+        elements='',
+        type='list'),
+    standard_key=dict(
+        required=False,
+        type='bool'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
-    iv_value=dict(
+    instance_id=dict(
+        required=False,
+        type='str'),
+    key_ring_id=dict(
         required=False,
         type='str'),
     expiration_date=dict(
@@ -265,7 +265,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -274,7 +274,7 @@ def run_module():
             resource_type='ibm_kms_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.25.0',
+            ibm_provider_version='1.26.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

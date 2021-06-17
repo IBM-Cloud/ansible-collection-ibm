@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb_monitor' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.25.0
+    - IBM-Cloud terraform-provider-ibm v1.26.0
     - Terraform v0.12.20
 
 options:
-    description:
+    expected_body:
         description:
-            - Descriptive text of the load balancer monitor
+            - A case-insensitive sub-string to look for in the response body
         required: False
         type: str
     retries:
@@ -33,39 +33,12 @@ options:
         required: False
         type: int
         default: 1
-    headers:
+    timeout:
         description:
-            - The HTTP request headers to send in the health check
-        required: False
-        type: list
-        elements: dict
-    allow_insecure:
-        description:
-            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
-        required: False
-        type: bool
-    expected_body:
-        description:
-            - A case-insensitive sub-string to look for in the response body
-        required: False
-        type: str
-    type:
-        description:
-            - The protocol to use for the health check
-        required: False
-        type: str
-        default: HTTP
-    interval:
-        description:
-            - The interval between each health check
+            - The timeout (in seconds) before marking the health check as failed
         required: False
         type: int
-        default: 60
-    method:
-        description:
-            - The method to use for the health check
-        required: False
-        type: str
+        default: 5
     name:
         description:
             - (Required for new resource) The unique identifier of a service instance.
@@ -76,12 +49,28 @@ options:
             - Port number to connect to for the health check
         required: False
         type: int
-    timeout:
+    method:
         description:
-            - The timeout (in seconds) before marking the health check as failed
+            - The method to use for the health check
+        required: False
+        type: str
+    headers:
+        description:
+            - The HTTP request headers to send in the health check
+        required: False
+        type: list
+        elements: dict
+    instance_id:
+        description:
+            - (Required for new resource) Instance Id
+        required: True
+        type: str
+    interval:
+        description:
+            - The interval between each health check
         required: False
         type: int
-        default: 5
+        default: 60
     path:
         description:
             - The endpoint path to health check against
@@ -92,11 +81,22 @@ options:
             - The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
         required: False
         type: str
-    instance_id:
+    description:
         description:
-            - (Required for new resource) Instance Id
-        required: True
+            - Descriptive text of the load balancer monitor
+        required: False
         type: str
+    type:
+        description:
+            - The protocol to use for the health check
+        required: False
+        type: str
+        default: HTTP
+    allow_insecure:
+        description:
+            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -149,20 +149,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'retries',
-    'headers',
-    'allow_insecure',
     'expected_body',
-    'type',
-    'interval',
-    'method',
+    'retries',
+    'timeout',
     'name',
     'port',
-    'timeout',
+    'method',
+    'headers',
+    'instance_id',
+    'interval',
     'path',
     'expected_codes',
-    'instance_id',
+    'description',
+    'type',
+    'allow_insecure',
 ]
 
 # Params for Data source
@@ -179,38 +179,32 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
+    expected_body=dict(
         required=False,
         type='str'),
     retries=dict(
         required=False,
         type='int'),
-    headers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allow_insecure=dict(
-        required=False,
-        type='bool'),
-    expected_body=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    interval=dict(
+    timeout=dict(
         required=False,
         type='int'),
-    method=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     port=dict(
         required=False,
         type='int'),
-    timeout=dict(
+    method=dict(
+        required=False,
+        type='str'),
+    headers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    interval=dict(
         required=False,
         type='int'),
     path=dict(
@@ -219,9 +213,15 @@ module_args = dict(
     expected_codes=dict(
         required=False,
         type='str'),
-    instance_id=dict(
+    description=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    allow_insecure=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_dns_glb_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.25.0',
+        ibm_provider_version='1.26.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

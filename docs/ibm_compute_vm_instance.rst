@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -31,11 +31,47 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hourly_billing (False, bool, True)
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
-  public_bandwidth_limited (False, int, None)
+  transient (False, bool, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  image_id (False, int, None)
+    None
+
+
+  evault (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  hostname (False, str, None)
     None
 
 
@@ -43,7 +79,63 @@ Parameters
     None
 
 
+  user_metadata (False, str, None)
+    None
+
+
+  disks (False, list, None)
+    None
+
+
   private_vlan_id (False, int, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    None
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  private_security_group_ids (False, list, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  network_speed (False, int, 100)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
     None
 
 
@@ -55,27 +147,35 @@ Parameters
     Quote ID for Quote based provisioning
 
 
-  network_speed (False, int, 100)
+  cores (False, int, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  datacenter (False, str, None)
     None
 
 
   secondary_ip_count (False, int, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  local_disk (False, bool, True)
-    None
-
-
-  transient (False, bool, None)
-    None
-
-
-  os_reference_code (False, str, None)
     None
 
 
@@ -87,111 +187,11 @@ Parameters
     None
 
 
-  disks (False, list, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  cores (False, int, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  memory (False, int, None)
+  os_reference_code (False, str, None)
     None
 
 
   public_subnet (False, str, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
-  notes (False, str, None)
     None
 
 

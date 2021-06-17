@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.25.0
+- IBM-Cloud terraform-provider-ibm v1.26.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  encryption_algorithm (True, str, None)
-    (Required for new resource) Encryption algorithm
+  name (True, str, None)
+    (Required for new resource) IPSEC name
 
 
-  pfs (True, str, None)
-    (Required for new resource) PFS info
+  authentication_algorithm (True, str, None)
+    (Required for new resource) Authentication alorothm
 
 
   resource_group (False, str, None)
@@ -47,12 +47,12 @@ Parameters
     IPSEC key lifetime
 
 
-  name (True, str, None)
-    (Required for new resource) IPSEC name
+  encryption_algorithm (True, str, None)
+    (Required for new resource) Encryption algorithm
 
 
-  authentication_algorithm (True, str, None)
-    (Required for new resource) Authentication alorothm
+  pfs (True, str, None)
+    (Required for new resource) PFS info
 
 
   id (False, str, None)
