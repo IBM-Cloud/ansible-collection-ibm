@@ -18,50 +18,46 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_database' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Resource instance name for example, my Database instance
+        required: True
+        type: str
     node_memory_allocation_mb:
         description:
             - Memory allocation per node
         required: False
         type: int
-    users:
+    key_protect_key:
+        description:
+            - The CRN of Key protect key
+        required: False
+        type: str
+    whitelist:
         description:
             - None
         required: False
         type: list
         elements: dict
-    plan:
+    auto_scaling:
         description:
-            - (Required for new resource) The plan type of the Database instance
-        required: True
-        type: str
-    remote_leader_id:
-        description:
-            - The CRN of leader database
+            - ICD Auto Scaling
         required: False
-        type: str
-    members_memory_allocation_mb:
-        description:
-            - Memory allocation required for cluster
-        required: False
-        type: int
-    members_cpu_allocation_count:
-        description:
-            - CPU allocation required for cluster
-        required: False
-        type: int
-    backup_id:
-        description:
-            - The CRN of backup source database
-        required: False
-        type: str
+        type: list
+        elements: dict
     service:
         description:
             - (Required for new resource) The name of the Cloud Internet database service
         required: True
+        type: str
+    adminpassword:
+        description:
+            - The admin user password for the instance
+        required: False
         type: str
     version:
         description:
@@ -73,21 +69,31 @@ options:
             - Total number of nodes in the cluster
         required: False
         type: int
-    auto_scaling:
+    tags:
         description:
-            - ICD Auto Scaling
+            - None
         required: False
         type: list
-        elements: dict
-    service_endpoints:
+        elements: str
+    point_in_time_recovery_time:
         description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+            - The point in time recovery time stamp of the deployed instance
         required: False
         type: str
-        default: public
-    adminpassword:
+    location:
         description:
-            - The admin user password for the instance
+            - (Required for new resource) The location or the region in which Database instance exists
+        required: True
+        type: str
+    plan_validation:
+        description:
+            - For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
+        required: False
+        type: bool
+        default: True
+    backup_id:
+        description:
+            - The CRN of backup source database
         required: False
         type: str
     members_disk_allocation_mb:
@@ -95,54 +101,33 @@ options:
             - Disk allocation required for cluster
         required: False
         type: int
-    plan_validation:
+    service_endpoints:
         description:
-            - For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
-        required: False
-        type: bool
-        default: True
-    key_protect_key:
-        description:
-            - The CRN of Key protect key
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
         required: False
         type: str
-    tags:
+        default: public
+    resource_group_id:
         description:
-            - None
+            - The id of the resource group in which the Database instance is present
         required: False
-        type: list
-        elements: str
-    location:
-        description:
-            - (Required for new resource) The location or the region in which Database instance exists
-        required: True
         type: str
     node_cpu_allocation_count:
         description:
             - CPU allocation per node
         required: False
         type: int
-    point_in_time_recovery_deployment_id:
+    remote_leader_id:
         description:
-            - The CRN of source instance
+            - The CRN of leader database
         required: False
         type: str
-    whitelist:
+    users:
         description:
             - None
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) Resource instance name for example, my Database instance
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - The id of the resource group in which the Database instance is present
-        required: False
-        type: str
     node_disk_allocation_mb:
         description:
             - Disk allocation per node
@@ -153,14 +138,29 @@ options:
             - The CRN of Key protect instance
         required: False
         type: str
+    plan:
+        description:
+            - (Required for new resource) The plan type of the Database instance
+        required: True
+        type: str
+    members_memory_allocation_mb:
+        description:
+            - Memory allocation required for cluster
+        required: False
+        type: int
     backup_encryption_key_crn:
         description:
             - The Backup Encryption Key CRN
         required: False
         type: str
-    point_in_time_recovery_time:
+    members_cpu_allocation_count:
         description:
-            - The point in time recovery time stamp of the deployed instance
+            - CPU allocation required for cluster
+        required: False
+        type: int
+    point_in_time_recovery_deployment_id:
+        description:
+            - The CRN of source instance
         required: False
         type: str
     id:
@@ -209,41 +209,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('plan', 'str'),
+    ('name', 'str'),
     ('service', 'str'),
     ('location', 'str'),
-    ('name', 'str'),
+    ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'node_memory_allocation_mb',
-    'users',
-    'plan',
-    'remote_leader_id',
-    'members_memory_allocation_mb',
-    'members_cpu_allocation_count',
-    'backup_id',
+    'key_protect_key',
+    'whitelist',
+    'auto_scaling',
     'service',
+    'adminpassword',
     'version',
     'node_count',
-    'auto_scaling',
-    'service_endpoints',
-    'adminpassword',
-    'members_disk_allocation_mb',
-    'plan_validation',
-    'key_protect_key',
     'tags',
+    'point_in_time_recovery_time',
     'location',
-    'node_cpu_allocation_count',
-    'point_in_time_recovery_deployment_id',
-    'whitelist',
-    'name',
+    'plan_validation',
+    'backup_id',
+    'members_disk_allocation_mb',
+    'service_endpoints',
     'resource_group_id',
+    'node_cpu_allocation_count',
+    'remote_leader_id',
+    'users',
     'node_disk_allocation_mb',
     'key_protect_instance',
+    'plan',
+    'members_memory_allocation_mb',
     'backup_encryption_key_crn',
-    'point_in_time_recovery_time',
+    'members_cpu_allocation_count',
+    'point_in_time_recovery_deployment_id',
 ]
 
 # Params for Data source
@@ -252,50 +252,48 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'resource_group_id',
-    'location',
     'tags',
     'name',
+    'resource_group_id',
+    'location',
     'service',
 ]
 
 TL_CONFLICTS_MAP = {
     'node_memory_allocation_mb': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count'],
-    'members_memory_allocation_mb': ['node_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count'],
-    'members_cpu_allocation_count': ['node_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count'],
     'node_count': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count'],
     'members_disk_allocation_mb': ['node_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count'],
     'node_cpu_allocation_count': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count'],
     'node_disk_allocation_mb': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count'],
+    'members_memory_allocation_mb': ['node_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count'],
+    'members_cpu_allocation_count': ['node_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     node_memory_allocation_mb=dict(
         required=False,
         type='int'),
-    users=dict(
+    key_protect_key=dict(
+        required=False,
+        type='str'),
+    whitelist=dict(
         required=False,
         elements='',
         type='list'),
-    plan=dict(
+    auto_scaling=dict(
         required=False,
-        type='str'),
-    remote_leader_id=dict(
-        required=False,
-        type='str'),
-    members_memory_allocation_mb=dict(
-        required=False,
-        type='int'),
-    members_cpu_allocation_count=dict(
-        required=False,
-        type='int'),
-    backup_id=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     service=dict(
+        required=False,
+        type='str'),
+    adminpassword=dict(
         required=False,
         type='str'),
     version=dict(
@@ -304,58 +302,60 @@ module_args = dict(
     node_count=dict(
         required=False,
         type='int'),
-    auto_scaling=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    service_endpoints=dict(
+    point_in_time_recovery_time=dict(
         required=False,
         type='str'),
-    adminpassword=dict(
+    location=dict(
+        required=False,
+        type='str'),
+    plan_validation=dict(
+        required=False,
+        type='bool'),
+    backup_id=dict(
         required=False,
         type='str'),
     members_disk_allocation_mb=dict(
         required=False,
         type='int'),
-    plan_validation=dict(
-        required=False,
-        type='bool'),
-    key_protect_key=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    location=dict(
-        required=False,
-        type='str'),
-    node_cpu_allocation_count=dict(
-        required=False,
-        type='int'),
-    point_in_time_recovery_deployment_id=dict(
-        required=False,
-        type='str'),
-    whitelist=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
+    service_endpoints=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
+    node_cpu_allocation_count=dict(
+        required=False,
+        type='int'),
+    remote_leader_id=dict(
+        required=False,
+        type='str'),
+    users=dict(
+        required=False,
+        elements='',
+        type='list'),
     node_disk_allocation_mb=dict(
         required=False,
         type='int'),
     key_protect_instance=dict(
         required=False,
         type='str'),
+    plan=dict(
+        required=False,
+        type='str'),
+    members_memory_allocation_mb=dict(
+        required=False,
+        type='int'),
     backup_encryption_key_crn=dict(
         required=False,
         type='str'),
-    point_in_time_recovery_time=dict(
+    members_cpu_allocation_count=dict(
+        required=False,
+        type='int'),
+    point_in_time_recovery_deployment_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -423,7 +423,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -432,7 +432,7 @@ def run_module():
             resource_type='ibm_database',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

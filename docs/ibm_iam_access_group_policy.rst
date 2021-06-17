@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  access_group_id (True, str, None)
+    (Required for new resource) ID of access group
+
 
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
@@ -49,10 +53,6 @@ Parameters
 
   tags (False, list, None)
     None
-
-
-  access_group_id (True, str, None)
-    (Required for new resource) ID of access group
 
 
   id (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  sort (False, str, None)
+    Sort query for policies
+
+
   iam_service_id (False, str, None)
     UUID of ServiceID
 
 
   iam_id (False, str, None)
     IAM ID of ServiceID
-
-
-  sort (False, str, None)
-    Sort query for policies
 
 
   iaas_classic_username (False, any, None)

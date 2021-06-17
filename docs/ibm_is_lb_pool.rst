@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -35,48 +35,48 @@ Parameters
     (Required for new resource) Load Balancer ID
 
 
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
   algorithm (True, str, None)
     (Required for new resource) Load Balancer Pool algorithm
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
 
 
   health_retries (True, int, None)
     (Required for new resource) Load Balancer health retry count
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  session_persistence_cookie_name (False, str, None)
-    Load Balancer Pool session persisence cookie name
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
 
 
   protocol (True, str, None)
     (Required for new resource) Load Balancer Protocol
 
 
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
   health_monitor_port (False, int, None)
     Health monitor Port the LB Pool
+
+
+  session_persistence_cookie_name (False, str, None)
+    Load Balancer Pool session persisence cookie name
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
 
 
   proxy_protocol (False, str, None)

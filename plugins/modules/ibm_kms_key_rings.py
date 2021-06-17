@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_rings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
     instance_id:
         description:
             - (Required for new resource) Key protect Instance GUID
@@ -32,12 +38,6 @@ options:
             - (Required for new resource) User defined unique ID for the key ring
         required: True
         type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,9 +90,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'endpoint_type',
     'instance_id',
     'key_ring_id',
-    'endpoint_type',
 ]
 
 # Params for Data source
@@ -112,13 +112,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=False,
         type='str'),
     key_ring_id=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_kms_key_rings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -195,7 +195,7 @@ def run_module():
             resource_type='ibm_kms_key_rings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

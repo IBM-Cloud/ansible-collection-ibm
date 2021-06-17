@@ -18,33 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_certificate_upload' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
-    certificate:
-        description:
-            - (Required for new resource) Certificate key
-        required: True
-        type: str
     priority:
         description:
             - Certificate priority
         required: False
         type: int
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    private_key:
-        description:
-            - (Required for new resource) Certificate private key
-        required: True
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
         required: True
         type: str
     bundle_method:
@@ -53,6 +43,16 @@ options:
         required: False
         type: str
         default: ubiquitous
+    certificate:
+        description:
+            - (Required for new resource) Certificate key
+        required: True
+        type: str
+    private_key:
+        description:
+            - (Required for new resource) Certificate private key
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate', 'str'),
-    ('domain_id', 'str'),
-    ('private_key', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
+    ('certificate', 'str'),
+    ('private_key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate',
     'priority',
-    'domain_id',
-    'private_key',
     'cis_id',
+    'domain_id',
     'bundle_method',
+    'certificate',
+    'private_key',
 ]
 
 # Params for Data source
@@ -129,22 +129,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate=dict(
-        required=False,
-        type='str'),
     priority=dict(
         required=False,
         type='int'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    private_key=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
     bundle_method=dict(
+        required=False,
+        type='str'),
+    certificate=dict(
+        required=False,
+        type='str'),
+    private_key=dict(
         required=False,
         type='str'),
     id=dict(
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_cis_certificate_upload',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

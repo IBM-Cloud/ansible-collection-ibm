@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -35,24 +35,24 @@ Parameters
     (Required for new resource) The name of the resource key
 
 
-  resource_alias_id (False, str, None)
-    The id of the resource alias for which to create resource key
-
-
   role (True, str, None)
     (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
 
 
-  tags (False, list, None)
-    None
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
 
 
   resource_instance_id (False, str, None)
     The id of the resource instance for which to create resource key
 
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
+  resource_alias_id (False, str, None)
+    The id of the resource alias for which to create resource key
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

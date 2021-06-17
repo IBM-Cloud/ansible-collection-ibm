@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
 
   next_hop (True, str, None)
     (Required for new resource) VPC route next hop value
@@ -45,10 +49,6 @@ Parameters
 
   destination (True, str, None)
     (Required for new resource) VPC route destination CIDR value
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
 
 
   id (False, str, None)

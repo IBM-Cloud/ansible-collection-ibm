@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  period (True, int, None)
-    (Required for new resource) Rate Limiting Period
-
-
   description (False, str, None)
     A note that you can use to describe the reason for a rate limiting rule.
 
 
-  bypass (False, list, None)
-    Bypass URL
-
-
   threshold (True, int, None)
     (Required for new resource) Rate Limiting Threshold
+
+
+  period (True, int, None)
+    (Required for new resource) Rate Limiting Period
 
 
   correlate (False, list, None)
@@ -69,6 +65,10 @@ Parameters
 
   disabled (False, bool, False)
     Whether this rate limiting rule is currently disabled.
+
+
+  bypass (False, list, None)
+    Bypass URL
 
 
   id (False, str, None)

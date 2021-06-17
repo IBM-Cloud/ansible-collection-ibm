@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,20 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
   ttl (True, int, None)
     (Required for new resource) TTL configuration
 
 
-  priority (False, int, 0)
-    priority info
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   host (True, str, None)
@@ -55,48 +75,28 @@ Parameters
     Maximum priority
 
 
-  refresh (False, int, None)
-    refresh rate
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
   port (False, int, None)
     port number
 
 
-  tags (False, list, None)
-    tags set for the resource
+  priority (False, int, 0)
+    priority info
 
 
   expire (False, int, None)
     DNS record expiry info
 
 
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
   protocol (False, str, None)
     protocol info
 
 
-  weight (False, int, 0)
-    weight info
+  tags (False, list, None)
+    tags set for the resource
 
 
-  retry (False, int, None)
-    Retry count
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  service (False, str, None)
-    service info
+  refresh (False, int, None)
+    refresh rate
 
 
   id (False, str, None)

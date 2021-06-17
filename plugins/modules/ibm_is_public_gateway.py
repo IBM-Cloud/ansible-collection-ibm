@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
@@ -27,22 +27,16 @@ options:
             - (Required for new resource) Name of the Public gateway instance
         required: True
         type: str
-    resource_group:
-        description:
-            - Public gateway resource group info
-        required: False
-        type: str
-    tags:
-        description:
-            - Service tags for the public gateway instance
-        required: False
-        type: list
-        elements: str
     floating_ip:
         description:
             - None
         required: False
         type: dict
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
+        type: str
     vpc:
         description:
             - (Required for new resource) Public gateway VPC info
@@ -53,6 +47,12 @@ options:
             - (Required for new resource) Public gateway zone info
         required: True
         type: str
+    tags:
+        description:
+            - Service tags for the public gateway instance
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,11 +107,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'resource_group',
-    'tags',
     'floating_ip',
+    'resource_group',
     'vpc',
     'zone',
+    'tags',
 ]
 
 # Params for Data source
@@ -134,22 +134,22 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     floating_ip=dict(
         required=False,
         type='dict'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     vpc=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_is_public_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -236,7 +236,7 @@ def run_module():
             resource_type='ibm_is_public_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

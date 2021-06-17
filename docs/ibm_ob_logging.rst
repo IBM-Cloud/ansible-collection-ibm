@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     LogDNA ingestion key
 
 
-  cluster (True, str, None)
-    (Required for new resource) Name or ID of the cluster to be used.
-
-
   private_endpoint (False, bool, None)
     Add this option to connect to your LogDNA service instance through the private service endpoint
+
+
+  cluster (True, str, None)
+    (Required for new resource) Name or ID of the cluster to be used.
 
 
   id (False, str, None)

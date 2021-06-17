@@ -18,18 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_package' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
+        required: False
+        type: str
+        default: []
     namespace:
         description:
             - (Required for new resource) IBM Cloud function namespace.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of package.
         required: True
         type: str
     publish:
@@ -44,16 +45,15 @@ options:
         required: False
         type: str
         default: []
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
-        required: False
-        type: str
-        default: []
     bind_package_name:
         description:
             - Name of package to be binded.
         required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of package.
+        required: True
         type: str
     id:
         description:
@@ -93,12 +93,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'user_defined_parameters',
     'namespace',
-    'name',
     'publish',
     'user_defined_annotations',
-    'user_defined_parameters',
     'bind_package_name',
+    'name',
 ]
 
 # Params for Data source
@@ -119,10 +119,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    namespace=dict(
+    user_defined_parameters=dict(
         required=False,
         type='str'),
-    name=dict(
+    namespace=dict(
         required=False,
         type='str'),
     publish=dict(
@@ -131,10 +131,10 @@ module_args = dict(
     user_defined_annotations=dict(
         required=False,
         type='str'),
-    user_defined_parameters=dict(
+    bind_package_name=dict(
         required=False,
         type='str'),
-    bind_package_name=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_function_package',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -201,7 +201,7 @@ def run_module():
             resource_type='ibm_function_package',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

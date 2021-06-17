@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,36 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
   node_memory_allocation_mb (False, int, None)
     Memory allocation per node
 
 
-  users (False, list, None)
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  whitelist (False, list, None)
     None
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  remote_leader_id (False, str, None)
-    The CRN of leader database
-
-
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
 
 
   service (True, str, None)
     (Required for new resource) The name of the Cloud Internet database service
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
 
 
   version (False, str, None)
@@ -71,56 +67,48 @@ Parameters
     Total number of nodes in the cluster
 
 
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  adminpassword (False, str, None)
-    The admin user password for the instance
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  plan_validation (False, bool, True)
-    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
   tags (False, list, None)
     None
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
   location (True, str, None)
     (Required for new resource) The location or the region in which Database instance exists
 
 
-  node_cpu_allocation_count (False, int, None)
-    CPU allocation per node
+  plan_validation (False, bool, True)
+    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
 
 
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
-  whitelist (False, list, None)
-    None
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
 
 
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
   resource_group_id (False, str, None)
     The id of the resource group in which the Database instance is present
+
+
+  node_cpu_allocation_count (False, int, None)
+    CPU allocation per node
+
+
+  remote_leader_id (False, str, None)
+    The CRN of leader database
+
+
+  users (False, list, None)
+    None
 
 
   node_disk_allocation_mb (False, int, None)
@@ -131,12 +119,24 @@ Parameters
     The CRN of Key protect instance
 
 
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
+
+
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
+
+
   backup_encryption_key_crn (False, str, None)
     The Backup Encryption Key CRN
 
 
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
+
+
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  fallback_pool (True, str, None)
-    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
-
-
-  default_pools (True, list, None)
-    (Required for new resource) A list of pool IDs ordered by their failover priority
+  enabled (False, bool, None)
+    Whether the load balancer is enabled
 
 
   zone_id (True, str, None)
@@ -51,16 +47,20 @@ Parameters
     Descriptive text of the load balancer
 
 
-  enabled (False, bool, None)
-    Whether the load balancer is enabled
+  ttl (False, int, 60)
+    Time to live in second
+
+
+  fallback_pool (True, str, None)
+    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
 
 
   instance_id (True, str, None)
     (Required for new resource) The GUID of the private DNS.
 
 
-  ttl (False, int, 60)
-    Time to live in second
+  default_pools (True, list, None)
+    (Required for new resource) A list of pool IDs ordered by their failover priority
 
 
   az_pools (False, list, None)

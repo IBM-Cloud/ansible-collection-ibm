@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
@@ -37,11 +37,12 @@ options:
             - Cache level setting
         required: False
         type: str
-    browser_expiration:
+    purge_by_hosts:
         description:
-            - Browser Expiration setting
+            - Purge by hosts
         required: False
-        type: int
+        type: list
+        elements: str
     purge_all:
         description:
             - Purge all setting
@@ -65,6 +66,11 @@ options:
         required: False
         type: str
         default: on
+    browser_expiration:
+        description:
+            - Browser Expiration setting
+        required: False
+        type: int
     development_mode:
         description:
             - Development mode setting
@@ -75,12 +81,6 @@ options:
             - Query String sort setting
         required: False
         type: str
-    purge_by_hosts:
-        description:
-            - Purge by hosts
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -136,32 +136,32 @@ TL_ALL_PARAMETERS = [
     'cis_id',
     'domain_id',
     'caching_level',
-    'browser_expiration',
+    'purge_by_hosts',
     'purge_all',
     'purge_by_urls',
     'purge_by_tags',
     'serve_stale_content',
+    'browser_expiration',
     'development_mode',
     'query_string_sort',
-    'purge_by_hosts',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'domain_id',
     'cis_id',
+    'domain_id',
 ]
 
 TL_CONFLICTS_MAP = {
+    'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
     'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
     'purge_by_urls': ['purge_all', 'purge_by_tags', 'purge_by_hosts'],
     'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
-    'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -177,9 +177,10 @@ module_args = dict(
     caching_level=dict(
         required=False,
         type='str'),
-    browser_expiration=dict(
+    purge_by_hosts=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
     purge_all=dict(
         required=False,
         type='bool'),
@@ -194,16 +195,15 @@ module_args = dict(
     serve_stale_content=dict(
         required=False,
         type='str'),
+    browser_expiration=dict(
+        required=False,
+        type='int'),
     development_mode=dict(
         required=False,
         type='str'),
     query_string_sort=dict(
         required=False,
         type='str'),
-    purge_by_hosts=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -269,7 +269,7 @@ def run_module():
         resource_type='ibm_cis_cache_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -278,7 +278,7 @@ def run_module():
             resource_type='ibm_cis_cache_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

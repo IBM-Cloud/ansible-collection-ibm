@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_snapshot' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
@@ -32,17 +32,17 @@ options:
             - Snapshot description
         required: False
         type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) Instance name / id of the pvm
+        required: True
+        type: str
     pi_volume_ids:
         description:
             - List of PI volumes
         required: False
         type: list
         elements: str
-    pi_instance_name:
-        description:
-            - (Required for new resource) Instance name / id of the pvm
-        required: True
-        type: str
     pi_snap_shot_name:
         description:
             - (Required for new resource) Unique name of the snapshot
@@ -99,8 +99,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
     'description',
-    'pi_volume_ids',
     'pi_instance_name',
+    'pi_volume_ids',
     'pi_snap_shot_name',
 ]
 
@@ -124,13 +124,13 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
     pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
     pi_snap_shot_name=dict(
         required=False,
         type='str'),
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_pi_snapshot',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

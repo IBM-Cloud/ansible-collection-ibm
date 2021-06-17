@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster_config' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,12 @@ options:
             - The name/id of the cluster
         required: True
         type: str
+    download:
+        description:
+            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+        required: False
+        type: bool
+        default: True
     admin:
         description:
             - If set to true will download the config for admin
@@ -48,12 +54,6 @@ options:
         required: False
         type: bool
         default: False
-    download:
-        description:
-            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
-        required: False
-        type: bool
-        default: True
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -73,11 +73,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_name_id',
+    'download',
     'admin',
     'resource_group_id',
     'config_dir',
     'network',
-    'download',
 ]
 
 
@@ -91,6 +91,9 @@ module_args = dict(
     cluster_name_id=dict(
         required=True,
         type='str'),
+    download=dict(
+        required=False,
+        type='bool'),
     admin=dict(
         required=False,
         type='bool'),
@@ -101,9 +104,6 @@ module_args = dict(
         required=False,
         type='str'),
     network=dict(
-        required=False,
-        type='bool'),
-    download=dict(
         required=False,
         type='bool'),
     ibmcloud_api_key=dict(
@@ -126,7 +126,7 @@ def run_module():
         resource_type='ibm_container_cluster_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

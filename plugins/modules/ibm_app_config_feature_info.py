@@ -17,29 +17,29 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_feature' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
-    environment_id:
-        description:
-            - Environment Id.
-        required: True
-        type: str
     feature_id:
         description:
             - Feature Id.
-        required: True
-        type: str
-    guid:
-        description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
     includes:
         description:
             - Include the associated collections in the response.
         required: False
+        type: str
+    environment_id:
+        description:
+            - Environment Id.
+        required: True
+        type: str
+    guid:
+        description:
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -74,17 +74,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('environment_id', 'str'),
     ('feature_id', 'str'),
+    ('environment_id', 'str'),
     ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'environment_id',
     'feature_id',
-    'guid',
     'includes',
+    'environment_id',
+    'guid',
 ]
 
 
@@ -95,17 +95,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    environment_id=dict(
-        required=True,
-        type='str'),
     feature_id=dict(
-        required=True,
-        type='str'),
-    guid=dict(
         required=True,
         type='str'),
     includes=dict(
         required=False,
+        type='str'),
+    environment_id=dict(
+        required=True,
+        type='str'),
+    guid=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_app_config_feature',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

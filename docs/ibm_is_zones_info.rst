@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -29,11 +29,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  region_ (True, str, None)
+  status (False, str, None)
     None
 
 
-  status (False, str, None)
+  region_ (True, str, None)
     None
 
 

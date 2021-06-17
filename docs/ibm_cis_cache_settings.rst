@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -43,8 +43,8 @@ Parameters
     Cache level setting
 
 
-  browser_expiration (False, int, None)
-    Browser Expiration setting
+  purge_by_hosts (False, list, None)
+    Purge by hosts
 
 
   purge_all (False, bool, None)
@@ -63,16 +63,16 @@ Parameters
     Serve Stale Content
 
 
+  browser_expiration (False, int, None)
+    Browser Expiration setting
+
+
   development_mode (False, str, None)
     Development mode setting
 
 
   query_string_sort (False, str, None)
     Query String sort setting
-
-
-  purge_by_hosts (False, list, None)
-    Purge by hosts
 
 
   id (False, str, None)

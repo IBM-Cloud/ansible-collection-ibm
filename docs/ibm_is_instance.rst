@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   network_interfaces (False, list, None)
@@ -43,64 +47,60 @@ Parameters
     User data given for the instance
 
 
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  tags (False, list, None)
-    list of tags for the instance
+  name (True, str, None)
+    (Required for new resource) Instance name
 
 
   volumes (False, list, None)
     List of volumes
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
 
 
   dedicated_host_group (False, str, None)
     Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  name (True, str, None)
-    (Required for new resource) Instance name
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  boot_volume (False, list, None)
+    None
 
 
   auto_delete_volume (False, bool, None)
     Auto delete volume along with instance
 
 
-  boot_volume (False, list, None)
-    None
+  image (True, str, None)
+    (Required for new resource) image name
 
 
   id (False, str, None)

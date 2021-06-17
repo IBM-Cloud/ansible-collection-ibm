@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  state_ (True, str, None)
-    (Required for new resource) Satate name
-
-
   timezone (True, str, None)
     (Required for new resource) time zone info
 
 
-  permissions (False, list, None)
-    set of persmissions assigned for the user
+  user_status (False, str, ACTIVE)
+    user status info
 
 
   has_api_key (False, bool, False)
@@ -51,52 +47,56 @@ Parameters
     API key for the user
 
 
-  username (False, str, None)
-    user name
-
-
-  first_name (True, str, None)
-    (Required for new resource) First name of the user
-
-
-  company_name (True, str, None)
-    (Required for new resource) comapany name
-
-
   tags (False, list, None)
     Tags set for the resources
 
 
-  email (True, str, None)
-    (Required for new resource) email address of the user
-
-
-  address1 (True, str, None)
-    (Required for new resource) Address info of the user
+  country (True, str, None)
+    (Required for new resource) Country name
 
 
   last_name (True, str, None)
     (Required for new resource) Last name of the user
 
 
-  user_status (False, str, ACTIVE)
-    user status info
-
-
-  password (False, str, None)
-    password for the user
+  email (True, str, None)
+    (Required for new resource) email address of the user
 
 
   address2 (False, str, None)
     Address info of the user
 
 
+  username (False, str, None)
+    user name
+
+
+  company_name (True, str, None)
+    (Required for new resource) comapany name
+
+
+  address1 (True, str, None)
+    (Required for new resource) Address info of the user
+
+
+  first_name (True, str, None)
+    (Required for new resource) First name of the user
+
+
+  state_ (True, str, None)
+    (Required for new resource) Satate name
+
+
+  password (False, str, None)
+    password for the user
+
+
+  permissions (False, list, None)
+    set of persmissions assigned for the user
+
+
   city (True, str, None)
     (Required for new resource) City name
-
-
-  country (True, str, None)
-    (Required for new resource) Country name
 
 
   id (False, str, None)

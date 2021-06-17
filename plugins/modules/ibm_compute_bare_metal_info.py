@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,12 @@ options:
             - The domain of the bare metal server
         required: False
         type: str
+    most_recent:
+        description:
+            - If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
+        required: False
+        type: bool
+        default: False
     global_identifier:
         description:
             - The unique global identifier of the bare metal server
@@ -36,12 +42,6 @@ options:
             - The hostname of the bare metal server
         required: False
         type: str
-    most_recent:
-        description:
-            - If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
-        required: False
-        type: bool
-        default: False
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -80,17 +80,17 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain',
+    'most_recent',
     'global_identifier',
     'hostname',
-    'most_recent',
 ]
 
 
 TL_CONFLICTS_MAP = {
     'domain': ['global_identifier'],
+    'most_recent': ['global_identifier'],
     'global_identifier': ['hostname', 'domain', 'most_recent'],
     'hostname': ['global_identifier'],
-    'most_recent': ['global_identifier'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -100,15 +100,15 @@ module_args = dict(
     domain=dict(
         required=False,
         type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     global_identifier=dict(
         required=False,
         type='str'),
     hostname=dict(
         required=False,
         type='str'),
-    most_recent=dict(
-        required=False,
-        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

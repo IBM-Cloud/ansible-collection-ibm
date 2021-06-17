@@ -18,20 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
-    zones:
+    logging_account_id:
         description:
-            - The names of at least three high availability zones to use for the location
+            - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
-        type: list
-        elements: str
-    managed_from:
-        description:
-            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
-        required: True
         type: str
     cos_config:
         description:
@@ -51,14 +45,14 @@ options:
         required: False
         type: list
         elements: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     location:
         description:
             - (Required for new resource) A unique name for the new Satellite location
+        required: True
+        type: str
+    managed_from:
+        description:
+            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
         required: True
         type: str
     description:
@@ -66,9 +60,15 @@ options:
             - A description of the new Satellite location
         required: False
         type: str
-    logging_account_id:
+    zones:
         description:
-            - The account ID for IBM Log Analysis with LogDNA log forwarding
+            - The names of at least three high availability zones to use for the location
+        required: False
+        type: list
+        elements: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
         required: False
         type: str
     id:
@@ -117,21 +117,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('managed_from', 'str'),
     ('location', 'str'),
+    ('managed_from', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zones',
-    'managed_from',
+    'logging_account_id',
     'cos_config',
     'cos_credentials',
     'tags',
-    'resource_group_id',
     'location',
+    'managed_from',
     'description',
-    'logging_account_id',
+    'zones',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -150,11 +150,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    managed_from=dict(
+    logging_account_id=dict(
         required=False,
         type='str'),
     cos_config=dict(
@@ -169,16 +165,20 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
+    location=dict(
         required=False,
         type='str'),
-    location=dict(
+    managed_from=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    logging_account_id=dict(
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.0',
+            ibm_provider_version='1.26.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

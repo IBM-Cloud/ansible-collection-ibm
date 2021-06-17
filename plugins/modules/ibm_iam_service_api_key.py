@@ -18,13 +18,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_api_key' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.0
+    - IBM-Cloud terraform-provider-ibm v1.26.2
     - Terraform v0.12.20
 
 options:
+    apikey:
+        description:
+            - API key value for this API key
+        required: False
+        type: str
+    file:
+        description:
+            - File where api key is to be stored
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Name of the Service API key
+        required: True
+        type: str
+    description:
+        description:
+            - description of the API key
+        required: False
+        type: str
+    store_value:
+        description:
+            - Boolean value deciding whether API key value is retrievable in the future
+        required: False
+        type: bool
+    iam_service_id:
+        description:
+            - (Required for new resource) The service iam_id that this API key authenticates
         required: True
         type: str
     locked:
@@ -32,31 +57,6 @@ options:
             - The API key cannot be changed if set to true
         required: False
         type: bool
-    store_value:
-        description:
-            - Boolean value deciding whether API key value is retrievable in the future
-        required: False
-        type: bool
-    file:
-        description:
-            - File where api key is to be stored
-        required: False
-        type: str
-    description:
-        description:
-            - description of the API key
-        required: False
-        type: str
-    iam_service_id:
-        description:
-            - (Required for new resource) The service iam_id that this API key authenticates
-        required: True
-        type: str
-    apikey:
-        description:
-            - API key value for this API key
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,13 +109,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'locked',
-    'store_value',
-    'file',
-    'description',
-    'iam_service_id',
     'apikey',
+    'file',
+    'name',
+    'description',
+    'store_value',
+    'iam_service_id',
+    'locked',
 ]
 
 # Params for Data source
@@ -132,27 +132,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    apikey=dict(
         required=False,
         type='str'),
-    locked=dict(
-        required=False,
-        type='bool'),
-    store_value=dict(
-        required=False,
-        type='bool'),
     file=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
+    store_value=dict(
+        required=False,
+        type='bool'),
     iam_service_id=dict(
         required=False,
         type='str'),
-    apikey=dict(
+    locked=dict(
         required=False,
-        type='str'),
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_iam_service_api_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.26.0',
+        ibm_provider_version='1.26.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

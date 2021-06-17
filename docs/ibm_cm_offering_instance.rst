@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -39,16 +39,12 @@ Parameters
     id of the resource group
 
 
-  kind_format (True, str, None)
-    (Required for new resource) the format this instance has (helm, operator, ova...).
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
 
 
   cluster_id (True, str, None)
     (Required for new resource) Cluster ID.
-
-
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
 
 
   catalog_id (True, str, None)
@@ -57,6 +53,10 @@ Parameters
 
   offering_id (True, str, None)
     (Required for new resource) Offering ID this instance was created from.
+
+
+  kind_format (True, str, None)
+    (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
   cluster_region (True, str, None)

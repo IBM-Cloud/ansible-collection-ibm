@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.0
+- IBM-Cloud terraform-provider-ibm v1.26.2
 - Terraform v0.12.20
 
 
@@ -39,8 +39,12 @@ Parameters
     (Required for new resource) Loadbalancer listener port
 
 
-  default_pool (False, str, None)
-    Loadbalancer default pool info
+  certificate_instance (False, str, None)
+    certificate instance for the Loadbalancer
+
+
+  accept_proxy_protocol (False, bool, None)
+    Listener will forward proxy protocol
 
 
   connection_limit (False, int, None)
@@ -51,12 +55,8 @@ Parameters
     (Required for new resource) Loadbalancer protocol
 
 
-  certificate_instance (False, str, None)
-    certificate instance for the Loadbalancer
-
-
-  accept_proxy_protocol (False, bool, None)
-    Listener will forward proxy protocol
+  default_pool (False, str, None)
+    Loadbalancer default pool info
 
 
   id (False, str, None)
