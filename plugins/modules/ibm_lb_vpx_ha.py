@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_ha' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    primary_id:
-        description:
-            - (Required for new resource) primary ID
-        required: True
-        type: int
-    secondary_id:
-        description:
-            - (Required for new resource) Secondary ID
-        required: True
-        type: int
     stay_secondary:
         description:
             - Boolean value for stay secondary
@@ -43,6 +33,16 @@ options:
         required: False
         type: list
         elements: str
+    primary_id:
+        description:
+            - (Required for new resource) primary ID
+        required: True
+        type: int
+    secondary_id:
+        description:
+            - (Required for new resource) Secondary ID
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,10 +95,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'primary_id',
-    'secondary_id',
     'stay_secondary',
     'tags',
+    'primary_id',
+    'secondary_id',
 ]
 
 # Params for Data source
@@ -115,12 +115,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    primary_id=dict(
-        required=False,
-        type='int'),
-    secondary_id=dict(
-        required=False,
-        type='int'),
     stay_secondary=dict(
         required=False,
         type='bool'),
@@ -128,6 +122,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    primary_id=dict(
+        required=False,
+        type='int'),
+    secondary_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_lb_vpx_ha',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

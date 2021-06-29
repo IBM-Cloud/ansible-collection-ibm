@@ -18,23 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name of the instance
-        required: True
-        type: str
-    description:
-        description:
-            - Description of the certificate instance
-        required: False
-        type: str
     certificate_manager_instance_id:
         description:
             - (Required for new resource) Instance ID of the certificate manager resource
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the instance
         required: True
         type: str
     data:
@@ -42,6 +37,11 @@ options:
             - (Required for new resource) certificate data
         required: True
         type: dict
+    description:
+        description:
+            - Description of the certificate instance
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,17 +88,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('certificate_manager_instance_id', 'str'),
+    ('name', 'str'),
     ('data', 'dict'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'description',
     'certificate_manager_instance_id',
+    'name',
     'data',
+    'description',
 ]
 
 # Params for Data source
@@ -115,18 +115,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     certificate_manager_instance_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     data=dict(
         required=False,
         type='dict'),
+    description=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_certificate_manager_import',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

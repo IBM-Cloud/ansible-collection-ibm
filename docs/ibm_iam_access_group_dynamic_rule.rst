@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  identity_provider (True, str, None)
-    (Required for new resource) The realm name or identity proivider url
-
 
   conditions (True, list, None)
     (Required for new resource) conditions info
@@ -49,6 +45,10 @@ Parameters
 
   expiration (True, int, None)
     (Required for new resource) The expiration in hours
+
+
+  identity_provider (True, str, None)
+    (Required for new resource) The realm name or identity proivider url
 
 
   id (False, str, None)

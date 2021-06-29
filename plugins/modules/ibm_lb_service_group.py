@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_service_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
+    routing_method:
+        description:
+            - (Required for new resource) Routing method
+        required: True
+        type: str
     tags:
         description:
             - List of tags
@@ -33,9 +38,9 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: True
         type: int
-    port:
+    allocation:
         description:
-            - (Required for new resource) Port number
+            - (Required for new resource) Allocation type
         required: True
         type: int
     timeout:
@@ -43,16 +48,11 @@ options:
             - Timeout value
         required: False
         type: int
-    allocation:
+    port:
         description:
-            - (Required for new resource) Allocation type
+            - (Required for new resource) Port number
         required: True
         type: int
-    routing_method:
-        description:
-            - (Required for new resource) Routing method
-        required: True
-        type: str
     routing_type:
         description:
             - (Required for new resource) Routing type
@@ -104,21 +104,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('load_balancer_id', 'int'),
-    ('port', 'int'),
-    ('allocation', 'int'),
     ('routing_method', 'str'),
+    ('load_balancer_id', 'int'),
+    ('allocation', 'int'),
+    ('port', 'int'),
     ('routing_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'routing_method',
     'tags',
     'load_balancer_id',
-    'port',
-    'timeout',
     'allocation',
-    'routing_method',
+    'timeout',
+    'port',
     'routing_type',
 ]
 
@@ -136,6 +136,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    routing_method=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -143,18 +146,15 @@ module_args = dict(
     load_balancer_id=dict(
         required=False,
         type='int'),
-    port=dict(
+    allocation=dict(
         required=False,
         type='int'),
     timeout=dict(
         required=False,
         type='int'),
-    allocation=dict(
+    port=dict(
         required=False,
         type='int'),
-    routing_method=dict(
-        required=False,
-        type='str'),
     routing_type=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_lb_service_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
-
-
-  publish (False, bool, False)
-    Package visibilty.
-
 
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
@@ -47,8 +39,16 @@ Parameters
     Name of package to be binded.
 
 
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
+
+
   name (True, str, None)
     (Required for new resource) Name of package.
+
+
+  publish (False, bool, False)
+    Package visibilty.
 
 
   user_defined_parameters (False, str, [])

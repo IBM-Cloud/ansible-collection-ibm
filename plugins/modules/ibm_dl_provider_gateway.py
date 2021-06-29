@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
@@ -27,26 +27,6 @@ options:
             - (Required for new resource) BGP ASN
         required: True
         type: int
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The unique user-defined name for this gateway
-        required: True
-        type: str
-    customer_account_id:
-        description:
-            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
-        required: True
-        type: str
-    port:
-        description:
-            - (Required for new resource) Gateway port
-        required: True
-        type: str
     bgp_cer_cidr:
         description:
             - BGP customer edge router CIDR
@@ -57,12 +37,32 @@ options:
             - (Required for new resource) Gateway speed in megabits per second
         required: True
         type: int
+    customer_account_id:
+        description:
+            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+        required: True
+        type: str
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The unique user-defined name for this gateway
+        required: True
+        type: str
     tags:
         description:
             - Tags for the direct link gateway
         required: False
         type: list
         elements: str
+    port:
+        description:
+            - (Required for new resource) Gateway port
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,22 +110,22 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bgp_asn', 'int'),
-    ('name', 'str'),
-    ('customer_account_id', 'str'),
-    ('port', 'str'),
     ('speed_mbps', 'int'),
+    ('customer_account_id', 'str'),
+    ('name', 'str'),
+    ('port', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bgp_asn',
-    'bgp_ibm_cidr',
-    'name',
-    'customer_account_id',
-    'port',
     'bgp_cer_cidr',
     'speed_mbps',
+    'customer_account_id',
+    'bgp_ibm_cidr',
+    'name',
     'tags',
+    'port',
 ]
 
 # Params for Data source
@@ -145,28 +145,28 @@ module_args = dict(
     bgp_asn=dict(
         required=False,
         type='int'),
-    bgp_ibm_cidr=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    customer_account_id=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='str'),
     bgp_cer_cidr=dict(
         required=False,
         type='str'),
     speed_mbps=dict(
         required=False,
         type='int'),
+    customer_account_id=dict(
+        required=False,
+        type='str'),
+    bgp_ibm_cidr=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    port=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

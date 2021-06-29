@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_type (False, str, None)
-    Resource type on which the tags should be fetched
-
-
   resource_id (True, str, None)
     CRN of the resource on which the tags should be attached
+
+
+  resource_type (False, str, None)
+    Resource type on which the tags should be fetched
 
 
   iaas_classic_username (False, any, None)

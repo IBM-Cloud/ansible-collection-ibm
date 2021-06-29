@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  owner_iam_id (False, str, None)
+    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
+
+
   name (False, str, None)
     The name of the account. This field must have 3 - 60 characters.
+
+
+  account_id (False, str, None)
+    The source account id of account to be imported
 
 
   parent (True, str, None)
@@ -45,14 +53,6 @@ Parameters
 
   enterprise_account_id (False, str, None)
     The enterprise account ID.
-
-
-  owner_iam_id (False, str, None)
-    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
-
-
-  account_id (False, str, None)
-    The source account id of account to be imported
 
 
   id (False, str, None)

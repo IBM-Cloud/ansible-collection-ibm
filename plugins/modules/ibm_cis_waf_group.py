@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,9 @@ options:
             - (Required for new resource) WAF Rule group id
         required: True
         type: str
-    cis_id:
+    mode:
         description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) CIS Domain ID
+            - (Required for new resource) WAF Rule group mode on/off
         required: True
         type: str
     package_id:
@@ -42,9 +37,14 @@ options:
             - (Required for new resource) WAF Rule package id
         required: True
         type: str
-    mode:
+    domain_id:
         description:
-            - (Required for new resource) WAF Rule group mode on/off
+            - (Required for new resource) CIS Domain ID
+        required: True
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
         required: True
         type: str
     id:
@@ -94,19 +94,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('group_id', 'str'),
-    ('cis_id', 'str'),
-    ('domain_id', 'str'),
-    ('package_id', 'str'),
     ('mode', 'str'),
+    ('package_id', 'str'),
+    ('domain_id', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'group_id',
-    'cis_id',
-    'domain_id',
-    'package_id',
     'mode',
+    'package_id',
+    'domain_id',
+    'cis_id',
 ]
 
 # Params for Data source
@@ -126,16 +126,16 @@ module_args = dict(
     group_id=dict(
         required=False,
         type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
+    mode=dict(
         required=False,
         type='str'),
     package_id=dict(
         required=False,
         type='str'),
-    mode=dict(
+    domain_id=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

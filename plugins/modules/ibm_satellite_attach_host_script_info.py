@@ -17,16 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_attach_host_script' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    labels:
-        description:
-            - List of labels for the attach host
-        required: False
-        type: list
-        elements: str
     host_provider:
         description:
             - None
@@ -42,6 +36,12 @@ options:
             - A unique name for the new Satellite location
         required: True
         type: str
+    labels:
+        description:
+            - List of labels for the attach host
+        required: False
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -81,10 +81,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'labels',
     'host_provider',
     'script_dir',
     'location',
+    'labels',
 ]
 
 
@@ -95,10 +95,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
     host_provider=dict(
         required=True,
         type='str'),
@@ -108,6 +104,10 @@ module_args = dict(
     location=dict(
         required=True,
         type='str'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_satellite_attach_host_script',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

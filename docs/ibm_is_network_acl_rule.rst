@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,23 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  source (True, str, None)
-    (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-
-
   destination (True, str, None)
     (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
 
 
-  direction (True, str, None)
-    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+  before (False, str, None)
+    The rule that this rule is immediately before. If absent, this is the last rule.
 
 
-  network_acl (True, str, None)
-    (Required for new resource) Network ACL id
+  tcp (False, list, None)
+    None
 
 
-  icmp (False, list, None)
+  udp (False, list, None)
     None
 
 
@@ -59,16 +55,20 @@ Parameters
     (Required for new resource) Whether to allow or deny matching traffic
 
 
-  tcp (False, list, None)
+  icmp (False, list, None)
     None
 
 
-  udp (False, list, None)
-    None
+  network_acl (True, str, None)
+    (Required for new resource) Network ACL id
 
 
-  before (False, str, None)
-    The rule that this rule is immediately before. If absent, this is the last rule.
+  source (True, str, None)
+    (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+
+
+  direction (True, str, None)
+    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
 
 
   id (False, str, None)

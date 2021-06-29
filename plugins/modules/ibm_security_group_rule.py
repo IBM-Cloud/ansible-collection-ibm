@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_security_group_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
+    port_range_max:
+        description:
+            - Port number max range
+        required: False
+        type: int
     remote_group_id:
         description:
             - remote group ID
@@ -56,11 +61,6 @@ options:
     port_range_min:
         description:
             - Port number minimum range
-        required: False
-        type: int
-    port_range_max:
-        description:
-            - Port number max range
         required: False
         type: int
     id:
@@ -115,6 +115,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'port_range_max',
     'remote_group_id',
     'remote_ip',
     'protocol',
@@ -122,7 +123,6 @@ TL_ALL_PARAMETERS = [
     'direction',
     'ether_type',
     'port_range_min',
-    'port_range_max',
 ]
 
 # Params for Data source
@@ -141,6 +141,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    port_range_max=dict(
+        required=False,
+        type='int'),
     remote_group_id=dict(
         required=False,
         type='int'),
@@ -160,9 +163,6 @@ module_args = dict(
         required=False,
         type='str'),
     port_range_min=dict(
-        required=False,
-        type='int'),
-    port_range_max=dict(
         required=False,
         type='int'),
     id=dict(
@@ -230,7 +230,7 @@ def run_module():
         resource_type='ibm_security_group_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

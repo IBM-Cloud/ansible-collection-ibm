@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -39,68 +39,68 @@ Parameters
     (Required for new resource) Metered billing option
 
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
-
-
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
   bgp_ibm_cidr (False, str, None)
     BGP IBM CIDR
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  customer_name (False, str, None)
-    Customer name
-
-
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  port (False, str, None)
-    Gateway port
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  type (True, str, None)
-    (Required for new resource) Gateway type
 
 
   bgp_asn (True, int, None)
     (Required for new resource) BGP ASN
 
 
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  type (True, str, None)
+    (Required for new resource) Gateway type
+
+
+  port (False, str, None)
+    Gateway port
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  customer_name (False, str, None)
+    Customer name
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
   loa_reject_reason (False, str, None)
     Loa reject reason
 
 
+  location_name (False, str, None)
+    Gateway location
+
+
+  carrier_name (False, str, None)
+    Carrier name
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
   macsec_config (False, list, None)
     MACsec configuration information
+
+
+  resource_group (False, str, None)
+    Gateway resource group
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
 
 
   id (False, str, None)

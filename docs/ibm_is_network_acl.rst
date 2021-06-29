@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     Resource group ID for the network ACL
 
 
-  name (True, str, None)
-    (Required for new resource) Network ACL name
-
-
   tags (False, list, None)
     List of tags
+
+
+  name (True, str, None)
+    (Required for new resource) Network ACL name
 
 
   rules (False, list, None)

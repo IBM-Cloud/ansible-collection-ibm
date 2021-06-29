@@ -18,24 +18,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    remote_gateway_ip:
+    remote_tunnel_ip:
         description:
-            - The remote gateway IP address. This field only applies to network type 'gre_tunnel' connections.
+            - The remote tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
         required: False
         type: str
-    zone:
+    network_type:
         description:
-            - Location of GRE tunnel. This field only applies to network type 'gre_tunnel' connections.
-        required: False
+            - (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc,gre_tunnel)
+        required: True
         type: str
     name:
         description:
             - The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
         required: False
+        type: str
+    network_id:
+        description:
+            - The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
+        required: False
+        type: str
+    local_gateway_ip:
+        description:
+            - The local gateway IP address. This field only applies to network type 'gre_tunnel' connections.
+        required: False
+        type: str
+    remote_bgp_asn:
+        description:
+            - The remote network BGP ASN. This field only applies to network type 'gre_tunnel' connections.
+        required: False
+        type: int
+    remote_gateway_ip:
+        description:
+            - The remote gateway IP address. This field only applies to network type 'gre_tunnel' connections.
+        required: False
+        type: str
+    gateway:
+        description:
+            - (Required for new resource) The Transit Gateway identifier
+        required: True
         type: str
     network_account_id:
         description:
@@ -47,39 +72,14 @@ options:
             - The ID of a network_type 'classic' connection a tunnel is configured over. This field only applies to network type 'gre_tunnel' connections.
         required: False
         type: str
-    local_gateway_ip:
+    zone:
         description:
-            - The local gateway IP address. This field only applies to network type 'gre_tunnel' connections.
-        required: False
-        type: str
-    network_type:
-        description:
-            - (Required for new resource) Defines what type of network is connected via this connection.Allowable values (classic,vpc,gre_tunnel)
-        required: True
-        type: str
-    remote_bgp_asn:
-        description:
-            - The remote network BGP ASN. This field only applies to network type 'gre_tunnel' connections.
-        required: False
-        type: int
-    gateway:
-        description:
-            - (Required for new resource) The Transit Gateway identifier
-        required: True
-        type: str
-    network_id:
-        description:
-            - The ID of the network being connected via this connection. This field is required for some types, such as 'vpc'. For network type 'vpc' this is the CRN of the VPC to be connected. This field is required to be unspecified for network type 'classic'.
+            - Location of GRE tunnel. This field only applies to network type 'gre_tunnel' connections.
         required: False
         type: str
     local_tunnel_ip:
         description:
             - The local tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
-        required: False
-        type: str
-    remote_tunnel_ip:
-        description:
-            - The remote tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
         required: False
         type: str
     id:
@@ -134,18 +134,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'remote_gateway_ip',
-    'zone',
+    'remote_tunnel_ip',
+    'network_type',
     'name',
+    'network_id',
+    'local_gateway_ip',
+    'remote_bgp_asn',
+    'remote_gateway_ip',
+    'gateway',
     'network_account_id',
     'base_connection_id',
-    'local_gateway_ip',
-    'network_type',
-    'remote_bgp_asn',
-    'gateway',
-    'network_id',
+    'zone',
     'local_tunnel_ip',
-    'remote_tunnel_ip',
 ]
 
 # Params for Data source
@@ -162,13 +162,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    remote_gateway_ip=dict(
+    remote_tunnel_ip=dict(
         required=False,
         type='str'),
-    zone=dict(
+    network_type=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    network_id=dict(
+        required=False,
+        type='str'),
+    local_gateway_ip=dict(
+        required=False,
+        type='str'),
+    remote_bgp_asn=dict(
+        required=False,
+        type='int'),
+    remote_gateway_ip=dict(
+        required=False,
+        type='str'),
+    gateway=dict(
         required=False,
         type='str'),
     network_account_id=dict(
@@ -177,25 +192,10 @@ module_args = dict(
     base_connection_id=dict(
         required=False,
         type='str'),
-    local_gateway_ip=dict(
-        required=False,
-        type='str'),
-    network_type=dict(
-        required=False,
-        type='str'),
-    remote_bgp_asn=dict(
-        required=False,
-        type='int'),
-    gateway=dict(
-        required=False,
-        type='str'),
-    network_id=dict(
+    zone=dict(
         required=False,
         type='str'),
     local_tunnel_ip=dict(
-        required=False,
-        type='str'),
-    remote_tunnel_ip=dict(
         required=False,
         type='str'),
     id=dict(
@@ -263,7 +263,7 @@ def run_module():
         resource_type='ibm_tg_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

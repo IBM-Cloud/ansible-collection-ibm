@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  wait_until_successful (False, bool, True)
+    Whether to wait until the offering instance successfully provisions, or to return when accepted
+
+
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
+
+
   catalog_id (True, str, None)
     (Required for new resource) Catalog ID this instance was created from.
 
 
   version (True, str, None)
     (Required for new resource) The version this instance was installed from (not version id).
+
+
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
 
 
   resource_group_id (False, str, None)
@@ -47,16 +59,12 @@ Parameters
     install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
 
 
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
+
+
   offering_id (True, str, None)
     (Required for new resource) Offering ID this instance was created from.
-
-
-  wait_until_successful (False, bool, True)
-    Whether to wait until the offering instance successfully provisions, or to return when accepted
-
-
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
 
 
   kind_format (True, str, None)
@@ -73,14 +81,6 @@ Parameters
 
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
-
-
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
-
-
-  channel (False, str, None)
-    channel to target for the operator subscription. Required for operator bundles
 
 
   id (False, str, None)

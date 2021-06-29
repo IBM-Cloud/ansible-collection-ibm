@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_secrets_manager_secret' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    instance_id:
+    secret_id:
         description:
-            - Secrets Manager instance GUID
+            - The v4 UUID that uniquely identifies the secret.
         required: True
         type: str
     endpoint_type:
@@ -32,9 +32,9 @@ options:
         required: False
         type: str
         default: public
-    secret_id:
+    instance_id:
         description:
-            - The v4 UUID that uniquely identifies the secret.
+            - Secrets Manager instance GUID
         required: True
         type: str
     secret_type:
@@ -75,16 +75,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('secret_id', 'str'),
+    ('instance_id', 'str'),
     ('secret_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'endpoint_type',
     'secret_id',
+    'endpoint_type',
+    'instance_id',
     'secret_type',
 ]
 
@@ -96,13 +96,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
+    secret_id=dict(
         required=True,
         type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
-    secret_id=dict(
+    instance_id=dict(
         required=True,
         type='str'),
     secret_type=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_secrets_manager_secret',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

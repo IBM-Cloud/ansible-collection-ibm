@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    List of tags
+
 
   datacenter (True, str, None)
     (Required for new resource) Dataceneter name
@@ -45,10 +49,6 @@ Parameters
 
   rule (False, str, SPREAD)
     Rule info
-
-
-  tags (False, list, None)
-    List of tags
 
 
   id (False, str, None)

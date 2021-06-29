@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,6 @@ options:
     type:
         description:
             - (Required for new resource) Policy rule type.
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) policy rule value info
         required: True
         type: str
     field:
@@ -55,6 +50,11 @@ options:
     policy:
         description:
             - (Required for new resource) Listener Policy ID
+        required: True
+        type: str
+    value:
+        description:
+            - (Required for new resource) policy rule value info
         required: True
         type: str
     id:
@@ -105,21 +105,21 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('condition', 'str'),
     ('type', 'str'),
-    ('value', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
     ('policy', 'str'),
+    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'condition',
     'type',
-    'value',
     'field',
     'lb',
     'listener',
     'policy',
+    'value',
 ]
 
 # Params for Data source
@@ -142,9 +142,6 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    value=dict(
-        required=False,
-        type='str'),
     field=dict(
         required=False,
         type='str'),
@@ -155,6 +152,9 @@ module_args = dict(
         required=False,
         type='str'),
     policy=dict(
+        required=False,
+        type='str'),
+    value=dict(
         required=False,
         type='str'),
     id=dict(
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

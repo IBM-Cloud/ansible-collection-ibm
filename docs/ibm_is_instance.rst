@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
   wait_before_delete (False, bool, True)
     Enables stopping of instance before deleting and waits till deletion is complete
 
 
-  image (True, str, None)
-    (Required for new resource) image name
+  network_interfaces (False, list, None)
+    None
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   primary_network_interface (True, list, None)
@@ -53,30 +49,6 @@ Parameters
 
   user_data (False, str, None)
     User data given for the instance
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  resource_group (False, str, None)
-    Instance resource group
 
 
   dedicated_host_group (False, str, None)
@@ -91,16 +63,44 @@ Parameters
     (Required for new resource) Instance name
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  boot_volume (False, list, None)
+    None
 
 
   tags (False, list, None)
     list of tags for the instance
 
 
-  network_interfaces (False, list, None)
-    None
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  resource_group (False, str, None)
+    Instance resource group
 
 
   id (False, str, None)

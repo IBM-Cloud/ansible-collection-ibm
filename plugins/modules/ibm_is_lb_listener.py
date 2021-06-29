@@ -18,30 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    lb:
-        description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
-        type: str
-    port:
-        description:
-            - (Required for new resource) Loadbalancer listener port
-        required: True
-        type: int
-    accept_proxy_protocol:
-        description:
-            - Listener will forward proxy protocol
-        required: False
-        type: bool
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
     protocol:
         description:
             - (Required for new resource) Loadbalancer protocol
@@ -52,11 +32,31 @@ options:
             - certificate instance for the Loadbalancer
         required: False
         type: str
+    accept_proxy_protocol:
+        description:
+            - Listener will forward proxy protocol
+        required: False
+        type: bool
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    port:
+        description:
+            - (Required for new resource) Loadbalancer listener port
+        required: True
+        type: int
     connection_limit:
         description:
             - Connection limit for Loadbalancer
         required: False
         type: int
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -103,20 +103,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
-    ('port', 'int'),
     ('protocol', 'str'),
+    ('port', 'int'),
+    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
-    'port',
-    'accept_proxy_protocol',
-    'default_pool',
     'protocol',
     'certificate_instance',
+    'accept_proxy_protocol',
+    'default_pool',
+    'port',
     'connection_limit',
+    'lb',
 ]
 
 # Params for Data source
@@ -133,27 +133,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    accept_proxy_protocol=dict(
-        required=False,
-        type='bool'),
-    default_pool=dict(
-        required=False,
-        type='str'),
     protocol=dict(
         required=False,
         type='str'),
     certificate_instance=dict(
         required=False,
         type='str'),
+    accept_proxy_protocol=dict(
+        required=False,
+        type='bool'),
+    default_pool=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
     connection_limit=dict(
         required=False,
         type='int'),
+    lb=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +231,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

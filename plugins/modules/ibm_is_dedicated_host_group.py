@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
-    family:
-        description:
-            - (Required for new resource) The dedicated host profile family for hosts in this group.
-        required: True
-        type: str
-    name:
-        description:
-            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
     resource_group:
         description:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
@@ -40,6 +30,16 @@ options:
     zone:
         description:
             - (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
+        required: True
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
+    family:
+        description:
+            - (Required for new resource) The dedicated host profile family for hosts in this group.
         required: True
         type: str
     class_:
@@ -93,17 +93,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('family', 'str'),
     ('zone', 'str'),
+    ('family', 'str'),
     ('class_', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'family',
-    'name',
     'resource_group',
     'zone',
+    'name',
+    'family',
     'class_',
 ]
 
@@ -123,16 +123,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    family=dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    zone=dict(
+    family=dict(
         required=False,
         type='str'),
     class_=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.0',
+            ibm_provider_version='1.27.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

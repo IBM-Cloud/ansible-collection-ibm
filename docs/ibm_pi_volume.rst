@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -39,16 +39,16 @@ Parameters
     (Required for new resource) Size of the volume in GB
 
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+  pi_volume_type (True, str, None)
+    (Required for new resource) Volume type
 
 
   pi_volume_name (True, str, None)
     (Required for new resource) Volume Name to create
 
 
-  pi_volume_type (True, str, None)
-    (Required for new resource) Volume type
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
 
 
   id (False, str, None)

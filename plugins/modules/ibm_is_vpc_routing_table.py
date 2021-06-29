@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.0
+    - IBM-Cloud terraform-provider-ibm v1.27.1
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,17 @@ options:
         description:
             - (Required for new resource) The VPC identifier.
         required: True
+        type: str
+    route_vpc_zone_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+        required: False
+        type: bool
+        default: False
+    name:
+        description:
+            - The user-defined name for this routing table.
+        required: False
         type: str
     route_direct_link_ingress:
         description:
@@ -39,17 +50,6 @@ options:
         required: False
         type: bool
         default: False
-    route_vpc_zone_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - The user-defined name for this routing table.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,10 +102,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
-    'route_direct_link_ingress',
-    'route_transit_gateway_ingress',
     'route_vpc_zone_ingress',
     'name',
+    'route_direct_link_ingress',
+    'route_transit_gateway_ingress',
 ]
 
 # Params for Data source
@@ -125,18 +125,18 @@ module_args = dict(
     vpc=dict(
         required=False,
         type='str'),
-    route_direct_link_ingress=dict(
-        required=False,
-        type='bool'),
-    route_transit_gateway_ingress=dict(
-        required=False,
-        type='bool'),
     route_vpc_zone_ingress=dict(
         required=False,
         type='bool'),
     name=dict(
         required=False,
         type='str'),
+    route_direct_link_ingress=dict(
+        required=False,
+        type='bool'),
+    route_transit_gateway_ingress=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -214,7 +214,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.0',
+        ibm_provider_version='1.27.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

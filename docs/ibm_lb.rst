@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  dedicated (False, bool, False)
+    Boolena value true if Load balncer is dedicated type
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name info
+
+
   ha_enabled (False, bool, False)
     true if High availability is enabled
 
 
-  ssl_offload (False, bool, False)
-    boolean value true if SSL offload is enabled
+  security_certificate_id (False, int, None)
+    Security certificate ID
 
 
   tags (False, list, None)
@@ -47,16 +55,8 @@ Parameters
     (Required for new resource) Connections value
 
 
-  security_certificate_id (False, int, None)
-    Security certificate ID
-
-
-  dedicated (False, bool, False)
-    Boolena value true if Load balncer is dedicated type
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name info
+  ssl_offload (False, bool, False)
+    boolean value true if SSL offload is enabled
 
 
   id (False, str, None)

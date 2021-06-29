@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.0
+- IBM-Cloud terraform-provider-ibm v1.27.1
 - Terraform v0.12.20
 
 
@@ -31,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
   refresh (False, int, None)
     refresh rate
 
 
-  service (False, str, None)
-    service info
+  protocol (False, str, None)
+    protocol info
 
 
-  priority (False, int, 0)
-    priority info
+  tags (False, list, None)
+    tags set for the resource
 
 
-  weight (False, int, 0)
-    weight info
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   responsible_person (False, str, None)
@@ -67,16 +67,20 @@ Parameters
     Minimun TTL configuration
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
-  protocol (False, str, None)
-    protocol info
+  port (False, int, None)
+    port number
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  weight (False, int, 0)
+    weight info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   retry (False, int, None)
@@ -87,16 +91,12 @@ Parameters
     (Required for new resource) TTL configuration
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  service (False, str, None)
+    service info
 
 
-  port (False, int, None)
-    port number
-
-
-  tags (False, list, None)
-    tags set for the resource
+  priority (False, int, 0)
+    priority info
 
 
   id (False, str, None)
