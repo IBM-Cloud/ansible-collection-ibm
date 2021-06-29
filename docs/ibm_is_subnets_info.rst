@@ -21,13 +21,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    Resource Group ID
+
+
+  routing_table_name (False, str, None)
+    Name of the routing table
+
+
+  routing_table (False, str, None)
+    ID of the routing table
+
 
   generation (False, int, 2)
     The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.

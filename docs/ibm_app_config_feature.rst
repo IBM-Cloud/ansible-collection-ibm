@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Feature name.
-
-
-  enabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+  tags (False, str, None)
+    Tags associated with the feature.
 
 
   collections (False, list, None)
     List of collection id representing the collections that are associated with the specified feature flag.
 
 
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different feature flag values for different segments.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
+  name (True, str, None)
+    (Required for new resource) Feature name.
 
 
   disabled_value (True, str, None)
     (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  tags (False, str, None)
-    Tags associated with the feature.
 
 
   environment_id (True, str, None)
@@ -71,8 +55,24 @@ Parameters
     (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
 
 
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different feature flag values for different segments.
+
+
+  enabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
   description (False, str, None)
     Feature description.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
 
 
   id (False, str, None)

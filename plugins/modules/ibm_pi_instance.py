@@ -18,34 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI Instance name
-        required: True
-        type: str
     pi_proc_type:
         description:
             - (Required for new resource) Instance processor type
-        required: True
-        type: str
-    pi_virtual_cores_assigned:
-        description:
-            - Virtual Cores Assigned to the PVMInstance
-        required: False
-        type: int
-    pi_replication_scheme:
-        description:
-            - Replication scheme
-        required: False
-        type: str
-        default: suffix
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) This is the Power Instance id that is assigned to the account
         required: True
         type: str
     pi_sys_type:
@@ -53,56 +32,77 @@ options:
             - (Required for new resource) PI Instance system type
         required: True
         type: str
-    pi_image_id:
-        description:
-            - (Required for new resource) PI instance image name
-        required: True
-        type: str
-    pi_pin_policy:
-        description:
-            - Pin Policy of the instance
-        required: False
-        type: str
-        default: none
-    pi_network_ids:
-        description:
-            - (Required for new resource) List of Networks that have been configured for the account
-        required: True
-        type: list
-        elements: str
-    pi_volume_ids:
-        description:
-            - List of PI volumes
-        required: False
-        type: list
-        elements: str
-    pi_user_data:
-        description:
-            - Base64 encoded data to be passed in for invoking a cloud init script
-        required: False
-        type: str
     pi_replicants:
         description:
             - PI Instance replicas count
         required: False
         type: float
         default: 1
-    pi_replication_policy:
+    pi_pin_policy:
         description:
-            - Replication policy for the PI Instance
+            - Pin Policy of the instance
         required: False
         type: str
         default: none
+    pi_volume_ids:
+        description:
+            - List of PI volumes
+        required: False
+        type: list
+        elements: str
+    pi_image_id:
+        description:
+            - (Required for new resource) PI instance image name
+        required: True
+        type: str
     pi_key_pair_name:
         description:
             - (Required for new resource) SSH key name
         required: True
+        type: str
+    pi_user_data:
+        description:
+            - Base64 encoded data to be passed in for invoking a cloud init script
+        required: False
         type: str
     pi_memory:
         description:
             - (Required for new resource) Memory size
         required: True
         type: float
+    pi_replication_scheme:
+        description:
+            - Replication scheme
+        required: False
+        type: str
+        default: suffix
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI Instance name
+        required: True
+        type: str
+    pi_replication_policy:
+        description:
+            - Replication policy for the PI Instance
+        required: False
+        type: str
+        default: none
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) This is the Power Instance id that is assigned to the account
+        required: True
+        type: str
+    pi_virtual_cores_assigned:
+        description:
+            - Virtual Cores Assigned to the PVMInstance
+        required: False
+        type: int
+    pi_network_ids:
+        description:
+            - (Required for new resource) List of Networks that have been configured for the account
+        required: True
+        type: list
+        elements: str
     pi_processors:
         description:
             - (Required for new resource) Processors count
@@ -156,47 +156,47 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_instance_name', 'str'),
     ('pi_proc_type', 'str'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_sys_type', 'str'),
     ('pi_image_id', 'str'),
-    ('pi_network_ids', 'list'),
     ('pi_key_pair_name', 'str'),
     ('pi_memory', 'float'),
+    ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
+    ('pi_network_ids', 'list'),
     ('pi_processors', 'float'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
     'pi_proc_type',
-    'pi_virtual_cores_assigned',
-    'pi_replication_scheme',
-    'pi_cloud_instance_id',
     'pi_sys_type',
-    'pi_image_id',
-    'pi_pin_policy',
-    'pi_network_ids',
-    'pi_volume_ids',
-    'pi_user_data',
     'pi_replicants',
-    'pi_replication_policy',
+    'pi_pin_policy',
+    'pi_volume_ids',
+    'pi_image_id',
     'pi_key_pair_name',
+    'pi_user_data',
     'pi_memory',
+    'pi_replication_scheme',
+    'pi_instance_name',
+    'pi_replication_policy',
+    'pi_cloud_instance_id',
+    'pi_virtual_cores_assigned',
+    'pi_network_ids',
     'pi_processors',
     'pi_health_status',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_instance_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_instance_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_instance_name',
     'pi_cloud_instance_id',
+    'pi_instance_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -206,53 +206,53 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
     pi_proc_type=dict(
-        required=False,
-        type='str'),
-    pi_virtual_cores_assigned=dict(
-        required=False,
-        type='int'),
-    pi_replication_scheme=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_sys_type=dict(
         required=False,
         type='str'),
-    pi_image_id=dict(
+    pi_replicants=dict(
         required=False,
-        type='str'),
+        type='float'),
     pi_pin_policy=dict(
         required=False,
         type='str'),
-    pi_network_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
     pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
-    pi_user_data=dict(
-        required=False,
-        type='str'),
-    pi_replicants=dict(
-        required=False,
-        type='float'),
-    pi_replication_policy=dict(
+    pi_image_id=dict(
         required=False,
         type='str'),
     pi_key_pair_name=dict(
         required=False,
         type='str'),
+    pi_user_data=dict(
+        required=False,
+        type='str'),
     pi_memory=dict(
         required=False,
         type='float'),
+    pi_replication_scheme=dict(
+        required=False,
+        type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
+    pi_replication_policy=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_virtual_cores_assigned=dict(
+        required=False,
+        type='int'),
+    pi_network_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
     pi_processors=dict(
         required=False,
         type='float'),
@@ -317,7 +317,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -326,7 +326,7 @@ def run_module():
             resource_type='ibm_pi_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

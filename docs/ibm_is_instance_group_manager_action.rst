@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  run_at (False, str, None)
-    The date and time the scheduled action will run.
-
-
   name (False, str, None)
     instance group manager action name
 
 
-  min_membership_count (False, int, 1)
-    The minimum number of members in a managed instance group
-
-
-  instance_group (True, str, None)
-    (Required for new resource) instance group ID
+  run_at (False, str, None)
+    The date and time the scheduled action will run.
 
 
   cron_spec (False, str, None)
@@ -55,16 +47,24 @@ Parameters
     The number of members the instance group should have at the scheduled time.
 
 
-  max_membership_count (False, int, None)
-    The maximum number of members in a managed instance group
+  target_manager (False, str, None)
+    The unique identifier for this instance group manager of type autoscale.
+
+
+  min_membership_count (False, int, 1)
+    The minimum number of members in a managed instance group
+
+
+  instance_group (True, str, None)
+    (Required for new resource) instance group ID
 
 
   instance_group_manager (True, str, None)
     (Required for new resource) Instance group manager ID of type scheduled
 
 
-  target_manager (False, str, None)
-    The unique identifier for this instance group manager of type autoscale.
+  max_membership_count (False, int, None)
+    The maximum number of members in a managed instance group
 
 
   id (False, str, None)

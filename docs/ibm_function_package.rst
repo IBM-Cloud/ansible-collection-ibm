@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
-
 
   namespace (True, str, None)
     (Required for new resource) IBM Cloud function namespace.
@@ -53,6 +49,10 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Name of package.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
 
 
   id (False, str, None)

@@ -18,29 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ssh_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
-    resource_group:
-        description:
-            - Resource group ID
-        required: False
-        type: str
-    public_key:
-        description:
-            - (Required for new resource) SSH Public key data
-        required: True
-        type: str
     tags:
         description:
             - List of tags for SSH key
         required: False
         type: list
         elements: str
+    resource_group:
+        description:
+            - Resource group ID
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) SSH Key name
+        required: True
+        type: str
+    public_key:
+        description:
+            - (Required for new resource) SSH Public key data
         required: True
         type: str
     id:
@@ -89,16 +89,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('public_key', 'str'),
     ('name', 'str'),
+    ('public_key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'public_key',
     'tags',
+    'resource_group',
     'name',
+    'public_key',
 ]
 
 # Params for Data source
@@ -108,6 +108,7 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
+    'resource_group',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -117,17 +118,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
-        required=False,
-        type='str'),
-    public_key=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    public_key=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,7 +208,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +217,7 @@ def run_module():
             resource_type='ibm_is_ssh_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_environments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -26,16 +26,6 @@ options:
             - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    tags:
-        description:
-            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
-        required: False
-        type: str
-    expand:
-        description:
-            - If set to `true`, returns expanded view of the resource details.
-        required: False
-        type: bool
     limit:
         description:
             - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
@@ -46,6 +36,16 @@ options:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
+    tags:
+        description:
+            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
+        required: False
+        type: str
+    expand:
+        description:
+            - If set to `true`, returns expanded view of the resource details.
+        required: False
+        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -85,10 +85,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'guid',
-    'tags',
-    'expand',
     'limit',
     'offset',
+    'tags',
+    'expand',
 ]
 
 
@@ -102,18 +102,18 @@ module_args = dict(
     guid=dict(
         required=True,
         type='str'),
-    tags=dict(
-        required=False,
-        type='str'),
-    expand=dict(
-        required=False,
-        type='bool'),
     limit=dict(
         required=False,
         type='int'),
     offset=dict(
         required=False,
         type='int'),
+    tags=dict(
+        required=False,
+        type='str'),
+    expand=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -148,7 +148,7 @@ def run_module():
         resource_type='ibm_app_config_environments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

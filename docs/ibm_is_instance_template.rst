@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,11 +31,35 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) Instance Template name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
   network_interfaces (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  volume_attachments (False, list, None)
     None
 
 
@@ -47,16 +71,8 @@ Parameters
     Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  name (True, str, None)
-    (Required for new resource) Instance Template name
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
   image (True, str, None)
@@ -67,24 +83,8 @@ Parameters
     None
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  volume_attachments (False, list, None)
-    None
-
-
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  resource_group (False, str, None)
-    Instance template resource group
 
 
   id (False, str, None)

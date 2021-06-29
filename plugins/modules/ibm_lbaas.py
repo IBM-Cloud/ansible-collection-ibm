@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -27,11 +27,6 @@ options:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
-    name:
-        description:
-            - (Required for new resource) The load balancer's name.
-        required: True
-        type: str
     description:
         description:
             - Description of a load balancer.
@@ -49,6 +44,17 @@ options:
         required: True
         type: list
         elements: int
+    name:
+        description:
+            - (Required for new resource) The load balancer's name.
+        required: True
+        type: str
+    protocols:
+        description:
+            - Protocols to be assigned to this load balancer.
+        required: False
+        type: list
+        elements: dict
     ssl_ciphers:
         description:
             - None
@@ -61,12 +67,6 @@ options:
         required: False
         type: int
         default: 90
-    protocols:
-        description:
-            - Protocols to be assigned to this load balancer.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,20 +113,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnets', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'use_system_public_ip_pool',
-    'name',
     'description',
     'type',
     'subnets',
+    'name',
+    'protocols',
     'ssl_ciphers',
     'wait_time_minutes',
-    'protocols',
 ]
 
 # Params for Data source
@@ -148,9 +148,6 @@ module_args = dict(
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -161,6 +158,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    protocols=dict(
+        required=False,
+        elements='',
+        type='list'),
     ssl_ciphers=dict(
         required=False,
         elements='',
@@ -168,10 +172,6 @@ module_args = dict(
     wait_time_minutes=dict(
         required=False,
         type='int'),
-    protocols=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

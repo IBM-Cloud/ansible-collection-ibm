@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  endpoint_type (False, str, None)
+    public or private
+
 
   instance_id (True, str, None)
     (Required for new resource) Key ID
@@ -41,10 +45,6 @@ Parameters
 
   key_id (True, str, None)
     (Required for new resource) Key ID
-
-
-  endpoint_type (False, str, public)
-    public or private
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,48 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
-  expire_rule (False, list, None)
-    Enable configuration expire_rule to COS Bucket after a defined period of time
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
+  single_site_location (False, str, None)
+    single site location info
 
 
   object_versioning (False, list, None)
     Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
 
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  hard_quota (False, int, None)
+    sets a maximum amount of storage (in bytes) available for a bucket
 
 
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
-
-
-  region_location (False, str, None)
-    Region Location info.
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   endpoint_type (False, str, public)
     public or private
 
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
 
 
   metrics_monitoring (False, list, None)
@@ -83,8 +71,12 @@ Parameters
     A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
 
 
-  single_site_location (False, str, None)
-    single site location info
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  region_location (False, str, None)
+    Region Location info.
 
 
   cross_region_location (False, str, None)
@@ -93,6 +85,18 @@ Parameters
 
   storage_class (True, str, None)
     (Required for new resource) Storage class info
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+
+
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
+
+
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
   id (False, str, None)

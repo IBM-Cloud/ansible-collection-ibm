@@ -18,35 +18,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
-    pi_volume_name:
-        description:
-            - (Required for new resource) Volume Name to create
-        required: True
-        type: str
-    pi_volume_size:
-        description:
-            - (Required for new resource) Size of the volume in GB
-        required: True
-        type: float
-    pi_volume_type:
-        description:
-            - (Required for new resource) Volume type
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
     pi_volume_shareable:
         description:
             - Flag to indicate if the volume can be shared across multiple instances?
         required: False
         type: bool
+    pi_volume_size:
+        description:
+            - (Required for new resource) Size of the volume in GB
+        required: True
+        type: float
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
+    pi_volume_name:
+        description:
+            - (Required for new resource) Volume Name to create
+        required: True
+        type: str
+    pi_volume_type:
+        description:
+            - (Required for new resource) Volume type
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,19 +89,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_volume_name', 'str'),
     ('pi_volume_size', 'float'),
-    ('pi_volume_type', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_volume_name', 'str'),
+    ('pi_volume_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_volume_name',
-    'pi_volume_size',
-    'pi_volume_type',
-    'pi_cloud_instance_id',
     'pi_volume_shareable',
+    'pi_volume_size',
+    'pi_cloud_instance_id',
+    'pi_volume_name',
+    'pi_volume_type',
 ]
 
 # Params for Data source
@@ -122,21 +122,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_volume_name=dict(
-        required=False,
-        type='str'),
-    pi_volume_size=dict(
-        required=False,
-        type='float'),
-    pi_volume_type=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     pi_volume_shareable=dict(
         required=False,
         type='bool'),
+    pi_volume_size=dict(
+        required=False,
+        type='float'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_name=dict(
+        required=False,
+        type='str'),
+    pi_volume_type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -204,7 +204,7 @@ def run_module():
             resource_type='ibm_pi_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

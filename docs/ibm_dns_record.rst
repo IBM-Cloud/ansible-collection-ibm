@@ -23,13 +23,65 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  service (False, str, None)
+    service info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  retry (False, int, None)
+    Retry count
+
 
   ttl (True, int, None)
     (Required for new resource) TTL configuration
@@ -39,64 +91,12 @@ Parameters
     (Required for new resource) DNS record type
 
 
-  service (False, str, None)
-    service info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
   port (False, int, None)
     port number
 
 
-  priority (False, int, 0)
-    priority info
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  protocol (False, str, None)
-    protocol info
-
-
   tags (False, list, None)
     tags set for the resource
-
-
-  refresh (False, int, None)
-    refresh rate
 
 
   id (False, str, None)

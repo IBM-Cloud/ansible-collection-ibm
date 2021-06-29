@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    (Required for new resource) Subnet zone info
-
-
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
-
-
   ip_version (False, str, ipv4)
     The IP version(s) to support for this subnet.
 
 
   tags (False, list, None)
     List of tags
+
+
+  zone (True, str, None)
+    (Required for new resource) Subnet zone info
+
+
+  network_acl (False, str, None)
+    The network ACL for this subnet
 
 
   resource_group (False, str, None)
@@ -59,6 +55,10 @@ Parameters
     routing table id that is associated with the subnet
 
 
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
+
+
   total_ipv4_address_count (False, int, None)
     The total number of IPv4 addresses in this subnet.
 
@@ -67,12 +67,12 @@ Parameters
     (Required for new resource) Subnet name
 
 
-  network_acl (False, str, None)
-    The network ACL for this subnet
-
-
   public_gateway (False, str, None)
     Public Gateway of the subnet
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
 
 
   id (False, str, None)

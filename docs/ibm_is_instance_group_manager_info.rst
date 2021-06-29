@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_group (True, str, None)
-    instance group ID
-
-
   name (True, str, None)
     Name of the instance group manager.
+
+
+  instance_group (True, str, None)
+    instance group ID
 
 
   generation (False, int, 2)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -32,31 +32,31 @@ options:
             - (Required for new resource) Loadbalancer listener port
         required: True
         type: int
-    certificate_instance:
-        description:
-            - certificate instance for the Loadbalancer
-        required: False
-        type: str
     accept_proxy_protocol:
         description:
             - Listener will forward proxy protocol
         required: False
         type: bool
-    connection_limit:
-        description:
-            - Connection limit for Loadbalancer
-        required: False
-        type: int
-    protocol:
-        description:
-            - (Required for new resource) Loadbalancer protocol
-        required: True
-        type: str
     default_pool:
         description:
             - Loadbalancer default pool info
         required: False
         type: str
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: True
+        type: str
+    certificate_instance:
+        description:
+            - certificate instance for the Loadbalancer
+        required: False
+        type: str
+    connection_limit:
+        description:
+            - Connection limit for Loadbalancer
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,11 +112,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'lb',
     'port',
-    'certificate_instance',
     'accept_proxy_protocol',
-    'connection_limit',
-    'protocol',
     'default_pool',
+    'protocol',
+    'certificate_instance',
+    'connection_limit',
 ]
 
 # Params for Data source
@@ -139,21 +139,21 @@ module_args = dict(
     port=dict(
         required=False,
         type='int'),
-    certificate_instance=dict(
-        required=False,
-        type='str'),
     accept_proxy_protocol=dict(
         required=False,
         type='bool'),
-    connection_limit=dict(
-        required=False,
-        type='int'),
-    protocol=dict(
-        required=False,
-        type='str'),
     default_pool=dict(
         required=False,
         type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    certificate_instance=dict(
+        required=False,
+        type='str'),
+    connection_limit=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +231,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

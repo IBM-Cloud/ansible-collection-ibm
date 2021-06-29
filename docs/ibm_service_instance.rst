@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -33,6 +33,10 @@ Parameters
 
   space_guid (True, str, None)
     (Required for new resource) The guid of the space in which the instance will be created
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the service instance
 
 
   parameters (False, dict, None)
@@ -47,16 +51,12 @@ Parameters
     None
 
 
-  name (True, str, None)
-    (Required for new resource) A name for the service instance
+  wait_time_minutes (False, int, 10)
+    Define timeout to wait for the service instances to succeeded/deleted etc.
 
 
   service (True, str, None)
     (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
-
-
-  wait_time_minutes (False, int, 10)
-    Define timeout to wait for the service instances to succeeded/deleted etc.
 
 
   id (False, str, None)

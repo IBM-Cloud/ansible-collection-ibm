@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instances' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -29,6 +29,16 @@ options:
     vpc:
         description:
             - VPC ID to filter the instances attached to it
+        required: False
+        type: str
+    vpc_crn:
+        description:
+            - VPC CRN to filter the instances attached to it
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Instance resource group
         required: False
         type: str
     generation:
@@ -70,12 +80,15 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'vpc_name',
     'vpc',
+    'vpc_crn',
+    'resource_group',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'vpc_name': ['vpc'],
-    'vpc': ['vpc_name'],
+    'vpc_name': ['vpc', 'vpc_crn'],
+    'vpc': ['vpc_name', 'vpc_crn'],
+    'vpc_crn': ['vpc_name', 'vpc'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -86,6 +99,12 @@ module_args = dict(
         required=False,
         type='str'),
     vpc=dict(
+        required=False,
+        type='str'),
+    vpc_crn=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -134,7 +153,7 @@ def run_module():
         resource_type='ibm_is_instances',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

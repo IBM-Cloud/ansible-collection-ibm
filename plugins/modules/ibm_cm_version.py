@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -34,14 +34,9 @@ options:
         required: False
         type: list
         elements: str
-    content:
+    target_version:
         description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
-        required: False
-        type: str
-    zipurl:
-        description:
-            - URL path to zip location.  If not specified, must provide content in the body of this call.
+            - The semver value for this new version, if not found in the zip url package content.
         required: False
         type: str
     offering_id:
@@ -49,15 +44,20 @@ options:
             - (Required for new resource) Offering identification.
         required: True
         type: str
-    target_version:
+    zipurl:
         description:
-            - The semver value for this new version, if not found in the zip url package content.
+            - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
     catalog_identifier:
         description:
             - (Required for new resource) Catalog identifier.
         required: True
+        type: str
+    content:
+        description:
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
+        required: False
         type: str
     id:
         description:
@@ -113,11 +113,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'tags',
     'target_kinds',
-    'content',
-    'zipurl',
-    'offering_id',
     'target_version',
+    'offering_id',
+    'zipurl',
     'catalog_identifier',
+    'content',
 ]
 
 # Params for Data source
@@ -144,19 +144,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    content=dict(
-        required=False,
-        type='str'),
-    zipurl=dict(
+    target_version=dict(
         required=False,
         type='str'),
     offering_id=dict(
         required=False,
         type='str'),
-    target_version=dict(
+    zipurl=dict(
         required=False,
         type='str'),
     catalog_identifier=dict(
+        required=False,
+        type='str'),
+    content=dict(
         required=False,
         type='str'),
     id=dict(
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +233,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

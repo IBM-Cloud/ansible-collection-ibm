@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -39,12 +39,6 @@ options:
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - List of tags associated with resource instance
-        required: False
-        type: list
-        elements: str
     location:
         description:
             - (Required for new resource) A unique name for the new Satellite location
@@ -55,17 +49,23 @@ options:
             - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
         required: True
         type: str
-    description:
-        description:
-            - A description of the new Satellite location
-        required: False
-        type: str
     zones:
         description:
             - The names of at least three high availability zones to use for the location
         required: False
         type: list
         elements: str
+    tags:
+        description:
+            - List of tags associated with resource instance
+        required: False
+        type: list
+        elements: str
+    description:
+        description:
+            - A description of the new Satellite location
+        required: False
+        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -126,11 +126,11 @@ TL_ALL_PARAMETERS = [
     'logging_account_id',
     'cos_config',
     'cos_credentials',
-    'tags',
     'location',
     'managed_from',
-    'description',
     'zones',
+    'tags',
+    'description',
     'resource_group_id',
 ]
 
@@ -161,23 +161,23 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     location=dict(
         required=False,
         type='str'),
     managed_from=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

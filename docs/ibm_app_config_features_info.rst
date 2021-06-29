@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -33,16 +33,24 @@ Parameters
     Environment Id.
 
 
-  limit (False, int, None)
-    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
-
-
   sort (False, str, None)
     Sort the feature details based on the specified attribute.
 
 
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
+  tags (False, str, None)
+    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
+
+
+  segments (False, list, None)
+    Filter features by a list of comma separated segments.
+
+
+  limit (False, int, None)
+    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+
+
+  includes (False, list, None)
+    Include the associated collections or targeting rules details in the response.
 
 
   guid (True, str, None)
@@ -53,16 +61,8 @@ Parameters
     Filter features by a list of comma separated collections.
 
 
-  segments (False, list, None)
-    Filter features by a list of comma separated segments.
-
-
-  includes (False, list, None)
-    Include the associated collections or targeting rules details in the response.
-
-
-  tags (False, str, None)
-    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
 
 
   offset (False, int, None)

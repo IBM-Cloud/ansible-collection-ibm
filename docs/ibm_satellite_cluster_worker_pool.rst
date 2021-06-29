@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+  name (True, str, None)
+    (Required for new resource) The name for the worker pool
 
 
-  flavor (False, str, None)
-    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
-
-
-  disk_encryption (False, bool, None)
-    Disk encryption for worker node
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
 
 
   worker_count (False, int, None)
@@ -55,8 +51,16 @@ Parameters
     Labels on all the workers in the worker pool
 
 
-  name (True, str, None)
-    (Required for new resource) The name for the worker pool
+  cluster (True, str, None)
+    (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+
+
+  flavor (False, str, None)
+    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
+
+
+  disk_encryption (False, bool, None)
+    Disk encryption for worker node
 
 
   isolation (False, str, None)
@@ -65,10 +69,6 @@ Parameters
 
   entitlement (False, str, None)
     None
-
-
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
 
 
   resource_group_id (False, str, None)

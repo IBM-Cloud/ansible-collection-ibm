@@ -21,17 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  location (True, str, None)
-    A unique name for the new Satellite location
-
 
   labels (False, list, None)
     List of labels for the attach host
@@ -43,6 +39,10 @@ Parameters
 
   script_dir (False, str, None)
     The directory where the satellite attach host script to be downloaded. Default is home directory
+
+
+  location (True, str, None)
+    A unique name for the new Satellite location
 
 
   iaas_classic_username (False, any, None)

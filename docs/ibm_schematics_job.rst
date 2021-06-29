@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
+
+
   data (False, list, None)
     Job data.
-
-
-  command_parameter (True, str, None)
-    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  command_object_id (True, str, None)
-    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
-
-
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
 
 
   command_options (False, list, None)
     Command line options for the command.
 
 
-  job_inputs (False, list, None)
-    Job inputs used by an action.
-
-
   job_env_settings (False, list, None)
     Environment variables used by the job while performing an action.
-
-
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
 
 
   location (False, str, None)
@@ -75,8 +55,28 @@ Parameters
     Complete target details with the user inputs and the system generated data.
 
 
+  command_object_id (True, str, None)
+    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
+
+
+  command_parameter (True, str, None)
+    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
+
+
   job_log_summary (False, list, None)
     Job log summary record.
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  job_inputs (False, list, None)
+    Job inputs used by an action.
 
 
   id (False, str, None)

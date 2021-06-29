@@ -18,38 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
-    bgp_cer_cidr:
-        description:
-            - BGP customer edge router CIDR
-        required: False
-        type: str
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
-        required: False
-        type: str
     bgp_asn:
         description:
             - (Required for new resource) BGP ASN
         required: True
         type: int
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) The unique user-defined name for this gateway
-        required: True
-        type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
-    port:
-        description:
-            - (Required for new resource) Gateway port
         required: True
         type: str
     customer_account_id:
@@ -57,6 +42,21 @@ options:
             - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
         required: True
         type: str
+    port:
+        description:
+            - (Required for new resource) Gateway port
+        required: True
+        type: str
+    bgp_cer_cidr:
+        description:
+            - BGP customer edge router CIDR
+        required: False
+        type: str
+    speed_mbps:
+        description:
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
     tags:
         description:
             - Tags for the direct link gateway
@@ -111,20 +111,20 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('bgp_asn', 'int'),
     ('name', 'str'),
-    ('speed_mbps', 'int'),
-    ('port', 'str'),
     ('customer_account_id', 'str'),
+    ('port', 'str'),
+    ('speed_mbps', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bgp_cer_cidr',
-    'bgp_ibm_cidr',
     'bgp_asn',
+    'bgp_ibm_cidr',
     'name',
-    'speed_mbps',
-    'port',
     'customer_account_id',
+    'port',
+    'bgp_cer_cidr',
+    'speed_mbps',
     'tags',
 ]
 
@@ -142,27 +142,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bgp_cer_cidr=dict(
-        required=False,
-        type='str'),
-    bgp_ibm_cidr=dict(
-        required=False,
-        type='str'),
     bgp_asn=dict(
         required=False,
         type='int'),
-    name=dict(
+    bgp_ibm_cidr=dict(
         required=False,
         type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
-    port=dict(
+    name=dict(
         required=False,
         type='str'),
     customer_account_id=dict(
         required=False,
         type='str'),
+    port=dict(
+        required=False,
+        type='str'),
+    bgp_cer_cidr=dict(
+        required=False,
+        type='str'),
+    speed_mbps=dict(
+        required=False,
+        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

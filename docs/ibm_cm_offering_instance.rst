@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
+
 
   version (True, str, None)
     (Required for new resource) The version this instance was installed from (not version id).
@@ -39,28 +43,28 @@ Parameters
     id of the resource group
 
 
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
-
-
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
+  install_plan (False, str, None)
+    install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
 
 
   offering_id (True, str, None)
     (Required for new resource) Offering ID this instance was created from.
 
 
+  wait_until_successful (False, bool, True)
+    Whether to wait until the offering instance successfully provisions, or to return when accepted
+
+
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
+
+
   kind_format (True, str, None)
     (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
 
 
   cluster_namespaces (True, list, None)
@@ -69,6 +73,14 @@ Parameters
 
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
+
+
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
+
+
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
 
 
   id (False, str, None)

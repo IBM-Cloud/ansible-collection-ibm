@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.26.2
+- IBM-Cloud terraform-provider-ibm v1.27.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  class_ (True, str, None)
-    (Required for new resource) The dedicated host profile class for hosts in this group.
-
 
   family (True, str, None)
     (Required for new resource) The dedicated host profile family for hosts in this group.
@@ -49,6 +45,10 @@ Parameters
 
   zone (True, str, None)
     (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
+
+
+  class_ (True, str, None)
+    (Required for new resource) The dedicated host profile class for hosts in this group.
 
 
   id (False, str, None)

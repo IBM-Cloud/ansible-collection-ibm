@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -28,16 +28,6 @@ options:
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) Endpoint gateway name
-        required: True
-        type: str
-    resource_group:
-        description:
-            - The resource group id
-        required: False
-        type: str
     target:
         description:
             - (Required for new resource) Endpoint gateway target
@@ -55,6 +45,16 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) Endpoint gateway name
+        required: True
+        type: str
+    resource_group:
+        description:
+            - The resource group id
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,19 +101,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('target', 'list'),
     ('vpc', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'ips',
-    'name',
-    'resource_group',
     'target',
     'vpc',
     'tags',
+    'name',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -136,12 +136,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     target=dict(
         required=False,
         elements='',
@@ -153,6 +147,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -230,7 +230,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -239,7 +239,7 @@ def run_module():
             resource_type='ibm_is_virtual_endpoint_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

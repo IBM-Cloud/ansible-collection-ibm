@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.26.2
+    - IBM-Cloud terraform-provider-ibm v1.27.0
     - Terraform v0.12.20
 
 options:
@@ -33,27 +33,10 @@ options:
             - (Required for new resource) The user-defined name for this instance group
         required: True
         type: str
-    instance_count:
-        description:
-            - The number of instances in the instance group
-        required: False
-        type: int
-        default: 0
-    subnets:
-        description:
-            - (Required for new resource) list of subnet IDs
-        required: True
-        type: list
-        elements: str
     instance_template:
         description:
             - (Required for new resource) instance template ID
         required: True
-        type: str
-    resource_group:
-        description:
-            - Resource group ID
-        required: False
         type: str
     application_port:
         description:
@@ -70,6 +53,23 @@ options:
             - load balancer pool ID
         required: False
         type: str
+    instance_count:
+        description:
+            - The number of instances in the instance group
+        required: False
+        type: int
+        default: 0
+    resource_group:
+        description:
+            - Resource group ID
+        required: False
+        type: str
+    subnets:
+        description:
+            - (Required for new resource) list of subnet IDs
+        required: True
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,21 +117,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('subnets', 'list'),
     ('instance_template', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'tags',
     'name',
-    'instance_count',
-    'subnets',
     'instance_template',
-    'resource_group',
     'application_port',
     'load_balancer',
     'load_balancer_pool',
+    'instance_count',
+    'resource_group',
+    'subnets',
 ]
 
 # Params for Data source
@@ -157,17 +157,7 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    instance_count=dict(
-        required=False,
-        type='int'),
-    subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
     instance_template=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
         required=False,
         type='str'),
     application_port=dict(
@@ -179,6 +169,16 @@ module_args = dict(
     load_balancer_pool=dict(
         required=False,
         type='str'),
+    instance_count=dict(
+        required=False,
+        type='int'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -256,7 +256,7 @@ def run_module():
         resource_type='ibm_is_instance_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.26.2',
+        ibm_provider_version='1.27.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -265,7 +265,7 @@ def run_module():
             resource_type='ibm_is_instance_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.26.2',
+            ibm_provider_version='1.27.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
