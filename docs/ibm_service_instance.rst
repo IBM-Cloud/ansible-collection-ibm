@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) A name for the service instance
-
-
   space_guid (True, str, None)
     (Required for new resource) The guid of the space in which the instance will be created
 
 
   service (True, str, None)
     (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the service instance
 
 
   parameters (False, dict, None)

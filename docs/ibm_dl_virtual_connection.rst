@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_id (False, str, None)
-    Unique identifier of the target network. For type=vpc virtual connections this is the CRN of the target VPC. This field does not apply to type=classic connections.
-
-
   gateway (True, str, None)
     (Required for new resource) The Direct Link gateway identifier
+
+
+  network_id (False, str, None)
+    Unique identifier of the target network. For type=vpc virtual connections this is the CRN of the target VPC. This field does not apply to type=classic connections.
 
 
   type (True, str, None)

@@ -571,7 +571,7 @@ class Resource:
         if 'name' in self.parameters and self.parameters['name'] is not None:
             # To avoid special characters in the resource name removing special character.
             tfname = ''.join(e for e in self.parameters['name'] if e.isalnum())
-            self.tf_name = tfname            
+            self.tf_name = "ansible_" + tfname
         else:
             self.tf_name = (
                 "ansible_" + datetime.now().strftime("%Y%m%d-%H%M%S"))
@@ -1082,9 +1082,9 @@ def fmt_tf_block(
         if key.endswith("_"):
             key = key[:-1]
         if isinstance(value, dict):
-            output += indent() + key + ' {\n'
+            output += indent() + key + ' = {\n'
             output += fmt_tf_block(value, indent_count + 1, indent_spaces)
-            output += indent(-1) + '}\n'
+            output += indent() + '}\n'
         elif isinstance(value, list):
             if len(value) >= 1 and isinstance(value[0], dict):
                 for item in value:

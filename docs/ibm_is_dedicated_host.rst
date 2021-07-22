@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  host_group (True, str, None)
+    (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
+
 
   instance_placement_enabled (False, bool, True)
     If set to true, instances can be placed on this dedicated host.
@@ -41,10 +45,6 @@ Parameters
 
   name (False, str, None)
     The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
-
-
-  host_group (True, str, None)
-    (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
 
 
   profile (True, str, None)

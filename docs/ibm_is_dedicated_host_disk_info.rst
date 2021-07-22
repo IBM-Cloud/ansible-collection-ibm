@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disk (True, str, None)
-    The dedicated host disk identifier.
-
-
   dedicated_host (True, str, None)
     The dedicated host identifier.
+
+
+  disk (True, str, None)
+    The dedicated host disk identifier.
 
 
   generation (False, int, 2)

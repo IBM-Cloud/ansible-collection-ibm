@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -37,21 +37,21 @@ options:
             - Listener will forward proxy protocol
         required: False
         type: bool
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
-    port:
-        description:
-            - (Required for new resource) Loadbalancer listener port
-        required: True
-        type: int
     connection_limit:
         description:
             - Connection limit for Loadbalancer
         required: False
         type: int
+    port:
+        description:
+            - (Required for new resource) Loadbalancer listener port
+        required: True
+        type: int
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer listener ID
@@ -113,9 +113,9 @@ TL_ALL_PARAMETERS = [
     'protocol',
     'certificate_instance',
     'accept_proxy_protocol',
-    'default_pool',
-    'port',
     'connection_limit',
+    'port',
+    'default_pool',
     'lb',
 ]
 
@@ -142,15 +142,15 @@ module_args = dict(
     accept_proxy_protocol=dict(
         required=False,
         type='bool'),
-    default_pool=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
     connection_limit=dict(
         required=False,
         type='int'),
+    port=dict(
+        required=False,
+        type='int'),
+    default_pool=dict(
+        required=False,
+        type='str'),
     lb=dict(
         required=False,
         type='str'),
@@ -231,7 +231,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -47,16 +47,16 @@ Parameters
     worker node disk encrypted if set to true
 
 
-  labels (False, dict, None)
-    list of labels to worker pool
-
-
   machine_type (True, str, None)
     (Required for new resource) worker nodes machine type
 
 
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
+
+
+  labels (False, dict, None)
+    list of labels to worker pool
 
 
   resource_group_id (False, str, None)

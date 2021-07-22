@@ -18,13 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
-    user_state:
+    description:
         description:
-            - User defined status of the Schematics object.
+            - Action description.
+        required: False
+        type: str
+    source_readme_url:
+        description:
+            - URL of the `README` file, for the source.
+        required: False
+        type: str
+    targets_ini:
+        description:
+            - Inventory of host and host group for the playbook in `INI` file format. For example, `"targets_ini": "[webserverhost]  172.22.192.6  [dbhost]  172.22.192.5"`. For more information, about an inventory host group syntax, see [Inventory host groups](/docs/schematics?topic=schematics-schematics-cli-reference#schematics-inventory-host-grps).
+        required: False
+        type: str
+    sys_lock:
+        description:
+            - System lock status.
         required: False
         type: list
         elements: dict
@@ -34,64 +49,15 @@ options:
         required: False
         type: list
         elements: dict
-    trigger_record_id:
-        description:
-            - ID to the trigger.
-        required: False
-        type: str
-    settings:
-        description:
-            - Environment variables for an action.
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) Action name (unique for an account).
-        required: True
-        type: str
-    bastion:
-        description:
-            - Complete target details with the user inputs and the system generated data.
-        required: False
-        type: list
-        elements: dict
-    action_inputs:
-        description:
-            - Input variables for an action.
-        required: False
-        type: list
-        elements: dict
-    sys_lock:
-        description:
-            - System lock status.
-        required: False
-        type: list
-        elements: dict
-    description:
-        description:
-            - Action description.
-        required: False
-        type: str
-    source_type:
-        description:
-            - Type of source for the Template.
-        required: False
-        type: str
-    source_readme_url:
-        description:
-            - URL of the `README` file, for the source.
-        required: False
-        type: str
     credentials:
         description:
             - credentials of the Action.
         required: False
         type: list
         elements: dict
-    action_outputs:
+    settings:
         description:
-            - Output variables for an action.
+            - Environment variables for an action.
         required: False
         type: list
         elements: dict
@@ -105,14 +71,49 @@ options:
             - List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
         required: False
         type: str
+    tags:
+        description:
+            - Action tags.
+        required: False
+        type: list
+        elements: str
+    action_inputs:
+        description:
+            - Input variables for an action.
+        required: False
+        type: list
+        elements: dict
+    bastion:
+        description:
+            - Complete target details with the user inputs and the system generated data.
+        required: False
+        type: list
+        elements: dict
     resource_group:
         description:
             - Resource-group name for an action.  By default, action is created in default resource group.
         required: False
         type: str
-    targets_ini:
+    action_outputs:
         description:
-            - Inventory of host and host group for the playbook in `INI` file format. For example, `"targets_ini": "[webserverhost]  172.22.192.6  [dbhost]  172.22.192.5"`. For more information, about an inventory host group syntax, see [Inventory host groups](/docs/schematics?topic=schematics-schematics-cli-reference#schematics-inventory-host-grps).
+            - Output variables for an action.
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) Action name (unique for an account).
+        required: True
+        type: str
+    user_state:
+        description:
+            - User defined status of the Schematics object.
+        required: False
+        type: list
+        elements: dict
+    source_type:
+        description:
+            - Type of source for the Template.
         required: False
         type: str
     command_parameter:
@@ -120,12 +121,11 @@ options:
             - Schematics job command parameter (playbook-name, capsule-name or flow-name).
         required: False
         type: str
-    tags:
+    trigger_record_id:
         description:
-            - Action tags.
+            - ID to the trigger.
         required: False
-        type: list
-        elements: str
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -177,25 +177,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_state',
-    'source',
-    'trigger_record_id',
-    'settings',
-    'name',
-    'bastion',
-    'action_inputs',
-    'sys_lock',
     'description',
-    'source_type',
     'source_readme_url',
+    'targets_ini',
+    'sys_lock',
+    'source',
     'credentials',
-    'action_outputs',
+    'settings',
     'x_github_token',
     'location',
-    'resource_group',
-    'targets_ini',
-    'command_parameter',
     'tags',
+    'action_inputs',
+    'bastion',
+    'resource_group',
+    'action_outputs',
+    'name',
+    'user_state',
+    'source_type',
+    'command_parameter',
+    'trigger_record_id',
 ]
 
 # Params for Data source
@@ -214,7 +214,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_state=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    source_readme_url=dict(
+        required=False,
+        type='str'),
+    targets_ini=dict(
+        required=False,
+        type='str'),
+    sys_lock=dict(
         required=False,
         elements='',
         type='list'),
@@ -222,42 +231,11 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    trigger_record_id=dict(
-        required=False,
-        type='str'),
-    settings=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    bastion=dict(
-        required=False,
-        elements='',
-        type='list'),
-    action_inputs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    sys_lock=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    source_type=dict(
-        required=False,
-        type='str'),
-    source_readme_url=dict(
-        required=False,
-        type='str'),
     credentials=dict(
         required=False,
         elements='',
         type='list'),
-    action_outputs=dict(
+    settings=dict(
         required=False,
         elements='',
         type='list'),
@@ -267,19 +245,41 @@ module_args = dict(
     location=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    action_inputs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    bastion=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
-    targets_ini=dict(
+    action_outputs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    user_state=dict(
+        required=False,
+        elements='',
+        type='list'),
+    source_type=dict(
         required=False,
         type='str'),
     command_parameter=dict(
         required=False,
         type='str'),
-    tags=dict(
+    trigger_record_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -345,7 +345,7 @@ def run_module():
         resource_type='ibm_schematics_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -354,7 +354,7 @@ def run_module():
             resource_type='ibm_schematics_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.1',
+            ibm_provider_version='1.27.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -43,18 +43,18 @@ options:
             - The resource group id
         required: False
         type: str
-    ips:
-        description:
-            - Endpoint gateway resource group
-        required: False
-        type: list
-        elements: dict
     tags:
         description:
             - List of tags for VPE
         required: False
         type: list
         elements: str
+    ips:
+        description:
+            - Endpoint gateway resource group
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,8 +112,8 @@ TL_ALL_PARAMETERS = [
     'vpc',
     'name',
     'resource_group',
-    'ips',
     'tags',
+    'ips',
 ]
 
 # Params for Data source
@@ -145,11 +145,11 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    ips=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    ips=dict(
         required=False,
         elements='',
         type='list'),
@@ -230,7 +230,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -239,7 +239,7 @@ def run_module():
             resource_type='ibm_is_virtual_endpoint_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.1',
+            ibm_provider_version='1.27.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

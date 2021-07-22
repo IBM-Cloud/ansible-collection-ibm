@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
+
+
+  command_parameter (True, str, None)
+    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
 
 
   command_options (False, list, None)
@@ -43,30 +47,6 @@ Parameters
     Job data.
 
 
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
-
-
-  job_env_settings (False, list, None)
-    Environment variables used by the job while performing an action.
-
-
-  job_log_summary (False, list, None)
-    Job log summary record.
-
-
-  command_object_id (True, str, None)
-    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
-
-
-  command_parameter (True, str, None)
-    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
-
-
-  bastion (False, list, None)
-    Complete target details with the user inputs and the system generated data.
-
-
   job_inputs (False, list, None)
     Job inputs used by an action.
 
@@ -75,8 +55,28 @@ Parameters
     User defined tags, while running the job.
 
 
+  job_log_summary (False, list, None)
+    Job log summary record.
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
   location (False, str, None)
     List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
+
+
+  command_object_id (True, str, None)
+    (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
+
+
+  job_env_settings (False, list, None)
+    Environment variables used by the job while performing an action.
+
+
+  bastion (False, list, None)
+    Complete target details with the user inputs and the system generated data.
 
 
   id (False, str, None)

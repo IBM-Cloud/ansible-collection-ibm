@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -44,12 +44,6 @@ options:
         required: False
         type: bool
         default: True
-    labels:
-        description:
-            - list of labels to worker pool
-        required: False
-        type: dict
-        elements: str
     machine_type:
         description:
             - (Required for new resource) worker nodes machine type
@@ -60,6 +54,12 @@ options:
             - (Required for new resource) worker pool name
         required: True
         type: str
+    labels:
+        description:
+            - list of labels to worker pool
+        required: False
+        type: dict
+        elements: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -108,9 +108,9 @@ TL_ALL_PARAMETERS = [
     'entitlement',
     'hardware',
     'disk_encryption',
-    'labels',
     'machine_type',
     'worker_pool_name',
+    'labels',
     'resource_group_id',
     'cluster',
 ]
@@ -145,16 +145,16 @@ module_args = dict(
     disk_encryption=dict(
         required=False,
         type='bool'),
-    labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
     machine_type=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
         required=False,
         type='str'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -221,7 +221,7 @@ def run_module():
             resource_type='ibm_container_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.1',
+            ibm_provider_version='1.27.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

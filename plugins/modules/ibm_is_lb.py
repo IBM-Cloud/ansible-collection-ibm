@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -28,23 +28,11 @@ options:
         required: False
         type: str
         default: public
-    name:
+    profile:
         description:
-            - (Required for new resource) Load Balancer name
-        required: True
+            - The profile to use for this load balancer.
+        required: False
         type: str
-    security_groups:
-        description:
-            - Load Balancer securitygroups list
-        required: False
-        type: list
-        elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     resource_group:
         description:
             - None
@@ -56,17 +44,29 @@ options:
         required: True
         type: list
         elements: str
-    profile:
+    name:
         description:
-            - The profile to use for this load balancer.
-        required: False
+            - (Required for new resource) Load Balancer name
+        required: True
         type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     logging:
         description:
             - Logging of Load Balancer
         required: False
         type: bool
         default: False
+    security_groups:
+        description:
+            - Load Balancer securitygroups list
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,20 +113,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnets', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'name',
-    'security_groups',
-    'tags',
+    'profile',
     'resource_group',
     'subnets',
-    'profile',
+    'name',
+    'tags',
     'logging',
+    'security_groups',
 ]
 
 # Params for Data source
@@ -139,9 +139,9 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'security_groups': ['profile'],
     'profile': ['logging'],
     'logging': ['profile'],
+    'security_groups': ['profile'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -151,17 +151,9 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    name=dict(
+    profile=dict(
         required=False,
         type='str'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -169,12 +161,20 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    profile=dict(
+    name=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     logging=dict(
         required=False,
         type='bool'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -261,7 +261,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.1',
+            ibm_provider_version='1.27.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

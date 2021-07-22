@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -33,6 +33,11 @@ options:
             - (Required for new resource) number of ip addresses in the subnet
         required: True
         type: int
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
     tags:
         description:
             - tags set for the resource
@@ -58,11 +63,6 @@ options:
     endpoint_ip:
         description:
             - endpoint IP
-        required: False
-        type: str
-    notes:
-        description:
-            - Notes
         required: False
         type: str
     id:
@@ -119,12 +119,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'private',
     'capacity',
+    'notes',
     'tags',
     'type',
     'ip_version',
     'vlan_id',
     'endpoint_ip',
-    'notes',
 ]
 
 # Params for Data source
@@ -149,6 +149,9 @@ module_args = dict(
     capacity=dict(
         required=False,
         type='int'),
+    notes=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -163,9 +166,6 @@ module_args = dict(
         required=False,
         type='int'),
     endpoint_ip=dict(
-        required=False,
-        type='str'),
-    notes=dict(
         required=False,
         type='str'),
     id=dict(
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

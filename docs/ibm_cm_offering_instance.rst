@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -31,36 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  wait_until_successful (False, bool, True)
-    Whether to wait until the offering instance successfully provisions, or to return when accepted
+  version (True, str, None)
+    (Required for new resource) The version this instance was installed from (not version id).
 
 
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
 
 
   catalog_id (True, str, None)
     (Required for new resource) Catalog ID this instance was created from.
 
 
-  version (True, str, None)
-    (Required for new resource) The version this instance was installed from (not version id).
-
-
-  channel (False, str, None)
-    channel to target for the operator subscription. Required for operator bundles
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
 
 
   resource_group_id (False, str, None)
     id of the resource group
 
 
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
+
+
+  wait_until_successful (False, bool, True)
+    Whether to wait until the offering instance successfully provisions, or to return when accepted
+
+
   install_plan (False, str, None)
     install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
-
-
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
 
 
   offering_id (True, str, None)
@@ -71,12 +71,12 @@ Parameters
     (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
   cluster_namespaces (True, list, None)
     (Required for new resource) List of target namespaces to install into.
+
+
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
 
 
   cluster_all_namespaces (True, bool, None)

@@ -23,41 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
 
   responsible_person (False, str, None)
     Responsible person for DNS record
@@ -67,36 +39,64 @@ Parameters
     Minimun TTL configuration
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  tags (False, list, None)
+    tags set for the resource
 
 
   port (False, int, None)
     port number
 
 
-  weight (False, int, 0)
-    weight info
+  priority (False, int, 0)
+    priority info
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   host (True, str, None)
     (Required for new resource) Hostname
 
 
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
   retry (False, int, None)
     Retry count
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
 
 
   ttl (True, int, None)
     (Required for new resource) TTL configuration
 
 
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
   service (False, str, None)
     service info
-
-
-  priority (False, int, 0)
-    priority info
 
 
   id (False, str, None)

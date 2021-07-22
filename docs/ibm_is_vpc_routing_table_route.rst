@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  routing_table (True, str, None)
+    (Required for new resource) The routing table identifier.
+
 
   zone (True, str, None)
     (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
@@ -45,10 +49,6 @@ Parameters
 
   name (False, str, None)
     The user-defined name for this route.
-
-
-  routing_table (True, str, None)
-    (Required for new resource) The routing table identifier.
 
 
   vpc (True, str, None)

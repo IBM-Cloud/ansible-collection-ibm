@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_group' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -74,8 +74,6 @@ TL_ALL_PARAMETERS = [
 
 
 TL_CONFLICTS_MAP = {
-    'name': ['is_default'],
-    'is_default': ['name'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -122,7 +120,7 @@ def run_module():
         resource_type='ibm_resource_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

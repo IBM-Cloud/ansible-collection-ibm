@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - Name or id of the cluster
+        required: False
+        type: str
     list_bounded_services:
         description:
             - If set to false bounded services won't be listed.
@@ -33,11 +38,6 @@ options:
         required: False
         type: str
         default: all
-    name:
-        description:
-            - Name or id of the cluster
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -60,9 +60,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'list_bounded_services',
     'alb_type',
-    'name',
     'resource_group_id',
 ]
 
@@ -74,13 +74,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     list_bounded_services=dict(
         required=False,
         type='bool'),
     alb_type=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -106,7 +106,7 @@ def run_module():
         resource_type='ibm_container_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

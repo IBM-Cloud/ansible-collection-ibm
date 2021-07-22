@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
 
   cidr (True, str, None)
     (Required for new resource) CIDIR address prefix
@@ -41,14 +49,6 @@ Parameters
 
   vpc (True, str, None)
     (Required for new resource) VPC id
-
-
-  name (True, str, None)
-    (Required for new resource) Name
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
 
 
   id (False, str, None)

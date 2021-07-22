@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.1
+- IBM-Cloud terraform-provider-ibm v1.27.2
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    Key protect or hpcs instance GUID
-
-
-  key_name (False, str, None)
-    The name of the key to be fetched
-
-
   alias (False, str, None)
     The alias associated with the key
 
 
   endpoint_type (False, str, public)
     public or private
+
+
+  instance_id (True, str, None)
+    Key protect or hpcs instance GUID
+
+
+  key_name (False, str, None)
+    The name of the key to be fetched
 
 
   iaas_classic_username (False, any, None)

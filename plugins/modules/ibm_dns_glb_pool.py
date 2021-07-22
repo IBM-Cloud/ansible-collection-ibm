@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb_pool' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.1
+    - IBM-Cloud terraform-provider-ibm v1.27.2
     - Terraform v0.12.20
 
 options:
@@ -32,6 +32,32 @@ options:
             - The notification channel,It is a webhook url
         required: False
         type: str
+    origins:
+        description:
+            - (Required for new resource) Origins info
+        required: True
+        type: list
+        elements: dict
+    healthcheck_region:
+        description:
+            - Health check region of VSIs
+        required: False
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer pool
+        required: False
+        type: str
+    enabled:
+        description:
+            - Whether the load balancer pool is enabled
+        required: False
+        type: bool
+    instance_id:
+        description:
+            - (Required for new resource) Instance Id
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) The unique identifier of a service instance.
@@ -42,32 +68,6 @@ options:
             - The minimum number of origins that must be healthy for this pool to serve traffic
         required: False
         type: int
-    description:
-        description:
-            - Descriptive text of the load balancer pool
-        required: False
-        type: str
-    healthcheck_region:
-        description:
-            - Health check region of VSIs
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) Instance Id
-        required: True
-        type: str
-    enabled:
-        description:
-            - Whether the load balancer pool is enabled
-        required: False
-        type: bool
-    origins:
-        description:
-            - (Required for new resource) Origins info
-        required: True
-        type: list
-        elements: dict
     healthcheck_subnets:
         description:
             - Health check subnet crn of VSIs
@@ -120,22 +120,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('instance_id', 'str'),
     ('origins', 'list'),
+    ('instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'monitor',
     'notification_channel',
+    'origins',
+    'healthcheck_region',
+    'description',
+    'enabled',
+    'instance_id',
     'name',
     'healthy_origins_threshold',
-    'description',
-    'healthcheck_region',
-    'instance_id',
-    'enabled',
-    'origins',
     'healthcheck_subnets',
 ]
 
@@ -159,28 +159,28 @@ module_args = dict(
     notification_channel=dict(
         required=False,
         type='str'),
+    origins=dict(
+        required=False,
+        elements='',
+        type='list'),
+    healthcheck_region=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    instance_id=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     healthy_origins_threshold=dict(
         required=False,
         type='int'),
-    description=dict(
-        required=False,
-        type='str'),
-    healthcheck_region=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    origins=dict(
-        required=False,
-        elements='',
-        type='list'),
     healthcheck_subnets=dict(
         required=False,
         elements='',
@@ -250,7 +250,7 @@ def run_module():
         resource_type='ibm_dns_glb_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.1',
+        ibm_provider_version='1.27.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
