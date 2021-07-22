@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,15 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hourly_billing (False, bool, True)
+  private_vlan_id (False, int, None)
     None
 
 
-  private_network_only (False, bool, False)
+  os_reference_code (False, str, None)
     None
 
 
-  block_storage_ids (False, list, None)
+  private_subnet (False, str, None)
+    None
+
+
+  network_speed (False, int, 100)
     None
 
 
@@ -47,15 +51,23 @@ Parameters
     The user provided datacenter options
 
 
-  public_security_group_ids (False, list, None)
+  dedicated_host_id (False, int, None)
     None
 
 
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
+  private_security_group_ids (False, list, None)
+    None
 
 
-  cores (False, int, None)
+  post_install_script_uri (False, str, None)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  secondary_ip_count (False, int, None)
     None
 
 
@@ -63,15 +75,35 @@ Parameters
     None
 
 
-  private_vlan_id (False, int, None)
+  block_storage_ids (False, list, None)
     None
 
 
-  user_metadata (False, str, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
-  bulk_vms (False, list, None)
+  public_subnet (False, str, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  notes (False, str, None)
+    None
+
+
+  local_disk (False, bool, True)
+    None
+
+
+  hourly_billing (False, bool, True)
     None
 
 
@@ -79,11 +111,71 @@ Parameters
     None
 
 
-  memory (False, int, None)
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  disks (False, list, None)
     None
 
 
-  public_subnet (False, str, None)
+  private_network_only (False, bool, False)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  transient (False, bool, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  cores (False, int, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  image_id (False, int, None)
     None
 
 
@@ -95,103 +187,11 @@ Parameters
     None
 
 
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  local_disk (False, bool, True)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  disks (False, list, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  transient (False, bool, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
   domain (False, str, None)
     None
 
 
-  os_reference_code (False, str, None)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  network_speed (False, int, 100)
+  memory (False, int, None)
     None
 
 

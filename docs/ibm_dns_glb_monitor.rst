@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,48 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  allow_insecure (False, bool, None)
-    Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  interval (False, int, 60)
-    The interval between each health check
-
-
-  path (False, str, None)
-    The endpoint path to health check against
-
-
-  expected_codes (False, str, None)
-    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
-
-
-  timeout (False, int, 5)
-    The timeout (in seconds) before marking the health check as failed
-
-
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
-
-
-  port (False, int, None)
-    Port number to connect to for the health check
-
-
-  method (False, str, None)
-    The method to use for the health check
-
-
-  headers (False, list, None)
-    The HTTP request headers to send in the health check
-
-
-  expected_body (False, str, None)
-    A case-insensitive sub-string to look for in the response body
 
 
   description (False, str, None)
@@ -85,6 +45,46 @@ Parameters
 
   retries (False, int, 1)
     The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+
+
+  method (False, str, None)
+    The method to use for the health check
+
+
+  port (False, int, None)
+    Port number to connect to for the health check
+
+
+  timeout (False, int, 5)
+    The timeout (in seconds) before marking the health check as failed
+
+
+  expected_codes (False, str, None)
+    The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
+
+
+  expected_body (False, str, None)
+    A case-insensitive sub-string to look for in the response body
+
+
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  path (False, str, None)
+    The endpoint path to health check against
+
+
+  headers (False, list, None)
+    The HTTP request headers to send in the health check
+
+
+  allow_insecure (False, bool, None)
+    Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
 
 
   id (False, str, None)

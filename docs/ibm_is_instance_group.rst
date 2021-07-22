@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  load_balancer (False, str, None)
+    load balancer ID
+
+
+  load_balancer_pool (False, str, None)
+    load balancer pool ID
+
+
   name (True, str, None)
     (Required for new resource) The user-defined name for this instance group
 
 
-  instance_template (True, str, None)
-    (Required for new resource) instance template ID
-
-
   instance_count (False, int, 0)
     The number of instances in the instance group
+
+
+  subnets (True, list, None)
+    (Required for new resource) list of subnet IDs
 
 
   application_port (False, int, None)
@@ -51,20 +59,12 @@ Parameters
     List of tags for instance group
 
 
+  instance_template (True, str, None)
+    (Required for new resource) instance template ID
+
+
   resource_group (False, str, None)
     Resource group ID
-
-
-  subnets (True, list, None)
-    (Required for new resource) list of subnet IDs
-
-
-  load_balancer (False, str, None)
-    load balancer ID
-
-
-  load_balancer_pool (False, str, None)
-    load balancer pool ID
 
 
   id (False, str, None)

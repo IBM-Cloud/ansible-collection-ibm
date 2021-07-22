@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_tg_location' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
@@ -112,7 +112,7 @@ def run_module():
         resource_type='ibm_tg_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

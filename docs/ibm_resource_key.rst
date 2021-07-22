@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     The id of the resource instance for which to create resource key
 
 
-  tags (False, list, None)
-    None
-
-
   resource_alias_id (False, str, None)
     The id of the resource alias for which to create resource key
+
+
+  tags (False, list, None)
+    None
 
 
   parameters (False, dict, None)

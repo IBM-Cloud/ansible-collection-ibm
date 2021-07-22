@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain (False, str, None)
-    A domain or subdomain for the enterprise, such as `example.com` or `my.example.com`.
+  name (True, str, None)
+    (Required for new resource) The name of the enterprise. This field must have 3 - 60 characters.
 
 
   primary_contact_iam_id (True, str, None)
     (Required for new resource) The IAM ID of the enterprise primary contact, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
 
-  name (True, str, None)
-    (Required for new resource) The name of the enterprise. This field must have 3 - 60 characters.
+  domain (False, str, None)
+    A domain or subdomain for the enterprise, such as `example.com` or `my.example.com`.
 
 
   source_account_id (True, str, None)

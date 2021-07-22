@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
-
-
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
 
 
   session_persistence_cookie_name (False, str, None)
     Load Balancer Pool session persisence cookie name
+
+
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   proxy_protocol (False, str, None)
@@ -51,36 +71,16 @@ Parameters
     (Required for new resource) Load Balancer Pool name
 
 
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
   health_monitor_url (False, str, None)
     Health monitor URL of LB Pool
 
 
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
-
-
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
 
 
   id (False, str, None)

@@ -23,37 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
-
-
-  tags (False, str, None)
-    Tags associated with the feature.
-
-
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different feature flag values for different segments.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified feature flag.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  enabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
 
   environment_id (True, str, None)
     (Required for new resource) Environment Id.
@@ -63,16 +39,40 @@ Parameters
     (Required for new resource) Feature name.
 
 
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
+
+
+  description (False, str, None)
+    Feature description.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  tags (False, str, None)
+    Tags associated with the feature.
+
+
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified feature flag.
+
+
+  enabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different feature flag values for different segments.
+
+
   type (True, str, None)
     (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
 
 
   disabled_value (True, str, None)
     (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  description (False, str, None)
-    Feature description.
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
@@ -32,14 +32,14 @@ options:
             - (Required for new resource) The dedicated host profile family for hosts in this group.
         required: True
         type: str
-    name:
-        description:
-            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
     resource_group:
         description:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
         type: str
     zone:
@@ -102,8 +102,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'class_',
     'family',
-    'name',
     'resource_group',
+    'name',
     'zone',
 ]
 
@@ -129,10 +129,10 @@ module_args = dict(
     family=dict(
         required=False,
         type='str'),
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
     zone=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.2',
+            ibm_provider_version='1.28.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

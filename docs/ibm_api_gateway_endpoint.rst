@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  service_instance_crn (True, str, None)
+    (Required for new resource) Api Gateway Service Instance Crn
+
+
   routes (False, list, None)
     Invokable routes for an endpoint
+
+
+  managed (False, bool, False)
+    Managed indicates if endpoint is online or offline.
+
+
+  provider_id (False, str, user-defined)
+    Provider ID of an endpoint allowable values user-defined and whisk
 
 
   type (False, str, unshare)
@@ -45,18 +57,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Endpoint name
-
-
-  provider_id (False, str, user-defined)
-    Provider ID of an endpoint allowable values user-defined and whisk
-
-
-  service_instance_crn (True, str, None)
-    (Required for new resource) Api Gateway Service Instance Crn
-
-
-  managed (False, bool, False)
-    Managed indicates if endpoint is online or offline.
 
 
   id (False, str, None)

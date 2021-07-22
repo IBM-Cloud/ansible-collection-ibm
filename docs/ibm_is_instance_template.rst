@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
-  network_interfaces (False, list, None)
-    None
-
-
-  image (True, str, None)
-    (Required for new resource) image name
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
   resource_group (False, str, None)
     Instance template resource group
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   keys (True, list, None)
@@ -63,12 +63,20 @@ Parameters
     None
 
 
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  boot_volume (False, list, None)
+    None
+
+
   name (True, str, None)
     (Required for new resource) Instance Template name
 
 
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
+  network_interfaces (False, list, None)
+    None
 
 
   user_data (False, str, None)
@@ -77,14 +85,6 @@ Parameters
 
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
   id (False, str, None)

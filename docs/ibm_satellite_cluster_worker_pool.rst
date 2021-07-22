@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
+
+
   name (True, str, None)
     (Required for new resource) The name for the worker pool
 
 
   cluster (True, str, None)
     (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
-
-
-  zones (False, list, None)
-    Zone info for worker pool
-
-
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  flavor (False, str, None)
-    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
-
-
-  disk_encryption (False, bool, None)
-    Disk encryption for worker node
 
 
   isolation (False, str, None)
@@ -67,12 +51,28 @@ Parameters
     None
 
 
-  worker_count (False, int, None)
-    Specify the desired number of workers per zone in this worker pool
+  zones (False, list, None)
+    Zone info for worker pool
 
 
   worker_pool_labels (False, dict, None)
     Labels on all the workers in the worker pool
+
+
+  flavor (False, str, None)
+    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
+
+
+  disk_encryption (False, bool, None)
+    Disk encryption for worker node
+
+
+  worker_count (False, int, None)
+    Specify the desired number of workers per zone in this worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

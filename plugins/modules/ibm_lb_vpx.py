@@ -18,26 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
+    version:
+        description:
+            - (Required for new resource) version info
+        required: True
+        type: str
+    public_subnet:
+        description:
+            - Public subnet
+        required: False
+        type: str
     tags:
         description:
             - List of the tags
         required: False
         type: list
         elements: str
-    speed:
+    public_vlan_id:
         description:
-            - (Required for new resource) Speed value
-        required: True
-        type: int
-    public_subnet:
-        description:
-            - Public subnet
+            - Piblic VLAN id
         required: False
-        type: str
+        type: int
+    private_vlan_id:
+        description:
+            - Private VLAN id
+        required: False
+        type: int
     private_subnet:
         description:
             - Private subnet
@@ -48,30 +58,20 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
+    speed:
+        description:
+            - (Required for new resource) Speed value
+        required: True
+        type: int
     plan:
         description:
             - (Required for new resource) Plan info
-        required: True
-        type: str
-    version:
-        description:
-            - (Required for new resource) version info
         required: True
         type: str
     ip_count:
         description:
             - (Required for new resource) IP address count
         required: True
-        type: int
-    private_vlan_id:
-        description:
-            - Private VLAN id
-        required: False
-        type: int
-    public_vlan_id:
-        description:
-            - Piblic VLAN id
-        required: False
         type: int
     id:
         description:
@@ -119,25 +119,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('speed', 'int'),
-    ('datacenter', 'str'),
-    ('plan', 'str'),
     ('version', 'str'),
+    ('datacenter', 'str'),
+    ('speed', 'int'),
+    ('plan', 'str'),
     ('ip_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'speed',
+    'version',
     'public_subnet',
+    'tags',
+    'public_vlan_id',
+    'private_vlan_id',
     'private_subnet',
     'datacenter',
+    'speed',
     'plan',
-    'version',
     'ip_count',
-    'private_vlan_id',
-    'public_vlan_id',
 ]
 
 # Params for Data source
@@ -154,35 +154,35 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    version=dict(
+        required=False,
+        type='str'),
+    public_subnet=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    speed=dict(
+    public_vlan_id=dict(
         required=False,
         type='int'),
-    public_subnet=dict(
+    private_vlan_id=dict(
         required=False,
-        type='str'),
+        type='int'),
     private_subnet=dict(
         required=False,
         type='str'),
     datacenter=dict(
         required=False,
         type='str'),
+    speed=dict(
+        required=False,
+        type='int'),
     plan=dict(
         required=False,
         type='str'),
-    version=dict(
-        required=False,
-        type='str'),
     ip_count=dict(
-        required=False,
-        type='int'),
-    private_vlan_id=dict(
-        required=False,
-        type='int'),
-    public_vlan_id=dict(
         required=False,
         type='int'),
     id=dict(
@@ -250,7 +250,7 @@ def run_module():
         resource_type='ibm_lb_vpx',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

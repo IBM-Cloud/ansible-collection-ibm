@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) name
+  region_pools (False, list, None)
+    None
 
 
-  fallback_pool_id (True, str, None)
-    (Required for new resource) fallback pool ID
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
 
 
   ttl (False, int, 60)
@@ -55,28 +67,16 @@ Parameters
     None
 
 
-  region_pools (False, list, None)
-    None
+  name (True, str, None)
+    (Required for new resource) name
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
+  fallback_pool_id (True, str, None)
+    (Required for new resource) fallback pool ID
 
 
   description (False, str, None)
     Description for the load balancer instance
-
-
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
 
 
   id (False, str, None)

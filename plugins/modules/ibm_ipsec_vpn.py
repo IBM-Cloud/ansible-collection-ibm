@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
@@ -34,6 +34,11 @@ options:
         required: False
         type: list
         elements: dict
+    preshared_key:
+        description:
+            - Preshared Key data
+        required: False
+        type: str
     customer_peer_ip:
         description:
             - Customer Peer IP Address
@@ -61,11 +66,6 @@ options:
         required: False
         type: list
         elements: dict
-    preshared_key:
-        description:
-            - Preshared Key data
-        required: False
-        type: str
     internal_subnet_id:
         description:
             - Internal subnet ID value
@@ -129,12 +129,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'phase_one',
     'phase_two',
+    'preshared_key',
     'customer_peer_ip',
     'remote_subnet',
     'service_subnet_id',
     'datacenter',
     'address_translation',
-    'preshared_key',
     'internal_subnet_id',
     'remote_subnet_id',
 ]
@@ -163,6 +163,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    preshared_key=dict(
+        required=False,
+        type='str'),
     customer_peer_ip=dict(
         required=False,
         type='str'),
@@ -180,9 +183,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    preshared_key=dict(
-        required=False,
-        type='str'),
     internal_subnet_id=dict(
         required=False,
         type='int'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

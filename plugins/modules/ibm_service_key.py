@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_service_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - (Required for new resource) The name of the service key
@@ -37,12 +43,6 @@ options:
             - Arbitrary parameters to pass along to the service broker. Must be a JSON object
         required: False
         type: dict
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,10 +95,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'name',
     'service_instance_guid',
     'parameters',
-    'tags',
 ]
 
 # Params for Data source
@@ -121,6 +121,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -130,10 +134,6 @@ module_args = dict(
     parameters=dict(
         required=False,
         type='dict'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -199,7 +199,7 @@ def run_module():
         resource_type='ibm_service_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -208,7 +208,7 @@ def run_module():
             resource_type='ibm_service_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.27.2',
+            ibm_provider_version='1.28.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

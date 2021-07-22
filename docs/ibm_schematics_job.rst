@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  data (False, list, None)
+    Job data.
+
+
+  job_log_summary (False, list, None)
+    Job log summary record.
+
 
   command_object (True, str, None)
     (Required for new resource) Name of the Schematics automation resource.
@@ -39,28 +47,16 @@ Parameters
     (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
 
 
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  data (False, list, None)
-    Job data.
-
-
-  job_inputs (False, list, None)
-    Job inputs used by an action.
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  job_log_summary (False, list, None)
-    Job log summary record.
+  job_env_settings (False, list, None)
+    Environment variables used by the job while performing an action.
 
 
   command_name (True, str, None)
     (Required for new resource) Schematics job command name.
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
   location (False, str, None)
@@ -71,12 +67,16 @@ Parameters
     (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
 
 
-  job_env_settings (False, list, None)
-    Environment variables used by the job while performing an action.
+  job_inputs (False, list, None)
+    Job inputs used by an action.
 
 
   bastion (False, list, None)
     Complete target details with the user inputs and the system generated data.
+
+
+  command_options (False, list, None)
+    Command line options for the command.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,72 +31,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  port (False, int, None)
-    port number
-
-
-  priority (False, int, 0)
-    priority info
-
-
   expire (False, int, None)
     DNS record expiry info
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   service (False, str, None)
     service info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  port (False, int, None)
+    port number
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  tags (False, list, None)
+    tags set for the resource
 
 
   id (False, str, None)

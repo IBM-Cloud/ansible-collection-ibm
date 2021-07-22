@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
-
-
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
 
 
   user_defined_parameters (False, str, [])
     Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
+
+
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
 
 
   name (True, str, None)

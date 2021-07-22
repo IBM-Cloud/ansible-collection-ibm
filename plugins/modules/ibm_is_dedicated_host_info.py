@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_dedicated_host' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.27.2
+    - IBM-Cloud terraform-provider-ibm v1.28.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - The unique name of this dedicated host
+        required: True
+        type: str
     host_group:
         description:
             - The unique identifier of the dedicated host group this dedicated host belongs to
@@ -30,11 +35,6 @@ options:
         description:
             - The unique identifier of the resource group this dedicated host belongs to
         required: False
-        type: str
-    name:
-        description:
-            - The unique name of this dedicated host
-        required: True
         type: str
     generation:
         description:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_group', 'str'),
     ('name', 'str'),
+    ('host_group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'host_group',
     'resource_group',
-    'name',
 ]
 
 
@@ -88,14 +88,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=True,
+        type='str'),
     host_group=dict(
         required=True,
         type='str'),
     resource_group=dict(
         required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     generation=dict(
         type='int',
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.27.2',
+        ibm_provider_version='1.28.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

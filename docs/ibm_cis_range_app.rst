@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dns (True, str, None)
-    (Required for new resource) Name of the DNS record for this application
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
 
 
-  origin_direct (False, list, None)
-    IP address and port of the origin for this Range application.
-
-
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
 
 
   edge_ips_connectivity (False, str, all)
@@ -59,32 +55,36 @@ Parameters
     (Required for new resource) Defines the protocol and port for this application
 
 
-  origin_port (False, int, None)
-    Port at the origin that listens to traffic
+  dns (True, str, None)
+    (Required for new resource) Name of the DNS record for this application
+
+
+  dns_type (True, str, None)
+    (Required for new resource) Type of the DNS record for this application
 
 
   origin_dns (False, str, None)
     DNS record pointing to the origin for this Range application.
 
 
+  origin_port (False, int, None)
+    Port at the origin that listens to traffic
+
+
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
+
+
+  origin_direct (False, list, None)
+    IP address and port of the origin for this Range application.
+
+
   proxy_protocol (False, str, None)
     Allows for the true client IP to be passed to the service.
 
 
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
-
-
   traffic_type (False, str, direct)
     Configure how traffic is handled at the edge.
-
-
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
-
-  dns_type (True, str, None)
-    (Required for new resource) Type of the DNS record for this application
 
 
   id (False, str, None)

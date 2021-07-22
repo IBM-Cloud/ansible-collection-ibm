@@ -23,45 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.27.2
+- IBM-Cloud terraform-provider-ibm v1.28.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  path (False, str, /*)
-    Path details
-
-
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
-  protocol (False, str, HTTP)
-    Protocol name
-
-
-  cname (False, str, None)
-    cname info
-
-
-  header (False, str, None)
-    Header info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  cache_key_query_rule (False, str, include-all)
-    query rule info
-
-
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
-
 
   http_port (False, int, 80)
     HTTP port number
@@ -71,28 +39,60 @@ Parameters
     HTTPS port number
 
 
-  host_name (True, str, None)
-    (Required for new resource) Host name
+  cname (False, str, None)
+    cname info
 
 
-  vendor_name (False, str, akamai)
-    Vendor name
+  file_extension (False, str, None)
+    File extension info
 
 
-  respect_headers (False, bool, True)
-    respect headers info
-
-
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
+  certificate_type (False, str, None)
+    Certificate type
 
 
   bucket_name (False, str, None)
     Bucket name
 
 
-  file_extension (False, str, None)
-    File extension info
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
+  respect_headers (False, bool, True)
+    respect headers info
+
+
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
+  host_name (True, str, None)
+    (Required for new resource) Host name
+
+
+  protocol (False, str, HTTP)
+    Protocol name
+
+
+  path (False, str, /*)
+    Path details
+
+
+  vendor_name (False, str, akamai)
+    Vendor name
+
+
+  header (False, str, None)
+    Header info
 
 
   id (False, str, None)
