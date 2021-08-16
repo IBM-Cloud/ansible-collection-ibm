@@ -17,26 +17,26 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
-    workspace_id:
+    template_git_has_uploadedgitrepotar:
         description:
-            - The ID of the workspace for which you want to retrieve detailed information. To find the workspace ID, use the `GET /v1/workspaces` API.
-        required: True
-        type: str
+            - Has uploaded git repo tar.
+        required: False
+        type: bool
     template_values_metadata:
         description:
             - A list of input variables that are associated with the workspace.
         required: False
         type: list
         elements: dict
-    template_git_has_uploadedgitrepotar:
+    workspace_id:
         description:
-            - Has uploaded git repo tar.
-        required: False
-        type: bool
+            - The ID of the workspace for which you want to retrieve detailed information. To find the workspace ID, use the `GET /v1/workspaces` API.
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'workspace_id',
-    'template_values_metadata',
     'template_git_has_uploadedgitrepotar',
+    'template_values_metadata',
+    'workspace_id',
 ]
 
 
@@ -88,16 +88,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    workspace_id=dict(
-        required=True,
-        type='str'),
+    template_git_has_uploadedgitrepotar=dict(
+        required=False,
+        type='bool'),
     template_values_metadata=dict(
         required=False,
         elements='',
         type='list'),
-    template_git_has_uploadedgitrepotar=dict(
-        required=False,
-        type='bool'),
+    workspace_id=dict(
+        required=True,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

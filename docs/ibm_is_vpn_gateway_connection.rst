@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,52 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
 
 
   vpn_gateway (True, str, None)
     (Required for new resource) VPN Gateway info
 
 
-  ipsec_policy (False, str, None)
-    IP security policy for vpn gateway connection
+  local_cidrs (False, list, None)
+    VPN gateway connection local CIDRs
+
+
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
 
 
   ike_policy (False, str, None)
     VPN gateway connection IKE Policy
 
 
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
-
-
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
-
-
-  local_cidrs (False, list, None)
-    VPN gateway connection local CIDRs
-
-
   interval (False, int, 2)
     Interval for dead peer detection interval
-
-
-  timeout (False, int, 10)
-    Timeout for dead peer detection
 
 
   peer_address (True, str, None)
     (Required for new resource) VPN gateway connection peer address
 
 
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
 
 
   action (False, str, restart)
     Action detection for dead peer detection action
+
+
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
+
+
+  timeout (False, int, 10)
+    Timeout for dead peer detection
+
+
+  ipsec_policy (False, str, None)
+    IP security policy for vpn gateway connection
 
 
   id (False, str, None)

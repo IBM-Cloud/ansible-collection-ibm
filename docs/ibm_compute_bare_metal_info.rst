@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -29,8 +29,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  global_identifier (False, str, None)
-    The unique global identifier of the bare metal server
+  hostname (False, str, None)
+    The hostname of the bare metal server
 
 
   domain (False, str, None)
@@ -41,8 +41,8 @@ Parameters
     If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
 
 
-  hostname (False, str, None)
-    The hostname of the bare metal server
+  global_identifier (False, str, None)
+    The unique global identifier of the bare metal server
 
 
   iaas_classic_username (False, any, None)

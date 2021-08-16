@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_multi_vlan_firewall' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,12 @@ options:
             - (Required for new resource) Firewall type
         required: True
         type: str
+    addon_configuration:
+        description:
+            - High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
+        required: False
+        type: list
+        elements: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name
@@ -37,12 +43,6 @@ options:
             - (Required for new resource) POD name
         required: True
         type: str
-    addon_configuration:
-        description:
-            - High Availability - [Web Filtering Add-on, NGFW Add-on, AV Add-on] or [Web Filtering Add-on, NGFW Add-on, AV Add-on]
-        required: False
-        type: list
-        elements: str
     name:
         description:
             - (Required for new resource) name
@@ -103,9 +103,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'firewall_type',
+    'addon_configuration',
     'datacenter',
     'pod',
-    'addon_configuration',
     'name',
 ]
 
@@ -126,16 +126,16 @@ module_args = dict(
     firewall_type=dict(
         required=False,
         type='str'),
+    addon_configuration=dict(
+        required=False,
+        elements='',
+        type='list'),
     datacenter=dict(
         required=False,
         type='str'),
     pod=dict(
         required=False,
         type='str'),
-    addon_configuration=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -204,7 +204,7 @@ def run_module():
         resource_type='ibm_multi_vlan_firewall',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

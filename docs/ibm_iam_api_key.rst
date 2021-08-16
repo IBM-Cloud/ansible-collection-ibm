@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -35,8 +35,8 @@ Parameters
     You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this value.
 
 
-  entity_lock (False, str, False)
-    Indicates if the API key is locked for further write operations. False by default.
+  file (False, str, None)
+    File where api key is to be stored
 
 
   name (True, str, None)
@@ -47,12 +47,12 @@ Parameters
     The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
 
 
-  file (False, str, None)
-    File where api key is to be stored
-
-
   store_value (False, bool, None)
     Send true or false to set whether the API key value is retrievable in the future by using the Get details of an API key request. If you create an API key for a user, you must specify `false` or omit the value. We don't allow storing of API keys for users.
+
+
+  entity_lock (False, str, False)
+    Indicates if the API key is locked for further write operations. False by default.
 
 
   id (False, str, None)

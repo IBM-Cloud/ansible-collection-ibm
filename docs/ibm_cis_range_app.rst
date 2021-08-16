@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
-
   edge_ips_type (False, str, dynamic)
     The type of edge IP configuration.
-
-
-  edge_ips_connectivity (False, str, all)
-    Specifies the IP version.
 
 
   tls (False, str, False)
     Configure if and how TLS connections are terminated at the edge.
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
   protocol (True, str, None)
     (Required for new resource) Defines the protocol and port for this application
 
 
-  dns (True, str, None)
-    (Required for new resource) Name of the DNS record for this application
-
-
   dns_type (True, str, None)
     (Required for new resource) Type of the DNS record for this application
+
+
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
+
+
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
 
 
   origin_dns (False, str, None)
@@ -71,20 +63,28 @@ Parameters
     Port at the origin that listens to traffic
 
 
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
+  traffic_type (False, str, direct)
+    Configure how traffic is handled at the edge.
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
+
+
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
 
 
   origin_direct (False, list, None)
     IP address and port of the origin for this Range application.
 
 
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
+  edge_ips_connectivity (False, str, all)
+    Specifies the IP version.
 
 
-  traffic_type (False, str, direct)
-    Configure how traffic is handled at the edge.
+  dns (True, str, None)
+    (Required for new resource) Name of the DNS record for this application
 
 
   id (False, str, None)

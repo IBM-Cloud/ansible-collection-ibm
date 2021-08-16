@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  scale_group_id (True, int, None)
-    (Required for new resource) scale group ID
-
-
-  triggers (False, list, None)
-    None
-
 
   tags (False, list, None)
     List of tags
@@ -57,6 +49,14 @@ Parameters
 
   cooldown (False, int, None)
     cooldown value
+
+
+  scale_group_id (True, int, None)
+    (Required for new resource) scale group ID
+
+
+  triggers (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  stay_secondary (False, bool, None)
+    Boolean value for stay secondary
+
 
   tags (False, list, None)
     Tags set for the resource
@@ -41,10 +45,6 @@ Parameters
 
   secondary_id (True, int, None)
     (Required for new resource) Secondary ID
-
-
-  stay_secondary (False, bool, None)
-    Boolean value for stay secondary
 
 
   id (False, str, None)

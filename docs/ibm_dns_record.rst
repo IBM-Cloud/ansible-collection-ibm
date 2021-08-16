@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  service (False, str, None)
-    service info
+  priority (False, int, 0)
+    priority info
 
 
   data (True, str, None)
     (Required for new resource) DNS record data
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
   refresh (False, int, None)
     refresh rate
 
 
-  priority (False, int, 0)
-    priority info
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  retry (False, int, None)
+    Retry count
 
 
   minimum_ttl (False, int, None)
     Minimun TTL configuration
+
+
+  service (False, str, None)
+    service info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   protocol (False, str, None)
@@ -91,12 +91,12 @@ Parameters
     port number
 
 
-  weight (False, int, 0)
-    weight info
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
-  tags (False, list, None)
-    tags set for the resource
+  expire (False, int, None)
+    DNS record expiry info
 
 
   id (False, str, None)

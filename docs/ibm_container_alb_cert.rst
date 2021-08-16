@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID
-
-
-  persistence (False, bool, None)
-    Persistence of secret
-
-
   cert_crn (True, str, None)
     (Required for new resource) Certificate CRN id
+
+
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID
 
 
   secret_name (True, str, None)
@@ -49,6 +45,10 @@ Parameters
 
   namespace (False, str, ibm-cert-store)
     Namespace of the secret
+
+
+  persistence (False, bool, None)
+    Persistence of secret
 
 
   id (False, str, None)

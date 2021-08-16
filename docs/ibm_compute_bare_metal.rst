@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,23 +31,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_vlan_id (False, int, None)
-    None
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
 
 
-  private_subnet (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    Optional notes info
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  package_key_name (False, str, None)
+  block_storage_ids (False, list, None)
     None
 
 
@@ -55,31 +43,19 @@ Parameters
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
-  os_key_name (False, str, None)
-    None
-
-
   redundant_network (False, bool, False)
     None
 
 
-  unbonded_network (False, bool, False)
+  restricted_network (False, bool, False)
     None
 
 
-  public_bandwidth (False, int, None)
+  os_reference_code (False, str, None)
+    OS refernece code value
+
+
+  private_subnet (False, str, None)
     None
 
 
@@ -87,12 +63,16 @@ Parameters
     Boolean value true if IPV6 ia enabled or false
 
 
-  hostname (False, str, None)
-    Host name
-
-
   user_metadata (False, str, None)
     User metadata info
+
+
+  network_speed (False, int, 100)
+    Network speed in MBPS
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
 
 
   memory (False, int, None)
@@ -103,11 +83,7 @@ Parameters
     None
 
 
-  public_subnet (False, str, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
+  public_vlan_id (False, int, None)
     None
 
 
@@ -115,7 +91,43 @@ Parameters
     None
 
 
-  redundant_power_supply (False, bool, None)
+  file_storage_ids (False, list, None)
+    None
+
+
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
+  software_guard_extensions (False, bool, False)
+    None
+
+
+  package_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  notes (False, str, None)
+    Optional notes info
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  os_key_name (False, str, None)
     None
 
 
@@ -123,63 +135,31 @@ Parameters
     None
 
 
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  software_guard_extensions (False, bool, False)
-    None
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
 
 
   ipv6_static_enabled (False, bool, False)
     boolean value true if ipv6 static is enabled else false
 
 
-  os_reference_code (False, str, None)
-    OS refernece code value
-
-
-  datacenter (False, str, None)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  network_speed (False, int, 100)
-    Network speed in MBPS
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
-
-
-  block_storage_ids (False, list, None)
-    None
+  domain (True, str, None)
+    (Required for new resource) Domain name
 
 
   tags (False, list, None)
     None
 
 
-  extended_hardware_testing (False, bool, False)
+  datacenter (False, str, None)
     None
 
 
-  public_vlan_id (False, int, None)
+  private_vlan_id (False, int, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
     None
 
 
@@ -187,7 +167,27 @@ Parameters
     OS image template ID
 
 
+  redundant_power_supply (False, bool, None)
+    None
+
+
   process_key_name (False, str, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  public_bandwidth (False, int, None)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  public_subnet (False, str, None)
     None
 
 

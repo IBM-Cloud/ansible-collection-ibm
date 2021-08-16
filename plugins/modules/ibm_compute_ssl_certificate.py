@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_ssl_certificate' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,10 @@ options:
             - (Required for new resource) SSL Certifcate
         required: True
         type: str
-    intermediate_certificate:
+    private_key:
         description:
-            - Intermediate certificate value
-        required: False
+            - (Required for new resource) SSL Private Key
+        required: True
         type: str
     tags:
         description:
@@ -38,10 +38,10 @@ options:
         required: False
         type: list
         elements: str
-    private_key:
+    intermediate_certificate:
         description:
-            - (Required for new resource) SSL Private Key
-        required: True
+            - Intermediate certificate value
+        required: False
         type: str
     id:
         description:
@@ -96,9 +96,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'certificate',
-    'intermediate_certificate',
-    'tags',
     'private_key',
+    'tags',
+    'intermediate_certificate',
 ]
 
 # Params for Data source
@@ -118,14 +118,14 @@ module_args = dict(
     certificate=dict(
         required=False,
         type='str'),
-    intermediate_certificate=dict(
+    private_key=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    private_key=dict(
+    intermediate_certificate=dict(
         required=False,
         type='str'),
     id=dict(
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_compute_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

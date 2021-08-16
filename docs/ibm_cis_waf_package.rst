@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
-
-  package_id (True, str, None)
-    (Required for new resource) WAF pakcage ID
-
 
   sensitivity (True, str, None)
     (Required for new resource) WAF pakcage sensitivity
@@ -49,6 +41,14 @@ Parameters
 
   cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
+
+
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
+  package_id (True, str, None)
+    (Required for new resource) WAF pakcage ID
 
 
   id (False, str, None)

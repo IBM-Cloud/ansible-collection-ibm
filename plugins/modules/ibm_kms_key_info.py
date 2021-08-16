@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,16 @@ options:
         description:
             - Key protect or hpcs instance GUID
         required: True
+        type: str
+    limit:
+        description:
+            - Limit till the keys to be fetched
+        required: False
+        type: int
+    key_id:
+        description:
+            - None
+        required: False
         type: str
     key_name:
         description:
@@ -81,6 +91,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
+    'limit',
+    'key_id',
     'key_name',
     'alias',
     'endpoint_type',
@@ -96,6 +108,12 @@ from ansible.module_utils.basic import env_fallback
 module_args = dict(
     instance_id=dict(
         required=True,
+        type='str'),
+    limit=dict(
+        required=False,
+        type='int'),
+    key_id=dict(
+        required=False,
         type='str'),
     key_name=dict(
         required=False,
@@ -140,7 +158,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

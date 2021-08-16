@@ -18,14 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_custom_role' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
-    display_name:
+    name:
         description:
-            - (Required for new resource) Display Name of the Custom Role
+            - (Required for new resource) The name of the custom Role
         required: True
+        type: str
+    description:
+        description:
+            - The description of the role
+        required: False
         type: str
     service:
         description:
@@ -38,15 +43,10 @@ options:
         required: True
         type: list
         elements: str
-    name:
+    display_name:
         description:
-            - (Required for new resource) The name of the custom Role
+            - (Required for new resource) Display Name of the Custom Role
         required: True
-        type: str
-    description:
-        description:
-            - The description of the role
-        required: False
         type: str
     id:
         description:
@@ -94,19 +94,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('display_name', 'str'),
+    ('name', 'str'),
     ('service', 'str'),
     ('actions', 'list'),
-    ('name', 'str'),
+    ('display_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'display_name',
-    'service',
-    'actions',
     'name',
     'description',
+    'service',
+    'actions',
+    'display_name',
 ]
 
 # Params for Data source
@@ -123,7 +123,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    display_name=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     service=dict(
@@ -133,10 +136,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    display_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -204,7 +204,7 @@ def run_module():
         resource_type='ibm_iam_custom_role',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

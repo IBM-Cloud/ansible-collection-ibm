@@ -18,10 +18,22 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_org' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
+    managers:
+        description:
+            - The IBMID of the users who will have manager role in this org, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    auditors:
+        description:
+            - The IBMID of the users who will have auditor role in this org, ex - user@example.com
+        required: False
+        type: list
+        elements: str
     users:
         description:
             - The IBMID of the users who will have user role in this org, ex - user@example.com
@@ -47,18 +59,6 @@ options:
     billing_managers:
         description:
             - The IBMID of the users who will have billing manager role in this org, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    managers:
-        description:
-            - The IBMID of the users who will have manager role in this org, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    auditors:
-        description:
-            - The IBMID of the users who will have auditor role in this org, ex - user@example.com
         required: False
         type: list
         elements: str
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'managers',
+    'auditors',
     'users',
     'tags',
     'name',
     'org_quota_definition_guid',
     'billing_managers',
-    'managers',
-    'auditors',
 ]
 
 # Params for Data source
@@ -138,6 +138,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    managers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    auditors=dict(
+        required=False,
+        elements='',
+        type='list'),
     users=dict(
         required=False,
         elements='',
@@ -153,14 +161,6 @@ module_args = dict(
         required=False,
         type='str'),
     billing_managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    auditors=dict(
         required=False,
         elements='',
         type='list'),
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_org',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -238,7 +238,7 @@ def run_module():
             resource_type='ibm_org',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.28.0',
+            ibm_provider_version='1.29.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -29,8 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Instance resource group
+  instance_group (False, str, None)
+    Instance group ID to filter the instances attached to it
+
+
+  instance_group_name (False, str, None)
+    Instance group name to filter the instances attached to it
 
 
   vpc_name (False, str, None)
@@ -43,6 +47,10 @@ Parameters
 
   vpc_crn (False, str, None)
     VPC CRN to filter the instances attached to it
+
+
+  resource_group (False, str, None)
+    Instance resource group
 
 
   generation (False, int, 2)

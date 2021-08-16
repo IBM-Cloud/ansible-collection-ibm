@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_event_streams_topic' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
-    resource_instance_id:
-        description:
-            - The CRN of the Event Streams instance
-        required: True
-        type: str
     name:
         description:
             - The name of the topic
+        required: True
+        type: str
+    resource_instance_id:
+        description:
+            - The CRN of the Event Streams instance
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_instance_id', 'str'),
     ('name', 'str'),
+    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
     'name',
+    'resource_instance_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_instance_id=dict(
+    name=dict(
         required=True,
         type='str'),
-    name=dict(
+    resource_instance_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_event_streams_topic',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

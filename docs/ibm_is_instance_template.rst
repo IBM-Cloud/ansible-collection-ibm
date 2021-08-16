@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,35 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
   profile (True, str, None)
     (Required for new resource) Profile info
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  resource_group (False, str, None)
-    Instance template resource group
 
 
   vpc (True, str, None)
     (Required for new resource) VPC id
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  volume_attachments (False, list, None)
+  network_interfaces (False, list, None)
     None
 
 
@@ -71,12 +55,12 @@ Parameters
     None
 
 
-  name (True, str, None)
-    (Required for new resource) Instance Template name
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  network_interfaces (False, list, None)
-    None
+  resource_group (False, str, None)
+    Instance template resource group
 
 
   user_data (False, str, None)
@@ -85,6 +69,22 @@ Parameters
 
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  name (True, str, None)
+    (Required for new resource) Instance Template name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   id (False, str, None)

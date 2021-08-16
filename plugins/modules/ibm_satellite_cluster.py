@@ -18,42 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
-    default_worker_pool_labels:
-        description:
-            - Labels on the default worker pool
-        required: False
-        type: dict
-        elements: str
-    pod_subnet:
-        description:
-            - User provided value for the pod subnet
-        required: False
-        type: str
     host_labels:
         description:
             - Labels that describe a Satellite host for default workerpool
         required: False
         type: list
         elements: str
-    kube_version:
+    worker_count:
         description:
-            - The OpenShift Container Platform version
+            - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
         required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    pull_secret:
-        description:
-            - The RedHat pull secret to create the OpenShift cluster
-        required: False
-        type: str
+        type: int
     zones:
         description:
             - Zone info for worker pool
@@ -70,17 +49,42 @@ options:
             - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
         required: False
         type: int
-    worker_count:
+    enable_config_admin:
         description:
-            - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
-        required: False
-        type: int
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
+            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
         required: False
         type: bool
-        default: False
+    pull_secret:
+        description:
+            - The RedHat pull secret to create the OpenShift cluster
+        required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    pod_subnet:
+        description:
+            - User provided value for the pod subnet
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags for the resources
+        required: False
+        type: list
+        elements: str
+    kube_version:
+        description:
+            - The OpenShift Container Platform version
+        required: False
+        type: str
     wait_for_worker_update:
         description:
             - Wait for worker node to update during kube version update.
@@ -92,27 +96,23 @@ options:
             - Kubernetes patch version
         required: False
         type: str
+    default_worker_pool_labels:
+        description:
+            - Labels on the default worker pool
+        required: False
+        type: dict
+        elements: str
     service_subnet:
         description:
             - User provided value for service subnet
         required: False
         type: str
-    tags:
+    disable_public_service_endpoint:
         description:
-            - List of tags for the resources
-        required: False
-        type: list
-        elements: str
-    location:
-        description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
-        type: str
-    enable_config_admin:
-        description:
-            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
+            - Boolean value true if Public service endpoint to be disabled
         required: False
         type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -165,23 +165,23 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default_worker_pool_labels',
-    'pod_subnet',
     'host_labels',
-    'kube_version',
-    'resource_group_id',
-    'pull_secret',
+    'worker_count',
     'zones',
     'name',
     'retry_patch_version',
-    'worker_count',
-    'disable_public_service_endpoint',
+    'enable_config_admin',
+    'pull_secret',
+    'location',
+    'resource_group_id',
+    'pod_subnet',
+    'tags',
+    'kube_version',
     'wait_for_worker_update',
     'patch_version',
+    'default_worker_pool_labels',
     'service_subnet',
-    'tags',
-    'location',
-    'enable_config_admin',
+    'disable_public_service_endpoint',
 ]
 
 # Params for Data source
@@ -201,26 +201,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default_worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    pod_subnet=dict(
-        required=False,
-        type='str'),
     host_labels=dict(
         required=False,
         elements='',
         type='list'),
-    kube_version=dict(
+    worker_count=dict(
         required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    pull_secret=dict(
-        required=False,
-        type='str'),
+        type='int'),
     zones=dict(
         required=False,
         elements='',
@@ -231,29 +218,42 @@ module_args = dict(
     retry_patch_version=dict(
         required=False,
         type='int'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    disable_public_service_endpoint=dict(
+    enable_config_admin=dict(
         required=False,
         type='bool'),
-    wait_for_worker_update=dict(
-        required=False,
-        type='bool'),
-    patch_version=dict(
+    pull_secret=dict(
         required=False,
         type='str'),
-    service_subnet=dict(
+    location=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    location=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    enable_config_admin=dict(
+    wait_for_worker_update=dict(
+        required=False,
+        type='bool'),
+    patch_version=dict(
+        required=False,
+        type='str'),
+    default_worker_pool_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    service_subnet=dict(
+        required=False,
+        type='str'),
+    disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
     id=dict(
@@ -321,7 +321,7 @@ def run_module():
         resource_type='ibm_satellite_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -330,7 +330,7 @@ def run_module():
             resource_type='ibm_satellite_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.28.0',
+            ibm_provider_version='1.29.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

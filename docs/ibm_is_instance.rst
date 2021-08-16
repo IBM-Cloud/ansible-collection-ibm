@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.28.0
+- IBM-Cloud terraform-provider-ibm v1.29.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  image (False, str, None)
-    image id
-
-
   instance_template (False, str, None)
     Id of the instance template
-
-
-  volumes (False, list, None)
-    List of volumes
 
 
   keys (False, list, None)
     SSH key Ids for the instance
 
 
+  primary_network_interface (False, list, None)
+    Primary Network interface info
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  vpc (False, str, None)
+    VPC id
+
+
+  profile (False, str, None)
+    Profile info
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
   boot_volume (False, list, None)
     None
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  image (False, str, None)
+    image id
 
 
   auto_delete_volume (False, bool, None)
@@ -63,32 +79,12 @@ Parameters
     Instance resource group
 
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  primary_network_interface (False, list, None)
-    Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
 
 
-  vpc (False, str, None)
-    VPC id
+  user_data (False, str, None)
+    User data given for the instance
 
 
   zone (False, str, None)
@@ -99,12 +95,16 @@ Parameters
     list of tags for the instance
 
 
-  profile (False, str, None)
-    Profile info
+  network_interfaces (False, list, None)
+    None
 
 
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
 
 
   id (False, str, None)

@@ -18,10 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.28.0
+    - IBM-Cloud terraform-provider-ibm v1.29.0
     - Terraform v0.12.20
 
 options:
+    labels:
+        description:
+            - List of labels for the host
+        required: False
+        type: list
+        elements: str
+    zone:
+        description:
+            - The zone within the cluster to assign the host to
+        required: False
+        type: str
+    worker_pool:
+        description:
+            - The name or ID of the worker pool within the cluster to assign the host to
+        required: False
+        type: str
     host_provider:
         description:
             - Host Provider
@@ -41,22 +57,6 @@ options:
         description:
             - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
         required: True
-        type: str
-    labels:
-        description:
-            - List of labels for the host
-        required: False
-        type: list
-        elements: str
-    zone:
-        description:
-            - The zone within the cluster to assign the host to
-        required: False
-        type: str
-    worker_pool:
-        description:
-            - The name or ID of the worker pool within the cluster to assign the host to
-        required: False
         type: str
     id:
         description:
@@ -110,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'labels',
+    'zone',
+    'worker_pool',
     'host_provider',
     'location',
     'cluster',
     'host_id',
-    'labels',
-    'zone',
-    'worker_pool',
 ]
 
 # Params for Data source
@@ -133,6 +133,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
+    zone=dict(
+        required=False,
+        type='str'),
+    worker_pool=dict(
+        required=False,
+        type='str'),
     host_provider=dict(
         required=False,
         type='str'),
@@ -143,16 +153,6 @@ module_args = dict(
         required=False,
         type='str'),
     host_id=dict(
-        required=False,
-        type='str'),
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    zone=dict(
-        required=False,
-        type='str'),
-    worker_pool=dict(
         required=False,
         type='str'),
     id=dict(
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_satellite_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.28.0',
+        ibm_provider_version='1.29.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
