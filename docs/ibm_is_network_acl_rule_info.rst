@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_acl (True, str, None)
-    Network ACL id
-
-
   name (True, str, None)
     The user-defined name for this rule
+
+
+  network_acl (True, str, None)
+    Network ACL id
 
 
   generation (False, int, 2)

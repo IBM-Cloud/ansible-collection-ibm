@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  refresh (False, int, None)
-    refresh rate
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
   retry (False, int, None)
@@ -59,8 +43,52 @@ Parameters
     Minimun TTL configuration
 
 
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
   service (False, str, None)
     service info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  port (False, int, None)
+    port number
 
 
   weight (False, int, 0)
@@ -69,34 +97,6 @@ Parameters
 
   tags (False, list, None)
     tags set for the resource
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  port (False, int, None)
-    port number
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  expire (False, int, None)
-    DNS record expiry info
 
 
   id (False, str, None)

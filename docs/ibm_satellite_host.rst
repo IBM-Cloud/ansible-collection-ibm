@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  location (True, str, None)
+    (Required for new resource) The name or ID of the Satellite location
+
+
+  cluster (False, str, None)
+    The name or ID of a Satellite location or cluster to assign the host to
+
+
+  host_id (True, str, None)
+    (Required for new resource) The specific host ID to assign to a Satellite location or cluster
+
 
   labels (False, list, None)
     List of labels for the host
@@ -45,18 +57,6 @@ Parameters
 
   host_provider (False, str, None)
     Host Provider
-
-
-  location (True, str, None)
-    (Required for new resource) The name or ID of the Satellite location
-
-
-  cluster (False, str, None)
-    The name or ID of a Satellite location or cluster to assign the host to
-
-
-  host_id (True, str, None)
-    (Required for new resource) The specific host ID to assign to a Satellite location or cluster
 
 
   id (False, str, None)

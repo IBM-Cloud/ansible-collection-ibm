@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -29,11 +29,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
+  sap (False, bool, None)
     None
 
 
-  sap (False, bool, None)
+  pi_cloud_instance_id (True, str, None)
     None
 
 

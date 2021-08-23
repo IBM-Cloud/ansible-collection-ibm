@@ -18,10 +18,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_token_config' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
+    access_token_claim:
+        description:
+            - A set of objects that are created when claims that are related to access tokens are mapped
+        required: False
+        type: list
+        elements: dict
+    id_token_claim:
+        description:
+            - A set of objects that are created when claims that are related to identity tokens are mapped
+        required: False
+        type: list
+        elements: dict
+    tenant_id:
+        description:
+            - (Required for new resource) The service `tenantId`
+        required: True
+        type: str
     access_token_expires_in:
         description:
             - The length of time for which access tokens are valid in seconds
@@ -49,23 +66,6 @@ options:
             - None
         required: False
         type: bool
-    access_token_claim:
-        description:
-            - A set of objects that are created when claims that are related to access tokens are mapped
-        required: False
-        type: list
-        elements: dict
-    id_token_claim:
-        description:
-            - A set of objects that are created when claims that are related to identity tokens are mapped
-        required: False
-        type: list
-        elements: dict
-    tenant_id:
-        description:
-            - (Required for new resource) The service `tenantId`
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,14 +117,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'access_token_claim',
+    'id_token_claim',
+    'tenant_id',
     'access_token_expires_in',
     'refresh_token_expires_in',
     'anonymous_token_expires_in',
     'anonymous_access_enabled',
     'refresh_token_enabled',
-    'access_token_claim',
-    'id_token_claim',
-    'tenant_id',
 ]
 
 # Params for Data source
@@ -143,6 +143,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    access_token_claim=dict(
+        required=False,
+        elements='',
+        type='list'),
+    id_token_claim=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tenant_id=dict(
+        required=False,
+        type='str'),
     access_token_expires_in=dict(
         required=False,
         type='int'),
@@ -158,17 +169,6 @@ module_args = dict(
     refresh_token_enabled=dict(
         required=False,
         type='bool'),
-    access_token_claim=dict(
-        required=False,
-        elements='',
-        type='list'),
-    id_token_claim=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tenant_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_appid_token_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +243,7 @@ def run_module():
             resource_type='ibm_appid_token_config',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.29.0',
+            ibm_provider_version='1.30.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
+  cname_flattening (False, str, None)
+    cname_flattening setting
 
 
   http2 (False, str, None)
     http2 setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
-
-
-  max_upload (False, int, None)
-    Maximum upload
-
-
-  cipher (False, list, None)
-    Cipher settings
 
 
   minify (False, list, None)
@@ -71,20 +51,56 @@ Parameters
     DNS Sec setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
+  waf (False, str, None)
+    WAF setting
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
 
 
   hotlink_protection (False, str, None)
     hotlink_protection setting
 
 
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
 
 
   response_buffering (False, str, None)
@@ -95,72 +111,56 @@ Parameters
     websockets setting
 
 
-  waf (False, str, None)
-    WAF setting
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
 
 
   always_use_https (False, str, None)
     always_use_https setting
 
 
-  browser_check (False, str, None)
-    browser_check setting
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
   brotli (False, str, None)
     brotli setting
 
 
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   origin_error_page_pass_thru (False, str, None)
     origin_error_page_pass_thru setting
 
 
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
 
 
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  mobile_redirect (False, list, None)
+    None
 
 
   server_side_exclude (False, str, None)
     server_side_exclude setting
 
 
-  mobile_redirect (False, list, None)
-    None
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
 
 
   id (False, str, None)

@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN id
-        required: True
-        type: str
-    cluster_id:
-        description:
-            - (Required for new resource) Cluster ID
-        required: True
-        type: str
-    secret_name:
-        description:
-            - (Required for new resource) Secret name
-        required: True
-        type: str
     namespace:
         description:
             - Namespace of the secret
@@ -48,6 +33,21 @@ options:
             - Persistence of secret
         required: False
         type: bool
+    secret_name:
+        description:
+            - (Required for new resource) Secret name
+        required: True
+        type: str
+    cluster_id:
+        description:
+            - (Required for new resource) Cluster ID
+        required: True
+        type: str
+    cert_crn:
+        description:
+            - (Required for new resource) Certificate CRN id
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -74,29 +74,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cert_crn', 'str'),
-    ('cluster_id', 'str'),
     ('secret_name', 'str'),
+    ('cluster_id', 'str'),
+    ('cert_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cert_crn',
-    'cluster_id',
-    'secret_name',
     'namespace',
     'persistence',
+    'secret_name',
+    'cluster_id',
+    'cert_crn',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('secret_name', 'str'),
     ('cluster_id', 'str'),
+    ('secret_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'secret_name',
     'cluster_id',
+    'secret_name',
     'namespace',
 ]
 
@@ -107,21 +107,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cert_crn=dict(
-        required=False,
-        type='str'),
-    cluster_id=dict(
-        required=False,
-        type='str'),
-    secret_name=dict(
-        required=False,
-        type='str'),
     namespace=dict(
         required=False,
         type='str'),
     persistence=dict(
         required=False,
         type='bool'),
+    secret_name=dict(
+        required=False,
+        type='str'),
+    cluster_id=dict(
+        required=False,
+        type='str'),
+    cert_crn=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -173,7 +173,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -182,7 +182,7 @@ def run_module():
             resource_type='ibm_container_alb_cert',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.29.0',
+            ibm_provider_version='1.30.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

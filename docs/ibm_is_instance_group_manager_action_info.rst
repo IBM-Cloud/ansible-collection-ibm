@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     instance group manager action name
 
 
-  instance_group_manager (True, str, None)
-    Instance group manager ID of type scheduled
-
-
   instance_group (True, str, None)
     instance group ID
+
+
+  instance_group_manager (True, str, None)
+    Instance group manager ID of type scheduled
 
 
   generation (False, int, 2)

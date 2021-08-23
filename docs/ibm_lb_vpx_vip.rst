@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  nad_controller_id (True, int, None)
-    (Required for new resource) NAD controller ID
+  persistence (False, str, None)
+    Persistance value
 
 
-  load_balancing_method (True, str, None)
-    (Required for new resource) Load balancing method
+  name (True, str, None)
+    (Required for new resource) Name
 
 
   source_port (True, int, None)
     (Required for new resource) Source Port number
-
-
-  type (True, str, None)
-    (Required for new resource) Type
 
 
   security_certificate_id (False, int, None)
@@ -55,12 +51,16 @@ Parameters
     List of tags
 
 
-  persistence (False, str, None)
-    Persistance value
+  nad_controller_id (True, int, None)
+    (Required for new resource) NAD controller ID
 
 
-  name (True, str, None)
-    (Required for new resource) Name
+  load_balancing_method (True, str, None)
+    (Required for new resource) Load balancing method
+
+
+  type (True, str, None)
+    (Required for new resource) Type
 
 
   virtual_ip_address (True, str, None)

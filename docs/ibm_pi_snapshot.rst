@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-
-
-  description (False, str, None)
-    Snapshot description
-
-
   pi_snap_shot_name (True, str, None)
     (Required for new resource) Unique name of the snapshot
 
 
   pi_instance_name (True, str, None)
     (Required for new resource) Instance name / id of the pvm
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+
+
+  description (False, str, None)
+    Snapshot description
 
 
   pi_volume_ids (False, list, None)

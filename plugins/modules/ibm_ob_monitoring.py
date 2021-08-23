@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ob_monitoring' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
@@ -32,16 +32,16 @@ options:
             - (Required for new resource) ID of the Sysdig service instance to latch
         required: True
         type: str
-    sysdig_access_key:
-        description:
-            - Sysdig ingestion key
-        required: False
-        type: str
     private_endpoint:
         description:
             - Add this option to connect to your Sysdig service instance through the private service endpoint
         required: False
         type: bool
+    sysdig_access_key:
+        description:
+            - Sysdig ingestion key
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,8 +96,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cluster',
     'instance_id',
-    'sysdig_access_key',
     'private_endpoint',
+    'sysdig_access_key',
 ]
 
 # Params for Data source
@@ -120,12 +120,12 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
-    sysdig_access_key=dict(
-        required=False,
-        type='str'),
     private_endpoint=dict(
         required=False,
         type='bool'),
+    sysdig_access_key=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_ob_monitoring',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

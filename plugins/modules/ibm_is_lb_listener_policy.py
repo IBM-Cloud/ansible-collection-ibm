@@ -18,13 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
+    priority:
+        description:
+            - (Required for new resource) Listener Policy Priority
+        required: True
+        type: int
     name:
         description:
             - Policy name
+        required: False
+        type: str
+    rules:
+        description:
+            - Policy Rules
+        required: False
+        type: list
+        elements: dict
+    target_id:
+        description:
+            - Listener Policy Target ID
         required: False
         type: str
     target_http_status_code:
@@ -42,31 +58,15 @@ options:
             - (Required for new resource) Load Balancer Listener Policy
         required: True
         type: str
-    listener:
-        description:
-            - (Required for new resource) Listener ID
-        required: True
-        type: str
-    priority:
-        description:
-            - (Required for new resource) Listener Policy Priority
-        required: True
-        type: int
     action:
         description:
             - (Required for new resource) Policy Action
         required: True
         type: str
-    rules:
+    listener:
         description:
-            - Policy Rules
-        required: False
-        type: list
-        elements: dict
-    target_id:
-        description:
-            - Listener Policy Target ID
-        required: False
+            - (Required for new resource) Listener ID
+        required: True
         type: str
     id:
         description:
@@ -114,23 +114,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
-    ('listener', 'str'),
     ('priority', 'int'),
+    ('lb', 'str'),
     ('action', 'str'),
+    ('listener', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'priority',
     'name',
+    'rules',
+    'target_id',
     'target_http_status_code',
     'target_url',
     'lb',
-    'listener',
-    'priority',
     'action',
-    'rules',
-    'target_id',
+    'listener',
 ]
 
 # Params for Data source
@@ -147,7 +147,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    priority=dict(
+        required=False,
+        type='int'),
     name=dict(
+        required=False,
+        type='str'),
+    rules=dict(
+        required=False,
+        elements='',
+        type='list'),
+    target_id=dict(
         required=False,
         type='str'),
     target_http_status_code=dict(
@@ -159,20 +169,10 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    listener=dict(
-        required=False,
-        type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
     action=dict(
         required=False,
         type='str'),
-    rules=dict(
-        required=False,
-        elements='',
-        type='list'),
-    target_id=dict(
+    listener=dict(
         required=False,
         type='str'),
     id=dict(
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

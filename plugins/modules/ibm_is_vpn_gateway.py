@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
@@ -27,15 +27,21 @@ options:
             - (Required for new resource) VPNGateway subnet info
         required: True
         type: str
-    resource_group:
+    mode:
         description:
-            - The resource group for this VPN gateway
+            - mode in VPN gateway(route/policy)
         required: False
         type: str
+        default: route
     name:
         description:
             - (Required for new resource) VPN Gateway instance name
         required: True
+        type: str
+    resource_group:
+        description:
+            - The resource group for this VPN gateway
+        required: False
         type: str
     tags:
         description:
@@ -43,12 +49,6 @@ options:
         required: False
         type: list
         elements: str
-    mode:
-        description:
-            - mode in VPN gateway(route/policy)
-        required: False
-        type: str
-        default: route
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,10 +102,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'subnet',
-    'resource_group',
-    'name',
-    'tags',
     'mode',
+    'name',
+    'resource_group',
+    'tags',
 ]
 
 # Params for Data source
@@ -125,19 +125,19 @@ module_args = dict(
     subnet=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    mode=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    mode=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

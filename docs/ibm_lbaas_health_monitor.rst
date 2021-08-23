@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  max_retries (False, int, 2)
+    Maximum retry counts
+
+
+  timeout (False, int, 2)
+    Timeout in seconds
+
 
   url_path (False, str, /)
     URL Path
@@ -53,14 +61,6 @@ Parameters
 
   interval (False, int, 5)
     Interval value
-
-
-  max_retries (False, int, 2)
-    Maximum retry counts
-
-
-  timeout (False, int, 2)
-    Timeout in seconds
 
 
   id (False, str, None)

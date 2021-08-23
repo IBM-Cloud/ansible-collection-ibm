@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
@@ -37,6 +37,16 @@ options:
             - (Required for new resource) Workerpool name
         required: True
         type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -48,16 +58,6 @@ options:
         required: False
         type: bool
         default: True
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -94,10 +94,10 @@ TL_ALL_PARAMETERS = [
     'zone',
     'cluster',
     'worker_pool',
+    'public_vlan_id',
+    'private_vlan_id',
     'resource_group_id',
     'wait_till_albs',
-    'private_vlan_id',
-    'public_vlan_id',
 ]
 
 # Params for Data source
@@ -123,18 +123,18 @@ module_args = dict(
     worker_pool=dict(
         required=False,
         type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     wait_till_albs=dict(
         required=False,
         type='bool'),
-    private_vlan_id=dict(
-        required=False,
-        type='str'),
-    public_vlan_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

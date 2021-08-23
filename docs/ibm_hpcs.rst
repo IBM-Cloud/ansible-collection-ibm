@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
-
-
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
+  service (False, str, hs-crypto)
+    The name of the service offering `hs-crypto`
 
 
   tags (False, list, None)
     None
 
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
-
-
   plan (True, str, None)
     (Required for new resource) The plan type of the HPCS Instance
-
-
-  failover_units (False, int, None)
-    The number of failover crypto units for your service instance
 
 
   resource_group_id (False, str, None)
     The resource group id
 
 
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
   signature_threshold (True, int, None)
     (Required for new resource) Signature Threshold Value
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   admins (True, list, None)
     (Required for new resource) Crypto Unit Administrators
 
 
-  service (False, str, hs-crypto)
-    The name of the service offering `hs-crypto`
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
+
+
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
 
 
   name (True, str, None)
     (Required for new resource) A name for the HPCS instance
+
+
+  failover_units (False, int, None)
+    The number of failover crypto units for your service instance
+
+
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
 
 
   id (False, str, None)

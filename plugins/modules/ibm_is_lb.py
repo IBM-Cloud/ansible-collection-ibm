@@ -18,53 +18,53 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
-    type:
+    name:
         description:
-            - Load Balancer type
-        required: False
+            - (Required for new resource) Load Balancer name
+        required: True
         type: str
-        default: public
-    profile:
+    security_groups:
         description:
-            - The profile to use for this load balancer.
+            - Load Balancer securitygroups list
         required: False
-        type: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
+        type: list
+        elements: str
     logging:
         description:
             - Logging of Load Balancer
         required: False
         type: bool
         default: False
-    name:
+    profile:
         description:
-            - (Required for new resource) Load Balancer name
-        required: True
+            - The profile to use for this load balancer.
+        required: False
         type: str
-    subnets:
-        description:
-            - (Required for new resource) Load Balancer subnets list
-        required: True
-        type: list
-        elements: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    security_groups:
+    resource_group:
         description:
-            - Load Balancer securitygroups list
+            - None
         required: False
+        type: str
+    type:
+        description:
+            - Load Balancer type
+        required: False
+        type: str
+        default: public
+    subnets:
+        description:
+            - (Required for new resource) Load Balancer subnets list
+        required: True
         type: list
         elements: str
     id:
@@ -119,14 +119,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'profile',
-    'resource_group',
-    'logging',
     'name',
-    'subnets',
-    'tags',
     'security_groups',
+    'logging',
+    'profile',
+    'tags',
+    'resource_group',
+    'type',
+    'subnets',
 ]
 
 # Params for Data source
@@ -139,39 +139,39 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'profile': ['logging'],
-    'logging': ['profile'],
     'security_groups': ['profile'],
+    'logging': ['profile'],
+    'profile': ['logging'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    logging=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    security_groups=dict(
         required=False,
         elements='',
         type='list'),
+    logging=dict(
+        required=False,
+        type='bool'),
+    profile=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    security_groups=dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -252,7 +252,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -261,7 +261,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.29.0',
+            ibm_provider_version='1.30.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

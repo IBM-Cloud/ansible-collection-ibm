@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  locked (False, bool, None)
-    The API key cannot be changed if set to true
-
-
-  file (False, str, None)
-    File where api key is to be stored
+  description (False, str, None)
+    description of the API key
 
 
   iam_service_id (True, str, None)
     (Required for new resource) The service iam_id that this API key authenticates
-
-
-  apikey (False, str, None)
-    API key value for this API key
 
 
   store_value (False, bool, None)
@@ -55,8 +47,16 @@ Parameters
     (Required for new resource) Name of the Service API key
 
 
-  description (False, str, None)
-    description of the API key
+  apikey (False, str, None)
+    API key value for this API key
+
+
+  locked (False, bool, None)
+    The API key cannot be changed if set to true
+
+
+  file (False, str, None)
+    File where api key is to be stored
 
 
   id (False, str, None)

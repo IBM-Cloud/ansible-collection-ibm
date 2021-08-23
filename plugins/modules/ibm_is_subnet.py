@@ -18,13 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
-    public_gateway:
+    total_ipv4_address_count:
         description:
-            - Public Gateway of the subnet
+            - The total number of IPv4 addresses in this subnet.
+        required: False
+        type: int
+    zone:
+        description:
+            - (Required for new resource) Subnet zone info
+        required: True
+        type: str
+    routing_table:
+        description:
+            - routing table id that is associated with the subnet
         required: False
         type: str
     ipv4_cidr_block:
@@ -43,9 +53,20 @@ options:
             - (Required for new resource) Subnet name
         required: True
         type: str
+    access_tags:
+        description:
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
     network_acl:
         description:
             - The network ACL for this subnet
+        required: False
+        type: str
+    public_gateway:
+        description:
+            - Public Gateway of the subnet
         required: False
         type: str
     vpc:
@@ -53,30 +74,9 @@ options:
             - (Required for new resource) VPC instance ID
         required: True
         type: str
-    zone:
-        description:
-            - (Required for new resource) Subnet zone info
-        required: True
-        type: str
-    routing_table:
-        description:
-            - routing table id that is associated with the subnet
-        required: False
-        type: str
-    total_ipv4_address_count:
-        description:
-            - The total number of IPv4 addresses in this subnet.
-        required: False
-        type: int
     tags:
         description:
             - List of tags
-        required: False
-        type: list
-        elements: str
-    access_tags:
-        description:
-            - List of access management tags
         required: False
         type: list
         elements: str
@@ -131,24 +131,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone', 'str'),
     ('name', 'str'),
     ('vpc', 'str'),
-    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_gateway',
+    'total_ipv4_address_count',
+    'zone',
+    'routing_table',
     'ipv4_cidr_block',
     'ip_version',
     'name',
-    'network_acl',
-    'vpc',
-    'zone',
-    'routing_table',
-    'total_ipv4_address_count',
-    'tags',
     'access_tags',
+    'network_acl',
+    'public_gateway',
+    'vpc',
+    'tags',
     'resource_group',
 ]
 
@@ -162,15 +162,21 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'ipv4_cidr_block': ['total_ipv4_address_count'],
     'total_ipv4_address_count': ['ipv4_cidr_block'],
+    'ipv4_cidr_block': ['total_ipv4_address_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_gateway=dict(
+    total_ipv4_address_count=dict(
+        required=False,
+        type='int'),
+    zone=dict(
+        required=False,
+        type='str'),
+    routing_table=dict(
         required=False,
         type='str'),
     ipv4_cidr_block=dict(
@@ -182,26 +188,20 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     network_acl=dict(
+        required=False,
+        type='str'),
+    public_gateway=dict(
         required=False,
         type='str'),
     vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    routing_table=dict(
-        required=False,
-        type='str'),
-    total_ipv4_address_count=dict(
-        required=False,
-        type='int'),
     tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    access_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -285,7 +285,7 @@ def run_module():
         resource_type='ibm_is_subnet',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -294,7 +294,7 @@ def run_module():
             resource_type='ibm_is_subnet',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.29.0',
+            ibm_provider_version='1.30.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

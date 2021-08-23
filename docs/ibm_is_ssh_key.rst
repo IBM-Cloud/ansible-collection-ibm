@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  public_key (True, str, None)
-    (Required for new resource) SSH Public key data
-
 
   resource_group (False, str, None)
     Resource group ID
@@ -45,6 +41,10 @@ Parameters
 
   tags (False, list, None)
     List of tags for SSH key
+
+
+  public_key (True, str, None)
+    (Required for new resource) SSH Public key data
 
 
   id (False, str, None)

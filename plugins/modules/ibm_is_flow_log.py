@@ -18,10 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_flow_log' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.29.0
+    - IBM-Cloud terraform-provider-ibm v1.30.0
     - Terraform v0.12.20
 
 options:
+    storage_bucket:
+        description:
+            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+        required: True
+        type: str
+    target:
+        description:
+            - (Required for new resource) The target id that the flow log collector is to collect flow logs
+        required: True
+        type: str
+    resource_group:
+        description:
+            - The resource group of flow log
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Flow Log Collector name
@@ -33,27 +48,12 @@ options:
         required: False
         type: bool
         default: True
-    storage_bucket:
-        description:
-            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
-        required: True
-        type: str
     tags:
         description:
             - Tags for the VPC Flow logs
         required: False
         type: list
         elements: str
-    target:
-        description:
-            - (Required for new resource) The target id that the flow log collector is to collect flow logs
-        required: True
-        type: str
-    resource_group:
-        description:
-            - The resource group of flow log
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,19 +100,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('storage_bucket', 'str'),
     ('target', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'active',
     'storage_bucket',
-    'tags',
     'target',
     'resource_group',
+    'name',
+    'active',
+    'tags',
 ]
 
 # Params for Data source
@@ -129,25 +129,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    active=dict(
-        required=False,
-        type='bool'),
     storage_bucket=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     target=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    active=dict(
+        required=False,
+        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_is_flow_log',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.29.0',
+        ibm_provider_version='1.30.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

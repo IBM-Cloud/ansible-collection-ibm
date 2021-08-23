@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.29.0
+- IBM-Cloud terraform-provider-ibm v1.30.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    The name of the security group
-
-
   description (False, str, None)
     The description of the security group
 
 
   most_recent (False, bool, False)
     If true and multiple entries are found, the most recently created group is used. If false, an error is returned
+
+
+  name (True, str, None)
+    The name of the security group
 
 
   iaas_classic_username (False, any, None)
