@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ssh_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
@@ -32,17 +32,17 @@ options:
             - (Required for new resource) SSH Key name
         required: True
         type: str
+    public_key:
+        description:
+            - (Required for new resource) SSH Public key data
+        required: True
+        type: str
     tags:
         description:
             - List of tags for SSH key
         required: False
         type: list
         elements: str
-    public_key:
-        description:
-            - (Required for new resource) SSH Public key data
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,8 +97,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'resource_group',
     'name',
-    'tags',
     'public_key',
+    'tags',
 ]
 
 # Params for Data source
@@ -124,13 +124,13 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    public_key=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    public_key=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_ssh_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_ssh_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

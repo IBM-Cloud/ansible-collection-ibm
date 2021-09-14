@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cluster_name_id (True, str, None)
+    Cluster name or ID
+
 
   service_instance_id (False, str, None)
     Service instance ID
@@ -39,10 +43,6 @@ Parameters
 
   namespace_id (True, str, None)
     namespace ID
-
-
-  cluster_name_id (True, str, None)
-    Cluster name or ID
 
 
   ibmcloud_api_key (True, any, None)

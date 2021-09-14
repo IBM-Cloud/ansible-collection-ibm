@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  resource_group (False, str, None)
-    Instance template resource group
-
-
-  name (True, str, None)
-    (Required for new resource) Instance Template name
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
 
 
   user_data (False, str, None)
@@ -75,16 +43,48 @@ Parameters
     None
 
 
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
 
 
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  name (True, str, None)
+    (Required for new resource) Instance Template name
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
   volume_attachments (False, list, None)
     None
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
 
 
   id (False, str, None)

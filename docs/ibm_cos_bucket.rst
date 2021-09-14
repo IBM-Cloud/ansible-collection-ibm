@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  endpoint_type (False, str, public)
+    public or private
+
+
+  object_versioning (False, list, None)
+    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
+
+
+  hard_quota (False, int, None)
+    sets a maximum amount of storage (in bytes) available for a bucket
+
+
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
+
+
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+
+
+  retention_rule (False, list, None)
+    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
 
 
   key_protect (False, str, None)
@@ -41,6 +61,10 @@ Parameters
 
   single_site_location (False, str, None)
     single site location info
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
 
 
   activity_tracking (False, list, None)
@@ -55,48 +79,24 @@ Parameters
     Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
-  expire_rule (False, list, None)
-    Enable configuration expire_rule to COS Bucket after a defined period of time
-
-
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
 
 
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
-  retention_rule (False, list, None)
-    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
-
-
-  hard_quota (False, int, None)
-    sets a maximum amount of storage (in bytes) available for a bucket
-
-
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
 
 
   region_location (False, str, None)
     Region Location info.
 
 
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
   allowed_ip (False, list, None)
     List of IPv4 or IPv6 addresses
 
 
-  object_versioning (False, list, None)
-    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
+  expire_rule (False, list, None)
+    Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
   id (False, str, None)

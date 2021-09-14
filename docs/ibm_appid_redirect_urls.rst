@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  urls (True, list, None)
-    (Required for new resource) A list of redirect URLs
-
-
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
+
+
+  urls (True, list, None)
+    (Required for new resource) A list of redirect URLs
 
 
   id (False, str, None)

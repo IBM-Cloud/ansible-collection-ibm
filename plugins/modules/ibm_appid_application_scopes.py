@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_application_scopes' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    scopes:
-        description:
-            - (Required for new resource) A `scope` is a runtime action in your application that you register with IBM Cloud App ID to create an access permission
-        required: True
-        type: list
-        elements: str
     tenant_id:
         description:
             - (Required for new resource) The service `tenantId`
@@ -38,6 +32,12 @@ options:
             - (Required for new resource) The `client_id` is a public identifier for applications
         required: True
         type: str
+    scopes:
+        description:
+            - (Required for new resource) A `scope` is a runtime action in your application that you register with IBM Cloud App ID to create an access permission
+        required: True
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,16 +84,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('scopes', 'list'),
     ('tenant_id', 'str'),
     ('client_id', 'str'),
+    ('scopes', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'scopes',
     'tenant_id',
     'client_id',
+    'scopes',
 ]
 
 # Params for Data source
@@ -114,16 +114,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    scopes=dict(
-        required=False,
-        elements='',
-        type='list'),
     tenant_id=dict(
         required=False,
         type='str'),
     client_id=dict(
         required=False,
         type='str'),
+    scopes=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -189,7 +189,7 @@ def run_module():
         resource_type='ibm_appid_application_scopes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -198,7 +198,7 @@ def run_module():
             resource_type='ibm_appid_application_scopes',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

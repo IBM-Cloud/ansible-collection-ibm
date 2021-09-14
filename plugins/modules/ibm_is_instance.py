@@ -18,28 +18,61 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Instance name
         required: True
         type: str
-    zone:
+    instance_template:
         description:
-            - Zone name
+            - Id of the instance template
         required: False
         type: str
-    image:
+    user_data:
         description:
-            - image id
+            - User data given for the instance
+        required: False
+        type: str
+    auto_delete_volume:
+        description:
+            - Auto delete volume along with instance
+        required: False
+        type: bool
+    volumes:
+        description:
+            - List of volumes
+        required: False
+        type: list
+        elements: str
+    vpc:
+        description:
+            - VPC id
+        required: False
+        type: str
+    primary_network_interface:
+        description:
+            - Primary Network interface info
+        required: False
+        type: list
+        elements: dict
+    network_interfaces:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    force_recovery_time:
+        description:
+            - Define timeout to force the instances to start/stop in minutes.
+        required: False
+        type: int
+    resource_group:
+        description:
+            - Instance resource group
         required: False
         type: str
     dedicated_host:
@@ -47,31 +80,19 @@ options:
             - Unique Identifier of the Dedicated Host where the instance will be placed
         required: False
         type: str
-    network_interfaces:
+    zone:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    vpc:
-        description:
-            - VPC id
+            - Zone name
         required: False
         type: str
-    volumes:
+    profile:
         description:
-            - List of volumes
+            - Profile info
         required: False
-        type: list
-        elements: str
-    force_recovery_time:
+        type: str
+    tags:
         description:
-            - Define timeout to force the instances to start/stop in minutes.
-        required: False
-        type: int
-    keys:
-        description:
-            - SSH key Ids for the instance
+            - list of tags for the instance
         required: False
         type: list
         elements: str
@@ -81,42 +102,15 @@ options:
         required: False
         type: bool
         default: True
-    auto_delete_volume:
+    keys:
         description:
-            - Auto delete volume along with instance
-        required: False
-        type: bool
-    resource_group:
-        description:
-            - Instance resource group
-        required: False
-        type: str
-    tags:
-        description:
-            - list of tags for the instance
+            - SSH key Ids for the instance
         required: False
         type: list
         elements: str
-    primary_network_interface:
+    image:
         description:
-            - Primary Network interface info
-        required: False
-        type: list
-        elements: dict
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    instance_template:
-        description:
-            - Id of the instance template
-        required: False
-        type: str
-    profile:
-        description:
-            - Profile info
+            - image id
         required: False
         type: str
     dedicated_host_group:
@@ -124,6 +118,12 @@ options:
             - Unique Identifier of the Dedicated Host Group where the instance will be placed
         required: False
         type: str
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -175,25 +175,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_data',
     'name',
-    'zone',
-    'image',
-    'dedicated_host',
-    'network_interfaces',
-    'vpc',
-    'volumes',
-    'force_recovery_time',
-    'keys',
-    'wait_before_delete',
-    'auto_delete_volume',
-    'resource_group',
-    'tags',
-    'primary_network_interface',
-    'boot_volume',
     'instance_template',
+    'user_data',
+    'auto_delete_volume',
+    'volumes',
+    'vpc',
+    'primary_network_interface',
+    'network_interfaces',
+    'force_recovery_time',
+    'resource_group',
+    'dedicated_host',
+    'zone',
     'profile',
+    'tags',
+    'wait_before_delete',
+    'keys',
+    'image',
     'dedicated_host_group',
+    'boot_volume',
 ]
 
 # Params for Data source
@@ -203,14 +203,14 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'private_key',
     'passphrase',
+    'private_key',
 ]
 
 TL_CONFLICTS_MAP = {
-    'image': ['boot_volume.0.snapshot'],
-    'dedicated_host': ['dedicated_host_group'],
     'instance_template': ['boot_volume.0.snapshot'],
+    'dedicated_host': ['dedicated_host_group'],
+    'image': ['boot_volume.0.snapshot'],
     'dedicated_host_group': ['dedicated_host'],
 }
 
@@ -218,69 +218,69 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_data=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    zone=dict(
+    instance_template=dict(
         required=False,
         type='str'),
-    image=dict(
+    user_data=dict(
         required=False,
         type='str'),
-    dedicated_host=dict(
+    auto_delete_volume=dict(
         required=False,
-        type='str'),
-    network_interfaces=dict(
+        type='bool'),
+    volumes=dict(
         required=False,
         elements='',
         type='list'),
     vpc=dict(
         required=False,
         type='str'),
-    volumes=dict(
+    primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
     force_recovery_time=dict(
         required=False,
         type='int'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    wait_before_delete=dict(
-        required=False,
-        type='bool'),
-    auto_delete_volume=dict(
-        required=False,
-        type='bool'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    dedicated_host=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    primary_network_interface=dict(
+    wait_before_delete=dict(
+        required=False,
+        type='bool'),
+    keys=dict(
         required=False,
         elements='',
         type='list'),
-    boot_volume=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instance_template=dict(
-        required=False,
-        type='str'),
-    profile=dict(
+    image=dict(
         required=False,
         type='str'),
     dedicated_host_group=dict(
         required=False,
         type='str'),
+    boot_volume=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -358,7 +358,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -367,7 +367,7 @@ def run_module():
             resource_type='ibm_is_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

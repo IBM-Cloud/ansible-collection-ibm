@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ob_monitoring' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
+    sysdig_access_key:
+        description:
+            - Sysdig ingestion key
+        required: False
+        type: str
+    private_endpoint:
+        description:
+            - Add this option to connect to your Sysdig service instance through the private service endpoint
+        required: False
+        type: bool
     cluster:
         description:
             - (Required for new resource) Name or ID of the cluster to be used.
@@ -31,16 +41,6 @@ options:
         description:
             - (Required for new resource) ID of the Sysdig service instance to latch
         required: True
-        type: str
-    private_endpoint:
-        description:
-            - Add this option to connect to your Sysdig service instance through the private service endpoint
-        required: False
-        type: bool
-    sysdig_access_key:
-        description:
-            - Sysdig ingestion key
-        required: False
         type: str
     id:
         description:
@@ -94,10 +94,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'sysdig_access_key',
+    'private_endpoint',
     'cluster',
     'instance_id',
-    'private_endpoint',
-    'sysdig_access_key',
 ]
 
 # Params for Data source
@@ -114,16 +114,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
+    sysdig_access_key=dict(
         required=False,
         type='str'),
     private_endpoint=dict(
         required=False,
         type='bool'),
-    sysdig_access_key=dict(
+    cluster=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_ob_monitoring',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

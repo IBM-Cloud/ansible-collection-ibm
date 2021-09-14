@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Resource group info
-
-
-  name (True, str, None)
-    (Required for new resource) VPC name
-
-
-  default_security_group_name (False, str, None)
-    Default security group name
-
-
   default_network_acl_name (False, str, None)
     Default Network ACL name
+
+
+  resource_group (False, str, None)
+    Resource group info
 
 
   classic_access (False, bool, False)
@@ -61,6 +53,14 @@ Parameters
 
   address_prefix_management (False, str, auto)
     Address Prefix management value
+
+
+  name (True, str, None)
+    (Required for new resource) VPC name
+
+
+  default_security_group_name (False, str, None)
+    Default security group name
 
 
   id (False, str, None)

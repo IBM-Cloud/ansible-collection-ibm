@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  zones (True, list, None)
+    (Required for new resource) Zone info
 
 
-  worker_labels (False, dict, None)
-    Labels for default worker pool
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
+
+
+  retry_patch_version (False, int, None)
+    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  tags (False, list, None)
+    List of tags for the resources
 
 
   force_delete_storage (False, bool, False)
@@ -47,54 +67,6 @@ Parameters
     ID of the resource group.
 
 
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  patch_version (False, str, None)
-    Kubernetes patch version
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  zones (True, list, None)
-    (Required for new resource) Zone info
-
-
-  retry_patch_version (False, int, None)
-    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-
-
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
-
-
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
   flavor (True, str, None)
     (Required for new resource) Cluster nodes flavour
 
@@ -103,20 +75,48 @@ Parameters
     (Required for new resource) The cluster name
 
 
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
   kube_version (False, str, None)
     Kubernetes version
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
+
+
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+
+
+  patch_version (False, str, None)
+    Kubernetes patch version
 
 
   wait_for_worker_update (False, bool, True)
     Wait for worker node to update during kube version update.
 
 
-  tags (False, list, None)
-    List of tags for the resources
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
 
 
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   id (False, str, None)

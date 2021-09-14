@@ -18,13 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    payload:
+    standard_key:
         description:
-            - None
+            - Standard key type
+        required: False
+        type: bool
+        default: False
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: True
+        type: str
+    key_protect_id:
+        description:
+            - (Required for new resource) Key protect instance ID
+        required: True
+        type: str
+    iv_value:
+        description:
+            - Only for imported root key
         required: False
         type: str
     force_delete:
@@ -33,27 +49,11 @@ options:
         required: False
         type: bool
         default: False
-    iv_value:
+    payload:
         description:
-            - Only for imported root key
+            - None
         required: False
         type: str
-    key_protect_id:
-        description:
-            - (Required for new resource) Key protect instance ID
-        required: True
-        type: str
-    key_name:
-        description:
-            - (Required for new resource) Key name
-        required: True
-        type: str
-    standard_key:
-        description:
-            - Standard key type
-        required: False
-        type: bool
-        default: False
     encrypted_nonce:
         description:
             - Only for imported root key
@@ -105,18 +105,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key_protect_id', 'str'),
     ('key_name', 'str'),
+    ('key_protect_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'payload',
-    'force_delete',
-    'iv_value',
-    'key_protect_id',
-    'key_name',
     'standard_key',
+    'key_name',
+    'key_protect_id',
+    'iv_value',
+    'force_delete',
+    'payload',
     'encrypted_nonce',
 ]
 
@@ -137,24 +137,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    payload=dict(
-        required=False,
-        type='str'),
-    force_delete=dict(
+    standard_key=dict(
         required=False,
         type='bool'),
-    iv_value=dict(
+    key_name=dict(
         required=False,
         type='str'),
     key_protect_id=dict(
         required=False,
         type='str'),
-    key_name=dict(
+    iv_value=dict(
         required=False,
         type='str'),
-    standard_key=dict(
+    force_delete=dict(
         required=False,
         type='bool'),
+    payload=dict(
+        required=False,
+        type='str'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

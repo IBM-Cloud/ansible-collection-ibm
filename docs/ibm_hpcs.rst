@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
+
+
   service (False, str, hs-crypto)
     The name of the service offering `hs-crypto`
-
-
-  tags (False, list, None)
-    None
 
 
   plan (True, str, None)
     (Required for new resource) The plan type of the HPCS Instance
 
 
-  resource_group_id (False, str, None)
-    The resource group id
-
-
   signature_server_url (False, str, None)
     URL of signing service
+
+
+  tags (False, list, None)
+    None
 
 
   signature_threshold (True, int, None)
@@ -59,28 +63,24 @@ Parameters
     Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
+
+
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
 
 
   location (True, str, None)
     (Required for new resource) The location where the HPCS instance available
 
 
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
-
-
-  name (True, str, None)
-    (Required for new resource) A name for the HPCS instance
-
-
   failover_units (False, int, None)
     The number of failover crypto units for your service instance
 
 
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
+  name (True, str, None)
+    (Required for new resource) A name for the HPCS instance
 
 
   id (False, str, None)

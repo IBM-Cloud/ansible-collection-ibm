@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    None
+
 
   location (True, str, None)
     (Required for new resource) Location of Transit Gateway Services
@@ -39,16 +43,12 @@ Parameters
     (Required for new resource) Name Transit Gateway Services
 
 
-  tags (False, list, None)
-    Tags for the transit gateway instance
-
-
   global_ (False, bool, False)
     Allow global routing for a Transit Gateway. If unspecified, the default value is false
 
 
-  resource_group (False, str, None)
-    None
+  tags (False, list, None)
+    Tags for the transit gateway instance
 
 
   id (False, str, None)

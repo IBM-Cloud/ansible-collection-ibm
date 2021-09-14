@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    target_version:
-        description:
-            - The semver value for this new version, if not found in the zip url package content.
-        required: False
-        type: str
-    target_kinds:
-        description:
-            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-        required: False
-        type: list
-        elements: str
     catalog_identifier:
         description:
             - (Required for new resource) Catalog identifier.
@@ -53,9 +42,20 @@ options:
             - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
+    target_version:
+        description:
+            - The semver value for this new version, if not found in the zip url package content.
+        required: False
+        type: str
     tags:
         description:
             - Tags array.
+        required: False
+        type: list
+        elements: str
+    target_kinds:
+        description:
+            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
         required: False
         type: list
         elements: str
@@ -111,13 +111,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_version',
-    'target_kinds',
     'catalog_identifier',
     'offering_id',
     'content',
     'zipurl',
+    'target_version',
     'tags',
+    'target_kinds',
 ]
 
 # Params for Data source
@@ -136,13 +136,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_version=dict(
-        required=False,
-        type='str'),
-    target_kinds=dict(
-        required=False,
-        elements='',
-        type='list'),
     catalog_identifier=dict(
         required=False,
         type='str'),
@@ -155,7 +148,14 @@ module_args = dict(
     zipurl=dict(
         required=False,
         type='str'),
+    target_version=dict(
+        required=False,
+        type='str'),
     tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    target_kinds=dict(
         required=False,
         elements='',
         type='list'),
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +233,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

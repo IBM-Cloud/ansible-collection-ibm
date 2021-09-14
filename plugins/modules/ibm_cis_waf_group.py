@@ -18,23 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
     cis_id:
         description:
             - (Required for new resource) CIS Intance CRN
-        required: True
-        type: str
-    group_id:
-        description:
-            - (Required for new resource) WAF Rule group id
-        required: True
-        type: str
-    mode:
-        description:
-            - (Required for new resource) WAF Rule group mode on/off
         required: True
         type: str
     domain_id:
@@ -45,6 +35,16 @@ options:
     package_id:
         description:
             - (Required for new resource) WAF Rule package id
+        required: True
+        type: str
+    group_id:
+        description:
+            - (Required for new resource) WAF Rule group id
+        required: True
+        type: str
+    mode:
+        description:
+            - (Required for new resource) WAF Rule group mode on/off
         required: True
         type: str
     id:
@@ -94,19 +94,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('group_id', 'str'),
-    ('mode', 'str'),
     ('domain_id', 'str'),
     ('package_id', 'str'),
+    ('group_id', 'str'),
+    ('mode', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
-    'group_id',
-    'mode',
     'domain_id',
     'package_id',
+    'group_id',
+    'mode',
 ]
 
 # Params for Data source
@@ -126,16 +126,16 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    group_id=dict(
-        required=False,
-        type='str'),
-    mode=dict(
-        required=False,
-        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
     package_id=dict(
+        required=False,
+        type='str'),
+    group_id=dict(
+        required=False,
+        type='str'),
+    mode=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,29 +17,35 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_features' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    environment_id:
+    limit:
         description:
-            - Environment Id.
-        required: True
-        type: str
+            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+        required: False
+        type: int
     collections:
         description:
             - Filter features by a list of comma separated collections.
         required: False
         type: list
         elements: str
-    tags:
-        description:
-            - Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
-        required: False
-        type: str
     segments:
         description:
             - Filter features by a list of comma separated segments.
+        required: False
+        type: list
+        elements: str
+    sort:
+        description:
+            - Sort the feature details based on the specified attribute.
+        required: False
+        type: str
+    includes:
+        description:
+            - Include the associated collections or targeting rules details in the response.
         required: False
         type: list
         elements: str
@@ -48,32 +54,26 @@ options:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    guid:
-        description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
-    sort:
-        description:
-            - Sort the feature details based on the specified attribute.
-        required: False
-        type: str
     offset:
         description:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
-    includes:
+    guid:
         description:
-            - Include the associated collections or targeting rules details in the response.
-        required: False
-        type: list
-        elements: str
-    limit:
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
+    environment_id:
         description:
-            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+            - Environment Id.
+        required: True
+        type: str
+    tags:
+        description:
+            - Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
         required: False
-        type: int
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -107,22 +107,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('environment_id', 'str'),
     ('guid', 'str'),
+    ('environment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'environment_id',
-    'collections',
-    'tags',
-    'segments',
-    'expand',
-    'guid',
-    'sort',
-    'offset',
-    'includes',
     'limit',
+    'collections',
+    'segments',
+    'sort',
+    'includes',
+    'expand',
+    'offset',
+    'guid',
+    'environment_id',
+    'tags',
 ]
 
 
@@ -133,39 +133,39 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    environment_id=dict(
-        required=True,
-        type='str'),
+    limit=dict(
+        required=False,
+        type='int'),
     collections=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    segments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    sort=dict(
         required=False,
         type='str'),
-    segments=dict(
+    includes=dict(
         required=False,
         elements='',
         type='list'),
     expand=dict(
         required=False,
         type='bool'),
-    guid=dict(
-        required=True,
-        type='str'),
-    sort=dict(
-        required=False,
-        type='str'),
     offset=dict(
         required=False,
         type='int'),
-    includes=dict(
+    guid=dict(
+        required=True,
+        type='str'),
+    environment_id=dict(
+        required=True,
+        type='str'),
+    tags=dict(
         required=False,
-        elements='',
-        type='list'),
-    limit=dict(
-        required=False,
-        type='int'),
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_app_config_features',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - Instance name
         required: True
         type: str
-    private_key:
-        description:
-            - Instance Private Key file
-        required: False
-        type: str
     passphrase:
         description:
             - Passphrase for Instance Private Key file
+        required: False
+        type: str
+    private_key:
+        description:
+            - Instance Private Key file
         required: False
         type: str
     generation:
@@ -75,8 +75,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'private_key',
     'passphrase',
+    'private_key',
 ]
 
 
@@ -90,10 +90,10 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    private_key=dict(
+    passphrase=dict(
         required=False,
         type='str'),
-    passphrase=dict(
+    private_key=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

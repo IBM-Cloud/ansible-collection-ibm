@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  patch_version (False, str, None)
-    Kubernetes patch version
-
-
-  retry_patch_version (False, int, None)
-    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-
-
-  private_vlan_id (False, str, None)
-    Private VLAN ID
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  kube_version (False, str, None)
-    Kubernetes version info
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
-
-
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
 
 
   gateway_enabled (False, bool, False)
@@ -71,32 +43,36 @@ Parameters
     Enables KMS on a given cluster
 
 
-  machine_type (False, str, None)
-    Machine type
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  workers_info (False, list, None)
-    The IDs of the worker node
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
 
 
   disk_encryption (False, bool, True)
@@ -107,36 +83,40 @@ Parameters
     Updates all the woker nodes if sets to true
 
 
+  machine_type (False, str, None)
+    Machine type
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  webhook (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
   default_pool_size (False, int, 1)
     The size of the default worker pool
 
 
-  tags (False, list, None)
-    Tags for the resource
+  workers_info (False, list, None)
+    The IDs of the worker node
 
 
-  labels (False, dict, None)
-    list of labels to the default worker pool
+  patch_version (False, str, None)
+    Kubernetes patch version
 
 
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  public_vlan_id (False, str, None)
-    Public VLAN ID
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+  public_service_endpoint (False, bool, None)
+    None
 
 
   pod_subnet (False, str, None)
@@ -147,8 +127,28 @@ Parameters
     Boolean value set to true when subnet creation is not required.
 
 
-  webhook (False, list, None)
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  private_service_endpoint (False, bool, None)
     None
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  labels (False, dict, None)
+    list of labels to the default worker pool
+
+
+  retry_patch_version (False, int, None)
+    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+
+
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
   id (False, str, None)

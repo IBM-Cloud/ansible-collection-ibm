@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
+
+
   kind_format (True, str, None)
     (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
-  version (True, str, None)
-    (Required for new resource) The version this instance was installed from (not version id).
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
 
 
   install_plan (False, str, None)
     install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
 
 
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
-
-
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
   resource_group_id (False, str, None)
     id of the resource group
 
 
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
 
 
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
 
 
   cluster_namespaces (True, list, None)
@@ -71,8 +67,12 @@ Parameters
     channel to target for the operator subscription. Required for operator bundles
 
 
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
+  version (True, str, None)
+    (Required for new resource) The version this instance was installed from (not version id).
 
 
   cluster_all_namespaces (True, bool, None)

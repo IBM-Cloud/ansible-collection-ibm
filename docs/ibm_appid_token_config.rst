@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.30.0
+- IBM-Cloud terraform-provider-ibm v1.31.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  access_token_claim (False, list, None)
-    A set of objects that are created when claims that are related to access tokens are mapped
-
-
-  id_token_claim (False, list, None)
-    A set of objects that are created when claims that are related to identity tokens are mapped
-
-
-  tenant_id (True, str, None)
-    (Required for new resource) The service `tenantId`
-
 
   access_token_expires_in (False, int, None)
     The length of time for which access tokens are valid in seconds
@@ -61,6 +49,18 @@ Parameters
 
   refresh_token_enabled (False, bool, None)
     None
+
+
+  access_token_claim (False, list, None)
+    A set of objects that are created when claims that are related to access tokens are mapped
+
+
+  id_token_claim (False, list, None)
+    A set of objects that are created when claims that are related to identity tokens are mapped
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The service `tenantId`
 
 
   id (False, str, None)

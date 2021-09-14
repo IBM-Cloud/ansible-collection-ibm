@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.30.0
+    - IBM-Cloud terraform-provider-ibm v1.31.0
     - Terraform v0.12.20
 
 options:
-    host:
-        description:
-            - The host portion of the route. Required for shared-domains.
-        required: False
-        type: str
     space_guid:
         description:
             - (Required for new resource) The guid of the associated space
@@ -53,6 +48,11 @@ options:
         required: False
         type: list
         elements: str
+    host:
+        description:
+            - The host portion of the route. Required for shared-domains.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,26 +105,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'host',
     'space_guid',
     'domain_guid',
     'port',
     'path',
     'tags',
+    'host',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('space_guid', 'str'),
     ('domain_guid', 'str'),
+    ('space_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'space_guid',
     'domain_guid',
     'host',
     'path',
     'port',
+    'space_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -134,9 +134,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    host=dict(
-        required=False,
-        type='str'),
     space_guid=dict(
         required=False,
         type='str'),
@@ -153,6 +150,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    host=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_app_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.30.0',
+        ibm_provider_version='1.31.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_app_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.30.0',
+            ibm_provider_version='1.31.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
