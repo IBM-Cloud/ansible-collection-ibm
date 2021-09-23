@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    limit:
-        description:
-            - Limit till the keys to be fetched
-        required: False
-        type: int
-    key_id:
-        description:
-            - None
-        required: False
-        type: str
     key_name:
         description:
             - The name of the key to be fetched
@@ -51,6 +41,16 @@ options:
         description:
             - Key protect or hpcs instance GUID
         required: True
+        type: str
+    limit:
+        description:
+            - Limit till the keys to be fetched
+        required: False
+        type: int
+    key_id:
+        description:
+            - None
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -90,12 +90,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'limit',
-    'key_id',
     'key_name',
     'alias',
     'endpoint_type',
     'instance_id',
+    'limit',
+    'key_id',
 ]
 
 
@@ -106,12 +106,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    limit=dict(
-        required=False,
-        type='int'),
-    key_id=dict(
-        required=False,
-        type='str'),
     key_name=dict(
         required=False,
         type='str'),
@@ -123,6 +117,12 @@ module_args = dict(
         type='str'),
     instance_id=dict(
         required=True,
+        type='str'),
+    limit=dict(
+        required=False,
+        type='int'),
+    key_id=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -158,7 +158,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) The name for the space
-
 
   org (True, str, None)
     (Required for new resource) The org this space belongs to
@@ -57,6 +49,14 @@ Parameters
 
   space_quota (False, str, None)
     The name of the Space Quota Definition
+
+
+  tags (False, list, None)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) The name for the space
 
 
   id (False, str, None)

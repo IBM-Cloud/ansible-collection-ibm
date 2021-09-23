@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  kind (False, str, offering)
+    Kind of catalog, offering or vpe.
+
+
+  label (True, str, None)
+    (Required for new resource) Display Name in the requested language.
+
 
   short_description (False, str, None)
     Description in the requested language.
@@ -41,14 +49,6 @@ Parameters
 
   tags (False, list, None)
     List of tags associated with this catalog.
-
-
-  kind (False, str, offering)
-    Kind of catalog, offering or vpe.
-
-
-  label (True, str, None)
-    (Required for new resource) Display Name in the requested language.
 
 
   id (False, str, None)

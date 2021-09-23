@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -35,15 +35,7 @@ Parameters
     None
 
 
-  reset_password_notification_enabled (False, bool, True)
-    None
-
-
-  identity_confirm_access_mode (False, str, FULL)
-    None
-
-
-  identity_field (False, str, None)
+  identity_confirm_methods (False, list, None)
     None
 
 
@@ -67,7 +59,15 @@ Parameters
     None
 
 
-  identity_confirm_methods (False, list, None)
+  reset_password_notification_enabled (False, bool, True)
+    None
+
+
+  identity_confirm_access_mode (False, str, FULL)
+    None
+
+
+  identity_field (False, str, None)
     None
 
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -32,16 +32,6 @@ options:
             - (Required for new resource) Load balancer ID
         required: True
         type: str
-    target_address:
-        description:
-            - Load balancer pool member target address
-        required: False
-        type: str
-    target_id:
-        description:
-            - Load balancer pool member target id
-        required: False
-        type: str
     port:
         description:
             - (Required for new resource) Load Balancer Pool port
@@ -52,6 +42,16 @@ options:
             - Load balcner pool member weight
         required: False
         type: int
+    target_address:
+        description:
+            - Load balancer pool member target address
+        required: False
+        type: str
+    target_id:
+        description:
+            - Load balancer pool member target id
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,10 +107,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pool',
     'lb',
-    'target_address',
-    'target_id',
     'port',
     'weight',
+    'target_address',
+    'target_id',
 ]
 
 # Params for Data source
@@ -133,18 +133,18 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    target_address=dict(
-        required=False,
-        type='str'),
-    target_id=dict(
-        required=False,
-        type='str'),
     port=dict(
         required=False,
         type='int'),
     weight=dict(
         required=False,
         type='int'),
+    target_address=dict(
+        required=False,
+        type='str'),
+    target_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,14 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_bind_service' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    cluster_name_id:
+    key:
         description:
-            - (Required for new resource) Cluster name or ID
-        required: True
+            - Key info
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
         type: str
     service_instance_id:
         description:
@@ -37,9 +42,9 @@ options:
             - (Required for new resource) namespace ID
         required: True
         type: str
-    resource_group_id:
+    role:
         description:
-            - ID of the resource group.
+            - Role info
         required: False
         type: str
     tags:
@@ -48,19 +53,14 @@ options:
         required: False
         type: list
         elements: str
+    cluster_name_id:
+        description:
+            - (Required for new resource) Cluster name or ID
+        required: True
+        type: str
     service_instance_name:
         description:
             - serivice instance name
-        required: False
-        type: str
-    key:
-        description:
-            - Key info
-        required: False
-        type: str
-    role:
-        description:
-            - Role info
         required: False
         type: str
     id:
@@ -89,33 +89,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster_name_id', 'str'),
     ('namespace_id', 'str'),
+    ('cluster_name_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster_name_id',
+    'key',
+    'resource_group_id',
     'service_instance_id',
     'namespace_id',
-    'resource_group_id',
-    'tags',
-    'service_instance_name',
-    'key',
     'role',
+    'tags',
+    'cluster_name_id',
+    'service_instance_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('cluster_name_id', 'str'),
     ('namespace_id', 'str'),
+    ('cluster_name_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'namespace_id',
     'cluster_name_id',
     'service_instance_id',
     'service_instance_name',
-    'namespace_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -127,7 +127,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster_name_id=dict(
+    key=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     service_instance_id=dict(
@@ -136,20 +139,17 @@ module_args = dict(
     namespace_id=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    role=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    cluster_name_id=dict(
+        required=False,
+        type='str'),
     service_instance_name=dict(
-        required=False,
-        type='str'),
-    key=dict(
-        required=False,
-        type='str'),
-    role=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -212,7 +212,7 @@ def run_module():
             resource_type='ibm_container_bind_service',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_policies' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -111,15 +111,15 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('key_id', 'str'),
     ('instance_id', 'str'),
+    ('key_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'key_id',
     'policies',
     'instance_id',
     'endpoint_type',
+    'key_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -211,7 +211,7 @@ def run_module():
         resource_type='ibm_kms_key_policies',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -220,7 +220,7 @@ def run_module():
             resource_type='ibm_kms_key_policies',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

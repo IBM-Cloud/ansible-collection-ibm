@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,11 @@ options:
             - The id of the resource instance for which to create resource key
         required: False
         type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
     name:
         description:
             - (Required for new resource) The name of the resource key
@@ -37,22 +42,17 @@ options:
             - (Required for new resource) Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
         required: True
         type: str
+    resource_alias_id:
+        description:
+            - The id of the resource alias for which to create resource key
+        required: False
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    resource_alias_id:
-        description:
-            - The id of the resource alias for which to create resource key
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,11 +106,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_instance_id',
+    'parameters',
     'name',
     'role',
-    'tags',
     'resource_alias_id',
-    'parameters',
+    'tags',
 ]
 
 # Params for Data source
@@ -119,10 +119,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'resource_alias_id',
     'most_recent',
     'name',
     'resource_instance_id',
+    'resource_alias_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -137,22 +137,22 @@ module_args = dict(
     resource_instance_id=dict(
         required=False,
         type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
     name=dict(
         required=False,
         type='str'),
     role=dict(
         required=False,
         type='str'),
+    resource_alias_id=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_alias_id=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
-        required=False,
-        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_resource_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

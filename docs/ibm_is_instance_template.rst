@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,28 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
   zone (True, str, None)
     (Required for new resource) Zone name
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
 
 
   dedicated_host_group (False, str, None)
@@ -63,28 +43,52 @@ Parameters
     (Required for new resource) Instance Template name
 
 
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
+
+
+  boot_volume (False, list, None)
+    None
+
+
   profile (True, str, None)
     (Required for new resource) Profile info
 
 
-  volume_attachments (False, list, None)
-    None
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
 
 
-  resource_group (False, str, None)
-    Instance template resource group
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
-  network_interfaces (False, list, None)
-    None
+  user_data (False, str, None)
+    User data given for the instance
 
 
   image (True, str, None)
     (Required for new resource) image name
 
 
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance template resource group
 
 
   id (False, str, None)

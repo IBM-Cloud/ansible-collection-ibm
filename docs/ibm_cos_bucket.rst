@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  endpoint_type (False, str, public)
-    public or private
+  bucket_name (True, str, None)
+    (Required for new resource) COS Bucket name
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
 
 
   object_versioning (False, list, None)
@@ -43,44 +47,40 @@ Parameters
     sets a maximum amount of storage (in bytes) available for a bucket
 
 
-  storage_class (True, str, None)
-    (Required for new resource) Storage class info
-
-
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
   retention_rule (False, list, None)
     A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  single_site_location (False, str, None)
-    single site location info
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
   cross_region_location (False, str, None)
     Cros region location info
 
 
+  storage_class (True, str, None)
+    (Required for new resource) Storage class info
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
   activity_tracking (False, list, None)
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
+  single_site_location (False, str, None)
+    single site location info
 
 
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  bucket_name (True, str, None)
-    (Required for new resource) COS Bucket name
+  endpoint_type (False, str, public)
+    public or private
 
 
   resource_instance_id (True, str, None)
@@ -91,8 +91,8 @@ Parameters
     Region Location info.
 
 
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
 
 
   expire_rule (False, list, None)

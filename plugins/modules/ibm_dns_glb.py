@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -28,38 +28,6 @@ options:
         required: True
         type: list
         elements: str
-    description:
-        description:
-            - Descriptive text of the load balancer
-        required: False
-        type: str
-    ttl:
-        description:
-            - Time to live in second
-        required: False
-        type: int
-        default: 60
-    fallback_pool:
-        description:
-            - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of the load balancer
-        required: True
-        type: str
-    enabled:
-        description:
-            - Whether the load balancer is enabled
-        required: False
-        type: bool
-    az_pools:
-        description:
-            - Map availability zones to pool ID's.
-        required: False
-        type: list
-        elements: dict
     instance_id:
         description:
             - (Required for new resource) The GUID of the private DNS.
@@ -70,6 +38,38 @@ options:
             - (Required for new resource) Zone Id
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) Name of the load balancer
+        required: True
+        type: str
+    fallback_pool:
+        description:
+            - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
+        required: True
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer
+        required: False
+        type: str
+    enabled:
+        description:
+            - Whether the load balancer is enabled
+        required: False
+        type: bool
+    ttl:
+        description:
+            - Time to live in second
+        required: False
+        type: int
+        default: 60
+    az_pools:
+        description:
+            - Map availability zones to pool ID's.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,23 +117,23 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('default_pools', 'list'),
-    ('fallback_pool', 'str'),
-    ('name', 'str'),
     ('instance_id', 'str'),
     ('zone_id', 'str'),
+    ('name', 'str'),
+    ('fallback_pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'default_pools',
-    'description',
-    'ttl',
-    'fallback_pool',
-    'name',
-    'enabled',
-    'az_pools',
     'instance_id',
     'zone_id',
+    'name',
+    'fallback_pool',
+    'description',
+    'enabled',
+    'ttl',
+    'az_pools',
 ]
 
 # Params for Data source
@@ -154,31 +154,31 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
-    fallback_pool=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    az_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
     instance_id=dict(
         required=False,
         type='str'),
     zone_id=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    fallback_pool=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    ttl=dict(
+        required=False,
+        type='int'),
+    az_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_dns_glb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

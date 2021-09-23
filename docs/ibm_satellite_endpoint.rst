@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  server_host (True, str, None)
+    (Required for new resource) The host name or IP address of the server endpoint. For 'http-tunnel' protocol, server_host can start with '*.' , which means a wildcard to it's sub domains. Such as '*.example.com' can accept request to 'api.example.com' and 'www.example.com'.
+
 
   client_protocol (True, str, None)
     (Required for new resource) The protocol in the client application side.
@@ -39,36 +43,20 @@ Parameters
     Whether enable mutual auth in the client application side, when client_protocol is 'tls' or 'https', this field is required.
 
 
-  server_protocol (False, str, None)
-    The protocol in the server application side. This parameter will change to default value if it is omitted even when using PATCH API. If client_protocol is 'udp', server_protocol must be 'udp'. If client_protocol is 'tcp'/'http', server_protocol could be 'tcp'/'tls' and default to 'tcp'. If client_protocol is 'tls'/'https', server_protocol could be 'tcp'/'tls' and default to 'tls'. If client_protocol is 'http-tunnel', server_protocol must be 'tcp'.
-
-
-  certs (False, list, None)
-    The certs.
-
-
-  server_host (True, str, None)
-    (Required for new resource) The host name or IP address of the server endpoint. For 'http-tunnel' protocol, server_host can start with '*.' , which means a wildcard to it's sub domains. Such as '*.example.com' can accept request to 'api.example.com' and 'www.example.com'.
-
-
-  sni (False, str, None)
-    The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
-
-
-  display_name (True, str, None)
-    (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
-
-
-  server_port (True, int, None)
-    (Required for new resource) The port number of the server endpoint. For 'http-tunnel' protocol, server_port can be 0, which means any port. Such as 0 is good for 80 (http) and 443 (https).
-
-
   server_mutual_auth (False, bool, False)
     Whether enable mutual auth in the server application side, when client_protocol is 'tls', this field is required.
 
 
+  reject_unauth (False, bool, False)
+    Whether reject any connection to the server application which is not authorized with the list of supplied CAs in the fields certs.server_cert.
+
+
   timeout (False, int, None)
     The inactivity timeout in the Endpoint side.
+
+
+  certs (False, list, None)
+    The certs.
 
 
   location (True, str, None)
@@ -79,8 +67,20 @@ Parameters
     (Required for new resource) The type of the endpoint.
 
 
-  reject_unauth (False, bool, False)
-    Whether reject any connection to the server application which is not authorized with the list of supplied CAs in the fields certs.server_cert.
+  display_name (True, str, None)
+    (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
+
+
+  server_port (True, int, None)
+    (Required for new resource) The port number of the server endpoint. For 'http-tunnel' protocol, server_port can be 0, which means any port. Such as 0 is good for 80 (http) and 443 (https).
+
+
+  sni (False, str, None)
+    The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
+
+
+  server_protocol (False, str, None)
+    The protocol in the server application side. This parameter will change to default value if it is omitted even when using PATCH API. If client_protocol is 'udp', server_protocol must be 'udp'. If client_protocol is 'tcp'/'http', server_protocol could be 'tcp'/'tls' and default to 'tcp'. If client_protocol is 'tls'/'https', server_protocol could be 'tcp'/'tls' and default to 'tls'. If client_protocol is 'http-tunnel', server_protocol must be 'tcp'.
 
 
   created_by (False, str, None)

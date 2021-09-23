@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
+  carrier_name (False, str, None)
+    Carrier name
 
 
   type (True, str, None)
     (Required for new resource) Gateway type
 
 
-  loa_reject_reason (False, str, None)
-    Loa reject reason
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
 
 
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
+  customer_name (False, str, None)
+    Customer name
+
+
+  authentication_key (False, str, None)
+    BGP MD5 authentication key
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   cross_connect_router (False, str, None)
@@ -55,56 +63,52 @@ Parameters
     (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
 
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  macsec_config (False, list, None)
-    MACsec configuration information
-
-
-  port (False, str, None)
-    Gateway port
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  metered (True, bool, None)
-    (Required for new resource) Metered billing option
-
-
-  customer_name (False, str, None)
-    Customer name
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  authentication_key (False, str, None)
-    BGP MD5 authentication key
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
   tags (False, list, None)
     Tags for the direct link gateway
 
 
   bgp_cer_cidr (False, str, None)
     BGP customer edge router CIDR
+
+
+  port (False, str, None)
+    Gateway port
+
+
+  connection_mode (False, str, None)
+    Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
+
+
+  metered (True, bool, None)
+    (Required for new resource) Metered billing option
+
+
+  macsec_config (False, list, None)
+    MACsec configuration information
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  loa_reject_reason (False, str, None)
+    Loa reject reason
+
+
+  resource_group (False, str, None)
+    Gateway resource group
 
 
   id (False, str, None)

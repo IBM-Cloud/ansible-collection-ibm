@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
+
+
   catalog_id (True, str, None)
     (Required for new resource) Catalog ID this instance was created from.
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
 
 
   kind_format (True, str, None)
@@ -43,44 +55,32 @@ Parameters
     (Required for new resource) Cluster region (e.g., us-south).
 
 
-  install_plan (False, str, None)
-    install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
-
-
-  resource_group_id (False, str, None)
-    id of the resource group
-
-
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
-
-
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
   cluster_namespaces (True, list, None)
     (Required for new resource) List of target namespaces to install into.
 
 
-  channel (False, str, None)
-    channel to target for the operator subscription. Required for operator bundles
-
-
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
-
-
-  version (True, str, None)
-    (Required for new resource) The version this instance was installed from (not version id).
+  wait_until_successful (False, bool, True)
+    Whether to wait until the offering instance successfully provisions, or to return when accepted
 
 
   cluster_all_namespaces (True, bool, None)
     (Required for new resource) designate to install into all namespaces.
 
 
-  wait_until_successful (False, bool, True)
-    Whether to wait until the offering instance successfully provisions, or to return when accepted
+  version (True, str, None)
+    (Required for new resource) The version this instance was installed from (not version id).
+
+
+  resource_group_id (False, str, None)
+    id of the resource group
+
+
+  install_plan (False, str, None)
+    install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
+
+
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
 
 
   id (False, str, None)

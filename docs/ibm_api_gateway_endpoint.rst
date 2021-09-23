@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  provider_id (False, str, user-defined)
-    Provider ID of an endpoint allowable values user-defined and whisk
-
-
-  type (False, str, unshare)
-    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
+  managed (False, bool, False)
+    Managed indicates if endpoint is online or offline.
 
 
   service_instance_crn (True, str, None)
@@ -47,16 +43,20 @@ Parameters
     (Required for new resource) Json File path
 
 
-  name (True, str, None)
-    (Required for new resource) Endpoint name
-
-
   routes (False, list, None)
     Invokable routes for an endpoint
 
 
-  managed (False, bool, False)
-    Managed indicates if endpoint is online or offline.
+  name (True, str, None)
+    (Required for new resource) Endpoint name
+
+
+  provider_id (False, str, user-defined)
+    Provider ID of an endpoint allowable values user-defined and whisk
+
+
+  type (False, str, unshare)
+    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
   id (False, str, None)

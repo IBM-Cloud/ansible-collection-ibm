@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_affinity_volume (False, str, None)
-    Volume (ID or Name) to base volume affinity policy against;
+  pi_volume_name (True, str, None)
+    (Required for new resource) Volume Name to create
+
+
+  pi_volume_size (True, float, None)
+    (Required for new resource) Size of the volume in GB
 
 
   pi_affinity_instance (False, str, None)
     PVM Instance (ID or Name) to base volume affinity policy against;
 
 
-  pi_volume_name (True, str, None)
-    (Required for new resource) Volume Name to create
-
-
   pi_volume_shareable (False, bool, None)
     Flag to indicate if the volume can be shared across multiple instances?
+
+
+  pi_volume_type (False, str, None)
+    Volume type
 
 
   pi_cloud_instance_id (True, str, None)
@@ -55,12 +59,8 @@ Parameters
     Affinity policy for data volume being created
 
 
-  pi_volume_size (True, float, None)
-    (Required for new resource) Size of the volume in GB
-
-
-  pi_volume_type (False, str, None)
-    Volume type
+  pi_affinity_volume (False, str, None)
+    Volume (ID or Name) to base volume affinity policy against;
 
 
   id (False, str, None)

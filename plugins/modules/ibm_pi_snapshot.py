@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_snapshot' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
+    pi_snap_shot_name:
         description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+            - (Required for new resource) Unique name of the snapshot
         required: True
         type: str
     pi_instance_name:
@@ -38,15 +38,15 @@ options:
         required: False
         type: list
         elements: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
     description:
         description:
             - Snapshot description
         required: False
-        type: str
-    pi_snap_shot_name:
-        description:
-            - (Required for new resource) Unique name of the snapshot
-        required: True
         type: str
     id:
         description:
@@ -90,18 +90,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
-    ('pi_instance_name', 'str'),
     ('pi_snap_shot_name', 'str'),
+    ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
+    'pi_snap_shot_name',
     'pi_instance_name',
     'pi_volume_ids',
+    'pi_cloud_instance_id',
     'description',
-    'pi_snap_shot_name',
 ]
 
 # Params for Data source
@@ -118,7 +118,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
+    pi_snap_shot_name=dict(
         required=False,
         type='str'),
     pi_instance_name=dict(
@@ -128,10 +128,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_snap_shot_name=dict(
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_pi_snapshot',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

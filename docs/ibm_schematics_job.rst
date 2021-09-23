@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,32 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  job_env_settings (False, list, None)
-    Environment variables used by the job while performing an action.
-
-
   command_object (True, str, None)
     (Required for new resource) Name of the Schematics automation resource.
 
 
-  command_parameter (True, str, None)
-    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
-
-
-  job_inputs (False, list, None)
-    Job inputs used by an action.
-
-
-  data (False, list, None)
-    Job data.
-
-
-  bastion (False, list, None)
-    Complete target details with the user inputs and the system generated data.
-
-
-  location (False, str, None)
-    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
+  job_env_settings (False, list, None)
+    Environment variables used by the job while performing an action.
 
 
   job_log_summary (False, list, None)
@@ -65,6 +45,14 @@ Parameters
 
   command_object_id (True, str, None)
     (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
+
+
+  job_inputs (False, list, None)
+    Job inputs used by an action.
+
+
+  location (False, str, None)
+    List of action locations supported by IBM Cloud Schematics service.  **Note** this does not limit the location of the resources provisioned using Schematics.
 
 
   command_name (True, str, None)
@@ -77,6 +65,18 @@ Parameters
 
   tags (False, list, None)
     User defined tags, while running the job.
+
+
+  bastion (False, list, None)
+    Complete target details with the user inputs and the system generated data.
+
+
+  command_parameter (True, str, None)
+    (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+
+
+  data (False, list, None)
+    Job data.
 
 
   id (False, str, None)

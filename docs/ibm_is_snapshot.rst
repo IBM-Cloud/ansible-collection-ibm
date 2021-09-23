@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    Snapshot name
-
-
   resource_group (False, str, None)
     Resource group info
+
+
+  name (False, str, None)
+    Snapshot name
 
 
   source_volume (True, str, None)

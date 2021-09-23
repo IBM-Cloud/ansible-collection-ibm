@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_package' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -32,18 +32,18 @@ options:
             - (Required for new resource) Name of package.
         required: True
         type: str
-    user_defined_annotations:
-        description:
-            - Annotation values in KEY VALUE format.
-        required: False
-        type: str
-        default: []
     publish:
         description:
             - Package visibilty.
         required: False
         type: bool
         default: False
+    user_defined_annotations:
+        description:
+            - Annotation values in KEY VALUE format.
+        required: False
+        type: str
+        default: []
     user_defined_parameters:
         description:
             - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
@@ -95,8 +95,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'namespace',
     'name',
-    'user_defined_annotations',
     'publish',
+    'user_defined_annotations',
     'user_defined_parameters',
     'bind_package_name',
 ]
@@ -125,12 +125,12 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    user_defined_annotations=dict(
-        required=False,
-        type='str'),
     publish=dict(
         required=False,
         type='bool'),
+    user_defined_annotations=dict(
+        required=False,
+        type='str'),
     user_defined_parameters=dict(
         required=False,
         type='str'),
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_function_package',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -201,7 +201,7 @@ def run_module():
             resource_type='ibm_function_package',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

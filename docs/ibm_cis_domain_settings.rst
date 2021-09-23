@@ -23,29 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  dnssec (False, str, None)
-    DNS Sec setting
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  security_header (False, list, None)
-    Security Header Setting
-
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -55,84 +39,40 @@ Parameters
     SSL/TLS setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  hotlink_protection (False, str, None)
-    hotlink_protection setting
-
-
-  minify (False, list, None)
-    Minify setting
-
-
   automatic_https_rewrites (False, str, None)
     automatic_https_rewrites setting
 
 
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  brotli (False, str, None)
-    brotli setting
-
-
-  response_buffering (False, str, None)
-    response_buffering setting
-
-
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  always_use_https (False, str, None)
-    always_use_https setting
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
 
 
   pseudo_ipv4 (False, str, None)
     pseudo_ipv4 setting
 
 
+  cipher (False, list, None)
+    Cipher settings
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
   tls_client_auth (False, str, None)
     tls_client_auth setting
 
 
-  websockets (False, str, None)
-    websockets setting
+  dnssec (False, str, None)
+    DNS Sec setting
 
 
-  cipher (False, list, None)
-    Cipher settings
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
 
 
   cname_flattening (False, str, None)
@@ -143,24 +83,84 @@ Parameters
     browser_check setting
 
 
-  http2 (False, str, None)
-    http2 setting
+  brotli (False, str, None)
+    brotli setting
 
 
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  waf (False, str, None)
+    WAF setting
 
 
   server_side_exclude (False, str, None)
     server_side_exclude setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
   mobile_redirect (False, list, None)
     None
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  websockets (False, str, None)
+    websockets setting
+
+
+  http2 (False, str, None)
+    http2 setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  minify (False, list, None)
+    Minify setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
 
 
   id (False, str, None)

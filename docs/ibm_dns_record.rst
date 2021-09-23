@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.31.0
+- IBM-Cloud terraform-provider-ibm v1.32.1
 - Terraform v0.12.20
 
 
@@ -31,24 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
   domain_id (True, int, None)
     (Required for new resource) Domain ID of dns record instance
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   minimum_ttl (False, int, None)
     Minimun TTL configuration
 
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
+  service (False, str, None)
+    service info
 
 
   expire (False, int, None)
@@ -59,16 +71,12 @@ Parameters
     Maximum priority
 
 
-  refresh (False, int, None)
-    refresh rate
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  protocol (False, str, None)
-    protocol info
+  port (False, int, None)
+    port number
 
 
   priority (False, int, 0)
@@ -79,24 +87,16 @@ Parameters
     (Required for new resource) Hostname
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
-  service (False, str, None)
-    service info
+  retry (False, int, None)
+    Retry count
 
 
-  port (False, int, None)
-    port number
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   id (False, str, None)

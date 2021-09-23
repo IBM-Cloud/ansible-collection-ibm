@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_certificate_order' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id or CRN
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
     type:
         description:
             - certificate type
@@ -44,6 +34,16 @@ options:
         required: True
         type: list
         elements: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id or CRN
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,17 +90,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('hosts', 'list'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('hosts', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'domain_id',
     'type',
     'hosts',
+    'cis_id',
+    'domain_id',
 ]
 
 # Params for Data source
@@ -117,12 +117,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -130,6 +124,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_cis_certificate_order',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

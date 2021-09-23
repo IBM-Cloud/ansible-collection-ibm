@@ -18,20 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    worker_pool_labels:
+    name:
         description:
-            - Labels on all the workers in the worker pool
-        required: False
-        type: dict
-        elements: str
-    flavor:
-        description:
-            - The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
-        required: False
+            - (Required for new resource) The name for the worker pool
+        required: True
         type: str
     isolation:
         description:
@@ -43,6 +37,21 @@ options:
             - None
         required: False
         type: str
+    cluster:
+        description:
+            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+        required: True
+        type: str
+    flavor:
+        description:
+            - The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
+        required: False
+        type: str
+    disk_encryption:
+        description:
+            - Disk encryption for worker node
+        required: False
+        type: bool
     worker_count:
         description:
             - Specify the desired number of workers per zone in this worker pool
@@ -54,6 +63,12 @@ options:
         required: False
         type: list
         elements: dict
+    worker_pool_labels:
+        description:
+            - Labels on all the workers in the worker pool
+        required: False
+        type: dict
+        elements: str
     host_labels:
         description:
             - Labels that describe a Satellite host
@@ -65,21 +80,6 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) The name for the worker pool
-        required: True
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
-        required: True
-        type: str
-    disk_encryption:
-        description:
-            - Disk encryption for worker node
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -132,17 +132,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_pool_labels',
-    'flavor',
+    'name',
     'isolation',
     'entitlement',
+    'cluster',
+    'flavor',
+    'disk_encryption',
     'worker_count',
     'zones',
+    'worker_pool_labels',
     'host_labels',
     'resource_group_id',
-    'name',
-    'cluster',
-    'disk_encryption',
 ]
 
 # Params for Data source
@@ -153,8 +153,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'region',
-    'name',
     'resource_group_id',
+    'name',
     'cluster',
 ]
 
@@ -165,11 +165,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    flavor=dict(
+    name=dict(
         required=False,
         type='str'),
     isolation=dict(
@@ -178,6 +174,15 @@ module_args = dict(
     entitlement=dict(
         required=False,
         type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
+    disk_encryption=dict(
+        required=False,
+        type='bool'),
     worker_count=dict(
         required=False,
         type='int'),
@@ -185,6 +190,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    worker_pool_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
     host_labels=dict(
         required=False,
         elements='',
@@ -192,15 +201,6 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    disk_encryption=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -266,7 +266,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -275,7 +275,7 @@ def run_module():
             resource_type='ibm_satellite_cluster_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
@@ -28,16 +28,6 @@ options:
         required: False
         type: bool
         default: True
-    resource_group:
-        description:
-            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
-    host_group:
-        description:
-            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
-        required: True
-        type: str
     name:
         description:
             - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
@@ -47,6 +37,16 @@ options:
         description:
             - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
         required: True
+        type: str
+    host_group:
+        description:
+            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
+        required: True
+        type: str
+    resource_group:
+        description:
+            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     id:
         description:
@@ -94,17 +94,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_group', 'str'),
     ('profile', 'str'),
+    ('host_group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_placement_enabled',
-    'resource_group',
-    'host_group',
     'name',
     'profile',
+    'host_group',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -129,16 +129,16 @@ module_args = dict(
     instance_placement_enabled=dict(
         required=False,
         type='bool'),
-    resource_group=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     host_group=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    profile=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

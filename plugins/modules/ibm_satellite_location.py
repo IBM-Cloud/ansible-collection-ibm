@@ -18,13 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.31.0
+    - IBM-Cloud terraform-provider-ibm v1.32.1
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    managed_from:
         description:
-            - ID of the resource group.
+            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+        required: True
+        type: str
+    logging_account_id:
+        description:
+            - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
         type: str
     tags:
@@ -43,6 +48,11 @@ options:
             - A description of the new Satellite location
         required: False
         type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     cos_config:
         description:
             - COSBucket - IBM Cloud Object Storage bucket configuration details
@@ -55,16 +65,6 @@ options:
         required: False
         type: list
         elements: dict
-    managed_from:
-        description:
-            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
-        required: True
-        type: str
-    logging_account_id:
-        description:
-            - The account ID for IBM Log Analysis with LogDNA log forwarding
-        required: False
-        type: str
     zones:
         description:
             - The names of at least three high availability zones to use for the location
@@ -117,20 +117,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('managed_from', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
+    'managed_from',
+    'logging_account_id',
     'tags',
     'location',
     'description',
+    'resource_group_id',
     'cos_config',
     'cos_credentials',
-    'managed_from',
-    'logging_account_id',
     'zones',
 ]
 
@@ -150,7 +150,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    managed_from=dict(
+        required=False,
+        type='str'),
+    logging_account_id=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -163,6 +166,9 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     cos_config=dict(
         required=False,
         elements='',
@@ -171,12 +177,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    managed_from=dict(
-        required=False,
-        type='str'),
-    logging_account_id=dict(
-        required=False,
-        type='str'),
     zones=dict(
         required=False,
         elements='',
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.31.0',
+        ibm_provider_version='1.32.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.31.0',
+            ibm_provider_version='1.32.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
