@@ -18,27 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    strategy:
-        description:
-            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
-        required: True
-        type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     access_tags:
         description:
             - List of access management tags
         required: False
         type: list
         elements: str
+    strategy:
+        description:
+            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
@@ -49,6 +43,12 @@ options:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
         required: False
         type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'strategy',
-    'tags',
     'access_tags',
+    'strategy',
     'name',
     'resource_group',
+    'tags',
 ]
 
 # Params for Data source
@@ -124,23 +124,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    strategy=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     access_tags=dict(
         required=False,
         elements='',
         type='list'),
+    strategy=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.32.1',
+            ibm_provider_version='1.33.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

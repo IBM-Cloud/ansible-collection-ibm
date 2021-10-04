@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -33,6 +33,10 @@ Parameters
 
   managed_from (True, str, None)
     (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   logging_account_id (False, str, None)
@@ -49,10 +53,6 @@ Parameters
 
   description (False, str, None)
     A description of the new Satellite location
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   cos_config (False, list, None)

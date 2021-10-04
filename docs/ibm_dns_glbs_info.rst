@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    The GUID of the private DNS.
-
-
   zone_id (True, str, None)
     Zone GUID
+
+
+  instance_id (True, str, None)
+    The GUID of the private DNS.
 
 
   iaas_classic_username (False, any, None)

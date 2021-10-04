@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     The hostname of the virtual guest
 
 
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
-
-
   domain (True, str, None)
     The domain of the virtual guest
+
+
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
 
 
   iaas_classic_username (False, any, None)

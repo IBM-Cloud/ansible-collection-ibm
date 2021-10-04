@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
+
+
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
   algorithm (True, str, None)
@@ -43,44 +71,16 @@ Parameters
     (Required for new resource) Load Balancer Protocol
 
 
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
 
 
   session_persistence_app_cookie_name (False, str, None)
     Load Balancer Pool session persisence app cookie name.
 
 
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
-
-
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
   proxy_protocol (False, str, None)
     PROXY protocol setting for this pool
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
 
 
   id (False, str, None)

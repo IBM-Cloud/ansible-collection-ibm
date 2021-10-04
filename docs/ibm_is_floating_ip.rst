@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     Zone name
 
 
-  target (False, str, None)
-    Target info
-
-
   resource_group (False, str, None)
     Resource group info
+
+
+  target (False, str, None)
+    Target info
 
 
   tags (False, list, None)

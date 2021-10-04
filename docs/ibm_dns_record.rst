@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,28 +31,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  expire (False, int, None)
+    DNS record expiry info
 
 
-  protocol (False, str, None)
-    protocol info
+  retry (False, int, None)
+    Retry count
 
 
-  weight (False, int, 0)
-    weight info
-
-
-  tags (False, list, None)
-    tags set for the resource
+  port (False, int, None)
+    port number
 
 
   data (True, str, None)
     (Required for new resource) DNS record data
 
 
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
   refresh (False, int, None)
     refresh rate
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
   minimum_ttl (False, int, None)
@@ -63,40 +95,8 @@ Parameters
     service info
 
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  port (False, int, None)
-    port number
-
-
-  priority (False, int, 0)
-    priority info
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
+  weight (False, int, 0)
+    weight info
 
 
   id (False, str, None)

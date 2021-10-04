@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  default_routing_table_name (False, str, None)
-    Default routing table name
+  resource_group (False, str, None)
+    Resource group info
 
 
   classic_access (False, bool, False)
     Set to true if classic access needs to enabled to VPC
+
+
+  default_security_group_name (False, str, None)
+    Default security group name
+
+
+  default_network_acl_name (False, str, None)
+    Default Network ACL name
 
 
   tags (False, list, None)
@@ -47,20 +55,12 @@ Parameters
     (Required for new resource) VPC name
 
 
-  resource_group (False, str, None)
-    Resource group info
+  default_routing_table_name (False, str, None)
+    Default routing table name
 
 
   address_prefix_management (False, str, auto)
     Address Prefix management value
-
-
-  default_network_acl_name (False, str, None)
-    Default Network ACL name
-
-
-  default_security_group_name (False, str, None)
-    Default security group name
 
 
   id (False, str, None)

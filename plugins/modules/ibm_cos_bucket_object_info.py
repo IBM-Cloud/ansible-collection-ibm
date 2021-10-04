@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket_object' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -26,17 +26,17 @@ options:
             - COS bucket CRN
         required: True
         type: str
-    bucket_location:
-        description:
-            - COS bucket location
-        required: True
-        type: str
     endpoint_type:
         description:
             - COS endpoint type: public, private, direct
         required: False
         type: str
         default: public
+    bucket_location:
+        description:
+            - COS bucket location
+        required: True
+        type: str
     key:
         description:
             - COS object key
@@ -83,8 +83,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bucket_crn',
-    'bucket_location',
     'endpoint_type',
+    'bucket_location',
     'key',
 ]
 
@@ -99,11 +99,11 @@ module_args = dict(
     bucket_crn=dict(
         required=True,
         type='str'),
-    bucket_location=dict(
-        required=True,
-        type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    bucket_location=dict(
+        required=True,
         type='str'),
     key=dict(
         required=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_cos_bucket_object',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

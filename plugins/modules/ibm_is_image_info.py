@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_image' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

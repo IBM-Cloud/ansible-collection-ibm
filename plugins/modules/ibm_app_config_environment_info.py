@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_environment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    guid:
+    environment_id:
         description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+            - Environment Id.
         required: True
         type: str
     expand:
@@ -31,9 +31,9 @@ options:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    environment_id:
+    guid:
         description:
-            - Environment Id.
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
     iaas_classic_username:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guid', 'str'),
     ('environment_id', 'str'),
+    ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
-    'expand',
     'environment_id',
+    'expand',
+    'guid',
 ]
 
 
@@ -88,13 +88,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
+    environment_id=dict(
         required=True,
         type='str'),
     expand=dict(
         required=False,
         type='bool'),
-    environment_id=dict(
+    guid=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_app_config_environment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

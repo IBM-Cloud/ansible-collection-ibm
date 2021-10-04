@@ -17,16 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_key_policies' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    policies:
-        description:
-            - Creates or updates one or more policies for the specified key
-        required: False
-        type: list
-        elements: dict
     instance_id:
         description:
             - Key protect or hpcs instance GUID
@@ -43,6 +37,12 @@ options:
             - Key ID of the Key
         required: True
         type: str
+    policies:
+        description:
+            - Creates or updates one or more policies for the specified key
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -82,10 +82,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'policies',
     'instance_id',
     'endpoint_type',
     'key_id',
+    'policies',
 ]
 
 
@@ -96,10 +96,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    policies=dict(
-        required=False,
-        elements='',
-        type='list'),
     instance_id=dict(
         required=True,
         type='str'),
@@ -109,6 +105,10 @@ module_args = dict(
     key_id=dict(
         required=True,
         type='str'),
+    policies=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_kms_key_policies',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

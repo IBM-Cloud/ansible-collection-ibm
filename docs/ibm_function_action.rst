@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
+  name (True, str, None)
+    (Required for new resource) Name of action.
 
 
-  exec (True, list, None)
-    (Required for new resource) Execution info
+  limits (False, list, None)
+    None
 
 
   user_defined_parameters (False, str, [])
@@ -47,12 +47,12 @@ Parameters
     Annotation values in KEY VALUE format.
 
 
-  name (True, str, None)
-    (Required for new resource) Name of action.
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
 
 
-  limits (False, list, None)
-    None
+  exec (True, list, None)
+    (Required for new resource) Execution info
 
 
   publish (False, bool, None)

@@ -17,16 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    most_recent:
-        description:
-            - If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
-        required: False
-        type: bool
-        default: False
     name:
         description:
             - The name of the resource key
@@ -42,6 +36,12 @@ options:
             - The id of the resource alias
         required: False
         type: str
+    most_recent:
+        description:
+            - If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
+        required: False
+        type: bool
+        default: False
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -80,10 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'most_recent',
     'name',
     'resource_instance_id',
     'resource_alias_id',
+    'most_recent',
 ]
 
 
@@ -96,9 +96,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    most_recent=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=True,
         type='str'),
@@ -108,6 +105,9 @@ module_args = dict(
     resource_alias_id=dict(
         required=False,
         type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

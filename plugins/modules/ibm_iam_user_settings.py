@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_settings' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_iam_user_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

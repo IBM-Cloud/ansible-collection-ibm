@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  description (False, str, None)
-    Description of the Policy
-
-
-  iam_service_id (False, str, None)
-    UUID of ServiceID
-
 
   iam_id (False, str, None)
     IAM ID of ServiceID
@@ -61,6 +53,14 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  description (False, str, None)
+    Description of the Policy
+
+
+  iam_service_id (False, str, None)
+    UUID of ServiceID
 
 
   id (False, str, None)

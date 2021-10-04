@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cdn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -28,32 +28,59 @@ options:
         required: False
         type: int
         default: 80
-    header:
+    file_extension:
         description:
-            - Header info
+            - File extension info
         required: False
         type: str
-    path:
+    host_name:
         description:
-            - Path details
+            - (Required for new resource) Host name
+        required: True
+        type: str
+    origin_type:
+        description:
+            - Origin type info
         required: False
         type: str
-        default: /*
+        default: HOST_SERVER
+    bucket_name:
+        description:
+            - Bucket name
+        required: False
+        type: str
     cache_key_query_rule:
         description:
             - query rule info
         required: False
         type: str
         default: include-all
-    host_name:
+    performance_configuration:
         description:
-            - (Required for new resource) Host name
-        required: True
+            - performance configuration info
+        required: False
         type: str
+        default: General web delivery
+    protocol:
+        description:
+            - Protocol name
+        required: False
+        type: str
+        default: HTTP
     cname:
         description:
             - cname info
         required: False
+        type: str
+    header:
+        description:
+            - Header info
+        required: False
+        type: str
+    origin_address:
+        description:
+            - (Required for new resource) origin address info
+        required: True
         type: str
     respect_headers:
         description:
@@ -61,56 +88,29 @@ options:
         required: False
         type: bool
         default: True
-    file_extension:
+    path:
         description:
-            - File extension info
+            - Path details
         required: False
         type: str
-    certificate_type:
-        description:
-            - Certificate type
-        required: False
-        type: str
-    performance_configuration:
-        description:
-            - performance configuration info
-        required: False
-        type: str
-        default: General web delivery
+        default: /*
     vendor_name:
         description:
             - Vendor name
         required: False
         type: str
         default: akamai
-    origin_type:
-        description:
-            - Origin type info
-        required: False
-        type: str
-        default: HOST_SERVER
-    origin_address:
-        description:
-            - (Required for new resource) origin address info
-        required: True
-        type: str
-    bucket_name:
-        description:
-            - Bucket name
-        required: False
-        type: str
-    protocol:
-        description:
-            - Protocol name
-        required: False
-        type: str
-        default: HTTP
     https_port:
         description:
             - HTTPS port number
         required: False
         type: int
         default: 443
+    certificate_type:
+        description:
+            - Certificate type
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -164,21 +164,21 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'http_port',
-    'header',
-    'path',
-    'cache_key_query_rule',
-    'host_name',
-    'cname',
-    'respect_headers',
     'file_extension',
-    'certificate_type',
-    'performance_configuration',
-    'vendor_name',
+    'host_name',
     'origin_type',
-    'origin_address',
     'bucket_name',
+    'cache_key_query_rule',
+    'performance_configuration',
     'protocol',
+    'cname',
+    'header',
+    'origin_address',
+    'respect_headers',
+    'path',
+    'vendor_name',
     'https_port',
+    'certificate_type',
 ]
 
 # Params for Data source
@@ -198,51 +198,51 @@ module_args = dict(
     http_port=dict(
         required=False,
         type='int'),
-    header=dict(
-        required=False,
-        type='str'),
-    path=dict(
-        required=False,
-        type='str'),
-    cache_key_query_rule=dict(
+    file_extension=dict(
         required=False,
         type='str'),
     host_name=dict(
         required=False,
         type='str'),
-    cname=dict(
-        required=False,
-        type='str'),
-    respect_headers=dict(
-        required=False,
-        type='bool'),
-    file_extension=dict(
-        required=False,
-        type='str'),
-    certificate_type=dict(
-        required=False,
-        type='str'),
-    performance_configuration=dict(
-        required=False,
-        type='str'),
-    vendor_name=dict(
-        required=False,
-        type='str'),
     origin_type=dict(
-        required=False,
-        type='str'),
-    origin_address=dict(
         required=False,
         type='str'),
     bucket_name=dict(
         required=False,
         type='str'),
+    cache_key_query_rule=dict(
+        required=False,
+        type='str'),
+    performance_configuration=dict(
+        required=False,
+        type='str'),
     protocol=dict(
+        required=False,
+        type='str'),
+    cname=dict(
+        required=False,
+        type='str'),
+    header=dict(
+        required=False,
+        type='str'),
+    origin_address=dict(
+        required=False,
+        type='str'),
+    respect_headers=dict(
+        required=False,
+        type='bool'),
+    path=dict(
+        required=False,
+        type='str'),
+    vendor_name=dict(
         required=False,
         type='str'),
     https_port=dict(
         required=False,
         type='int'),
+    certificate_type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -308,7 +308,7 @@ def run_module():
         resource_type='ibm_cdn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

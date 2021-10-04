@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_offering_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -32,25 +32,25 @@ options:
             - (Required for new resource) Catalog ID this instance was created from.
         required: True
         type: str
-    offering_id:
-        description:
-            - (Required for new resource) Offering ID this instance was created from.
-        required: True
-        type: str
-    cluster_id:
-        description:
-            - (Required for new resource) Cluster ID.
-        required: True
-        type: str
     kind_format:
         description:
             - (Required for new resource) the format this instance has (helm, operator, ova...).
         required: True
         type: str
-    cluster_region:
+    version:
         description:
-            - (Required for new resource) Cluster region (e.g., us-south).
+            - (Required for new resource) The version this instance was installed from (not version id).
         required: True
+        type: str
+    cluster_all_namespaces:
+        description:
+            - (Required for new resource) designate to install into all namespaces.
+        required: True
+        type: bool
+    channel:
+        description:
+            - channel to target for the operator subscription. Required for operator bundles
+        required: False
         type: str
     cluster_namespaces:
         description:
@@ -58,20 +58,9 @@ options:
         required: True
         type: list
         elements: str
-    wait_until_successful:
+    cluster_id:
         description:
-            - Whether to wait until the offering instance successfully provisions, or to return when accepted
-        required: False
-        type: bool
-        default: True
-    cluster_all_namespaces:
-        description:
-            - (Required for new resource) designate to install into all namespaces.
-        required: True
-        type: bool
-    version:
-        description:
-            - (Required for new resource) The version this instance was installed from (not version id).
+            - (Required for new resource) Cluster ID.
         required: True
         type: str
     resource_group_id:
@@ -84,10 +73,21 @@ options:
             - install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
         required: False
         type: str
-    channel:
+    wait_until_successful:
         description:
-            - channel to target for the operator subscription. Required for operator bundles
+            - Whether to wait until the offering instance successfully provisions, or to return when accepted
         required: False
+        type: bool
+        default: True
+    cluster_region:
+        description:
+            - (Required for new resource) Cluster region (e.g., us-south).
+        required: True
+        type: str
+    offering_id:
+        description:
+            - (Required for new resource) Offering ID this instance was created from.
+        required: True
         type: str
     id:
         description:
@@ -137,30 +137,30 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('label', 'str'),
     ('catalog_id', 'str'),
-    ('offering_id', 'str'),
-    ('cluster_id', 'str'),
     ('kind_format', 'str'),
-    ('cluster_region', 'str'),
-    ('cluster_namespaces', 'list'),
-    ('cluster_all_namespaces', 'bool'),
     ('version', 'str'),
+    ('cluster_all_namespaces', 'bool'),
+    ('cluster_namespaces', 'list'),
+    ('cluster_id', 'str'),
+    ('cluster_region', 'str'),
+    ('offering_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'label',
     'catalog_id',
-    'offering_id',
-    'cluster_id',
     'kind_format',
-    'cluster_region',
-    'cluster_namespaces',
-    'wait_until_successful',
-    'cluster_all_namespaces',
     'version',
+    'cluster_all_namespaces',
+    'channel',
+    'cluster_namespaces',
+    'cluster_id',
     'resource_group_id',
     'install_plan',
-    'channel',
+    'wait_until_successful',
+    'cluster_region',
+    'offering_id',
 ]
 
 # Params for Data source
@@ -185,29 +185,23 @@ module_args = dict(
     catalog_id=dict(
         required=False,
         type='str'),
-    offering_id=dict(
-        required=False,
-        type='str'),
-    cluster_id=dict(
-        required=False,
-        type='str'),
     kind_format=dict(
         required=False,
         type='str'),
-    cluster_region=dict(
+    version=dict(
+        required=False,
+        type='str'),
+    cluster_all_namespaces=dict(
+        required=False,
+        type='bool'),
+    channel=dict(
         required=False,
         type='str'),
     cluster_namespaces=dict(
         required=False,
         elements='',
         type='list'),
-    wait_until_successful=dict(
-        required=False,
-        type='bool'),
-    cluster_all_namespaces=dict(
-        required=False,
-        type='bool'),
-    version=dict(
+    cluster_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -216,7 +210,13 @@ module_args = dict(
     install_plan=dict(
         required=False,
         type='str'),
-    channel=dict(
+    wait_until_successful=dict(
+        required=False,
+        type='bool'),
+    cluster_region=dict(
+        required=False,
+        type='str'),
+    offering_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -284,7 +284,7 @@ def run_module():
         resource_type='ibm_cm_offering_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -293,7 +293,7 @@ def run_module():
             resource_type='ibm_cm_offering_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.32.1',
+            ibm_provider_version='1.33.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

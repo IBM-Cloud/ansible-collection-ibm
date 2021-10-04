@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (True, str, None)
+    (Required for new resource) Gateway port
+
 
   tags (False, list, None)
     Tags for the direct link gateway
@@ -39,24 +43,20 @@ Parameters
     BGP customer edge router CIDR
 
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
   bgp_ibm_cidr (False, str, None)
     BGP IBM CIDR
 
 
-  port (True, str, None)
-    (Required for new resource) Gateway port
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
   speed_mbps (True, int, None)
     (Required for new resource) Gateway speed in megabits per second
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   customer_account_id (True, str, None)

@@ -18,13 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_capture' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    pi_capture_cloud_storage_access_key:
+    pi_cloud_instance_id:
         description:
-            - Name of Cloud Storage Access Key
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
+    pi_capture_destination:
+        description:
+            - (Required for new resource) Name of destination to store the image capture to
+        required: True
+        type: str
+    pi_capture_cloud_storage_region:
+        description:
+            - List of Regions to use
         required: False
         type: str
     pi_capture_cloud_storage_secret_key:
@@ -32,14 +42,9 @@ options:
             - Name of the Cloud Storage Secret Key
         required: False
         type: str
-    pi_capture_storage_image_path:
+    pi_instance_name:
         description:
-            - Name of the Image Path
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+            - (Required for new resource) Instance Name of the Power VM
         required: True
         type: str
     pi_capture_name:
@@ -52,20 +57,15 @@ options:
             - List of volume names that need to be passed in the input
         required: False
         type: str
-    pi_capture_cloud_storage_region:
+    pi_capture_cloud_storage_access_key:
         description:
-            - List of Regions to use
+            - Name of Cloud Storage Access Key
         required: False
         type: str
-    pi_instance_name:
+    pi_capture_storage_image_path:
         description:
-            - (Required for new resource) Instance Name of the Power VM
-        required: True
-        type: str
-    pi_capture_destination:
-        description:
-            - (Required for new resource) Name of destination to store the image capture to
-        required: True
+            - Name of the Image Path
+        required: False
         type: str
     id:
         description:
@@ -110,22 +110,22 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_cloud_instance_id', 'str'),
-    ('pi_capture_name', 'str'),
-    ('pi_instance_name', 'str'),
     ('pi_capture_destination', 'str'),
+    ('pi_instance_name', 'str'),
+    ('pi_capture_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_capture_cloud_storage_access_key',
-    'pi_capture_cloud_storage_secret_key',
-    'pi_capture_storage_image_path',
     'pi_cloud_instance_id',
+    'pi_capture_destination',
+    'pi_capture_cloud_storage_region',
+    'pi_capture_cloud_storage_secret_key',
+    'pi_instance_name',
     'pi_capture_name',
     'pi_capture_volume_ids',
-    'pi_capture_cloud_storage_region',
-    'pi_instance_name',
-    'pi_capture_destination',
+    'pi_capture_cloud_storage_access_key',
+    'pi_capture_storage_image_path',
 ]
 
 # Params for Data source
@@ -142,16 +142,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_capture_cloud_storage_access_key=dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_capture_destination=dict(
+        required=False,
+        type='str'),
+    pi_capture_cloud_storage_region=dict(
         required=False,
         type='str'),
     pi_capture_cloud_storage_secret_key=dict(
         required=False,
         type='str'),
-    pi_capture_storage_image_path=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
+    pi_instance_name=dict(
         required=False,
         type='str'),
     pi_capture_name=dict(
@@ -160,13 +163,10 @@ module_args = dict(
     pi_capture_volume_ids=dict(
         required=False,
         type='str'),
-    pi_capture_cloud_storage_region=dict(
+    pi_capture_cloud_storage_access_key=dict(
         required=False,
         type='str'),
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
-    pi_capture_destination=dict(
+    pi_capture_storage_image_path=dict(
         required=False,
         type='str'),
     id=dict(
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_pi_capture',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_alias' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
+    alias:
+        description:
+            - (Required for new resource) Key protect or hpcs key alias name
+        required: True
+        type: str
     key_id:
         description:
             - (Required for new resource) Key ID
@@ -35,11 +40,6 @@ options:
     instance_id:
         description:
             - (Required for new resource) Key ID
-        required: True
-        type: str
-    alias:
-        description:
-            - (Required for new resource) Key protect or hpcs key alias name
         required: True
         type: str
     id:
@@ -88,17 +88,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('alias', 'str'),
     ('key_id', 'str'),
     ('instance_id', 'str'),
-    ('alias', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'alias',
     'key_id',
     'endpoint_type',
     'instance_id',
-    'alias',
 ]
 
 # Params for Data source
@@ -115,6 +115,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    alias=dict(
+        required=False,
+        type='str'),
     key_id=dict(
         required=False,
         type='str'),
@@ -122,9 +125,6 @@ module_args = dict(
         required=False,
         type='str'),
     instance_id=dict(
-        required=False,
-        type='str'),
-    alias=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_kms_key_alias',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

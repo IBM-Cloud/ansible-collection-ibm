@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cos_endpoint (True, list, None)
-    (Required for new resource) Property values for a Cloud Object Storage Endpoint.
-
-
   name (True, str, None)
     (Required for new resource) The name of the target. The name must be 1000 characters or less, and cannot include any special characters other than `(space) - . _ :`.
 
 
   target_type (True, str, None)
     (Required for new resource) The type of the target.
+
+
+  cos_endpoint (True, list, None)
+    (Required for new resource) Property values for a Cloud Object Storage Endpoint.
 
 
   id (False, str, None)

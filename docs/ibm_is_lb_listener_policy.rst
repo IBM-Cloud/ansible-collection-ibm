@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  rules (False, list, None)
+    Policy Rules
+
+
+  target_id (False, str, None)
+    Listener Policy Target ID
+
+
   lb (True, str, None)
     (Required for new resource) Load Balancer Listener Policy
 
 
-  name (False, str, None)
-    Policy name
+  priority (True, int, None)
+    (Required for new resource) Listener Policy Priority
 
 
   target_http_status_code (False, int, None)
@@ -55,16 +63,8 @@ Parameters
     (Required for new resource) Policy Action
 
 
-  priority (True, int, None)
-    (Required for new resource) Listener Policy Priority
-
-
-  rules (False, list, None)
-    Policy Rules
-
-
-  target_id (False, str, None)
-    Listener Policy Target ID
+  name (False, str, None)
+    Policy name
 
 
   id (False, str, None)

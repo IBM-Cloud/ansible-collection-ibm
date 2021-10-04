@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,104 +31,92 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  users (False, list, None)
-    None
-
-
-  whitelist (False, list, None)
-    None
-
-
-  node_memory_allocation_mb (False, int, None)
-    Memory allocation per node
-
-
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
-
-
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
 
 
   service (True, str, None)
     (Required for new resource) The name of the Cloud Internet database service
 
 
-  adminpassword (False, str, None)
-    The admin user password for the instance
+  version (False, str, None)
+    The database version to provision if specified
 
 
-  plan_validation (False, bool, True)
-    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
-
-
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
   members_memory_allocation_mb (False, int, None)
     Memory allocation required for cluster
 
 
-  node_disk_allocation_mb (False, int, None)
-    Disk allocation per node
-
-
-  node_cpu_allocation_count (False, int, None)
-    CPU allocation per node
-
-
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
-
-
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
+  backup_id (False, str, None)
+    The CRN of backup source database
 
 
   tags (False, list, None)
     None
 
 
-  backup_id (False, str, None)
-    The CRN of backup source database
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
 
 
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
+  node_disk_allocation_mb (False, int, None)
+    Disk allocation per node
 
 
-  version (False, str, None)
-    The database version to provision if specified
+  whitelist (False, list, None)
+    None
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
 
 
   node_count (False, int, None)
     Total number of nodes in the cluster
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
+
+
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
+
+
+  node_memory_allocation_mb (False, int, None)
+    Memory allocation per node
+
+
+  node_cpu_allocation_count (False, int, None)
+    CPU allocation per node
+
+
+  plan_validation (False, bool, True)
+    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
+
+
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
+
+
+  users (False, list, None)
+    None
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   remote_leader_id (False, str, None)
@@ -137,6 +125,18 @@ Parameters
 
   auto_scaling (False, list, None)
     ICD Auto Scaling
+
+
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
 
 
   id (False, str, None)

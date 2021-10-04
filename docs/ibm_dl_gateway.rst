@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -31,84 +31,84 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  type (True, str, None)
-    (Required for new resource) Gateway type
-
-
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  customer_name (False, str, None)
-    Customer name
-
-
-  authentication_key (False, str, None)
-    BGP MD5 authentication key
+  resource_group (False, str, None)
+    Gateway resource group
 
 
   bgp_asn (True, int, None)
     (Required for new resource) BGP ASN
 
 
-  cross_connect_router (False, str, None)
-    Cross connect router
+  port (False, str, None)
+    Gateway port
 
 
   global_ (True, bool, None)
     (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
 
 
-  tags (False, list, None)
-    Tags for the direct link gateway
+  speed_mbps (True, int, None)
+    (Required for new resource) Gateway speed in megabits per second
+
+
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
 
 
   bgp_cer_cidr (False, str, None)
     BGP customer edge router CIDR
 
 
-  port (False, str, None)
-    Gateway port
+  loa_reject_reason (False, str, None)
+    Loa reject reason
 
 
   connection_mode (False, str, None)
     Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
 
 
+  cross_connect_router (False, str, None)
+    Cross connect router
+
+
   metered (True, bool, None)
     (Required for new resource) Metered billing option
 
 
-  macsec_config (False, list, None)
-    MACsec configuration information
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  speed_mbps (True, int, None)
-    (Required for new resource) Gateway speed in megabits per second
-
-
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
+  authentication_key (False, str, None)
+    BGP MD5 authentication key
 
 
   name (True, str, None)
     (Required for new resource) The unique user-defined name for this gateway
 
 
-  loa_reject_reason (False, str, None)
-    Loa reject reason
+  carrier_name (False, str, None)
+    Carrier name
 
 
-  resource_group (False, str, None)
-    Gateway resource group
+  location_name (False, str, None)
+    Gateway location
+
+
+  macsec_config (False, list, None)
+    MACsec configuration information
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
+
+
+  customer_name (False, str, None)
+    Customer name
+
+
+  type (True, str, None)
+    (Required for new resource) Gateway type
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
 
 
   id (False, str, None)

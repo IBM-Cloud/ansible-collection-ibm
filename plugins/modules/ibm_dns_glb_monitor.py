@@ -18,73 +18,41 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb_monitor' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    instance_id:
-        description:
-            - (Required for new resource) Instance Id
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The unique identifier of a service instance.
-        required: True
-        type: str
-    headers:
-        description:
-            - The HTTP request headers to send in the health check
-        required: False
-        type: list
-        elements: dict
-    allow_insecure:
-        description:
-            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
-        required: False
-        type: bool
-    expected_body:
-        description:
-            - A case-insensitive sub-string to look for in the response body
-        required: False
-        type: str
-    port:
-        description:
-            - Port number to connect to for the health check
-        required: False
-        type: int
     interval:
         description:
             - The interval between each health check
         required: False
         type: int
         default: 60
-    path:
+    expected_body:
         description:
-            - The endpoint path to health check against
+            - A case-insensitive sub-string to look for in the response body
         required: False
         type: str
-    expected_codes:
+    instance_id:
         description:
-            - The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
-        required: False
-        type: str
-    type:
-        description:
-            - The protocol to use for the health check
-        required: False
-        type: str
-        default: HTTP
-    method:
-        description:
-            - The method to use for the health check
-        required: False
+            - (Required for new resource) Instance Id
+        required: True
         type: str
     description:
         description:
             - Descriptive text of the load balancer monitor
         required: False
         type: str
+    allow_insecure:
+        description:
+            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+        required: False
+        type: bool
+    port:
+        description:
+            - Port number to connect to for the health check
+        required: False
+        type: int
     retries:
         description:
             - The number of retries to attempt in case of a timeout before marking the origin as unhealthy
@@ -97,6 +65,38 @@ options:
         required: False
         type: int
         default: 5
+    expected_codes:
+        description:
+            - The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
+        required: False
+        type: str
+    headers:
+        description:
+            - The HTTP request headers to send in the health check
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) The unique identifier of a service instance.
+        required: True
+        type: str
+    type:
+        description:
+            - The protocol to use for the health check
+        required: False
+        type: str
+        default: HTTP
+    method:
+        description:
+            - The method to use for the health check
+        required: False
+        type: str
+    path:
+        description:
+            - The endpoint path to health check against
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -149,20 +149,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'name',
-    'headers',
-    'allow_insecure',
-    'expected_body',
-    'port',
     'interval',
-    'path',
-    'expected_codes',
-    'type',
-    'method',
+    'expected_body',
+    'instance_id',
     'description',
+    'allow_insecure',
+    'port',
     'retries',
     'timeout',
+    'expected_codes',
+    'headers',
+    'name',
+    'type',
+    'method',
+    'path',
 ]
 
 # Params for Data source
@@ -179,32 +179,38 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    interval=dict(
+        required=False,
+        type='int'),
+    expected_body=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    allow_insecure=dict(
+        required=False,
+        type='bool'),
+    port=dict(
+        required=False,
+        type='int'),
+    retries=dict(
+        required=False,
+        type='int'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    expected_codes=dict(
         required=False,
         type='str'),
     headers=dict(
         required=False,
         elements='',
         type='list'),
-    allow_insecure=dict(
-        required=False,
-        type='bool'),
-    expected_body=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    interval=dict(
-        required=False,
-        type='int'),
-    path=dict(
-        required=False,
-        type='str'),
-    expected_codes=dict(
+    name=dict(
         required=False,
         type='str'),
     type=dict(
@@ -213,15 +219,9 @@ module_args = dict(
     method=dict(
         required=False,
         type='str'),
-    description=dict(
+    path=dict(
         required=False,
         type='str'),
-    retries=dict(
-        required=False,
-        type='int'),
-    timeout=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_dns_glb_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

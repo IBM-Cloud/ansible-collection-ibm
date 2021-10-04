@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Name of the API key. The name is not checked for uniqueness. Therefore multiple names with the same value can exist. Access is done via the UUID of the API key.
+
 
   store_value (False, bool, None)
     Send true or false to set whether the API key value is retrievable in the future by using the Get details of an API key request. If you create an API key for a user, you must specify `false` or omit the value. We don't allow storing of API keys for users.
@@ -39,20 +43,16 @@ Parameters
     You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this value.
 
 
+  file (False, str, None)
+    File where api key is to be stored
+
+
   description (False, str, None)
     The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
 
 
   entity_lock (False, str, False)
     Indicates if the API key is locked for further write operations. False by default.
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the API key. The name is not checked for uniqueness. Therefore multiple names with the same value can exist. Access is done via the UUID of the API key.
-
-
-  file (False, str, None)
-    File where api key is to be stored
 
 
   id (False, str, None)

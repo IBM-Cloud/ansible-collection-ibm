@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -35,18 +35,6 @@ Parameters
     (Required for new resource) Zone name
 
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  name (True, str, None)
-    (Required for new resource) Instance Template name
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
   placement_group (False, str, None)
     Unique Identifier of the Placement Group for restricting the placement of the instance
 
@@ -55,28 +43,8 @@ Parameters
     None
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  name (True, str, None)
+    (Required for new resource) Instance Template name
 
 
   volume_attachments (False, list, None)
@@ -87,8 +55,40 @@ Parameters
     None
 
 
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
   resource_group (False, str, None)
     Instance template resource group
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
@@ -33,14 +33,6 @@ Parameters
 
   pool (True, str, None)
     (Required for new resource) Loadblancer Poold ID
-
-
-  lb (True, str, None)
-    (Required for new resource) Load balancer ID
-
-
-  port (True, int, None)
-    (Required for new resource) Load Balancer Pool port
 
 
   weight (False, int, None)
@@ -53,6 +45,14 @@ Parameters
 
   target_id (False, str, None)
     Load balancer pool member target id
+
+
+  lb (True, str, None)
+    (Required for new resource) Load balancer ID
+
+
+  port (True, int, None)
+    (Required for new resource) Load Balancer Pool port
 
 
   id (False, str, None)

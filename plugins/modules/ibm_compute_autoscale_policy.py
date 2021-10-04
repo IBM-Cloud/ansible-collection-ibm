@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_autoscale_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
+    cooldown:
+        description:
+            - cooldown value
+        required: False
+        type: int
     scale_group_id:
         description:
             - (Required for new resource) scale group ID
@@ -53,11 +58,6 @@ options:
         description:
             - (Required for new resource) Scale amount
         required: True
-        type: int
-    cooldown:
-        description:
-            - cooldown value
-        required: False
         type: int
     id:
         description:
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cooldown',
     'scale_group_id',
     'triggers',
     'tags',
     'name',
     'scale_type',
     'scale_amount',
-    'cooldown',
 ]
 
 # Params for Data source
@@ -136,6 +136,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cooldown=dict(
+        required=False,
+        type='int'),
     scale_group_id=dict(
         required=False,
         type='int'),
@@ -154,9 +157,6 @@ module_args = dict(
         required=False,
         type='str'),
     scale_amount=dict(
-        required=False,
-        type='int'),
-    cooldown=dict(
         required=False,
         type='int'),
     id=dict(
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_compute_autoscale_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    The user-defined or system-provided name for this reserved IP.
+
 
   target (False, str, None)
     The unique identifier for target.
@@ -41,10 +45,6 @@ Parameters
 
   auto_delete (False, bool, None)
     If set to true, this reserved IP will be automatically deleted
-
-
-  name (False, str, None)
-    The user-defined or system-provided name for this reserved IP.
 
 
   id (False, str, None)

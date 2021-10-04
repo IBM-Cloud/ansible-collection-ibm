@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_custom_page' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
@@ -32,14 +32,14 @@ options:
             - (Required for new resource) Associated CIS domain
         required: True
         type: str
-    url:
-        description:
-            - (Required for new resource) Custom page url
-        required: True
-        type: str
     page_id:
         description:
             - (Required for new resource) Custom page identifier
+        required: True
+        type: str
+    url:
+        description:
+            - (Required for new resource) Custom page url
         required: True
         type: str
     id:
@@ -90,16 +90,16 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('url', 'str'),
     ('page_id', 'str'),
+    ('url', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
     'domain_id',
-    'url',
     'page_id',
+    'url',
 ]
 
 # Params for Data source
@@ -122,10 +122,10 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
-    url=dict(
+    page_id=dict(
         required=False,
         type='str'),
-    page_id=dict(
+    url=dict(
         required=False,
         type='str'),
     id=dict(
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_cis_custom_page',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

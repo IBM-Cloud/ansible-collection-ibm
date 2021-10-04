@@ -18,10 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    description:
+        description:
+            - Description of the Policy
+        required: False
+        type: str
+    ibm_id:
+        description:
+            - (Required for new resource) The ibm id or email of user
+        required: True
+        type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -46,22 +62,6 @@ options:
         required: False
         type: bool
         default: False
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    description:
-        description:
-            - Description of the Policy
-        required: False
-        type: str
-    ibm_id:
-        description:
-            - (Required for new resource) The ibm id or email of user
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -108,19 +108,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('roles', 'list'),
     ('ibm_id', 'str'),
+    ('roles', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
+    'description',
+    'ibm_id',
     'roles',
     'resources',
     'resource_attributes',
     'account_management',
-    'tags',
-    'description',
-    'ibm_id',
 ]
 
 # Params for Data source
@@ -143,6 +143,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    ibm_id=dict(
+        required=False,
+        type='str'),
     roles=dict(
         required=False,
         elements='',
@@ -158,16 +168,6 @@ module_args = dict(
     account_management=dict(
         required=False,
         type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    ibm_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_iam_user_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -242,7 +242,7 @@ def run_module():
             resource_type='ibm_iam_user_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.32.1',
+            ibm_provider_version='1.33.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

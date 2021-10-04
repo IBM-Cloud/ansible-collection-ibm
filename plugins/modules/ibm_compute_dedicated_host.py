@@ -18,16 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
-    hourly_billing:
+    hostname:
         description:
-            - The billing type for the dedicatated host.
-        required: False
-        type: bool
-        default: True
+            - (Required for new resource) The host name of dedicatated host.
+        required: True
+        type: str
+    domain:
+        description:
+            - (Required for new resource) The domain of dedicatated host.
+        required: True
+        type: str
     router_hostname:
         description:
             - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
@@ -45,16 +49,6 @@ options:
         required: False
         type: list
         elements: str
-    hostname:
-        description:
-            - (Required for new resource) The host name of dedicatated host.
-        required: True
-        type: str
-    domain:
-        description:
-            - (Required for new resource) The domain of dedicatated host.
-        required: True
-        type: str
     datacenter:
         description:
             - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
@@ -66,6 +60,12 @@ options:
         required: False
         type: str
         default: 56_CORES_X_242_RAM_X_1_4_TB
+    hourly_billing:
+        description:
+            - The billing type for the dedicatated host.
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,22 +112,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('router_hostname', 'str'),
     ('hostname', 'str'),
     ('domain', 'str'),
+    ('router_hostname', 'str'),
     ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hourly_billing',
+    'hostname',
+    'domain',
     'router_hostname',
     'wait_time_minutes',
     'tags',
-    'hostname',
-    'domain',
     'datacenter',
     'flavor',
+    'hourly_billing',
 ]
 
 # Params for Data source
@@ -144,9 +144,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hourly_billing=dict(
+    hostname=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    domain=dict(
+        required=False,
+        type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
@@ -157,18 +160,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    domain=dict(
-        required=False,
-        type='str'),
     datacenter=dict(
         required=False,
         type='str'),
     flavor=dict(
         required=False,
         type='str'),
+    hourly_billing=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

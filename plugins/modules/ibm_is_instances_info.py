@@ -17,13 +17,33 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instances' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.32.1
+    - IBM-Cloud terraform-provider-ibm v1.33.1
     - Terraform v0.12.20
 
 options:
     instance_group_name:
         description:
             - Instance group name to filter the instances attached to it
+        required: False
+        type: str
+    vpc:
+        description:
+            - VPC ID to filter the instances attached to it
+        required: False
+        type: str
+    placement_group_name:
+        description:
+            - Name of the placement group to filter the instances attached to it
+        required: False
+        type: str
+    instance_group:
+        description:
+            - Instance group ID to filter the instances attached to it
+        required: False
+        type: str
+    vpc_crn:
+        description:
+            - VPC CRN to filter the instances attached to it
         required: False
         type: str
     resource_group:
@@ -44,26 +64,6 @@ options:
     placement_group:
         description:
             - ID of the placement group to filter the instances attached to it
-        required: False
-        type: str
-    instance_group:
-        description:
-            - Instance group ID to filter the instances attached to it
-        required: False
-        type: str
-    vpc:
-        description:
-            - VPC ID to filter the instances attached to it
-        required: False
-        type: str
-    vpc_crn:
-        description:
-            - VPC CRN to filter the instances attached to it
-        required: False
-        type: str
-    placement_group_name:
-        description:
-            - Name of the placement group to filter the instances attached to it
         required: False
         type: str
     vpc_name:
@@ -109,27 +109,27 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_group_name',
+    'vpc',
+    'placement_group_name',
+    'instance_group',
+    'vpc_crn',
     'resource_group',
     'dedicated_host_name',
     'dedicated_host',
     'placement_group',
-    'instance_group',
-    'vpc',
-    'vpc_crn',
-    'placement_group_name',
     'vpc_name',
 ]
 
 
 TL_CONFLICTS_MAP = {
     'instance_group_name': ['vpc', 'vpc_crn', 'vpc_name', 'instance_group'],
+    'vpc': ['vpc_name', 'vpc_crn', 'instance_group'],
+    'placement_group_name': ['placement_group'],
+    'instance_group': ['vpc', 'vpc_crn', 'vpc_name', 'instance_group_name'],
+    'vpc_crn': ['vpc_name', 'vpc', 'instance_group'],
     'dedicated_host_name': ['dedicated_host'],
     'dedicated_host': ['dedicated_host_name'],
     'placement_group': ['placement_group_name'],
-    'instance_group': ['vpc', 'vpc_crn', 'vpc_name', 'instance_group_name'],
-    'vpc': ['vpc_name', 'vpc_crn', 'instance_group'],
-    'vpc_crn': ['vpc_name', 'vpc', 'instance_group'],
-    'placement_group_name': ['placement_group'],
     'vpc_name': ['vpc', 'vpc_crn', 'instance_group'],
 }
 
@@ -138,6 +138,18 @@ from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud impor
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
     instance_group_name=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    placement_group_name=dict(
+        required=False,
+        type='str'),
+    instance_group=dict(
+        required=False,
+        type='str'),
+    vpc_crn=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -150,18 +162,6 @@ module_args = dict(
         required=False,
         type='str'),
     placement_group=dict(
-        required=False,
-        type='str'),
-    instance_group=dict(
-        required=False,
-        type='str'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    vpc_crn=dict(
-        required=False,
-        type='str'),
-    placement_group_name=dict(
         required=False,
         type='str'),
     vpc_name=dict(
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_is_instances',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.32.1',
+        ibm_provider_version='1.33.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

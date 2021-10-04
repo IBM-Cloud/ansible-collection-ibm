@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.32.1
+- IBM-Cloud terraform-provider-ibm v1.33.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  owner_iam_id (False, str, None)
-    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
-
 
   parent (True, str, None)
     (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
@@ -45,6 +41,10 @@ Parameters
 
   enterprise_account_id (False, str, None)
     The enterprise account ID.
+
+
+  owner_iam_id (False, str, None)
+    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
 
   account_id (False, str, None)
