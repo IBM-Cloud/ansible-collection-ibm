@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    The location or the environment in which instance exists
-
-
   name (True, str, None)
     Resource instance name for example, myobjectstorage
+
+
+  location (False, str, None)
+    The location or the environment in which instance exists
 
 
   resource_group_id (False, str, None)

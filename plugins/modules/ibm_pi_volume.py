@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
@@ -27,26 +27,16 @@ options:
             - (Required for new resource) Size of the volume in GB
         required: True
         type: float
-    pi_volume_type:
-        description:
-            - Volume type
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
     pi_affinity_policy:
         description:
             - Affinity policy for data volume being created
         required: False
         type: str
-    pi_volume_shareable:
+    pi_affinity_volume:
         description:
-            - Flag to indicate if the volume can be shared across multiple instances?
+            - Volume (ID or Name) to base volume affinity policy against;
         required: False
-        type: bool
+        type: str
     pi_affinity_instance:
         description:
             - PVM Instance (ID or Name) to base volume affinity policy against;
@@ -57,9 +47,19 @@ options:
             - (Required for new resource) Volume Name to create
         required: True
         type: str
-    pi_affinity_volume:
+    pi_volume_shareable:
         description:
-            - Volume (ID or Name) to base volume affinity policy against;
+            - Flag to indicate if the volume can be shared across multiple instances?
+        required: False
+        type: bool
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
+    pi_volume_type:
+        description:
+            - Volume type
         required: False
         type: str
     id:
@@ -105,20 +105,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_volume_size', 'float'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_volume_size',
-    'pi_volume_type',
-    'pi_cloud_instance_id',
     'pi_affinity_policy',
-    'pi_volume_shareable',
+    'pi_affinity_volume',
     'pi_affinity_instance',
     'pi_volume_name',
-    'pi_affinity_volume',
+    'pi_volume_shareable',
+    'pi_cloud_instance_id',
+    'pi_volume_type',
 ]
 
 # Params for Data source
@@ -133,8 +133,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'pi_affinity_instance': ['pi_affinity_volume'],
     'pi_affinity_volume': ['pi_affinity_instance'],
+    'pi_affinity_instance': ['pi_affinity_volume'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -144,25 +144,25 @@ module_args = dict(
     pi_volume_size=dict(
         required=False,
         type='float'),
-    pi_volume_type=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     pi_affinity_policy=dict(
         required=False,
         type='str'),
-    pi_volume_shareable=dict(
+    pi_affinity_volume=dict(
         required=False,
-        type='bool'),
+        type='str'),
     pi_affinity_instance=dict(
         required=False,
         type='str'),
     pi_volume_name=dict(
         required=False,
         type='str'),
-    pi_affinity_volume=dict(
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_pi_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_pi_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

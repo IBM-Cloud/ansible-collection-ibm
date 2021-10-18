@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_secrets_manager_secret' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,12 @@ options:
             - The secret type. Supported options include: arbitrary, iam_credentials, username_password.
         required: True
         type: str
+    endpoint_type:
+        description:
+            - Endpoint Type. 'public' or 'private'
+        required: False
+        type: str
+        default: public
     secret_id:
         description:
             - The v4 UUID that uniquely identifies the secret.
@@ -36,12 +42,6 @@ options:
             - Secrets Manager instance GUID
         required: True
         type: str
-    endpoint_type:
-        description:
-            - Endpoint Type. 'public' or 'private'
-        required: False
-        type: str
-        default: public
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -83,9 +83,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'secret_type',
+    'endpoint_type',
     'secret_id',
     'instance_id',
-    'endpoint_type',
 ]
 
 
@@ -99,14 +99,14 @@ module_args = dict(
     secret_type=dict(
         required=True,
         type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     secret_id=dict(
         required=True,
         type='str'),
     instance_id=dict(
         required=True,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_secrets_manager_secret',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

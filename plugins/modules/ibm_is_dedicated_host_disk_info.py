@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_dedicated_host_disk' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    dedicated_host:
-        description:
-            - The dedicated host identifier.
-        required: True
-        type: str
     disk:
         description:
             - The dedicated host disk identifier.
+        required: True
+        type: str
+    dedicated_host:
+        description:
+            - The dedicated host identifier.
         required: True
         type: str
     generation:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('dedicated_host', 'str'),
     ('disk', 'str'),
+    ('dedicated_host', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dedicated_host',
     'disk',
+    'dedicated_host',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dedicated_host=dict(
+    disk=dict(
         required=True,
         type='str'),
-    disk=dict(
+    dedicated_host=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -134,7 +134,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host_disk',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

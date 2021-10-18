@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -35,28 +35,20 @@ Parameters
     (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  logging_account_id (False, str, None)
-    The account ID for IBM Log Analysis with LogDNA log forwarding
+  description (False, str, None)
+    A description of the new Satellite location
 
 
   tags (False, list, None)
     List of tags associated with resource instance
 
 
-  location (True, str, None)
-    (Required for new resource) A unique name for the new Satellite location
+  logging_account_id (False, str, None)
+    The account ID for IBM Log Analysis with LogDNA log forwarding
 
 
-  description (False, str, None)
-    A description of the new Satellite location
-
-
-  cos_config (False, list, None)
-    COSBucket - IBM Cloud Object Storage bucket configuration details
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   cos_credentials (False, list, None)
@@ -65,6 +57,14 @@ Parameters
 
   zones (False, list, None)
     The names of at least three high availability zones to use for the location
+
+
+  location (True, str, None)
+    (Required for new resource) A unique name for the new Satellite location
+
+
+  cos_config (False, list, None)
+    COSBucket - IBM Cloud Object Storage bucket configuration details
 
 
   id (False, str, None)

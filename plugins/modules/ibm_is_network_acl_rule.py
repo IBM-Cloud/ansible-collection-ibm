@@ -18,13 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    action:
+    name:
         description:
-            - (Required for new resource) Whether to allow or deny matching traffic
+            - The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
+    source:
+        description:
+            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+        required: True
+        type: str
+    destination:
+        description:
+            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
         required: True
         type: str
     icmp:
@@ -54,27 +64,17 @@ options:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
-    name:
-        description:
-            - The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
-    source:
-        description:
-            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-        required: True
-        type: str
-    destination:
-        description:
-            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-        required: True
-        type: str
     udp:
         description:
             - None
         required: False
         type: list
         elements: dict
+    action:
+        description:
+            - (Required for new resource) Whether to allow or deny matching traffic
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,36 +121,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('network_acl', 'str'),
-    ('direction', 'str'),
     ('source', 'str'),
     ('destination', 'str'),
+    ('network_acl', 'str'),
+    ('direction', 'str'),
+    ('action', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'action',
+    'name',
+    'source',
+    'destination',
     'icmp',
     'tcp',
     'network_acl',
     'before',
     'direction',
-    'name',
-    'source',
-    'destination',
     'udp',
+    'action',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('network_acl', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'network_acl',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -163,7 +163,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    action=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    source=dict(
+        required=False,
+        type='str'),
+    destination=dict(
         required=False,
         type='str'),
     icmp=dict(
@@ -183,19 +189,13 @@ module_args = dict(
     direction=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    source=dict(
-        required=False,
-        type='str'),
-    destination=dict(
-        required=False,
-        type='str'),
     udp=dict(
         required=False,
         elements='',
         type='list'),
+    action=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -273,7 +273,7 @@ def run_module():
         resource_type='ibm_is_network_acl_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -282,7 +282,7 @@ def run_module():
             resource_type='ibm_is_network_acl_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

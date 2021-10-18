@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (False, str, None)
+    instance group manager name
+
+
+  enable_manager (False, bool, True)
+    enable instance group manager
+
+
   manager_type (False, str, autoscale)
     The type of instance group manager.
+
+
+  aggregation_window (False, int, 90)
+    The time window in seconds to aggregate metrics prior to evaluation
 
 
   cooldown (False, int, 300)
@@ -47,20 +59,8 @@ Parameters
     (Required for new resource) instance group ID
 
 
-  enable_manager (False, bool, True)
-    enable instance group manager
-
-
-  aggregation_window (False, int, 90)
-    The time window in seconds to aggregate metrics prior to evaluation
-
-
   min_membership_count (False, int, 1)
     The minimum number of members in a managed instance group
-
-
-  name (False, str, None)
-    instance group manager name
 
 
   id (False, str, None)

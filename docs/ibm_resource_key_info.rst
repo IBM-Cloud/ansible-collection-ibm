@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
+
 
   name (True, str, None)
     The name of the resource key
@@ -39,10 +43,6 @@ Parameters
 
   resource_alias_id (False, str, None)
     The id of the resource alias
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
 
 
   iaas_classic_username (False, any, None)

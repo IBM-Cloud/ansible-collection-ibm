@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  type (False, str, None)
-    Type of the forwarding rule.
-
 
   match (False, str, None)
     The matching zone or hostname.
@@ -53,6 +49,10 @@ Parameters
 
   description (False, str, None)
     Descriptive text of the forwarding rule.
+
+
+  type (False, str, None)
+    Type of the forwarding rule.
 
 
   id (False, str, None)

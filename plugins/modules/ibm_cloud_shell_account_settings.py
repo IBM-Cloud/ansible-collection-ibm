@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cloud_shell_account_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
+    default_enable_new_features:
+        description:
+            - You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
+        required: False
+        type: bool
     enabled:
         description:
             - When enabled, Cloud Shell is available to all users in the account.
@@ -33,21 +38,11 @@ options:
         required: False
         type: list
         elements: dict
-    account_id:
-        description:
-            - (Required for new resource) The account ID in which the account settings belong to.
-        required: True
-        type: str
     rev:
         description:
             - Unique revision number for the settings object.
         required: False
         type: str
-    default_enable_new_features:
-        description:
-            - You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
-        required: False
-        type: bool
     default_enable_new_regions:
         description:
             - Set whether Cloud Shell is enabled in a specific location for the account. The location determines where user and session data are stored. By default, users are routed to the nearest available location.
@@ -59,6 +54,11 @@ options:
         required: False
         type: list
         elements: dict
+    account_id:
+        description:
+            - (Required for new resource) The account ID in which the account settings belong to.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'default_enable_new_features',
     'enabled',
     'regions',
-    'account_id',
     'rev',
-    'default_enable_new_features',
     'default_enable_new_regions',
     'features',
+    'account_id',
 ]
 
 # Params for Data source
@@ -135,6 +135,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    default_enable_new_features=dict(
+        required=False,
+        type='bool'),
     enabled=dict(
         required=False,
         type='bool'),
@@ -142,15 +145,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    account_id=dict(
-        required=False,
-        type='str'),
     rev=dict(
         required=False,
         type='str'),
-    default_enable_new_features=dict(
-        required=False,
-        type='bool'),
     default_enable_new_regions=dict(
         required=False,
         type='bool'),
@@ -158,6 +155,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    account_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_cloud_shell_account_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_cloud_shell_account_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

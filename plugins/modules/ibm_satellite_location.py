@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,9 @@ options:
             - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
         required: True
         type: str
-    resource_group_id:
+    description:
         description:
-            - ID of the resource group.
-        required: False
-        type: str
-    logging_account_id:
-        description:
-            - The account ID for IBM Log Analysis with LogDNA log forwarding
+            - A description of the new Satellite location
         required: False
         type: str
     tags:
@@ -43,22 +38,16 @@ options:
         required: False
         type: list
         elements: str
-    location:
+    logging_account_id:
         description:
-            - (Required for new resource) A unique name for the new Satellite location
-        required: True
-        type: str
-    description:
-        description:
-            - A description of the new Satellite location
+            - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
         type: str
-    cos_config:
+    resource_group_id:
         description:
-            - COSBucket - IBM Cloud Object Storage bucket configuration details
+            - ID of the resource group.
         required: False
-        type: list
-        elements: dict
+        type: str
     cos_credentials:
         description:
             - COSAuthorization - IBM Cloud Object Storage authorization keys
@@ -71,6 +60,17 @@ options:
         required: False
         type: list
         elements: str
+    location:
+        description:
+            - (Required for new resource) A unique name for the new Satellite location
+        required: True
+        type: str
+    cos_config:
+        description:
+            - COSBucket - IBM Cloud Object Storage bucket configuration details
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -124,14 +124,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'managed_from',
-    'resource_group_id',
-    'logging_account_id',
-    'tags',
-    'location',
     'description',
-    'cos_config',
+    'tags',
+    'logging_account_id',
+    'resource_group_id',
     'cos_credentials',
     'zones',
+    'location',
+    'cos_config',
 ]
 
 # Params for Data source
@@ -153,31 +153,31 @@ module_args = dict(
     managed_from=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    logging_account_id=dict(
+    description=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    location=dict(
+    logging_account_id=dict(
         required=False,
         type='str'),
-    description=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    cos_config=dict(
-        required=False,
-        elements='',
-        type='list'),
     cos_credentials=dict(
         required=False,
         elements='',
         type='list'),
     zones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    location=dict(
+        required=False,
+        type='str'),
+    cos_config=dict(
         required=False,
         elements='',
         type='list'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

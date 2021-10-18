@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,27 +31,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
   force_recovery_time (False, int, None)
     Define timeout to force the instances to start/stop in minutes.
 
 
-  volumes (False, list, None)
-    List of volumes
+  user_data (False, str, None)
+    User data given for the instance
 
 
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  vpc (False, str, None)
-    VPC id
-
-
-  network_interfaces (False, list, None)
+  boot_volume (False, list, None)
     None
 
 
@@ -59,40 +47,24 @@ Parameters
     Id of the instance template
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  primary_network_interface (False, list, None)
+    Primary Network interface info
 
 
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  zone (False, str, None)
-    Zone name
-
-
-  profile (False, str, None)
-    Profile info
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
+  vpc (False, str, None)
+    VPC id
 
 
   keys (False, list, None)
     SSH key Ids for the instance
 
 
-  image (False, str, None)
-    image id
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
 
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
+  resource_group (False, str, None)
+    Instance resource group
 
 
   placement_group (False, str, None)
@@ -103,12 +75,40 @@ Parameters
     list of tags for the instance
 
 
-  boot_volume (False, list, None)
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  image (False, str, None)
+    image id
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  zone (False, str, None)
+    Zone name
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  network_interfaces (False, list, None)
     None
 
 
-  primary_network_interface (False, list, None)
-    Primary Network interface info
+  profile (False, str, None)
+    Profile info
 
 
   id (False, str, None)

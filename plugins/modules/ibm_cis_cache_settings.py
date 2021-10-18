@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
+    purge_all:
+        description:
+            - Purge all setting
+        required: False
+        type: bool
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -32,6 +37,11 @@ options:
             - Cache level setting
         required: False
         type: str
+    browser_expiration:
+        description:
+            - Browser Expiration setting
+        required: False
+        type: int
     development_mode:
         description:
             - Development mode setting
@@ -42,11 +52,6 @@ options:
             - Query String sort setting
         required: False
         type: str
-    purge_all:
-        description:
-            - Purge all setting
-        required: False
-        type: bool
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
@@ -58,11 +63,6 @@ options:
         required: False
         type: str
         default: on
-    browser_expiration:
-        description:
-            - Browser Expiration setting
-        required: False
-        type: int
     purge_by_urls:
         description:
             - Purge by URLs
@@ -133,14 +133,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'purge_all',
     'cis_id',
     'caching_level',
+    'browser_expiration',
     'development_mode',
     'query_string_sort',
-    'purge_all',
     'domain_id',
     'serve_stale_content',
-    'browser_expiration',
     'purge_by_urls',
     'purge_by_tags',
     'purge_by_hosts',
@@ -168,30 +168,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    purge_all=dict(
+        required=False,
+        type='bool'),
     cis_id=dict(
         required=False,
         type='str'),
     caching_level=dict(
         required=False,
         type='str'),
+    browser_expiration=dict(
+        required=False,
+        type='int'),
     development_mode=dict(
         required=False,
         type='str'),
     query_string_sort=dict(
         required=False,
         type='str'),
-    purge_all=dict(
-        required=False,
-        type='bool'),
     domain_id=dict(
         required=False,
         type='str'),
     serve_stale_content=dict(
         required=False,
         type='str'),
-    browser_expiration=dict(
-        required=False,
-        type='int'),
     purge_by_urls=dict(
         required=False,
         elements='',
@@ -269,7 +269,7 @@ def run_module():
         resource_type='ibm_cis_cache_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -278,7 +278,7 @@ def run_module():
             resource_type='ibm_cis_cache_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  catalog_identifier (True, str, None)
-    (Required for new resource) Catalog identifier.
+  offering_id (True, str, None)
+    (Required for new resource) Offering identification.
 
 
-  tags (False, list, None)
-    Tags array.
+  target_kinds (False, list, None)
+    Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
 
 
   content (False, str, None)
@@ -51,12 +51,12 @@ Parameters
     The semver value for this new version, if not found in the zip url package content.
 
 
-  offering_id (True, str, None)
-    (Required for new resource) Offering identification.
+  catalog_identifier (True, str, None)
+    (Required for new resource) Catalog identifier.
 
 
-  target_kinds (False, list, None)
-    Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
+  tags (False, list, None)
+    Tags array.
 
 
   id (False, str, None)

@@ -18,29 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    payload:
+    standard_key:
         description:
-            - None
+            - Standard key type
         required: False
+        type: bool
+        default: False
+    key_protect_id:
+        description:
+            - (Required for new resource) Key protect instance ID
+        required: True
         type: str
     force_delete:
         description:
             - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
-    iv_value:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
-    standard_key:
-        description:
-            - Standard key type
         required: False
         type: bool
         default: False
@@ -49,10 +44,15 @@ options:
             - Only for imported root key
         required: False
         type: str
-    key_protect_id:
+    iv_value:
         description:
-            - (Required for new resource) Key protect instance ID
-        required: True
+            - Only for imported root key
+        required: False
+        type: str
+    payload:
+        description:
+            - None
+        required: False
         type: str
     key_name:
         description:
@@ -111,12 +111,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'payload',
-    'force_delete',
-    'iv_value',
     'standard_key',
-    'encrypted_nonce',
     'key_protect_id',
+    'force_delete',
+    'encrypted_nonce',
+    'iv_value',
+    'payload',
     'key_name',
 ]
 
@@ -137,22 +137,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    payload=dict(
+    standard_key=dict(
+        required=False,
+        type='bool'),
+    key_protect_id=dict(
         required=False,
         type='str'),
     force_delete=dict(
         required=False,
         type='bool'),
-    iv_value=dict(
-        required=False,
-        type='str'),
-    standard_key=dict(
-        required=False,
-        type='bool'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
-    key_protect_id=dict(
+    iv_value=dict(
+        required=False,
+        type='str'),
+    payload=dict(
         required=False,
         type='str'),
     key_name=dict(
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

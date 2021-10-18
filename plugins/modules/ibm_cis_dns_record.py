@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,17 @@ options:
             - DNS record name
         required: False
         type: str
+    type:
+        description:
+            - (Required for new resource) Record type
+        required: True
+        type: str
+    proxied:
+        description:
+            - Boolean value true if proxied else flase
+        required: False
+        type: bool
+        default: False
     ttl:
         description:
             - TTL value
@@ -38,25 +49,9 @@ options:
             - (Required for new resource) CIS object id or CRN
         required: True
         type: str
-    priority:
-        description:
-            - Priority Value
-        required: False
-        type: int
-    proxied:
-        description:
-            - Boolean value true if proxied else flase
-        required: False
-        type: bool
-        default: False
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Record type
         required: True
         type: str
     content:
@@ -69,6 +64,11 @@ options:
             - None
         required: False
         type: dict
+    priority:
+        description:
+            - Priority Value
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,22 +115,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'type',
+    'proxied',
     'ttl',
     'cis_id',
-    'priority',
-    'proxied',
     'domain_id',
-    'type',
     'content',
     'data',
+    'priority',
 ]
 
 # Params for Data source
@@ -152,22 +152,19 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    proxied=dict(
+        required=False,
+        type='bool'),
     ttl=dict(
         required=False,
         type='int'),
     cis_id=dict(
         required=False,
         type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
-    proxied=dict(
-        required=False,
-        type='bool'),
     domain_id=dict(
-        required=False,
-        type='str'),
-    type=dict(
         required=False,
         type='str'),
     content=dict(
@@ -176,6 +173,9 @@ module_args = dict(
     data=dict(
         required=False,
         type='dict'),
+    priority=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

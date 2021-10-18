@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,15 +31,75 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
+  domain (False, str, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  reserved_instance_primary_disk (False, int, None)
+    The primary disk of reserved instance
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  hostname (False, str, None)
+    None
 
 
   cores (False, int, None)
     None
 
 
-  transient (False, bool, None)
+  dedicated_host_name (False, str, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
+    None
+
+
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  memory (False, int, None)
+    None
+
+
+  evault (False, int, None)
     None
 
 
@@ -47,7 +107,7 @@ Parameters
     The placement group name
 
 
-  private_vlan_id (False, int, None)
+  transient (False, bool, None)
     None
 
 
@@ -59,27 +119,11 @@ Parameters
     None
 
 
-  private_network_only (False, bool, False)
-    None
-
-
-  disks (False, list, None)
-    None
-
-
-  image_id (False, int, None)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
   public_vlan_id (False, int, None)
     None
 
 
-  private_subnet (False, str, None)
+  public_subnet (False, str, None)
     None
 
 
@@ -95,87 +139,11 @@ Parameters
     None
 
 
-  os_reference_code (False, str, None)
-    None
+  reserved_capacity_name (False, str, None)
+    The reserved group id
 
 
-  tags (False, list, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  dedicated_acct_host_only (False, bool, None)
-    None
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  hourly_billing (False, bool, True)
-    None
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  memory (False, int, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  public_security_group_ids (False, list, None)
+  disks (False, list, None)
     None
 
 
@@ -183,15 +151,59 @@ Parameters
     None
 
 
-  hostname (False, str, None)
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  reserved_capacity_id (False, int, None)
+    The reserved group id
+
+
+  image_id (False, int, None)
     None
 
 
-  datacenter (False, str, None)
+  hourly_billing (False, bool, True)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  dedicated_acct_host_only (False, bool, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
     None
 
 
   ipv6_enabled (False, bool, False)
+    None
+
+
+  private_network_only (False, bool, False)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  public_bandwidth_limited (False, int, None)
     None
 
 

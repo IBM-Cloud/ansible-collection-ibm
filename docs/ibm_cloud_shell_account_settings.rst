@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  default_enable_new_features (False, bool, None)
+    You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
+
 
   enabled (False, bool, None)
     When enabled, Cloud Shell is available to all users in the account.
@@ -39,16 +43,8 @@ Parameters
     List of Cloud Shell region settings.
 
 
-  account_id (True, str, None)
-    (Required for new resource) The account ID in which the account settings belong to.
-
-
   rev (False, str, None)
     Unique revision number for the settings object.
-
-
-  default_enable_new_features (False, bool, None)
-    You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
 
 
   default_enable_new_regions (False, bool, None)
@@ -57,6 +53,10 @@ Parameters
 
   features (False, list, None)
     List of Cloud Shell features.
+
+
+  account_id (True, str, None)
+    (Required for new resource) The account ID in which the account settings belong to.
 
 
   id (False, str, None)

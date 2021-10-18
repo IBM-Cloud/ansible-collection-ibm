@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,92 +31,92 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
-
-
-  patch_version (False, str, None)
-    Kubernetes patch version
-
-
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  worker_labels (False, dict, None)
-    Labels for default worker pool
-
-
-  tags (False, list, None)
-    List of tags for the resources
-
-
-  kube_version (False, str, None)
-    Kubernetes version
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
-
-
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  zones (True, list, None)
-    (Required for new resource) Zone info
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
 
 
   vpc_id (True, str, None)
     (Required for new resource) The vpc id where the cluster is
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
   retry_patch_version (False, int, None)
     Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
 
 
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  flavor (True, str, None)
-    (Required for new resource) Cluster nodes flavour
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
 
 
   name (True, str, None)
     (Required for new resource) The cluster name
 
 
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
+  kube_version (False, str, None)
+    Kubernetes version
+
+
+  patch_version (False, str, None)
+    Kubernetes patch version
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+
+
+  zones (True, list, None)
+    (Required for new resource) Zone info
+
+
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
+
+
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
+
+
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
+
+
+  flavor (True, str, None)
+    (Required for new resource) Cluster nodes flavour
+
+
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
 
 
   id (False, str, None)

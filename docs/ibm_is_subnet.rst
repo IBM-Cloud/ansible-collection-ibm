@@ -23,13 +23,33 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  public_gateway (False, str, None)
+    Public Gateway of the subnet
+
+
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  ipv4_cidr_block (False, str, None)
+    IPV4 subnet - CIDR block
+
+
+  total_ipv4_address_count (False, int, None)
+    The total number of IPv4 addresses in this subnet.
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
 
   ip_version (False, str, ipv4)
     The IP version(s) to support for this subnet.
@@ -43,40 +63,20 @@ Parameters
     List of tags
 
 
-  resource_group (False, str, None)
-    The resource group for this subnet
-
-
-  routing_table (False, str, None)
-    routing table id that is associated with the subnet
-
-
-  total_ipv4_address_count (False, int, None)
-    The total number of IPv4 addresses in this subnet.
-
-
-  access_tags (False, list, None)
-    List of access management tags
-
-
-  public_gateway (False, str, None)
-    Public Gateway of the subnet
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
+  network_acl (False, str, None)
+    The network ACL for this subnet
 
 
   zone (True, str, None)
     (Required for new resource) Subnet zone info
 
 
-  ipv4_cidr_block (False, str, None)
-    IPV4 subnet - CIDR block
+  resource_group (False, str, None)
+    The resource group for this subnet
 
 
-  network_acl (False, str, None)
-    The network ACL for this subnet
+  routing_table (False, str, None)
+    routing table id that is associated with the subnet
 
 
   id (False, str, None)

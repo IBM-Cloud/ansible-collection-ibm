@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_package' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    sensitivity:
-        description:
-            - (Required for new resource) WAF pakcage sensitivity
-        required: True
-        type: str
-    action_mode:
-        description:
-            - (Required for new resource) WAF pakcage action mode
-        required: True
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS Intance CRN
@@ -45,6 +35,16 @@ options:
     package_id:
         description:
             - (Required for new resource) WAF pakcage ID
+        required: True
+        type: str
+    sensitivity:
+        description:
+            - (Required for new resource) WAF pakcage sensitivity
+        required: True
+        type: str
+    action_mode:
+        description:
+            - (Required for new resource) WAF pakcage action mode
         required: True
         type: str
     id:
@@ -93,20 +93,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('sensitivity', 'str'),
-    ('action_mode', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('package_id', 'str'),
+    ('sensitivity', 'str'),
+    ('action_mode', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'sensitivity',
-    'action_mode',
     'cis_id',
     'domain_id',
     'package_id',
+    'sensitivity',
+    'action_mode',
 ]
 
 # Params for Data source
@@ -123,12 +123,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    sensitivity=dict(
-        required=False,
-        type='str'),
-    action_mode=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -136,6 +130,12 @@ module_args = dict(
         required=False,
         type='str'),
     package_id=dict(
+        required=False,
+        type='str'),
+    sensitivity=dict(
+        required=False,
+        type='str'),
+    action_mode=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_package',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

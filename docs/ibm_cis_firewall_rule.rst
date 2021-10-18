@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  description (False, str, None)
-    Firewallrules Description
-
 
   paused (False, bool, None)
     Firewallrules Paused
@@ -57,6 +53,10 @@ Parameters
 
   priority (False, int, None)
     Firewallrules Action
+
+
+  description (False, str, None)
+    Firewallrules Description
 
 
   id (False, str, None)

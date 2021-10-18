@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Gateway resource group
+  carrier_name (False, str, None)
+    Carrier name
 
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  port (False, str, None)
-    Gateway port
+  customer_name (False, str, None)
+    Customer name
 
 
   global_ (True, bool, None)
@@ -51,56 +47,60 @@ Parameters
     (Required for new resource) Gateway speed in megabits per second
 
 
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
-
-
   loa_reject_reason (False, str, None)
     Loa reject reason
 
 
-  connection_mode (False, str, None)
-    Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
-
-
-  cross_connect_router (False, str, None)
-    Cross connect router
-
-
-  metered (True, bool, None)
-    (Required for new resource) Metered billing option
-
-
-  authentication_key (False, str, None)
-    BGP MD5 authentication key
-
-
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
-
-
-  carrier_name (False, str, None)
-    Carrier name
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  macsec_config (False, list, None)
-    MACsec configuration information
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
 
 
   tags (False, list, None)
     Tags for the direct link gateway
 
 
-  customer_name (False, str, None)
-    Customer name
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  port (False, str, None)
+    Gateway port
+
+
+  macsec_config (False, list, None)
+    MACsec configuration information
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  metered (True, bool, None)
+    (Required for new resource) Metered billing option
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  resource_group (False, str, None)
+    Gateway resource group
+
+
+  authentication_key (False, str, None)
+    BGP MD5 authentication key
+
+
+  connection_mode (False, str, None)
+    Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
+
+
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
 
 
   type (True, str, None)

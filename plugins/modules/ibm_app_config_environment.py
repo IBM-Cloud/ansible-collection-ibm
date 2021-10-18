@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_environment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    guid:
+    environment_id:
         description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+            - (Required for new resource) Environment Id.
         required: True
         type: str
     tags:
@@ -37,14 +37,14 @@ options:
             - Color code to distinguish the environment.
         required: False
         type: str
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Environment name.
-        required: True
-        type: str
-    environment_id:
-        description:
-            - (Required for new resource) Environment Id.
         required: True
         type: str
     description:
@@ -98,31 +98,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('environment_id', 'str'),
     ('guid', 'str'),
     ('name', 'str'),
-    ('environment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
+    'environment_id',
     'tags',
     'color_code',
+    'guid',
     'name',
-    'environment_id',
     'description',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('environment_id', 'str'),
     ('guid', 'str'),
+    ('environment_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'guid',
     'environment_id',
     'expand',
-    'guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -132,7 +132,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
+    environment_id=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -141,10 +141,10 @@ module_args = dict(
     color_code=dict(
         required=False,
         type='str'),
-    name=dict(
+    guid=dict(
         required=False,
         type='str'),
-    environment_id=dict(
+    name=dict(
         required=False,
         type='str'),
     description=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_app_config_environment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_app_config_environment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

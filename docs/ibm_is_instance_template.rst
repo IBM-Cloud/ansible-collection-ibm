@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,64 +31,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) Instance Template name
-
-
-  volume_attachments (False, list, None)
-    None
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  resource_group (False, str, None)
-    Instance template resource group
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   profile (True, str, None)
     (Required for new resource) Profile info
 
 
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
   dedicated_host_group (False, str, None)
     Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  name (True, str, None)
+    (Required for new resource) Instance Template name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   id (False, str, None)

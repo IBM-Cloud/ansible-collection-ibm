@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
+    space_guid:
+        description:
+            - The guid of the space
+        required: True
+        type: str
     domain_guid:
         description:
             - The guid of the domain
@@ -40,11 +45,6 @@ options:
         description:
             - The port of the route
         required: False
-        type: str
-    space_guid:
-        description:
-            - The guid of the space
-        required: True
         type: str
     iaas_classic_username:
         description:
@@ -79,17 +79,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_guid', 'str'),
     ('space_guid', 'str'),
+    ('domain_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'space_guid',
     'domain_guid',
     'host',
     'path',
     'port',
-    'space_guid',
 ]
 
 
@@ -100,6 +100,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    space_guid=dict(
+        required=True,
+        type='str'),
     domain_guid=dict(
         required=True,
         type='str'),
@@ -111,9 +114,6 @@ module_args = dict(
         type='str'),
     port=dict(
         required=False,
-        type='str'),
-    space_guid=dict(
-        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -149,7 +149,7 @@ def run_module():
         resource_type='ibm_app_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

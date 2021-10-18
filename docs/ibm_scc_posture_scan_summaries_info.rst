@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile_id (True, str, None)
+    The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The URL contains the ID.
+
+
   scope_id (True, str, None)
     The scope ID. This can be obtained from the Security and Compliance Center UI by clicking on the scope name. The URL contains the ID.
 
 
   scan_id (False, str, None)
     The ID of the scan.
-
-
-  profile_id (True, str, None)
-    The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The URL contains the ID.
 
 
   iaas_classic_username (False, any, None)

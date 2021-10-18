@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
-    field:
-        description:
-            - None
-        required: False
-        type: str
     listener:
         description:
             - (Required for new resource) Listener ID.
@@ -42,6 +37,11 @@ options:
             - (Required for new resource) Condition info of the rule.
         required: True
         type: str
+    type:
+        description:
+            - (Required for new resource) Policy rule type.
+        required: True
+        type: str
     value:
         description:
             - (Required for new resource) policy rule value info
@@ -52,10 +52,10 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: True
         type: str
-    type:
+    field:
         description:
-            - (Required for new resource) Policy rule type.
-        required: True
+            - None
+        required: False
         type: str
     id:
         description:
@@ -106,20 +106,20 @@ TL_REQUIRED_PARAMETERS = [
     ('listener', 'str'),
     ('policy', 'str'),
     ('condition', 'str'),
+    ('type', 'str'),
     ('value', 'str'),
     ('lb', 'str'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'field',
     'listener',
     'policy',
     'condition',
+    'type',
     'value',
     'lb',
-    'type',
+    'field',
 ]
 
 # Params for Data source
@@ -136,9 +136,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    field=dict(
-        required=False,
-        type='str'),
     listener=dict(
         required=False,
         type='str'),
@@ -148,13 +145,16 @@ module_args = dict(
     condition=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     value=dict(
         required=False,
         type='str'),
     lb=dict(
         required=False,
         type='str'),
-    type=dict(
+    field=dict(
         required=False,
         type='str'),
     id=dict(
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

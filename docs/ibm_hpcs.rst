@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  failover_units (False, int, None)
-    The number of failover crypto units for your service instance
+  service (False, str, hs-crypto)
+    The name of the service offering `hs-crypto`
+
+
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
 
 
   admins (True, list, None)
     (Required for new resource) Crypto Unit Administrators
 
 
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  failover_units (False, int, None)
+    The number of failover crypto units for your service instance
+
+
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
   units (True, int, None)
     (Required for new resource) The number of operational crypto units for your service instance
 
 
-  service (False, str, hs-crypto)
-    The name of the service offering `hs-crypto`
+  plan (True, str, None)
+    (Required for new resource) The plan type of the HPCS Instance
 
 
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   name (True, str, None)
@@ -59,28 +75,12 @@ Parameters
     (Required for new resource) Revocation Threshold Value
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the HPCS Instance
-
-
   tags (False, list, None)
     None
 
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
 
 
   id (False, str, None)

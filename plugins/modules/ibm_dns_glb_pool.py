@@ -18,10 +18,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb_pool' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
+    instance_id:
+        description:
+            - (Required for new resource) Instance Id
+        required: True
+        type: str
+    healthy_origins_threshold:
+        description:
+            - The minimum number of origins that must be healthy for this pool to serve traffic
+        required: False
+        type: int
+    monitor:
+        description:
+            - The ID of the load balancer monitor to be associated to this pool
+        required: False
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer pool
+        required: False
+        type: str
     origins:
         description:
             - (Required for new resource) Origins info
@@ -34,19 +54,14 @@ options:
         required: False
         type: list
         elements: str
-    instance_id:
-        description:
-            - (Required for new resource) Instance Id
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) The unique identifier of a service instance.
         required: True
         type: str
-    description:
+    healthcheck_region:
         description:
-            - Descriptive text of the load balancer pool
+            - Health check region of VSIs
         required: False
         type: str
     enabled:
@@ -54,21 +69,6 @@ options:
             - Whether the load balancer pool is enabled
         required: False
         type: bool
-    healthy_origins_threshold:
-        description:
-            - The minimum number of origins that must be healthy for this pool to serve traffic
-        required: False
-        type: int
-    monitor:
-        description:
-            - The ID of the load balancer monitor to be associated to this pool
-        required: False
-        type: str
-    healthcheck_region:
-        description:
-            - Health check region of VSIs
-        required: False
-        type: str
     notification_channel:
         description:
             - The notification channel,It is a webhook url
@@ -120,22 +120,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('origins', 'list'),
     ('instance_id', 'str'),
+    ('origins', 'list'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'origins',
-    'healthcheck_subnets',
     'instance_id',
-    'name',
-    'description',
-    'enabled',
     'healthy_origins_threshold',
     'monitor',
+    'description',
+    'origins',
+    'healthcheck_subnets',
+    'name',
     'healthcheck_region',
+    'enabled',
     'notification_channel',
 ]
 
@@ -153,6 +153,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    instance_id=dict(
+        required=False,
+        type='str'),
+    healthy_origins_threshold=dict(
+        required=False,
+        type='int'),
+    monitor=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     origins=dict(
         required=False,
         elements='',
@@ -161,27 +173,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    instance_id=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    healthy_origins_threshold=dict(
-        required=False,
-        type='int'),
-    monitor=dict(
         required=False,
         type='str'),
     healthcheck_region=dict(
         required=False,
         type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     notification_channel=dict(
         required=False,
         type='str'),
@@ -250,7 +250,7 @@ def run_module():
         resource_type='ibm_dns_glb_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

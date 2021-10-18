@@ -18,10 +18,42 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_si_note' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.33.1
+    - IBM-Cloud terraform-provider-ibm v1.34.0
     - Terraform v0.12.20
 
 options:
+    shared:
+        description:
+            - True if this note can be shared by multiple accounts.
+        required: False
+        type: bool
+        default: True
+    note_id:
+        description:
+            - (Required for new resource) The ID of the note.
+        required: True
+        type: str
+    short_description:
+        description:
+            - (Required for new resource) A one sentence description of your note.
+        required: True
+        type: str
+    long_description:
+        description:
+            - (Required for new resource) A more detailed description of your note.
+        required: True
+        type: str
+    related_url:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    provider_id:
+        description:
+            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+        required: True
+        type: str
     kind:
         description:
             - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
@@ -33,16 +65,12 @@ options:
         required: True
         type: list
         elements: dict
-    long_description:
+    finding:
         description:
-            - (Required for new resource) A more detailed description of your note.
-        required: True
-        type: str
-    note_id:
-        description:
-            - (Required for new resource) The ID of the note.
-        required: True
-        type: str
+            - FindingType provides details about a finding note.
+        required: False
+        type: list
+        elements: dict
     kpi:
         description:
             - KpiType provides details about a KPI note.
@@ -55,23 +83,6 @@ options:
         required: False
         type: list
         elements: dict
-    short_description:
-        description:
-            - (Required for new resource) A one sentence description of your note.
-        required: True
-        type: str
-    related_url:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    shared:
-        description:
-            - True if this note can be shared by multiple accounts.
-        required: False
-        type: bool
-        default: True
     section:
         description:
             - Card provides details about a card kind of note.
@@ -83,17 +94,6 @@ options:
             - None
         required: False
         type: str
-    provider_id:
-        description:
-            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-        required: True
-        type: str
-    finding:
-        description:
-            - FindingType provides details about a finding note.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -140,41 +140,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('kind', 'str'),
-    ('reported_by', 'list'),
-    ('long_description', 'str'),
     ('note_id', 'str'),
     ('short_description', 'str'),
+    ('long_description', 'str'),
     ('provider_id', 'str'),
+    ('kind', 'str'),
+    ('reported_by', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'shared',
+    'note_id',
+    'short_description',
+    'long_description',
+    'related_url',
+    'provider_id',
     'kind',
     'reported_by',
-    'long_description',
-    'note_id',
+    'finding',
     'kpi',
     'card',
-    'short_description',
-    'related_url',
-    'shared',
     'section',
     'account_id',
-    'provider_id',
-    'finding',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('note_id', 'str'),
     ('provider_id', 'str'),
+    ('note_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'provider_id',
     'note_id',
     'account_id',
-    'provider_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -184,6 +184,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    shared=dict(
+        required=False,
+        type='bool'),
+    note_id=dict(
+        required=False,
+        type='str'),
+    short_description=dict(
+        required=False,
+        type='str'),
+    long_description=dict(
+        required=False,
+        type='str'),
+    related_url=dict(
+        required=False,
+        elements='',
+        type='list'),
+    provider_id=dict(
+        required=False,
+        type='str'),
     kind=dict(
         required=False,
         type='str'),
@@ -191,12 +210,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    long_description=dict(
+    finding=dict(
         required=False,
-        type='str'),
-    note_id=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     kpi=dict(
         required=False,
         elements='',
@@ -205,16 +222,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    short_description=dict(
-        required=False,
-        type='str'),
-    related_url=dict(
-        required=False,
-        elements='',
-        type='list'),
-    shared=dict(
-        required=False,
-        type='bool'),
     section=dict(
         required=False,
         elements='',
@@ -222,13 +229,6 @@ module_args = dict(
     account_id=dict(
         required=False,
         type='str'),
-    provider_id=dict(
-        required=False,
-        type='str'),
-    finding=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -294,7 +294,7 @@ def run_module():
         resource_type='ibm_scc_si_note',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.33.1',
+        ibm_provider_version='1.34.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -303,7 +303,7 @@ def run_module():
             resource_type='ibm_scc_si_note',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.33.1',
+            ibm_provider_version='1.34.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

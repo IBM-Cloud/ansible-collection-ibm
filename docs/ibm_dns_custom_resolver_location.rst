@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.33.1
+- IBM-Cloud terraform-provider-ibm v1.34.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resolver_id (True, str, None)
+    (Required for new resource) Custom Resolver ID
+
 
   subnet_crn (True, str, None)
     (Required for new resource) CRLocation Subnet CRN
@@ -41,10 +45,6 @@ Parameters
 
   instance_id (True, str, None)
     (Required for new resource) Instance ID
-
-
-  resolver_id (True, str, None)
-    (Required for new resource) Custom Resolver ID
 
 
   id (False, str, None)
