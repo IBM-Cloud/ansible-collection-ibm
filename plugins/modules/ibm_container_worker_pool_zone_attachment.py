@@ -18,31 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool_zone_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
-    worker_pool:
-        description:
-            - (Required for new resource) Workerpool name
-        required: True
-        type: str
-    private_vlan_id:
-        description:
-            - None
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    wait_till_albs:
-        description:
-            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
-        required: False
-        type: bool
-        default: True
     zone:
         description:
             - (Required for new resource) Zone name
@@ -53,11 +32,32 @@ options:
             - (Required for new resource) cluster name or ID
         required: True
         type: str
+    worker_pool:
+        description:
+            - (Required for new resource) Workerpool name
+        required: True
+        type: str
     public_vlan_id:
         description:
             - None
         required: False
         type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    private_vlan_id:
+        description:
+            - None
+        required: False
+        type: str
+    wait_till_albs:
+        description:
+            - wait_till_albs can be configured to wait for albs during the worker pool zone attachment.
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,20 +84,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker_pool', 'str'),
     ('zone', 'str'),
     ('cluster', 'str'),
+    ('worker_pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_pool',
-    'private_vlan_id',
-    'resource_group_id',
-    'wait_till_albs',
     'zone',
     'cluster',
+    'worker_pool',
     'public_vlan_id',
+    'resource_group_id',
+    'private_vlan_id',
+    'wait_till_albs',
 ]
 
 # Params for Data source
@@ -114,27 +114,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_pool=dict(
-        required=False,
-        type='str'),
-    private_vlan_id=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    wait_till_albs=dict(
-        required=False,
-        type='bool'),
     zone=dict(
         required=False,
         type='str'),
     cluster=dict(
         required=False,
         type='str'),
+    worker_pool=dict(
+        required=False,
+        type='str'),
     public_vlan_id=dict(
         required=False,
         type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='str'),
+    wait_till_albs=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_worker_pool_zone_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

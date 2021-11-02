@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,31 @@ options:
             - Connection limit for Loadbalancer
         required: False
         type: int
+    port:
+        description:
+            - Loadbalancer listener port
+        required: False
+        type: int
+    https_redirect_status_code:
+        description:
+            - The HTTP status code to be returned in the redirect response
+        required: False
+        type: int
+    https_redirect_uri:
+        description:
+            - Target URI where traffic will be redirected
+        required: False
+        type: str
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: True
+        type: str
     certificate_instance:
         description:
             - certificate instance for the Loadbalancer
@@ -37,14 +62,9 @@ options:
             - Listener will forward proxy protocol
         required: False
         type: bool
-    protocol:
+    https_redirect_listener:
         description:
-            - (Required for new resource) Loadbalancer protocol
-        required: True
-        type: str
-    default_pool:
-        description:
-            - Loadbalancer default pool info
+            - ID of the listener that will be set as http redirect target
         required: False
         type: str
     lb:
@@ -52,11 +72,6 @@ options:
             - (Required for new resource) Loadbalancer listener ID
         required: True
         type: str
-    port:
-        description:
-            - (Required for new resource) Loadbalancer listener port
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,18 +120,20 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('protocol', 'str'),
     ('lb', 'str'),
-    ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'connection_limit',
+    'port',
+    'https_redirect_status_code',
+    'https_redirect_uri',
+    'default_pool',
+    'protocol',
     'certificate_instance',
     'accept_proxy_protocol',
-    'protocol',
-    'default_pool',
+    'https_redirect_listener',
     'lb',
-    'port',
 ]
 
 # Params for Data source
@@ -136,24 +153,33 @@ module_args = dict(
     connection_limit=dict(
         required=False,
         type='int'),
+    port=dict(
+        required=False,
+        type='int'),
+    https_redirect_status_code=dict(
+        required=False,
+        type='int'),
+    https_redirect_uri=dict(
+        required=False,
+        type='str'),
+    default_pool=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
     certificate_instance=dict(
         required=False,
         type='str'),
     accept_proxy_protocol=dict(
         required=False,
         type='bool'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    default_pool=dict(
+    https_redirect_listener=dict(
         required=False,
         type='str'),
     lb=dict(
         required=False,
         type='str'),
-    port=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -231,7 +257,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

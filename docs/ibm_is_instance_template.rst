@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  boot_volume (False, list, None)
+    None
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  volume_attachments (False, list, None)
+    None
 
 
   profile (True, str, None)
     (Required for new resource) Profile info
 
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   user_data (False, str, None)
     User data given for the instance
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
   image (True, str, None)
@@ -55,16 +75,12 @@ Parameters
     (Required for new resource) Instance Template name
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  volume_attachments (False, list, None)
-    None
-
-
-  boot_volume (False, list, None)
-    None
+  resource_group (False, str, None)
+    Instance template resource group
 
 
   placement_group (False, str, None)
@@ -73,22 +89,6 @@ Parameters
 
   network_interfaces (False, list, None)
     None
-
-
-  resource_group (False, str, None)
-    Instance template resource group
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
 
 
   id (False, str, None)

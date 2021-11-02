@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
-    paused:
-        description:
-            - Firewallrules Paused
-        required: False
-        type: bool
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -57,6 +52,11 @@ options:
             - Firewallrules Description
         required: False
         type: str
+    paused:
+        description:
+            - Firewallrules Paused
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,13 +111,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'paused',
     'cis_id',
     'domain_id',
     'filter_id',
     'action',
     'priority',
     'description',
+    'paused',
 ]
 
 # Params for Data source
@@ -134,9 +134,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    paused=dict(
-        required=False,
-        type='bool'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -155,6 +152,9 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
+    paused=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_cis_firewall_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

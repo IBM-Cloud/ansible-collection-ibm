@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,44 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  always_use_https (False, str, None)
-    always_use_https setting
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  browser_check (False, str, None)
+    browser_check setting
 
 
   hotlink_protection (False, str, None)
     hotlink_protection setting
 
 
-  http2 (False, str, None)
-    http2 setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
 
 
   cipher (False, list, None)
     Cipher settings
 
 
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  dnssec (False, str, None)
+    DNS Sec setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
   minify (False, list, None)
     Minify setting
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  http2 (False, str, None)
+    http2 setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   waf (False, str, None)
     WAF setting
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  brotli (False, str, None)
-    brotli setting
 
 
   script_load_optimization (False, str, None)
@@ -79,88 +87,80 @@ Parameters
     tls_client_auth setting
 
 
-  mobile_redirect (False, list, None)
-    None
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
 
 
   origin_error_page_pass_thru (False, str, None)
     origin_error_page_pass_thru setting
 
 
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
-
-
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
 
 
   challenge_ttl (False, int, None)
     Challenge TTL setting
 
 
-  cname_flattening (False, str, None)
-    cname_flattening setting
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
   response_buffering (False, str, None)
     response_buffering setting
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
   websockets (False, str, None)
     websockets setting
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  mobile_redirect (False, list, None)
+    None
 
 
-  dnssec (False, str, None)
-    DNS Sec setting
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
 
 
   opportunistic_encryption (False, str, None)
     opportunistic_encryption setting
 
 
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
 
 
   id (False, str, None)

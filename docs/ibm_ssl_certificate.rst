@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,52 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_type (True, str, None)
-    (Required for new resource) server type
-
-
-  validity_months (True, int, None)
-    (Required for new resource) vslidity of the ssl certificate in month
-
-
-  technical_contact_same_as_org_address_flag (False, bool, False)
-    Technical contact same as org address flag
-
-
-  billing_address_same_as_organization_flag (False, bool, False)
-    billing address same as organization flag
-
-
-  billing_contact (False, list, None)
-    None
-
-
   billing_contact_same_as_technical_flag (False, bool, False)
     billing contact
 
 
-  administrative_address_same_as_organization_flag (False, bool, False)
-    administrative address same as organization flag
-
-
-  ssl_type (True, str, None)
-    (Required for new resource) ssl type
-
-
-  certificate_signing_request (True, str, None)
-    (Required for new resource) certificate signing request info
-
-
-  renewal_flag (False, bool, True)
-    Renewal flag
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    Administrative contact same as technical flag
-
-
   organization_information (True, list, None)
     (Required for new resource) Organization information
+
+
+  billing_contact (False, list, None)
+    None
 
 
   administrative_contact (False, list, None)
@@ -91,8 +55,44 @@ Parameters
     (Required for new resource) Email address of the approver
 
 
+  ssl_type (True, str, None)
+    (Required for new resource) ssl type
+
+
+  server_type (True, str, None)
+    (Required for new resource) server type
+
+
+  validity_months (True, int, None)
+    (Required for new resource) vslidity of the ssl certificate in month
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    Administrative contact same as technical flag
+
+
+  administrative_address_same_as_organization_flag (False, bool, False)
+    administrative address same as organization flag
+
+
   technical_contact (True, list, None)
     (Required for new resource) Technical contact info
+
+
+  certificate_signing_request (True, str, None)
+    (Required for new resource) certificate signing request info
+
+
+  renewal_flag (False, bool, True)
+    Renewal flag
+
+
+  technical_contact_same_as_org_address_flag (False, bool, False)
+    Technical contact same as org address flag
+
+
+  billing_address_same_as_organization_flag (False, bool, False)
+    billing address same as organization flag
 
 
   id (False, str, None)

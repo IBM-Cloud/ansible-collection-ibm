@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_network_name (True, str, None)
+    (Required for new resource)
+
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource)
@@ -41,10 +45,6 @@ Parameters
 
   pi_network_port_ipaddress (False, str, None)
     None
-
-
-  pi_network_name (True, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)

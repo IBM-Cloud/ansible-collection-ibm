@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,19 +31,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile (False, str, None)
+    The profile to use for this load balancer.
+
+
   logging (False, bool, False)
     Logging of Load Balancer
 
 
-  profile (False, str, None)
-    The profile to use for this load balancer.
+  type (False, str, public)
+    Load Balancer type
 
 
   subnets (True, list, None)
     (Required for new resource) Load Balancer subnets list
 
 
-  resource_group (False, str, None)
+  tags (False, list, None)
     None
 
 
@@ -55,12 +59,12 @@ Parameters
     Load Balancer securitygroups list
 
 
-  tags (False, list, None)
+  route_mode (False, bool, False)
+    Indicates whether route mode is enabled for this load balancer
+
+
+  resource_group (False, str, None)
     None
-
-
-  type (False, str, public)
-    Load Balancer type
 
 
   id (False, str, None)

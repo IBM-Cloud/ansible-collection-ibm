@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
+
+  description (False, str, None)
+    Description of the Policy
+
 
   ibm_id (True, str, None)
     (Required for new resource) The ibm id or email of user
@@ -49,14 +57,6 @@ Parameters
 
   account_management (False, bool, False)
     Give access to all account management services
-
-
-  tags (False, list, None)
-    None
-
-
-  description (False, str, None)
-    Description of the Policy
 
 
   id (False, str, None)

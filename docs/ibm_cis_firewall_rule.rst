@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  paused (False, bool, None)
-    Firewallrules Paused
-
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -57,6 +53,10 @@ Parameters
 
   description (False, str, None)
     Firewallrules Description
+
+
+  paused (False, bool, None)
+    Firewallrules Paused
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -35,12 +35,8 @@ Parameters
     If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
 
 
-  delete_volume_on_instance_delete (False, bool, None)
-    If set to true, when deleting the instance the volume will also be deleted.
-
-
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
+  iops (False, int, None)
+    The maximum I/O operations per second (IOPS) for the volume.
 
 
   encryption_key (False, str, None)
@@ -55,24 +51,28 @@ Parameters
     Instance id
 
 
-  snapshot (False, str, None)
-    The snapshot of the volume to be attached
-
-
   profile (False, str, None)
     The  globally unique name for the volume profile to use for this volume.
+
+
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
 
 
   instance (True, str, None)
     (Required for new resource) Instance id
 
 
-  iops (False, int, None)
-    The maximum I/O operations per second (IOPS) for the volume.
-
-
   volume_name (False, str, None)
     The unique user-defined name for this volume
+
+
+  snapshot (False, str, None)
+    The snapshot of the volume to be attached
+
+
+  delete_volume_on_instance_delete (False, bool, None)
+    If set to true, when deleting the instance the volume will also be deleted.
 
 
   id (False, str, None)

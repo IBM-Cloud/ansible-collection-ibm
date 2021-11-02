@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The name of the route. The name must be 1000 characters or less and cannot include any special characters other than `(space) - . _ :`.
-
-
   receive_global_events (True, bool, None)
     (Required for new resource) Indicates whether or not all global events should be forwarded to this region.
 
 
   rules (True, list, None)
     (Required for new resource) Routing rules that will be evaluated in their order of the array.
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the route. The name must be 1000 characters or less and cannot include any special characters other than `(space) - . _ :`.
 
 
   id (False, str, None)

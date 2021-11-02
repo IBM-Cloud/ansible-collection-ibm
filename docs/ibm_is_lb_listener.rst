@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -35,6 +35,26 @@ Parameters
     Connection limit for Loadbalancer
 
 
+  port (False, int, None)
+    Loadbalancer listener port
+
+
+  https_redirect_status_code (False, int, None)
+    The HTTP status code to be returned in the redirect response
+
+
+  https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
+
+
+  default_pool (False, str, None)
+    Loadbalancer default pool info
+
+
+  protocol (True, str, None)
+    (Required for new resource) Loadbalancer protocol
+
+
   certificate_instance (False, str, None)
     certificate instance for the Loadbalancer
 
@@ -43,20 +63,12 @@ Parameters
     Listener will forward proxy protocol
 
 
-  protocol (True, str, None)
-    (Required for new resource) Loadbalancer protocol
-
-
-  default_pool (False, str, None)
-    Loadbalancer default pool info
+  https_redirect_listener (False, str, None)
+    ID of the listener that will be set as http redirect target
 
 
   lb (True, str, None)
     (Required for new resource) Loadbalancer listener ID
-
-
-  port (True, int, None)
-    (Required for new resource) Loadbalancer listener port
 
 
   id (False, str, None)

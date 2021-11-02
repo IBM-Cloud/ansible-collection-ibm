@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  disabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
   environment_id (True, str, None)
     (Required for new resource) Environment Id.
 
 
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified feature flag.
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
 
 
   enabled_value (True, str, None)
     (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
-  disabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   segment_rules (False, list, None)
     Specify the targeting rules that is used to set different feature flag values for different segments.
 
 
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified feature flag.
 
 
-  type (True, str, None)
-    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+  name (True, str, None)
+    (Required for new resource) Feature name.
 
 
   description (False, str, None)
@@ -65,14 +73,6 @@ Parameters
 
   tags (False, str, None)
     Tags associated with the feature.
-
-
-  name (True, str, None)
-    (Required for new resource) Feature name.
-
-
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
 
 
   id (False, str, None)

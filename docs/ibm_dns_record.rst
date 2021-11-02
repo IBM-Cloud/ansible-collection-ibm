@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  retry (False, int, None)
-    Retry count
+  mx_priority (False, int, 0)
+    Maximum priority
 
 
-  weight (False, int, 0)
-    weight info
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   data (True, str, None)
     (Required for new resource) DNS record data
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   type (True, str, None)
     (Required for new resource) DNS record type
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   protocol (False, str, None)
@@ -59,16 +79,16 @@ Parameters
     port number
 
 
-  priority (False, int, 0)
-    priority info
+  tags (False, list, None)
+    tags set for the resource
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  retry (False, int, None)
+    Retry count
 
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
 
 
   ttl (True, int, None)
@@ -77,26 +97,6 @@ Parameters
 
   service (False, str, None)
     service info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
 
 
   id (False, str, None)

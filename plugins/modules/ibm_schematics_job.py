@@ -18,27 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_job' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
-    command_object_id:
+    command_object:
         description:
-            - (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
+            - (Required for new resource) Name of the Schematics automation resource.
         required: True
         type: str
-    job_inputs:
+    command_parameter:
         description:
-            - Job inputs used by an action.
+            - (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
+        required: True
+        type: str
+    data:
+        description:
+            - Job data.
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - User defined tags, while running the job.
-        required: False
-        type: list
-        elements: str
     command_options:
         description:
             - Command line options for the command.
@@ -62,9 +61,21 @@ options:
         required: False
         type: list
         elements: dict
-    command_object:
+    job_inputs:
         description:
-            - (Required for new resource) Name of the Schematics automation resource.
+            - Job inputs used by an action.
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - User defined tags, while running the job.
+        required: False
+        type: list
+        elements: str
+    command_object_id:
+        description:
+            - (Required for new resource) Job command object ID (`workspace-id, action-id or control-id`).
         required: True
         type: str
     command_name:
@@ -72,20 +83,9 @@ options:
             - (Required for new resource) Schematics job command name.
         required: True
         type: str
-    command_parameter:
-        description:
-            - (Required for new resource) Schematics job command parameter (`playbook-name, capsule-name or flow-name`).
-        required: True
-        type: str
     bastion:
         description:
             - Complete target details with the user inputs and the system generated data.
-        required: False
-        type: list
-        elements: dict
-    data:
-        description:
-            - Job data.
         required: False
         type: list
         elements: dict
@@ -135,26 +135,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('command_object_id', 'str'),
     ('command_object', 'str'),
-    ('command_name', 'str'),
     ('command_parameter', 'str'),
+    ('command_object_id', 'str'),
+    ('command_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'command_object_id',
-    'job_inputs',
-    'tags',
+    'command_object',
+    'command_parameter',
+    'data',
     'command_options',
     'job_env_settings',
     'location',
     'job_log_summary',
-    'command_object',
+    'job_inputs',
+    'tags',
+    'command_object_id',
     'command_name',
-    'command_parameter',
     'bastion',
-    'data',
 ]
 
 # Params for Data source
@@ -173,14 +173,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    command_object_id=dict(
+    command_object=dict(
         required=False,
         type='str'),
-    job_inputs=dict(
+    command_parameter=dict(
         required=False,
-        elements='',
-        type='list'),
-    tags=dict(
+        type='str'),
+    data=dict(
         required=False,
         elements='',
         type='list'),
@@ -199,20 +198,21 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    command_object=dict(
+    job_inputs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    command_object_id=dict(
         required=False,
         type='str'),
     command_name=dict(
         required=False,
         type='str'),
-    command_parameter=dict(
-        required=False,
-        type='str'),
     bastion=dict(
-        required=False,
-        elements='',
-        type='list'),
-    data=dict(
         required=False,
         elements='',
         type='list'),
@@ -281,7 +281,7 @@ def run_module():
         resource_type='ibm_schematics_job',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -290,7 +290,7 @@ def run_module():
             resource_type='ibm_schematics_job',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.34.0',
+            ibm_provider_version='1.35.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

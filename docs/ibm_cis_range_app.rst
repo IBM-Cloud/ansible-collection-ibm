@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
-
-
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
-
-
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
 
   dns (True, str, None)
     (Required for new resource) Name of the DNS record for this application
@@ -51,8 +39,28 @@ Parameters
     (Required for new resource) Type of the DNS record for this application
 
 
+  origin_direct (False, list, None)
+    IP address and port of the origin for this Range application.
+
+
+  origin_port (False, int, None)
+    Port at the origin that listens to traffic
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
+
+
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
   origin_dns (False, str, None)
     DNS record pointing to the origin for this Range application.
+
+
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
 
 
   edge_ips_connectivity (False, str, all)
@@ -71,20 +79,12 @@ Parameters
     (Required for new resource) Defines the protocol and port for this application
 
 
-  origin_port (False, int, None)
-    Port at the origin that listens to traffic
-
-
-  origin_direct (False, list, None)
-    IP address and port of the origin for this Range application.
-
-
   ip_firewall (False, bool, None)
     Enables the IP Firewall for this application. Only available for TCP applications.
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
 
 
   id (False, str, None)

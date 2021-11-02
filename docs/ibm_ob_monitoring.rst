@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cluster (True, str, None)
+    (Required for new resource) Name or ID of the cluster to be used.
+
+
   instance_id (True, str, None)
     (Required for new resource) ID of the Sysdig service instance to latch
 
 
   sysdig_access_key (False, str, None)
     Sysdig ingestion key
-
-
-  cluster (True, str, None)
-    (Required for new resource) Name or ID of the cluster to be used.
 
 
   private_endpoint (False, bool, None)

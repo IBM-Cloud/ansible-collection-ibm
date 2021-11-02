@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  min_password_change_interval (True, list, None)
+    (Required for new resource)
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The AppID instance GUID
+
+
+  enabled (True, bool, None)
+    (Required for new resource) `true` if APM is enabled
+
 
   prevent_password_with_username (False, bool, False)
     None
@@ -45,18 +57,6 @@ Parameters
 
   lockout_policy (True, list, None)
     (Required for new resource)
-
-
-  min_password_change_interval (True, list, None)
-    (Required for new resource)
-
-
-  tenant_id (True, str, None)
-    (Required for new resource) The AppID instance GUID
-
-
-  enabled (True, bool, None)
-    (Required for new resource) `true` if APM is enabled
 
 
   id (False, str, None)

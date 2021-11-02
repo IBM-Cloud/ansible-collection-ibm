@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_membership' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
@@ -27,15 +27,15 @@ options:
             - (Required for new resource) The unique identifier for this instance group membership.
         required: True
         type: str
-    instance_group:
-        description:
-            - (Required for new resource) The instance group identifier.
-        required: True
-        type: str
     name:
         description:
             - The user-defined name for this instance group membership. Names must be unique within the instance group.
         required: False
+        type: str
+    instance_group:
+        description:
+            - (Required for new resource) The instance group identifier.
+        required: True
         type: str
     action_delete:
         description:
@@ -96,20 +96,20 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_group_membership',
-    'instance_group',
     'name',
+    'instance_group',
     'action_delete',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_group', 'str'),
     ('name', 'str'),
+    ('instance_group', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_group',
     'name',
+    'instance_group',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -122,10 +122,10 @@ module_args = dict(
     instance_group_membership=dict(
         required=False,
         type='str'),
-    instance_group=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    instance_group=dict(
         required=False,
         type='str'),
     action_delete=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_instance_group_membership',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_instance_group_membership',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.34.0',
+            ibm_provider_version='1.35.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

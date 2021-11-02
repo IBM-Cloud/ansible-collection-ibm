@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+  destination (True, str, None)
+    (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
 
 
   source (True, str, None)
     (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
 
 
-  destination (True, str, None)
-    (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-
-
-  icmp (False, list, None)
-    None
+  direction (True, str, None)
+    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
 
 
   tcp (False, list, None)
@@ -55,20 +51,24 @@ Parameters
     (Required for new resource) Network ACL id
 
 
-  before (False, str, None)
-    The rule that this rule is immediately before. If absent, this is the last rule.
-
-
-  direction (True, str, None)
-    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+  name (False, str, None)
+    The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   udp (False, list, None)
     None
 
 
+  before (False, str, None)
+    The rule that this rule is immediately before. If absent, this is the last rule.
+
+
   action (True, str, None)
     (Required for new resource) Whether to allow or deny matching traffic
+
+
+  icmp (False, list, None)
+    None
 
 
   id (False, str, None)

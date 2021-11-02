@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  include_data_events (False, bool, False)
-    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
-
-
   resource_group_id (False, str, None)
     The resource group id
 
 
-  enable_cors (False, bool, True)
-    Boolean value to turn CORS on and off.
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
 
 
   cors_config (False, list, None)
@@ -59,28 +47,40 @@ Parameters
     (Required for new resource) A name for the resource instance
 
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
   tags (False, list, None)
     None
 
 
+  legacy_credentials (False, bool, False)
+    Use both legacy credentials and IAM for authentication
+
+
   environment_crn (False, str, None)
     CRN of the IBM Cloudant Dedicated Hardware plan instance
+
+
+  include_data_events (False, bool, False)
+    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
 
 
   capacity (False, int, 1)
     A number of blocks of throughput units. A block consists of 100 reads/sec, 50 writes/sec, and 5 global queries/sec of provisioned throughput capacity.
 
 
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  legacy_credentials (False, bool, False)
-    Use both legacy credentials and IAM for authentication
+  enable_cors (False, bool, True)
+    Boolean value to turn CORS on and off.
 
 
   id (False, str, None)

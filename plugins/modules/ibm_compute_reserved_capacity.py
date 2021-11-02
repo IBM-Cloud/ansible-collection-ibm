@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_reserved_capacity' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
+    instances:
+        description:
+            - (Required for new resource) no of the instances
+        required: True
+        type: int
     flavor:
         description:
             - (Required for new resource) flavor of the reserved capacity
@@ -48,11 +53,6 @@ options:
             - (Required for new resource) Name
         required: True
         type: str
-    instances:
-        description:
-            - (Required for new resource) no of the instances
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,21 +99,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('instances', 'int'),
     ('flavor', 'str'),
     ('datacenter', 'str'),
     ('pod', 'str'),
     ('name', 'str'),
-    ('instances', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'instances',
     'flavor',
     'tags',
     'datacenter',
     'pod',
     'name',
-    'instances',
 ]
 
 # Params for Data source
@@ -133,6 +133,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    instances=dict(
+        required=False,
+        type='int'),
     flavor=dict(
         required=False,
         type='str'),
@@ -149,9 +152,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    instances=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_compute_reserved_capacity',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_compute_reserved_capacity',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.34.0',
+            ibm_provider_version='1.35.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

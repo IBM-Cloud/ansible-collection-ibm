@@ -18,24 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
-    resource_alias_id:
-        description:
-            - The id of the resource alias for which to create resource key
-        required: False
-        type: str
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     name:
         description:
             - (Required for new resource) The name of the resource key
         required: True
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    resource_alias_id:
+        description:
+            - The id of the resource alias for which to create resource key
+        required: False
         type: str
     role:
         description:
@@ -47,12 +48,11 @@ options:
             - The id of the resource instance for which to create resource key
         required: False
         type: str
-    tags:
+    parameters:
         description:
-            - None
+            - Arbitrary parameters to pass. Must be a JSON object
         required: False
-        type: list
-        elements: str
+        type: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,12 +105,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_alias_id',
-    'parameters',
     'name',
+    'tags',
+    'resource_alias_id',
     'role',
     'resource_instance_id',
-    'tags',
+    'parameters',
 ]
 
 # Params for Data source
@@ -134,13 +134,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_alias_id=dict(
+    name=dict(
         required=False,
         type='str'),
-    parameters=dict(
+    tags=dict(
         required=False,
-        type='dict'),
-    name=dict(
+        elements='',
+        type='list'),
+    resource_alias_id=dict(
         required=False,
         type='str'),
     role=dict(
@@ -149,10 +150,9 @@ module_args = dict(
     resource_instance_id=dict(
         required=False,
         type='str'),
-    tags=dict(
+    parameters=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_resource_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.34.0',
+            ibm_provider_version='1.35.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

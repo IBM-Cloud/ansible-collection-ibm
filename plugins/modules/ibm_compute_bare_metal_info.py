@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
-    domain:
-        description:
-            - The domain of the bare metal server
-        required: False
-        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
@@ -35,6 +30,11 @@ options:
     global_identifier:
         description:
             - The unique global identifier of the bare metal server
+        required: False
+        type: str
+    domain:
+        description:
+            - The domain of the bare metal server
         required: False
         type: str
     hostname:
@@ -79,17 +79,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain',
     'most_recent',
     'global_identifier',
+    'domain',
     'hostname',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'domain': ['global_identifier'],
     'most_recent': ['global_identifier'],
     'global_identifier': ['hostname', 'domain', 'most_recent'],
+    'domain': ['global_identifier'],
     'hostname': ['global_identifier'],
 }
 
@@ -97,13 +97,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain=dict(
-        required=False,
-        type='str'),
     most_recent=dict(
         required=False,
         type='bool'),
     global_identifier=dict(
+        required=False,
+        type='str'),
+    domain=dict(
         required=False,
         type='str'),
     hostname=dict(
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

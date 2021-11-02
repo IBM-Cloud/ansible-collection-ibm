@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_cluster' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.34.0
+    - IBM-Cloud terraform-provider-ibm v1.35.0
     - Terraform v0.12.20
 
 options:
@@ -33,14 +33,14 @@ options:
         required: False
         type: bool
         default: True
-    name:
-        description:
-            - Name or id of the cluster
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
+        required: False
+        type: str
+    name:
+        description:
+            - Name or id of the cluster
         required: False
         type: str
     ibmcloud_api_key:
@@ -62,8 +62,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'alb_type',
     'list_bounded_services',
-    'name',
     'resource_group_id',
+    'name',
 ]
 
 
@@ -80,10 +80,10 @@ module_args = dict(
     list_bounded_services=dict(
         required=False,
         type='bool'),
-    name=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    name=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(
@@ -106,7 +106,7 @@ def run_module():
         resource_type='ibm_container_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.34.0',
+        ibm_provider_version='1.35.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

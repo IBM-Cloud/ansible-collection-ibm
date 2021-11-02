@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  carrier_name (False, str, None)
-    Carrier name
+  tags (False, list, None)
+    Tags for the direct link gateway
 
 
-  customer_name (False, str, None)
-    Customer name
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
 
 
-  global_ (True, bool, None)
-    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+  bfd_multiplier (False, int, None)
+    BFD Multiplier
+
+
+  cross_connect_router (False, str, None)
+    Cross connect router
 
 
   speed_mbps (True, int, None)
@@ -51,36 +55,8 @@ Parameters
     Loa reject reason
 
 
-  bgp_asn (True, int, None)
-    (Required for new resource) BGP ASN
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
-
-
-  bgp_base_cidr (False, str, None)
-    BGP base CIDR
-
-
-  port (False, str, None)
-    Gateway port
-
-
-  macsec_config (False, list, None)
-    MACsec configuration information
-
-
-  location_name (False, str, None)
-    Gateway location
-
-
-  metered (True, bool, None)
-    (Required for new resource) Metered billing option
-
-
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
 
 
   resource_group (False, str, None)
@@ -91,24 +67,64 @@ Parameters
     BGP MD5 authentication key
 
 
+  carrier_name (False, str, None)
+    Carrier name
+
+
   connection_mode (False, str, None)
     Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
 
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
+  metered (True, bool, None)
+    (Required for new resource) Metered billing option
 
 
-  cross_connect_router (False, str, None)
-    Cross connect router
+  bfd_interval (False, int, None)
+    BFD Interval
+
+
+  port (False, str, None)
+    Gateway port
+
+
+  global_ (True, bool, None)
+    (Required for new resource) Gateways with global routing (true) can connect to networks outside their associated region
+
+
+  location_name (False, str, None)
+    Gateway location
+
+
+  customer_name (False, str, None)
+    Customer name
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  bfd_status (False, str, None)
+    Gateway BFD status
+
+
+  bgp_base_cidr (False, str, None)
+    BGP base CIDR
+
+
+  bgp_asn (True, int, None)
+    (Required for new resource) BGP ASN
+
+
+  macsec_config (False, list, None)
+    MACsec configuration information
+
+
+  bfd_status_updated_at (False, str, None)
+    Date and time BFD status was updated
 
 
   type (True, str, None)
     (Required for new resource) Gateway type
-
-
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
 
 
   id (False, str, None)

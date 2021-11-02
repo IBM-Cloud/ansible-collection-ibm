@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.34.0
+- IBM-Cloud terraform-provider-ibm v1.35.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  access (False, list, None)
-    None
-
 
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
@@ -45,6 +41,10 @@ Parameters
 
   description (False, str, None)
     Optional role description
+
+
+  access (False, list, None)
+    None
 
 
   id (False, str, None)
