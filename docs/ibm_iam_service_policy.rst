@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_attributes (False, list, None)
+    Set resource attributes.
+
 
   account_management (False, bool, False)
     Give access to all account management services
@@ -57,10 +61,6 @@ Parameters
 
   resources (False, list, None)
     None
-
-
-  resource_attributes (False, list, None)
-    Set resource attributes.
 
 
   id (False, str, None)

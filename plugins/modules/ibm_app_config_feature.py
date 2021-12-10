@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_feature' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    disabled_value:
-        description:
-            - (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-        required: True
-        type: str
     environment_id:
         description:
             - (Required for new resource) Environment Id.
@@ -35,6 +30,26 @@ options:
     feature_id:
         description:
             - (Required for new resource) Feature id.
+        required: True
+        type: str
+    description:
+        description:
+            - Feature description.
+        required: False
+        type: str
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Feature name.
+        required: True
+        type: str
+    disabled_value:
+        description:
+            - (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
         required: True
         type: str
     type:
@@ -47,10 +62,16 @@ options:
             - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
         required: True
         type: str
-    guid:
+    collections:
         description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
+            - List of collection id representing the collections that are associated with the specified feature flag.
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - Tags associated with the feature.
+        required: False
         type: str
     segment_rules:
         description:
@@ -58,27 +79,6 @@ options:
         required: False
         type: list
         elements: dict
-    collections:
-        description:
-            - List of collection id representing the collections that are associated with the specified feature flag.
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) Feature name.
-        required: True
-        type: str
-    description:
-        description:
-            - Feature description.
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags associated with the feature.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,41 +125,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('disabled_value', 'str'),
     ('environment_id', 'str'),
     ('feature_id', 'str'),
-    ('type', 'str'),
-    ('enabled_value', 'str'),
     ('guid', 'str'),
     ('name', 'str'),
+    ('disabled_value', 'str'),
+    ('type', 'str'),
+    ('enabled_value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'disabled_value',
     'environment_id',
     'feature_id',
+    'description',
+    'guid',
+    'name',
+    'disabled_value',
     'type',
     'enabled_value',
-    'guid',
-    'segment_rules',
     'collections',
-    'name',
-    'description',
     'tags',
+    'segment_rules',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('feature_id', 'str'),
     ('guid', 'str'),
     ('environment_id', 'str'),
+    ('feature_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'feature_id',
     'guid',
     'environment_id',
+    'feature_id',
     'includes',
 ]
 
@@ -170,13 +170,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    disabled_value=dict(
-        required=False,
-        type='str'),
     environment_id=dict(
         required=False,
         type='str'),
     feature_id=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    guid=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    disabled_value=dict(
         required=False,
         type='str'),
     type=dict(
@@ -185,26 +194,17 @@ module_args = dict(
     enabled_value=dict(
         required=False,
         type='str'),
-    guid=dict(
+    collections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
         required=False,
         type='str'),
     segment_rules=dict(
         required=False,
         elements='',
         type='list'),
-    collections=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -270,7 +270,7 @@ def run_module():
         resource_type='ibm_app_config_feature',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -279,7 +279,7 @@ def run_module():
             resource_type='ibm_app_config_feature',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

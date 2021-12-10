@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace (True, str, None)
-    (Required for new resource) The namespace to which the retention policy is attached.
-
-
   images_per_repo (True, int, None)
     (Required for new resource) Determines how many images will be retained for each repository when the retention policy is executed. The value -1 denotes 'Unlimited' (all images are retained).
 
 
   retain_untagged (False, bool, False)
     Determines if untagged images are retained when executing the retention policy. This is false by default meaning untagged images will be deleted when the policy is executed.
+
+
+  namespace (True, str, None)
+    (Required for new resource) The namespace to which the retention policy is attached.
 
 
   id (False, str, None)

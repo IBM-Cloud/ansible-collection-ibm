@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
 
   name (True, str, None)
     (Required for new resource) Name
@@ -49,6 +45,10 @@ Parameters
 
   is_default (False, bool, False)
     Is default prefix for this zone in this VPC
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   id (False, str, None)

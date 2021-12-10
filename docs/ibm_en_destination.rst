@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  description (False, str, None)
-    The Destination description.
-
-
-  config (False, list, None)
-    Payload describing a destination configuration.
+  type (True, str, None)
+    (Required for new resource) The type of Destination Webhook.
 
 
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
 
 
-  type (True, str, None)
-    (Required for new resource) The type of Destination Webhook.
+  description (False, str, None)
+    The Destination description.
+
+
+  config (False, list, None)
+    Payload describing a destination configuration.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
   environment_id (True, str, None)
     (Required for new resource) Environment Id.
 
 
   feature_id (True, str, None)
     (Required for new resource) Feature id.
+
+
+  description (False, str, None)
+    Feature description.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  name (True, str, None)
+    (Required for new resource) Feature name.
+
+
+  disabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
   type (True, str, None)
@@ -51,28 +63,16 @@ Parameters
     (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different feature flag values for different segments.
-
-
   collections (False, list, None)
     List of collection id representing the collections that are associated with the specified feature flag.
 
 
-  name (True, str, None)
-    (Required for new resource) Feature name.
-
-
-  description (False, str, None)
-    Feature description.
-
-
   tags (False, str, None)
     Tags associated with the feature.
+
+
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different feature flag values for different segments.
 
 
   id (False, str, None)

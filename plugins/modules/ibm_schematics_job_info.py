@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_job' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
     job_id:
         description:
-            - Use GET jobs API to look up the Job IDs in your IBM Cloud account.
+            - Job Id. Use `GET /v2/jobs` API to look up the Job Ids in your IBM Cloud account.
         required: True
         type: str
     iaas_classic_username:
@@ -112,7 +112,7 @@ def run_module():
         resource_type='ibm_schematics_job',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

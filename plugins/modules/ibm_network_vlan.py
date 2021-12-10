@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_vlan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - VLAN name
-        required: False
-        type: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name
@@ -36,6 +31,11 @@ options:
         description:
             - (Required for new resource) VLAN type
         required: True
+        type: str
+    name:
+        description:
+            - VLAN name
+        required: False
         type: str
     router_hostname:
         description:
@@ -100,9 +100,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'datacenter',
     'type',
+    'name',
     'router_hostname',
     'tags',
 ]
@@ -124,13 +124,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     datacenter=dict(
         required=False,
         type='str'),
     type=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     router_hostname=dict(
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_network_vlan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -214,7 +214,7 @@ def run_module():
             resource_type='ibm_network_vlan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

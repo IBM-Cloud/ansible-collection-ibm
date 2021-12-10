@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_filter' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    paused:
-        description:
-            - Filter Paused
-        required: False
-        type: bool
     expression:
         description:
             - (Required for new resource) Filter Expression
@@ -47,6 +42,11 @@ options:
             - (Required for new resource) Associated CIS domain
         required: True
         type: str
+    paused:
+        description:
+            - Filter Paused
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,11 +100,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'paused',
     'expression',
     'description',
     'cis_id',
     'domain_id',
+    'paused',
 ]
 
 # Params for Data source
@@ -121,9 +121,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    paused=dict(
-        required=False,
-        type='bool'),
     expression=dict(
         required=False,
         type='str'),
@@ -136,6 +133,9 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
+    paused=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_cis_filter',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

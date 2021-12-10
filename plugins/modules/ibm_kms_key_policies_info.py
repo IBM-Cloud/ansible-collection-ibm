@@ -17,21 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_key_policies' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
-    key_id:
-        description:
-            - Key ID of the Key
-        required: True
-        type: str
     policies:
         description:
             - Creates or updates one or more policies for the specified key
@@ -41,6 +30,17 @@ options:
     instance_id:
         description:
             - Key protect or hpcs instance GUID
+        required: True
+        type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
+    key_id:
+        description:
+            - Key ID of the Key
         required: True
         type: str
     iaas_classic_username:
@@ -76,16 +76,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key_id', 'str'),
     ('instance_id', 'str'),
+    ('key_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'endpoint_type',
-    'key_id',
     'policies',
     'instance_id',
+    'endpoint_type',
+    'key_id',
 ]
 
 
@@ -96,17 +96,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    key_id=dict(
-        required=True,
-        type='str'),
     policies=dict(
         required=False,
         elements='',
         type='list'),
     instance_id=dict(
+        required=True,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    key_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -143,7 +143,7 @@ def run_module():
         resource_type='ibm_kms_key_policies',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

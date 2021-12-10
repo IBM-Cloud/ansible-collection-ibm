@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  url (True, str, None)
+    (Required for new resource) Custom page url
+
+
   page_id (True, str, None)
     (Required for new resource) Custom page identifier
 
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
-
-
-  url (True, str, None)
-    (Required for new resource) Custom page url
 
 
   domain_id (True, str, None)

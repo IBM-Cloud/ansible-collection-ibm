@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  profile_id (False, str, None)
+    UUID of Trusted Profile
+
+
+  iam_id (False, str, None)
+    IAM ID of Trusted Profile
+
+
+  roles (True, list, None)
+    (Required for new resource) Role names of the policy definition
+
 
   resources (False, list, None)
     None
@@ -49,18 +61,6 @@ Parameters
 
   description (False, str, None)
     Description of the Policy
-
-
-  profile_id (False, str, None)
-    UUID of Trusted Profile
-
-
-  iam_id (False, str, None)
-    IAM ID of Trusted Profile
-
-
-  roles (True, list, None)
-    (Required for new resource) Role names of the policy definition
 
 
   id (False, str, None)

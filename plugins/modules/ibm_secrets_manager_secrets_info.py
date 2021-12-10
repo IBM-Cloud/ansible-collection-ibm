@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_secrets_manager_secrets' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    instance_id:
-        description:
-            - Secrets Manager instance GUID
-        required: True
-        type: str
     secret_type:
         description:
             - The secret type. Supported options include: arbitrary, iam_credentials, username_password.
@@ -37,6 +32,11 @@ options:
         required: False
         type: str
         default: public
+    instance_id:
+        description:
+            - Secrets Manager instance GUID
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
     'secret_type',
     'endpoint_type',
+    'instance_id',
 ]
 
 
@@ -88,14 +88,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
-        required=True,
-        type='str'),
     secret_type=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    instance_id=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_secrets_manager_secrets',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

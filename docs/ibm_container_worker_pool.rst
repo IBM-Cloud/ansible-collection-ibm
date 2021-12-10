@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -35,8 +35,32 @@ Parameters
     Hardware type
 
 
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  size_per_zone (True, int, None)
+    (Required for new resource) Number of nodes per zone
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
   cluster (True, str, None)
     (Required for new resource) Cluster name
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   machine_type (True, str, None)
@@ -45,30 +69,6 @@ Parameters
 
   labels (False, dict, None)
     list of labels to worker pool
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  size_per_zone (True, int, None)
-    (Required for new resource) Number of nodes per zone
-
-
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   id (False, str, None)

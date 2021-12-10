@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,32 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
-  flavor (True, str, None)
-    (Required for new resource) cluster node falvor
-
-
   labels (False, dict, None)
     Labels
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
 
 
   zones (True, list, None)
@@ -67,8 +43,32 @@ Parameters
     WorkerPool Taints
 
 
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
   worker_count (True, int, None)
     (Required for new resource) The number of workers
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  flavor (True, str, None)
+    (Required for new resource) cluster node falvor
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   id (False, str, None)

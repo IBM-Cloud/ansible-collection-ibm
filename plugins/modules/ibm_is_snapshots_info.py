@@ -17,10 +17,30 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_snapshots' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
+    resource_group:
+        description:
+            - Filters the snapshot collection by resources group id
+        required: False
+        type: str
+    name:
+        description:
+            - Filters the snapshot collection by snapshot name
+        required: False
+        type: str
+    source_image:
+        description:
+            - Filters the snapshot collection by source image id
+        required: False
+        type: str
+    source_volume:
+        description:
+            - Filters the snapshot collection by source volume id
+        required: False
+        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -58,6 +78,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_group',
+    'name',
+    'source_image',
+    'source_volume',
 ]
 
 
@@ -68,6 +92,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    source_image=dict(
+        required=False,
+        type='str'),
+    source_volume=dict(
+        required=False,
+        type='str'),
     generation=dict(
         type='int',
         required=False,
@@ -114,7 +150,7 @@ def run_module():
         resource_type='ibm_is_snapshots',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

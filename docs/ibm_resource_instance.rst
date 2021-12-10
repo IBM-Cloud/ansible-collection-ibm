@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
-
-
   name (True, str, None)
     (Required for new resource) A name for the resource instance
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
 
 
   service (True, str, None)
     (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
+
+
   tags (False, list, None)
     None
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
   parameters (False, dict, None)

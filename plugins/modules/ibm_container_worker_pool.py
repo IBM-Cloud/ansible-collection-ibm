@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -28,9 +28,41 @@ options:
         required: False
         type: str
         default: shared
+    disk_encryption:
+        description:
+            - worker node disk encrypted if set to true
+        required: False
+        type: bool
+        default: True
+    taints:
+        description:
+            - WorkerPool Taints
+        required: False
+        type: list
+        elements: dict
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    size_per_zone:
+        description:
+            - (Required for new resource) Number of nodes per zone
+        required: True
+        type: int
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name
+        required: True
+        type: str
+    worker_pool_name:
+        description:
+            - (Required for new resource) worker pool name
         required: True
         type: str
     machine_type:
@@ -44,38 +76,6 @@ options:
         required: False
         type: dict
         elements: str
-    taints:
-        description:
-            - WorkerPool Taints
-        required: False
-        type: list
-        elements: dict
-    size_per_zone:
-        description:
-            - (Required for new resource) Number of nodes per zone
-        required: True
-        type: int
-    disk_encryption:
-        description:
-            - worker node disk encrypted if set to true
-        required: False
-        type: bool
-        default: True
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    worker_pool_name:
-        description:
-            - (Required for new resource) worker pool name
-        required: True
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,24 +102,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
-    ('machine_type', 'str'),
     ('size_per_zone', 'int'),
+    ('cluster', 'str'),
     ('worker_pool_name', 'str'),
+    ('machine_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'hardware',
+    'disk_encryption',
+    'taints',
+    'resource_group_id',
+    'size_per_zone',
+    'entitlement',
     'cluster',
+    'worker_pool_name',
     'machine_type',
     'labels',
-    'taints',
-    'size_per_zone',
-    'disk_encryption',
-    'resource_group_id',
-    'worker_pool_name',
-    'entitlement',
 ]
 
 # Params for Data source
@@ -143,7 +143,26 @@ module_args = dict(
     hardware=dict(
         required=False,
         type='str'),
+    disk_encryption=dict(
+        required=False,
+        type='bool'),
+    taints=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    size_per_zone=dict(
+        required=False,
+        type='int'),
+    entitlement=dict(
+        required=False,
+        type='str'),
     cluster=dict(
+        required=False,
+        type='str'),
+    worker_pool_name=dict(
         required=False,
         type='str'),
     machine_type=dict(
@@ -153,25 +172,6 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    taints=dict(
-        required=False,
-        elements='',
-        type='list'),
-    size_per_zone=dict(
-        required=False,
-        type='int'),
-    disk_encryption=dict(
-        required=False,
-        type='bool'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    worker_pool_name=dict(
-        required=False,
-        type='str'),
-    entitlement=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_container_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_container_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

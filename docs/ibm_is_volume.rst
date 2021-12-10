@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  capacity (False, int, 100)
+    Volume capacity value
+
+
   tags (False, list, None)
     Tags for the volume instance
+
+
+  name (True, str, None)
+    (Required for new resource) Volume name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  resource_group (False, str, None)
+    Resource group name
 
 
   profile (True, str, None)
     (Required for new resource) Volume profile name
 
 
-  capacity (False, int, 100)
-    Volume capacity value
-
-
-  resource_group (False, str, None)
-    Resource group name
+  delete_all_snapshots (False, bool, None)
+    Deletes all snapshots created from this volume
 
 
   encryption_key (False, str, None)
@@ -53,18 +65,6 @@ Parameters
 
   iops (False, int, None)
     IOPS value for the Volume
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  name (True, str, None)
-    (Required for new resource) Volume name
-
-
-  delete_all_snapshots (False, bool, None)
-    Deletes all snapshots created from this volume
 
 
   id (False, str, None)

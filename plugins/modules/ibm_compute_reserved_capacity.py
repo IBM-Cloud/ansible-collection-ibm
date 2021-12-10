@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_reserved_capacity' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -38,6 +38,11 @@ options:
         required: False
         type: list
         elements: str
+    force_create:
+        description:
+            - Force the creation of reserved capacity with same name
+        required: False
+        type: bool
     datacenter:
         description:
             - (Required for new resource) Dataceneter name
@@ -111,6 +116,7 @@ TL_ALL_PARAMETERS = [
     'instances',
     'flavor',
     'tags',
+    'force_create',
     'datacenter',
     'pod',
     'name',
@@ -143,6 +149,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    force_create=dict(
+        required=False,
+        type='bool'),
     datacenter=dict(
         required=False,
         type='str'),
@@ -217,7 +226,7 @@ def run_module():
         resource_type='ibm_compute_reserved_capacity',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +235,7 @@ def run_module():
             resource_type='ibm_compute_reserved_capacity',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

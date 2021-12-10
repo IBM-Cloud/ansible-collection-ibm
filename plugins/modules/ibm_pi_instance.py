@@ -18,34 +18,70 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    pi_replication_scheme:
+    pi_sap_profile_id:
         description:
-            - Replication scheme
+            - SAP Profile ID for the amount of cores and memory
         required: False
         type: str
-        default: suffix
-    pi_image_id:
+    pi_health_status:
         description:
-            - (Required for new resource) PI instance image name
+            - Allow the user to set the status of the lpar so that they can connect to it faster
+        required: False
+        type: str
+        default: OK
+    pi_volume_ids:
+        description:
+            - List of PI volumes
+        required: False
+        type: list
+        elements: str
+    pi_storage_pool:
+        description:
+            - Storage Pool for server deployment; if provided then pi_affinity_policy and pi_storage_type will be ignored
+        required: False
+        type: str
+    pi_memory:
+        description:
+            - Memory size
+        required: False
+        type: float
+    pi_virtual_cores_assigned:
+        description:
+            - Virtual Cores Assigned to the PVMInstance
+        required: False
+        type: int
+    pi_affinity_instance:
+        description:
+            - PVM Instance (ID or Name) to base storage affinity policy against; required if requesting storage affinity and pi_affinity_volume is not provided
+        required: False
+        type: str
+    pi_instance_name:
+        description:
+            - (Required for new resource) PI Instance name
         required: True
         type: str
-    pi_cloud_instance_id:
+    pi_processors:
         description:
-            - (Required for new resource) This is the Power Instance id that is assigned to the account
-        required: True
+            - Processors count
+        required: False
+        type: float
+    pi_sys_type:
+        description:
+            - PI Instance system type
+        required: False
         type: str
     pi_migratable:
         description:
             - set to true to enable migration of the PI instance
         required: False
         type: bool
-    pi_volume_ids:
+    pi_anti_affinity_instances:
         description:
-            - List of PI volumes
+            - List of pvmInstances to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_volumes is not provided
         required: False
         type: list
         elements: str
@@ -54,80 +90,86 @@ options:
             - Storage Connectivity Group for server deployment
         required: False
         type: str
-    pi_storage_type:
+    pi_network:
         description:
-            - Storage type for server deployment
+            - (Required for new resource) List of one or more networks to attach to the instance
+        required: True
+        type: list
+        elements: dict
+    pi_key_pair_name:
+        description:
+            - SSH key name
         required: False
         type: str
-    pi_replicants:
+    pi_affinity_policy:
         description:
-            - PI Instance replicas count
+            - Affinity policy for pvm instance being created; ignored if pi_storage_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
         required: False
-        type: float
-        default: 1
+        type: str
     pi_replication_policy:
         description:
             - Replication policy for the PI Instance
         required: False
         type: str
         default: none
-    pi_processors:
+    pi_replication_scheme:
         description:
-            - (Required for new resource) Processors count
-        required: True
-        type: float
-    pi_virtual_cores_assigned:
-        description:
-            - Virtual Cores Assigned to the PVMInstance
-        required: False
-        type: int
-    pi_network:
-        description:
-            - List of one or more networks to attach to the instance
-        required: False
-        type: list
-        elements: dict
-    pi_key_pair_name:
-        description:
-            - (Required for new resource) SSH key name
-        required: True
-        type: str
-    pi_health_status:
-        description:
-            - Allow the user to set the status of the lpar so that they can connect to it faster
+            - Replication scheme
         required: False
         type: str
-        default: OK
-    pi_user_data:
-        description:
-            - Base64 encoded data to be passed in for invoking a cloud init script
-        required: False
-        type: str
+        default: suffix
     pi_pin_policy:
         description:
             - Pin Policy of the instance
         required: False
         type: str
         default: none
+    pi_anti_affinity_volumes:
+        description:
+            - List of volumes to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_instances is not provided
+        required: False
+        type: list
+        elements: str
+    pi_image_id:
+        description:
+            - (Required for new resource) PI instance image id
+        required: True
+        type: str
+    pi_user_data:
+        description:
+            - Base64 encoded data to be passed in for invoking a cloud init script
+        required: False
+        type: str
+    pi_storage_type:
+        description:
+            - Storage type for server deployment
+        required: False
+        type: str
     pi_proc_type:
         description:
-            - (Required for new resource) Instance processor type
+            - Instance processor type
+        required: False
+        type: str
+    pi_replicants:
+        description:
+            - PI Instance replicas count
+        required: False
+        type: int
+        default: 1
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) This is the Power Instance id that is assigned to the account
         required: True
         type: str
-    pi_memory:
+    pi_license_repository_capacity:
         description:
-            - (Required for new resource) Memory size
-        required: True
-        type: float
-    pi_sys_type:
+            - The VTL license repository capacity TB value
+        required: False
+        type: int
+    pi_affinity_volume:
         description:
-            - (Required for new resource) PI Instance system type
-        required: True
-        type: str
-    pi_instance_name:
-        description:
-            - (Required for new resource) PI Instance name
-        required: True
+            - Volume (ID or Name) to base storage affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
+        required: False
         type: str
     id:
         description:
@@ -171,38 +213,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_instance_name', 'str'),
+    ('pi_network', 'list'),
     ('pi_image_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
-    ('pi_processors', 'float'),
-    ('pi_key_pair_name', 'str'),
-    ('pi_proc_type', 'str'),
-    ('pi_memory', 'float'),
-    ('pi_sys_type', 'str'),
-    ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_replication_scheme',
-    'pi_image_id',
-    'pi_cloud_instance_id',
-    'pi_migratable',
+    'pi_sap_profile_id',
+    'pi_health_status',
     'pi_volume_ids',
-    'pi_storage_connection',
-    'pi_storage_type',
-    'pi_replicants',
-    'pi_replication_policy',
-    'pi_processors',
+    'pi_storage_pool',
+    'pi_memory',
     'pi_virtual_cores_assigned',
+    'pi_affinity_instance',
+    'pi_instance_name',
+    'pi_processors',
+    'pi_sys_type',
+    'pi_migratable',
+    'pi_anti_affinity_instances',
+    'pi_storage_connection',
     'pi_network',
     'pi_key_pair_name',
-    'pi_health_status',
-    'pi_user_data',
+    'pi_affinity_policy',
+    'pi_replication_policy',
+    'pi_replication_scheme',
     'pi_pin_policy',
+    'pi_anti_affinity_volumes',
+    'pi_image_id',
+    'pi_user_data',
+    'pi_storage_type',
     'pi_proc_type',
-    'pi_memory',
-    'pi_sys_type',
-    'pi_instance_name',
+    'pi_replicants',
+    'pi_cloud_instance_id',
+    'pi_license_repository_capacity',
+    'pi_affinity_volume',
 ]
 
 # Params for Data source
@@ -217,47 +263,62 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'pi_network': ['pi_network_ids'],
+    'pi_sap_profile_id': ['pi_processors', 'pi_memory', 'pi_proc_type', 'pi_sys_type'],
+    'pi_memory': ['pi_sap_profile_id'],
+    'pi_affinity_instance': ['pi_affinity_volume'],
+    'pi_processors': ['pi_sap_profile_id'],
+    'pi_sys_type': ['pi_sap_profile_id'],
+    'pi_anti_affinity_instances': ['pi_anti_affinity_volumes'],
+    'pi_anti_affinity_volumes': ['pi_anti_affinity_instances'],
+    'pi_proc_type': ['pi_sap_profile_id'],
+    'pi_affinity_volume': ['pi_affinity_instance'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_replication_scheme=dict(
+    pi_sap_profile_id=dict(
         required=False,
         type='str'),
-    pi_image_id=dict(
+    pi_health_status=dict(
         required=False,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_volume_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_storage_pool=dict(
+        required=False,
+        type='str'),
+    pi_memory=dict(
+        required=False,
+        type='float'),
+    pi_virtual_cores_assigned=dict(
+        required=False,
+        type='int'),
+    pi_affinity_instance=dict(
+        required=False,
+        type='str'),
+    pi_instance_name=dict(
+        required=False,
+        type='str'),
+    pi_processors=dict(
+        required=False,
+        type='float'),
+    pi_sys_type=dict(
         required=False,
         type='str'),
     pi_migratable=dict(
         required=False,
         type='bool'),
-    pi_volume_ids=dict(
+    pi_anti_affinity_instances=dict(
         required=False,
         elements='',
         type='list'),
     pi_storage_connection=dict(
         required=False,
         type='str'),
-    pi_storage_type=dict(
-        required=False,
-        type='str'),
-    pi_replicants=dict(
-        required=False,
-        type='float'),
-    pi_replication_policy=dict(
-        required=False,
-        type='str'),
-    pi_processors=dict(
-        required=False,
-        type='float'),
-    pi_virtual_cores_assigned=dict(
-        required=False,
-        type='int'),
     pi_network=dict(
         required=False,
         elements='',
@@ -265,25 +326,44 @@ module_args = dict(
     pi_key_pair_name=dict(
         required=False,
         type='str'),
-    pi_health_status=dict(
+    pi_affinity_policy=dict(
         required=False,
         type='str'),
-    pi_user_data=dict(
+    pi_replication_policy=dict(
+        required=False,
+        type='str'),
+    pi_replication_scheme=dict(
         required=False,
         type='str'),
     pi_pin_policy=dict(
         required=False,
         type='str'),
+    pi_anti_affinity_volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_image_id=dict(
+        required=False,
+        type='str'),
+    pi_user_data=dict(
+        required=False,
+        type='str'),
+    pi_storage_type=dict(
+        required=False,
+        type='str'),
     pi_proc_type=dict(
         required=False,
         type='str'),
-    pi_memory=dict(
+    pi_replicants=dict(
         required=False,
-        type='float'),
-    pi_sys_type=dict(
+        type='int'),
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_instance_name=dict(
+    pi_license_repository_capacity=dict(
+        required=False,
+        type='int'),
+    pi_affinity_volume=dict(
         required=False,
         type='str'),
     id=dict(
@@ -344,7 +424,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -353,7 +433,7 @@ def run_module():
             resource_type='ibm_pi_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

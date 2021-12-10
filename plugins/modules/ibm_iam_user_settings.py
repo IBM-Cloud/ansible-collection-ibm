@@ -18,21 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_settings' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
+    iam_id:
+        description:
+            - (Required for new resource) User's IAM ID or or email of user
+        required: True
+        type: str
     allowed_ip_addresses:
         description:
             - List of allowed IPv4 or IPv6 addresses
         required: False
         type: list
         elements: str
-    iam_id:
-        description:
-            - (Required for new resource) User's IAM ID or or email of user
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,8 +84,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'allowed_ip_addresses',
     'iam_id',
+    'allowed_ip_addresses',
 ]
 
 # Params for Data source
@@ -102,13 +102,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    iam_id=dict(
+        required=False,
+        type='str'),
     allowed_ip_addresses=dict(
         required=False,
         elements='',
         type='list'),
-    iam_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_iam_user_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

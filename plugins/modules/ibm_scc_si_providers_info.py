@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_providers' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
     limit:
         description:
             - The number of elements returned in the current instance. The default is 200.
@@ -36,6 +31,11 @@ options:
             - The offset is the index of the item from which you want to start returning data from. The default is 0.
         required: False
         type: int
+    account_id:
+        description:
+            - None
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_id',
     'limit',
     'skip',
+    'account_id',
 ]
 
 
@@ -86,15 +86,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_id=dict(
-        required=False,
-        type='str'),
     limit=dict(
         required=False,
         type='int'),
     skip=dict(
         required=False,
         type='int'),
+    account_id=dict(
+        required=False,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -129,7 +129,7 @@ def run_module():
         resource_type='ibm_scc_si_providers',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

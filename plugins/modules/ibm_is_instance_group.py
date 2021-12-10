@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -27,20 +27,26 @@ options:
             - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
         required: False
         type: int
-    instance_template:
+    instance_count:
         description:
-            - (Required for new resource) instance template ID
-        required: True
-        type: str
+            - The number of instances in the instance group
+        required: False
+        type: int
+        default: 0
     subnets:
         description:
             - (Required for new resource) list of subnet IDs
         required: True
         type: list
         elements: str
-    load_balancer_pool:
+    instance_template:
         description:
-            - load balancer pool ID
+            - (Required for new resource) instance template ID
+        required: True
+        type: str
+    load_balancer:
+        description:
+            - load balancer ID
         required: False
         type: str
     name:
@@ -53,23 +59,17 @@ options:
             - Resource group ID
         required: False
         type: str
-    instance_count:
-        description:
-            - The number of instances in the instance group
-        required: False
-        type: int
-        default: 0
-    load_balancer:
-        description:
-            - load balancer ID
-        required: False
-        type: str
     tags:
         description:
             - List of tags for instance group
         required: False
         type: list
         elements: str
+    load_balancer_pool:
+        description:
+            - load balancer pool ID
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -116,22 +116,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_template', 'str'),
     ('subnets', 'list'),
+    ('instance_template', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'application_port',
-    'instance_template',
+    'instance_count',
     'subnets',
-    'load_balancer_pool',
+    'instance_template',
+    'load_balancer',
     'name',
     'resource_group',
-    'instance_count',
-    'load_balancer',
     'tags',
+    'load_balancer_pool',
 ]
 
 # Params for Data source
@@ -153,14 +153,17 @@ module_args = dict(
     application_port=dict(
         required=False,
         type='int'),
-    instance_template=dict(
+    instance_count=dict(
         required=False,
-        type='str'),
+        type='int'),
     subnets=dict(
         required=False,
         elements='',
         type='list'),
-    load_balancer_pool=dict(
+    instance_template=dict(
+        required=False,
+        type='str'),
+    load_balancer=dict(
         required=False,
         type='str'),
     name=dict(
@@ -169,16 +172,13 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    instance_count=dict(
-        required=False,
-        type='int'),
-    load_balancer=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    load_balancer_pool=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -256,7 +256,7 @@ def run_module():
         resource_type='ibm_is_instance_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -265,7 +265,7 @@ def run_module():
             resource_type='ibm_is_instance_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

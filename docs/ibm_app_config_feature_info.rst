@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  feature_id (True, str, None)
-    Feature Id.
-
-
   guid (True, str, None)
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   environment_id (True, str, None)
     Environment Id.
+
+
+  feature_id (True, str, None)
+    Feature Id.
 
 
   includes (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  client_id (True, str, None)
-    The `client_id` is a public identifier for applications
-
-
   tenant_id (True, str, None)
     The service `tenantId`
+
+
+  client_id (True, str, None)
+    The `client_id` is a public identifier for applications
 
 
   iaas_classic_username (False, any, None)

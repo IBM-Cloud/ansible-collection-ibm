@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -30,7 +30,7 @@ Parameters
 ----------
 
   job_id (True, str, None)
-    Use GET jobs API to look up the Job IDs in your IBM Cloud account.
+    Job Id. Use `GET /v2/jobs` API to look up the Job Ids in your IBM Cloud account.
 
 
   iaas_classic_username (False, any, None)

@@ -18,32 +18,47 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - Tags for the volume instance
-        required: False
-        type: list
-        elements: str
-    profile:
-        description:
-            - (Required for new resource) Volume profile name
-        required: True
-        type: str
     capacity:
         description:
             - Volume capacity value
         required: False
         type: int
         default: 100
+    tags:
+        description:
+            - Tags for the volume instance
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Volume name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
     resource_group:
         description:
             - Resource group name
         required: False
         type: str
+    profile:
+        description:
+            - (Required for new resource) Volume profile name
+        required: True
+        type: str
+    delete_all_snapshots:
+        description:
+            - Deletes all snapshots created from this volume
+        required: False
+        type: bool
     encryption_key:
         description:
             - Volume encryption key info
@@ -54,21 +69,6 @@ options:
             - IOPS value for the Volume
         required: False
         type: int
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Volume name
-        required: True
-        type: str
-    delete_all_snapshots:
-        description:
-            - Deletes all snapshots created from this volume
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,22 +115,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
-    ('zone', 'str'),
     ('name', 'str'),
+    ('zone', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'profile',
     'capacity',
+    'tags',
+    'name',
+    'zone',
     'resource_group',
+    'profile',
+    'delete_all_snapshots',
     'encryption_key',
     'iops',
-    'zone',
-    'name',
-    'delete_all_snapshots',
 ]
 
 # Params for Data source
@@ -139,8 +139,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'zone',
     'name',
+    'zone',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -150,34 +150,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    capacity=dict(
+        required=False,
+        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    profile=dict(
+    name=dict(
         required=False,
         type='str'),
-    capacity=dict(
+    zone=dict(
         required=False,
-        type='int'),
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    delete_all_snapshots=dict(
+        required=False,
+        type='bool'),
     encryption_key=dict(
         required=False,
         type='str'),
     iops=dict(
         required=False,
         type='int'),
-    zone=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    delete_all_snapshots=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -255,7 +255,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +264,7 @@ def run_module():
             resource_type='ibm_is_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

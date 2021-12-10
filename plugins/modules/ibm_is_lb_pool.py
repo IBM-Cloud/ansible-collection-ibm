@@ -18,10 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
+    algorithm:
+        description:
+            - (Required for new resource) Load Balancer Pool algorithm
+        required: True
+        type: str
+    health_retries:
+        description:
+            - (Required for new resource) Load Balancer health retry count
+        required: True
+        type: int
+    health_monitor_port:
+        description:
+            - Health monitor Port the LB Pool
+        required: False
+        type: int
+    session_persistence_type:
+        description:
+            - Load Balancer Pool session persisence type.
+        required: False
+        type: str
+    session_persistence_app_cookie_name:
+        description:
+            - Load Balancer Pool session persisence app cookie name.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Load Balancer Pool name
+        required: True
+        type: str
     protocol:
         description:
             - (Required for new resource) Load Balancer Protocol
@@ -32,45 +62,20 @@ options:
             - (Required for new resource) Load Blancer health delay time period
         required: True
         type: int
-    health_retries:
-        description:
-            - (Required for new resource) Load Balancer health retry count
-        required: True
-        type: int
-    session_persistence_type:
-        description:
-            - Load Balancer Pool session persisence type.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Load Balancer Pool name
-        required: True
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Load Balancer ID
-        required: True
-        type: str
-    algorithm:
-        description:
-            - (Required for new resource) Load Balancer Pool algorithm
-        required: True
-        type: str
     health_monitor_url:
         description:
             - Health monitor URL of LB Pool
         required: False
         type: str
-    health_monitor_port:
-        description:
-            - Health monitor Port the LB Pool
-        required: False
-        type: int
     proxy_protocol:
         description:
             - PROXY protocol setting for this pool
         required: False
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Load Balancer ID
+        required: True
         type: str
     health_timeout:
         description:
@@ -81,11 +86,6 @@ options:
         description:
             - (Required for new resource) Load Balancer health type
         required: True
-        type: str
-    session_persistence_app_cookie_name:
-        description:
-            - Load Balancer Pool session persisence app cookie name.
-        required: False
         type: str
     id:
         description:
@@ -133,31 +133,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
-    ('health_delay', 'int'),
+    ('algorithm', 'str'),
     ('health_retries', 'int'),
     ('name', 'str'),
+    ('protocol', 'str'),
+    ('health_delay', 'int'),
     ('lb', 'str'),
-    ('algorithm', 'str'),
     ('health_timeout', 'int'),
     ('health_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'algorithm',
+    'health_retries',
+    'health_monitor_port',
+    'session_persistence_type',
+    'session_persistence_app_cookie_name',
+    'name',
     'protocol',
     'health_delay',
-    'health_retries',
-    'session_persistence_type',
-    'name',
-    'lb',
-    'algorithm',
     'health_monitor_url',
-    'health_monitor_port',
     'proxy_protocol',
+    'lb',
     'health_timeout',
     'health_type',
-    'session_persistence_app_cookie_name',
 ]
 
 # Params for Data source
@@ -174,43 +174,43 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    algorithm=dict(
+        required=False,
+        type='str'),
+    health_retries=dict(
+        required=False,
+        type='int'),
+    health_monitor_port=dict(
+        required=False,
+        type='int'),
+    session_persistence_type=dict(
+        required=False,
+        type='str'),
+    session_persistence_app_cookie_name=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     protocol=dict(
         required=False,
         type='str'),
     health_delay=dict(
         required=False,
         type='int'),
-    health_retries=dict(
-        required=False,
-        type='int'),
-    session_persistence_type=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    lb=dict(
-        required=False,
-        type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
     health_monitor_url=dict(
         required=False,
         type='str'),
-    health_monitor_port=dict(
-        required=False,
-        type='int'),
     proxy_protocol=dict(
+        required=False,
+        type='str'),
+    lb=dict(
         required=False,
         type='str'),
     health_timeout=dict(
         required=False,
         type='int'),
     health_type=dict(
-        required=False,
-        type='str'),
-    session_persistence_app_cookie_name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -290,7 +290,7 @@ def run_module():
         resource_type='ibm_is_lb_pool',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

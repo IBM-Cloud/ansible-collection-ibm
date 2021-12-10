@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -38,11 +38,6 @@ options:
             - PI network enable MTU Jumbo option
         required: False
         type: bool
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
-        required: True
-        type: str
     pi_network_name:
         description:
             - (Required for new resource) PI network name
@@ -57,6 +52,11 @@ options:
         description:
             - PI network gateway
         required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: True
         type: str
     id:
         description:
@@ -101,8 +101,8 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_network_type', 'str'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -110,10 +110,10 @@ TL_ALL_PARAMETERS = [
     'pi_network_type',
     'pi_dns',
     'pi_network_jumbo',
-    'pi_cloud_instance_id',
     'pi_network_name',
     'pi_cidr',
     'pi_gateway',
+    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
@@ -144,9 +144,6 @@ module_args = dict(
     pi_network_jumbo=dict(
         required=False,
         type='bool'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     pi_network_name=dict(
         required=False,
         type='str'),
@@ -154,6 +151,9 @@ module_args = dict(
         required=False,
         type='str'),
     pi_gateway=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -214,7 +214,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -223,7 +223,7 @@ def run_module():
             resource_type='ibm_pi_network',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

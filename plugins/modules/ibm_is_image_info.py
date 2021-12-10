@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_image' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - Image name
         required: False
         type: str
-    visibility:
-        description:
-            - Whether the image is publicly visible or private to the account
-        required: False
-        type: str
     identifier:
         description:
             - Image id
+        required: False
+        type: str
+    visibility:
+        description:
+            - Whether the image is publicly visible or private to the account
         required: False
         type: str
     generation:
@@ -74,8 +74,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'visibility',
     'identifier',
+    'visibility',
 ]
 
 
@@ -89,10 +89,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    visibility=dict(
+    identifier=dict(
         required=False,
         type='str'),
-    identifier=dict(
+    visibility=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

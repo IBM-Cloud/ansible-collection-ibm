@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -30,7 +30,7 @@ Parameters
 ----------
 
   action_id (True, str, None)
-    Use GET or actions API to look up the action IDs in your IBM Cloud account.
+    Action Id.  Use GET /actions API to look up the Action Ids in your IBM Cloud account.
 
 
   iaas_classic_username (False, any, None)

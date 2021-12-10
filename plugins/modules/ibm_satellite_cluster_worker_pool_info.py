@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_cluster_worker_pool' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
@@ -31,15 +31,15 @@ options:
             - ID of the resource group
         required: False
         type: str
-    cluster:
-        description:
-            - Cluster name
-        required: True
-        type: str
     region:
         description:
             - Name of the region
         required: False
+        type: str
+    cluster:
+        description:
+            - Cluster name
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -82,8 +82,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'resource_group_id',
-    'cluster',
     'region',
+    'cluster',
 ]
 
 
@@ -100,11 +100,11 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    cluster=dict(
-        required=True,
-        type='str'),
     region=dict(
         required=False,
+        type='str'),
+    cluster=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,19 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    profile:
+    host_group:
         description:
-            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
+            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
         required: True
-        type: str
-    resource_group:
-        description:
-            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
         type: str
     instance_placement_enabled:
         description:
@@ -38,15 +33,20 @@ options:
         required: False
         type: bool
         default: True
-    host_group:
+    resource_group:
         description:
-            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
-        required: True
+            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     name:
         description:
             - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
+        type: str
+    profile:
+        description:
+            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
+        required: True
         type: str
     id:
         description:
@@ -94,29 +94,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
     ('host_group', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile',
-    'resource_group',
-    'instance_placement_enabled',
     'host_group',
+    'instance_placement_enabled',
+    'resource_group',
     'name',
+    'profile',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('host_group', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
-    'resource_group',
     'host_group',
+    'resource_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -126,19 +126,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    host_group=dict(
         required=False,
         type='str'),
     instance_placement_enabled=dict(
         required=False,
         type='bool'),
-    host_group=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

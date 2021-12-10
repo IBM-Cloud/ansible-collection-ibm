@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_api_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
-        required: False
-        type: str
     store_value:
         description:
             - Send true or false to set whether the API key value is retrievable in the future by using the Get details of an API key request. If you create an API key for a user, you must specify `false` or omit the value. We don't allow storing of API keys for users.
@@ -42,17 +37,22 @@ options:
             - You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this value.
         required: False
         type: str
-    file:
-        description:
-            - File where api key is to be stored
-        required: False
-        type: str
     entity_lock:
         description:
             - Indicates if the API key is locked for further write operations. False by default.
         required: False
         type: str
         default: false
+    description:
+        description:
+            - The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
+        required: False
+        type: str
+    file:
+        description:
+            - File where api key is to be stored
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,12 +104,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'store_value',
     'name',
     'apikey',
-    'file',
     'entity_lock',
+    'description',
+    'file',
 ]
 
 # Params for Data source
@@ -128,9 +128,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     store_value=dict(
         required=False,
         type='bool'),
@@ -140,10 +137,13 @@ module_args = dict(
     apikey=dict(
         required=False,
         type='str'),
-    file=dict(
+    entity_lock=dict(
         required=False,
         type='str'),
-    entity_lock=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    file=dict(
         required=False,
         type='str'),
     id=dict(
@@ -211,7 +211,7 @@ def run_module():
         resource_type='ibm_iam_api_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -220,7 +220,7 @@ def run_module():
             resource_type='ibm_iam_api_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

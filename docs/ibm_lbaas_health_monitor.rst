@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  port (True, int, None)
+    (Required for new resource) Port number
+
+
+  interval (False, int, 5)
+    Interval value
+
 
   max_retries (False, int, 2)
     Maximum retry counts
@@ -53,14 +61,6 @@ Parameters
 
   protocol (True, str, None)
     (Required for new resource) Protocol value
-
-
-  port (True, int, None)
-    (Required for new resource) Port number
-
-
-  interval (False, int, 5)
-    Interval value
 
 
   id (False, str, None)

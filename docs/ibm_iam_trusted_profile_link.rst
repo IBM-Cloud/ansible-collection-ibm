@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.35.0
+- IBM-Cloud terraform-provider-ibm v1.37.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile_id (True, str, None)
-    (Required for new resource) ID of the trusted profile.
-
-
-  cr_type (True, str, None)
-    (Required for new resource) The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
-
-
   link (True, list, None)
     (Required for new resource) Link details.
 
 
   name (False, str, None)
     Optional name of the Link.
+
+
+  profile_id (True, str, None)
+    (Required for new resource) ID of the trusted profile.
+
+
+  cr_type (True, str, None)
+    (Required for new resource) The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
 
 
   id (False, str, None)

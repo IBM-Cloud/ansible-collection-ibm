@@ -18,10 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.35.0
+    - IBM-Cloud terraform-provider-ibm v1.37.1
     - Terraform v0.12.20
 
 options:
+    profile_id:
+        description:
+            - UUID of Trusted Profile
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of Trusted Profile
+        required: False
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
     resources:
         description:
             - None
@@ -51,22 +67,6 @@ options:
             - Description of the Policy
         required: False
         type: str
-    profile_id:
-        description:
-            - UUID of Trusted Profile
-        required: False
-        type: str
-    iam_id:
-        description:
-            - IAM ID of Trusted Profile
-        required: False
-        type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,14 +118,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'profile_id',
+    'iam_id',
+    'roles',
     'resources',
     'resource_attributes',
     'account_management',
     'tags',
     'description',
-    'profile_id',
-    'iam_id',
-    'roles',
 ]
 
 # Params for Data source
@@ -133,9 +133,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'sort',
     'profile_id',
     'iam_id',
-    'sort',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -148,6 +148,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    profile_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
+        required=False,
+        type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     resources=dict(
         required=False,
         elements='',
@@ -166,16 +176,6 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    profile_id=dict(
-        required=False,
-        type='str'),
-    iam_id=dict(
-        required=False,
-        type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.35.0',
+        ibm_provider_version='1.37.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -250,7 +250,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.35.0',
+            ibm_provider_version='1.37.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
