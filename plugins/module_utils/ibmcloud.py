@@ -382,7 +382,7 @@ def ibmcloud_terraform(
         ibm_provider_version,
         tl_required_params,
         tl_all_params,
-        terraform_dir=DEFAULT_TF_DIR):
+        terraform_dir=None):
     """
     Use Terraform to interact with IBM Cloud resources
 
@@ -397,7 +397,8 @@ def ibmcloud_terraform(
         tl_all_params (list): Top Level Parameters supported by TF.
             Each tuple consists of two strings:(<name>, <type>)
         terraform_dir (str, optional): Path to Terraform working
-                                       directory
+            directory. Can also be set using the
+            'IBMCLOUD_ANSIBLE_TERRAFORM_DIR' environment variable.
 
     Returns:
         dict: Ansible 'result' dictionary. The 'resource' key contains
@@ -436,6 +437,13 @@ def ibmcloud_terraform(
         'stderr': '',
         'warnings': []
     }
+
+    # Set terraform directory
+    if terraform_dir is None:
+        if 'IBMCLOUD_ANSIBLE_TERRAFORM_DIR' in env:
+            terraform_dir = env['IBMCLOUD_ANSIBLE_TERRAFORM_DIR']
+        else:
+            terraform_dir = DEFAULT_TF_DIR
 
     # Initialize Terraform object
     terraform = Terraform(
