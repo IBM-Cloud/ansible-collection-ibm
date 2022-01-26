@@ -10,6 +10,7 @@
     proc_type: shared
     processors: "0.25"
     memory: "2"
+    storage_type: tier1
     pi_cloud_instance_id: "11956c6d-f7e8-4120-a403-14428405d1fe"
     ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0eZ4uNSH6rtxNM7MagrBtxwlASw0iKcxDdXq9eNu93xDpsvxdn6xE/JESlIHhf9/45oLw9AKpu/MZYwqQ0O+uedwgtLvorv++fyXI36cls4xmUCuNnEhoK1aXh26N+V+lxejqF3DJhMKHYprQCnyl/8RWkWIFc2Jo60ACZ98MY4rRHgBP/0t1tqmb0I4IdBaYLctVIdv16gYJ5zqGYKeJBMG7XtgkrtOeacVoArrmjHY6n2cNgE5jLt9n9MyyGLjzq1agIpwwsWJGfhzqo2I98UhGWtUlD2UeNHbuJZmbXeyibuoV7RhDZg9LafkOXOTojjZc9rUrd8BChoHhbW3X anil@Anils-MacBook-Pro.local"
   tasks:
@@ -106,10 +107,11 @@
         pi_proc_type: "{{ proc_type }}"
         pi_image_id: "{{ image_dict[pi_image] }}"
         pi_volume_ids: []
-        pi_network_ids:
-          - "{{ pi_network.id }}"
+        pi_network:
+          - network_id: "{{ pi_network.id }}"
         pi_key_pair_name: "{{ pi_ssh_key.pi_key_name }}"
         pi_sys_type: "{{ sys_type }}"
+        pi_storage_type: "{{ storage_type }}"
         pi_replication_policy: none
         pi_replication_scheme: suffix
         pi_replicants: "1"
@@ -118,11 +120,18 @@
       register: pi_instance_create_output
       when: pi_instance_existing_output.rc != 0
 
+    - name: Check for existing Virtual Server Instance
+      ibm_pi_instance_info:
+        pi_instance_name: "{{ pi_name }}"
+        pi_cloud_instance_id: "{{ pi_cloud_instance_id }}"
+      register: pi_instance_new_output
+      when: pi_instance_create_output.resource is defined
+
     - name: Save new Power VSI fact
       set_fact:
         cacheable: True
-        pi_instance: "{{ pi_instance_create_output.resource }}"
-      when: pi_instance_create_output.resource is defined
+        pi_instance: "{{ pi_instance_new_output.resource }}"
+      when: pi_instance_new_output.resource is defined
 
     - name: Print Public IP Address
       debug:
