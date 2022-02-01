@@ -66,7 +66,7 @@
     - name: Save existing network as fact
       set_fact:
         cacheable: True
-        pi_network: "{{ pi_network_existing_output.resource }}"
+        pi_network_id: "{{ pi_network_existing_output.resource.id }}"
       when: pi_network_existing_output.resource.id is defined
 
     - name: Add new network
@@ -80,7 +80,7 @@
     - name: Save new network as fact
       set_fact:
         cacheable: True
-        pi_network: "{{ pi_network_create_output.resource }}"
+        pi_network_id: "{{ pi_network_create_output.resource.network_id }}"
       when: pi_network_existing_output.resource.id is not defined
 
     - name: Check for existing Virtual Server Instance
@@ -108,7 +108,7 @@
         pi_image_id: "{{ image_dict[pi_image] }}"
         pi_volume_ids: []
         pi_network:
-          - network_id: "{{ pi_network.id }}"
+          - network_id: "{{ pi_network_id }}"
         pi_key_pair_name: "{{ pi_ssh_key.pi_key_name }}"
         pi_sys_type: "{{ sys_type }}"
         pi_storage_type: "{{ storage_type }}"
