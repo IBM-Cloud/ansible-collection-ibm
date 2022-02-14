@@ -871,6 +871,8 @@ class Terraform:
                             _dict['name'] = arg['name']
                         if 'subnet' in arg:
                             _dict['subnet'] = arg['subnet']
+                        if 'network_id' in arg:
+                            _dict['network_id'] = arg['network_id']
                         safe_list.append(_dict)
                     else:
                         safe_list.append(arg)
