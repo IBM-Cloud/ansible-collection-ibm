@@ -48,7 +48,7 @@ The following parameters can be set by the user:
     export IC_REGION=<REGION_NAME_HERE>
     ```
 
-    Note: Modules also support the 'ibmcloud_region' parameter.
+    Note: Modules also support the 'region' parameter.
 
 ### Create
 
