@@ -667,6 +667,12 @@ class Terraform:
         if self.platform.startswith('linux'):
             self.platform = 'linux'
 
+        # Create global 'terraform_dir' accessible by all system users
+        if not os.path.isdir(self.terraform_dir):
+            orig_umask = os.umask(0o000)
+            os.makedirs(self.terraform_dir)
+            os.umask(orig_umask)
+
         # Create a subdirectory in 'terraform_dir' to use as a working
         # directory for a single object instance
         def tf_subdir_path():
@@ -733,7 +739,7 @@ class Terraform:
         self._download_extract_zip(
             "{0}{1}/terraform_{1}_{2}_amd64.zip".format(
                 self.TERRAFORM_BASE_URL, self.terraform_version, self.platform))
-        os.chmod(filepath, 0o755)
+        os.chmod(filepath, 0o777)
         self.executable = filepath
 
     def _install_ibmcloud_tf_provider(self):
@@ -741,7 +747,9 @@ class Terraform:
         self._download_extract_zip(
             "{0}v{1}/terraform-provider-ibm_{1}_{2}_amd64.zip".format(
                 self.IBM_PROVIDER_BASE_URL, self.ibm_provider_version, self.platform))
-        os.chmod(os.path.join(self.terraform_dir, filename), 0o755)
+        os.chmod(os.path.join(self.terraform_dir, filename), 0o777)
+        os.remove(os.path.join(self.terraform_dir, filename + ".pem"))
+        os.remove(os.path.join(self.terraform_dir, filename + ".sig"))
 
     def _render_provider_file(self):
         # Render terraform provider file
