@@ -585,6 +585,9 @@ class Resource:
         self.id_ = None
         if 'id' in parameters:
             self.id_ = parameters['id']
+            if (self.resource_type.startswith('ibm_pi') and
+                    'pi_cloud_instance_id' in parameters):
+                self.id_ = parameters['pi_cloud_instance_id'] + '/' + self.id_
 
 
 class Terraform:
@@ -868,6 +871,8 @@ class Terraform:
                             _dict['name'] = arg['name']
                         if 'subnet' in arg:
                             _dict['subnet'] = arg['subnet']
+                        if 'network_id' in arg:
+                            _dict['network_id'] = arg['network_id']
                         safe_list.append(_dict)
                     else:
                         safe_list.append(arg)
