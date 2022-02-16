@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  kind_format (True, str, None)
-    (Required for new resource) the format this instance has (helm, operator, ova...).
-
-
-  cluster_region (True, str, None)
-    (Required for new resource) Cluster region (e.g., us-south).
-
-
-  cluster_all_namespaces (True, bool, None)
-    (Required for new resource) designate to install into all namespaces.
-
-
-  channel (False, str, None)
-    channel to target for the operator subscription. Required for operator bundles
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
-
-
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
-
-
   cluster_namespaces (True, list, None)
     (Required for new resource) List of target namespaces to install into.
 
 
-  resource_group_id (False, str, None)
-    id of the resource group
+  label (True, str, None)
+    (Required for new resource) the label for this instance.
 
 
   version (True, str, None)
     (Required for new resource) The version this instance was installed from (not version id).
 
 
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
+
+
+  cluster_region (True, str, None)
+    (Required for new resource) Cluster region (e.g., us-south).
+
+
+  resource_group_id (False, str, None)
+    id of the resource group
 
 
   install_plan (False, str, None)
     install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
 
 
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
+
+
   wait_until_successful (False, bool, True)
     Whether to wait until the offering instance successfully provisions, or to return when accepted
 
 
-  label (True, str, None)
-    (Required for new resource) the label for this instance.
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
+
+
+  cluster_all_namespaces (True, bool, None)
+    (Required for new resource) designate to install into all namespaces.
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
+  kind_format (True, str, None)
+    (Required for new resource) the format this instance has (helm, operator, ova...).
 
 
   id (False, str, None)

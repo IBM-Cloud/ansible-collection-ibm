@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,56 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Instance Template name
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
   profile (True, str, None)
     (Required for new resource) Profile info
 
 
   dedicated_host_group (False, str, None)
     Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  resource_group (False, str, None)
-    Instance template resource group
-
-
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
 
 
   placement_group (False, str, None)
@@ -91,8 +47,52 @@ Parameters
     None
 
 
+  network_interfaces (False, list, None)
+    None
+
+
   boot_volume (False, list, None)
     None
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  name (False, str, None)
+    Instance Template name
+
+
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

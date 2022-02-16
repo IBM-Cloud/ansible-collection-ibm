@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     (Required for new resource) The list of addresses in the zone.
 
 
-  name (True, str, None)
-    (Required for new resource) The name of the zone.
-
-
   excluded (False, list, None)
     The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the zone.
 
 
   id (False, str, None)

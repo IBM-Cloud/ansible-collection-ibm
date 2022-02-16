@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  target_kinds (False, list, None)
-    Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-
-
-  content (False, str, None)
-    byte array representing the content to be imported.  Only supported for OVA images at this time.
+  catalog_identifier (True, str, None)
+    (Required for new resource) Catalog identifier.
 
 
   offering_id (True, str, None)
@@ -47,16 +43,20 @@ Parameters
     URL path to zip location.  If not specified, must provide content in the body of this call.
 
 
+  target_version (False, str, None)
+    The semver value for this new version, if not found in the zip url package content.
+
+
+  target_kinds (False, list, None)
+    Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
+
+
   tags (False, list, None)
     Tags array.
 
 
-  catalog_identifier (True, str, None)
-    (Required for new resource) Catalog identifier.
-
-
-  target_version (False, str, None)
-    The semver value for this new version, if not found in the zip url package content.
+  content (False, str, None)
+    byte array representing the content to be imported.  Only supported for OVA images at this time.
 
 
   id (False, str, None)

@@ -18,14 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_si_occurrence' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    provider_id:
+    occurrence_id:
         description:
-            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+            - (Required for new resource) The id of the occurrence.
         required: True
+        type: str
+    remediation:
+        description:
+            - A description of actions that can be taken to remedy the `Note`.
+        required: False
+        type: str
+    kpi:
+        description:
+            - Kpi provides details about a KPI occurrence.
+        required: False
+        type: list
+        elements: dict
+    replace_if_exists:
+        description:
+            - When set to true, an existing occurrence is replaced rather than duplicated.
+        required: False
+        type: bool
+        default: False
+    account_id:
+        description:
+            - None
+        required: False
         type: str
     note_name:
         description:
@@ -54,33 +76,11 @@ options:
         required: False
         type: list
         elements: dict
-    replace_if_exists:
+    provider_id:
         description:
-            - When set to true, an existing occurrence is replaced rather than duplicated.
-        required: False
-        type: bool
-        default: False
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
-    occurrence_id:
-        description:
-            - (Required for new resource) The id of the occurrence.
+            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
         type: str
-    remediation:
-        description:
-            - A description of actions that can be taken to remedy the `Note`.
-        required: False
-        type: str
-    kpi:
-        description:
-            - Kpi provides details about a KPI occurrence.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,25 +127,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('provider_id', 'str'),
+    ('occurrence_id', 'str'),
     ('note_name', 'str'),
     ('kind', 'str'),
-    ('occurrence_id', 'str'),
+    ('provider_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'provider_id',
+    'occurrence_id',
+    'remediation',
+    'kpi',
+    'replace_if_exists',
+    'account_id',
     'note_name',
     'kind',
     'resource_url',
     'context',
     'finding',
-    'replace_if_exists',
-    'account_id',
-    'occurrence_id',
-    'remediation',
-    'kpi',
+    'provider_id',
 ]
 
 # Params for Data source
@@ -155,9 +155,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'account_id',
     'occurrence_id',
     'provider_id',
+    'account_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -167,7 +167,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    provider_id=dict(
+    occurrence_id=dict(
+        required=False,
+        type='str'),
+    remediation=dict(
+        required=False,
+        type='str'),
+    kpi=dict(
+        required=False,
+        elements='',
+        type='list'),
+    replace_if_exists=dict(
+        required=False,
+        type='bool'),
+    account_id=dict(
         required=False,
         type='str'),
     note_name=dict(
@@ -187,22 +200,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    replace_if_exists=dict(
-        required=False,
-        type='bool'),
-    account_id=dict(
+    provider_id=dict(
         required=False,
         type='str'),
-    occurrence_id=dict(
-        required=False,
-        type='str'),
-    remediation=dict(
-        required=False,
-        type='str'),
-    kpi=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -268,7 +268,7 @@ def run_module():
         resource_type='ibm_scc_si_occurrence',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -277,7 +277,7 @@ def run_module():
             resource_type='ibm_scc_si_occurrence',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

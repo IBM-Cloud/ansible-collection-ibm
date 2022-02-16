@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    Tags set for the resource
-
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
@@ -49,6 +45,10 @@ Parameters
 
   hardware_instance_id (False, int, None)
     Hardware instance ID
+
+
+  tags (False, list, None)
+    Tags set for the resource
 
 
   id (False, str, None)

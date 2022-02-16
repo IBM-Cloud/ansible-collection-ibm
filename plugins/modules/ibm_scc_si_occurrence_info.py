@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_occurrence' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
     occurrence_id:
         description:
             - Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
@@ -35,6 +30,11 @@ options:
         description:
             - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
+        type: str
+    account_id:
+        description:
+            - None
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_id',
     'occurrence_id',
     'provider_id',
+    'account_id',
 ]
 
 
@@ -88,14 +88,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_id=dict(
-        required=False,
-        type='str'),
     occurrence_id=dict(
         required=True,
         type='str'),
     provider_id=dict(
         required=True,
+        type='str'),
+    account_id=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_scc_si_occurrence',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

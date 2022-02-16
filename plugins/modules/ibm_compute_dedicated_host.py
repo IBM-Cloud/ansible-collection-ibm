@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,16 @@ options:
     datacenter:
         description:
             - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+        required: True
+        type: str
+    router_hostname:
+        description:
+            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
+        required: True
+        type: str
+    hostname:
+        description:
+            - (Required for new resource) The host name of dedicatated host.
         required: True
         type: str
     flavor:
@@ -56,16 +66,6 @@ options:
         required: False
         type: list
         elements: str
-    hostname:
-        description:
-            - (Required for new resource) The host name of dedicatated host.
-        required: True
-        type: str
-    router_hostname:
-        description:
-            - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,20 +114,20 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('domain', 'str'),
     ('datacenter', 'str'),
-    ('hostname', 'str'),
     ('router_hostname', 'str'),
+    ('hostname', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain',
     'datacenter',
+    'router_hostname',
+    'hostname',
     'flavor',
     'hourly_billing',
     'wait_time_minutes',
     'tags',
-    'hostname',
-    'router_hostname',
 ]
 
 # Params for Data source
@@ -150,6 +150,12 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
+    router_hostname=dict(
+        required=False,
+        type='str'),
+    hostname=dict(
+        required=False,
+        type='str'),
     flavor=dict(
         required=False,
         type='str'),
@@ -163,12 +169,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    hostname=dict(
-        required=False,
-        type='str'),
-    router_hostname=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

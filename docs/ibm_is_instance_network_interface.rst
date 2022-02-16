@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  floating_ip (False, str, None)
-    The ID of the floating IP to attach to this network interface
-
 
   primary_ipv4_address (False, str, None)
     The primary IPv4 address. If specified, it must be an available address on the network interface's subnet. If unspecified, an available address on the subnet will be automatically selected.
@@ -43,20 +39,24 @@ Parameters
     (Required for new resource) The unique identifier of the subnet.
 
 
-  security_groups (False, list, None)
-    None
+  allow_ip_spoofing (False, bool, False)
+    Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
 
 
   name (True, str, None)
     (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
+  floating_ip (False, str, None)
+    The ID of the floating IP to attach to this network interface
+
+
   instance (True, str, None)
     (Required for new resource) The unique identifier of the instance.
 
 
-  allow_ip_spoofing (False, bool, False)
-    Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+  security_groups (False, list, None)
+    None
 
 
   id (False, str, None)

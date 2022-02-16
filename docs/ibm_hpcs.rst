@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
-
-
   failover_units (False, int, None)
     The number of failover crypto units for your service instance
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
-
-
-  name (True, str, None)
-    (Required for new resource) A name for the HPCS instance
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
-
-
-  service (False, str, hs-crypto)
-    The name of the service offering `hs-crypto`
-
-
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   admins (True, list, None)
     (Required for new resource) Crypto Unit Administrators
 
 
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
+
+
   units (True, int, None)
     (Required for new resource) The number of operational crypto units for your service instance
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the HPCS instance
+
+
+  tags (False, list, None)
+    None
+
+
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
 
 
   plan (True, str, None)
     (Required for new resource) The plan type of the HPCS Instance
 
 
-  tags (False, list, None)
-    None
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
+  service (False, str, hs-crypto)
+    The name of the service offering `hs-crypto`
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   id (False, str, None)

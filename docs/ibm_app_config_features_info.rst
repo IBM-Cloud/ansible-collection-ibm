@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -29,28 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  environment_id (True, str, None)
-    Environment Id.
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  sort (False, str, None)
-    Sort the feature details based on the specified attribute.
+  collections (False, list, None)
+    Filter features by a list of comma separated collections.
 
 
   expand (False, bool, None)
     If set to `true`, returns expanded view of the resource details.
 
 
-  includes (False, list, None)
-    Include the associated collections or targeting rules details in the response.
-
-
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  segments (False, list, None)
-    Filter features by a list of comma separated segments.
+  limit (False, int, None)
+    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
 
 
   offset (False, int, None)
@@ -61,12 +53,20 @@ Parameters
     Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
 
 
-  collections (False, list, None)
-    Filter features by a list of comma separated collections.
+  environment_id (True, str, None)
+    Environment Id.
 
 
-  limit (False, int, None)
-    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+  sort (False, str, None)
+    Sort the feature details based on the specified attribute.
+
+
+  includes (False, list, None)
+    Include the associated collections or targeting rules details in the response.
+
+
+  segments (False, list, None)
+    Filter features by a list of comma separated segments.
 
 
   iaas_classic_username (False, any, None)

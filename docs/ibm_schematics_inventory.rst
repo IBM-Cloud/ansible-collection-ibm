@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  inventories_ini (False, str, None)
-    Input inventory of host and host group for the playbook, in the `.ini` file format.
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+
+
+  resource_group (False, str, None)
+    Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
 
 
   name (False, str, None)
@@ -43,12 +47,8 @@ Parameters
     The description of your Inventory definition. The description can be up to 2048 characters long in size.
 
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-
-
-  resource_group (False, str, None)
-    Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
+  inventories_ini (False, str, None)
+    Input inventory of host and host group for the playbook, in the `.ini` file format.
 
 
   resource_queries (False, list, None)

@@ -17,15 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_environments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    tags:
+    limit:
         description:
-            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
+            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
         required: False
-        type: str
+        type: int
     guid:
         description:
             - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
@@ -36,11 +36,11 @@ options:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    limit:
+    tags:
         description:
-            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
         required: False
-        type: int
+        type: str
     offset:
         description:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
@@ -84,10 +84,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
+    'limit',
     'guid',
     'expand',
-    'limit',
+    'tags',
     'offset',
 ]
 
@@ -99,18 +99,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
+    limit=dict(
         required=False,
-        type='str'),
+        type='int'),
     guid=dict(
         required=True,
         type='str'),
     expand=dict(
         required=False,
         type='bool'),
-    limit=dict(
+    tags=dict(
         required=False,
-        type='int'),
+        type='str'),
     offset=dict(
         required=False,
         type='int'),
@@ -148,7 +148,7 @@ def run_module():
         resource_type='ibm_app_config_environments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

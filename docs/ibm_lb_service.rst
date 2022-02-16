@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    Tags for the resource
-
-
-  service_group_id (True, int, None)
-    (Required for new resource) service group ID
-
-
-  ip_address_id (True, int, None)
-    (Required for new resource) IP Address ID
-
 
   port (True, int, None)
     (Required for new resource) Port number
@@ -57,6 +45,18 @@ Parameters
 
   weight (True, int, None)
     (Required for new resource) Weight value
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  service_group_id (True, int, None)
+    (Required for new resource) service group ID
+
+
+  ip_address_id (True, int, None)
+    (Required for new resource) IP Address ID
 
 
   id (False, str, None)

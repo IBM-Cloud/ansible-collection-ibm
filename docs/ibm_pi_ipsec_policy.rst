@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
-
-
-  pi_policy_name (True, str, None)
-    (Required for new resource) Name of the IPSec Policy
-
-
-  pi_policy_dh_group (True, int, None)
-    (Required for new resource) DH group of the IPSec Policy
-
 
   pi_policy_encryption (True, str, None)
     (Required for new resource) Encryption of the IPSec Policy
@@ -57,6 +45,18 @@ Parameters
 
   pi_policy_authentication (False, str, none)
     Authentication for the IPSec Policy
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
+  pi_policy_name (True, str, None)
+    (Required for new resource) Name of the IPSec Policy
+
+
+  pi_policy_dh_group (True, int, None)
+    (Required for new resource) DH group of the IPSec Policy
 
 
   id (False, str, None)

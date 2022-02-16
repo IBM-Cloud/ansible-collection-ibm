@@ -17,24 +17,14 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_posture_scan_summaries' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    profile_id:
+    report_setting_id:
         description:
-            - The profile ID. This can be obtained from the Security and Compliance Center UI by clicking on the profile name. The URL contains the ID.
+            - The report setting ID. This can be obtained from the /validations/latest_scans API call.
         required: True
-        type: str
-    scope_id:
-        description:
-            - The scope ID. This can be obtained from the Security and Compliance Center UI by clicking on the scope name. The URL contains the ID.
-        required: True
-        type: str
-    scan_id:
-        description:
-            - The ID of the scan.
-        required: False
         type: str
     iaas_classic_username:
         description:
@@ -69,15 +59,12 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile_id', 'str'),
-    ('scope_id', 'str'),
+    ('report_setting_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile_id',
-    'scope_id',
-    'scan_id',
+    'report_setting_id',
 ]
 
 
@@ -88,14 +75,8 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile_id=dict(
+    report_setting_id=dict(
         required=True,
-        type='str'),
-    scope_id=dict(
-        required=True,
-        type='str'),
-    scan_id=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -131,7 +112,7 @@ def run_module():
         resource_type='ibm_scc_posture_scan_summaries',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

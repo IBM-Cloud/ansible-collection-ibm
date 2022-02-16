@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_event_streams_topic' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    resource_instance_id:
-        description:
-            - (Required for new resource) The CRN of the Event Streams instance
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The name of the topic
-        required: True
-        type: str
     partitions:
         description:
             - The number of partitions
@@ -43,6 +33,16 @@ options:
             - The configuration parameters of a topic
         required: False
         type: dict
+    resource_instance_id:
+        description:
+            - (Required for new resource) The CRN of the Event Streams instance
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name of the topic
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,10 +95,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
-    'name',
     'partitions',
     'config',
+    'resource_instance_id',
+    'name',
 ]
 
 # Params for Data source
@@ -119,18 +119,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_instance_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     partitions=dict(
         required=False,
         type='int'),
     config=dict(
         required=False,
         type='dict'),
+    resource_instance_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_event_streams_topic',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -205,7 +205,7 @@ def run_module():
             resource_type='ibm_event_streams_topic',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

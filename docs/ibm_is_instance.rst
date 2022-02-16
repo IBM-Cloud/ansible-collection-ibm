@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,12 +31,88 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
+  keys (False, list, None)
+    SSH key Ids for the instance
+
+
+  image (False, str, None)
+    image id
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
 
 
   total_volume_bandwidth (False, int, None)
     The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+
+
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  force_action (False, bool, False)
+    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
+
+
+  zone (False, str, None)
+    Zone name
+
+
+  action (False, str, None)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  vpc (False, str, None)
+    VPC id
+
+
+  profile (False, str, None)
+    Profile info
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  primary_network_interface (False, list, None)
+    Primary Network interface info
 
 
   network_interfaces (False, list, None)
@@ -45,82 +121,6 @@ Parameters
 
   instance_template (False, str, None)
     Id of the instance template
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  primary_network_interface (False, list, None)
-    Primary Network interface info
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  profile (False, str, None)
-    Profile info
-
-
-  zone (False, str, None)
-    Zone name
-
-
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  keys (False, list, None)
-    SSH key Ids for the instance
-
-
-  force_action (False, bool, False)
-    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
-
-
-  image (False, str, None)
-    image id
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  vpc (False, str, None)
-    VPC id
-
-
-  action (False, str, None)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  user_data (False, str, None)
-    User data given for the instance
-
-
-  volumes (False, list, None)
-    List of volumes
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  boot_volume (False, list, None)
-    None
 
 
   id (False, str, None)

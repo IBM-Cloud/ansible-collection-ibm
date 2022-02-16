@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  firewall_type (False, str, HARDWARE_FIREWALL_DEDICATED)
-    Firewall type
-
-
-  ha_enabled (False, bool, False)
-    set to true if High availability is enabled
-
-
   public_vlan_id (True, int, None)
     (Required for new resource) Public VLAN ID
 
 
   tags (False, list, None)
     List of tags for the firewall
+
+
+  firewall_type (False, str, HARDWARE_FIREWALL_DEDICATED)
+    Firewall type
+
+
+  ha_enabled (False, bool, False)
+    set to true if High availability is enabled
 
 
   id (False, str, None)

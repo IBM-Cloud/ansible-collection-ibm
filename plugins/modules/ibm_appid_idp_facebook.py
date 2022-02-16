@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_idp_facebook' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
+    is_active:
+        description:
+            - (Required for new resource) `true` if Facebook IDP configuration is active
+        required: True
+        type: bool
     config:
         description:
             - Facebook IDP configuration
@@ -33,11 +38,6 @@ options:
             - (Required for new resource) The AppID instance GUID
         required: True
         type: str
-    is_active:
-        description:
-            - (Required for new resource) `true` if Facebook IDP configuration is active
-        required: True
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,15 +84,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('tenant_id', 'str'),
     ('is_active', 'bool'),
+    ('tenant_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'is_active',
     'config',
     'tenant_id',
-    'is_active',
 ]
 
 # Params for Data source
@@ -111,6 +111,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    is_active=dict(
+        required=False,
+        type='bool'),
     config=dict(
         required=False,
         elements='',
@@ -118,9 +121,6 @@ module_args = dict(
     tenant_id=dict(
         required=False,
         type='str'),
-    is_active=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_appid_idp_facebook',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -195,7 +195,7 @@ def run_module():
             resource_type='ibm_appid_idp_facebook',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

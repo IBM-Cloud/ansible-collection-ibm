@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  queries (False, list, None)
-    None
-
-
   type (False, str, None)
     Resource type (cluster, vsi, icd, vpc).
 
 
   name (False, str, None)
     Resource query name.
+
+
+  queries (False, list, None)
+    None
 
 
   id (False, str, None)

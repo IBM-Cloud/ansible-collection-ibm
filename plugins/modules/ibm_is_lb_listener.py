@@ -18,10 +18,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
+    accept_proxy_protocol:
+        description:
+            - Listener will forward proxy protocol
+        required: False
+        type: bool
+    https_redirect_status_code:
+        description:
+            - The HTTP status code to be returned in the redirect response
+        required: False
+        type: int
+    https_redirect_uri:
+        description:
+            - Target URI where traffic will be redirected
+        required: False
+        type: str
+    https_redirect_listener:
+        description:
+            - ID of the listener that will be set as http redirect target
+        required: False
+        type: str
     port:
         description:
             - Loadbalancer listener port
@@ -32,9 +52,9 @@ options:
             - (Required for new resource) Loadbalancer protocol
         required: True
         type: str
-    https_redirect_uri:
+    default_pool:
         description:
-            - Target URI where traffic will be redirected
+            - Loadbalancer default pool info
         required: False
         type: str
     certificate_instance:
@@ -42,11 +62,6 @@ options:
             - certificate instance for the Loadbalancer
         required: False
         type: str
-    accept_proxy_protocol:
-        description:
-            - Listener will forward proxy protocol
-        required: False
-        type: bool
     connection_limit:
         description:
             - Connection limit for Loadbalancer
@@ -56,21 +71,6 @@ options:
         description:
             - (Required for new resource) Loadbalancer listener ID
         required: True
-        type: str
-    https_redirect_status_code:
-        description:
-            - The HTTP status code to be returned in the redirect response
-        required: False
-        type: int
-    https_redirect_listener:
-        description:
-            - ID of the listener that will be set as http redirect target
-        required: False
-        type: str
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
         type: str
     id:
         description:
@@ -124,16 +124,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'accept_proxy_protocol',
+    'https_redirect_status_code',
+    'https_redirect_uri',
+    'https_redirect_listener',
     'port',
     'protocol',
-    'https_redirect_uri',
+    'default_pool',
     'certificate_instance',
-    'accept_proxy_protocol',
     'connection_limit',
     'lb',
-    'https_redirect_status_code',
-    'https_redirect_listener',
-    'default_pool',
 ]
 
 # Params for Data source
@@ -150,34 +150,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    accept_proxy_protocol=dict(
+        required=False,
+        type='bool'),
+    https_redirect_status_code=dict(
+        required=False,
+        type='int'),
+    https_redirect_uri=dict(
+        required=False,
+        type='str'),
+    https_redirect_listener=dict(
+        required=False,
+        type='str'),
     port=dict(
         required=False,
         type='int'),
     protocol=dict(
         required=False,
         type='str'),
-    https_redirect_uri=dict(
+    default_pool=dict(
         required=False,
         type='str'),
     certificate_instance=dict(
         required=False,
         type='str'),
-    accept_proxy_protocol=dict(
-        required=False,
-        type='bool'),
     connection_limit=dict(
         required=False,
         type='int'),
     lb=dict(
-        required=False,
-        type='str'),
-    https_redirect_status_code=dict(
-        required=False,
-        type='int'),
-    https_redirect_listener=dict(
-        required=False,
-        type='str'),
-    default_pool=dict(
         required=False,
         type='str'),
     id=dict(
@@ -257,7 +257,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

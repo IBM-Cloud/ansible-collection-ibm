@@ -23,41 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
-
-
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-
-
-  data (False, list, None)
-    Job data.
-
-
-  log_summary (False, list, None)
-    Job log summary record.
-
-
-  bastion (False, list, None)
-    Describes a bastion resource.
-
 
   command_object_id (True, str, None)
     (Required for new resource) Job command object id (workspace-id, action-id).
@@ -67,16 +39,44 @@ Parameters
     (Required for new resource) Schematics job command name.
 
 
-  command_parameter (False, str, None)
-    Schematics job command parameter (playbook-name).
-
-
   job_inputs (False, list, None)
     Job inputs used by Action or Workspace.
 
 
+  log_summary (False, list, None)
+    Job log summary record.
+
+
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
+
+
   job_env_settings (False, list, None)
     Environment variables used by the Job while performing Action or Workspace.
+
+
+  command_parameter (False, str, None)
+    Schematics job command parameter (playbook-name).
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
+
+
+  bastion (False, list, None)
+    Describes a bastion resource.
+
+
+  command_options (False, list, None)
+    Command line options for the command.
+
+
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+
+
+  data (False, list, None)
+    Job data.
 
 
   id (False, str, None)

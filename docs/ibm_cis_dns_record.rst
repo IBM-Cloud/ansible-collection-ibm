@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  content (False, str, None)
-    DNS record content
+  cis_id (True, str, None)
+    (Required for new resource) CIS object id or CRN
 
 
   data (False, dict, None)
@@ -47,20 +43,24 @@ Parameters
     Priority Value
 
 
+  name (False, str, None)
+    DNS record name
+
+
   ttl (False, int, 1)
     TTL value
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   type (True, str, None)
     (Required for new resource) Record type
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS object id or CRN
-
-
-  name (False, str, None)
-    DNS record name
+  content (False, str, None)
+    DNS record content
 
 
   proxied (False, bool, False)

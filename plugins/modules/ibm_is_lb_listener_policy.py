@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -27,40 +27,19 @@ options:
             - (Required for new resource) Load Balancer Listener Policy
         required: True
         type: str
-    target_https_redirect_uri:
+    target_https_redirect_status_code:
         description:
-            - Target URI where traffic will be redirected
+            - The HTTP status code to be returned in the redirect response
         required: False
-        type: str
+        type: int
     target_https_redirect_listener:
         description:
             - ID of the listener that will be set as http redirect target
         required: False
         type: str
-    priority:
-        description:
-            - (Required for new resource) Listener Policy Priority
-        required: True
-        type: int
     target_id:
         description:
             - Listener Policy Target ID
-        required: False
-        type: str
-    rules:
-        description:
-            - Policy Rules
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - Policy name
-        required: False
-        type: str
-    target_url:
-        description:
-            - Policy Target URL
         required: False
         type: str
     listener:
@@ -68,16 +47,37 @@ options:
             - (Required for new resource) Listener ID
         required: True
         type: str
-    target_https_redirect_status_code:
+    target_https_redirect_uri:
         description:
-            - The HTTP status code to be returned in the redirect response
+            - Target URI where traffic will be redirected
         required: False
+        type: str
+    priority:
+        description:
+            - (Required for new resource) Listener Policy Priority
+        required: True
         type: int
+    target_url:
+        description:
+            - Policy Target URL
+        required: False
+        type: str
+    name:
+        description:
+            - Policy name
+        required: False
+        type: str
     action:
         description:
             - (Required for new resource) Policy Action
         required: True
         type: str
+    rules:
+        description:
+            - Policy Rules
+        required: False
+        type: list
+        elements: dict
     target_http_status_code:
         description:
             - Listener Policy target HTTPS Status code.
@@ -130,24 +130,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('lb', 'str'),
-    ('priority', 'int'),
     ('listener', 'str'),
+    ('priority', 'int'),
     ('action', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
-    'target_https_redirect_uri',
-    'target_https_redirect_listener',
-    'priority',
-    'target_id',
-    'rules',
-    'name',
-    'target_url',
-    'listener',
     'target_https_redirect_status_code',
+    'target_https_redirect_listener',
+    'target_id',
+    'listener',
+    'target_https_redirect_uri',
+    'priority',
+    'target_url',
+    'name',
     'action',
+    'rules',
     'target_http_status_code',
 ]
 
@@ -168,37 +168,37 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    target_https_redirect_uri=dict(
+    target_https_redirect_status_code=dict(
+        required=False,
+        type='int'),
+    target_https_redirect_listener=dict(
         required=False,
         type='str'),
-    target_https_redirect_listener=dict(
+    target_id=dict(
+        required=False,
+        type='str'),
+    listener=dict(
+        required=False,
+        type='str'),
+    target_https_redirect_uri=dict(
         required=False,
         type='str'),
     priority=dict(
         required=False,
         type='int'),
-    target_id=dict(
+    target_url=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    action=dict(
         required=False,
         type='str'),
     rules=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    target_url=dict(
-        required=False,
-        type='str'),
-    listener=dict(
-        required=False,
-        type='str'),
-    target_https_redirect_status_code=dict(
-        required=False,
-        type='int'),
-    action=dict(
-        required=False,
-        type='str'),
     target_http_status_code=dict(
         required=False,
         type='int'),
@@ -279,7 +279,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

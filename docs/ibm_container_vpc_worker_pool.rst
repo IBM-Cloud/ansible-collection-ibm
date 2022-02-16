@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  labels (False, dict, None)
-    Labels
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  flavor (True, str, None)
+    (Required for new resource) cluster node falvor
 
 
   zones (True, list, None)
@@ -51,20 +59,12 @@ Parameters
     (Required for new resource) The vpc id where the cluster is
 
 
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
-  flavor (True, str, None)
-    (Required for new resource) cluster node falvor
-
-
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
+
+
+  labels (False, dict, None)
+    Labels
 
 
   entitlement (False, str, None)

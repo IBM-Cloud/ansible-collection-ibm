@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -39,16 +39,16 @@ Parameters
     true if High availability is enabled
 
 
-  security_certificate_id (False, int, None)
-    Security certificate ID
-
-
   tags (False, list, None)
     Tags associated with resource
 
 
   datacenter (True, str, None)
     (Required for new resource) Datacenter name info
+
+
+  security_certificate_id (False, int, None)
+    Security certificate ID
 
 
   dedicated (False, bool, False)

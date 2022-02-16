@@ -18,10 +18,41 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_vip' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
+    nad_controller_id:
+        description:
+            - (Required for new resource) NAD controller ID
+        required: True
+        type: int
+    source_port:
+        description:
+            - (Required for new resource) Source Port number
+        required: True
+        type: int
+    security_certificate_id:
+        description:
+            - security certificate ID
+        required: False
+        type: int
+    virtual_ip_address:
+        description:
+            - (Required for new resource) Virtual IP address
+        required: True
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    load_balancing_method:
+        description:
+            - (Required for new resource) Load balancing method
+        required: True
+        type: str
     persistence:
         description:
             - Persistance value
@@ -32,40 +63,9 @@ options:
             - (Required for new resource) Name
         required: True
         type: str
-    source_port:
-        description:
-            - (Required for new resource) Source Port number
-        required: True
-        type: int
-    virtual_ip_address:
-        description:
-            - (Required for new resource) Virtual IP address
-        required: True
-        type: str
-    nad_controller_id:
-        description:
-            - (Required for new resource) NAD controller ID
-        required: True
-        type: int
     type:
         description:
             - (Required for new resource) Type
-        required: True
-        type: str
-    security_certificate_id:
-        description:
-            - security certificate ID
-        required: False
-        type: int
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
-    load_balancing_method:
-        description:
-            - (Required for new resource) Load balancing method
         required: True
         type: str
     id:
@@ -114,25 +114,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
+    ('nad_controller_id', 'int'),
     ('source_port', 'int'),
     ('virtual_ip_address', 'str'),
-    ('nad_controller_id', 'int'),
-    ('type', 'str'),
     ('load_balancing_method', 'str'),
+    ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'persistence',
-    'name',
-    'source_port',
-    'virtual_ip_address',
     'nad_controller_id',
-    'type',
+    'source_port',
     'security_certificate_id',
+    'virtual_ip_address',
     'tags',
     'load_balancing_method',
+    'persistence',
+    'name',
+    'type',
 ]
 
 # Params for Data source
@@ -149,32 +149,32 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    nad_controller_id=dict(
+        required=False,
+        type='int'),
+    source_port=dict(
+        required=False,
+        type='int'),
+    security_certificate_id=dict(
+        required=False,
+        type='int'),
+    virtual_ip_address=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    load_balancing_method=dict(
+        required=False,
+        type='str'),
     persistence=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    source_port=dict(
-        required=False,
-        type='int'),
-    virtual_ip_address=dict(
-        required=False,
-        type='str'),
-    nad_controller_id=dict(
-        required=False,
-        type='int'),
     type=dict(
-        required=False,
-        type='str'),
-    security_certificate_id=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    load_balancing_method=dict(
         required=False,
         type='str'),
     id=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_lb_vpx_vip',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
