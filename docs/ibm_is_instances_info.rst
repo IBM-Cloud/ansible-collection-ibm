@@ -21,33 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  instance_group_name (False, str, None)
-    Instance group name to filter the instances attached to it
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  dedicated_host (False, str, None)
-    ID of the dedicated host to filter the instances attached to it
-
-
-  placement_group_name (False, str, None)
-    Name of the placement group to filter the instances attached to it
-
-
-  instance_group (False, str, None)
-    Instance group ID to filter the instances attached to it
-
 
   vpc_name (False, str, None)
     Name of the vpc to filter the instances attached to it
@@ -63,6 +43,26 @@ Parameters
 
   dedicated_host_name (False, str, None)
     Name of the dedicated host to filter the instances attached to it
+
+
+  placement_group_name (False, str, None)
+    Name of the placement group to filter the instances attached to it
+
+
+  instance_group (False, str, None)
+    Instance group ID to filter the instances attached to it
+
+
+  instance_group_name (False, str, None)
+    Instance group name to filter the instances attached to it
+
+
+  resource_group (False, str, None)
+    Instance resource group
+
+
+  dedicated_host (False, str, None)
+    ID of the dedicated host to filter the instances attached to it
 
 
   placement_group (False, str, None)

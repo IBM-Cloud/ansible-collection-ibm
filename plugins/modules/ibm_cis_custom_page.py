@@ -18,18 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_custom_page' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    url:
-        description:
-            - (Required for new resource) Custom page url
-        required: True
-        type: str
     page_id:
         description:
             - (Required for new resource) Custom page identifier
+        required: True
+        type: str
+    url:
+        description:
+            - (Required for new resource) Custom page url
         required: True
         type: str
     cis_id:
@@ -88,16 +88,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('url', 'str'),
     ('page_id', 'str'),
+    ('url', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'url',
     'page_id',
+    'url',
     'cis_id',
     'domain_id',
 ]
@@ -116,10 +116,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    url=dict(
+    page_id=dict(
         required=False,
         type='str'),
-    page_id=dict(
+    url=dict(
         required=False,
         type='str'),
     cis_id=dict(
@@ -193,7 +193,7 @@ def run_module():
         resource_type='ibm_cis_custom_page',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -32,14 +32,14 @@ options:
             - If set to true, this reserved IP will be automatically deleted
         required: False
         type: bool
-    name:
-        description:
-            - The user-defined or system-provided name for this reserved IP.
-        required: False
-        type: str
     target:
         description:
             - The unique identifier for target.
+        required: False
+        type: str
+    name:
+        description:
+            - The user-defined or system-provided name for this reserved IP.
         required: False
         type: str
     id:
@@ -95,8 +95,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'subnet',
     'auto_delete',
-    'name',
     'target',
+    'name',
 ]
 
 # Params for Data source
@@ -123,10 +123,10 @@ module_args = dict(
     auto_delete=dict(
         required=False,
         type='bool'),
-    name=dict(
+    target=dict(
         required=False,
         type='str'),
-    target=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_is_subnet_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_is_subnet_reserved_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

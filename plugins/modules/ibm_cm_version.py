@@ -18,20 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    target_kinds:
+    catalog_identifier:
         description:
-            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
-        required: False
-        type: list
-        elements: str
-    content:
-        description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
-        required: False
+            - (Required for new resource) Catalog identifier.
+        required: True
         type: str
     offering_id:
         description:
@@ -43,20 +37,26 @@ options:
             - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
+    target_version:
+        description:
+            - The semver value for this new version, if not found in the zip url package content.
+        required: False
+        type: str
+    target_kinds:
+        description:
+            - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        required: False
+        type: list
+        elements: str
     tags:
         description:
             - Tags array.
         required: False
         type: list
         elements: str
-    catalog_identifier:
+    content:
         description:
-            - (Required for new resource) Catalog identifier.
-        required: True
-        type: str
-    target_version:
-        description:
-            - The semver value for this new version, if not found in the zip url package content.
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
         required: False
         type: str
     id:
@@ -105,19 +105,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('offering_id', 'str'),
     ('catalog_identifier', 'str'),
+    ('offering_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'target_kinds',
-    'content',
+    'catalog_identifier',
     'offering_id',
     'zipurl',
-    'tags',
-    'catalog_identifier',
     'target_version',
+    'target_kinds',
+    'tags',
+    'content',
 ]
 
 # Params for Data source
@@ -136,11 +136,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target_kinds=dict(
-        required=False,
-        elements='',
-        type='list'),
-    content=dict(
+    catalog_identifier=dict(
         required=False,
         type='str'),
     offering_id=dict(
@@ -149,14 +145,18 @@ module_args = dict(
     zipurl=dict(
         required=False,
         type='str'),
+    target_version=dict(
+        required=False,
+        type='str'),
+    target_kinds=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    catalog_identifier=dict(
-        required=False,
-        type='str'),
-    target_version=dict(
+    content=dict(
         required=False,
         type='str'),
     id=dict(
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +233,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

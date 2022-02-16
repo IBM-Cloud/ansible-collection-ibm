@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  transient (False, bool, None)
+  tags (False, list, None)
     None
 
 
-  bulk_vms (False, list, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
-  secondary_ip_count (False, int, None)
+  placement_group_id (False, int, None)
+    The placement group id
+
+
+  cores (False, int, None)
     None
 
 
-  local_disk (False, bool, True)
+  disks (False, list, None)
     None
-
-
-  reserved_capacity_id (False, int, None)
-    The reserved group id
 
 
   datacenter (False, str, None)
@@ -59,15 +59,31 @@ Parameters
     The user provided datacenter options
 
 
-  memory (False, int, None)
+  public_security_group_ids (False, list, None)
     None
 
 
-  disks (False, list, None)
+  private_security_group_ids (False, list, None)
     None
 
 
-  post_install_script_uri (False, str, None)
+  network_speed (False, int, 100)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  dedicated_host_name (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
     None
 
 
@@ -75,15 +91,59 @@ Parameters
     None
 
 
+  reserved_instance_primary_disk (False, int, None)
+    The primary disk of reserved instance
+
+
+  memory (False, int, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
+  hostname (False, str, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
   private_network_only (False, bool, False)
     None
 
 
-  public_subnet (False, str, None)
+  public_bandwidth_limited (False, int, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
+  os_reference_code (False, str, None)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
     None
 
 
@@ -95,23 +155,15 @@ Parameters
     The reserved group id
 
 
-  notes (False, str, None)
-    None
-
-
-  cores (False, int, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
   flavor_key_name (False, str, None)
     Flavor key name used to provision vm.
 
 
-  ipv6_static_enabled (False, bool, False)
+  notes (False, str, None)
+    None
+
+
+  private_vlan_id (False, int, None)
     None
 
 
@@ -119,39 +171,7 @@ Parameters
     None
 
 
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  placement_group_name (False, str, None)
-    The placement group name
-
-
-  public_security_group_ids (False, list, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  domain (False, str, None)
-    None
-
-
-  dedicated_host_name (False, str, None)
-    None
-
-
-  dedicated_acct_host_only (False, bool, None)
+  public_subnet (False, str, None)
     None
 
 
@@ -159,35 +179,11 @@ Parameters
     None
 
 
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  private_vlan_id (False, int, None)
+  domain (False, str, None)
     None
 
 
-  ssh_key_ids (False, list, None)
-    None
-
-
-  dedicated_host_id (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  reserved_instance_primary_disk (False, int, None)
-    The primary disk of reserved instance
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  network_speed (False, int, 100)
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
@@ -195,15 +191,19 @@ Parameters
     Quote ID for Quote based provisioning
 
 
-  public_vlan_id (False, int, None)
-    None
-
-
-  tags (False, list, None)
+  transient (False, bool, None)
     None
 
 
   hourly_billing (False, bool, True)
+    None
+
+
+  reserved_capacity_id (False, int, None)
+    The reserved group id
+
+
+  local_disk (False, bool, True)
     None
 
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -35,16 +35,12 @@ Parameters
     (Required for new resource) Load Balancer Pool algorithm
 
 
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
   health_monitor_port (False, int, None)
     Health monitor Port the LB Pool
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
 
 
   session_persistence_app_cookie_name (False, str, None)
@@ -55,22 +51,6 @@ Parameters
     (Required for new resource) Load Balancer Pool name
 
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
   lb (True, str, None)
     (Required for new resource) Load Balancer ID
 
@@ -79,8 +59,28 @@ Parameters
     (Required for new resource) Load Balancer health timeout interval
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
 
 
   id (False, str, None)

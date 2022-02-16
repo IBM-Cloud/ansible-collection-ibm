@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  family (True, str, None)
-    (Required for new resource) The dedicated host profile family for hosts in this group.
-
-
-  zone (True, str, None)
-    (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
+  name (False, str, None)
+    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   class_ (True, str, None)
     (Required for new resource) The dedicated host profile class for hosts in this group.
 
 
-  name (False, str, None)
-    The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+  family (True, str, None)
+    (Required for new resource) The dedicated host profile family for hosts in this group.
 
 
   resource_group (False, str, None)
     The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+
+
+  zone (True, str, None)
+    (Required for new resource) The globally unique name of the zone this dedicated host group will reside in.
 
 
   id (False, str, None)

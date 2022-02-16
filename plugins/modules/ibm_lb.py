@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -33,11 +33,6 @@ options:
         required: False
         type: bool
         default: False
-    security_certificate_id:
-        description:
-            - Security certificate ID
-        required: False
-        type: int
     tags:
         description:
             - Tags associated with resource
@@ -49,6 +44,11 @@ options:
             - (Required for new resource) Datacenter name info
         required: True
         type: str
+    security_certificate_id:
+        description:
+            - Security certificate ID
+        required: False
+        type: int
     dedicated:
         description:
             - Boolena value true if Load balncer is dedicated type
@@ -115,9 +115,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'connections',
     'ha_enabled',
-    'security_certificate_id',
     'tags',
     'datacenter',
+    'security_certificate_id',
     'dedicated',
     'ssl_offload',
 ]
@@ -142,9 +142,6 @@ module_args = dict(
     ha_enabled=dict(
         required=False,
         type='bool'),
-    security_certificate_id=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -152,6 +149,9 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
+    security_certificate_id=dict(
+        required=False,
+        type='int'),
     dedicated=dict(
         required=False,
         type='bool'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_lb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

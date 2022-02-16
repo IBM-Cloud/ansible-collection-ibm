@@ -18,70 +18,44 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hpcs' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
-        description:
-            - The resource group id
-        required: False
-        type: str
-    revocation_threshold:
-        description:
-            - (Required for new resource) Revocation Threshold Value
-        required: True
-        type: int
     failover_units:
         description:
             - The number of failover crypto units for your service instance
         required: False
         type: int
-    signature_server_url:
-        description:
-            - URL of signing service
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A name for the HPCS instance
-        required: True
-        type: str
-    location:
-        description:
-            - (Required for new resource) The location where the HPCS instance available
-        required: True
-        type: str
-    service:
-        description:
-            - The name of the service offering `hs-crypto`
-        required: False
-        type: str
-        default: hs-crypto
-    signature_threshold:
-        description:
-            - (Required for new resource) Signature Threshold Value
-        required: True
-        type: int
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
-        required: False
-        type: str
     admins:
         description:
             - (Required for new resource) Crypto Unit Administrators
         required: True
         type: list
         elements: dict
+    revocation_threshold:
+        description:
+            - (Required for new resource) Revocation Threshold Value
+        required: True
+        type: int
+    location:
+        description:
+            - (Required for new resource) The location where the HPCS instance available
+        required: True
+        type: str
     units:
         description:
             - (Required for new resource) The number of operational crypto units for your service instance
         required: True
         type: int
-    plan:
+    resource_group_id:
         description:
-            - (Required for new resource) The plan type of the HPCS Instance
+            - The resource group id
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) A name for the HPCS instance
         required: True
         type: str
     tags:
@@ -90,6 +64,32 @@ options:
         required: False
         type: list
         elements: str
+    signature_threshold:
+        description:
+            - (Required for new resource) Signature Threshold Value
+        required: True
+        type: int
+    plan:
+        description:
+            - (Required for new resource) The plan type of the HPCS Instance
+        required: True
+        type: str
+    signature_server_url:
+        description:
+            - URL of signing service
+        required: False
+        type: str
+    service:
+        description:
+            - The name of the service offering `hs-crypto`
+        required: False
+        type: str
+        default: hs-crypto
+    service_endpoints:
+        description:
+            - Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -136,30 +136,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('revocation_threshold', 'int'),
-    ('name', 'str'),
-    ('location', 'str'),
-    ('signature_threshold', 'int'),
     ('admins', 'list'),
+    ('revocation_threshold', 'int'),
+    ('location', 'str'),
     ('units', 'int'),
+    ('name', 'str'),
+    ('signature_threshold', 'int'),
     ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'revocation_threshold',
     'failover_units',
-    'signature_server_url',
-    'name',
-    'location',
-    'service',
-    'signature_threshold',
-    'service_endpoints',
     'admins',
+    'revocation_threshold',
+    'location',
     'units',
-    'plan',
+    'resource_group_id',
+    'name',
     'tags',
+    'signature_threshold',
+    'plan',
+    'signature_server_url',
+    'service',
+    'service_endpoints',
 ]
 
 # Params for Data source
@@ -168,10 +168,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
-    'resource_group_id',
     'location',
     'service',
+    'name',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -181,47 +181,47 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    revocation_threshold=dict(
-        required=False,
-        type='int'),
     failover_units=dict(
         required=False,
         type='int'),
-    signature_server_url=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    signature_threshold=dict(
-        required=False,
-        type='int'),
-    service_endpoints=dict(
-        required=False,
-        type='str'),
     admins=dict(
         required=False,
         elements='',
         type='list'),
+    revocation_threshold=dict(
+        required=False,
+        type='int'),
+    location=dict(
+        required=False,
+        type='str'),
     units=dict(
         required=False,
         type='int'),
-    plan=dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    signature_threshold=dict(
+        required=False,
+        type='int'),
+    plan=dict(
+        required=False,
+        type='str'),
+    signature_server_url=dict(
+        required=False,
+        type='str'),
+    service=dict(
+        required=False,
+        type='str'),
+    service_endpoints=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_hpcs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -296,7 +296,7 @@ def run_module():
             resource_type='ibm_hpcs',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

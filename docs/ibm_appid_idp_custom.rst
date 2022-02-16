@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  public_key (False, str, None)
-    This is the public key used to validate your signed JWT. It is required to be a PEM in the RS256 or greater format.
-
-
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
 
 
   is_active (True, bool, None)
     (Required for new resource)
+
+
+  public_key (False, str, None)
+    This is the public key used to validate your signed JWT. It is required to be a PEM in the RS256 or greater format.
 
 
   id (False, str, None)

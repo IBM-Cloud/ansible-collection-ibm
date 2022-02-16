@@ -18,38 +18,66 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_file' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
+    capacity:
+        description:
+            - (Required for new resource) Storage capacity
+        required: True
+        type: int
     allowed_virtual_guest_ids:
         description:
             - Virtual guest ID
         required: False
         type: list
         elements: int
+    allowed_hardware_ids:
+        description:
+            - Hardaware ID
+        required: False
+        type: list
+        elements: int
+    iops:
+        description:
+            - (Required for new resource) iops rate
+        required: True
+        type: float
+    allowed_subnets:
+        description:
+            - Allowed network subnets
+        required: False
+        type: list
+        elements: str
     allowed_ip_addresses:
         description:
             - Allowed range of IP addresses
         required: False
         type: list
         elements: str
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
     snapshot_schedule:
         description:
             - None
         required: False
         type: list
         elements: dict
-    capacity:
+    tags:
         description:
-            - (Required for new resource) Storage capacity
-        required: True
-        type: int
-    iops:
-        description:
-            - (Required for new resource) iops rate
-        required: True
-        type: float
+            - Tags set for the storage volume
+        required: False
+        type: list
+        elements: str
     type:
         description:
             - (Required for new resource) Storage type
@@ -60,34 +88,6 @@ options:
             - Snapshot capacity
         required: False
         type: int
-    allowed_hardware_ids:
-        description:
-            - Hardaware ID
-        required: False
-        type: list
-        elements: int
-    tags:
-        description:
-            - Tags set for the storage volume
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    allowed_subnets:
-        description:
-            - Allowed network subnets
-        required: False
-        type: list
-        elements: str
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
     hourly_billing:
         description:
             - Hourly based billing type
@@ -140,26 +140,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
     ('capacity', 'int'),
     ('iops', 'float'),
     ('type', 'str'),
-    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'allowed_virtual_guest_ids',
-    'allowed_ip_addresses',
-    'snapshot_schedule',
+    'datacenter',
     'capacity',
+    'allowed_virtual_guest_ids',
+    'allowed_hardware_ids',
     'iops',
+    'allowed_subnets',
+    'allowed_ip_addresses',
+    'notes',
+    'snapshot_schedule',
+    'tags',
     'type',
     'snapshot_capacity',
-    'allowed_hardware_ids',
-    'tags',
-    'datacenter',
-    'allowed_subnets',
-    'notes',
     'hourly_billing',
 ]
 
@@ -177,7 +177,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    datacenter=dict(
+        required=False,
+        type='str'),
+    capacity=dict(
+        required=False,
+        type='int'),
     allowed_virtual_guest_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    iops=dict(
+        required=False,
+        type='float'),
+    allowed_subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -185,23 +202,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    snapshot_schedule=dict(
-        required=False,
-        elements='',
-        type='list'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    iops=dict(
-        required=False,
-        type='float'),
-    type=dict(
+    notes=dict(
         required=False,
         type='str'),
-    snapshot_capacity=dict(
-        required=False,
-        type='int'),
-    allowed_hardware_ids=dict(
+    snapshot_schedule=dict(
         required=False,
         elements='',
         type='list'),
@@ -209,16 +213,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    datacenter=dict(
+    type=dict(
         required=False,
         type='str'),
-    allowed_subnets=dict(
+    snapshot_capacity=dict(
         required=False,
-        elements='',
-        type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
+        type='int'),
     hourly_billing=dict(
         required=False,
         type='bool'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_storage_file',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

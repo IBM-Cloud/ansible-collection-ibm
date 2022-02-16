@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  instance_id (True, str, None)
-    (Required for new resource) The unique identifier of a service instance.
-
-
-  resolver_id (True, str, None)
-    (Required for new resource) The unique identifier of a custom resolver.
-
-
-  description (False, str, None)
-    Descriptive text of the forwarding rule.
-
 
   type (False, str, None)
     Type of the forwarding rule.
@@ -53,6 +41,18 @@ Parameters
 
   forward_to (False, list, None)
     The upstream DNS servers will be forwarded to.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) The unique identifier of a service instance.
+
+
+  resolver_id (True, str, None)
+    (Required for new resource) The unique identifier of a custom resolver.
+
+
+  description (False, str, None)
+    Descriptive text of the forwarding rule.
 
 
   id (False, str, None)

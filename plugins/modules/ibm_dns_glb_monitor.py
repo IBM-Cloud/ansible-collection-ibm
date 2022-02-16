@@ -18,18 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb_monitor' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    allow_insecure:
+    interval:
         description:
-            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+            - The interval between each health check
         required: False
-        type: bool
-    path:
+        type: int
+        default: 60
+    method:
         description:
-            - The endpoint path to health check against
+            - The method to use for the health check
         required: False
         type: str
     headers:
@@ -38,15 +39,34 @@ options:
         required: False
         type: list
         elements: dict
-    timeout:
+    expected_body:
         description:
-            - The timeout (in seconds) before marking the health check as failed
+            - A case-insensitive sub-string to look for in the response body
         required: False
-        type: int
-        default: 5
+        type: str
     name:
         description:
             - (Required for new resource) The unique identifier of a service instance.
+        required: True
+        type: str
+    description:
+        description:
+            - Descriptive text of the load balancer monitor
+        required: False
+        type: str
+    port:
+        description:
+            - Port number to connect to for the health check
+        required: False
+        type: int
+    path:
+        description:
+            - The endpoint path to health check against
+        required: False
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) Instance Id
         required: True
         type: str
     type:
@@ -55,46 +75,26 @@ options:
         required: False
         type: str
         default: HTTP
-    port:
-        description:
-            - Port number to connect to for the health check
-        required: False
-        type: int
-    interval:
-        description:
-            - The interval between each health check
-        required: False
-        type: int
-        default: 60
     retries:
         description:
             - The number of retries to attempt in case of a timeout before marking the origin as unhealthy
         required: False
         type: int
         default: 1
-    method:
+    timeout:
         description:
-            - The method to use for the health check
+            - The timeout (in seconds) before marking the health check as failed
         required: False
-        type: str
+        type: int
+        default: 5
+    allow_insecure:
+        description:
+            - Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTPS monitors.
+        required: False
+        type: bool
     expected_codes:
         description:
             - The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) Instance Id
-        required: True
-        type: str
-    description:
-        description:
-            - Descriptive text of the load balancer monitor
-        required: False
-        type: str
-    expected_body:
-        description:
-            - A case-insensitive sub-string to look for in the response body
         required: False
         type: str
     id:
@@ -149,20 +149,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'allow_insecure',
-    'path',
-    'headers',
-    'timeout',
-    'name',
-    'type',
-    'port',
     'interval',
-    'retries',
     'method',
-    'expected_codes',
-    'instance_id',
-    'description',
+    'headers',
     'expected_body',
+    'name',
+    'description',
+    'port',
+    'path',
+    'instance_id',
+    'type',
+    'retries',
+    'timeout',
+    'allow_insecure',
+    'expected_codes',
 ]
 
 # Params for Data source
@@ -179,47 +179,47 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    allow_insecure=dict(
+    interval=dict(
         required=False,
-        type='bool'),
-    path=dict(
+        type='int'),
+    method=dict(
         required=False,
         type='str'),
     headers=dict(
         required=False,
         elements='',
         type='list'),
-    timeout=dict(
+    expected_body=dict(
         required=False,
-        type='int'),
+        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    interval=dict(
-        required=False,
-        type='int'),
-    retries=dict(
-        required=False,
-        type='int'),
-    method=dict(
-        required=False,
-        type='str'),
-    expected_codes=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    expected_body=dict(
+    port=dict(
+        required=False,
+        type='int'),
+    path=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    retries=dict(
+        required=False,
+        type='int'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    allow_insecure=dict(
+        required=False,
+        type='bool'),
+    expected_codes=dict(
         required=False,
         type='str'),
     id=dict(
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_dns_glb_monitor',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

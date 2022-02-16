@@ -18,21 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    default_worker_pool_labels:
+    pull_secret:
         description:
-            - Labels on the default worker pool
+            - The RedHat pull secret to create the OpenShift cluster
         required: False
-        type: dict
-        elements: str
-    location:
-        description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
         type: str
+    pod_subnet:
+        description:
+            - User provided value for the pod subnet
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags for the resources
+        required: False
+        type: list
+        elements: str
+    retry_patch_version:
+        description:
+            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+        required: False
+        type: int
     zones:
         description:
             - Zone info for worker pool
@@ -50,36 +65,47 @@ options:
         required: False
         type: list
         elements: str
-    crn_token:
-        description:
-            - The IBM Cloud Identity and Access Management (IAM) service CRN token for the service that creates the cluster.
-        required: False
-        type: str
     wait_for_worker_update:
         description:
             - Wait for worker node to update during kube version update.
         required: False
         type: bool
         default: True
-    patch_version:
+    default_worker_pool_labels:
         description:
-            - Kubernetes patch version
+            - Labels on the default worker pool
         required: False
-        type: str
-    pod_subnet:
+        type: dict
+        elements: str
+    enable_config_admin:
         description:
-            - User provided value for the pod subnet
+            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
         required: False
-        type: str
+        type: bool
     disable_public_service_endpoint:
         description:
             - Boolean value true if Public service endpoint to be disabled
         required: False
         type: bool
         default: False
-    resource_group_id:
+    name:
         description:
-            - ID of the resource group.
+            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+        required: True
+        type: str
+    patch_version:
+        description:
+            - Kubernetes patch version
+        required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
+        type: str
+    crn_token:
+        description:
+            - The IBM Cloud Identity and Access Management (IAM) service CRN token for the service that creates the cluster.
         required: False
         type: str
     kube_version:
@@ -87,35 +113,9 @@ options:
             - The OpenShift Container Platform version
         required: False
         type: str
-    enable_config_admin:
-        description:
-            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
-        required: False
-        type: bool
     worker_count:
         description:
             - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
-        required: False
-        type: int
-    pull_secret:
-        description:
-            - The RedHat pull secret to create the OpenShift cluster
-        required: False
-        type: str
-    tags:
-        description:
-            - List of tags for the resources
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
-        required: True
-        type: str
-    retry_patch_version:
-        description:
-            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
         required: False
         type: int
     id:
@@ -164,30 +164,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('name', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default_worker_pool_labels',
-    'location',
+    'pull_secret',
+    'pod_subnet',
+    'resource_group_id',
+    'tags',
+    'retry_patch_version',
     'zones',
     'service_subnet',
     'host_labels',
-    'crn_token',
     'wait_for_worker_update',
-    'patch_version',
-    'pod_subnet',
-    'disable_public_service_endpoint',
-    'resource_group_id',
-    'kube_version',
+    'default_worker_pool_labels',
     'enable_config_admin',
-    'worker_count',
-    'pull_secret',
-    'tags',
+    'disable_public_service_endpoint',
     'name',
-    'retry_patch_version',
+    'patch_version',
+    'location',
+    'crn_token',
+    'kube_version',
+    'worker_count',
 ]
 
 # Params for Data source
@@ -207,13 +207,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default_worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    location=dict(
+    pull_secret=dict(
         required=False,
         type='str'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    retry_patch_version=dict(
+        required=False,
+        type='int'),
     zones=dict(
         required=False,
         elements='',
@@ -225,44 +234,35 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    crn_token=dict(
-        required=False,
-        type='str'),
     wait_for_worker_update=dict(
         required=False,
         type='bool'),
-    patch_version=dict(
+    default_worker_pool_labels=dict(
         required=False,
-        type='str'),
-    pod_subnet=dict(
+        elements='',
+        type='dict'),
+    enable_config_admin=dict(
         required=False,
-        type='str'),
+        type='bool'),
     disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
-    resource_group_id=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    patch_version=dict(
+        required=False,
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    crn_token=dict(
         required=False,
         type='str'),
     kube_version=dict(
         required=False,
         type='str'),
-    enable_config_admin=dict(
-        required=False,
-        type='bool'),
     worker_count=dict(
-        required=False,
-        type='int'),
-    pull_secret=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    retry_patch_version=dict(
         required=False,
         type='int'),
     id=dict(
@@ -330,7 +330,7 @@ def run_module():
         resource_type='ibm_satellite_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -339,7 +339,7 @@ def run_module():
             resource_type='ibm_satellite_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

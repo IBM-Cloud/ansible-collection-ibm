@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,9 @@ options:
             - (Required for new resource) Load balancer ID
         required: True
         type: str
-    port:
+    target_id:
         description:
-            - (Required for new resource) Load Balancer Pool port
-        required: True
-        type: int
-    target_address:
-        description:
-            - Load balancer pool member target address
+            - Load balancer pool member target id
         required: False
         type: str
     weight:
@@ -47,9 +42,14 @@ options:
             - (Required for new resource) Loadblancer Poold ID
         required: True
         type: str
-    target_id:
+    port:
         description:
-            - Load balancer pool member target id
+            - (Required for new resource) Load Balancer Pool port
+        required: True
+        type: int
+    target_address:
+        description:
+            - Load balancer pool member target address
         required: False
         type: str
     id:
@@ -99,18 +99,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('lb', 'str'),
-    ('port', 'int'),
     ('pool', 'str'),
+    ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
-    'port',
-    'target_address',
+    'target_id',
     'weight',
     'pool',
-    'target_id',
+    'port',
+    'target_address',
 ]
 
 # Params for Data source
@@ -130,10 +130,7 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    target_address=dict(
+    target_id=dict(
         required=False,
         type='str'),
     weight=dict(
@@ -142,7 +139,10 @@ module_args = dict(
     pool=dict(
         required=False,
         type='str'),
-    target_id=dict(
+    port=dict(
+        required=False,
+        type='int'),
+    target_address=dict(
         required=False,
         type='str'),
     id=dict(
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

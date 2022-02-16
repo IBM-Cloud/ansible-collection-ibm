@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pattern_url (True, str, None)
+    (Required for new resource) Edge function trigger pattern
+
 
   action_name (False, str, None)
     Edge function trigger action name
@@ -41,10 +45,6 @@ Parameters
 
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
-
-
-  pattern_url (True, str, None)
-    (Required for new resource) Edge function trigger pattern
 
 
   id (False, str, None)

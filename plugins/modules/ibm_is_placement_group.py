@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,10 @@ options:
             - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
         required: True
         type: str
-    resource_group:
+    name:
         description:
-            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
+            - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: True
         type: str
     tags:
         description:
@@ -38,10 +38,10 @@ options:
         required: False
         type: list
         elements: str
-    name:
+    resource_group:
         description:
-            - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: True
+            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     access_tags:
         description:
@@ -102,9 +102,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'strategy',
-    'resource_group',
-    'tags',
     'name',
+    'tags',
+    'resource_group',
     'access_tags',
 ]
 
@@ -127,14 +127,14 @@ module_args = dict(
     strategy=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     access_tags=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

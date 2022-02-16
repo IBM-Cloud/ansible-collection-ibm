@@ -18,13 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_inventory' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    inventories_ini:
+    location:
         description:
-            - Input inventory of host and host group for the playbook, in the `.ini` file format.
+            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
         required: False
         type: str
     name:
@@ -37,14 +42,9 @@ options:
             - The description of your Inventory definition. The description can be up to 2048 characters long in size.
         required: False
         type: str
-    location:
+    inventories_ini:
         description:
-            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
+            - Input inventory of host and host group for the playbook, in the `.ini` file format.
         required: False
         type: str
     resource_queries:
@@ -103,11 +103,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'inventories_ini',
-    'name',
-    'description',
     'location',
     'resource_group',
+    'name',
+    'description',
+    'inventories_ini',
     'resource_queries',
 ]
 
@@ -127,7 +127,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    inventories_ini=dict(
+    location=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
@@ -136,10 +139,7 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    inventories_ini=dict(
         required=False,
         type='str'),
     resource_queries=dict(
@@ -211,7 +211,7 @@ def run_module():
         resource_type='ibm_schematics_inventory',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -220,7 +220,7 @@ def run_module():
             resource_type='ibm_schematics_inventory',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  instance (True, str, None)
+    (Required for new resource) Instance id
+
+
+  name (False, str, None)
+    The user-defined name for this volume attachment.
+
 
   volume (False, str, None)
     Instance id
@@ -39,40 +47,32 @@ Parameters
     The unique user-defined name for this volume
 
 
-  profile (False, str, None)
-    The  globally unique name for the volume profile to use for this volume.
-
-
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-
-
-  snapshot (False, str, None)
-    The snapshot of the volume to be attached
-
-
-  name (False, str, None)
-    The user-defined name for this volume attachment.
-
-
-  delete_volume_on_attachment_delete (False, bool, True)
-    If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
-
-
-  instance (True, str, None)
-    (Required for new resource) Instance id
-
-
-  delete_volume_on_instance_delete (False, bool, None)
-    If set to true, when deleting the instance the volume will also be deleted.
+  encryption_key (False, str, None)
+    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
 
 
   iops (False, int, None)
     The maximum I/O operations per second (IOPS) for the volume.
 
 
-  encryption_key (False, str, None)
-    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
+  delete_volume_on_instance_delete (False, bool, None)
+    If set to true, when deleting the instance the volume will also be deleted.
+
+
+  delete_volume_on_attachment_delete (False, bool, True)
+    If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
+
+
+  snapshot (False, str, None)
+    The snapshot of the volume to be attached
+
+
+  profile (False, str, None)
+    The  globally unique name for the volume profile to use for this volume.
+
+
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
 
 
   id (False, str, None)

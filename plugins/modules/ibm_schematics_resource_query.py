@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_resource_query' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.37.1
+    - IBM-Cloud terraform-provider-ibm v1.38.2
     - Terraform v0.12.20
 
 options:
-    queries:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     type:
         description:
             - Resource type (cluster, vsi, icd, vpc).
@@ -38,6 +32,12 @@ options:
             - Resource query name.
         required: False
         type: str
+    queries:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,9 +88,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'queries',
     'type',
     'name',
+    'queries',
 ]
 
 # Params for Data source
@@ -109,16 +109,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    queries=dict(
-        required=False,
-        elements='',
-        type='list'),
     type=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    queries=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_schematics_resource_query',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.37.1',
+        ibm_provider_version='1.38.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_schematics_resource_query',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.37.1',
+            ibm_provider_version='1.38.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

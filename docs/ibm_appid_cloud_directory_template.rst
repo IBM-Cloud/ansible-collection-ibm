@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.37.1
+- IBM-Cloud terraform-provider-ibm v1.38.2
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tenant_id (True, str, None)
-    (Required for new resource) The AppID instance GUID
-
 
   template_name (True, str, None)
     (Required for new resource) The type of email template. This can be `USER_VERIFICATION`, `WELCOME`, `PASSWORD_CHANGED`, `RESET_PASSWORD` or `MFA_VERIFICATION`
@@ -53,6 +49,10 @@ Parameters
 
   plain_text_body (False, str, None)
     The text body of the email.
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The AppID instance GUID
 
 
   id (False, str, None)
