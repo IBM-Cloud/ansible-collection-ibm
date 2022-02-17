@@ -748,8 +748,6 @@ class Terraform:
             "{0}v{1}/terraform-provider-ibm_{1}_{2}_amd64.zip".format(
                 self.IBM_PROVIDER_BASE_URL, self.ibm_provider_version, self.platform))
         os.chmod(os.path.join(self.terraform_dir, filename), 0o777)
-        os.remove(os.path.join(self.terraform_dir, filename + ".pem"))
-        os.remove(os.path.join(self.terraform_dir, filename + ".sig"))
 
     def _render_provider_file(self):
         # Render terraform provider file
