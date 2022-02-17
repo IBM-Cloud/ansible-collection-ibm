@@ -591,10 +591,11 @@ class Resource:
         #     self.target = 'data.' + self.target
 
         self.id_ = None
-        if 'id' in parameters:
+        if 'id' in parameters and parameters['id'] is not None:
             self.id_ = parameters['id']
             if (self.resource_type.startswith('ibm_pi') and
-                    'pi_cloud_instance_id' in parameters):
+                    'pi_cloud_instance_id' in parameters and
+                    parameters['pi_cloud_instance_id'] is not None):
                 self.id_ = parameters['pi_cloud_instance_id'] + '/' + self.id_
 
 
