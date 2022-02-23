@@ -22,23 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    minimum_origins:
-        description:
-            - Minimum number of Origins
-        required: False
-        type: int
-        default: 1
-    check_regions:
-        description:
-            - (Required for new resource) List of regions
-        required: True
-        type: list
-        elements: str
-    monitor:
-        description:
-            - Monitor value
-        required: False
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -49,27 +32,44 @@ options:
             - Description of the CIS Origin Pool
         required: False
         type: str
-    enabled:
-        description:
-            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
-        required: True
-        type: bool
-    notification_email:
-        description:
-            - Email address configured to recieve the notifications
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) name
         required: True
         type: str
+    minimum_origins:
+        description:
+            - Minimum number of Origins
+        required: False
+        type: int
+        default: 1
     origins:
         description:
             - (Required for new resource) Origins info
         required: True
         type: list
         elements: dict
+    check_regions:
+        description:
+            - (Required for new resource) List of regions
+        required: True
+        type: list
+        elements: str
+    enabled:
+        description:
+            - (Required for new resource) Boolean value set to true if cis origin pool needs to be enabled
+        required: True
+        type: bool
+    monitor:
+        description:
+            - Monitor value
+        required: False
+        type: str
+    notification_email:
+        description:
+            - Email address configured to recieve the notifications
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -116,24 +116,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('check_regions', 'list'),
     ('cis_id', 'str'),
-    ('enabled', 'bool'),
     ('name', 'str'),
     ('origins', 'list'),
+    ('check_regions', 'list'),
+    ('enabled', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'minimum_origins',
-    'check_regions',
-    'monitor',
     'cis_id',
     'description',
-    'enabled',
-    'notification_email',
     'name',
+    'minimum_origins',
     'origins',
+    'check_regions',
+    'enabled',
+    'monitor',
+    'notification_email',
 ]
 
 # Params for Data source
@@ -150,35 +150,35 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    minimum_origins=dict(
-        required=False,
-        type='int'),
-    check_regions=dict(
-        required=False,
-        elements='',
-        type='list'),
-    monitor=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    notification_email=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
+    minimum_origins=dict(
+        required=False,
+        type='int'),
     origins=dict(
         required=False,
         elements='',
         type='list'),
+    check_regions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    monitor=dict(
+        required=False,
+        type='str'),
+    notification_email=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -21,11 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    number:
-        description:
-            - None
-        required: False
-        type: int
     router_hostname:
         description:
             - None
@@ -36,6 +31,11 @@ options:
             - None
         required: False
         type: str
+    number:
+        description:
+            - None
+        required: False
+        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'number',
     'router_hostname',
     'name',
+    'number',
 ]
 
 
@@ -86,15 +86,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    number=dict(
-        required=False,
-        type='int'),
     router_hostname=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    number=dict(
+        required=False,
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

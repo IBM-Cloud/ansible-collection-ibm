@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    page_id:
-        description:
-            - (Required for new resource) Custom page identifier
-        required: True
-        type: str
-    url:
-        description:
-            - (Required for new resource) Custom page url
-        required: True
-        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -40,6 +30,16 @@ options:
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    page_id:
+        description:
+            - (Required for new resource) Custom page identifier
+        required: True
+        type: str
+    url:
+        description:
+            - (Required for new resource) Custom page url
         required: True
         type: str
     id:
@@ -88,18 +88,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('page_id', 'str'),
-    ('url', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
+    ('page_id', 'str'),
+    ('url', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'page_id',
-    'url',
     'cis_id',
     'domain_id',
+    'page_id',
+    'url',
 ]
 
 # Params for Data source
@@ -116,16 +116,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    page_id=dict(
-        required=False,
-        type='str'),
-    url=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
     domain_id=dict(
+        required=False,
+        type='str'),
+    page_id=dict(
+        required=False,
+        type='str'),
+    url=dict(
         required=False,
         type='str'),
     id=dict(

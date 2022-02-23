@@ -22,27 +22,28 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) subnet type
-        required: True
-        type: str
-    vlan_id:
-        description:
-            - VLAN ID for the subnet
-        required: False
-        type: int
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
     private:
         description:
             - private subnet
         required: False
         type: bool
         default: False
+    type:
+        description:
+            - (Required for new resource) subnet type
+        required: True
+        type: str
+    notes:
+        description:
+            - Notes
+        required: False
+        type: str
+    tags:
+        description:
+            - tags set for the resource
+        required: False
+        type: list
+        elements: str
     ip_version:
         description:
             - ip version
@@ -54,17 +55,16 @@ options:
             - (Required for new resource) number of ip addresses in the subnet
         required: True
         type: int
+    vlan_id:
+        description:
+            - VLAN ID for the subnet
+        required: False
+        type: int
     endpoint_ip:
         description:
             - endpoint IP
         required: False
         type: str
-    tags:
-        description:
-            - tags set for the resource
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,14 +117,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
-    'vlan_id',
-    'notes',
     'private',
+    'type',
+    'notes',
+    'tags',
     'ip_version',
     'capacity',
+    'vlan_id',
     'endpoint_ip',
-    'tags',
 ]
 
 # Params for Data source
@@ -143,31 +143,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
-    notes=dict(
-        required=False,
-        type='str'),
     private=dict(
         required=False,
         type='bool'),
-    ip_version=dict(
+    type=dict(
         required=False,
-        type='int'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    endpoint_ip=dict(
+        type='str'),
+    notes=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    ip_version=dict(
+        required=False,
+        type='int'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    vlan_id=dict(
+        required=False,
+        type='int'),
+    endpoint_ip=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

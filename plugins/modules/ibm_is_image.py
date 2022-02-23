@@ -27,6 +27,11 @@ options:
             - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
         required: False
         type: str
+    name:
+        description:
+            - (Required for new resource) Image name
+        required: True
+        type: str
     source_volume:
         description:
             - Image volume id
@@ -37,30 +42,25 @@ options:
             - The resource group for this image
         required: False
         type: str
-    href:
-        description:
-            - Image Href value
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Image name
-        required: True
-        type: str
     tags:
         description:
             - Tags for the image
         required: False
         type: list
         elements: str
+    encryption_key:
+        description:
+            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+        required: False
+        type: str
     operating_system:
         description:
             - Image Operating system
         required: False
         type: str
-    encryption_key:
+    href:
         description:
-            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+            - Image Href value
         required: False
         type: str
     id:
@@ -115,13 +115,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'encrypted_data_key',
+    'name',
     'source_volume',
     'resource_group',
-    'href',
-    'name',
     'tags',
-    'operating_system',
     'encryption_key',
+    'operating_system',
+    'href',
 ]
 
 # Params for Data source
@@ -130,8 +130,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'identifier',
     'visibility',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -144,26 +144,26 @@ module_args = dict(
     encrypted_data_key=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     source_volume=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    href=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    encryption_key=dict(
+        required=False,
+        type='str'),
     operating_system=dict(
         required=False,
         type='str'),
-    encryption_key=dict(
+    href=dict(
         required=False,
         type='str'),
     id=dict(

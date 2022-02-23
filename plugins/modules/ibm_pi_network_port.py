@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_network_name:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
     pi_network_port_description:
         description:
             - None
@@ -41,6 +31,16 @@ options:
         description:
             - None
         required: False
+        type: str
+    pi_network_name:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) 
+        required: True
         type: str
     id:
         description:
@@ -90,10 +90,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_network_name',
-    'pi_cloud_instance_id',
     'pi_network_port_description',
     'pi_network_port_ipaddress',
+    'pi_network_name',
+    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
@@ -114,16 +114,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_network_name=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     pi_network_port_description=dict(
         required=False,
         type='str'),
     pi_network_port_ipaddress=dict(
+        required=False,
+        type='str'),
+    pi_network_name=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(

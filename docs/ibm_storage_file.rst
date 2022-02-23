@@ -31,24 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  type (True, str, None)
+    (Required for new resource) Storage type
+
+
+  snapshot_capacity (False, int, None)
+    Snapshot capacity
+
+
+  notes (False, str, None)
+    Notes
 
 
   capacity (True, int, None)
     (Required for new resource) Storage capacity
-
-
-  allowed_virtual_guest_ids (False, list, None)
-    Virtual guest ID
-
-
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
-
-
-  iops (True, float, None)
-    (Required for new resource) iops rate
 
 
   allowed_subnets (False, list, None)
@@ -59,10 +55,6 @@ Parameters
     Allowed range of IP addresses
 
 
-  notes (False, str, None)
-    Notes
-
-
   snapshot_schedule (False, list, None)
     None
 
@@ -71,12 +63,20 @@ Parameters
     Tags set for the storage volume
 
 
-  type (True, str, None)
-    (Required for new resource) Storage type
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
-  snapshot_capacity (False, int, None)
-    Snapshot capacity
+  iops (True, float, None)
+    (Required for new resource) iops rate
+
+
+  allowed_virtual_guest_ids (False, list, None)
+    Virtual guest ID
+
+
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
 
 
   hourly_billing (False, bool, False)

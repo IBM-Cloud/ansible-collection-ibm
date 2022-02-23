@@ -29,10 +29,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  environment_id (True, str, None)
-    Environment Id.
-
-
   guid (True, str, None)
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
@@ -43,6 +39,10 @@ Parameters
 
   includes (False, str, None)
     Include the associated collections in the response.
+
+
+  environment_id (True, str, None)
+    Environment Id.
 
 
   iaas_classic_username (False, any, None)

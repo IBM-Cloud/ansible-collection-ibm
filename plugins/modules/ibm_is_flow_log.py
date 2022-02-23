@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    storage_bucket:
+        description:
+            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+        required: True
+        type: str
     tags:
         description:
             - Tags for the VPC Flow logs
@@ -31,11 +36,6 @@ options:
     name:
         description:
             - (Required for new resource) Flow Log Collector name
-        required: True
-        type: str
-    storage_bucket:
-        description:
-            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
         required: True
         type: str
     target:
@@ -100,16 +100,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('storage_bucket', 'str'),
+    ('name', 'str'),
     ('target', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'storage_bucket',
     'tags',
     'name',
-    'storage_bucket',
     'target',
     'active',
     'resource_group',
@@ -131,14 +131,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    storage_bucket=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
     name=dict(
-        required=False,
-        type='str'),
-    storage_bucket=dict(
         required=False,
         type='str'),
     target=dict(

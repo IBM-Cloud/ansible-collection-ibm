@@ -21,11 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    location:
-        description:
-            - A unique name for the new Satellite location
-        required: True
-        type: str
     labels:
         description:
             - List of labels for the attach host
@@ -41,6 +36,11 @@ options:
         description:
             - The directory where the satellite attach host script to be downloaded. Default is home directory
         required: False
+        type: str
+    location:
+        description:
+            - A unique name for the new Satellite location
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -75,16 +75,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('host_provider', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
     'labels',
     'host_provider',
     'script_dir',
+    'location',
 ]
 
 
@@ -95,9 +95,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
-        required=True,
-        type='str'),
     labels=dict(
         required=False,
         elements='',
@@ -107,6 +104,9 @@ module_args = dict(
         type='str'),
     script_dir=dict(
         required=False,
+        type='str'),
+    location=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',

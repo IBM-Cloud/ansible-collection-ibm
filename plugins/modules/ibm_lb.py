@@ -22,6 +22,23 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name info
+        required: True
+        type: str
+    dedicated:
+        description:
+            - Boolena value true if Load balncer is dedicated type
+        required: False
+        type: bool
+        default: False
+    tags:
+        description:
+            - Tags associated with resource
+        required: False
+        type: list
+        elements: str
     connections:
         description:
             - (Required for new resource) Connections value
@@ -33,28 +50,11 @@ options:
         required: False
         type: bool
         default: False
-    tags:
-        description:
-            - Tags associated with resource
-        required: False
-        type: list
-        elements: str
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name info
-        required: True
-        type: str
     security_certificate_id:
         description:
             - Security certificate ID
         required: False
         type: int
-    dedicated:
-        description:
-            - Boolena value true if Load balncer is dedicated type
-        required: False
-        type: bool
-        default: False
     ssl_offload:
         description:
             - boolean value true if SSL offload is enabled
@@ -107,18 +107,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('connections', 'int'),
     ('datacenter', 'str'),
+    ('connections', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'datacenter',
+    'dedicated',
+    'tags',
     'connections',
     'ha_enabled',
-    'tags',
-    'datacenter',
     'security_certificate_id',
-    'dedicated',
     'ssl_offload',
 ]
 
@@ -136,25 +136,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    connections=dict(
+    datacenter=dict(
         required=False,
-        type='int'),
-    ha_enabled=dict(
+        type='str'),
+    dedicated=dict(
         required=False,
         type='bool'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    datacenter=dict(
+    connections=dict(
         required=False,
-        type='str'),
+        type='int'),
+    ha_enabled=dict(
+        required=False,
+        type='bool'),
     security_certificate_id=dict(
         required=False,
         type='int'),
-    dedicated=dict(
-        required=False,
-        type='bool'),
     ssl_offload=dict(
         required=False,
         type='bool'),

@@ -35,28 +35,28 @@ Parameters
     (Required for new resource) Key protect instance ID
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
+  encrypted_nonce (False, str, None)
+    Only for imported root key
 
 
   standard_key (False, bool, False)
     Standard key type
 
 
-  payload (False, str, None)
-    None
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
   iv_value (False, str, None)
     Only for imported root key
 
 
+  payload (False, str, None)
+    None
+
+
   force_delete (False, bool, False)
     set to true to force delete the key
-
-
-  encrypted_nonce (False, str, None)
-    Only for imported root key
 
 
   id (False, str, None)

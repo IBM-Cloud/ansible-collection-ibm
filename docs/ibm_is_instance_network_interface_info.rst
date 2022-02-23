@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  network_interface_name (True, str, None)
-    The network interface name.
-
-
   instance_name (True, str, None)
     The instance name.
+
+
+  network_interface_name (True, str, None)
+    The network interface name.
 
 
   generation (False, int, 2)

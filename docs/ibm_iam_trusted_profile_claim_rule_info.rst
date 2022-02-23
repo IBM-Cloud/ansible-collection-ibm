@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rule_id (True, str, None)
-    ID of the claim rule to get.
-
-
   profile_id (True, str, None)
     ID of the trusted profile.
+
+
+  rule_id (True, str, None)
+    ID of the claim rule to get.
 
 
   iaas_classic_username (False, any, None)

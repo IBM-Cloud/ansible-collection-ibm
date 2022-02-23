@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Service instance name for example, speech_to_text
-        required: True
-        type: str
     space_guid:
         description:
             - The guid of the space in which the instance is present
+        required: True
+        type: str
+    name:
+        description:
+            - Service instance name for example, speech_to_text
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('space_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'space_guid',
+    'name',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    space_guid=dict(
         required=True,
         type='str'),
-    space_guid=dict(
+    name=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  storage_bucket (True, str, None)
+    (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+
+
   tags (False, list, None)
     Tags for the VPC Flow logs
 
 
   name (True, str, None)
     (Required for new resource) Flow Log Collector name
-
-
-  storage_bucket (True, str, None)
-    (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
 
 
   target (True, str, None)

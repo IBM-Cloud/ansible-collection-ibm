@@ -31,10 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parent (True, str, None)
-    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
-
-
   owner_iam_id (False, str, None)
     The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
@@ -43,16 +39,20 @@ Parameters
     The enterprise account ID.
 
 
+  account_id (False, str, None)
+    The source account id of account to be imported
+
+
+  parent (True, str, None)
+    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
+
+
   name (False, str, None)
     The name of the account. This field must have 3 - 60 characters.
 
 
   enterprise_id (False, str, None)
     The enterprise ID that the account is a part of.
-
-
-  account_id (False, str, None)
-    The source account id of account to be imported
 
 
   id (False, str, None)

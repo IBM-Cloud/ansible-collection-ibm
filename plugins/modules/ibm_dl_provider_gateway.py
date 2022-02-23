@@ -22,39 +22,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    bgp_asn:
-        description:
-            - (Required for new resource) BGP ASN
-        required: True
-        type: int
     port:
         description:
             - (Required for new resource) Gateway port
         required: True
         type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
-    bgp_ibm_cidr:
-        description:
-            - BGP IBM CIDR
-        required: False
-        type: str
-    bgp_cer_cidr:
-        description:
-            - BGP customer edge router CIDR
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) The unique user-defined name for this gateway
-        required: True
-        type: str
-    customer_account_id:
-        description:
-            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
         required: True
         type: str
     tags:
@@ -63,6 +38,31 @@ options:
         required: False
         type: list
         elements: str
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
+        type: str
+    customer_account_id:
+        description:
+            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+        required: True
+        type: str
+    speed_mbps:
+        description:
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
+    bgp_cer_cidr:
+        description:
+            - BGP customer edge router CIDR
+        required: False
+        type: str
+    bgp_asn:
+        description:
+            - (Required for new resource) BGP ASN
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,23 +109,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bgp_asn', 'int'),
     ('port', 'str'),
-    ('speed_mbps', 'int'),
     ('name', 'str'),
     ('customer_account_id', 'str'),
+    ('speed_mbps', 'int'),
+    ('bgp_asn', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bgp_asn',
     'port',
-    'speed_mbps',
-    'bgp_ibm_cidr',
-    'bgp_cer_cidr',
     'name',
-    'customer_account_id',
     'tags',
+    'bgp_ibm_cidr',
+    'customer_account_id',
+    'speed_mbps',
+    'bgp_cer_cidr',
+    'bgp_asn',
 ]
 
 # Params for Data source
@@ -142,31 +142,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bgp_asn=dict(
-        required=False,
-        type='int'),
     port=dict(
         required=False,
         type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
-    bgp_ibm_cidr=dict(
-        required=False,
-        type='str'),
-    bgp_cer_cidr=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    customer_account_id=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    bgp_ibm_cidr=dict(
+        required=False,
+        type='str'),
+    customer_account_id=dict(
+        required=False,
+        type='str'),
+    speed_mbps=dict(
+        required=False,
+        type='int'),
+    bgp_cer_cidr=dict(
+        required=False,
+        type='str'),
+    bgp_asn=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),

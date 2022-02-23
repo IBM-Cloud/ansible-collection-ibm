@@ -31,40 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  active (False, bool, True)
-    Determines if the user account is active or not
-
-
-  locked_until (False, int, None)
-    Integer (epoch time in milliseconds), determines till when the user account will be locked
-
-
-  status (False, str, PENDING)
-    Accepted values `PENDING` or `CONFIRMED`
-
-
-  email (True, list, None)
-    (Required for new resource) A set of user emails
-
-
-  password (True, str, None)
-    (Required for new resource) User password
-
-
-  tenant_id (True, str, None)
-    (Required for new resource) The AppID instance GUID
-
-
-  create_profile (False, bool, True)
-    A boolean indication if a profile should be created for the Cloud Directory user
-
-
   display_name (False, str, None)
     Cloud Directory user display name
 
 
   user_name (False, str, None)
     Optional username
+
+
+  password (True, str, None)
+    (Required for new resource) User password
+
+
+  status (False, str, PENDING)
+    Accepted values `PENDING` or `CONFIRMED`
+
+
+  create_profile (False, bool, True)
+    A boolean indication if a profile should be created for the Cloud Directory user
+
+
+  locked_until (False, int, None)
+    Integer (epoch time in milliseconds), determines till when the user account will be locked
+
+
+  email (True, list, None)
+    (Required for new resource) A set of user emails
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The AppID instance GUID
+
+
+  active (False, bool, True)
+    Determines if the user account is active or not
 
 
   id (False, str, None)

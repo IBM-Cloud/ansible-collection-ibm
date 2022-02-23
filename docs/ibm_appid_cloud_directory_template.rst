@@ -31,10 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  template_name (True, str, None)
-    (Required for new resource) The type of email template. This can be `USER_VERIFICATION`, `WELCOME`, `PASSWORD_CHANGED`, `RESET_PASSWORD` or `MFA_VERIFICATION`
-
-
   language (False, str, en)
     Preferred language for resource. Format as described at RFC5646. According to the configured languages codes returned from the `GET /management/v4/{tenantId}/config/ui/languages API`.
 
@@ -53,6 +49,10 @@ Parameters
 
   tenant_id (True, str, None)
     (Required for new resource) The AppID instance GUID
+
+
+  template_name (True, str, None)
+    (Required for new resource) The type of email template. This can be `USER_VERIFICATION`, `WELCOME`, `PASSWORD_CHANGED`, `RESET_PASSWORD` or `MFA_VERIFICATION`
 
 
   id (False, str, None)

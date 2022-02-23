@@ -21,11 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    environment_id:
-        description:
-            - Environment Id.
-        required: True
-        type: str
     guid:
         description:
             - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
@@ -40,6 +35,11 @@ options:
         description:
             - Include the associated collections in the response.
         required: False
+        type: str
+    environment_id:
+        description:
+            - Environment Id.
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -74,17 +74,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('environment_id', 'str'),
     ('guid', 'str'),
     ('feature_id', 'str'),
+    ('environment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'environment_id',
     'guid',
     'feature_id',
     'includes',
+    'environment_id',
 ]
 
 
@@ -95,9 +95,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    environment_id=dict(
-        required=True,
-        type='str'),
     guid=dict(
         required=True,
         type='str'),
@@ -106,6 +103,9 @@ module_args = dict(
         type='str'),
     includes=dict(
         required=False,
+        type='str'),
+    environment_id=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',

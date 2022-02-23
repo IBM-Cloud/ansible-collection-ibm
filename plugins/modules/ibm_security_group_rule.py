@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    direction:
-        description:
-            - (Required for new resource) Direction of rule: ingress or egress
-        required: True
-        type: str
     ether_type:
         description:
             - IP version IPv4 or IPv6
@@ -63,6 +58,11 @@ options:
             - (Required for new resource) Security group ID
         required: True
         type: int
+    direction:
+        description:
+            - (Required for new resource) Direction of rule: ingress or egress
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,13 +109,12 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('direction', 'str'),
     ('security_group_id', 'int'),
+    ('direction', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'direction',
     'ether_type',
     'port_range_min',
     'port_range_max',
@@ -123,6 +122,7 @@ TL_ALL_PARAMETERS = [
     'remote_ip',
     'protocol',
     'security_group_id',
+    'direction',
 ]
 
 # Params for Data source
@@ -141,9 +141,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    direction=dict(
-        required=False,
-        type='str'),
     ether_type=dict(
         required=False,
         type='str'),
@@ -165,6 +162,9 @@ module_args = dict(
     security_group_id=dict(
         required=False,
         type='int'),
+    direction=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

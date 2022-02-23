@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_dhcp_id:
-        description:
-            - The ID of the DHCP Server
-        required: True
-        type: str
     pi_cloud_instance_id:
         description:
             - None
+        required: True
+        type: str
+    pi_dhcp_id:
+        description:
+            - The ID of the DHCP Server
         required: True
         type: str
     zone:
@@ -60,14 +60,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_dhcp_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_dhcp_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_dhcp_id',
     'pi_cloud_instance_id',
+    'pi_dhcp_id',
 ]
 
 
@@ -78,10 +78,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_dhcp_id=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_dhcp_id=dict(
         required=True,
         type='str'),
     zone=dict(

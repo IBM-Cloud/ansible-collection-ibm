@@ -21,6 +21,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    bucket_region:
+        description:
+            - None
+        required: True
+        type: str
+    resource_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_name:
+        description:
+            - None
+        required: True
+        type: str
     bucket_type:
         description:
             - None
@@ -32,21 +47,6 @@ options:
         required: False
         type: str
         default: public
-    bucket_region:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_name:
-        description:
-            - None
-        required: True
-        type: str
-    resource_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -80,19 +80,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_type', 'str'),
     ('bucket_region', 'str'),
-    ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
+    ('bucket_name', 'str'),
+    ('bucket_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'bucket_region',
+    'resource_instance_id',
+    'bucket_name',
     'bucket_type',
     'endpoint_type',
-    'bucket_region',
-    'bucket_name',
-    'resource_instance_id',
 ]
 
 
@@ -103,20 +103,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bucket_type=dict(
+    bucket_region=dict(
         required=True,
         type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    bucket_region=dict(
+    resource_instance_id=dict(
         required=True,
         type='str'),
     bucket_name=dict(
         required=True,
         type='str'),
-    resource_instance_id=dict(
+    bucket_type=dict(
         required=True,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

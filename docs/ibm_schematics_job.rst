@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  command_object_id (True, str, None)
-    (Required for new resource) Job command object id (workspace-id, action-id).
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
 
 
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  data (False, list, None)
+    Job data.
 
 
-  job_inputs (False, list, None)
-    Job inputs used by Action or Workspace.
+  bastion (False, list, None)
+    Describes a bastion resource.
 
 
   log_summary (False, list, None)
@@ -51,32 +51,32 @@ Parameters
     (Required for new resource) Name of the Schematics automation resource.
 
 
-  job_env_settings (False, list, None)
-    Environment variables used by the Job while performing Action or Workspace.
+  command_object_id (True, str, None)
+    (Required for new resource) Job command object id (workspace-id, action-id).
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
 
 
   command_parameter (False, str, None)
     Schematics job command parameter (playbook-name).
 
 
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  bastion (False, list, None)
-    Describes a bastion resource.
-
-
   command_options (False, list, None)
     Command line options for the command.
 
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
-  data (False, list, None)
-    Job data.
+  job_inputs (False, list, None)
+    Job inputs used by Action or Workspace.
+
+
+  job_env_settings (False, list, None)
+    Environment variables used by the Job while performing Action or Workspace.
 
 
   id (False, str, None)

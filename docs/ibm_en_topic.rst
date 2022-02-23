@@ -35,16 +35,16 @@ Parameters
     (Required for new resource) Name of the topic.
 
 
+  description (False, str, None)
+    Description of the topic.
+
+
   sources (False, list, None)
     List of sources.
 
 
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-
-
-  description (False, str, None)
-    Description of the topic.
 
 
   id (False, str, None)

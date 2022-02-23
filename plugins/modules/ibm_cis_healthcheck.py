@@ -22,51 +22,34 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    follow_redirects:
-        description:
-            - follow_redirects
-        required: False
-        type: bool
-        default: False
-    retries:
-        description:
-            - retries
-        required: False
-        type: int
-        default: 2
-    interval:
-        description:
-            - interval
-        required: False
-        type: int
-        default: 60
-    port:
-        description:
-            - port number
-        required: False
-        type: int
     expected_body:
         description:
             - expected_body
         required: False
         type: str
-    expected_codes:
-        description:
-            - expected_codes
-        required: False
-        type: str
-    method:
-        description:
-            - method
-        required: False
-        type: str
-        default: GET
     description:
         description:
             - description
         required: False
         type: str
         default:  
+    method:
+        description:
+            - method
+        required: False
+        type: str
+        default: GET
+    follow_redirects:
+        description:
+            - follow_redirects
+        required: False
+        type: bool
+        default: False
+    port:
+        description:
+            - port number
+        required: False
+        type: int
     allow_insecure:
         description:
             - allow_insecure
@@ -90,6 +73,17 @@ options:
         required: False
         type: str
         default: /
+    retries:
+        description:
+            - retries
+        required: False
+        type: int
+        default: 2
+    expected_codes:
+        description:
+            - expected_codes
+        required: False
+        type: str
     type:
         description:
             - type
@@ -102,6 +96,12 @@ options:
         required: False
         type: int
         default: 5
+    interval:
+        description:
+            - interval
+        required: False
+        type: int
+        default: 60
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,20 +153,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'follow_redirects',
-    'retries',
-    'interval',
-    'port',
     'expected_body',
-    'expected_codes',
-    'method',
     'description',
+    'method',
+    'follow_redirects',
+    'port',
     'allow_insecure',
     'headers',
     'cis_id',
     'path',
+    'retries',
+    'expected_codes',
     'type',
     'timeout',
+    'interval',
 ]
 
 # Params for Data source
@@ -183,30 +183,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    follow_redirects=dict(
-        required=False,
-        type='bool'),
-    retries=dict(
-        required=False,
-        type='int'),
-    interval=dict(
-        required=False,
-        type='int'),
-    port=dict(
-        required=False,
-        type='int'),
     expected_body=dict(
-        required=False,
-        type='str'),
-    expected_codes=dict(
-        required=False,
-        type='str'),
-    method=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
+    method=dict(
+        required=False,
+        type='str'),
+    follow_redirects=dict(
+        required=False,
+        type='bool'),
+    port=dict(
+        required=False,
+        type='int'),
     allow_insecure=dict(
         required=False,
         type='bool'),
@@ -220,10 +211,19 @@ module_args = dict(
     path=dict(
         required=False,
         type='str'),
+    retries=dict(
+        required=False,
+        type='int'),
+    expected_codes=dict(
+        required=False,
+        type='str'),
     type=dict(
         required=False,
         type='str'),
     timeout=dict(
+        required=False,
+        type='int'),
+    interval=dict(
         required=False,
         type='int'),
     id=dict(

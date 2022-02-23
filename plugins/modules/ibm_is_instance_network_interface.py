@@ -22,15 +22,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    primary_ipv4_address:
+    floating_ip:
         description:
-            - The primary IPv4 address. If specified, it must be an available address on the network interface's subnet. If unspecified, an available address on the subnet will be automatically selected.
+            - The ID of the floating IP to attach to this network interface
         required: False
-        type: str
-    subnet:
-        description:
-            - (Required for new resource) The unique identifier of the subnet.
-        required: True
         type: str
     allow_ip_spoofing:
         description:
@@ -38,19 +33,24 @@ options:
         required: False
         type: bool
         default: False
-    name:
+    primary_ipv4_address:
         description:
-            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: True
-        type: str
-    floating_ip:
-        description:
-            - The ID of the floating IP to attach to this network interface
+            - The primary IPv4 address. If specified, it must be an available address on the network interface's subnet. If unspecified, an available address on the subnet will be automatically selected.
         required: False
         type: str
     instance:
         description:
             - (Required for new resource) The unique identifier of the instance.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: True
+        type: str
+    subnet:
+        description:
+            - (Required for new resource) The unique identifier of the subnet.
         required: True
         type: str
     security_groups:
@@ -105,31 +105,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnet', 'str'),
-    ('name', 'str'),
     ('instance', 'str'),
+    ('name', 'str'),
+    ('subnet', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'primary_ipv4_address',
-    'subnet',
-    'allow_ip_spoofing',
-    'name',
     'floating_ip',
+    'allow_ip_spoofing',
+    'primary_ipv4_address',
     'instance',
+    'name',
+    'subnet',
     'security_groups',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('network_interface_name', 'str'),
     ('instance_name', 'str'),
+    ('network_interface_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'network_interface_name',
     'instance_name',
+    'network_interface_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -139,22 +139,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    primary_ipv4_address=dict(
-        required=False,
-        type='str'),
-    subnet=dict(
+    floating_ip=dict(
         required=False,
         type='str'),
     allow_ip_spoofing=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    floating_ip=dict(
+    primary_ipv4_address=dict(
         required=False,
         type='str'),
     instance=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    subnet=dict(
         required=False,
         type='str'),
     security_groups=dict(

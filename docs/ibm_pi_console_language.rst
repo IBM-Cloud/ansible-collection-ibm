@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_language_code (True, str, None)
+    (Required for new resource) Language code
+
+
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
 
 
   pi_instance_name (True, str, None)
     (Required for new resource) The unique identifier or name of the instance
-
-
-  pi_language_code (True, str, None)
-    (Required for new resource) Language code
 
 
   id (False, str, None)

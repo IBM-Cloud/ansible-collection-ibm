@@ -21,11 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - The description of the security group
-        required: False
-        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created group is used. If false, an error is returned
@@ -36,6 +31,11 @@ options:
         description:
             - The name of the security group
         required: True
+        type: str
+    description:
+        description:
+            - The description of the security group
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'most_recent',
     'name',
+    'description',
 ]
 
 
@@ -88,14 +88,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     most_recent=dict(
         required=False,
         type='bool'),
     name=dict(
         required=True,
+        type='str'),
+    description=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

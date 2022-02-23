@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ttl (False, int, 60)
-    Time to live in second
+  description (False, str, None)
+    Descriptive text of the load balancer
+
+
+  fallback_pool (True, str, None)
+    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
 
 
   default_pools (True, list, None)
@@ -43,8 +47,16 @@ Parameters
     Map availability zones to pool ID's.
 
 
-  fallback_pool (True, str, None)
-    (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
+  name (True, str, None)
+    (Required for new resource) Name of the load balancer
+
+
+  enabled (False, bool, None)
+    Whether the load balancer is enabled
+
+
+  ttl (False, int, 60)
+    Time to live in second
 
 
   instance_id (True, str, None)
@@ -53,18 +65,6 @@ Parameters
 
   zone_id (True, str, None)
     (Required for new resource) Zone Id
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the load balancer
-
-
-  description (False, str, None)
-    Descriptive text of the load balancer
-
-
-  enabled (False, bool, None)
-    Whether the load balancer is enabled
 
 
   id (False, str, None)

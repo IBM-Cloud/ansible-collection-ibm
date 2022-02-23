@@ -31,22 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  url_path (False, str, /)
-    URL Path
-
-
-  monitor_id (True, str, None)
-    (Required for new resource) Monitor ID
-
-
-  lbaas_id (True, str, None)
-    (Required for new resource) LBAAS id
-
-
-  protocol (True, str, None)
-    (Required for new resource) Protocol value
-
-
   port (True, int, None)
     (Required for new resource) Port number
 
@@ -61,6 +45,22 @@ Parameters
 
   timeout (False, int, 2)
     Timeout in seconds
+
+
+  url_path (False, str, /)
+    URL Path
+
+
+  monitor_id (True, str, None)
+    (Required for new resource) Monitor ID
+
+
+  lbaas_id (True, str, None)
+    (Required for new resource) LBAAS id
+
+
+  protocol (True, str, None)
+    (Required for new resource) Protocol value
 
 
   id (False, str, None)

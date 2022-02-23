@@ -31,6 +31,38 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
+
+
+  tags (False, str, None)
+    Tags associated with the feature.
+
+
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+
+
+  description (False, str, None)
+    Feature description.
+
+
+  name (True, str, None)
+    (Required for new resource) Feature name.
+
+
+  enabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
   segment_rules (False, list, None)
     Specify the targeting rules that is used to set different feature flag values for different segments.
 
@@ -39,40 +71,8 @@ Parameters
     List of collection id representing the collections that are associated with the specified feature flag.
 
 
-  type (True, str, None)
-    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
-
-
-  enabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  description (False, str, None)
-    Feature description.
-
-
-  tags (False, str, None)
-    Tags associated with the feature.
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
-
-
-  name (True, str, None)
-    (Required for new resource) Feature name.
-
-
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
-
-
   disabled_value (True, str, None)
     (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   id (False, str, None)

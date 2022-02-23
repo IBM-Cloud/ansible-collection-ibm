@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    tenant_id:
-        description:
-            - The service `tenantId`
-        required: True
-        type: str
     client_id:
         description:
             - The `client_id` is a public identifier for applications
+        required: True
+        type: str
+    tenant_id:
+        description:
+            - The service `tenantId`
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('tenant_id', 'str'),
     ('client_id', 'str'),
+    ('tenant_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tenant_id',
     'client_id',
+    'tenant_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tenant_id=dict(
+    client_id=dict(
         required=True,
         type='str'),
-    client_id=dict(
+    tenant_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

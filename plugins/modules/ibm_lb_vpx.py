@@ -22,40 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    datacenter:
-        description:
-            - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    speed:
-        description:
-            - (Required for new resource) Speed value
-        required: True
-        type: int
-    public_subnet:
-        description:
-            - Public subnet
-        required: False
-        type: str
     private_subnet:
         description:
             - Private subnet
         required: False
         type: str
-    plan:
+    datacenter:
         description:
-            - (Required for new resource) Plan info
+            - (Required for new resource) Datacenter name
         required: True
         type: str
     ip_count:
         description:
             - (Required for new resource) IP address count
         required: True
-        type: int
-    public_vlan_id:
-        description:
-            - Piblic VLAN id
-        required: False
         type: int
     private_vlan_id:
         description:
@@ -68,9 +48,29 @@ options:
         required: False
         type: list
         elements: str
+    public_vlan_id:
+        description:
+            - Piblic VLAN id
+        required: False
+        type: int
+    public_subnet:
+        description:
+            - Public subnet
+        required: False
+        type: str
+    speed:
+        description:
+            - (Required for new resource) Speed value
+        required: True
+        type: int
     version:
         description:
             - (Required for new resource) version info
+        required: True
+        type: str
+    plan:
+        description:
+            - (Required for new resource) Plan info
         required: True
         type: str
     id:
@@ -120,24 +120,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('datacenter', 'str'),
-    ('speed', 'int'),
-    ('plan', 'str'),
     ('ip_count', 'int'),
+    ('speed', 'int'),
     ('version', 'str'),
+    ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'speed',
-    'public_subnet',
     'private_subnet',
-    'plan',
+    'datacenter',
     'ip_count',
-    'public_vlan_id',
     'private_vlan_id',
     'tags',
+    'public_vlan_id',
+    'public_subnet',
+    'speed',
     'version',
+    'plan',
 ]
 
 # Params for Data source
@@ -154,25 +154,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
-        required=False,
-        type='str'),
-    speed=dict(
-        required=False,
-        type='int'),
-    public_subnet=dict(
-        required=False,
-        type='str'),
     private_subnet=dict(
         required=False,
         type='str'),
-    plan=dict(
+    datacenter=dict(
         required=False,
         type='str'),
     ip_count=dict(
-        required=False,
-        type='int'),
-    public_vlan_id=dict(
         required=False,
         type='int'),
     private_vlan_id=dict(
@@ -182,7 +170,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
+    public_subnet=dict(
+        required=False,
+        type='str'),
+    speed=dict(
+        required=False,
+        type='int'),
     version=dict(
+        required=False,
+        type='str'),
+    plan=dict(
         required=False,
         type='str'),
     id=dict(

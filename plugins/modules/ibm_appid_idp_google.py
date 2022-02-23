@@ -22,12 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    config:
-        description:
-            - Google IDP configuration
-        required: False
-        type: list
-        elements: dict
     tenant_id:
         description:
             - (Required for new resource) The AppID instance GUID
@@ -38,6 +32,12 @@ options:
             - (Required for new resource) `true` if Google IDP configuration is active
         required: True
         type: bool
+    config:
+        description:
+            - Google IDP configuration
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,9 +90,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'config',
     'tenant_id',
     'is_active',
+    'config',
 ]
 
 # Params for Data source
@@ -111,16 +111,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    config=dict(
-        required=False,
-        elements='',
-        type='list'),
     tenant_id=dict(
         required=False,
         type='str'),
     is_active=dict(
         required=False,
         type='bool'),
+    config=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),

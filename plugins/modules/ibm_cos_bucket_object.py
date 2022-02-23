@@ -22,25 +22,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    etag:
+        description:
+            - COS object MD5 hexdigest
+        required: False
+        type: str
     content_base64:
         description:
             - COS object content in base64 encoding
-        required: False
-        type: str
-    force_delete:
-        description:
-            - COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-        required: False
-        type: bool
-        default: True
-    bucket_location:
-        description:
-            - (Required for new resource) COS bucket location
-        required: True
-        type: str
-    content:
-        description:
-            - COS object content
         required: False
         type: str
     endpoint_type:
@@ -54,20 +43,31 @@ options:
             - (Required for new resource) COS bucket CRN
         required: True
         type: str
-    key:
+    bucket_location:
         description:
-            - (Required for new resource) COS object key
+            - (Required for new resource) COS bucket location
         required: True
         type: str
-    etag:
+    content:
         description:
-            - COS object MD5 hexdigest
+            - COS object content
         required: False
         type: str
+    force_delete:
+        description:
+            - COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+        required: False
+        type: bool
+        default: True
     content_file:
         description:
             - COS object content file path
         required: False
+        type: str
+    key:
+        description:
+            - (Required for new resource) COS object key
+        required: True
         type: str
     id:
         description:
@@ -115,22 +115,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_location', 'str'),
     ('bucket_crn', 'str'),
+    ('bucket_location', 'str'),
     ('key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'etag',
     'content_base64',
-    'force_delete',
-    'bucket_location',
-    'content',
     'endpoint_type',
     'bucket_crn',
-    'key',
-    'etag',
+    'bucket_location',
+    'content',
+    'force_delete',
     'content_file',
+    'key',
 ]
 
 # Params for Data source
@@ -142,8 +142,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'bucket_crn',
-    'key',
     'endpoint_type',
+    'key',
     'bucket_location',
 ]
 
@@ -157,16 +157,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    etag=dict(
+        required=False,
+        type='str'),
     content_base64=dict(
-        required=False,
-        type='str'),
-    force_delete=dict(
-        required=False,
-        type='bool'),
-    bucket_location=dict(
-        required=False,
-        type='str'),
-    content=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
@@ -175,13 +169,19 @@ module_args = dict(
     bucket_crn=dict(
         required=False,
         type='str'),
-    key=dict(
+    bucket_location=dict(
         required=False,
         type='str'),
-    etag=dict(
+    content=dict(
         required=False,
         type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
     content_file=dict(
+        required=False,
+        type='str'),
+    key=dict(
         required=False,
         type='str'),
     id=dict(

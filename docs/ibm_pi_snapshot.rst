@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_snap_shot_name (True, str, None)
-    (Required for new resource) Unique name of the snapshot
+  pi_volume_ids (False, list, None)
+    List of PI volumes
 
 
   pi_cloud_instance_id (True, str, None)
@@ -43,12 +43,12 @@ Parameters
     Description of the PVM instance snapshot
 
 
+  pi_snap_shot_name (True, str, None)
+    (Required for new resource) Unique name of the snapshot
+
+
   pi_instance_name (True, str, None)
     (Required for new resource) Instance name / id of the pvm
-
-
-  pi_volume_ids (False, list, None)
-    List of PI volumes
 
 
   id (False, str, None)

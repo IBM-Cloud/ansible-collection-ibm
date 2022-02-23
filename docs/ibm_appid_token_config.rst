@@ -31,6 +31,18 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  anonymous_token_expires_in (False, int, 2592000)
+    None
+
+
+  anonymous_access_enabled (False, bool, None)
+    The length of time for which an anonymous token is valid in seconds
+
+
+  refresh_token_enabled (False, bool, None)
+    None
+
+
   access_token_claim (False, list, None)
     A set of objects that are created when claims that are related to access tokens are mapped
 
@@ -49,18 +61,6 @@ Parameters
 
   refresh_token_expires_in (False, int, 2592000)
     The length of time for which refresh tokens are valid in seconds
-
-
-  anonymous_token_expires_in (False, int, 2592000)
-    None
-
-
-  anonymous_access_enabled (False, bool, None)
-    The length of time for which an anonymous token is valid in seconds
-
-
-  refresh_token_enabled (False, bool, None)
-    None
 
 
   id (False, str, None)

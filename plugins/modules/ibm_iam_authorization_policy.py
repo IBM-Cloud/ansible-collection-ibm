@@ -27,25 +27,14 @@ options:
             - Description of the Policy
         required: False
         type: str
-    roles:
+    source_service_name:
         description:
-            - (Required for new resource) Role names of the policy definition
+            - (Required for new resource) The source service name
         required: True
-        type: list
-        elements: str
-    target_resource_instance_id:
-        description:
-            - The target resource instance Id
-        required: False
         type: str
     source_resource_group_id:
         description:
             - The source resource group Id
-        required: False
-        type: str
-    source_service_account:
-        description:
-            - Account GUID of source service
         required: False
         type: str
     source_resource_type:
@@ -58,19 +47,30 @@ options:
             - Resource type of target service
         required: False
         type: str
-    source_service_name:
+    source_service_account:
         description:
-            - (Required for new resource) The source service name
-        required: True
+            - Account GUID of source service
+        required: False
         type: str
     target_service_name:
         description:
             - (Required for new resource) The target service name
         required: True
         type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
     source_resource_instance_id:
         description:
             - The source resource instance Id
+        required: False
+        type: str
+    target_resource_instance_id:
+        description:
+            - The target resource instance Id
         required: False
         type: str
     target_resource_group_id:
@@ -124,23 +124,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('roles', 'list'),
     ('source_service_name', 'str'),
     ('target_service_name', 'str'),
+    ('roles', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'description',
-    'roles',
-    'target_resource_instance_id',
+    'source_service_name',
     'source_resource_group_id',
-    'source_service_account',
     'source_resource_type',
     'target_resource_type',
-    'source_service_name',
+    'source_service_account',
     'target_service_name',
+    'roles',
     'source_resource_instance_id',
+    'target_resource_instance_id',
     'target_resource_group_id',
 ]
 
@@ -161,17 +161,10 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
-    target_resource_instance_id=dict(
+    source_service_name=dict(
         required=False,
         type='str'),
     source_resource_group_id=dict(
-        required=False,
-        type='str'),
-    source_service_account=dict(
         required=False,
         type='str'),
     source_resource_type=dict(
@@ -180,13 +173,20 @@ module_args = dict(
     target_resource_type=dict(
         required=False,
         type='str'),
-    source_service_name=dict(
+    source_service_account=dict(
         required=False,
         type='str'),
     target_service_name=dict(
         required=False,
         type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     source_resource_instance_id=dict(
+        required=False,
+        type='str'),
+    target_resource_instance_id=dict(
         required=False,
         type='str'),
     target_resource_group_id=dict(

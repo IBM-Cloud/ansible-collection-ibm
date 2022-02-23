@@ -31,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
   metrics_monitoring (False, list, None)
     Enables sending metrics to IBM Cloud Monitoring.
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
   expire_rule (False, list, None)
@@ -55,56 +43,68 @@ Parameters
     Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  region_location (False, str, None)
-    Region Location info.
+  cross_region_location (False, str, None)
+    Cros region location info
 
 
   storage_class (True, str, None)
     (Required for new resource) Storage class info
 
 
-  retention_rule (False, list, None)
-    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
-
-
-  hard_quota (False, int, None)
-    sets a maximum amount of storage (in bytes) available for a bucket
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
 
 
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
 
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
-
-
-  allowed_ip (False, list, None)
-    List of IPv4 or IPv6 addresses
-
-
-  abort_incomplete_multipart_upload_days (False, list, None)
-    Enable abort incomplete multipart upload to COS Bucket after a defined period of time
-
-
-  single_site_location (False, str, None)
-    single site location info
-
-
-  endpoint_type (False, str, public)
-    public or private
+  region_location (False, str, None)
+    Region Location info.
 
 
   activity_tracking (False, list, None)
     Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
+  abort_incomplete_multipart_upload_days (False, list, None)
+    Enable abort incomplete multipart upload to COS Bucket after a defined period of time
+
+
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  single_site_location (False, str, None)
+    single site location info
+
+
+  allowed_ip (False, list, None)
+    List of IPv4 or IPv6 addresses
+
+
+  retention_rule (False, list, None)
+    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+
+
   noncurrent_version_expiration (False, list, None)
     Enable configuration expire_rule to COS Bucket after a defined period of time
+
+
+  hard_quota (False, int, None)
+    sets a maximum amount of storage (in bytes) available for a bucket
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  endpoint_type (False, str, public)
+    public or private
 
 
   id (False, str, None)

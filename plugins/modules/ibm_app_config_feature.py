@@ -22,6 +22,46 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
+    environment_id:
+        description:
+            - (Required for new resource) Environment Id.
+        required: True
+        type: str
+    tags:
+        description:
+            - Tags associated with the feature.
+        required: False
+        type: str
+    feature_id:
+        description:
+            - (Required for new resource) Feature id.
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+        required: True
+        type: str
+    description:
+        description:
+            - Feature description.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Feature name.
+        required: True
+        type: str
+    enabled_value:
+        description:
+            - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+        required: True
+        type: str
     segment_rules:
         description:
             - Specify the targeting rules that is used to set different feature flag values for different segments.
@@ -34,49 +74,9 @@ options:
         required: False
         type: list
         elements: dict
-    type:
-        description:
-            - (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
-        required: True
-        type: str
-    enabled_value:
-        description:
-            - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-        required: True
-        type: str
-    description:
-        description:
-            - Feature description.
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags associated with the feature.
-        required: False
-        type: str
-    environment_id:
-        description:
-            - (Required for new resource) Environment Id.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Feature name.
-        required: True
-        type: str
-    feature_id:
-        description:
-            - (Required for new resource) Feature id.
-        required: True
-        type: str
     disabled_value:
         description:
             - (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-        required: True
-        type: str
-    guid:
-        description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
     id:
@@ -125,42 +125,42 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
-    ('enabled_value', 'str'),
-    ('environment_id', 'str'),
-    ('name', 'str'),
-    ('feature_id', 'str'),
-    ('disabled_value', 'str'),
     ('guid', 'str'),
+    ('environment_id', 'str'),
+    ('feature_id', 'str'),
+    ('type', 'str'),
+    ('name', 'str'),
+    ('enabled_value', 'str'),
+    ('disabled_value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'guid',
+    'environment_id',
+    'tags',
+    'feature_id',
+    'type',
+    'description',
+    'name',
+    'enabled_value',
     'segment_rules',
     'collections',
-    'type',
-    'enabled_value',
-    'description',
-    'tags',
-    'environment_id',
-    'name',
-    'feature_id',
     'disabled_value',
-    'guid',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('environment_id', 'str'),
     ('guid', 'str'),
     ('feature_id', 'str'),
+    ('environment_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'environment_id',
     'guid',
     'feature_id',
     'includes',
+    'environment_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -170,6 +170,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    guid=dict(
+        required=False,
+        type='str'),
+    environment_id=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        type='str'),
+    feature_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    enabled_value=dict(
+        required=False,
+        type='str'),
     segment_rules=dict(
         required=False,
         elements='',
@@ -178,31 +202,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    type=dict(
-        required=False,
-        type='str'),
-    enabled_value=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        type='str'),
-    environment_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    feature_id=dict(
-        required=False,
-        type='str'),
     disabled_value=dict(
-        required=False,
-        type='str'),
-    guid=dict(
         required=False,
         type='str'),
     id=dict(

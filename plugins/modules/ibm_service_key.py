@@ -103,15 +103,15 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('service_instance_name', 'str'),
     ('space_guid', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'service_instance_name',
     'space_guid',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {

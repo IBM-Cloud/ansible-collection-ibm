@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    zone:
+        description:
+            - (Required for new resource) The zone where you want to deploy the ALB.
+        required: True
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) The ID of the cluster that the ALB belongs to.
+        required: True
+        type: str
     type:
         description:
             - (Required for new resource) The type of ALB that you want to create.
@@ -37,16 +47,6 @@ options:
             - Enable the ALB instance in the cluster
         required: False
         type: bool
-    zone:
-        description:
-            - (Required for new resource) The zone where you want to deploy the ALB.
-        required: True
-        type: str
-    cluster:
-        description:
-            - (Required for new resource) The ID of the cluster that the ALB belongs to.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,18 +73,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('zone', 'str'),
     ('cluster', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zone',
+    'cluster',
     'type',
     'resource_group_id',
     'enable',
-    'zone',
-    'cluster',
 ]
 
 # Params for Data source
@@ -101,6 +101,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    zone=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -110,12 +116,6 @@ module_args = dict(
     enable=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

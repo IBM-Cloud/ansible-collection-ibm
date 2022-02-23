@@ -31,24 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
   expire (False, int, None)
     DNS record expiry info
 
 
-  mx_priority (False, int, 0)
-    Maximum priority
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
-  port (False, int, None)
-    port number
+  retry (False, int, None)
+    Retry count
+
+
+  service (False, str, None)
+    service info
 
 
   priority (False, int, 0)
     priority info
 
 
-  tags (False, list, None)
-    tags set for the resource
+  refresh (False, int, None)
+    refresh rate
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   protocol (False, str, None)
@@ -59,44 +71,32 @@ Parameters
     (Required for new resource) Domain ID of dns record instance
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
   minimum_ttl (False, int, None)
     Minimun TTL configuration
 
 
-  service (False, str, None)
-    service info
+  port (False, int, None)
+    port number
 
 
   weight (False, int, 0)
     weight info
 
 
-  refresh (False, int, None)
-    refresh rate
+  tags (False, list, None)
+    tags set for the resource
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
 
 
   id (False, str, None)

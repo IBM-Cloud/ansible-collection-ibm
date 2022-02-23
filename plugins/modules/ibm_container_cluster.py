@@ -22,61 +22,47 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    kube_version:
         description:
-            - (Required for new resource) The datacenter where this cluster will be deployed
-        required: True
+            - Kubernetes version info
+        required: False
         type: str
-    default_pool_size:
+    service_subnet:
         description:
-            - The size of the default worker pool
+            - Custom subnet CIDR to provide private IP addresses for services
         required: False
-        type: int
-        default: 1
-    taints:
+        type: str
+    no_subnet:
         description:
-            - WorkerPool Taints
+            - Boolean value set to true when subnet creation is not required.
         required: False
-        type: list
-        elements: dict
+        type: bool
+        default: False
     force_delete_storage:
         description:
             - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
         required: False
         type: bool
         default: False
-    tags:
+    private_service_endpoint:
         description:
-            - Tags for the resource
+            - None
+        required: False
+        type: bool
+    datacenter:
+        description:
+            - (Required for new resource) The datacenter where this cluster will be deployed
+        required: True
+        type: str
+    workers_info:
+        description:
+            - The IDs of the worker node
         required: False
         type: list
-        elements: str
-    disk_encryption:
+        elements: dict
+    resource_group_id:
         description:
-            - disc encryption done, if set to true.
-        required: False
-        type: bool
-        default: True
-    retry_patch_version:
-        description:
-            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-        required: False
-        type: int
-    update_all_workers:
-        description:
-            - Updates all the woker nodes if sets to true
-        required: False
-        type: bool
-        default: False
-    wait_till:
-        description:
-            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-        required: False
-        type: str
-        default: IngressReady
-    machine_type:
-        description:
-            - Machine type
+            - ID of the resource group.
         required: False
         type: str
     hardware:
@@ -84,25 +70,53 @@ options:
             - (Required for new resource) Hardware type
         required: True
         type: str
-    private_vlan_id:
+    subnet_id:
         description:
-            - Private VLAN ID
+            - List of subnet IDs
         required: False
-        type: str
+        type: list
+        elements: str
+    webhook:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     labels:
         description:
             - list of labels to the default worker pool
         required: False
         type: dict
         elements: str
-    resource_group_id:
+    disk_encryption:
         description:
-            - ID of the resource group.
+            - disc encryption done, if set to true.
+        required: False
+        type: bool
+        default: True
+    patch_version:
+        description:
+            - Kubernetes patch version
         required: False
         type: str
-    webhook:
+    retry_patch_version:
         description:
-            - None
+            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+        required: False
+        type: int
+    machine_type:
+        description:
+            - Machine type
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The cluster name
+        required: True
+        type: str
+    kms_config:
+        description:
+            - Enables KMS on a given cluster
         required: False
         type: list
         elements: dict
@@ -112,81 +126,67 @@ options:
         required: False
         type: bool
         default: False
-    pod_subnet:
-        description:
-            - Custom subnet CIDR to provide private IP addresses for pods
-        required: False
-        type: str
-    no_subnet:
-        description:
-            - Boolean value set to true when subnet creation is not required.
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: True
-        type: str
-    kube_version:
-        description:
-            - Kubernetes version info
-        required: False
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
-    public_service_endpoint:
-        description:
-            - None
-        required: False
-        type: bool
-    patch_version:
-        description:
-            - Kubernetes patch version
-        required: False
-        type: str
     public_vlan_id:
         description:
             - Public VLAN ID
         required: False
         type: str
-    private_service_endpoint:
+    pod_subnet:
         description:
-            - None
-        required: False
-        type: bool
-    service_subnet:
-        description:
-            - Custom subnet CIDR to provide private IP addresses for services
+            - Custom subnet CIDR to provide private IP addresses for pods
         required: False
         type: str
-    subnet_id:
+    private_vlan_id:
         description:
-            - List of subnet IDs
+            - Private VLAN ID
         required: False
-        type: list
-        elements: str
-    kms_config:
+        type: str
+    default_pool_size:
         description:
-            - Enables KMS on a given cluster
+            - The size of the default worker pool
         required: False
-        type: list
-        elements: dict
-    workers_info:
-        description:
-            - The IDs of the worker node
-        required: False
-        type: list
-        elements: dict
+        type: int
+        default: 1
     wait_for_worker_update:
         description:
             - Wait for worker node to update during kube version update.
         required: False
         type: bool
         default: True
+    wait_till:
+        description:
+            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+        required: False
+        type: str
+        default: IngressReady
+    tags:
+        description:
+            - Tags for the resource
+        required: False
+        type: list
+        elements: str
+    public_service_endpoint:
+        description:
+            - None
+        required: False
+        type: bool
+    taints:
+        description:
+            - WorkerPool Taints
+        required: False
+        type: list
+        elements: dict
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    update_all_workers:
+        description:
+            - Updates all the woker nodes if sets to true
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -220,36 +220,36 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'default_pool_size',
-    'taints',
-    'force_delete_storage',
-    'tags',
-    'disk_encryption',
-    'retry_patch_version',
-    'update_all_workers',
-    'wait_till',
-    'machine_type',
-    'hardware',
-    'private_vlan_id',
-    'labels',
-    'resource_group_id',
-    'webhook',
-    'gateway_enabled',
-    'pod_subnet',
-    'no_subnet',
-    'name',
     'kube_version',
-    'entitlement',
-    'public_service_endpoint',
-    'patch_version',
-    'public_vlan_id',
-    'private_service_endpoint',
     'service_subnet',
-    'subnet_id',
-    'kms_config',
+    'no_subnet',
+    'force_delete_storage',
+    'private_service_endpoint',
+    'datacenter',
     'workers_info',
+    'resource_group_id',
+    'hardware',
+    'subnet_id',
+    'webhook',
+    'labels',
+    'disk_encryption',
+    'patch_version',
+    'retry_patch_version',
+    'machine_type',
+    'name',
+    'kms_config',
+    'gateway_enabled',
+    'public_vlan_id',
+    'pod_subnet',
+    'private_vlan_id',
+    'default_pool_size',
     'wait_for_worker_update',
+    'wait_till',
+    'tags',
+    'public_service_endpoint',
+    'taints',
+    'entitlement',
+    'update_all_workers',
 ]
 
 # Params for Data source
@@ -257,15 +257,15 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'region',
-    'resource_group_id',
-    'name',
-    'list_bounded_services',
     'org_guid',
+    'region',
+    'list_bounded_services',
     'account_guid',
-    'cluster_name_id',
-    'space_guid',
+    'name',
     'alb_type',
+    'resource_group_id',
+    'space_guid',
+    'cluster_name_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -275,101 +275,101 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    default_pool_size=dict(
-        required=False,
-        type='int'),
-    taints=dict(
-        required=False,
-        elements='',
-        type='list'),
-    force_delete_storage=dict(
-        required=False,
-        type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    disk_encryption=dict(
-        required=False,
-        type='bool'),
-    retry_patch_version=dict(
-        required=False,
-        type='int'),
-    update_all_workers=dict(
-        required=False,
-        type='bool'),
-    wait_till=dict(
-        required=False,
-        type='str'),
-    machine_type=dict(
-        required=False,
-        type='str'),
-    hardware=dict(
-        required=False,
-        type='str'),
-    private_vlan_id=dict(
-        required=False,
-        type='str'),
-    labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    webhook=dict(
-        required=False,
-        elements='',
-        type='list'),
-    gateway_enabled=dict(
-        required=False,
-        type='bool'),
-    pod_subnet=dict(
+    service_subnet=dict(
         required=False,
         type='str'),
     no_subnet=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    public_service_endpoint=dict(
+    force_delete_storage=dict(
         required=False,
         type='bool'),
-    patch_version=dict(
-        required=False,
-        type='str'),
-    public_vlan_id=dict(
-        required=False,
-        type='str'),
     private_service_endpoint=dict(
         required=False,
         type='bool'),
-    service_subnet=dict(
+    datacenter=dict(
+        required=False,
+        type='str'),
+    workers_info=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    hardware=dict(
         required=False,
         type='str'),
     subnet_id=dict(
         required=False,
         elements='',
         type='list'),
+    webhook=dict(
+        required=False,
+        elements='',
+        type='list'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    disk_encryption=dict(
+        required=False,
+        type='bool'),
+    patch_version=dict(
+        required=False,
+        type='str'),
+    retry_patch_version=dict(
+        required=False,
+        type='int'),
+    machine_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     kms_config=dict(
         required=False,
         elements='',
         type='list'),
-    workers_info=dict(
+    gateway_enabled=dict(
+        required=False,
+        type='bool'),
+    public_vlan_id=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
+    private_vlan_id=dict(
+        required=False,
+        type='str'),
+    default_pool_size=dict(
+        required=False,
+        type='int'),
+    wait_for_worker_update=dict(
+        required=False,
+        type='bool'),
+    wait_till=dict(
+        required=False,
+        type='str'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    wait_for_worker_update=dict(
+    public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    taints=dict(
+        required=False,
+        elements='',
+        type='list'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    update_all_workers=dict(
         required=False,
         type='bool'),
     id=dict(

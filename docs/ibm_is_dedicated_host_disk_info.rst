@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dedicated_host (True, str, None)
-    The dedicated host identifier.
-
-
   disk (True, str, None)
     The dedicated host disk identifier.
+
+
+  dedicated_host (True, str, None)
+    The dedicated host identifier.
 
 
   generation (False, int, 2)

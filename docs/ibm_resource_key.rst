@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    None
-
-
-  resource_instance_id (False, str, None)
-    The id of the resource instance for which to create resource key
-
-
   name (True, str, None)
     (Required for new resource) The name of the resource key
+
+
+  resource_alias_id (False, str, None)
+    The id of the resource alias for which to create resource key
 
 
   parameters (False, dict, None)
@@ -51,8 +47,12 @@ Parameters
     Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
 
 
-  resource_alias_id (False, str, None)
-    The id of the resource alias for which to create resource key
+  resource_instance_id (False, str, None)
+    The id of the resource instance for which to create resource key
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

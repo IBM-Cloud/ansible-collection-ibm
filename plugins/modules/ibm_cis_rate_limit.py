@@ -27,11 +27,40 @@ options:
             - (Required for new resource) CIS Intance CRN
         required: True
         type: str
+    bypass:
+        description:
+            - Bypass URL
+        required: False
+        type: list
+        elements: dict
+    threshold:
+        description:
+            - (Required for new resource) Rate Limiting Threshold
+        required: True
+        type: int
+    action:
+        description:
+            - (Required for new resource) Rate Limiting Action
+        required: True
+        type: list
+        elements: dict
+    match:
+        description:
+            - Rate Limiting Match
+        required: False
+        type: list
+        elements: dict
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
         required: True
         type: str
+    disabled:
+        description:
+            - Whether this rate limiting rule is currently disabled.
+        required: False
+        type: bool
+        default: False
     description:
         description:
             - A note that you can use to describe the reason for a rate limiting rule.
@@ -45,35 +74,6 @@ options:
     correlate:
         description:
             - Ratelimiting Correlate
-        required: False
-        type: list
-        elements: dict
-    action:
-        description:
-            - (Required for new resource) Rate Limiting Action
-        required: True
-        type: list
-        elements: dict
-    disabled:
-        description:
-            - Whether this rate limiting rule is currently disabled.
-        required: False
-        type: bool
-        default: False
-    bypass:
-        description:
-            - Bypass URL
-        required: False
-        type: list
-        elements: dict
-    threshold:
-        description:
-            - (Required for new resource) Rate Limiting Threshold
-        required: True
-        type: int
-    match:
-        description:
-            - Rate Limiting Match
         required: False
         type: list
         elements: dict
@@ -124,24 +124,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
+    ('threshold', 'int'),
+    ('action', 'list'),
     ('domain_id', 'str'),
     ('period', 'int'),
-    ('action', 'list'),
-    ('threshold', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
+    'bypass',
+    'threshold',
+    'action',
+    'match',
     'domain_id',
+    'disabled',
     'description',
     'period',
     'correlate',
-    'action',
-    'disabled',
-    'bypass',
-    'threshold',
-    'match',
 ]
 
 # Params for Data source
@@ -165,26 +165,6 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    period=dict(
-        required=False,
-        type='int'),
-    correlate=dict(
-        required=False,
-        elements='',
-        type='list'),
-    action=dict(
-        required=False,
-        elements='',
-        type='list'),
-    disabled=dict(
-        required=False,
-        type='bool'),
     bypass=dict(
         required=False,
         elements='',
@@ -192,7 +172,27 @@ module_args = dict(
     threshold=dict(
         required=False,
         type='int'),
+    action=dict(
+        required=False,
+        elements='',
+        type='list'),
     match=dict(
+        required=False,
+        elements='',
+        type='list'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    disabled=dict(
+        required=False,
+        type='bool'),
+    description=dict(
+        required=False,
+        type='str'),
+    period=dict(
+        required=False,
+        type='int'),
+    correlate=dict(
         required=False,
         elements='',
         type='list'),

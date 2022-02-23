@@ -35,12 +35,12 @@ Parameters
     (Required for new resource) The subnet identifier.
 
 
-  auto_delete (False, bool, None)
-    If set to true, this reserved IP will be automatically deleted
-
-
   target (False, str, None)
     The unique identifier for target.
+
+
+  auto_delete (False, bool, None)
+    If set to true, this reserved IP will be automatically deleted
 
 
   name (False, str, None)

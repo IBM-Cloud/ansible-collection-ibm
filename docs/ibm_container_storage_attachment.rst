@@ -31,10 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  volume (True, str, None)
-    (Required for new resource) VPC Volume ID
-
-
   cluster (True, str, None)
     (Required for new resource) Cluster name or ID
 
@@ -45,6 +41,10 @@ Parameters
 
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  volume (True, str, None)
+    (Required for new resource) VPC Volume ID
 
 
   id (False, str, None)

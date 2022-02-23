@@ -32,39 +32,21 @@ options:
             - None
         required: False
         type: str
-    subnets:
-        description:
-            - (Required for new resource) Load Balancer subnets list
-        required: True
-        type: list
-        elements: str
-    type:
-        description:
-            - Load Balancer type
-        required: False
-        type: str
-        default: public
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     route_mode:
         description:
             - Indicates whether route mode is enabled for this load balancer
         required: False
         type: bool
         default: False
-    logging:
+    subnets:
         description:
-            - Logging of Load Balancer
-        required: False
-        type: bool
-        default: False
-    security_groups:
+            - (Required for new resource) Load Balancer subnets list
+        required: True
+        type: list
+        elements: str
+    tags:
         description:
-            - Load Balancer securitygroups list
+            - None
         required: False
         type: list
         elements: str
@@ -73,6 +55,24 @@ options:
             - The profile to use for this load balancer.
         required: False
         type: str
+    logging:
+        description:
+            - Logging of Load Balancer
+        required: False
+        type: bool
+        default: False
+    type:
+        description:
+            - Load Balancer type
+        required: False
+        type: str
+        default: public
+    security_groups:
+        description:
+            - Load Balancer securitygroups list
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,13 +127,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'resource_group',
-    'subnets',
-    'type',
-    'tags',
     'route_mode',
-    'logging',
-    'security_groups',
+    'subnets',
+    'tags',
     'profile',
+    'logging',
+    'type',
+    'security_groups',
 ]
 
 # Params for Data source
@@ -146,9 +146,9 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'profile': ['logging'],
     'logging': ['profile'],
     'security_groups': ['profile'],
-    'profile': ['logging'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -161,30 +161,30 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
+    route_mode=dict(
+        required=False,
+        type='bool'),
     subnets=dict(
         required=False,
         elements='',
         type='list'),
-    type=dict(
-        required=False,
-        type='str'),
     tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    route_mode=dict(
-        required=False,
-        type='bool'),
-    logging=dict(
-        required=False,
-        type='bool'),
-    security_groups=dict(
         required=False,
         elements='',
         type='list'),
     profile=dict(
         required=False,
         type='str'),
+    logging=dict(
+        required=False,
+        type='bool'),
+    type=dict(
+        required=False,
+        type='str'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),

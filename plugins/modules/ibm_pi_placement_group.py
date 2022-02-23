@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pi_placement_group_name:
+        description:
+            - (Required for new resource) Name of the placement group
+        required: True
+        type: str
     pi_placement_group_policy:
         description:
             - (Required for new resource) Policy of the placement group
@@ -30,11 +35,6 @@ options:
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
-        required: True
-        type: str
-    pi_placement_group_name:
-        description:
-            - (Required for new resource) Name of the placement group
         required: True
         type: str
     id:
@@ -79,27 +79,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_placement_group_name', 'str'),
     ('pi_placement_group_policy', 'str'),
     ('pi_cloud_instance_id', 'str'),
-    ('pi_placement_group_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_placement_group_name',
     'pi_placement_group_policy',
     'pi_cloud_instance_id',
-    'pi_placement_group_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_placement_group_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_placement_group_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_placement_group_name',
     'pi_cloud_instance_id',
+    'pi_placement_group_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -109,13 +109,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_placement_group_name=dict(
+        required=False,
+        type='str'),
     pi_placement_group_policy=dict(
         required=False,
         type='str'),
     pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_placement_group_name=dict(
         required=False,
         type='str'),
     id=dict(

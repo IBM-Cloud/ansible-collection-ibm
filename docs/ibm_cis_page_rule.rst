@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  actions (True, list, None)
+    (Required for new resource) Page rule actions
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
@@ -49,10 +53,6 @@ Parameters
 
   targets (True, list, None)
     (Required for new resource) Page rule targets
-
-
-  actions (True, list, None)
-    (Required for new resource) Page rule actions
 
 
   id (False, str, None)

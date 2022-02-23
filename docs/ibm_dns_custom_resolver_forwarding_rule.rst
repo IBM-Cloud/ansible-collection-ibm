@@ -31,14 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
-    Type of the forwarding rule.
-
-
-  match (False, str, None)
-    The matching zone or hostname.
-
-
   forward_to (False, list, None)
     The upstream DNS servers will be forwarded to.
 
@@ -53,6 +45,14 @@ Parameters
 
   description (False, str, None)
     Descriptive text of the forwarding rule.
+
+
+  type (False, str, None)
+    Type of the forwarding rule.
+
+
+  match (False, str, None)
+    The matching zone or hostname.
 
 
   id (False, str, None)

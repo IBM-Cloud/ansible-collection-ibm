@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    namespace:
+        description:
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Name of package.
@@ -33,21 +38,10 @@ options:
         required: False
         type: str
         default: []
-    user_defined_parameters:
-        description:
-            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
-        required: False
-        type: str
-        default: []
     bind_package_name:
         description:
             - Name of package to be binded.
         required: False
-        type: str
-    namespace:
-        description:
-            - (Required for new resource) IBM Cloud function namespace.
-        required: True
         type: str
     publish:
         description:
@@ -55,6 +49,12 @@ options:
         required: False
         type: bool
         default: False
+    user_defined_parameters:
+        description:
+            - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the package.
+        required: False
+        type: str
+        default: []
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,18 +87,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('namespace', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'namespace',
     'name',
     'user_defined_annotations',
-    'user_defined_parameters',
     'bind_package_name',
-    'namespace',
     'publish',
+    'user_defined_parameters',
 ]
 
 # Params for Data source
@@ -119,24 +119,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    namespace=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     user_defined_annotations=dict(
         required=False,
         type='str'),
-    user_defined_parameters=dict(
-        required=False,
-        type='str'),
     bind_package_name=dict(
-        required=False,
-        type='str'),
-    namespace=dict(
         required=False,
         type='str'),
     publish=dict(
         required=False,
         type='bool'),
+    user_defined_parameters=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

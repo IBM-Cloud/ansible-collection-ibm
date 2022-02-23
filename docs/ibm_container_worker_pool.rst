@@ -31,28 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  machine_type (True, str, None)
-    (Required for new resource) worker nodes machine type
+  hardware (False, str, shared)
+    Hardware type
 
 
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
-  hardware (False, str, shared)
-    Hardware type
 
 
   size_per_zone (True, int, None)
@@ -63,12 +47,28 @@ Parameters
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
 
 
   labels (False, dict, None)
     list of labels to worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
+
+
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
 
 
   id (False, str, None)

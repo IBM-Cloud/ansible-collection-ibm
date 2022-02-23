@@ -26,17 +26,17 @@ options:
             - COS bucket CRN
         required: True
         type: str
-    key:
-        description:
-            - COS object key
-        required: True
-        type: str
     endpoint_type:
         description:
             - COS endpoint type: public, private, direct
         required: False
         type: str
         default: public
+    key:
+        description:
+            - COS object key
+        required: True
+        type: str
     bucket_location:
         description:
             - COS bucket location
@@ -83,8 +83,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bucket_crn',
-    'key',
     'endpoint_type',
+    'key',
     'bucket_location',
 ]
 
@@ -99,11 +99,11 @@ module_args = dict(
     bucket_crn=dict(
         required=True,
         type='str'),
-    key=dict(
-        required=True,
-        type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    key=dict(
+        required=True,
         type='str'),
     bucket_location=dict(
         required=True,

@@ -22,21 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    kind:
+    catalog_icon_url:
         description:
-            - Kind of catalog, offering or vpe.
+            - URL for an icon associated with this catalog.
         required: False
         type: str
-        default: offering
     short_description:
         description:
             - Description in the requested language.
         required: False
         type: str
-    catalog_icon_url:
+    label:
         description:
-            - URL for an icon associated with this catalog.
-        required: False
+            - (Required for new resource) Display Name in the requested language.
+        required: True
         type: str
     tags:
         description:
@@ -44,16 +43,17 @@ options:
         required: False
         type: list
         elements: str
-    label:
-        description:
-            - (Required for new resource) Display Name in the requested language.
-        required: True
-        type: str
     resource_group_id:
         description:
             - Resource Group ID
         required: False
         type: str
+    kind:
+        description:
+            - Kind of catalog, offering or vpe.
+        required: False
+        type: str
+        default: offering
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,12 +105,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'kind',
-    'short_description',
     'catalog_icon_url',
-    'tags',
+    'short_description',
     'label',
+    'tags',
     'resource_group_id',
+    'kind',
 ]
 
 # Params for Data source
@@ -129,23 +129,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    kind=dict(
+    catalog_icon_url=dict(
         required=False,
         type='str'),
     short_description=dict(
         required=False,
         type='str'),
-    catalog_icon_url=dict(
+    label=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    label=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    kind=dict(
         required=False,
         type='str'),
     id=dict(

@@ -22,23 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    managers:
-        description:
-            - The IBMID of the users who will have manager role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    developers:
-        description:
-            - The IBMID of the users who will have developer role in this space, ex - user@example.com
-        required: False
-        type: list
-        elements: str
-    space_quota:
-        description:
-            - The name of the Space Quota Definition
-        required: False
-        type: str
     tags:
         description:
             - None
@@ -61,6 +44,23 @@ options:
         required: False
         type: list
         elements: str
+    managers:
+        description:
+            - The IBMID of the users who will have manager role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    developers:
+        description:
+            - The IBMID of the users who will have developer role in this space, ex - user@example.com
+        required: False
+        type: list
+        elements: str
+    space_quota:
+        description:
+            - The name of the Space Quota Definition
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'managers',
-    'developers',
-    'space_quota',
     'tags',
     'name',
     'org',
     'auditors',
+    'managers',
+    'developers',
+    'space_quota',
 ]
 
 # Params for Data source
@@ -140,17 +140,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    managers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    developers=dict(
-        required=False,
-        elements='',
-        type='list'),
-    space_quota=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -165,6 +154,17 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    managers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    developers=dict(
+        required=False,
+        elements='',
+        type='list'),
+    space_quota=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -22,31 +22,47 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    disk_quota:
+    memory:
         description:
-            - The maximum amount of disk available to an instance of an app. In megabytes.
+            - The amount of memory each instance should have. In megabytes.
         required: False
         type: int
-    environment_json:
-        description:
-            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
-        required: False
-        type: dict
-    route_guid:
-        description:
-            - Define the route guids which should be bound to the application.
-        required: False
-        type: list
-        elements: str
     instances:
         description:
             - The number of instances
         required: False
         type: int
         default: 1
-    space_guid:
+    service_instance_guid:
         description:
-            - (Required for new resource) Define space guid to which app belongs
+            - Define the service instance guids that should be bound to this application.
+        required: False
+        type: list
+        elements: str
+    app_version:
+        description:
+            - Version of the application
+        required: False
+        type: str
+    command:
+        description:
+            - The initial command for the app
+        required: False
+        type: str
+    health_check_http_endpoint:
+        description:
+            - Endpoint called to determine if the app is healthy.
+        required: False
+        type: str
+    route_guid:
+        description:
+            - Define the route guids which should be bound to the application.
+        required: False
+        type: list
+        elements: str
+    app_path:
+        description:
+            - (Required for new resource) Define the  path of the zip file of the application.
         required: True
         type: str
     health_check_type:
@@ -55,51 +71,14 @@ options:
         required: False
         type: str
         default: port
-    name:
+    disk_quota:
         description:
-            - (Required for new resource) The name for the app
-        required: True
-        type: str
+            - The maximum amount of disk available to an instance of an app. In megabytes.
+        required: False
+        type: int
     buildpack:
         description:
             - Buildpack to build the app. 3 options: a) Blank means autodetection; b) A Git Url pointing to a buildpack; c) Name of an installed buildpack.
-        required: False
-        type: str
-    app_path:
-        description:
-            - (Required for new resource) Define the  path of the zip file of the application.
-        required: True
-        type: str
-    app_version:
-        description:
-            - Version of the application
-        required: False
-        type: str
-    wait_time_minutes:
-        description:
-            - Define timeout to wait for the app instances to start/update/restage etc.
-        required: False
-        type: int
-        default: 20
-    memory:
-        description:
-            - The amount of memory each instance should have. In megabytes.
-        required: False
-        type: int
-    command:
-        description:
-            - The initial command for the app
-        required: False
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    health_check_http_endpoint:
-        description:
-            - Endpoint called to determine if the app is healthy.
         required: False
         type: str
     health_check_timeout:
@@ -107,9 +86,30 @@ options:
             - Timeout in seconds for health checking of an staged app when starting up.
         required: False
         type: int
-    service_instance_guid:
+    name:
         description:
-            - Define the service instance guids that should be bound to this application.
+            - (Required for new resource) The name for the app
+        required: True
+        type: str
+    space_guid:
+        description:
+            - (Required for new resource) Define space guid to which app belongs
+        required: True
+        type: str
+    environment_json:
+        description:
+            - Key/value pairs of all the environment variables to run in your app. Does not include any system or service variables.
+        required: False
+        type: dict
+    wait_time_minutes:
+        description:
+            - Define timeout to wait for the app instances to start/update/restage etc.
+        required: False
+        type: int
+        default: 20
+    tags:
+        description:
+            - None
         required: False
         type: list
         elements: str
@@ -159,30 +159,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('space_guid', 'str'),
-    ('name', 'str'),
     ('app_path', 'str'),
+    ('name', 'str'),
+    ('space_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'disk_quota',
-    'environment_json',
-    'route_guid',
-    'instances',
-    'space_guid',
-    'health_check_type',
-    'name',
-    'buildpack',
-    'app_path',
-    'app_version',
-    'wait_time_minutes',
     'memory',
-    'command',
-    'tags',
-    'health_check_http_endpoint',
-    'health_check_timeout',
+    'instances',
     'service_instance_guid',
+    'app_version',
+    'command',
+    'health_check_http_endpoint',
+    'route_guid',
+    'app_path',
+    'health_check_type',
+    'disk_quota',
+    'buildpack',
+    'health_check_timeout',
+    'name',
+    'space_guid',
+    'environment_json',
+    'wait_time_minutes',
+    'tags',
 ]
 
 # Params for Data source
@@ -203,57 +203,57 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    disk_quota=dict(
+    memory=dict(
         required=False,
         type='int'),
-    environment_json=dict(
+    instances=dict(
         required=False,
-        type='dict'),
+        type='int'),
+    service_instance_guid=dict(
+        required=False,
+        elements='',
+        type='list'),
+    app_version=dict(
+        required=False,
+        type='str'),
+    command=dict(
+        required=False,
+        type='str'),
+    health_check_http_endpoint=dict(
+        required=False,
+        type='str'),
     route_guid=dict(
         required=False,
         elements='',
         type='list'),
-    instances=dict(
-        required=False,
-        type='int'),
-    space_guid=dict(
+    app_path=dict(
         required=False,
         type='str'),
     health_check_type=dict(
         required=False,
         type='str'),
-    name=dict(
+    disk_quota=dict(
         required=False,
-        type='str'),
+        type='int'),
     buildpack=dict(
-        required=False,
-        type='str'),
-    app_path=dict(
-        required=False,
-        type='str'),
-    app_version=dict(
-        required=False,
-        type='str'),
-    wait_time_minutes=dict(
-        required=False,
-        type='int'),
-    memory=dict(
-        required=False,
-        type='int'),
-    command=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    health_check_http_endpoint=dict(
         required=False,
         type='str'),
     health_check_timeout=dict(
         required=False,
         type='int'),
-    service_instance_guid=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    space_guid=dict(
+        required=False,
+        type='str'),
+    environment_json=dict(
+        required=False,
+        type='dict'),
+    wait_time_minutes=dict(
+        required=False,
+        type='int'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),

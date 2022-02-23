@@ -21,6 +21,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    alias:
+        description:
+            - The name of the key to be fetched
+        required: False
+        type: str
     key_id:
         description:
             - None
@@ -47,11 +52,6 @@ options:
             - Limit till the keys to be fetched
         required: False
         type: int
-    alias:
-        description:
-            - The name of the key to be fetched
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -90,25 +90,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'alias',
     'key_id',
     'endpoint_type',
     'instance_id',
     'key_name',
     'limit',
-    'alias',
 ]
 
 
 TL_CONFLICTS_MAP = {
+    'alias': ['key_name', 'key_id'],
     'key_id': ['alias', 'key_name'],
     'key_name': ['alias', 'key_id'],
-    'alias': ['key_name', 'key_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    alias=dict(
+        required=False,
+        type='str'),
     key_id=dict(
         required=False,
         type='str'),
@@ -124,9 +127,6 @@ module_args = dict(
     limit=dict(
         required=False,
         type='int'),
-    alias=dict(
-        required=False,
-        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

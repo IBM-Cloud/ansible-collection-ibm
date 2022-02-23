@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_id (True, str, None)
-    Cloud Directory user ID
-
-
   tenant_id (True, str, None)
     The AppID instance GUID
+
+
+  user_id (True, str, None)
+    Cloud Directory user ID
 
 
   iaas_classic_username (False, any, None)

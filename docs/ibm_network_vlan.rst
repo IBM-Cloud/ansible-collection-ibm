@@ -39,16 +39,16 @@ Parameters
     (Required for new resource) Datacenter name
 
 
-  name (False, str, None)
-    VLAN name
-
-
   router_hostname (False, str, None)
     router host name
 
 
   type (True, str, None)
     (Required for new resource) VLAN type
+
+
+  name (False, str, None)
+    VLAN name
 
 
   id (False, str, None)

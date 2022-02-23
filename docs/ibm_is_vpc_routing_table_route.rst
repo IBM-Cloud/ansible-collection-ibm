@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  next_hop (True, str, None)
+    (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+
+
+  action (False, str, deliver)
+    The action to perform with a packet matching the route.
+
+
   vpc (True, str, None)
     (Required for new resource) The VPC identifier.
 
@@ -43,20 +51,12 @@ Parameters
     (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
 
 
-  next_hop (True, str, None)
-    (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+  name (False, str, None)
+    The user-defined name for this route.
 
 
   routing_table (True, str, None)
     (Required for new resource) The routing table identifier.
-
-
-  action (False, str, deliver)
-    The action to perform with a packet matching the route.
-
-
-  name (False, str, None)
-    The user-defined name for this route.
 
 
   id (False, str, None)

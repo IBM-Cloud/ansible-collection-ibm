@@ -31,6 +31,26 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_image_access_key (False, str, None)
+    Cloud Object Storage access key; required for buckets with private access
+
+
+  pi_image_secret_key (False, str, None)
+    Cloud Object Storage secret key; required for buckets with private access
+
+
+  pi_image_bucket_region (False, str, None)
+    Cloud Object Storage region
+
+
+  pi_image_storage_type (False, str, None)
+    Type of storage
+
+
+  pi_image_bucket_name (False, str, None)
+    Cloud Object Storage bucket name; bucket-name[/optional/folder]
+
+
   pi_image_name (True, str, None)
     (Required for new resource) Image name
 
@@ -43,32 +63,12 @@ Parameters
     Indicates if the bucket has public or private access
 
 
-  pi_image_access_key (False, str, None)
-    Cloud Object Storage access key; required for buckets with private access
-
-
-  pi_image_bucket_region (False, str, None)
-    Cloud Object Storage region
-
-
   pi_image_bucket_file_name (False, str, None)
     Cloud Object Storage image filename
 
 
-  pi_image_storage_type (False, str, None)
-    Type of storage
-
-
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
-
-
-  pi_image_bucket_name (False, str, None)
-    Cloud Object Storage bucket name; bucket-name[/optional/folder]
-
-
-  pi_image_secret_key (False, str, None)
-    Cloud Object Storage secret key; required for buckets with private access
 
 
   id (False, str, None)

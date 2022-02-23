@@ -33,11 +33,6 @@ options:
             - (Required for new resource) Datacenter name
         required: True
         type: str
-    name:
-        description:
-            - VLAN name
-        required: False
-        type: str
     router_hostname:
         description:
             - router host name
@@ -47,6 +42,11 @@ options:
         description:
             - (Required for new resource) VLAN type
         required: True
+        type: str
+    name:
+        description:
+            - VLAN name
+        required: False
         type: str
     id:
         description:
@@ -102,9 +102,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'tags',
     'datacenter',
-    'name',
     'router_hostname',
     'type',
+    'name',
 ]
 
 # Params for Data source
@@ -112,9 +112,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'number',
     'router_hostname',
     'name',
+    'number',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -131,13 +131,13 @@ module_args = dict(
     datacenter=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
     type=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(

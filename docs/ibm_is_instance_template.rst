@@ -31,10 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
   dedicated_host_group (False, str, None)
     Unique Identifier of the Dedicated Host Group where the instance will be placed
 
@@ -43,56 +39,60 @@ Parameters
     Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
-  volume_attachments (False, list, None)
-    None
-
-
-  network_interfaces (False, list, None)
-    None
-
-
   boot_volume (False, list, None)
     None
-
-
-  vpc (True, str, None)
-    (Required for new resource) VPC id
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
 
 
   name (False, str, None)
     Instance Template name
 
 
-  image (True, str, None)
-    (Required for new resource) image name
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  user_data (False, str, None)
+    User data given for the instance
 
 
   resource_group (False, str, None)
     Instance template resource group
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  image (True, str, None)
+    (Required for new resource) image name
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  network_interfaces (False, list, None)
+    None
 
 
   id (False, str, None)

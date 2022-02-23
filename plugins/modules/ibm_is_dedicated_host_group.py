@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
     class_:
         description:
             - (Required for new resource) The dedicated host profile class for hosts in this group.
@@ -36,6 +31,11 @@ options:
         description:
             - (Required for new resource) The dedicated host profile family for hosts in this group.
         required: True
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this dedicated host group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
         type: str
     resource_group:
         description:
@@ -100,9 +100,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'class_',
     'family',
+    'name',
     'resource_group',
     'zone',
 ]
@@ -123,13 +123,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     class_=dict(
         required=False,
         type='str'),
     family=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     resource_group=dict(

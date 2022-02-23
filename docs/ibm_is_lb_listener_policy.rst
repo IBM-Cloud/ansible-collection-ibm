@@ -31,52 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (False, str, None)
+    Policy name
+
+
+  target_http_status_code (False, int, None)
+    Listener Policy target HTTPS Status code.
+
+
   lb (True, str, None)
     (Required for new resource) Load Balancer Listener Policy
-
-
-  target_https_redirect_status_code (False, int, None)
-    The HTTP status code to be returned in the redirect response
-
-
-  target_https_redirect_listener (False, str, None)
-    ID of the listener that will be set as http redirect target
-
-
-  target_id (False, str, None)
-    Listener Policy Target ID
 
 
   listener (True, str, None)
     (Required for new resource) Listener ID
 
 
-  target_https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
-
-
   priority (True, int, None)
     (Required for new resource) Listener Policy Priority
-
-
-  target_url (False, str, None)
-    Policy Target URL
-
-
-  name (False, str, None)
-    Policy name
-
-
-  action (True, str, None)
-    (Required for new resource) Policy Action
 
 
   rules (False, list, None)
     Policy Rules
 
 
-  target_http_status_code (False, int, None)
-    Listener Policy target HTTPS Status code.
+  target_url (False, str, None)
+    Policy Target URL
+
+
+  target_id (False, str, None)
+    Listener Policy Target ID
+
+
+  target_https_redirect_status_code (False, int, None)
+    The HTTP status code to be returned in the redirect response
+
+
+  target_https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
+
+
+  target_https_redirect_listener (False, str, None)
+    ID of the listener that will be set as http redirect target
+
+
+  action (True, str, None)
+    (Required for new resource) Policy Action
 
 
   id (False, str, None)

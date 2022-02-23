@@ -21,6 +21,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
+        required: False
+        type: str
     limit:
         description:
             - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
@@ -36,11 +41,6 @@ options:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    tags:
-        description:
-            - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
-        required: False
-        type: str
     offset:
         description:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
@@ -84,10 +84,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'limit',
     'guid',
     'expand',
-    'tags',
     'offset',
 ]
 
@@ -99,6 +99,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        type='str'),
     limit=dict(
         required=False,
         type='int'),
@@ -108,9 +111,6 @@ module_args = dict(
     expand=dict(
         required=False,
         type='bool'),
-    tags=dict(
-        required=False,
-        type='str'),
     offset=dict(
         required=False,
         type='int'),

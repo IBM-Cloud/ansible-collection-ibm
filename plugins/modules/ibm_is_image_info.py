@@ -26,14 +26,14 @@ options:
             - Image name
         required: False
         type: str
-    identifier:
-        description:
-            - Image id
-        required: False
-        type: str
     visibility:
         description:
             - Whether the image is publicly visible or private to the account
+        required: False
+        type: str
+    identifier:
+        description:
+            - Image id
         required: False
         type: str
     generation:
@@ -74,8 +74,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'identifier',
     'visibility',
+    'identifier',
 ]
 
 
@@ -89,10 +89,10 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    identifier=dict(
+    visibility=dict(
         required=False,
         type='str'),
-    visibility=dict(
+    identifier=dict(
         required=False,
         type='str'),
     generation=dict(

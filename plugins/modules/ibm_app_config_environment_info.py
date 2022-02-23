@@ -26,16 +26,16 @@ options:
             - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    expand:
-        description:
-            - If set to `true`, returns expanded view of the resource details.
-        required: False
-        type: bool
     environment_id:
         description:
             - Environment Id.
         required: True
         type: str
+    expand:
+        description:
+            - If set to `true`, returns expanded view of the resource details.
+        required: False
+        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -76,8 +76,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'guid',
-    'expand',
     'environment_id',
+    'expand',
 ]
 
 
@@ -91,12 +91,12 @@ module_args = dict(
     guid=dict(
         required=True,
         type='str'),
-    expand=dict(
-        required=False,
-        type='bool'),
     environment_id=dict(
         required=True,
         type='str'),
+    expand=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

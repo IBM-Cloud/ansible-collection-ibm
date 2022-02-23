@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    volume:
-        description:
-            - (Required for new resource) VPC Volume ID
-        required: True
-        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name or ID
@@ -41,6 +36,11 @@ options:
         description:
             - ID of the resource group.
         required: False
+        type: str
+    volume:
+        description:
+            - (Required for new resource) VPC Volume ID
+        required: True
         type: str
     id:
         description:
@@ -68,31 +68,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('volume', 'str'),
     ('cluster', 'str'),
     ('worker', 'str'),
+    ('volume', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'volume',
     'cluster',
     'worker',
     'resource_group_id',
+    'volume',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('cluster', 'str'),
     ('worker', 'str'),
     ('volume_attachment_id', 'str'),
-    ('cluster', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'cluster',
     'worker',
     'resource_group_id',
     'volume_attachment_id',
-    'cluster',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -102,9 +102,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    volume=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -112,6 +109,9 @@ module_args = dict(
         required=False,
         type='str'),
     resource_group_id=dict(
+        required=False,
+        type='str'),
+    volume=dict(
         required=False,
         type='str'),
     id=dict(

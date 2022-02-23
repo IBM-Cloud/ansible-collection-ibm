@@ -22,102 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    keys:
-        description:
-            - SSH key Ids for the instance
-        required: False
-        type: list
-        elements: str
-    image:
-        description:
-            - image id
-        required: False
-        type: str
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    force_recovery_time:
-        description:
-            - Define timeout to force the instances to start/stop in minutes.
-        required: False
-        type: int
-    total_volume_bandwidth:
-        description:
-            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-        required: False
-        type: int
-    auto_delete_volume:
-        description:
-            - Auto delete volume along with instance
-        required: False
-        type: bool
-    resource_group:
-        description:
-            - Instance resource group
-        required: False
-        type: str
-    force_action:
-        description:
-            - If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
-        required: False
-        type: bool
-        default: False
-    wait_before_delete:
-        description:
-            - Enables stopping of instance before deleting and waits till deletion is complete
-        required: False
-        type: bool
-        default: True
-    tags:
-        description:
-            - list of tags for the instance
-        required: False
-        type: list
-        elements: str
-    volumes:
-        description:
-            - List of volumes
-        required: False
-        type: list
-        elements: str
-    placement_group:
-        description:
-            - Unique Identifier of the Placement Group for restricting the placement of the instance
-        required: False
-        type: str
-    zone:
-        description:
-            - Zone name
-        required: False
-        type: str
-    action:
-        description:
-            - Enables stopping of instance before deleting and waits till deletion is complete
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Instance name
-        required: True
-        type: str
-    dedicated_host_group:
-        description:
-            - Unique Identifier of the Dedicated Host Group where the instance will be placed
-        required: False
-        type: str
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
-    vpc:
-        description:
-            - VPC id
-        required: False
-        type: str
     profile:
         description:
             - Profile info
@@ -128,23 +32,119 @@ options:
             - Unique Identifier of the Dedicated Host where the instance will be placed
         required: False
         type: str
+    auto_delete_volume:
+        description:
+            - Auto delete volume along with instance
+        required: False
+        type: bool
+    placement_group:
+        description:
+            - Unique Identifier of the Placement Group for restricting the placement of the instance
+        required: False
+        type: str
+    instance_template:
+        description:
+            - Id of the instance template
+        required: False
+        type: str
+    tags:
+        description:
+            - list of tags for the instance
+        required: False
+        type: list
+        elements: str
     primary_network_interface:
         description:
             - Primary Network interface info
         required: False
         type: list
         elements: dict
+    image:
+        description:
+            - image id
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Instance name
+        required: True
+        type: str
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - VPC id
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Instance resource group
+        required: False
+        type: str
+    dedicated_host_group:
+        description:
+            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+        required: False
+        type: str
+    total_volume_bandwidth:
+        description:
+            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+        required: False
+        type: int
+    wait_before_delete:
+        description:
+            - Enables stopping of instance before deleting and waits till deletion is complete
+        required: False
+        type: bool
+        default: True
+    action:
+        description:
+            - Enables stopping of instance before deleting and waits till deletion is complete
+        required: False
+        type: str
     network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
-    instance_template:
+    volumes:
         description:
-            - Id of the instance template
+            - List of volumes
+        required: False
+        type: list
+        elements: str
+    zone:
+        description:
+            - Zone name
         required: False
         type: str
+    keys:
+        description:
+            - SSH key Ids for the instance
+        required: False
+        type: list
+        elements: str
+    force_action:
+        description:
+            - If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+        required: False
+        type: bool
+        default: False
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    force_recovery_time:
+        description:
+            - Define timeout to force the instances to start/stop in minutes.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -196,29 +196,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'keys',
-    'image',
-    'boot_volume',
-    'force_recovery_time',
-    'total_volume_bandwidth',
-    'auto_delete_volume',
-    'resource_group',
-    'force_action',
-    'wait_before_delete',
-    'tags',
-    'volumes',
-    'placement_group',
-    'zone',
-    'action',
-    'name',
-    'dedicated_host_group',
-    'user_data',
-    'vpc',
     'profile',
     'dedicated_host',
-    'primary_network_interface',
-    'network_interfaces',
+    'auto_delete_volume',
+    'placement_group',
     'instance_template',
+    'tags',
+    'primary_network_interface',
+    'image',
+    'name',
+    'boot_volume',
+    'vpc',
+    'resource_group',
+    'dedicated_host_group',
+    'total_volume_bandwidth',
+    'wait_before_delete',
+    'action',
+    'network_interfaces',
+    'volumes',
+    'zone',
+    'keys',
+    'force_action',
+    'user_data',
+    'force_recovery_time',
 ]
 
 # Params for Data source
@@ -227,53 +227,75 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'private_key',
-    'name',
     'passphrase',
+    'name',
+    'private_key',
 ]
 
 TL_CONFLICTS_MAP = {
-    'image': ['boot_volume.0.snapshot'],
-    'placement_group': ['dedicated_host', 'dedicated_host_group'],
-    'dedicated_host_group': ['dedicated_host', 'placement_group'],
     'dedicated_host': ['dedicated_host_group', 'placement_group'],
+    'placement_group': ['dedicated_host', 'dedicated_host_group'],
     'instance_template': ['boot_volume.0.snapshot'],
+    'image': ['boot_volume.0.snapshot'],
+    'dedicated_host_group': ['dedicated_host', 'placement_group'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    keys=dict(
+    profile=dict(
+        required=False,
+        type='str'),
+    dedicated_host=dict(
+        required=False,
+        type='str'),
+    auto_delete_volume=dict(
+        required=False,
+        type='bool'),
+    placement_group=dict(
+        required=False,
+        type='str'),
+    instance_template=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    primary_network_interface=dict(
         required=False,
         elements='',
         type='list'),
     image=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     boot_volume=dict(
         required=False,
         elements='',
         type='list'),
-    force_recovery_time=dict(
+    vpc=dict(
         required=False,
-        type='int'),
-    total_volume_bandwidth=dict(
-        required=False,
-        type='int'),
-    auto_delete_volume=dict(
-        required=False,
-        type='bool'),
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    force_action=dict(
+    dedicated_host_group=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    total_volume_bandwidth=dict(
+        required=False,
+        type='int'),
     wait_before_delete=dict(
         required=False,
         type='bool'),
-    tags=dict(
+    action=dict(
+        required=False,
+        type='str'),
+    network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
@@ -281,44 +303,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    placement_group=dict(
-        required=False,
-        type='str'),
     zone=dict(
         required=False,
         type='str'),
-    action=dict(
+    keys=dict(
         required=False,
-        type='str'),
-    name=dict(
+        elements='',
+        type='list'),
+    force_action=dict(
         required=False,
-        type='str'),
-    dedicated_host_group=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     user_data=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    force_recovery_time=dict(
         required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    dedicated_host=dict(
-        required=False,
-        type='str'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instance_template=dict(
-        required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),

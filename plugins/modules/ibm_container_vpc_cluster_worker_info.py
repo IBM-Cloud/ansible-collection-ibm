@@ -21,11 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     cluster_name_id:
         description:
             - Name or ID of the cluster
@@ -35,6 +30,11 @@ options:
         description:
             - ID of the worker
         required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
         type: str
     ibmcloud_api_key:
         description:
@@ -55,9 +55,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
     'cluster_name_id',
     'worker_id',
+    'resource_group_id',
 ]
 
 
@@ -68,14 +68,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     cluster_name_id=dict(
         required=True,
         type='str'),
     worker_id=dict(
         required=True,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',

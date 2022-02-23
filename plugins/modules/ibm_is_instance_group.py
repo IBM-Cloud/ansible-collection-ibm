@@ -22,6 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - List of tags for instance group
+        required: False
+        type: list
+        elements: str
     instance_template:
         description:
             - (Required for new resource) instance template ID
@@ -38,22 +44,11 @@ options:
             - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
         required: False
         type: int
-    load_balancer:
-        description:
-            - load balancer ID
-        required: False
-        type: str
     load_balancer_pool:
         description:
             - load balancer pool ID
         required: False
         type: str
-    tags:
-        description:
-            - List of tags for instance group
-        required: False
-        type: list
-        elements: str
     resource_group:
         description:
             - Resource group ID
@@ -65,6 +60,11 @@ options:
         required: True
         type: list
         elements: str
+    load_balancer:
+        description:
+            - load balancer ID
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) The user-defined name for this instance group
@@ -123,14 +123,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
     'instance_template',
     'instance_count',
     'application_port',
-    'load_balancer',
     'load_balancer_pool',
-    'tags',
     'resource_group',
     'subnets',
+    'load_balancer',
     'name',
 ]
 
@@ -150,6 +150,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     instance_template=dict(
         required=False,
         type='str'),
@@ -159,16 +163,9 @@ module_args = dict(
     application_port=dict(
         required=False,
         type='int'),
-    load_balancer=dict(
-        required=False,
-        type='str'),
     load_balancer_pool=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -176,6 +173,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    load_balancer=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),

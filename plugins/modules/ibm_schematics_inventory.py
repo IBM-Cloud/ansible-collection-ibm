@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    location:
-        description:
-            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
-        required: False
-        type: str
     name:
         description:
             - The unique name of your Inventory definition. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores.
@@ -40,6 +30,16 @@ options:
     description:
         description:
             - The description of your Inventory definition. The description can be up to 2048 characters long in size.
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
+        required: False
+        type: str
+    location:
+        description:
+            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
         required: False
         type: str
     inventories_ini:
@@ -103,10 +103,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'resource_group',
     'name',
     'description',
+    'resource_group',
+    'location',
     'inventories_ini',
     'resource_queries',
 ]
@@ -127,16 +127,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    location=dict(
         required=False,
         type='str'),
     inventories_ini=dict(

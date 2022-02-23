@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  account_id (True, str, None)
+    (Required for new resource) The account ID in which the account settings belong to.
+
+
+  rev (False, str, None)
+    Unique revision number for the settings object.
+
+
   default_enable_new_features (False, bool, None)
     You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
 
@@ -45,14 +53,6 @@ Parameters
 
   features (False, list, None)
     List of Cloud Shell features.
-
-
-  account_id (True, str, None)
-    (Required for new resource) The account ID in which the account settings belong to.
-
-
-  rev (False, str, None)
-    Unique revision number for the settings object.
 
 
   regions (False, list, None)

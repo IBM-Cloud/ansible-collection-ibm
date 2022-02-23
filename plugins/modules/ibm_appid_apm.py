@@ -22,6 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    password_expiration:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
     lockout_policy:
         description:
             - (Required for new resource) 
@@ -51,12 +57,6 @@ options:
         type: bool
         default: False
     password_reuse:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: dict
-    password_expiration:
         description:
             - (Required for new resource) 
         required: True
@@ -108,23 +108,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('password_expiration', 'list'),
     ('lockout_policy', 'list'),
     ('min_password_change_interval', 'list'),
     ('tenant_id', 'str'),
     ('enabled', 'bool'),
     ('password_reuse', 'list'),
-    ('password_expiration', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'password_expiration',
     'lockout_policy',
     'min_password_change_interval',
     'tenant_id',
     'enabled',
     'prevent_password_with_username',
     'password_reuse',
-    'password_expiration',
 ]
 
 # Params for Data source
@@ -143,6 +143,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    password_expiration=dict(
+        required=False,
+        elements='',
+        type='list'),
     lockout_policy=dict(
         required=False,
         elements='',
@@ -161,10 +165,6 @@ module_args = dict(
         required=False,
         type='bool'),
     password_reuse=dict(
-        required=False,
-        elements='',
-        type='list'),
-    password_expiration=dict(
         required=False,
         elements='',
         type='list'),

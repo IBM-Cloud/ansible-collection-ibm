@@ -22,22 +22,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    catalog_id:
-        description:
-            - (Required for new resource) The id of the catalog containing this offering.
-        required: True
-        type: str
-    label:
-        description:
-            - (Required for new resource) Display Name in the requested language.
-        required: True
-        type: str
     tags:
         description:
             - List of tags associated with this catalog.
         required: False
         type: list
         elements: str
+    label:
+        description:
+            - (Required for new resource) Display Name in the requested language.
+        required: True
+        type: str
+    catalog_id:
+        description:
+            - (Required for new resource) The id of the catalog containing this offering.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,15 +84,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('catalog_id', 'str'),
     ('label', 'str'),
+    ('catalog_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'catalog_id',
-    'label',
     'tags',
+    'label',
+    'catalog_id',
 ]
 
 # Params for Data source
@@ -113,16 +113,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    catalog_id=dict(
-        required=False,
-        type='str'),
-    label=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    label=dict(
+        required=False,
+        type='str'),
+    catalog_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

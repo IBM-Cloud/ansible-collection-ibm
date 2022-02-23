@@ -27,10 +27,10 @@ options:
             - (Required for new resource) Key protect instance ID
         required: True
         type: str
-    key_name:
+    encrypted_nonce:
         description:
-            - (Required for new resource) Key name
-        required: True
+            - Only for imported root key
+        required: False
         type: str
     standard_key:
         description:
@@ -38,14 +38,19 @@ options:
         required: False
         type: bool
         default: False
-    payload:
+    key_name:
         description:
-            - None
-        required: False
+            - (Required for new resource) Key name
+        required: True
         type: str
     iv_value:
         description:
             - Only for imported root key
+        required: False
+        type: str
+    payload:
+        description:
+            - None
         required: False
         type: str
     force_delete:
@@ -54,11 +59,6 @@ options:
         required: False
         type: bool
         default: False
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,12 +112,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'key_protect_id',
-    'key_name',
-    'standard_key',
-    'payload',
-    'iv_value',
-    'force_delete',
     'encrypted_nonce',
+    'standard_key',
+    'key_name',
+    'iv_value',
+    'payload',
+    'force_delete',
 ]
 
 # Params for Data source
@@ -140,24 +140,24 @@ module_args = dict(
     key_protect_id=dict(
         required=False,
         type='str'),
-    key_name=dict(
+    encrypted_nonce=dict(
         required=False,
         type='str'),
     standard_key=dict(
         required=False,
         type='bool'),
-    payload=dict(
+    key_name=dict(
         required=False,
         type='str'),
     iv_value=dict(
         required=False,
         type='str'),
+    payload=dict(
+        required=False,
+        type='str'),
     force_delete=dict(
         required=False,
         type='bool'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

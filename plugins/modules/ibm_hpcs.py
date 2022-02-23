@@ -27,12 +27,43 @@ options:
             - The number of failover crypto units for your service instance
         required: False
         type: int
-    admins:
+    service:
         description:
-            - (Required for new resource) Crypto Unit Administrators
+            - The name of the service offering `hs-crypto`
+        required: False
+        type: str
+        default: hs-crypto
+    signature_threshold:
+        description:
+            - (Required for new resource) Signature Threshold Value
         required: True
+        type: int
+    tags:
+        description:
+            - None
+        required: False
         type: list
-        elements: dict
+        elements: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
+        type: str
+    units:
+        description:
+            - (Required for new resource) The number of operational crypto units for your service instance
+        required: True
+        type: int
+    signature_server_url:
+        description:
+            - URL of signing service
+        required: False
+        type: str
+    plan:
+        description:
+            - (Required for new resource) The plan type of the HPCS Instance
+        required: True
+        type: str
     revocation_threshold:
         description:
             - (Required for new resource) Revocation Threshold Value
@@ -43,52 +74,21 @@ options:
             - (Required for new resource) The location where the HPCS instance available
         required: True
         type: str
-    units:
-        description:
-            - (Required for new resource) The number of operational crypto units for your service instance
-        required: True
-        type: int
-    resource_group_id:
-        description:
-            - The resource group id
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A name for the HPCS instance
-        required: True
-        type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    signature_threshold:
-        description:
-            - (Required for new resource) Signature Threshold Value
-        required: True
-        type: int
-    plan:
-        description:
-            - (Required for new resource) The plan type of the HPCS Instance
-        required: True
-        type: str
-    signature_server_url:
-        description:
-            - URL of signing service
-        required: False
-        type: str
-    service:
-        description:
-            - The name of the service offering `hs-crypto`
-        required: False
-        type: str
-        default: hs-crypto
     service_endpoints:
         description:
             - Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
         required: False
+        type: str
+    admins:
+        description:
+            - (Required for new resource) Crypto Unit Administrators
+        required: True
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) A name for the HPCS instance
+        required: True
         type: str
     id:
         description:
@@ -136,30 +136,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('admins', 'list'),
+    ('signature_threshold', 'int'),
+    ('units', 'int'),
+    ('plan', 'str'),
     ('revocation_threshold', 'int'),
     ('location', 'str'),
-    ('units', 'int'),
+    ('admins', 'list'),
     ('name', 'str'),
-    ('signature_threshold', 'int'),
-    ('plan', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'failover_units',
-    'admins',
+    'service',
+    'signature_threshold',
+    'tags',
+    'resource_group_id',
+    'units',
+    'signature_server_url',
+    'plan',
     'revocation_threshold',
     'location',
-    'units',
-    'resource_group_id',
-    'name',
-    'tags',
-    'signature_threshold',
-    'plan',
-    'signature_server_url',
-    'service',
     'service_endpoints',
+    'admins',
+    'name',
 ]
 
 # Params for Data source
@@ -168,10 +168,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'location',
-    'service',
     'name',
     'resource_group_id',
+    'service',
+    'location',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -184,42 +184,42 @@ module_args = dict(
     failover_units=dict(
         required=False,
         type='int'),
-    admins=dict(
+    service=dict(
+        required=False,
+        type='str'),
+    signature_threshold=dict(
+        required=False,
+        type='int'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    units=dict(
+        required=False,
+        type='int'),
+    signature_server_url=dict(
+        required=False,
+        type='str'),
+    plan=dict(
+        required=False,
+        type='str'),
     revocation_threshold=dict(
         required=False,
         type='int'),
     location=dict(
         required=False,
         type='str'),
-    units=dict(
-        required=False,
-        type='int'),
-    resource_group_id=dict(
+    service_endpoints=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    admins=dict(
         required=False,
         elements='',
         type='list'),
-    signature_threshold=dict(
-        required=False,
-        type='int'),
-    plan=dict(
-        required=False,
-        type='str'),
-    signature_server_url=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    service_endpoints=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(

@@ -22,12 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    icmp:
+    direction:
         description:
-            - protocol=icmp
+            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+        required: True
+        type: str
+    remote:
+        description:
+            - Security group id: an IP address, a CIDR block, or a single security group identifier
         required: False
-        type: list
-        elements: dict
+        type: str
     tcp:
         description:
             - protocol=tcp
@@ -39,22 +43,18 @@ options:
             - (Required for new resource) Security group id
         required: True
         type: str
-    direction:
-        description:
-            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
-        required: True
-        type: str
-    remote:
-        description:
-            - Security group id: an IP address, a CIDR block, or a single security group identifier
-        required: False
-        type: str
     ip_version:
         description:
             - IP version: ipv4
         required: False
         type: str
         default: ipv4
+    icmp:
+        description:
+            - protocol=icmp
+        required: False
+        type: list
+        elements: dict
     udp:
         description:
             - protocol=udp
@@ -107,18 +107,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('group', 'str'),
     ('direction', 'str'),
+    ('group', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'icmp',
-    'tcp',
-    'group',
     'direction',
     'remote',
+    'tcp',
+    'group',
     'ip_version',
+    'icmp',
     'udp',
 ]
 
@@ -130,8 +130,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'icmp': ['tcp', 'udp'],
     'tcp': ['udp', 'icmp'],
+    'icmp': ['tcp', 'udp'],
     'udp': ['tcp', 'icmp'],
 }
 
@@ -139,10 +139,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    icmp=dict(
+    direction=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    remote=dict(
+        required=False,
+        type='str'),
     tcp=dict(
         required=False,
         elements='',
@@ -150,15 +152,13 @@ module_args = dict(
     group=dict(
         required=False,
         type='str'),
-    direction=dict(
-        required=False,
-        type='str'),
-    remote=dict(
-        required=False,
-        type='str'),
     ip_version=dict(
         required=False,
         type='str'),
+    icmp=dict(
+        required=False,
+        elements='',
+        type='list'),
     udp=dict(
         required=False,
         elements='',

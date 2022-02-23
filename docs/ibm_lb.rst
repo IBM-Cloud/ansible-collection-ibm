@@ -31,6 +31,18 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name info
+
+
+  dedicated (False, bool, False)
+    Boolena value true if Load balncer is dedicated type
+
+
+  tags (False, list, None)
+    Tags associated with resource
+
+
   connections (True, int, None)
     (Required for new resource) Connections value
 
@@ -39,20 +51,8 @@ Parameters
     true if High availability is enabled
 
 
-  tags (False, list, None)
-    Tags associated with resource
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name info
-
-
   security_certificate_id (False, int, None)
     Security certificate ID
-
-
-  dedicated (False, bool, False)
-    Boolena value true if Load balncer is dedicated type
 
 
   ssl_offload (False, bool, False)

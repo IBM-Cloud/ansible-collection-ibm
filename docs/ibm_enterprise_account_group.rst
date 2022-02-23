@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
-
-
   parent (True, str, None)
     (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
 
 
   primary_contact_iam_id (True, str, None)
     (Required for new resource) The IAM ID of the primary contact for this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
 
 
   id (False, str, None)

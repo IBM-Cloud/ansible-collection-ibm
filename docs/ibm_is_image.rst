@@ -35,6 +35,10 @@ Parameters
     A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
 
 
+  name (True, str, None)
+    (Required for new resource) Image name
+
+
   source_volume (False, str, None)
     Image volume id
 
@@ -43,24 +47,20 @@ Parameters
     The resource group for this image
 
 
-  href (False, str, None)
-    Image Href value
-
-
-  name (True, str, None)
-    (Required for new resource) Image name
-
-
   tags (False, list, None)
     Tags for the image
+
+
+  encryption_key (False, str, None)
+    The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
 
 
   operating_system (False, str, None)
     Image Operating system
 
 
-  encryption_key (False, str, None)
-    The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+  href (False, str, None)
+    Image Href value
 
 
   id (False, str, None)

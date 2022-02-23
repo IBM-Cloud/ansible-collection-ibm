@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The network acl name.
-
-
   vpc_name (False, str, None)
     The name of the vpc the network acl resides in.
+
+
+  name (False, str, None)
+    The network acl name.
 
 
   network_acl (False, str, None)

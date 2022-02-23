@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    DNS Zone CRN
-
-
   domain_id (True, str, None)
     DNS Zone ID
+
+
+  cis_id (True, str, None)
+    DNS Zone CRN
 
 
   iaas_classic_username (False, any, None)

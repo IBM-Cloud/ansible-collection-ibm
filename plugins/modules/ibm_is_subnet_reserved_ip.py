@@ -27,16 +27,16 @@ options:
             - (Required for new resource) The subnet identifier.
         required: True
         type: str
-    auto_delete:
-        description:
-            - If set to true, this reserved IP will be automatically deleted
-        required: False
-        type: bool
     target:
         description:
             - The unique identifier for target.
         required: False
         type: str
+    auto_delete:
+        description:
+            - If set to true, this reserved IP will be automatically deleted
+        required: False
+        type: bool
     name:
         description:
             - The user-defined or system-provided name for this reserved IP.
@@ -94,8 +94,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'subnet',
-    'auto_delete',
     'target',
+    'auto_delete',
     'name',
 ]
 
@@ -120,12 +120,12 @@ module_args = dict(
     subnet=dict(
         required=False,
         type='str'),
-    auto_delete=dict(
-        required=False,
-        type='bool'),
     target=dict(
         required=False,
         type='str'),
+    auto_delete=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),

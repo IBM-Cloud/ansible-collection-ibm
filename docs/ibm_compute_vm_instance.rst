@@ -31,39 +31,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
+  public_bandwidth_limited (False, int, None)
     None
 
 
-  ipv6_static_enabled (False, bool, False)
+  domain (False, str, None)
     None
 
 
-  placement_group_id (False, int, None)
-    The placement group id
-
-
-  cores (False, int, None)
-    None
-
-
-  disks (False, list, None)
-    None
-
-
-  datacenter (False, str, None)
-    None
-
-
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
-
-
-  public_security_group_ids (False, list, None)
-    None
-
-
-  private_security_group_ids (False, list, None)
+  memory (False, int, None)
     None
 
 
@@ -71,31 +47,27 @@ Parameters
     None
 
 
-  ipv6_enabled (False, bool, False)
+  block_storage_ids (False, list, None)
     None
 
 
-  dedicated_host_id (False, int, None)
+  user_metadata (False, str, None)
     None
 
 
-  dedicated_host_name (False, str, None)
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
-  public_bandwidth_unlimited (False, bool, False)
+  transient (False, bool, None)
     None
 
 
-  evault (False, int, None)
+  image_id (False, int, None)
     None
 
 
-  reserved_instance_primary_disk (False, int, None)
-    The primary disk of reserved instance
-
-
-  memory (False, int, None)
+  hourly_billing (False, bool, True)
     None
 
 
@@ -103,40 +75,16 @@ Parameters
     The placement group name
 
 
-  hostname (False, str, None)
+  private_vlan_id (False, int, None)
     None
 
 
-  bulk_vms (False, list, None)
+  tags (False, list, None)
     None
 
 
-  private_network_only (False, bool, False)
-    None
-
-
-  public_bandwidth_limited (False, int, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    None
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
 
 
   public_vlan_id (False, int, None)
@@ -147,7 +95,15 @@ Parameters
     None
 
 
-  image_id (False, int, None)
+  evault (False, int, None)
+    None
+
+
+  ssh_key_ids (False, list, None)
+    None
+
+
+  public_security_group_ids (False, list, None)
     None
 
 
@@ -155,19 +111,15 @@ Parameters
     The reserved group id
 
 
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  notes (False, str, None)
+  dedicated_host_name (False, str, None)
     None
 
 
-  private_vlan_id (False, int, None)
+  file_storage_ids (False, list, None)
     None
 
 
-  block_storage_ids (False, list, None)
+  datacenter (False, str, None)
     None
 
 
@@ -175,27 +127,31 @@ Parameters
     None
 
 
-  user_metadata (False, str, None)
+  ipv6_static_enabled (False, bool, False)
     None
 
 
-  domain (False, str, None)
+  post_install_script_uri (False, str, None)
     None
 
 
-  dedicated_acct_host_only (False, bool, None)
+  private_network_only (False, bool, False)
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
+  placement_group_id (False, int, None)
+    The placement group id
 
 
-  transient (False, bool, None)
+  notes (False, str, None)
     None
 
 
-  hourly_billing (False, bool, True)
+  local_disk (False, bool, True)
+    None
+
+
+  bulk_vms (False, list, None)
     None
 
 
@@ -203,8 +159,52 @@ Parameters
     The reserved group id
 
 
-  local_disk (False, bool, True)
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  disks (False, list, None)
     None
+
+
+  ipv6_enabled (False, bool, False)
+    None
+
+
+  hostname (False, str, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    None
+
+
+  reserved_instance_primary_disk (False, int, None)
+    The primary disk of reserved instance
+
+
+  dedicated_host_id (False, int, None)
+    None
+
+
+  secondary_ip_count (False, int, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
+  cores (False, int, None)
+    None
+
+
+  private_security_group_ids (False, list, None)
+    None
+
+
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
 
 
   id (False, str, None)

@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    Tags associated with resource
+
+
   name (True, str, None)
     (Required for new resource) Provision hook name
 
 
   uri (True, str, None)
     (Required for new resource) URI of the hook
-
-
-  tags (False, list, None)
-    Tags associated with resource
 
 
   id (False, str, None)

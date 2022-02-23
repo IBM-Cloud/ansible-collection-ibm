@@ -22,6 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    reset_api_key:
+        description:
+            - Determines if apikey has to be reset or not
+        required: False
+        type: int
+        default: 1
     region:
         description:
             - (Required for new resource) Region which api key has to be reset
@@ -32,12 +38,6 @@ options:
             - ID of Resource Group
         required: False
         type: str
-    reset_api_key:
-        description:
-            - Determines if apikey has to be reset or not
-        required: False
-        type: int
-        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -69,9 +69,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'reset_api_key',
     'region',
     'resource_group_id',
-    'reset_api_key',
 ]
 
 # Params for Data source
@@ -88,15 +88,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    reset_api_key=dict(
+        required=False,
+        type='int'),
     region=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    reset_api_key=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),

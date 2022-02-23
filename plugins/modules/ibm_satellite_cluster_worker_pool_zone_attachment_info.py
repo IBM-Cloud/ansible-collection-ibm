@@ -21,16 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    zone:
-        description:
-            - worker pool zone name
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
-        required: False
-        type: str
     cluster:
         description:
             - Name or id of the cluster
@@ -40,6 +30,16 @@ options:
         description:
             - worker pool name
         required: True
+        type: str
+    zone:
+        description:
+            - worker pool zone name
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -74,17 +74,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('cluster', 'str'),
     ('worker_pool', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone',
-    'resource_group_id',
     'cluster',
     'worker_pool',
+    'zone',
+    'resource_group_id',
 ]
 
 
@@ -95,17 +95,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone=dict(
-        required=True,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=True,
         type='str'),
     worker_pool=dict(
         required=True,
+        type='str'),
+    zone=dict(
+        required=True,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

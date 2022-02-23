@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    Description for the load balancer instance
+  enabled (False, bool, True)
+    set to true of LB needs to enabled
 
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
 
-  fallback_pool_id (True, str, None)
-    (Required for new resource) fallback pool ID
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
-  ttl (False, int, 60)
-    TTL value
-
-
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
+  description (False, str, None)
+    Description for the load balancer instance
 
 
   session_affinity (False, str, none)
     Session affinity info
 
 
-  enabled (False, bool, True)
-    set to true of LB needs to enabled
-
-
-  region_pools (False, list, None)
-    None
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  name (True, str, None)
-    (Required for new resource) name
+  fallback_pool_id (True, str, None)
+    (Required for new resource) fallback pool ID
 
 
   default_pool_ids (True, list, None)
     (Required for new resource) List of default Pool IDs
 
 
-  steering_policy (False, str, None)
-    Steering policy info
+  ttl (False, int, 60)
+    TTL value
+
+
+  name (True, str, None)
+    (Required for new resource) name
 
 
   pop_pools (False, list, None)
     None
+
+
+  region_pools (False, list, None)
+    None
+
+
+  steering_policy (False, str, None)
+    Steering policy info
+
+
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
 
 
   id (False, str, None)

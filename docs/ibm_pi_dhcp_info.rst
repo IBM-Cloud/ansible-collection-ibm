@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_dhcp_id (True, str, None)
-    The ID of the DHCP Server
-
-
   pi_cloud_instance_id (True, str, None)
     None
+
+
+  pi_dhcp_id (True, str, None)
+    The ID of the DHCP Server
 
 
   zone (False, str, None)

@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
-        type: str
     dedicated_host_group:
         description:
             - Unique Identifier of the Dedicated Host Group where the instance will be placed
@@ -35,6 +30,69 @@ options:
     placement_group:
         description:
             - Unique Identifier of the Placement Group for restricting the placement of the instance
+        required: False
+        type: str
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - Instance Template name
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    total_volume_bandwidth:
+        description:
+            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+        required: False
+        type: int
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance template
+        required: True
+        type: list
+        elements: str
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Instance template resource group
+        required: False
+        type: str
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    profile:
+        description:
+            - (Required for new resource) Profile info
+        required: True
+        type: str
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: True
+        type: list
+        elements: dict
+    dedicated_host:
+        description:
+            - Unique Identifier of the Dedicated Host where the instance will be placed
         required: False
         type: str
     volume_attachments:
@@ -49,64 +107,6 @@ options:
         required: False
         type: list
         elements: dict
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
-    keys:
-        description:
-            - (Required for new resource) SSH key Ids for the instance template
-        required: True
-        type: list
-        elements: str
-    dedicated_host:
-        description:
-            - Unique Identifier of the Dedicated Host where the instance will be placed
-        required: False
-        type: str
-    primary_network_interface:
-        description:
-            - (Required for new resource) Primary Network interface info
-        required: True
-        type: list
-        elements: dict
-    total_volume_bandwidth:
-        description:
-            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-        required: False
-        type: int
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    name:
-        description:
-            - Instance Template name
-        required: False
-        type: str
-    image:
-        description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Instance template resource group
-        required: False
-        type: str
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,32 +153,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
-    ('vpc', 'str'),
-    ('keys', 'list'),
-    ('primary_network_interface', 'list'),
     ('zone', 'str'),
+    ('keys', 'list'),
     ('image', 'str'),
+    ('vpc', 'str'),
+    ('profile', 'str'),
+    ('primary_network_interface', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile',
     'dedicated_host_group',
     'placement_group',
+    'boot_volume',
+    'name',
+    'zone',
+    'total_volume_bandwidth',
+    'keys',
+    'user_data',
+    'resource_group',
+    'image',
+    'vpc',
+    'profile',
+    'primary_network_interface',
+    'dedicated_host',
     'volume_attachments',
     'network_interfaces',
-    'boot_volume',
-    'vpc',
-    'keys',
-    'dedicated_host',
-    'primary_network_interface',
-    'total_volume_bandwidth',
-    'zone',
-    'name',
-    'image',
-    'resource_group',
-    'user_data',
 ]
 
 # Params for Data source
@@ -186,8 +186,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -200,13 +200,49 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile=dict(
-        required=False,
-        type='str'),
     dedicated_host_group=dict(
         required=False,
         type='str'),
     placement_group=dict(
+        required=False,
+        type='str'),
+    boot_volume=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    total_volume_bandwidth=dict(
+        required=False,
+        type='int'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    image=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    dedicated_host=dict(
         required=False,
         type='str'),
     volume_attachments=dict(
@@ -217,42 +253,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    boot_volume=dict(
-        required=False,
-        elements='',
-        type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    dedicated_host=dict(
-        required=False,
-        type='str'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
-    total_volume_bandwidth=dict(
-        required=False,
-        type='int'),
-    zone=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    image=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    user_data=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

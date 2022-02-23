@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_placement_group_name (True, str, None)
+    (Required for new resource) Name of the placement group
+
+
   pi_placement_group_policy (True, str, None)
     (Required for new resource) Policy of the placement group
 
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
-
-
-  pi_placement_group_name (True, str, None)
-    (Required for new resource) Name of the placement group
 
 
   id (False, str, None)

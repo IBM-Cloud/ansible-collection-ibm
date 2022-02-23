@@ -22,17 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    open_api_doc_name:
+    service_instance_crn:
         description:
-            - (Required for new resource) Json File path
+            - (Required for new resource) Api Gateway Service Instance Crn
         required: True
         type: str
-    routes:
-        description:
-            - Invokable routes for an endpoint
-        required: False
-        type: list
-        elements: str
     managed:
         description:
             - Managed indicates if endpoint is online or offline.
@@ -45,9 +39,15 @@ options:
         required: False
         type: str
         default: unshare
-    service_instance_crn:
+    provider_id:
         description:
-            - (Required for new resource) Api Gateway Service Instance Crn
+            - Provider ID of an endpoint allowable values user-defined and whisk
+        required: False
+        type: str
+        default: user-defined
+    open_api_doc_name:
+        description:
+            - (Required for new resource) Json File path
         required: True
         type: str
     name:
@@ -55,12 +55,12 @@ options:
             - (Required for new resource) Endpoint name
         required: True
         type: str
-    provider_id:
+    routes:
         description:
-            - Provider ID of an endpoint allowable values user-defined and whisk
+            - Invokable routes for an endpoint
         required: False
-        type: str
-        default: user-defined
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,20 +107,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('open_api_doc_name', 'str'),
     ('service_instance_crn', 'str'),
+    ('open_api_doc_name', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'open_api_doc_name',
-    'routes',
+    'service_instance_crn',
     'managed',
     'type',
-    'service_instance_crn',
-    'name',
     'provider_id',
+    'open_api_doc_name',
+    'name',
+    'routes',
 ]
 
 # Params for Data source
@@ -137,28 +137,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    open_api_doc_name=dict(
+    service_instance_crn=dict(
         required=False,
         type='str'),
-    routes=dict(
-        required=False,
-        elements='',
-        type='list'),
     managed=dict(
         required=False,
         type='bool'),
     type=dict(
         required=False,
         type='str'),
-    service_instance_crn=dict(
+    provider_id=dict(
+        required=False,
+        type='str'),
+    open_api_doc_name=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    provider_id=dict(
+    routes=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),

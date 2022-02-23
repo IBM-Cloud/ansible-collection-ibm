@@ -35,8 +35,32 @@ Parameters
     The number of failover crypto units for your service instance
 
 
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
+  service (False, str, hs-crypto)
+    The name of the service offering `hs-crypto`
+
+
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
+
+
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the HPCS Instance
 
 
   revocation_threshold (True, int, None)
@@ -47,40 +71,16 @@ Parameters
     (Required for new resource) The location where the HPCS instance available
 
 
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
-  resource_group_id (False, str, None)
-    The resource group id
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
 
 
   name (True, str, None)
     (Required for new resource) A name for the HPCS instance
-
-
-  tags (False, list, None)
-    None
-
-
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the HPCS Instance
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
-
-
-  service (False, str, hs-crypto)
-    The name of the service offering `hs-crypto`
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   id (False, str, None)

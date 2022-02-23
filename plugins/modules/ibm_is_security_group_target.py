@@ -90,13 +90,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('security_group', 'str'),
     ('name', 'str'),
+    ('security_group', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'security_group',
     'name',
+    'security_group',
 ]
 
 TL_CONFLICTS_MAP = {

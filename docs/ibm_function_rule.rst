@@ -31,10 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  action_name (True, str, None)
-    (Required for new resource) Name of action.
-
-
   namespace (True, str, None)
     (Required for new resource) IBM Cloud function namespace.
 
@@ -45,6 +41,10 @@ Parameters
 
   trigger_name (True, str, None)
     (Required for new resource) Name of trigger.
+
+
+  action_name (True, str, None)
+    (Required for new resource) Name of action.
 
 
   id (False, str, None)

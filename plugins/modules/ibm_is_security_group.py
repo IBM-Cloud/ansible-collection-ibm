@@ -22,10 +22,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vpc:
+    name:
         description:
-            - (Required for new resource) Security group's resource group id
-        required: True
+            - Security group name
+        required: False
         type: str
     tags:
         description:
@@ -33,15 +33,15 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - Security group name
-        required: False
-        type: str
     resource_group:
         description:
             - Resource Group ID
         required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) Security group's resource group id
+        required: True
         type: str
     id:
         description:
@@ -94,10 +94,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
-    'tags',
     'name',
+    'tags',
     'resource_group',
+    'vpc',
 ]
 
 # Params for Data source
@@ -116,17 +116,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    vpc=dict(
         required=False,
         type='str'),
     id=dict(

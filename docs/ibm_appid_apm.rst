@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  password_expiration (True, list, None)
+    (Required for new resource)
+
+
   lockout_policy (True, list, None)
     (Required for new resource)
 
@@ -52,10 +56,6 @@ Parameters
 
 
   password_reuse (True, list, None)
-    (Required for new resource)
-
-
-  password_expiration (True, list, None)
     (Required for new resource)
 
 

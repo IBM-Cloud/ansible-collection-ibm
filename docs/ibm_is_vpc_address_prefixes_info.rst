@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The user-defined name for this address prefix. Names must be unique within the VPC the address prefix resides in.
-
-
   vpc (True, str, None)
     The VPC identifier.
+
+
+  name (False, str, None)
+    The user-defined name for this address prefix. Names must be unique within the VPC the address prefix resides in.
 
 
   generation (False, int, 2)

@@ -22,21 +22,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    shared:
+    long_description:
         description:
-            - True if this note can be shared by multiple accounts.
-        required: False
-        type: bool
-        default: True
-    finding:
+            - (Required for new resource) A more detailed description of your note.
+        required: True
+        type: str
+    reported_by:
         description:
-            - FindingType provides details about a finding note.
-        required: False
+            - (Required for new resource) The entity reporting a note.
+        required: True
         type: list
         elements: dict
     card:
         description:
             - Card provides details about a card kind of note.
+        required: False
+        type: list
+        elements: dict
+    finding:
+        description:
+            - FindingType provides details about a finding note.
         required: False
         type: list
         elements: dict
@@ -51,6 +56,11 @@ options:
             - None
         required: False
         type: str
+    short_description:
+        description:
+            - (Required for new resource) A one sentence description of your note.
+        required: True
+        type: str
     kind:
         description:
             - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
@@ -61,25 +71,21 @@ options:
             - (Required for new resource) The ID of the note.
         required: True
         type: str
-    kpi:
-        description:
-            - KpiType provides details about a KPI note.
-        required: False
-        type: list
-        elements: dict
-    short_description:
-        description:
-            - (Required for new resource) A one sentence description of your note.
-        required: True
-        type: str
-    long_description:
-        description:
-            - (Required for new resource) A more detailed description of your note.
-        required: True
-        type: str
     related_url:
         description:
             - None
+        required: False
+        type: list
+        elements: dict
+    shared:
+        description:
+            - True if this note can be shared by multiple accounts.
+        required: False
+        type: bool
+        default: True
+    kpi:
+        description:
+            - KpiType provides details about a KPI note.
         required: False
         type: list
         elements: dict
@@ -88,12 +94,6 @@ options:
             - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
         type: str
-    reported_by:
-        description:
-            - (Required for new resource) The entity reporting a note.
-        required: True
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -140,29 +140,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('long_description', 'str'),
+    ('reported_by', 'list'),
+    ('short_description', 'str'),
     ('kind', 'str'),
     ('note_id', 'str'),
-    ('short_description', 'str'),
-    ('long_description', 'str'),
     ('provider_id', 'str'),
-    ('reported_by', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shared',
-    'finding',
+    'long_description',
+    'reported_by',
     'card',
+    'finding',
     'section',
     'account_id',
+    'short_description',
     'kind',
     'note_id',
-    'kpi',
-    'short_description',
-    'long_description',
     'related_url',
+    'shared',
+    'kpi',
     'provider_id',
-    'reported_by',
 ]
 
 # Params for Data source
@@ -184,14 +184,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shared=dict(
+    long_description=dict(
         required=False,
-        type='bool'),
-    finding=dict(
+        type='str'),
+    reported_by=dict(
         required=False,
         elements='',
         type='list'),
     card=dict(
+        required=False,
+        elements='',
+        type='list'),
+    finding=dict(
         required=False,
         elements='',
         type='list'),
@@ -202,33 +206,29 @@ module_args = dict(
     account_id=dict(
         required=False,
         type='str'),
+    short_description=dict(
+        required=False,
+        type='str'),
     kind=dict(
         required=False,
         type='str'),
     note_id=dict(
         required=False,
         type='str'),
-    kpi=dict(
+    related_url=dict(
         required=False,
         elements='',
         type='list'),
-    short_description=dict(
+    shared=dict(
         required=False,
-        type='str'),
-    long_description=dict(
-        required=False,
-        type='str'),
-    related_url=dict(
+        type='bool'),
+    kpi=dict(
         required=False,
         elements='',
         type='list'),
     provider_id=dict(
         required=False,
         type='str'),
-    reported_by=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),

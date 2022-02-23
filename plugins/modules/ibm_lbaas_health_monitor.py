@@ -22,27 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    url_path:
-        description:
-            - URL Path
-        required: False
-        type: str
-        default: /
-    monitor_id:
-        description:
-            - (Required for new resource) Monitor ID
-        required: True
-        type: str
-    lbaas_id:
-        description:
-            - (Required for new resource) LBAAS id
-        required: True
-        type: str
-    protocol:
-        description:
-            - (Required for new resource) Protocol value
-        required: True
-        type: str
     port:
         description:
             - (Required for new resource) Port number
@@ -66,6 +45,27 @@ options:
         required: False
         type: int
         default: 2
+    url_path:
+        description:
+            - URL Path
+        required: False
+        type: str
+        default: /
+    monitor_id:
+        description:
+            - (Required for new resource) Monitor ID
+        required: True
+        type: str
+    lbaas_id:
+        description:
+            - (Required for new resource) LBAAS id
+        required: True
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Protocol value
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,22 +112,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('port', 'int'),
     ('monitor_id', 'str'),
     ('lbaas_id', 'str'),
     ('protocol', 'str'),
-    ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'url_path',
-    'monitor_id',
-    'lbaas_id',
-    'protocol',
     'port',
     'interval',
     'max_retries',
     'timeout',
+    'url_path',
+    'monitor_id',
+    'lbaas_id',
+    'protocol',
 ]
 
 # Params for Data source
@@ -144,18 +144,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    url_path=dict(
-        required=False,
-        type='str'),
-    monitor_id=dict(
-        required=False,
-        type='str'),
-    lbaas_id=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
     port=dict(
         required=False,
         type='int'),
@@ -168,6 +156,18 @@ module_args = dict(
     timeout=dict(
         required=False,
         type='int'),
+    url_path=dict(
+        required=False,
+        type='str'),
+    monitor_id=dict(
+        required=False,
+        type='str'),
+    lbaas_id=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  default_pool (False, str, None)
+    Loadbalancer default pool info
+
+
+  certificate_instance (False, str, None)
+    certificate instance for the Loadbalancer
+
+
   accept_proxy_protocol (False, bool, None)
     Listener will forward proxy protocol
 
@@ -39,12 +47,8 @@ Parameters
     The HTTP status code to be returned in the redirect response
 
 
-  https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
-
-
-  https_redirect_listener (False, str, None)
-    ID of the listener that will be set as http redirect target
+  lb (True, str, None)
+    (Required for new resource) Loadbalancer listener ID
 
 
   port (False, int, None)
@@ -55,20 +59,16 @@ Parameters
     (Required for new resource) Loadbalancer protocol
 
 
-  default_pool (False, str, None)
-    Loadbalancer default pool info
+  https_redirect_listener (False, str, None)
+    ID of the listener that will be set as http redirect target
 
 
-  certificate_instance (False, str, None)
-    certificate instance for the Loadbalancer
+  https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
 
 
   connection_limit (False, int, None)
     Connection limit for Loadbalancer
-
-
-  lb (True, str, None)
-    (Required for new resource) Loadbalancer listener ID
 
 
   id (False, str, None)

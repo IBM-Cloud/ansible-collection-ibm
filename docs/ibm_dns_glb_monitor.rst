@@ -31,28 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  interval (False, int, 60)
-    The interval between each health check
-
-
-  method (False, str, None)
-    The method to use for the health check
-
-
-  headers (False, list, None)
-    The HTTP request headers to send in the health check
-
-
-  expected_body (False, str, None)
-    A case-insensitive sub-string to look for in the response body
-
-
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
 
 
   description (False, str, None)
     Descriptive text of the load balancer monitor
+
+
+  interval (False, int, 60)
+    The interval between each health check
+
+
+  retries (False, int, 1)
+    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+
+
+  method (False, str, None)
+    The method to use for the health check
 
 
   port (False, int, None)
@@ -63,16 +59,16 @@ Parameters
     The endpoint path to health check against
 
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
+  headers (False, list, None)
+    The HTTP request headers to send in the health check
 
 
   type (False, str, HTTP)
     The protocol to use for the health check
 
 
-  retries (False, int, 1)
-    The number of retries to attempt in case of a timeout before marking the origin as unhealthy
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
 
 
   timeout (False, int, 5)
@@ -85,6 +81,10 @@ Parameters
 
   expected_codes (False, str, None)
     The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS
+
+
+  expected_body (False, str, None)
+    A case-insensitive sub-string to look for in the response body
 
 
   id (False, str, None)

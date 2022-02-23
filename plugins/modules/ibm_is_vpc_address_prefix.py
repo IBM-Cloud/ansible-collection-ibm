@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
     cidr:
         description:
             - (Required for new resource) CIDIR address prefix
@@ -46,6 +36,16 @@ options:
     vpc:
         description:
             - (Required for new resource) VPC id
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Zone name
         required: True
         type: str
     id:
@@ -94,19 +94,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('zone', 'str'),
     ('cidr', 'str'),
     ('vpc', 'str'),
+    ('name', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'zone',
     'cidr',
     'is_default',
     'vpc',
+    'name',
+    'zone',
 ]
 
 # Params for Data source
@@ -123,12 +123,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
     cidr=dict(
         required=False,
         type='str'),
@@ -136,6 +130,12 @@ module_args = dict(
         required=False,
         type='bool'),
     vpc=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(

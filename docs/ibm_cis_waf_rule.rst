@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) CIS Domain ID
 
 
-  package_id (True, str, None)
-    (Required for new resource) CIS WAF Rule package id
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
   rule_id (True, str, None)
     (Required for new resource) CIS WAF Rule id
 
 
+  package_id (True, str, None)
+    (Required for new resource) CIS WAF Rule package id
+
+
   mode (True, str, None)
     (Required for new resource) CIS WAF Rule mode
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
   id (False, str, None)

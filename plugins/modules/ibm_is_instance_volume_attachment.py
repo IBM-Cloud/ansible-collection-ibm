@@ -22,15 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    instance:
-        description:
-            - (Required for new resource) Instance id
-        required: True
-        type: str
     name:
         description:
             - The user-defined name for this volume attachment.
         required: False
+        type: str
+    iops:
+        description:
+            - The maximum I/O operations per second (IOPS) for the volume.
+        required: False
+        type: int
+    instance:
+        description:
+            - (Required for new resource) Instance id
+        required: True
         type: str
     volume:
         description:
@@ -42,14 +47,25 @@ options:
             - The unique user-defined name for this volume
         required: False
         type: str
-    encryption_key:
+    profile:
         description:
-            - The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
+            - The  globally unique name for the volume profile to use for this volume.
         required: False
         type: str
-    iops:
+    snapshot:
         description:
-            - The maximum I/O operations per second (IOPS) for the volume.
+            - The snapshot of the volume to be attached
+        required: False
+        type: str
+    delete_volume_on_attachment_delete:
+        description:
+            - If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
+        required: False
+        type: bool
+        default: True
+    capacity:
+        description:
+            - The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
         required: False
         type: int
     delete_volume_on_instance_delete:
@@ -57,27 +73,11 @@ options:
             - If set to true, when deleting the instance the volume will also be deleted.
         required: False
         type: bool
-    delete_volume_on_attachment_delete:
+    encryption_key:
         description:
-            - If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
-        required: False
-        type: bool
-        default: True
-    snapshot:
-        description:
-            - The snapshot of the volume to be attached
+            - The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
         required: False
         type: str
-    profile:
-        description:
-            - The  globally unique name for the volume profile to use for this volume.
-        required: False
-        type: str
-    capacity:
-        description:
-            - The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,35 +129,35 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance',
     'name',
+    'iops',
+    'instance',
     'volume',
     'volume_name',
-    'encryption_key',
-    'iops',
-    'delete_volume_on_instance_delete',
-    'delete_volume_on_attachment_delete',
-    'snapshot',
     'profile',
+    'snapshot',
+    'delete_volume_on_attachment_delete',
     'capacity',
+    'delete_volume_on_instance_delete',
+    'encryption_key',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance', 'str'),
     ('name', 'str'),
+    ('instance', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance',
     'name',
+    'instance',
 ]
 
 TL_CONFLICTS_MAP = {
-    'volume': ['iops', 'volume_name', 'profile', 'capacity', 'snapshot'],
     'iops': ['volume'],
-    'snapshot': ['volume'],
+    'volume': ['iops', 'volume_name', 'profile', 'capacity', 'snapshot'],
     'profile': ['volume'],
+    'snapshot': ['volume'],
     'capacity': ['volume'],
 }
 
@@ -165,10 +165,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    iops=dict(
+        required=False,
+        type='int'),
+    instance=dict(
         required=False,
         type='str'),
     volume=dict(
@@ -177,27 +180,24 @@ module_args = dict(
     volume_name=dict(
         required=False,
         type='str'),
-    encryption_key=dict(
+    profile=dict(
         required=False,
         type='str'),
-    iops=dict(
+    snapshot=dict(
+        required=False,
+        type='str'),
+    delete_volume_on_attachment_delete=dict(
+        required=False,
+        type='bool'),
+    capacity=dict(
         required=False,
         type='int'),
     delete_volume_on_instance_delete=dict(
         required=False,
         type='bool'),
-    delete_volume_on_attachment_delete=dict(
-        required=False,
-        type='bool'),
-    snapshot=dict(
+    encryption_key=dict(
         required=False,
         type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    capacity=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),

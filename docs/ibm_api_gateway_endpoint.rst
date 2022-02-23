@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  open_api_doc_name (True, str, None)
-    (Required for new resource) Json File path
-
-
-  routes (False, list, None)
-    Invokable routes for an endpoint
+  service_instance_crn (True, str, None)
+    (Required for new resource) Api Gateway Service Instance Crn
 
 
   managed (False, bool, False)
@@ -47,16 +43,20 @@ Parameters
     Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
-  service_instance_crn (True, str, None)
-    (Required for new resource) Api Gateway Service Instance Crn
+  provider_id (False, str, user-defined)
+    Provider ID of an endpoint allowable values user-defined and whisk
+
+
+  open_api_doc_name (True, str, None)
+    (Required for new resource) Json File path
 
 
   name (True, str, None)
     (Required for new resource) Endpoint name
 
 
-  provider_id (False, str, user-defined)
-    Provider ID of an endpoint allowable values user-defined and whisk
+  routes (False, list, None)
+    Invokable routes for an endpoint
 
 
   id (False, str, None)

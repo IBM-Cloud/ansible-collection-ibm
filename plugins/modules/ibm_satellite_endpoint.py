@@ -22,11 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    timeout:
+    server_mutual_auth:
         description:
-            - The inactivity timeout in the Endpoint side.
+            - Whether enable mutual auth in the server application side, when client_protocol is 'tls', this field is required.
         required: False
-        type: int
+        type: bool
+        default: False
     location:
         description:
             - (Required for new resource) The Location ID.
@@ -37,6 +38,44 @@ options:
             - (Required for new resource) The type of the endpoint.
         required: True
         type: str
+    display_name:
+        description:
+            - (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
+        required: True
+        type: str
+    sni:
+        description:
+            - The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
+        required: False
+        type: str
+    created_by:
+        description:
+            - The service or person who created the endpoint. Must be 1000 characters or fewer.
+        required: False
+        type: str
+    certs:
+        description:
+            - The certs.
+        required: False
+        type: list
+        elements: dict
+    client_protocol:
+        description:
+            - (Required for new resource) The protocol in the client application side.
+        required: True
+        type: str
+    client_mutual_auth:
+        description:
+            - Whether enable mutual auth in the client application side, when client_protocol is 'tls' or 'https', this field is required.
+        required: False
+        type: bool
+        default: False
+    reject_unauth:
+        description:
+            - Whether reject any connection to the server application which is not authorized with the list of supplied CAs in the fields certs.server_cert.
+        required: False
+        type: bool
+        default: False
     server_host:
         description:
             - (Required for new resource) The host name or IP address of the server endpoint. For 'http-tunnel' protocol, server_host can start with '*.' , which means a wildcard to it's sub domains. Such as '*.example.com' can accept request to 'api.example.com' and 'www.example.com'.
@@ -52,50 +91,11 @@ options:
             - The protocol in the server application side. This parameter will change to default value if it is omitted even when using PATCH API. If client_protocol is 'udp', server_protocol must be 'udp'. If client_protocol is 'tcp'/'http', server_protocol could be 'tcp'/'tls' and default to 'tcp'. If client_protocol is 'tls'/'https', server_protocol could be 'tcp'/'tls' and default to 'tls'. If client_protocol is 'http-tunnel', server_protocol must be 'tcp'.
         required: False
         type: str
-    display_name:
+    timeout:
         description:
-            - (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
-        required: True
-        type: str
-    server_mutual_auth:
-        description:
-            - Whether enable mutual auth in the server application side, when client_protocol is 'tls', this field is required.
+            - The inactivity timeout in the Endpoint side.
         required: False
-        type: bool
-        default: False
-    reject_unauth:
-        description:
-            - Whether reject any connection to the server application which is not authorized with the list of supplied CAs in the fields certs.server_cert.
-        required: False
-        type: bool
-        default: False
-    created_by:
-        description:
-            - The service or person who created the endpoint. Must be 1000 characters or fewer.
-        required: False
-        type: str
-    client_mutual_auth:
-        description:
-            - Whether enable mutual auth in the client application side, when client_protocol is 'tls' or 'https', this field is required.
-        required: False
-        type: bool
-        default: False
-    certs:
-        description:
-            - The certs.
-        required: False
-        type: list
-        elements: dict
-    sni:
-        description:
-            - The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
-        required: False
-        type: str
-    client_protocol:
-        description:
-            - (Required for new resource) The protocol in the client application side.
-        required: True
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -144,39 +144,39 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('location', 'str'),
     ('connection_type', 'str'),
-    ('server_host', 'str'),
-    ('server_port', 'int'),
     ('display_name', 'str'),
     ('client_protocol', 'str'),
+    ('server_host', 'str'),
+    ('server_port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'timeout',
+    'server_mutual_auth',
     'location',
     'connection_type',
+    'display_name',
+    'sni',
+    'created_by',
+    'certs',
+    'client_protocol',
+    'client_mutual_auth',
+    'reject_unauth',
     'server_host',
     'server_port',
     'server_protocol',
-    'display_name',
-    'server_mutual_auth',
-    'reject_unauth',
-    'created_by',
-    'client_mutual_auth',
-    'certs',
-    'sni',
-    'client_protocol',
+    'timeout',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('location', 'str'),
     ('endpoint_id', 'str'),
+    ('location', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'location',
     'endpoint_id',
+    'location',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -186,15 +186,37 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    timeout=dict(
+    server_mutual_auth=dict(
         required=False,
-        type='int'),
+        type='bool'),
     location=dict(
         required=False,
         type='str'),
     connection_type=dict(
         required=False,
         type='str'),
+    display_name=dict(
+        required=False,
+        type='str'),
+    sni=dict(
+        required=False,
+        type='str'),
+    created_by=dict(
+        required=False,
+        type='str'),
+    certs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    client_protocol=dict(
+        required=False,
+        type='str'),
+    client_mutual_auth=dict(
+        required=False,
+        type='bool'),
+    reject_unauth=dict(
+        required=False,
+        type='bool'),
     server_host=dict(
         required=False,
         type='str'),
@@ -204,31 +226,9 @@ module_args = dict(
     server_protocol=dict(
         required=False,
         type='str'),
-    display_name=dict(
+    timeout=dict(
         required=False,
-        type='str'),
-    server_mutual_auth=dict(
-        required=False,
-        type='bool'),
-    reject_unauth=dict(
-        required=False,
-        type='bool'),
-    created_by=dict(
-        required=False,
-        type='str'),
-    client_mutual_auth=dict(
-        required=False,
-        type='bool'),
-    certs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    sni=dict(
-        required=False,
-        type='str'),
-    client_protocol=dict(
-        required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),

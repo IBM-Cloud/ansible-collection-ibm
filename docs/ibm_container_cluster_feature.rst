@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   cluster (True, str, None)
     (Required for new resource) Cluster name of ID
 
@@ -49,10 +53,6 @@ Parameters
 
   reload_workers (False, bool, True)
     Boolean value set true if worker nodes to be reloaded
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
 
 
   id (False, str, None)

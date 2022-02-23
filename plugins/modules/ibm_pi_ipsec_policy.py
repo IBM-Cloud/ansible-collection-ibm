@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_policy_encryption:
-        description:
-            - (Required for new resource) Encryption of the IPSec Policy
-        required: True
-        type: str
-    pi_policy_key_lifetime:
-        description:
-            - (Required for new resource) Policy key lifetime
-        required: True
-        type: int
     pi_policy_pfs:
         description:
             - (Required for new resource) Perfect Forward Secrecy
@@ -56,6 +46,16 @@ options:
     pi_policy_dh_group:
         description:
             - (Required for new resource) DH group of the IPSec Policy
+        required: True
+        type: int
+    pi_policy_encryption:
+        description:
+            - (Required for new resource) Encryption of the IPSec Policy
+        required: True
+        type: str
+    pi_policy_key_lifetime:
+        description:
+            - (Required for new resource) Policy key lifetime
         required: True
         type: int
     id:
@@ -100,23 +100,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_policy_encryption', 'str'),
-    ('pi_policy_key_lifetime', 'int'),
     ('pi_policy_pfs', 'bool'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_policy_name', 'str'),
     ('pi_policy_dh_group', 'int'),
+    ('pi_policy_encryption', 'str'),
+    ('pi_policy_key_lifetime', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_policy_encryption',
-    'pi_policy_key_lifetime',
     'pi_policy_pfs',
     'pi_policy_authentication',
     'pi_cloud_instance_id',
     'pi_policy_name',
     'pi_policy_dh_group',
+    'pi_policy_encryption',
+    'pi_policy_key_lifetime',
 ]
 
 # Params for Data source
@@ -133,12 +133,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_policy_encryption=dict(
-        required=False,
-        type='str'),
-    pi_policy_key_lifetime=dict(
-        required=False,
-        type='int'),
     pi_policy_pfs=dict(
         required=False,
         type='bool'),
@@ -152,6 +146,12 @@ module_args = dict(
         required=False,
         type='str'),
     pi_policy_dh_group=dict(
+        required=False,
+        type='int'),
+    pi_policy_encryption=dict(
+        required=False,
+        type='str'),
+    pi_policy_key_lifetime=dict(
         required=False,
         type='int'),
     id=dict(

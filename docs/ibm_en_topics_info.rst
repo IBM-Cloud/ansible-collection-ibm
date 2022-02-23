@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_guid (True, str, None)
-    Unique identifier for IBM Cloud Event Notifications instance.
-
-
   search_key (False, str, None)
     Filter the topic by name
+
+
+  instance_guid (True, str, None)
+    Unique identifier for IBM Cloud Event Notifications instance.
 
 
   iaas_classic_username (False, any, None)

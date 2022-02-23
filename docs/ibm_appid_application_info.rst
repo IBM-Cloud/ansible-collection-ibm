@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tenant_id (True, str, None)
-    The service `tenantId`
-
-
   client_id (True, str, None)
     The `client_id` is a public identifier for applications
+
+
+  tenant_id (True, str, None)
+    The service `tenantId`
 
 
   iaas_classic_username (False, any, None)

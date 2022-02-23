@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    location:
+        description:
+            - (Required for new resource) A unique name for the new Satellite location
+        required: True
+        type: str
     managed_from:
         description:
             - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
@@ -32,9 +37,26 @@ options:
             - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
         type: str
+    cos_credentials:
+        description:
+            - COSAuthorization - IBM Cloud Object Storage authorization keys
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - List of tags associated with resource instance
+        required: False
+        type: list
+        elements: str
     description:
         description:
             - A description of the new Satellite location
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
         required: False
         type: str
     cos_config:
@@ -43,28 +65,6 @@ options:
         required: False
         type: list
         elements: dict
-    cos_credentials:
-        description:
-            - COSAuthorization - IBM Cloud Object Storage authorization keys
-        required: False
-        type: list
-        elements: dict
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    tags:
-        description:
-            - List of tags associated with resource instance
-        required: False
-        type: list
-        elements: str
-    location:
-        description:
-            - (Required for new resource) A unique name for the new Satellite location
-        required: True
-        type: str
     zones:
         description:
             - The names of at least three high availability zones to use for the location
@@ -117,20 +117,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('managed_from', 'str'),
     ('location', 'str'),
+    ('managed_from', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'location',
     'managed_from',
     'logging_account_id',
-    'description',
-    'cos_config',
     'cos_credentials',
-    'resource_group_id',
     'tags',
-    'location',
+    'description',
+    'resource_group_id',
+    'cos_config',
     'zones',
 ]
 
@@ -150,33 +150,33 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    location=dict(
+        required=False,
+        type='str'),
     managed_from=dict(
         required=False,
         type='str'),
     logging_account_id=dict(
         required=False,
         type='str'),
+    cos_credentials=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     description=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     cos_config=dict(
         required=False,
         elements='',
         type='list'),
-    cos_credentials=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    location=dict(
-        required=False,
-        type='str'),
     zones=dict(
         required=False,
         elements='',

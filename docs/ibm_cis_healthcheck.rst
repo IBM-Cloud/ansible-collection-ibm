@@ -31,36 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  follow_redirects (False, bool, False)
-    follow_redirects
-
-
-  retries (False, int, 2)
-    retries
-
-
-  interval (False, int, 60)
-    interval
-
-
-  port (False, int, None)
-    port number
-
-
   expected_body (False, str, None)
     expected_body
 
 
-  expected_codes (False, str, None)
-    expected_codes
+  description (False, str, None)
+    description
 
 
   method (False, str, GET)
     method
 
 
-  description (False, str, None)
-    description
+  follow_redirects (False, bool, False)
+    follow_redirects
+
+
+  port (False, int, None)
+    port number
 
 
   allow_insecure (False, bool, False)
@@ -79,12 +67,24 @@ Parameters
     path
 
 
+  retries (False, int, 2)
+    retries
+
+
+  expected_codes (False, str, None)
+    expected_codes
+
+
   type (False, str, http)
     type
 
 
   timeout (False, int, 5)
     timeout
+
+
+  interval (False, int, 60)
+    interval
 
 
   id (False, str, None)

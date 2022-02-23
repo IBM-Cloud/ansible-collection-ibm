@@ -35,32 +35,32 @@ Parameters
     Description of a load balancer.
 
 
-  ssl_ciphers (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) The load balancer's name.
-
-
-  wait_time_minutes (False, int, 90)
-    None
-
-
   subnets (True, list, None)
     (Required for new resource) The subnet where this Load Balancer will be provisioned.
-
-
-  use_system_public_ip_pool (False, bool, None)
-    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
 
 
   protocols (False, list, None)
     Protocols to be assigned to this load balancer.
 
 
+  name (True, str, None)
+    (Required for new resource) The load balancer's name.
+
+
   type (False, str, PUBLIC)
     Specifies if a load balancer is public or private
+
+
+  use_system_public_ip_pool (False, bool, None)
+    in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet.
+
+
+  ssl_ciphers (False, list, None)
+    None
+
+
+  wait_time_minutes (False, int, 90)
+    None
 
 
   id (False, str, None)

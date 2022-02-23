@@ -33,12 +33,12 @@ Parameters
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
-
-
   environment_id (True, str, None)
     Environment Id.
+
+
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
 
 
   iaas_classic_username (False, any, None)

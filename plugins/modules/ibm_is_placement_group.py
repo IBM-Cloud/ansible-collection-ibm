@@ -22,10 +22,10 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    strategy:
+    resource_group:
         description:
-            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
-        required: True
+            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     name:
         description:
@@ -38,17 +38,17 @@ options:
         required: False
         type: list
         elements: str
-    resource_group:
-        description:
-            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
     access_tags:
         description:
             - List of access management tags
         required: False
         type: list
         elements: str
+    strategy:
+        description:
+            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,17 +95,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('strategy', 'str'),
     ('name', 'str'),
+    ('strategy', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'strategy',
+    'resource_group',
     'name',
     'tags',
-    'resource_group',
     'access_tags',
+    'strategy',
 ]
 
 # Params for Data source
@@ -124,7 +124,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    strategy=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
@@ -134,13 +134,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     access_tags=dict(
         required=False,
         elements='',
         type='list'),
+    strategy=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

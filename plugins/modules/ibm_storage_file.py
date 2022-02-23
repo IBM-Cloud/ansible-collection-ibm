@@ -22,33 +22,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    type:
         description:
-            - (Required for new resource) Datacenter name
+            - (Required for new resource) Storage type
         required: True
+        type: str
+    snapshot_capacity:
+        description:
+            - Snapshot capacity
+        required: False
+        type: int
+    notes:
+        description:
+            - Notes
+        required: False
         type: str
     capacity:
         description:
             - (Required for new resource) Storage capacity
         required: True
         type: int
-    allowed_virtual_guest_ids:
-        description:
-            - Virtual guest ID
-        required: False
-        type: list
-        elements: int
-    allowed_hardware_ids:
-        description:
-            - Hardaware ID
-        required: False
-        type: list
-        elements: int
-    iops:
-        description:
-            - (Required for new resource) iops rate
-        required: True
-        type: float
     allowed_subnets:
         description:
             - Allowed network subnets
@@ -61,11 +54,6 @@ options:
         required: False
         type: list
         elements: str
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
     snapshot_schedule:
         description:
             - None
@@ -78,16 +66,28 @@ options:
         required: False
         type: list
         elements: str
-    type:
+    datacenter:
         description:
-            - (Required for new resource) Storage type
+            - (Required for new resource) Datacenter name
         required: True
         type: str
-    snapshot_capacity:
+    iops:
         description:
-            - Snapshot capacity
+            - (Required for new resource) iops rate
+        required: True
+        type: float
+    allowed_virtual_guest_ids:
+        description:
+            - Virtual guest ID
         required: False
-        type: int
+        type: list
+        elements: int
+    allowed_hardware_ids:
+        description:
+            - Hardaware ID
+        required: False
+        type: list
+        elements: int
     hourly_billing:
         description:
             - Hourly based billing type
@@ -140,26 +140,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
-    ('capacity', 'int'),
-    ('iops', 'float'),
     ('type', 'str'),
+    ('capacity', 'int'),
+    ('datacenter', 'str'),
+    ('iops', 'float'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'capacity',
-    'allowed_virtual_guest_ids',
-    'allowed_hardware_ids',
-    'iops',
-    'allowed_subnets',
-    'allowed_ip_addresses',
-    'notes',
-    'snapshot_schedule',
-    'tags',
     'type',
     'snapshot_capacity',
+    'notes',
+    'capacity',
+    'allowed_subnets',
+    'allowed_ip_addresses',
+    'snapshot_schedule',
+    'tags',
+    'datacenter',
+    'iops',
+    'allowed_virtual_guest_ids',
+    'allowed_hardware_ids',
     'hourly_billing',
 ]
 
@@ -177,23 +177,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    type=dict(
+        required=False,
+        type='str'),
+    snapshot_capacity=dict(
+        required=False,
+        type='int'),
+    notes=dict(
         required=False,
         type='str'),
     capacity=dict(
         required=False,
         type='int'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_hardware_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    iops=dict(
-        required=False,
-        type='float'),
     allowed_subnets=dict(
         required=False,
         elements='',
@@ -202,9 +197,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    notes=dict(
-        required=False,
-        type='str'),
     snapshot_schedule=dict(
         required=False,
         elements='',
@@ -213,12 +205,20 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    type=dict(
+    datacenter=dict(
         required=False,
         type='str'),
-    snapshot_capacity=dict(
+    iops=dict(
         required=False,
-        type='int'),
+        type='float'),
+    allowed_virtual_guest_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
     hourly_billing=dict(
         required=False,
         type='bool'),

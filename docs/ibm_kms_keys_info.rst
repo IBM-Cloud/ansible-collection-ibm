@@ -29,6 +29,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  alias (False, str, None)
+    The name of the key to be fetched
+
+
   key_id (False, str, None)
     None
 
@@ -47,10 +51,6 @@ Parameters
 
   limit (False, int, None)
     Limit till the keys to be fetched
-
-
-  alias (False, str, None)
-    The name of the key to be fetched
 
 
   iaas_classic_username (False, any, None)

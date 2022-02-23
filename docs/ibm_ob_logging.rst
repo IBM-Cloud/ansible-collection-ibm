@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  logdna_ingestion_key (False, str, None)
-    LogDNA ingestion key
-
-
-  private_endpoint (False, bool, None)
-    Add this option to connect to your LogDNA service instance through the private service endpoint
-
-
   cluster (True, str, None)
     (Required for new resource) Name or ID of the cluster to be used.
 
 
   instance_id (True, str, None)
     (Required for new resource) ID of the LogDNA service instance to latch
+
+
+  private_endpoint (False, bool, None)
+    Add this option to connect to your LogDNA service instance through the private service endpoint
+
+
+  logdna_ingestion_key (False, str, None)
+    LogDNA ingestion key
 
 
   id (False, str, None)

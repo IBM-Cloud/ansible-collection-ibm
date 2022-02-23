@@ -35,16 +35,16 @@ Parameters
     The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
 
 
-  cluster (True, str, None)
-    (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
-
-
   nlb_host (True, str, None)
     (Required for new resource)
 
 
   nlb_ips (True, list, None)
     (Required for new resource)
+
+
+  cluster (True, str, None)
+    (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
 
 
   id (False, str, None)
