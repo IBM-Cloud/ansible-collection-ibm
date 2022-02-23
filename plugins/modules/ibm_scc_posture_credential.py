@@ -22,23 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    display_fields:
-        description:
-            - (Required for new resource) Details the fields on the credential. This will change as per credential type selected.
-        required: True
-        type: list
-        elements: dict
-    group:
-        description:
-            - (Required for new resource) Credential group details.
-        required: True
-        type: list
-        elements: dict
-    purpose:
-        description:
-            - (Required for new resource) Purpose for which the credential is created.
-        required: True
-        type: str
     enabled:
         description:
             - (Required for new resource) Credentials status enabled/disbaled.
@@ -57,6 +40,23 @@ options:
     description:
         description:
             - (Required for new resource) Credentials description.
+        required: True
+        type: str
+    display_fields:
+        description:
+            - (Required for new resource) Details the fields on the credential. This will change as per credential type selected.
+        required: True
+        type: list
+        elements: dict
+    group:
+        description:
+            - (Required for new resource) Credential group details.
+        required: True
+        type: list
+        elements: dict
+    purpose:
+        description:
+            - (Required for new resource) Purpose for which the credential is created.
         required: True
         type: str
     id:
@@ -105,24 +105,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('display_fields', 'list'),
-    ('group', 'list'),
-    ('purpose', 'str'),
     ('enabled', 'bool'),
     ('type', 'str'),
     ('name', 'str'),
     ('description', 'str'),
+    ('display_fields', 'list'),
+    ('group', 'list'),
+    ('purpose', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'display_fields',
-    'group',
-    'purpose',
     'enabled',
     'type',
     'name',
     'description',
+    'display_fields',
+    'group',
+    'purpose',
 ]
 
 # Params for Data source
@@ -139,17 +139,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    display_fields=dict(
-        required=False,
-        elements='',
-        type='list'),
-    group=dict(
-        required=False,
-        elements='',
-        type='list'),
-    purpose=dict(
-        required=False,
-        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
@@ -160,6 +149,17 @@ module_args = dict(
         required=False,
         type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    display_fields=dict(
+        required=False,
+        elements='',
+        type='list'),
+    group=dict(
+        required=False,
+        elements='',
+        type='list'),
+    purpose=dict(
         required=False,
         type='str'),
     id=dict(

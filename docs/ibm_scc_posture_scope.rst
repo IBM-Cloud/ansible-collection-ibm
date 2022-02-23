@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  credential_type (True, str, None)
+    (Required for new resource) The environment that the scope is targeted to.
+
+
   name (True, str, None)
     (Required for new resource) A unique name for your scope.
 
@@ -45,10 +49,6 @@ Parameters
 
   credential_id (True, str, None)
     (Required for new resource) The unique identifier of the credential.
-
-
-  credential_type (True, str, None)
-    (Required for new resource) The environment that the scope is targeted to.
 
 
   id (False, str, None)

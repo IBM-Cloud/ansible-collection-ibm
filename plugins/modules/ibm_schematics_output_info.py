@@ -21,6 +21,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    output_json:
+        description:
+            - The json output in string
+        required: False
+        type: str
     workspace_id:
         description:
             - The ID of the workspace for which you want to retrieve output values. To find the workspace ID, use the `GET /workspaces` API.
@@ -30,11 +35,6 @@ options:
         description:
             - The id of template
         required: True
-        type: str
-    output_json:
-        description:
-            - The json output in string
-        required: False
         type: str
     iaas_classic_username:
         description:
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'output_json',
     'workspace_id',
     'template_id',
-    'output_json',
 ]
 
 
@@ -88,14 +88,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    output_json=dict(
+        required=False,
+        type='str'),
     workspace_id=dict(
         required=True,
         type='str'),
     template_id=dict(
         required=True,
-        type='str'),
-    output_json=dict(
-        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',

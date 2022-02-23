@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    user_id:
-        description:
-            - Cloud Directory user ID
-        required: True
-        type: str
     tenant_id:
         description:
             - The AppID instance GUID
+        required: True
+        type: str
+    user_id:
+        description:
+            - Cloud Directory user ID
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('user_id', 'str'),
     ('tenant_id', 'str'),
+    ('user_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_id',
     'tenant_id',
+    'user_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_id=dict(
+    tenant_id=dict(
         required=True,
         type='str'),
-    tenant_id=dict(
+    user_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

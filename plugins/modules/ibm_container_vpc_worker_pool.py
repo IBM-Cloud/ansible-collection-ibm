@@ -22,11 +22,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    worker_count:
+    zones:
         description:
-            - (Required for new resource) The number of workers
+            - (Required for new resource) Zones info
         required: True
-        type: int
+        type: list
+        elements: dict
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name
@@ -35,28 +46,6 @@ options:
     flavor:
         description:
             - (Required for new resource) cluster node falvor
-        required: True
-        type: str
-    zones:
-        description:
-            - (Required for new resource) Zones info
-        required: True
-        type: list
-        elements: dict
-    taints:
-        description:
-            - WorkerPool Taints
-        required: False
-        type: list
-        elements: dict
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    vpc_id:
-        description:
-            - (Required for new resource) The vpc id where the cluster is
         required: True
         type: str
     worker_pool_name:
@@ -70,11 +59,22 @@ options:
         required: False
         type: dict
         elements: str
-    entitlement:
+    taints:
         description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+            - WorkerPool Taints
         required: False
+        type: list
+        elements: dict
+    vpc_id:
+        description:
+            - (Required for new resource) The vpc id where the cluster is
+        required: True
         type: str
+    worker_count:
+        description:
+            - (Required for new resource) The number of workers
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,26 +101,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker_count', 'int'),
+    ('zones', 'list'),
     ('cluster', 'str'),
     ('flavor', 'str'),
-    ('zones', 'list'),
-    ('vpc_id', 'str'),
     ('worker_pool_name', 'str'),
+    ('vpc_id', 'str'),
+    ('worker_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_count',
+    'zones',
+    'resource_group_id',
+    'entitlement',
     'cluster',
     'flavor',
-    'zones',
-    'taints',
-    'resource_group_id',
-    'vpc_id',
     'worker_pool_name',
     'labels',
-    'entitlement',
+    'taints',
+    'vpc_id',
+    'worker_count',
 ]
 
 # Params for Data source
@@ -141,27 +141,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_count=dict(
-        required=False,
-        type='int'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    flavor=dict(
-        required=False,
-        type='str'),
     zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    taints=dict(
         required=False,
         elements='',
         type='list'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    vpc_id=dict(
+    entitlement=dict(
+        required=False,
+        type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    flavor=dict(
         required=False,
         type='str'),
     worker_pool_name=dict(
@@ -171,9 +164,16 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    entitlement=dict(
+    taints=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc_id=dict(
         required=False,
         type='str'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),

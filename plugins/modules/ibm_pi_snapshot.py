@@ -22,11 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_snap_shot_name:
+    pi_volume_ids:
         description:
-            - (Required for new resource) Unique name of the snapshot
-        required: True
-        type: str
+            - List of PI volumes
+        required: False
+        type: list
+        elements: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
@@ -37,17 +38,16 @@ options:
             - Description of the PVM instance snapshot
         required: False
         type: str
+    pi_snap_shot_name:
+        description:
+            - (Required for new resource) Unique name of the snapshot
+        required: True
+        type: str
     pi_instance_name:
         description:
             - (Required for new resource) Instance name / id of the pvm
         required: True
         type: str
-    pi_volume_ids:
-        description:
-            - List of PI volumes
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,18 +90,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_snap_shot_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_snap_shot_name', 'str'),
     ('pi_instance_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_snap_shot_name',
+    'pi_volume_ids',
     'pi_cloud_instance_id',
     'pi_description',
+    'pi_snap_shot_name',
     'pi_instance_name',
-    'pi_volume_ids',
 ]
 
 # Params for Data source
@@ -118,22 +118,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_snap_shot_name=dict(
+    pi_volume_ids=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_description=dict(
         required=False,
         type='str'),
+    pi_snap_shot_name=dict(
+        required=False,
+        type='str'),
     pi_instance_name=dict(
         required=False,
         type='str'),
-    pi_volume_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),

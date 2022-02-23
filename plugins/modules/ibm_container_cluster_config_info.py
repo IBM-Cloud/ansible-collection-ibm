@@ -26,12 +26,12 @@ options:
             - The name/id of the cluster
         required: True
         type: str
-    download:
+    network:
         description:
-            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+            - If set to true will download the Calico network config with the Admin config
         required: False
         type: bool
-        default: True
+        default: False
     config_dir:
         description:
             - The directory where the cluster config to be downloaded. Default is home directory
@@ -48,12 +48,12 @@ options:
         required: False
         type: bool
         default: False
-    network:
+    download:
         description:
-            - If set to true will download the Calico network config with the Admin config
+            - If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
         required: False
         type: bool
-        default: False
+        default: True
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -73,11 +73,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_name_id',
-    'download',
+    'network',
     'config_dir',
     'resource_group_id',
     'admin',
-    'network',
+    'download',
 ]
 
 
@@ -91,7 +91,7 @@ module_args = dict(
     cluster_name_id=dict(
         required=True,
         type='str'),
-    download=dict(
+    network=dict(
         required=False,
         type='bool'),
     config_dir=dict(
@@ -103,7 +103,7 @@ module_args = dict(
     admin=dict(
         required=False,
         type='bool'),
-    network=dict(
+    download=dict(
         required=False,
         type='bool'),
     ibmcloud_api_key=dict(

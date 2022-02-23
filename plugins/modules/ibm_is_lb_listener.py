@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    certificate_instance:
+        description:
+            - certificate instance for the Loadbalancer
+        required: False
+        type: str
     accept_proxy_protocol:
         description:
             - Listener will forward proxy protocol
@@ -32,15 +42,10 @@ options:
             - The HTTP status code to be returned in the redirect response
         required: False
         type: int
-    https_redirect_uri:
+    lb:
         description:
-            - Target URI where traffic will be redirected
-        required: False
-        type: str
-    https_redirect_listener:
-        description:
-            - ID of the listener that will be set as http redirect target
-        required: False
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
         type: str
     port:
         description:
@@ -52,14 +57,14 @@ options:
             - (Required for new resource) Loadbalancer protocol
         required: True
         type: str
-    default_pool:
+    https_redirect_listener:
         description:
-            - Loadbalancer default pool info
+            - ID of the listener that will be set as http redirect target
         required: False
         type: str
-    certificate_instance:
+    https_redirect_uri:
         description:
-            - certificate instance for the Loadbalancer
+            - Target URI where traffic will be redirected
         required: False
         type: str
     connection_limit:
@@ -67,11 +72,6 @@ options:
             - Connection limit for Loadbalancer
         required: False
         type: int
-    lb:
-        description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,22 +118,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
     ('lb', 'str'),
+    ('protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'accept_proxy_protocol',
-    'https_redirect_status_code',
-    'https_redirect_uri',
-    'https_redirect_listener',
-    'port',
-    'protocol',
     'default_pool',
     'certificate_instance',
-    'connection_limit',
+    'accept_proxy_protocol',
+    'https_redirect_status_code',
     'lb',
+    'port',
+    'protocol',
+    'https_redirect_listener',
+    'https_redirect_uri',
+    'connection_limit',
 ]
 
 # Params for Data source
@@ -150,16 +150,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    default_pool=dict(
+        required=False,
+        type='str'),
+    certificate_instance=dict(
+        required=False,
+        type='str'),
     accept_proxy_protocol=dict(
         required=False,
         type='bool'),
     https_redirect_status_code=dict(
         required=False,
         type='int'),
-    https_redirect_uri=dict(
-        required=False,
-        type='str'),
-    https_redirect_listener=dict(
+    lb=dict(
         required=False,
         type='str'),
     port=dict(
@@ -168,18 +171,15 @@ module_args = dict(
     protocol=dict(
         required=False,
         type='str'),
-    default_pool=dict(
+    https_redirect_listener=dict(
         required=False,
         type='str'),
-    certificate_instance=dict(
+    https_redirect_uri=dict(
         required=False,
         type='str'),
     connection_limit=dict(
         required=False,
         type='int'),
-    lb=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

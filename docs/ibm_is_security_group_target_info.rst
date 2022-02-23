@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  security_group (True, str, None)
-    Security group id
-
-
   name (True, str, None)
     Security group target name
+
+
+  security_group (True, str, None)
+    Security group id
 
 
   generation (False, int, 2)

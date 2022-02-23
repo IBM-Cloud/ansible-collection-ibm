@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    subnet:
+        description:
+            - (Required for new resource) VPNGateway subnet info
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) VPN Gateway instance name
+        required: True
+        type: str
     tags:
         description:
             - VPN Gateway tags list
@@ -34,16 +44,6 @@ options:
         required: False
         type: str
         default: route
-    name:
-        description:
-            - (Required for new resource) VPN Gateway instance name
-        required: True
-        type: str
-    subnet:
-        description:
-            - (Required for new resource) VPNGateway subnet info
-        required: True
-        type: str
     resource_group:
         description:
             - The resource group for this VPN gateway
@@ -95,16 +95,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnet', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'subnet',
+    'name',
     'tags',
     'mode',
-    'name',
-    'subnet',
     'resource_group',
 ]
 
@@ -122,17 +122,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    mode=dict(
+    subnet=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    subnet=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    mode=dict(
         required=False,
         type='str'),
     resource_group=dict(

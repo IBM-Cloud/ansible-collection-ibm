@@ -29,20 +29,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc_name (False, str, None)
-    Name of the vpc to filter the instances attached to it
-
-
   vpc (False, str, None)
     VPC ID to filter the instances attached to it
+
+
+  placement_group (False, str, None)
+    ID of the placement group to filter the instances attached to it
 
 
   vpc_crn (False, str, None)
     VPC CRN to filter the instances attached to it
 
 
+  resource_group (False, str, None)
+    Instance resource group
+
+
   dedicated_host_name (False, str, None)
     Name of the dedicated host to filter the instances attached to it
+
+
+  dedicated_host (False, str, None)
+    ID of the dedicated host to filter the instances attached to it
 
 
   placement_group_name (False, str, None)
@@ -57,16 +65,8 @@ Parameters
     Instance group name to filter the instances attached to it
 
 
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  dedicated_host (False, str, None)
-    ID of the dedicated host to filter the instances attached to it
-
-
-  placement_group (False, str, None)
-    ID of the placement group to filter the instances attached to it
+  vpc_name (False, str, None)
+    Name of the vpc to filter the instances attached to it
 
 
   generation (False, int, 2)

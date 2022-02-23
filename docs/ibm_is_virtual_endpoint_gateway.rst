@@ -31,14 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) The VPC id
-
-
-  ips (False, list, None)
-    Endpoint gateway IPs
-
-
   target (True, list, None)
     (Required for new resource) Endpoint gateway target
 
@@ -57,6 +49,14 @@ Parameters
 
   security_groups (False, list, None)
     Endpoint gateway securitygroups list
+
+
+  ips (False, list, None)
+    Endpoint gateway IPs
+
+
+  vpc (True, str, None)
+    (Required for new resource) The VPC id
 
 
   id (False, str, None)

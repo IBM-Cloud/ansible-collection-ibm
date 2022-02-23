@@ -22,6 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    actions:
+        description:
+            - (Required for new resource) Page rule actions
+        required: True
+        type: list
+        elements: dict
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
@@ -47,12 +53,6 @@ options:
     targets:
         description:
             - (Required for new resource) Page rule targets
-        required: True
-        type: list
-        elements: dict
-    actions:
-        description:
-            - (Required for new resource) Page rule actions
         required: True
         type: list
         elements: dict
@@ -102,20 +102,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('actions', 'list'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('targets', 'list'),
-    ('actions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'actions',
     'cis_id',
     'domain_id',
     'priority',
     'status',
     'targets',
-    'actions',
 ]
 
 # Params for Data source
@@ -132,6 +132,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    actions=dict(
+        required=False,
+        elements='',
+        type='list'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -145,10 +149,6 @@ module_args = dict(
         required=False,
         type='str'),
     targets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    actions=dict(
         required=False,
         elements='',
         type='list'),

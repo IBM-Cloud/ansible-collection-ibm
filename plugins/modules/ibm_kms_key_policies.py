@@ -116,10 +116,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'policies',
     'instance_id',
     'endpoint_type',
     'key_id',
+    'policies',
 ]
 
 TL_CONFLICTS_MAP = {

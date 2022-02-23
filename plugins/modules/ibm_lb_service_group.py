@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    load_balancer_id:
+        description:
+            - (Required for new resource) Loadbalancer ID
+        required: True
+        type: int
+    routing_method:
+        description:
+            - (Required for new resource) Routing method
+        required: True
+        type: str
     routing_type:
         description:
             - (Required for new resource) Routing type
@@ -41,16 +51,6 @@ options:
     allocation:
         description:
             - (Required for new resource) Allocation type
-        required: True
-        type: int
-    routing_method:
-        description:
-            - (Required for new resource) Routing method
-        required: True
-        type: str
-    load_balancer_id:
-        description:
-            - (Required for new resource) Loadbalancer ID
         required: True
         type: int
     port:
@@ -104,21 +104,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('load_balancer_id', 'int'),
+    ('routing_method', 'str'),
     ('routing_type', 'str'),
     ('allocation', 'int'),
-    ('routing_method', 'str'),
-    ('load_balancer_id', 'int'),
     ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'load_balancer_id',
+    'routing_method',
     'routing_type',
     'timeout',
     'tags',
     'allocation',
-    'routing_method',
-    'load_balancer_id',
     'port',
 ]
 
@@ -136,6 +136,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    load_balancer_id=dict(
+        required=False,
+        type='int'),
+    routing_method=dict(
+        required=False,
+        type='str'),
     routing_type=dict(
         required=False,
         type='str'),
@@ -147,12 +153,6 @@ module_args = dict(
         elements='',
         type='list'),
     allocation=dict(
-        required=False,
-        type='int'),
-    routing_method=dict(
-        required=False,
-        type='str'),
-    load_balancer_id=dict(
         required=False,
         type='int'),
     port=dict(

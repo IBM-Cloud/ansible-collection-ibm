@@ -22,39 +22,18 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    before:
+    udp:
         description:
-            - The rule that this rule is immediately before. If absent, this is the last rule.
+            - None
         required: False
-        type: str
-    action:
-        description:
-            - (Required for new resource) Whether to allow or deny matching traffic
-        required: True
-        type: str
-    destination:
-        description:
-            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-        required: True
-        type: str
+        type: list
+        elements: dict
     direction:
         description:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
     icmp:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    tcp:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    udp:
         description:
             - None
         required: False
@@ -69,6 +48,27 @@ options:
         description:
             - The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
+        type: str
+    tcp:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    destination:
+        description:
+            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+        required: True
+        type: str
+    before:
+        description:
+            - The rule that this rule is immediately before. If absent, this is the last rule.
+        required: False
+        type: str
+    action:
+        description:
+            - (Required for new resource) Whether to allow or deny matching traffic
+        required: True
         type: str
     source:
         description:
@@ -121,24 +121,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('destination', 'str'),
     ('direction', 'str'),
     ('network_acl', 'str'),
+    ('destination', 'str'),
+    ('action', 'str'),
     ('source', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'before',
-    'action',
-    'destination',
+    'udp',
     'direction',
     'icmp',
-    'tcp',
-    'udp',
     'network_acl',
     'name',
+    'tcp',
+    'destination',
+    'before',
+    'action',
     'source',
 ]
 
@@ -154,24 +154,19 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'udp': ['icmp', 'tcp'],
     'icmp': ['tcp', 'udp'],
     'tcp': ['icmp', 'udp'],
-    'udp': ['icmp', 'tcp'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    before=dict(
+    udp=dict(
         required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
-    destination=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     direction=dict(
         required=False,
         type='str'),
@@ -179,18 +174,23 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tcp=dict(
-        required=False,
-        elements='',
-        type='list'),
-    udp=dict(
-        required=False,
-        elements='',
-        type='list'),
     network_acl=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    tcp=dict(
+        required=False,
+        elements='',
+        type='list'),
+    destination=dict(
+        required=False,
+        type='str'),
+    before=dict(
+        required=False,
+        type='str'),
+    action=dict(
         required=False,
         type='str'),
     source=dict(

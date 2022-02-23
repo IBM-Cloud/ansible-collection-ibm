@@ -22,14 +22,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    encryption_algorithm:
         description:
-            - (Required for new resource) IPSEC name
-        required: True
-        type: str
-    authentication_algorithm:
-        description:
-            - (Required for new resource) Authentication alorothm
+            - (Required for new resource) Encryption algorithm
         required: True
         type: str
     pfs:
@@ -48,9 +43,14 @@ options:
         required: False
         type: int
         default: 3600
-    encryption_algorithm:
+    name:
         description:
-            - (Required for new resource) Encryption algorithm
+            - (Required for new resource) IPSEC name
+        required: True
+        type: str
+    authentication_algorithm:
+        description:
+            - (Required for new resource) Authentication alorothm
         required: True
         type: str
     id:
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('encryption_algorithm', 'str'),
+    ('pfs', 'str'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
-    ('pfs', 'str'),
-    ('encryption_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'authentication_algorithm',
+    'encryption_algorithm',
     'pfs',
     'resource_group',
     'key_lifetime',
-    'encryption_algorithm',
+    'name',
+    'authentication_algorithm',
 ]
 
 # Params for Data source
@@ -129,10 +129,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    authentication_algorithm=dict(
+    encryption_algorithm=dict(
         required=False,
         type='str'),
     pfs=dict(
@@ -144,7 +141,10 @@ module_args = dict(
     key_lifetime=dict(
         required=False,
         type='int'),
-    encryption_algorithm=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    authentication_algorithm=dict(
         required=False,
         type='str'),
     id=dict(

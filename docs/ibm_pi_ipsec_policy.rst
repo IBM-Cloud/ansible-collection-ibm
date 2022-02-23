@@ -31,14 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_policy_encryption (True, str, None)
-    (Required for new resource) Encryption of the IPSec Policy
-
-
-  pi_policy_key_lifetime (True, int, None)
-    (Required for new resource) Policy key lifetime
-
-
   pi_policy_pfs (True, bool, None)
     (Required for new resource) Perfect Forward Secrecy
 
@@ -57,6 +49,14 @@ Parameters
 
   pi_policy_dh_group (True, int, None)
     (Required for new resource) DH group of the IPSec Policy
+
+
+  pi_policy_encryption (True, str, None)
+    (Required for new resource) Encryption of the IPSec Policy
+
+
+  pi_policy_key_lifetime (True, int, None)
+    (Required for new resource) Policy key lifetime
 
 
   id (False, str, None)

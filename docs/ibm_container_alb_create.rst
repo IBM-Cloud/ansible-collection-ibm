@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    (Required for new resource) The zone where you want to deploy the ALB.
+  enable (False, bool, True)
+    If set to true, the ALB is enabled by default.
 
 
   ip (False, str, None)
@@ -43,24 +43,24 @@ Parameters
     The version of the network load balancer that you want to use for the ALB.
 
 
-  enable (False, bool, True)
-    If set to true, the ALB is enabled by default.
-
-
-  cluster (True, str, None)
-    (Required for new resource) The ID of the cluster that the ALB belongs to.
+  ingress_image (False, str, None)
+    The type of Ingress image that you want to use for your ALB deployment.
 
 
   vlan_id (True, str, None)
     (Required for new resource) The VLAN ID that you want to use for your ALBs.
 
 
+  cluster (True, str, None)
+    (Required for new resource) The ID of the cluster that the ALB belongs to.
+
+
   alb_type (True, str, None)
     (Required for new resource) The type of ALB that you want to create.
 
 
-  ingress_image (False, str, None)
-    The type of Ingress image that you want to use for your ALB deployment.
+  zone (True, str, None)
+    (Required for new resource) The zone where you want to deploy the ALB.
 
 
   id (False, str, None)

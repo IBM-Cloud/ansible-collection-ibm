@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  domain_id (True, str, None)
+    CIS Domain ID
+
+
   package_id (True, str, None)
     WAF Rule package id
 
 
   cis_id (True, str, None)
     CIS Intance CRN
-
-
-  domain_id (True, str, None)
-    CIS Domain ID
 
 
   iaas_classic_username (False, any, None)

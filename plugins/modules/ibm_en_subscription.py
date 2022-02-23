@@ -22,9 +22,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
+    instance_guid:
         description:
-            - (Required for new resource) Subscription name.
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
     description:
@@ -32,9 +32,9 @@ options:
             - Subscription description.
         required: False
         type: str
-    topic_id:
+    destination_id:
         description:
-            - (Required for new resource) Topic ID.
+            - (Required for new resource) Destination ID.
         required: True
         type: str
     attributes:
@@ -43,14 +43,14 @@ options:
         required: True
         type: list
         elements: dict
-    instance_guid:
+    name:
         description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+            - (Required for new resource) Subscription name.
         required: True
         type: str
-    destination_id:
+    topic_id:
         description:
-            - (Required for new resource) Destination ID.
+            - (Required for new resource) Topic ID.
         required: True
         type: str
     id:
@@ -99,32 +99,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('topic_id', 'str'),
-    ('attributes', 'list'),
     ('instance_guid', 'str'),
     ('destination_id', 'str'),
+    ('attributes', 'list'),
+    ('name', 'str'),
+    ('topic_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'description',
-    'topic_id',
-    'attributes',
     'instance_guid',
+    'description',
     'destination_id',
+    'attributes',
+    'name',
+    'topic_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('subscription_id', 'str'),
     ('instance_guid', 'str'),
+    ('subscription_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'subscription_id',
     'instance_guid',
+    'subscription_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -134,23 +134,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    instance_guid=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    topic_id=dict(
+    destination_id=dict(
         required=False,
         type='str'),
     attributes=dict(
         required=False,
         elements='',
         type='list'),
-    instance_guid=dict(
+    name=dict(
         required=False,
         type='str'),
-    destination_id=dict(
+    topic_id=dict(
         required=False,
         type='str'),
     id=dict(

@@ -27,6 +27,11 @@ options:
             - (Required for new resource) Name of the topic.
         required: True
         type: str
+    description:
+        description:
+            - Description of the topic.
+        required: False
+        type: str
     sources:
         description:
             - List of sources.
@@ -37,11 +42,6 @@ options:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
-        type: str
-    description:
-        description:
-            - Description of the topic.
-        required: False
         type: str
     id:
         description:
@@ -96,9 +96,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'description',
     'sources',
     'instance_guid',
-    'description',
 ]
 
 # Params for Data source
@@ -122,14 +122,14 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     sources=dict(
         required=False,
         elements='',
         type='list'),
     instance_guid=dict(
-        required=False,
-        type='str'),
-    description=dict(
         required=False,
         type='str'),
     id=dict(

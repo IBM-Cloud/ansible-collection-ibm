@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) The ID or the CRN of the Event Streams service instance
-
-
   schema (True, str, None)
     (Required for new resource) The schema in JSON format
 
 
   schema_id (False, str, None)
     The ID to be assigned to schema, which must be unique. If this value is not specified, a generated UUID is assigned.
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) The ID or the CRN of the Event Streams service instance
 
 
   id (False, str, None)

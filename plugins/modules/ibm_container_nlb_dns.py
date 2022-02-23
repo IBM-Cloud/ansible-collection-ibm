@@ -27,11 +27,6 @@ options:
             - The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
         required: False
         type: str
-    cluster:
-        description:
-            - (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
-        required: True
-        type: str
     nlb_host:
         description:
             - (Required for new resource) 
@@ -43,6 +38,11 @@ options:
         required: True
         type: list
         elements: str
+    cluster:
+        description:
+            - (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -69,17 +69,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('nlb_host', 'str'),
     ('nlb_ips', 'list'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'cluster',
     'nlb_host',
     'nlb_ips',
+    'cluster',
 ]
 
 # Params for Data source
@@ -101,9 +101,6 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    cluster=dict(
-        required=False,
-        type='str'),
     nlb_host=dict(
         required=False,
         type='str'),
@@ -111,6 +108,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    cluster=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

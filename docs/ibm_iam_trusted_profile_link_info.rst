@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile_id (True, str, None)
-    ID of the trusted profile.
-
-
   link_id (True, str, None)
     ID of the link.
+
+
+  profile_id (True, str, None)
+    ID of the trusted profile.
 
 
   iaas_classic_username (False, any, None)

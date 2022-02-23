@@ -22,47 +22,41 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    occurrence_id:
-        description:
-            - (Required for new resource) The id of the occurrence.
-        required: True
-        type: str
-    remediation:
-        description:
-            - A description of actions that can be taken to remedy the `Note`.
-        required: False
-        type: str
-    kpi:
-        description:
-            - Kpi provides details about a KPI occurrence.
-        required: False
-        type: list
-        elements: dict
-    replace_if_exists:
-        description:
-            - When set to true, an existing occurrence is replaced rather than duplicated.
-        required: False
-        type: bool
-        default: False
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
     note_name:
         description:
             - (Required for new resource) An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This field can be used as a filter in list requests.
         required: True
         type: str
-    kind:
+    occurrence_id:
         description:
-            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
+            - (Required for new resource) The id of the occurrence.
         required: True
         type: str
     resource_url:
         description:
             - The unique URL of the resource, image or the container, for which the `Occurrence` applies. For example, https://gcr.io/provider/image@sha256:foo. This field can be used as a filter in list requests.
         required: False
+        type: str
+    remediation:
+        description:
+            - A description of actions that can be taken to remedy the `Note`.
+        required: False
+        type: str
+    replace_if_exists:
+        description:
+            - When set to true, an existing occurrence is replaced rather than duplicated.
+        required: False
+        type: bool
+        default: False
+    provider_id:
+        description:
+            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+        required: True
+        type: str
+    kind:
+        description:
+            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
+        required: True
         type: str
     context:
         description:
@@ -76,10 +70,16 @@ options:
         required: False
         type: list
         elements: dict
-    provider_id:
+    kpi:
         description:
-            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-        required: True
+            - Kpi provides details about a KPI occurrence.
+        required: False
+        type: list
+        elements: dict
+    account_id:
+        description:
+            - None
+        required: False
         type: str
     id:
         description:
@@ -127,25 +127,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('occurrence_id', 'str'),
     ('note_name', 'str'),
-    ('kind', 'str'),
+    ('occurrence_id', 'str'),
     ('provider_id', 'str'),
+    ('kind', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'occurrence_id',
-    'remediation',
-    'kpi',
-    'replace_if_exists',
-    'account_id',
     'note_name',
-    'kind',
+    'occurrence_id',
     'resource_url',
+    'remediation',
+    'replace_if_exists',
+    'provider_id',
+    'kind',
     'context',
     'finding',
-    'provider_id',
+    'kpi',
+    'account_id',
 ]
 
 # Params for Data source
@@ -167,29 +167,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    note_name=dict(
+        required=False,
+        type='str'),
     occurrence_id=dict(
+        required=False,
+        type='str'),
+    resource_url=dict(
         required=False,
         type='str'),
     remediation=dict(
         required=False,
         type='str'),
-    kpi=dict(
-        required=False,
-        elements='',
-        type='list'),
     replace_if_exists=dict(
         required=False,
         type='bool'),
-    account_id=dict(
-        required=False,
-        type='str'),
-    note_name=dict(
+    provider_id=dict(
         required=False,
         type='str'),
     kind=dict(
-        required=False,
-        type='str'),
-    resource_url=dict(
         required=False,
         type='str'),
     context=dict(
@@ -200,7 +196,11 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    provider_id=dict(
+    kpi=dict(
+        required=False,
+        elements='',
+        type='list'),
+    account_id=dict(
         required=False,
         type='str'),
     id=dict(

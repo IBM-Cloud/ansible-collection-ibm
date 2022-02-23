@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    crn:
-        description:
-            - (Required for new resource) CRN of the Location.
-        required: True
-        type: str
     location:
         description:
             - (Required for new resource) Location ID.
@@ -36,6 +31,11 @@ options:
         description:
             - The ws endpoint of the location.
         required: False
+        type: str
+    crn:
+        description:
+            - (Required for new resource) CRN of the Location.
+        required: True
         type: str
     id:
         description:
@@ -83,15 +83,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('crn', 'str'),
     ('location', 'str'),
+    ('crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'crn',
     'location',
     'ws_endpoint',
+    'crn',
 ]
 
 # Params for Data source
@@ -110,13 +110,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    crn=dict(
-        required=False,
-        type='str'),
     location=dict(
         required=False,
         type='str'),
     ws_endpoint=dict(
+        required=False,
+        type='str'),
+    crn=dict(
         required=False,
         type='str'),
     id=dict(

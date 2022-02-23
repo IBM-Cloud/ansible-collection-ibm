@@ -22,9 +22,9 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    instance_guid:
+    name:
         description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+            - (Required for new resource) The Destintion name.
         required: True
         type: str
     description:
@@ -32,9 +32,9 @@ options:
             - The Destination description.
         required: False
         type: str
-    name:
+    instance_guid:
         description:
-            - (Required for new resource) The Destintion name.
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
     type:
@@ -94,29 +94,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_guid', 'str'),
     ('name', 'str'),
+    ('instance_guid', 'str'),
     ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_guid',
-    'description',
     'name',
+    'description',
+    'instance_guid',
     'type',
     'config',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('destination_id', 'str'),
     ('instance_guid', 'str'),
+    ('destination_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'destination_id',
     'instance_guid',
+    'destination_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -126,13 +126,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_guid=dict(
+    name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    name=dict(
+    instance_guid=dict(
         required=False,
         type='str'),
     type=dict(

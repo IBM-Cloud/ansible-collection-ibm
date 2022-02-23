@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
   name (True, str, None)
     worker pool name
+
+
+  cluster (True, str, None)
+    Cluster name
 
 
   resource_group_id (False, str, None)
     ID of the resource group
 
 
-  cluster (True, str, None)
-    Cluster name
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   iaas_classic_username (False, any, None)

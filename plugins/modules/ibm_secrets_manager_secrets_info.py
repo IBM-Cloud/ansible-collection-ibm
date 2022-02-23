@@ -21,12 +21,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    endpoint_type:
-        description:
-            - Endpoint Type. 'public' or 'private'
-        required: False
-        type: str
-        default: public
     instance_id:
         description:
             - Secrets Manager instance GUID
@@ -37,6 +31,12 @@ options:
             - The secret type. Supported options include: arbitrary, iam_credentials, username_password.
         required: False
         type: str
+    endpoint_type:
+        description:
+            - Endpoint Type. 'public' or 'private'
+        required: False
+        type: str
+        default: public
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -75,9 +75,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'endpoint_type',
     'instance_id',
     'secret_type',
+    'endpoint_type',
 ]
 
 
@@ -88,13 +88,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    endpoint_type=dict(
-        required=False,
-        type='str'),
     instance_id=dict(
         required=True,
         type='str'),
     secret_type=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(

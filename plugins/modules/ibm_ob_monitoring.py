@@ -22,16 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - (Required for new resource) Name or ID of the cluster to be used.
-        required: True
-        type: str
     private_endpoint:
         description:
             - Add this option to connect to your Sysdig service instance through the private service endpoint
         required: False
         type: bool
+    cluster:
+        description:
+            - (Required for new resource) Name or ID of the cluster to be used.
+        required: True
+        type: str
     instance_id:
         description:
             - (Required for new resource) ID of the Sysdig service instance to latch
@@ -94,8 +94,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'private_endpoint',
+    'cluster',
     'instance_id',
     'sysdig_access_key',
 ]
@@ -114,12 +114,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=False,
-        type='str'),
     private_endpoint=dict(
         required=False,
         type='bool'),
+    cluster=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=False,
         type='str'),

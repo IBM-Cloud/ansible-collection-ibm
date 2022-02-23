@@ -33,8 +33,8 @@ Parameters
     The name/id of the cluster
 
 
-  download (False, bool, True)
-    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
+  network (False, bool, False)
+    If set to true will download the Calico network config with the Admin config
 
 
   config_dir (False, str, None)
@@ -49,8 +49,8 @@ Parameters
     If set to true will download the config for admin
 
 
-  network (False, bool, False)
-    If set to true will download the Calico network config with the Admin config
+  download (False, bool, True)
+    If set to false will not download the config, otherwise they are downloaded each time but onto the same path for a given cluster name/id
 
 
   ibmcloud_api_key (True, any, None)

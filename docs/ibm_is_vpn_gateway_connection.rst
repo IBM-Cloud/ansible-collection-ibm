@@ -31,32 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
-
-
-  local_cidrs (False, list, None)
-    VPN gateway connection local CIDRs
-
-
   name (True, str, None)
     (Required for new resource) VPN Gateway connection name
-
-
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
-
-
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
-
-
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
-
-
-  interval (False, int, 2)
-    Interval for dead peer detection interval
 
 
   ipsec_policy (False, str, None)
@@ -65,6 +41,10 @@ Parameters
 
   peer_address (True, str, None)
     (Required for new resource) VPN gateway connection peer address
+
+
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
 
 
   action (False, str, restart)
@@ -77,6 +57,26 @@ Parameters
 
   ike_policy (False, str, None)
     VPN gateway connection IKE Policy
+
+
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
+
+
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
+
+
+  local_cidrs (False, list, None)
+    VPN gateway connection local CIDRs
+
+
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
+
+
+  interval (False, int, 2)
+    Interval for dead peer detection interval
 
 
   id (False, str, None)

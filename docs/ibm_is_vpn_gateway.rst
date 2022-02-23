@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    VPN Gateway tags list
-
-
-  mode (False, str, route)
-    mode in VPN gateway(route/policy)
+  subnet (True, str, None)
+    (Required for new resource) VPNGateway subnet info
 
 
   name (True, str, None)
     (Required for new resource) VPN Gateway instance name
 
 
-  subnet (True, str, None)
-    (Required for new resource) VPNGateway subnet info
+  tags (False, list, None)
+    VPN Gateway tags list
+
+
+  mode (False, str, route)
+    mode in VPN gateway(route/policy)
 
 
   resource_group (False, str, None)

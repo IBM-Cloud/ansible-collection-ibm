@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    Tags set for the resource
+
+
   datacenter (True, str, None)
     (Required for new resource) Datacenter name
 
@@ -45,10 +49,6 @@ Parameters
 
   hardware_instance_id (False, int, None)
     Hardware instance ID
-
-
-  tags (False, list, None)
-    Tags set for the resource
 
 
   id (False, str, None)

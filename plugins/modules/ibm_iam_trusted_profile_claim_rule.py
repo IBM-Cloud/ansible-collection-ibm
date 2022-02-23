@@ -22,6 +22,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    cr_type:
+        description:
+            - The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+        required: True
+        type: str
+    name:
+        description:
+            - Name of the claim rule to be created or updated.
+        required: False
+        type: str
+    realm_name:
+        description:
+            - The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
+        required: False
+        type: str
     expiration:
         description:
             - Session expiration in seconds, only required if type is 'Profile-SAML'.
@@ -38,26 +58,6 @@ options:
         required: True
         type: list
         elements: dict
-    name:
-        description:
-            - Name of the claim rule to be created or updated.
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
-        required: True
-        type: str
-    realm_name:
-        description:
-            - The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
-        required: False
-        type: str
-    cr_type:
-        description:
-            - The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,31 +104,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
     ('profile_id', 'str'),
     ('conditions', 'list'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cr_type',
+    'type',
+    'name',
+    'realm_name',
     'expiration',
     'profile_id',
     'conditions',
-    'name',
-    'type',
-    'realm_name',
-    'cr_type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('rule_id', 'str'),
     ('profile_id', 'str'),
+    ('rule_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'rule_id',
     'profile_id',
+    'rule_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,6 +138,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cr_type=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    realm_name=dict(
+        required=False,
+        type='str'),
     expiration=dict(
         required=False,
         type='int'),
@@ -148,18 +160,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    realm_name=dict(
-        required=False,
-        type='str'),
-    cr_type=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

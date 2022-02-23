@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) IKE name
+  resource_group (False, str, None)
+    IKE resource group ID
+
+
+  key_lifetime (False, int, 28800)
+    IKE Key lifetime
 
 
   authentication_algorithm (True, str, None)
@@ -43,20 +47,16 @@ Parameters
     (Required for new resource) Encryption alogorithm type
 
 
-  key_lifetime (False, int, 28800)
-    IKE Key lifetime
-
-
   dh_group (True, int, None)
     (Required for new resource) IKE DH group
 
 
-  resource_group (False, str, None)
-    IKE resource group ID
-
-
   ike_version (False, int, None)
     IKE version
+
+
+  name (True, str, None)
+    (Required for new resource) IKE name
 
 
   id (False, str, None)

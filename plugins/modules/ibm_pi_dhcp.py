@@ -79,13 +79,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_dhcp_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_dhcp_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_dhcp_id',
     'pi_cloud_instance_id',
+    'pi_dhcp_id',
 ]
 
 TL_CONFLICTS_MAP = {

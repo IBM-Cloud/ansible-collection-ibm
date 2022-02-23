@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  kind (False, str, offering)
-    Kind of catalog, offering or vpe.
+  catalog_icon_url (False, str, None)
+    URL for an icon associated with this catalog.
 
 
   short_description (False, str, None)
     Description in the requested language.
 
 
-  catalog_icon_url (False, str, None)
-    URL for an icon associated with this catalog.
+  label (True, str, None)
+    (Required for new resource) Display Name in the requested language.
 
 
   tags (False, list, None)
     List of tags associated with this catalog.
 
 
-  label (True, str, None)
-    (Required for new resource) Display Name in the requested language.
-
-
   resource_group_id (False, str, None)
     Resource Group ID
+
+
+  kind (False, str, offering)
+    Kind of catalog, offering or vpe.
 
 
   id (False, str, None)

@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Name or ID of the cluster to be used.
-
-
   private_endpoint (False, bool, None)
     Add this option to connect to your Sysdig service instance through the private service endpoint
+
+
+  cluster (True, str, None)
+    (Required for new resource) Name or ID of the cluster to be used.
 
 
   instance_id (True, str, None)

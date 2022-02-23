@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    profile_id:
-        description:
-            - ID of the trusted profile.
-        required: True
-        type: str
     link_id:
         description:
             - ID of the link.
+        required: True
+        type: str
+    profile_id:
+        description:
+            - ID of the trusted profile.
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile_id', 'str'),
     ('link_id', 'str'),
+    ('profile_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile_id',
     'link_id',
+    'profile_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile_id=dict(
+    link_id=dict(
         required=True,
         type='str'),
-    link_id=dict(
+    profile_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

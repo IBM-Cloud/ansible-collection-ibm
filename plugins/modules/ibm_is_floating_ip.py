@@ -22,6 +22,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Name of the floating IP
+        required: True
+        type: str
+    tags:
+        description:
+            - Floating IP tags
+        required: False
+        type: list
+        elements: str
+    zone:
+        description:
+            - Zone name
+        required: False
+        type: str
     target:
         description:
             - Target info
@@ -32,22 +48,6 @@ options:
             - Resource group info
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) Name of the floating IP
-        required: True
-        type: str
-    zone:
-        description:
-            - Zone name
-        required: False
-        type: str
-    tags:
-        description:
-            - Floating IP tags
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,11 +99,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'tags',
+    'zone',
     'target',
     'resource_group',
-    'name',
-    'zone',
-    'tags',
 ]
 
 # Params for Data source
@@ -116,30 +116,30 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'target': ['zone'],
     'zone': ['target'],
+    'target': ['zone'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    target=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    zone=dict(
+        required=False,
+        type='str'),
+    target=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

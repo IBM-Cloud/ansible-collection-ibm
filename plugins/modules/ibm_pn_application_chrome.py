@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    web_site_url:
+        description:
+            - (Required for new resource) The URL of the WebSite / WebApp that should be permitted to subscribe to WebPush.
+        required: True
+        type: str
     guid:
         description:
             - (Required for new resource) Unique guid of the push notification instance.
@@ -30,11 +35,6 @@ options:
     server_key:
         description:
             - (Required for new resource) A server key that gives the push service an authorized access to Google services that is used for Chrome Web Push.
-        required: True
-        type: str
-    web_site_url:
-        description:
-            - (Required for new resource) The URL of the WebSite / WebApp that should be permitted to subscribe to WebPush.
         required: True
         type: str
     id:
@@ -83,16 +83,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('web_site_url', 'str'),
     ('guid', 'str'),
     ('server_key', 'str'),
-    ('web_site_url', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'web_site_url',
     'guid',
     'server_key',
-    'web_site_url',
 ]
 
 # Params for Data source
@@ -111,13 +111,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    web_site_url=dict(
+        required=False,
+        type='str'),
     guid=dict(
         required=False,
         type='str'),
     server_key=dict(
-        required=False,
-        type='str'),
-    web_site_url=dict(
         required=False,
         type='str'),
     id=dict(

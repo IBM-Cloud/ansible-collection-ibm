@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  datacenter (True, str, None)
+    (Required for new resource) Dataceneter name
+
+
   pod (True, str, None)
     (Required for new resource) Pod name
 
@@ -45,10 +49,6 @@ Parameters
 
   tags (False, list, None)
     List of tags
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Dataceneter name
 
 
   id (False, str, None)

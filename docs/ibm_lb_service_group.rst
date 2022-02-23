@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  load_balancer_id (True, int, None)
+    (Required for new resource) Loadbalancer ID
+
+
+  routing_method (True, str, None)
+    (Required for new resource) Routing method
+
+
   routing_type (True, str, None)
     (Required for new resource) Routing type
 
@@ -45,14 +53,6 @@ Parameters
 
   allocation (True, int, None)
     (Required for new resource) Allocation type
-
-
-  routing_method (True, str, None)
-    (Required for new resource) Routing method
-
-
-  load_balancer_id (True, int, None)
-    (Required for new resource) Loadbalancer ID
 
 
   port (True, int, None)

@@ -22,6 +22,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pi_image_access_key:
+        description:
+            - Cloud Object Storage access key; required for buckets with private access
+        required: False
+        type: str
+    pi_image_secret_key:
+        description:
+            - Cloud Object Storage secret key; required for buckets with private access
+        required: False
+        type: str
+    pi_image_bucket_region:
+        description:
+            - Cloud Object Storage region
+        required: False
+        type: str
+    pi_image_storage_type:
+        description:
+            - Type of storage
+        required: False
+        type: str
+    pi_image_bucket_name:
+        description:
+            - Cloud Object Storage bucket name; bucket-name[/optional/folder]
+        required: False
+        type: str
     pi_image_name:
         description:
             - (Required for new resource) Image name
@@ -38,40 +63,15 @@ options:
         required: False
         type: str
         default: public
-    pi_image_access_key:
-        description:
-            - Cloud Object Storage access key; required for buckets with private access
-        required: False
-        type: str
-    pi_image_bucket_region:
-        description:
-            - Cloud Object Storage region
-        required: False
-        type: str
     pi_image_bucket_file_name:
         description:
             - Cloud Object Storage image filename
-        required: False
-        type: str
-    pi_image_storage_type:
-        description:
-            - Type of storage
         required: False
         type: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
         required: True
-        type: str
-    pi_image_bucket_name:
-        description:
-            - Cloud Object Storage bucket name; bucket-name[/optional/folder]
-        required: False
-        type: str
-    pi_image_secret_key:
-        description:
-            - Cloud Object Storage secret key; required for buckets with private access
-        required: False
         type: str
     id:
         description:
@@ -121,41 +121,56 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_image_access_key',
+    'pi_image_secret_key',
+    'pi_image_bucket_region',
+    'pi_image_storage_type',
+    'pi_image_bucket_name',
     'pi_image_name',
     'pi_image_id',
     'pi_image_bucket_access',
-    'pi_image_access_key',
-    'pi_image_bucket_region',
     'pi_image_bucket_file_name',
-    'pi_image_storage_type',
     'pi_cloud_instance_id',
-    'pi_image_bucket_name',
-    'pi_image_secret_key',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_image_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_cloud_instance_id',
     'pi_image_name',
+    'pi_cloud_instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
+    'pi_image_bucket_region': ['pi_image_id'],
+    'pi_image_bucket_name': ['pi_image_id'],
     'pi_image_id': ['pi_image_bucket_name'],
     'pi_image_bucket_access': ['pi_image_id'],
-    'pi_image_bucket_region': ['pi_image_id'],
     'pi_image_bucket_file_name': ['pi_image_id'],
-    'pi_image_bucket_name': ['pi_image_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_image_access_key=dict(
+        required=False,
+        type='str'),
+    pi_image_secret_key=dict(
+        required=False,
+        type='str'),
+    pi_image_bucket_region=dict(
+        required=False,
+        type='str'),
+    pi_image_storage_type=dict(
+        required=False,
+        type='str'),
+    pi_image_bucket_name=dict(
+        required=False,
+        type='str'),
     pi_image_name=dict(
         required=False,
         type='str'),
@@ -165,25 +180,10 @@ module_args = dict(
     pi_image_bucket_access=dict(
         required=False,
         type='str'),
-    pi_image_access_key=dict(
-        required=False,
-        type='str'),
-    pi_image_bucket_region=dict(
-        required=False,
-        type='str'),
     pi_image_bucket_file_name=dict(
         required=False,
         type='str'),
-    pi_image_storage_type=dict(
-        required=False,
-        type='str'),
     pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_image_bucket_name=dict(
-        required=False,
-        type='str'),
-    pi_image_secret_key=dict(
         required=False,
         type='str'),
     id=dict(

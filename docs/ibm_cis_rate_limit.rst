@@ -35,8 +35,28 @@ Parameters
     (Required for new resource) CIS Intance CRN
 
 
+  bypass (False, list, None)
+    Bypass URL
+
+
+  threshold (True, int, None)
+    (Required for new resource) Rate Limiting Threshold
+
+
+  action (True, list, None)
+    (Required for new resource) Rate Limiting Action
+
+
+  match (False, list, None)
+    Rate Limiting Match
+
+
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
+
+
+  disabled (False, bool, False)
+    Whether this rate limiting rule is currently disabled.
 
 
   description (False, str, None)
@@ -49,26 +69,6 @@ Parameters
 
   correlate (False, list, None)
     Ratelimiting Correlate
-
-
-  action (True, list, None)
-    (Required for new resource) Rate Limiting Action
-
-
-  disabled (False, bool, False)
-    Whether this rate limiting rule is currently disabled.
-
-
-  bypass (False, list, None)
-    Bypass URL
-
-
-  threshold (True, int, None)
-    (Required for new resource) Rate Limiting Threshold
-
-
-  match (False, list, None)
-    Rate Limiting Match
 
 
   id (False, str, None)

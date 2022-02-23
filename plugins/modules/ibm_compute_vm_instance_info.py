@@ -26,17 +26,17 @@ options:
             - The domain of the virtual guest
         required: True
         type: str
+    hostname:
+        description:
+            - The hostname of the virtual guest
+        required: True
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created virtual guest is used. If false, an error is returned
         required: False
         type: bool
         default: False
-    hostname:
-        description:
-            - The hostname of the virtual guest
-        required: True
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -77,8 +77,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'domain',
-    'most_recent',
     'hostname',
+    'most_recent',
 ]
 
 
@@ -92,12 +92,12 @@ module_args = dict(
     domain=dict(
         required=True,
         type='str'),
-    most_recent=dict(
-        required=False,
-        type='bool'),
     hostname=dict(
         required=True,
         type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,

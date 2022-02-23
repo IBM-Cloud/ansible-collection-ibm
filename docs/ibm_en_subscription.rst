@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Subscription name.
+  instance_guid (True, str, None)
+    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
 
 
   description (False, str, None)
     Subscription description.
 
 
-  topic_id (True, str, None)
-    (Required for new resource) Topic ID.
+  destination_id (True, str, None)
+    (Required for new resource) Destination ID.
 
 
   attributes (True, list, None)
     (Required for new resource)
 
 
-  instance_guid (True, str, None)
-    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+  name (True, str, None)
+    (Required for new resource) Subscription name.
 
 
-  destination_id (True, str, None)
-    (Required for new resource) Destination ID.
+  topic_id (True, str, None)
+    (Required for new resource) Topic ID.
 
 
   id (False, str, None)

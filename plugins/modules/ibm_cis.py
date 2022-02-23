@@ -22,19 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    parameters:
+    tags:
         description:
-            - Arbitrary parameters to pass. Must be a JSON object
+            - None
         required: False
-        type: dict
-    name:
-        description:
-            - (Required for new resource) A name for the resource instance
-        required: True
-        type: str
+        type: list
+        elements: str
     plan:
         description:
             - (Required for new resource) The plan type of the service
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) A name for the resource instance
         required: True
         type: str
     location:
@@ -42,17 +43,16 @@ options:
             - (Required for new resource) The location where the instance available
         required: True
         type: str
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
     resource_group_id:
         description:
             - The resource group id
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('plan', 'str'),
+    ('name', 'str'),
     ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameters',
-    'name',
-    'plan',
-    'location',
-    'resource_group_id',
     'tags',
+    'plan',
+    'name',
+    'location',
+    'parameters',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -131,25 +131,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameters=dict(
+    tags=dict(
         required=False,
-        type='dict'),
-    name=dict(
+        elements='',
+        type='list'),
+    plan=dict(
         required=False,
         type='str'),
-    plan=dict(
+    name=dict(
         required=False,
         type='str'),
     location=dict(
         required=False,
         type='str'),
+    parameters=dict(
+        required=False,
+        type='dict'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),

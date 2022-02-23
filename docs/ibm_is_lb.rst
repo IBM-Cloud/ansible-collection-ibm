@@ -39,32 +39,32 @@ Parameters
     None
 
 
+  route_mode (False, bool, False)
+    Indicates whether route mode is enabled for this load balancer
+
+
   subnets (True, list, None)
     (Required for new resource) Load Balancer subnets list
-
-
-  type (False, str, public)
-    Load Balancer type
 
 
   tags (False, list, None)
     None
 
 
-  route_mode (False, bool, False)
-    Indicates whether route mode is enabled for this load balancer
+  profile (False, str, None)
+    The profile to use for this load balancer.
 
 
   logging (False, bool, False)
     Logging of Load Balancer
 
 
+  type (False, str, public)
+    Load Balancer type
+
+
   security_groups (False, list, None)
     Load Balancer securitygroups list
-
-
-  profile (False, str, None)
-    The profile to use for this load balancer.
 
 
   id (False, str, None)

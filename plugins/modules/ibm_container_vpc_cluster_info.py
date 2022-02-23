@@ -27,14 +27,14 @@ options:
         required: False
         type: str
         default: all
-    name:
-        description:
-            - Name or id of the cluster
-        required: False
-        type: str
     resource_group_id:
         description:
             - ID of the resource group.
+        required: False
+        type: str
+    name:
+        description:
+            - Name or id of the cluster
         required: False
         type: str
     ibmcloud_api_key:
@@ -55,8 +55,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'alb_type',
-    'name',
     'resource_group_id',
+    'name',
 ]
 
 
@@ -70,10 +70,10 @@ module_args = dict(
     alb_type=dict(
         required=False,
         type='str'),
-    name=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    name=dict(
         required=False,
         type='str'),
     ibmcloud_api_key=dict(

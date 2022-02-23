@@ -97,13 +97,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('tenant_id', 'str'),
     ('client_id', 'str'),
+    ('tenant_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'tenant_id',
     'client_id',
+    'tenant_id',
 ]
 
 TL_CONFLICTS_MAP = {

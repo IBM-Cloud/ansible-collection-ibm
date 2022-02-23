@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway_id (True, int, None)
-    (Required for new resource) Gateway instance ID
-
-
   network_vlan_id (True, int, None)
     (Required for new resource) The Identifier of the VLAN to be associated
 
 
   bypass (False, bool, True)
     Indicates if the VLAN should be in bypass or routed modes
+
+
+  gateway_id (True, int, None)
+    (Required for new resource) Gateway instance ID
 
 
   id (False, str, None)

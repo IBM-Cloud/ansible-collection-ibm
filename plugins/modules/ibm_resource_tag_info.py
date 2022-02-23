@@ -21,6 +21,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    resource_type:
+        description:
+            - Resource type on which the tags should be fetched
+        required: False
+        type: str
     tag_type:
         description:
             - Tag type on which the tags should be fetched
@@ -30,11 +35,6 @@ options:
     resource_id:
         description:
             - CRN of the resource on which the tags should be attached
-        required: False
-        type: str
-    resource_type:
-        description:
-            - Resource type on which the tags should be fetched
         required: False
         type: str
     iaas_classic_username:
@@ -74,9 +74,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_type',
     'tag_type',
     'resource_id',
-    'resource_type',
 ]
 
 
@@ -87,13 +87,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_type=dict(
+        required=False,
+        type='str'),
     tag_type=dict(
         required=False,
         type='str'),
     resource_id=dict(
-        required=False,
-        type='str'),
-    resource_type=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(

@@ -33,12 +33,12 @@ Parameters
     None
 
 
-  name (False, str, None)
-    Name or id of the cluster
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  name (False, str, None)
+    Name or id of the cluster
 
 
   ibmcloud_api_key (True, any, None)

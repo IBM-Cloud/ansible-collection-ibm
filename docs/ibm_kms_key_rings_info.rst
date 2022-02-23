@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    Key protect or hpcs instance GUID
-
-
   endpoint_type (False, str, public)
     public or private
+
+
+  instance_id (True, str, None)
+    Key protect or hpcs instance GUID
 
 
   iaas_classic_username (False, any, None)

@@ -22,40 +22,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_anti_affinity_volumes:
-        description:
-            - List of volumes to base volume anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_instances is not provided
-        required: False
-        type: list
-        elements: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
-    pi_volume_type:
-        description:
-            - Type of Disk, required if pi_affinity_policy and pi_volume_pool not provided, otherwise ignored
-        required: False
-        type: str
-    pi_affinity_policy:
-        description:
-            - Affinity policy for data volume being created; ignored if pi_volume_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
-        required: False
-        type: str
-    pi_volume_shareable:
-        description:
-            - Flag to indicate if the volume can be shared across multiple instances?
-        required: False
-        type: bool
-    pi_volume_size:
-        description:
-            - (Required for new resource) Size of the volume in GB
-        required: True
-        type: float
     pi_volume_pool:
         description:
             - Volume pool where the volume will be created; if provided then pi_volume_type and pi_affinity_policy values will be ignored
+        required: False
+        type: str
+    pi_affinity_volume:
+        description:
+            - Volume (ID or Name) to base volume affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
         required: False
         type: str
     pi_anti_affinity_instances:
@@ -69,14 +43,40 @@ options:
             - (Required for new resource) Volume Name to create
         required: True
         type: str
-    pi_affinity_volume:
+    pi_volume_size:
         description:
-            - Volume (ID or Name) to base volume affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
-        required: False
-        type: str
+            - (Required for new resource) Size of the volume in GB
+        required: True
+        type: float
     pi_affinity_instance:
         description:
             - PVM Instance (ID or Name) to base volume affinity policy against; required if requesting affinity and pi_affinity_volume is not provided
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
+    pi_volume_shareable:
+        description:
+            - Flag to indicate if the volume can be shared across multiple instances?
+        required: False
+        type: bool
+    pi_volume_type:
+        description:
+            - Type of Disk, required if pi_affinity_policy and pi_volume_pool not provided, otherwise ignored
+        required: False
+        type: str
+    pi_anti_affinity_volumes:
+        description:
+            - List of volumes to base volume anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_instances is not provided
+        required: False
+        type: list
+        elements: str
+    pi_affinity_policy:
+        description:
+            - Affinity policy for data volume being created; ignored if pi_volume_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
         required: False
         type: str
     id:
@@ -121,24 +121,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
-    ('pi_volume_size', 'float'),
     ('pi_volume_name', 'str'),
+    ('pi_volume_size', 'float'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_anti_affinity_volumes',
-    'pi_cloud_instance_id',
-    'pi_volume_type',
-    'pi_affinity_policy',
-    'pi_volume_shareable',
-    'pi_volume_size',
     'pi_volume_pool',
+    'pi_affinity_volume',
     'pi_anti_affinity_instances',
     'pi_volume_name',
-    'pi_affinity_volume',
+    'pi_volume_size',
     'pi_affinity_instance',
+    'pi_cloud_instance_id',
+    'pi_volume_shareable',
+    'pi_volume_type',
+    'pi_anti_affinity_volumes',
+    'pi_affinity_policy',
 ]
 
 # Params for Data source
@@ -153,36 +153,20 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'pi_anti_affinity_volumes': ['pi_anti_affinity_instances'],
-    'pi_anti_affinity_instances': ['pi_anti_affinity_volumes'],
     'pi_affinity_volume': ['pi_affinity_instance'],
+    'pi_anti_affinity_instances': ['pi_anti_affinity_volumes'],
     'pi_affinity_instance': ['pi_affinity_volume'],
+    'pi_anti_affinity_volumes': ['pi_anti_affinity_instances'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_anti_affinity_volumes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_volume_type=dict(
-        required=False,
-        type='str'),
-    pi_affinity_policy=dict(
-        required=False,
-        type='str'),
-    pi_volume_shareable=dict(
-        required=False,
-        type='bool'),
-    pi_volume_size=dict(
-        required=False,
-        type='float'),
     pi_volume_pool=dict(
+        required=False,
+        type='str'),
+    pi_affinity_volume=dict(
         required=False,
         type='str'),
     pi_anti_affinity_instances=dict(
@@ -192,10 +176,26 @@ module_args = dict(
     pi_volume_name=dict(
         required=False,
         type='str'),
-    pi_affinity_volume=dict(
+    pi_volume_size=dict(
+        required=False,
+        type='float'),
+    pi_affinity_instance=dict(
         required=False,
         type='str'),
-    pi_affinity_instance=dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_shareable=dict(
+        required=False,
+        type='bool'),
+    pi_volume_type=dict(
+        required=False,
+        type='str'),
+    pi_anti_affinity_volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_affinity_policy=dict(
         required=False,
         type='str'),
     id=dict(

@@ -21,30 +21,30 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service:
+        description:
+            - The name of the Cloud Database service
+        required: False
+        type: str
+    name:
+        description:
+            - Resource instance name for example, my Database instance
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The id of the resource group in which the Database instance is present
+        required: False
+        type: str
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - Resource instance name for example, my Database instance
-        required: True
-        type: str
     location:
         description:
             - The location or the region in which the Database instance exists
-        required: False
-        type: str
-    service:
-        description:
-            - The name of the Cloud Database service
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - The id of the resource group in which the Database instance is present
         required: False
         type: str
     iaas_classic_username:
@@ -85,11 +85,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'name',
-    'location',
     'service',
+    'name',
     'resource_group_id',
+    'tags',
+    'location',
 ]
 
 
@@ -100,20 +100,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    service=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=True,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=True,
-        type='str'),
     location=dict(
-        required=False,
-        type='str'),
-    service=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(

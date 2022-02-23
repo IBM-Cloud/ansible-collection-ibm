@@ -22,22 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vpc:
-        description:
-            - Network ACL VPC name
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group ID for the network ACL
-        required: False
-        type: str
-    rules:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     name:
         description:
             - (Required for new resource) Network ACL name
@@ -49,6 +33,22 @@ options:
         required: False
         type: list
         elements: str
+    rules:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - Network ACL VPC name
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group ID for the network ACL
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,11 +100,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
-    'resource_group',
-    'rules',
     'name',
     'tags',
+    'rules',
+    'vpc',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -112,8 +112,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'vpc_name',
+    'name',
     'network_acl',
 ]
 
@@ -124,16 +124,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    rules=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -141,6 +131,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    rules=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

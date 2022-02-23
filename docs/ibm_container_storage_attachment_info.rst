@@ -29,6 +29,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cluster (True, str, None)
+    Cluster name or ID
+
+
   worker (True, str, None)
     Worker node ID
 
@@ -39,10 +43,6 @@ Parameters
 
   volume_attachment_id (True, str, None)
     The volume attachment ID
-
-
-  cluster (True, str, None)
-    Cluster name or ID
 
 
   ibmcloud_api_key (True, any, None)

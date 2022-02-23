@@ -22,29 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    ipv4_cidr_block:
-        description:
-            - IPV4 subnet - CIDR block
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Subnet name
-        required: True
-        type: str
     network_acl:
         description:
             - The network ACL for this subnet
         required: False
         type: str
-    zone:
+    tags:
         description:
-            - (Required for new resource) Subnet zone info
-        required: True
-        type: str
-    routing_table:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    public_gateway:
         description:
-            - routing table id that is associated with the subnet
+            - Public Gateway of the subnet
         required: False
         type: str
     total_ipv4_address_count:
@@ -58,15 +49,20 @@ options:
         required: False
         type: str
         default: ipv4
-    tags:
+    access_tags:
         description:
-            - List of tags
+            - List of access management tags
         required: False
         type: list
         elements: str
-    public_gateway:
+    routing_table:
         description:
-            - Public Gateway of the subnet
+            - routing table id that is associated with the subnet
+        required: False
+        type: str
+    ipv4_cidr_block:
+        description:
+            - IPV4 subnet - CIDR block
         required: False
         type: str
     vpc:
@@ -74,16 +70,20 @@ options:
             - (Required for new resource) VPC instance ID
         required: True
         type: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
     resource_group:
         description:
             - The resource group for this subnet
         required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Subnet name
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Subnet zone info
+        required: True
         type: str
     id:
         description:
@@ -131,25 +131,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('vpc', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
-    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ipv4_cidr_block',
-    'name',
     'network_acl',
-    'zone',
-    'routing_table',
-    'total_ipv4_address_count',
-    'ip_version',
     'tags',
     'public_gateway',
-    'vpc',
+    'total_ipv4_address_count',
+    'ip_version',
     'access_tags',
+    'routing_table',
+    'ipv4_cidr_block',
+    'vpc',
     'resource_group',
+    'name',
+    'zone',
 ]
 
 # Params for Data source
@@ -157,38 +157,20 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
-    'ipv4_cidr_block': ['total_ipv4_address_count'],
     'total_ipv4_address_count': ['ipv4_cidr_block'],
+    'ipv4_cidr_block': ['total_ipv4_address_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ipv4_cidr_block=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     network_acl=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    routing_table=dict(
-        required=False,
-        type='str'),
-    total_ipv4_address_count=dict(
-        required=False,
-        type='int'),
-    ip_version=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -198,14 +180,32 @@ module_args = dict(
     public_gateway=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    total_ipv4_address_count=dict(
+        required=False,
+        type='int'),
+    ip_version=dict(
         required=False,
         type='str'),
     access_tags=dict(
         required=False,
         elements='',
         type='list'),
+    routing_table=dict(
+        required=False,
+        type='str'),
+    ipv4_cidr_block=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(

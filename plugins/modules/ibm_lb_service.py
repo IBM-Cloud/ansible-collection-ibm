@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    service_group_id:
+        description:
+            - (Required for new resource) service group ID
+        required: True
+        type: int
+    ip_address_id:
+        description:
+            - (Required for new resource) IP Address ID
+        required: True
+        type: int
     port:
         description:
             - (Required for new resource) Port number
@@ -48,16 +58,6 @@ options:
         required: False
         type: list
         elements: str
-    service_group_id:
-        description:
-            - (Required for new resource) service group ID
-        required: True
-        type: int
-    ip_address_id:
-        description:
-            - (Required for new resource) IP Address ID
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,23 +104,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('service_group_id', 'int'),
+    ('ip_address_id', 'int'),
     ('port', 'int'),
     ('enabled', 'bool'),
     ('health_check_type', 'str'),
     ('weight', 'int'),
-    ('service_group_id', 'int'),
-    ('ip_address_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'service_group_id',
+    'ip_address_id',
     'port',
     'enabled',
     'health_check_type',
     'weight',
     'tags',
-    'service_group_id',
-    'ip_address_id',
 ]
 
 # Params for Data source
@@ -137,6 +137,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    service_group_id=dict(
+        required=False,
+        type='int'),
+    ip_address_id=dict(
+        required=False,
+        type='int'),
     port=dict(
         required=False,
         type='int'),
@@ -153,12 +159,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    service_group_id=dict(
-        required=False,
-        type='int'),
-    ip_address_id=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),

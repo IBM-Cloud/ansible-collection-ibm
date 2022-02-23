@@ -103,16 +103,16 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('zone', 'str'),
     ('cluster', 'str'),
     ('worker_pool', 'str'),
+    ('zone', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'zone',
-    'resource_group_id',
     'cluster',
     'worker_pool',
+    'zone',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {

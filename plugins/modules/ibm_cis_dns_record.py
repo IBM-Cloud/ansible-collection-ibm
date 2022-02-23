@@ -27,27 +27,27 @@ options:
             - (Required for new resource) CIS object id or CRN
         required: True
         type: str
-    data:
-        description:
-            - None
-        required: False
-        type: dict
     priority:
         description:
             - Priority Value
         required: False
         type: int
+    proxied:
+        description:
+            - Boolean value true if proxied else flase
+        required: False
+        type: bool
+        default: False
     name:
         description:
             - DNS record name
         required: False
         type: str
-    ttl:
+    content:
         description:
-            - TTL value
+            - DNS record content
         required: False
-        type: int
-        default: 1
+        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
@@ -58,17 +58,17 @@ options:
             - (Required for new resource) Record type
         required: True
         type: str
-    content:
+    data:
         description:
-            - DNS record content
+            - None
         required: False
-        type: str
-    proxied:
+        type: dict
+    ttl:
         description:
-            - Boolean value true if proxied else flase
+            - TTL value
         required: False
-        type: bool
-        default: False
+        type: int
+        default: 1
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -123,14 +123,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cis_id',
-    'data',
     'priority',
+    'proxied',
     'name',
-    'ttl',
+    'content',
     'domain_id',
     'type',
-    'content',
-    'proxied',
+    'data',
+    'ttl',
 ]
 
 # Params for Data source
@@ -141,8 +141,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'data': ['content'],
     'content': ['data'],
+    'data': ['content'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -152,30 +152,30 @@ module_args = dict(
     cis_id=dict(
         required=False,
         type='str'),
-    data=dict(
-        required=False,
-        type='dict'),
     priority=dict(
         required=False,
         type='int'),
+    proxied=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),
-    ttl=dict(
+    content=dict(
         required=False,
-        type='int'),
+        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
     type=dict(
         required=False,
         type='str'),
-    content=dict(
+    data=dict(
         required=False,
-        type='str'),
-    proxied=dict(
+        type='dict'),
+    ttl=dict(
         required=False,
-        type='bool'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),

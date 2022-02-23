@@ -22,6 +22,28 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    account_management:
+        description:
+            - Give access to all account management services
+        required: False
+        type: bool
+        default: False
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    description:
+        description:
+            - Description of the Policy
+        required: False
+        type: str
+    iam_service_id:
+        description:
+            - UUID of ServiceID
+        required: False
+        type: str
     iam_id:
         description:
             - IAM ID of ServiceID
@@ -45,28 +67,6 @@ options:
         required: False
         type: list
         elements: dict
-    account_management:
-        description:
-            - Give access to all account management services
-        required: False
-        type: bool
-        default: False
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    description:
-        description:
-            - Description of the Policy
-        required: False
-        type: str
-    iam_service_id:
-        description:
-            - UUID of ServiceID
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -118,14 +118,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iam_id',
-    'roles',
-    'resources',
-    'resource_attributes',
     'account_management',
     'tags',
     'description',
     'iam_service_id',
+    'iam_id',
+    'roles',
+    'resources',
+    'resource_attributes',
 ]
 
 # Params for Data source
@@ -133,21 +133,34 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'sort',
     'iam_service_id',
     'iam_id',
-    'sort',
 ]
 
 TL_CONFLICTS_MAP = {
+    'account_management': ['resources', 'resource_attributes'],
     'resources': ['account_management', 'resource_attributes'],
     'resource_attributes': ['resources', 'account_management'],
-    'account_management': ['resources', 'resource_attributes'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    account_management=dict(
+        required=False,
+        type='bool'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    iam_service_id=dict(
+        required=False,
+        type='str'),
     iam_id=dict(
         required=False,
         type='str'),
@@ -163,19 +176,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    account_management=dict(
-        required=False,
-        type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    iam_service_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

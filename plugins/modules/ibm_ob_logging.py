@@ -22,16 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    logdna_ingestion_key:
-        description:
-            - LogDNA ingestion key
-        required: False
-        type: str
-    private_endpoint:
-        description:
-            - Add this option to connect to your LogDNA service instance through the private service endpoint
-        required: False
-        type: bool
     cluster:
         description:
             - (Required for new resource) Name or ID of the cluster to be used.
@@ -41,6 +31,16 @@ options:
         description:
             - (Required for new resource) ID of the LogDNA service instance to latch
         required: True
+        type: str
+    private_endpoint:
+        description:
+            - Add this option to connect to your LogDNA service instance through the private service endpoint
+        required: False
+        type: bool
+    logdna_ingestion_key:
+        description:
+            - LogDNA ingestion key
+        required: False
         type: str
     id:
         description:
@@ -94,10 +94,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'logdna_ingestion_key',
-    'private_endpoint',
     'cluster',
     'instance_id',
+    'private_endpoint',
+    'logdna_ingestion_key',
 ]
 
 # Params for Data source
@@ -114,16 +114,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    logdna_ingestion_key=dict(
+    cluster=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
         required=False,
         type='str'),
     private_endpoint=dict(
         required=False,
         type='bool'),
-    cluster=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
+    logdna_ingestion_key=dict(
         required=False,
         type='str'),
     id=dict(

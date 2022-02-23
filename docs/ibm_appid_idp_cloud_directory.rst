@@ -31,15 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  signup_enabled (False, bool, True)
-    None
-
-
   welcome_enabled (False, bool, True)
     None
 
 
   reset_password_enabled (False, bool, True)
+    None
+
+
+  identity_confirm_methods (False, list, None)
+    None
+
+
+  signup_enabled (False, bool, True)
     None
 
 
@@ -51,7 +55,7 @@ Parameters
     None
 
 
-  identity_confirm_methods (False, list, None)
+  identity_field (False, str, None)
     None
 
 
@@ -64,10 +68,6 @@ Parameters
 
 
   self_service_enabled (False, bool, True)
-    None
-
-
-  identity_field (False, str, None)
     None
 
 

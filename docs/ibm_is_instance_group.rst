@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    List of tags for instance group
+
+
   instance_template (True, str, None)
     (Required for new resource) instance template ID
 
@@ -43,16 +47,8 @@ Parameters
     Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
 
 
-  load_balancer (False, str, None)
-    load balancer ID
-
-
   load_balancer_pool (False, str, None)
     load balancer pool ID
-
-
-  tags (False, list, None)
-    List of tags for instance group
 
 
   resource_group (False, str, None)
@@ -61,6 +57,10 @@ Parameters
 
   subnets (True, list, None)
     (Required for new resource) list of subnet IDs
+
+
+  load_balancer (False, str, None)
+    load balancer ID
 
 
   name (True, str, None)

@@ -22,26 +22,26 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vpc:
-        description:
-            - (Required for new resource) The VPC identifier.
-        required: True
-        type: str
     route_direct_link_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
         required: False
         type: bool
         default: False
-    route_transit_gateway_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
-        required: False
-        type: bool
-        default: False
     route_vpc_zone_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+        required: False
+        type: bool
+        default: False
+    vpc:
+        description:
+            - (Required for new resource) The VPC identifier.
+        required: True
+        type: str
+    route_transit_gateway_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
         required: False
         type: bool
         default: False
@@ -101,10 +101,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
     'route_direct_link_ingress',
-    'route_transit_gateway_ingress',
     'route_vpc_zone_ingress',
+    'vpc',
+    'route_transit_gateway_ingress',
     'name',
 ]
 
@@ -122,16 +122,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
-        required=False,
-        type='str'),
     route_direct_link_ingress=dict(
         required=False,
         type='bool'),
-    route_transit_gateway_ingress=dict(
+    route_vpc_zone_ingress=dict(
         required=False,
         type='bool'),
-    route_vpc_zone_ingress=dict(
+    vpc=dict(
+        required=False,
+        type='str'),
+    route_transit_gateway_ingress=dict(
         required=False,
         type='bool'),
     name=dict(

@@ -22,6 +22,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    next_hop:
+        description:
+            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+        required: True
+        type: str
+    action:
+        description:
+            - The action to perform with a packet matching the route.
+        required: False
+        type: str
+        default: deliver
     vpc:
         description:
             - (Required for new resource) The VPC identifier.
@@ -37,26 +48,15 @@ options:
             - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
         required: True
         type: str
-    next_hop:
+    name:
         description:
-            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
-        required: True
+            - The user-defined name for this route.
+        required: False
         type: str
     routing_table:
         description:
             - (Required for new resource) The routing table identifier.
         required: True
-        type: str
-    action:
-        description:
-            - The action to perform with a packet matching the route.
-        required: False
-        type: str
-        default: deliver
-    name:
-        description:
-            - The user-defined name for this route.
-        required: False
         type: str
     id:
         description:
@@ -104,22 +104,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('next_hop', 'str'),
     ('vpc', 'str'),
     ('destination', 'str'),
     ('zone', 'str'),
-    ('next_hop', 'str'),
     ('routing_table', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'next_hop',
+    'action',
     'vpc',
     'destination',
     'zone',
-    'next_hop',
-    'routing_table',
-    'action',
     'name',
+    'routing_table',
 ]
 
 # Params for Data source
@@ -136,6 +136,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    next_hop=dict(
+        required=False,
+        type='str'),
+    action=dict(
+        required=False,
+        type='str'),
     vpc=dict(
         required=False,
         type='str'),
@@ -145,16 +151,10 @@ module_args = dict(
     zone=dict(
         required=False,
         type='str'),
-    next_hop=dict(
+    name=dict(
         required=False,
         type='str'),
     routing_table=dict(
-        required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(

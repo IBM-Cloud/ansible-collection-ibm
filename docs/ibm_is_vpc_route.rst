@@ -31,14 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC instance ID
-
-
-  next_hop (True, str, None)
-    (Required for new resource) VPC route next hop value
-
-
   name (True, str, None)
     (Required for new resource) VPC route name
 
@@ -49,6 +41,14 @@ Parameters
 
   destination (True, str, None)
     (Required for new resource) VPC route destination CIDR value
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC instance ID
+
+
+  next_hop (True, str, None)
+    (Required for new resource) VPC route next hop value
 
 
   id (False, str, None)

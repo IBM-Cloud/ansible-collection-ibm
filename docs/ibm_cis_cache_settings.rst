@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
@@ -39,12 +43,16 @@ Parameters
     Cache level setting
 
 
-  serve_stale_content (False, str, True)
-    Serve Stale Content
-
-
   browser_expiration (False, int, None)
     Browser Expiration setting
+
+
+  purge_by_urls (False, list, None)
+    Purge by URLs
+
+
+  serve_stale_content (False, str, True)
+    Serve Stale Content
 
 
   development_mode (False, str, None)
@@ -55,24 +63,16 @@ Parameters
     Query String sort setting
 
 
-  purge_by_hosts (False, list, None)
-    Purge by hosts
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
   purge_all (False, bool, None)
     Purge all setting
 
 
-  purge_by_urls (False, list, None)
-    Purge by URLs
-
-
   purge_by_tags (False, list, None)
     Purge by tags
+
+
+  purge_by_hosts (False, list, None)
+    Purge by hosts
 
 
   id (False, str, None)

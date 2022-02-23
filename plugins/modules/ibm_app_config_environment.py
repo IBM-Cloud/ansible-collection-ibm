@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    environment_id:
+        description:
+            - (Required for new resource) Environment Id.
+        required: True
+        type: str
     color_code:
         description:
             - Color code to distinguish the environment.
@@ -30,11 +35,6 @@ options:
     name:
         description:
             - (Required for new resource) Environment name.
-        required: True
-        type: str
-    environment_id:
-        description:
-            - (Required for new resource) Environment Id.
         required: True
         type: str
     description:
@@ -98,16 +98,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('environment_id', 'str'),
+    ('name', 'str'),
     ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'environment_id',
     'color_code',
     'name',
-    'environment_id',
     'description',
     'tags',
     'guid',
@@ -121,8 +121,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'guid',
-    'expand',
     'environment_id',
+    'expand',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -132,13 +132,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    environment_id=dict(
+        required=False,
+        type='str'),
     color_code=dict(
         required=False,
         type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    environment_id=dict(
         required=False,
         type='str'),
     description=dict(

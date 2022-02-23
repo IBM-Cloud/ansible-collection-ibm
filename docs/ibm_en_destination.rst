@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_guid (True, str, None)
-    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+  name (True, str, None)
+    (Required for new resource) The Destintion name.
 
 
   description (False, str, None)
     The Destination description.
 
 
-  name (True, str, None)
-    (Required for new resource) The Destintion name.
+  instance_guid (True, str, None)
+    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
 
 
   type (True, str, None)

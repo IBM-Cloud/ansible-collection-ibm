@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  web_site_url (True, str, None)
+    (Required for new resource) The URL of the WebSite / WebApp that should be permitted to subscribe to WebPush.
+
+
   guid (True, str, None)
     (Required for new resource) Unique guid of the push notification instance.
 
 
   server_key (True, str, None)
     (Required for new resource) A server key that gives the push service an authorized access to Google services that is used for Chrome Web Push.
-
-
-  web_site_url (True, str, None)
-    (Required for new resource) The URL of the WebSite / WebApp that should be permitted to subscribe to WebPush.
 
 
   id (False, str, None)

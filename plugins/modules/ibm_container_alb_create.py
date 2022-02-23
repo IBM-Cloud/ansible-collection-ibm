@@ -22,11 +22,12 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    zone:
+    enable:
         description:
-            - (Required for new resource) The zone where you want to deploy the ALB.
-        required: True
-        type: str
+            - If set to true, the ALB is enabled by default.
+        required: False
+        type: bool
+        default: True
     ip:
         description:
             - The IP address that you want to assign to the ALB.
@@ -37,20 +38,19 @@ options:
             - The version of the network load balancer that you want to use for the ALB.
         required: False
         type: str
-    enable:
+    ingress_image:
         description:
-            - If set to true, the ALB is enabled by default.
+            - The type of Ingress image that you want to use for your ALB deployment.
         required: False
-        type: bool
-        default: True
-    cluster:
-        description:
-            - (Required for new resource) The ID of the cluster that the ALB belongs to.
-        required: True
         type: str
     vlan_id:
         description:
             - (Required for new resource) The VLAN ID that you want to use for your ALBs.
+        required: True
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) The ID of the cluster that the ALB belongs to.
         required: True
         type: str
     alb_type:
@@ -58,10 +58,10 @@ options:
             - (Required for new resource) The type of ALB that you want to create.
         required: True
         type: str
-    ingress_image:
+    zone:
         description:
-            - The type of Ingress image that you want to use for your ALB deployment.
-        required: False
+            - (Required for new resource) The zone where you want to deploy the ALB.
+        required: True
         type: str
     id:
         description:
@@ -89,22 +89,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
-    ('cluster', 'str'),
     ('vlan_id', 'str'),
+    ('cluster', 'str'),
     ('alb_type', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone',
+    'enable',
     'ip',
     'nlb_version',
-    'enable',
-    'cluster',
-    'vlan_id',
-    'alb_type',
     'ingress_image',
+    'vlan_id',
+    'cluster',
+    'alb_type',
+    'zone',
 ]
 
 # Params for Data source
@@ -121,28 +121,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone=dict(
+    enable=dict(
         required=False,
-        type='str'),
+        type='bool'),
     ip=dict(
         required=False,
         type='str'),
     nlb_version=dict(
         required=False,
         type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
-    cluster=dict(
+    ingress_image=dict(
         required=False,
         type='str'),
     vlan_id=dict(
         required=False,
         type='str'),
+    cluster=dict(
+        required=False,
+        type='str'),
     alb_type=dict(
         required=False,
         type='str'),
-    ingress_image=dict(
+    zone=dict(
         required=False,
         type='str'),
     id=dict(

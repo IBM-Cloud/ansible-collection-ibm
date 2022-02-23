@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    firewall_type:
-        description:
-            - (Required for new resource) Firewall type
-        required: True
-        type: str
     virtual_instance_id:
         description:
             - Virtual instance ID
@@ -37,6 +32,11 @@ options:
             - Hardware instance ID
         required: False
         type: int
+    firewall_type:
+        description:
+            - (Required for new resource) Firewall type
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,9 +88,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'firewall_type',
     'virtual_instance_id',
     'hardware_instance_id',
+    'firewall_type',
 ]
 
 # Params for Data source
@@ -109,15 +109,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    firewall_type=dict(
-        required=False,
-        type='str'),
     virtual_instance_id=dict(
         required=False,
         type='int'),
     hardware_instance_id=dict(
         required=False,
         type='int'),
+    firewall_type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

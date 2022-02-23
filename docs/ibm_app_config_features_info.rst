@@ -29,10 +29,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
   collections (False, list, None)
     Filter features by a list of comma separated collections.
 
@@ -41,32 +37,36 @@ Parameters
     If set to `true`, returns expanded view of the resource details.
 
 
-  limit (False, int, None)
-    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
-
-
   offset (False, int, None)
     The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
 
 
-  tags (False, str, None)
-    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   environment_id (True, str, None)
     Environment Id.
 
 
-  sort (False, str, None)
-    Sort the feature details based on the specified attribute.
+  segments (False, list, None)
+    Filter features by a list of comma separated segments.
 
 
   includes (False, list, None)
     Include the associated collections or targeting rules details in the response.
 
 
-  segments (False, list, None)
-    Filter features by a list of comma separated segments.
+  limit (False, int, None)
+    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+
+
+  sort (False, str, None)
+    Sort the feature details based on the specified attribute.
+
+
+  tags (False, str, None)
+    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
 
 
   iaas_classic_username (False, any, None)

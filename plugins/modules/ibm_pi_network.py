@@ -22,11 +22,17 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
+    pi_network_type:
         description:
-            - (Required for new resource) PI cloud instance ID
+            - (Required for new resource) PI network type
         required: True
         type: str
+    pi_dns:
+        description:
+            - List of PI network DNS name
+        required: False
+        type: list
+        elements: str
     pi_cidr:
         description:
             - PI network CIDR
@@ -37,27 +43,21 @@ options:
             - PI network gateway
         required: False
         type: str
-    pi_network_jumbo:
-        description:
-            - PI network enable MTU Jumbo option
-        required: False
-        type: bool
-    pi_network_type:
-        description:
-            - (Required for new resource) PI network type
-        required: True
-        type: str
     pi_network_name:
         description:
             - (Required for new resource) PI network name
         required: True
         type: str
-    pi_dns:
+    pi_network_jumbo:
         description:
-            - List of PI network DNS name
+            - PI network enable MTU Jumbo option
         required: False
-        type: list
-        elements: str
+        type: bool
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,31 +100,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_network_type', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
+    'pi_network_type',
+    'pi_dns',
     'pi_cidr',
     'pi_gateway',
-    'pi_network_jumbo',
-    'pi_network_type',
     'pi_network_name',
-    'pi_dns',
+    'pi_network_jumbo',
+    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_network_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_network_name',
     'pi_cloud_instance_id',
+    'pi_network_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -134,28 +134,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_cidr=dict(
-        required=False,
-        type='str'),
-    pi_gateway=dict(
-        required=False,
-        type='str'),
-    pi_network_jumbo=dict(
-        required=False,
-        type='bool'),
     pi_network_type=dict(
-        required=False,
-        type='str'),
-    pi_network_name=dict(
         required=False,
         type='str'),
     pi_dns=dict(
         required=False,
         elements='',
         type='list'),
+    pi_cidr=dict(
+        required=False,
+        type='str'),
+    pi_gateway=dict(
+        required=False,
+        type='str'),
+    pi_network_name=dict(
+        required=False,
+        type='str'),
+    pi_network_jumbo=dict(
+        required=False,
+        type='bool'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

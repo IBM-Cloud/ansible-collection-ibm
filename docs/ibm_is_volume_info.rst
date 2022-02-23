@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (False, str, None)
-    Zone name
-
-
   name (True, str, None)
     Volume name
+
+
+  zone (False, str, None)
+    Zone name
 
 
   generation (False, int, 2)

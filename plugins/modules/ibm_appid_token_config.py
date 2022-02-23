@@ -22,6 +22,22 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    anonymous_token_expires_in:
+        description:
+            - None
+        required: False
+        type: int
+        default: 2592000
+    anonymous_access_enabled:
+        description:
+            - The length of time for which an anonymous token is valid in seconds
+        required: False
+        type: bool
+    refresh_token_enabled:
+        description:
+            - None
+        required: False
+        type: bool
     access_token_claim:
         description:
             - A set of objects that are created when claims that are related to access tokens are mapped
@@ -50,22 +66,6 @@ options:
         required: False
         type: int
         default: 2592000
-    anonymous_token_expires_in:
-        description:
-            - None
-        required: False
-        type: int
-        default: 2592000
-    anonymous_access_enabled:
-        description:
-            - The length of time for which an anonymous token is valid in seconds
-        required: False
-        type: bool
-    refresh_token_enabled:
-        description:
-            - None
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,14 +117,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'anonymous_token_expires_in',
+    'anonymous_access_enabled',
+    'refresh_token_enabled',
     'access_token_claim',
     'id_token_claim',
     'tenant_id',
     'access_token_expires_in',
     'refresh_token_expires_in',
-    'anonymous_token_expires_in',
-    'anonymous_access_enabled',
-    'refresh_token_enabled',
 ]
 
 # Params for Data source
@@ -143,6 +143,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    anonymous_token_expires_in=dict(
+        required=False,
+        type='int'),
+    anonymous_access_enabled=dict(
+        required=False,
+        type='bool'),
+    refresh_token_enabled=dict(
+        required=False,
+        type='bool'),
     access_token_claim=dict(
         required=False,
         elements='',
@@ -160,15 +169,6 @@ module_args = dict(
     refresh_token_expires_in=dict(
         required=False,
         type='int'),
-    anonymous_token_expires_in=dict(
-        required=False,
-        type='int'),
-    anonymous_access_enabled=dict(
-        required=False,
-        type='bool'),
-    refresh_token_enabled=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

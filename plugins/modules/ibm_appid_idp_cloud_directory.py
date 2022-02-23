@@ -22,12 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    signup_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
     welcome_enabled:
         description:
             - None
@@ -35,6 +29,18 @@ options:
         type: bool
         default: True
     reset_password_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    identity_confirm_methods:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    signup_enabled:
         description:
             - None
         required: False
@@ -52,12 +58,11 @@ options:
         required: False
         type: str
         default: FULL
-    identity_confirm_methods:
+    identity_field:
         description:
             - None
         required: False
-        type: list
-        elements: str
+        type: str
     tenant_id:
         description:
             - (Required for new resource) 
@@ -74,11 +79,6 @@ options:
         required: False
         type: bool
         default: True
-    identity_field:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -131,16 +131,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'signup_enabled',
     'welcome_enabled',
     'reset_password_enabled',
+    'identity_confirm_methods',
+    'signup_enabled',
     'reset_password_notification_enabled',
     'identity_confirm_access_mode',
-    'identity_confirm_methods',
+    'identity_field',
     'tenant_id',
     'is_active',
     'self_service_enabled',
-    'identity_field',
 ]
 
 # Params for Data source
@@ -159,13 +159,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    signup_enabled=dict(
-        required=False,
-        type='bool'),
     welcome_enabled=dict(
         required=False,
         type='bool'),
     reset_password_enabled=dict(
+        required=False,
+        type='bool'),
+    identity_confirm_methods=dict(
+        required=False,
+        elements='',
+        type='list'),
+    signup_enabled=dict(
         required=False,
         type='bool'),
     reset_password_notification_enabled=dict(
@@ -174,10 +178,9 @@ module_args = dict(
     identity_confirm_access_mode=dict(
         required=False,
         type='str'),
-    identity_confirm_methods=dict(
+    identity_field=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     tenant_id=dict(
         required=False,
         type='str'),
@@ -187,9 +190,6 @@ module_args = dict(
     self_service_enabled=dict(
         required=False,
         type='bool'),
-    identity_field=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

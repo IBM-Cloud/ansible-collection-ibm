@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  crn (True, str, None)
-    (Required for new resource) CRN of the Location.
-
-
   location (True, str, None)
     (Required for new resource) Location ID.
 
 
   ws_endpoint (False, str, None)
     The ws endpoint of the location.
+
+
+  crn (True, str, None)
+    (Required for new resource) CRN of the Location.
 
 
   id (False, str, None)

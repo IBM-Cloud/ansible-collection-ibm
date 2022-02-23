@@ -31,15 +31,139 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  os_reference_code (False, str, None)
-    OS refernece code value
+  gpu_secondary_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  network_speed (False, int, 100)
+    Network speed in MBPS
 
 
   tcp_monitoring (False, bool, False)
     TCP monitoring enabled if set as true
 
 
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  tags (False, list, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
   package_key_name (False, str, None)
+    None
+
+
+  os_key_name (False, str, None)
+    None
+
+
+  public_bandwidth (False, int, None)
+    None
+
+
+  storage_groups (False, list, None)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
+
+
+  notes (False, str, None)
+    Optional notes info
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  os_reference_code (False, str, None)
+    OS refernece code value
+
+
+  private_network_only (False, bool, False)
+    only private network configured if is true
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  datacenter (False, str, None)
     None
 
 
@@ -51,115 +175,11 @@ Parameters
     None
 
 
-  hostname (False, str, None)
-    Host name
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
-
-
-  gpu_secondary_key_name (False, str, None)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  gpu_key_name (False, str, None)
-    None
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  software_guard_extensions (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    Optional notes info
-
-
-  tags (False, list, None)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  private_vlan_id (False, int, None)
-    None
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
-  storage_groups (False, list, None)
-    None
-
-
-  redundant_power_supply (False, bool, None)
-    None
-
-
-  disk_key_names (False, list, None)
-    None
-
-
   secondary_ip_count (False, int, None)
     Secondary IP addresses count
 
 
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  image_template_id (False, int, None)
-    OS image template ID
-
-
-  datacenter (False, str, None)
+  software_guard_extensions (False, bool, False)
     None
 
 
@@ -167,28 +187,8 @@ Parameters
     None
 
 
-  os_key_name (False, str, None)
+  gpu_key_name (False, str, None)
     None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  network_speed (False, int, 100)
-    Network speed in MBPS
 
 
   id (False, str, None)

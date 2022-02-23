@@ -22,9 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
     location:
         description:
             - (Required for new resource) Location of Transit Gateway Services
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name Transit Gateway Services
         required: True
         type: str
     global_:
@@ -33,17 +44,6 @@ options:
         required: False
         type: bool
         default: False
-    tags:
-        description:
-            - Tags for the transit gateway instance
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - (Required for new resource) Name Transit Gateway Services
-        required: True
-        type: str
     resource_group:
         description:
             - None
@@ -101,10 +101,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'global_',
     'tags',
+    'location',
     'name',
+    'global_',
     'resource_group',
 ]
 
@@ -124,19 +124,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     location=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     global_=dict(
         required=False,
         type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),

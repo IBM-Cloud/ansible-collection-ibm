@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (False, str, None)
-    Resource type (cluster, vsi, icd, vpc).
-
-
   name (False, str, None)
     Resource query name.
 
 
   queries (False, list, None)
     None
+
+
+  type (False, str, None)
+    Resource type (cluster, vsi, icd, vpc).
 
 
   id (False, str, None)

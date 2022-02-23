@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    worker pool zone name
-
-
-  resource_group_id (False, str, None)
-    The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
-
-
   cluster (True, str, None)
     Name or id of the cluster
 
 
   worker_pool (True, str, None)
     worker pool name
+
+
+  zone (True, str, None)
+    worker pool zone name
+
+
+  resource_group_id (False, str, None)
+    The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
 
 
   iaas_classic_username (False, any, None)

@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) CIS Intance CRN
 
 
-  mode (True, str, None)
-    (Required for new resource) WAF Rule group mode on/off
-
-
   domain_id (True, str, None)
     (Required for new resource) CIS Domain ID
+
+
+  group_id (True, str, None)
+    (Required for new resource) WAF Rule group id
 
 
   package_id (True, str, None)
     (Required for new resource) WAF Rule package id
 
 
-  group_id (True, str, None)
-    (Required for new resource) WAF Rule group id
+  mode (True, str, None)
+    (Required for new resource) WAF Rule group mode on/off
 
 
   id (False, str, None)

@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    profile_id:
+        description:
+            - UUID of Trusted Profile
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of Trusted Profile
+        required: False
+        type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -55,16 +65,6 @@ options:
     description:
         description:
             - Description of the Policy
-        required: False
-        type: str
-    profile_id:
-        description:
-            - UUID of Trusted Profile
-        required: False
-        type: str
-    iam_id:
-        description:
-            - IAM ID of Trusted Profile
         required: False
         type: str
     id:
@@ -118,14 +118,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'profile_id',
+    'iam_id',
     'roles',
     'resources',
     'resource_attributes',
     'account_management',
     'tags',
     'description',
-    'profile_id',
-    'iam_id',
 ]
 
 # Params for Data source
@@ -148,6 +148,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    profile_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
+        required=False,
+        type='str'),
     roles=dict(
         required=False,
         elements='',
@@ -168,12 +174,6 @@ module_args = dict(
         elements='',
         type='list'),
     description=dict(
-        required=False,
-        type='str'),
-    profile_id=dict(
-        required=False,
-        type='str'),
-    iam_id=dict(
         required=False,
         type='str'),
     id=dict(

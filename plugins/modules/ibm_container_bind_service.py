@@ -22,19 +22,24 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    service_instance_name:
+    role:
         description:
-            - serivice instance name
+            - Role info
         required: False
+        type: str
+    cluster_name_id:
+        description:
+            - (Required for new resource) Cluster name or ID
+        required: True
         type: str
     namespace_id:
         description:
             - (Required for new resource) namespace ID
         required: True
         type: str
-    role:
+    key:
         description:
-            - Role info
+            - Key info
         required: False
         type: str
     resource_group_id:
@@ -48,19 +53,14 @@ options:
         required: False
         type: list
         elements: str
-    cluster_name_id:
+    service_instance_name:
         description:
-            - (Required for new resource) Cluster name or ID
-        required: True
+            - serivice instance name
+        required: False
         type: str
     service_instance_id:
         description:
             - Service instance ID
-        required: False
-        type: str
-    key:
-        description:
-            - Key info
         required: False
         type: str
     id:
@@ -89,20 +89,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace_id', 'str'),
     ('cluster_name_id', 'str'),
+    ('namespace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_instance_name',
-    'namespace_id',
     'role',
+    'cluster_name_id',
+    'namespace_id',
+    'key',
     'resource_group_id',
     'tags',
-    'cluster_name_id',
+    'service_instance_name',
     'service_instance_id',
-    'key',
 ]
 
 # Params for Data source
@@ -112,10 +112,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'service_instance_name',
     'namespace_id',
     'cluster_name_id',
     'service_instance_id',
+    'service_instance_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -127,13 +127,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_instance_name=dict(
+    role=dict(
+        required=False,
+        type='str'),
+    cluster_name_id=dict(
         required=False,
         type='str'),
     namespace_id=dict(
         required=False,
         type='str'),
-    role=dict(
+    key=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -143,13 +146,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    cluster_name_id=dict(
+    service_instance_name=dict(
         required=False,
         type='str'),
     service_instance_id=dict(
-        required=False,
-        type='str'),
-    key=dict(
         required=False,
         type='str'),
     id=dict(

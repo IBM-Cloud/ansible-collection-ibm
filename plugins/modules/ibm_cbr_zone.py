@@ -33,17 +33,17 @@ options:
         required: True
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) The name of the zone.
+        required: True
+        type: str
     excluded:
         description:
             - The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) The name of the zone.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,8 +98,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'description',
     'addresses',
-    'excluded',
     'name',
+    'excluded',
 ]
 
 # Params for Data source
@@ -125,13 +125,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     excluded=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

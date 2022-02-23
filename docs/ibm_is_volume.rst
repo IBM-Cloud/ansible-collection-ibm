@@ -31,40 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  delete_all_snapshots (False, bool, None)
-    Deletes all snapshots created from this volume
-
-
   profile (True, str, None)
     (Required for new resource) Volume profile name
-
-
-  encryption_key (False, str, None)
-    Volume encryption key info
-
-
-  iops (False, int, None)
-    IOPS value for the Volume
-
-
-  name (True, str, None)
-    (Required for new resource) Volume name
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
 
 
+  tags (False, list, None)
+    Tags for the volume instance
+
+
   capacity (False, int, 100)
     Volume capacity value
+
+
+  delete_all_snapshots (False, bool, None)
+    Deletes all snapshots created from this volume
+
+
+  encryption_key (False, str, None)
+    Volume encryption key info
+
+
+  name (True, str, None)
+    (Required for new resource) Volume name
 
 
   resource_group (False, str, None)
     Resource group name
 
 
-  tags (False, list, None)
-    Tags for the volume instance
+  iops (False, int, None)
+    IOPS value for the Volume
 
 
   id (False, str, None)

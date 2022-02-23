@@ -32,32 +32,44 @@ options:
             - (Required for new resource) Speed of the cloud connection (speed in megabits per second)
         required: True
         type: int
-    pi_cloud_connection_gre_cidr:
+    pi_cloud_connection_global_routing:
         description:
-            - GRE network in CIDR notation
+            - Enable global routing for this cloud connection
         required: False
-        type: str
-    pi_cloud_connection_vpc_crns:
-        description:
-            - Set of VPCs to attach to this cloud connection
-        required: False
-        type: list
-        elements: str
+        type: bool
+        default: False
     pi_cloud_connection_metered:
         description:
             - Enable metered for this cloud connection
         required: False
         type: bool
         default: False
+    pi_cloud_connection_gre_destination_address:
+        description:
+            - GRE destination IP address
+        required: False
+        type: str
+    pi_cloud_connection_vpc_enabled:
+        description:
+            - Enable VPC for this cloud connection
+        required: False
+        type: bool
+        default: False
+    pi_cloud_connection_vpc_crns:
+        description:
+            - Set of VPCs to attach to this cloud connection
+        required: False
+        type: list
+        elements: str
     pi_cloud_connection_networks:
         description:
             - Set of Networks to attach to this cloud connection
         required: False
         type: list
         elements: str
-    pi_cloud_connection_vpc_enabled:
+    pi_cloud_connection_classic_enabled:
         description:
-            - Enable VPC for this cloud connection
+            - Enable classic endpoint destination
         required: False
         type: bool
         default: False
@@ -66,21 +78,9 @@ options:
             - (Required for new resource) Name of the cloud connection
         required: True
         type: str
-    pi_cloud_connection_global_routing:
+    pi_cloud_connection_gre_cidr:
         description:
-            - Enable global routing for this cloud connection
-        required: False
-        type: bool
-        default: False
-    pi_cloud_connection_classic_enabled:
-        description:
-            - Enable classic endpoint destination
-        required: False
-        type: bool
-        default: False
-    pi_cloud_connection_gre_destination_address:
-        description:
-            - GRE destination IP address
+            - GRE network in CIDR notation
         required: False
         type: str
     id:
@@ -134,15 +134,15 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
     'pi_cloud_connection_speed',
-    'pi_cloud_connection_gre_cidr',
-    'pi_cloud_connection_vpc_crns',
-    'pi_cloud_connection_metered',
-    'pi_cloud_connection_networks',
-    'pi_cloud_connection_vpc_enabled',
-    'pi_cloud_connection_name',
     'pi_cloud_connection_global_routing',
-    'pi_cloud_connection_classic_enabled',
+    'pi_cloud_connection_metered',
     'pi_cloud_connection_gre_destination_address',
+    'pi_cloud_connection_vpc_enabled',
+    'pi_cloud_connection_vpc_crns',
+    'pi_cloud_connection_networks',
+    'pi_cloud_connection_classic_enabled',
+    'pi_cloud_connection_name',
+    'pi_cloud_connection_gre_cidr',
 ]
 
 # Params for Data source
@@ -169,33 +169,33 @@ module_args = dict(
     pi_cloud_connection_speed=dict(
         required=False,
         type='int'),
-    pi_cloud_connection_gre_cidr=dict(
+    pi_cloud_connection_global_routing=dict(
+        required=False,
+        type='bool'),
+    pi_cloud_connection_metered=dict(
+        required=False,
+        type='bool'),
+    pi_cloud_connection_gre_destination_address=dict(
         required=False,
         type='str'),
+    pi_cloud_connection_vpc_enabled=dict(
+        required=False,
+        type='bool'),
     pi_cloud_connection_vpc_crns=dict(
         required=False,
         elements='',
         type='list'),
-    pi_cloud_connection_metered=dict(
-        required=False,
-        type='bool'),
     pi_cloud_connection_networks=dict(
         required=False,
         elements='',
         type='list'),
-    pi_cloud_connection_vpc_enabled=dict(
+    pi_cloud_connection_classic_enabled=dict(
         required=False,
         type='bool'),
     pi_cloud_connection_name=dict(
         required=False,
         type='str'),
-    pi_cloud_connection_global_routing=dict(
-        required=False,
-        type='bool'),
-    pi_cloud_connection_classic_enabled=dict(
-        required=False,
-        type='bool'),
-    pi_cloud_connection_gre_destination_address=dict(
+    pi_cloud_connection_gre_cidr=dict(
         required=False,
         type='str'),
     id=dict(

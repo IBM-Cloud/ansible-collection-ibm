@@ -27,16 +27,16 @@ options:
             - (Required for new resource) Instance ID of the certificate manager resource
         required: True
         type: str
-    data:
-        description:
-            - (Required for new resource) certificate data
-        required: True
-        type: dict
     name:
         description:
             - (Required for new resource) Name of the instance
         required: True
         type: str
+    data:
+        description:
+            - (Required for new resource) certificate data
+        required: True
+        type: dict
     description:
         description:
             - Description of the certificate instance
@@ -89,15 +89,15 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('certificate_manager_instance_id', 'str'),
-    ('data', 'dict'),
     ('name', 'str'),
+    ('data', 'dict'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'certificate_manager_instance_id',
-    'data',
     'name',
+    'data',
     'description',
 ]
 
@@ -118,12 +118,12 @@ module_args = dict(
     certificate_manager_instance_id=dict(
         required=False,
         type='str'),
-    data=dict(
-        required=False,
-        type='dict'),
     name=dict(
         required=False,
         type='str'),
+    data=dict(
+        required=False,
+        type='dict'),
     description=dict(
         required=False,
         type='str'),

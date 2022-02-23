@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) CIS object id or CRN
 
 
-  data (False, dict, None)
-    None
-
-
   priority (False, int, None)
     Priority Value
+
+
+  proxied (False, bool, False)
+    Boolean value true if proxied else flase
 
 
   name (False, str, None)
     DNS record name
 
 
-  ttl (False, int, 1)
-    TTL value
+  content (False, str, None)
+    DNS record content
 
 
   domain_id (True, str, None)
@@ -59,12 +59,12 @@ Parameters
     (Required for new resource) Record type
 
 
-  content (False, str, None)
-    DNS record content
+  data (False, dict, None)
+    None
 
 
-  proxied (False, bool, False)
-    Boolean value true if proxied else flase
+  ttl (False, int, 1)
+    TTL value
 
 
   id (False, str, None)

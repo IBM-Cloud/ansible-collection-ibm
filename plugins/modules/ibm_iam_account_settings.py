@@ -22,9 +22,20 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    restrict_create_platform_apikey:
+    include_history:
         description:
-            - Defines whether or not creating platform API keys is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
+            - Defines if the entity history is included in the response.
+        required: False
+        type: bool
+        default: False
+    restrict_create_service_id:
+        description:
+            - Defines whether or not creating a Service Id is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
+        required: False
+        type: str
+    allowed_ip_addresses:
+        description:
+            - Defines the IP addresses and subnets from which IAM tokens can be created for the account.
         required: False
         type: str
     entity_tag:
@@ -43,20 +54,9 @@ options:
             - Defines the max allowed sessions per identity required by the account. Value values: * Any whole number greater than '0'   * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
-    include_history:
+    restrict_create_platform_apikey:
         description:
-            - Defines if the entity history is included in the response.
-        required: False
-        type: bool
-        default: False
-    restrict_create_service_id:
-        description:
-            - Defines whether or not creating a Service Id is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
-        required: False
-        type: str
-    allowed_ip_addresses:
-        description:
-            - Defines the IP addresses and subnets from which IAM tokens can be created for the account.
+            - Defines whether or not creating platform API keys is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
         required: False
         type: str
     mfa:
@@ -124,13 +124,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'restrict_create_platform_apikey',
-    'entity_tag',
-    'if_match',
-    'max_sessions_per_identity',
     'include_history',
     'restrict_create_service_id',
     'allowed_ip_addresses',
+    'entity_tag',
+    'if_match',
+    'max_sessions_per_identity',
+    'restrict_create_platform_apikey',
     'mfa',
     'session_expiration_in_seconds',
     'session_invalidation_in_seconds',
@@ -151,7 +151,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    restrict_create_platform_apikey=dict(
+    include_history=dict(
+        required=False,
+        type='bool'),
+    restrict_create_service_id=dict(
+        required=False,
+        type='str'),
+    allowed_ip_addresses=dict(
         required=False,
         type='str'),
     entity_tag=dict(
@@ -163,13 +169,7 @@ module_args = dict(
     max_sessions_per_identity=dict(
         required=False,
         type='str'),
-    include_history=dict(
-        required=False,
-        type='bool'),
-    restrict_create_service_id=dict(
-        required=False,
-        type='str'),
-    allowed_ip_addresses=dict(
+    restrict_create_platform_apikey=dict(
         required=False,
         type='str'),
     mfa=dict(

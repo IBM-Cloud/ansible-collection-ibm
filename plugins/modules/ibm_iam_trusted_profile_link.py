@@ -22,6 +22,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    profile_id:
+        description:
+            - (Required for new resource) ID of the trusted profile.
+        required: True
+        type: str
     cr_type:
         description:
             - (Required for new resource) The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
@@ -37,11 +42,6 @@ options:
         description:
             - Optional name of the Link.
         required: False
-        type: str
-    profile_id:
-        description:
-            - (Required for new resource) ID of the trusted profile.
-        required: True
         type: str
     id:
         description:
@@ -89,28 +89,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('profile_id', 'str'),
     ('cr_type', 'str'),
     ('link', 'list'),
-    ('profile_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'profile_id',
     'cr_type',
     'link',
     'name',
-    'profile_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('profile_id', 'str'),
     ('link_id', 'str'),
+    ('profile_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'profile_id',
     'link_id',
+    'profile_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -120,6 +120,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    profile_id=dict(
+        required=False,
+        type='str'),
     cr_type=dict(
         required=False,
         type='str'),
@@ -128,9 +131,6 @@ module_args = dict(
         elements='',
         type='list'),
     name=dict(
-        required=False,
-        type='str'),
-    profile_id=dict(
         required=False,
         type='str'),
     id=dict(

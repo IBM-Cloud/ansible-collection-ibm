@@ -22,6 +22,31 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - (Required for new resource) Policy rule type.
+        required: True
+        type: str
+    value:
+        description:
+            - (Required for new resource) policy rule value info
+        required: True
+        type: str
+    policy:
+        description:
+            - (Required for new resource) Listener Policy ID
+        required: True
+        type: str
+    condition:
+        description:
+            - (Required for new resource) Condition info of the rule.
+        required: True
+        type: str
+    field:
+        description:
+            - None
+        required: False
+        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer ID
@@ -31,31 +56,6 @@ options:
         description:
             - (Required for new resource) Listener ID.
         required: True
-        type: str
-    condition:
-        description:
-            - (Required for new resource) Condition info of the rule.
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Policy rule type.
-        required: True
-        type: str
-    policy:
-        description:
-            - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) policy rule value info
-        required: True
-        type: str
-    field:
-        description:
-            - None
-        required: False
         type: str
     id:
         description:
@@ -103,23 +103,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
+    ('value', 'str'),
+    ('policy', 'str'),
+    ('condition', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
-    ('condition', 'str'),
-    ('type', 'str'),
-    ('policy', 'str'),
-    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'value',
+    'policy',
+    'condition',
+    'field',
     'lb',
     'listener',
-    'condition',
-    'type',
-    'policy',
-    'value',
-    'field',
 ]
 
 # Params for Data source
@@ -136,25 +136,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
-        required=False,
-        type='str'),
-    listener=dict(
-        required=False,
-        type='str'),
-    condition=dict(
-        required=False,
-        type='str'),
     type=dict(
-        required=False,
-        type='str'),
-    policy=dict(
         required=False,
         type='str'),
     value=dict(
         required=False,
         type='str'),
+    policy=dict(
+        required=False,
+        type='str'),
+    condition=dict(
+        required=False,
+        type='str'),
     field=dict(
+        required=False,
+        type='str'),
+    lb=dict(
+        required=False,
+        type='str'),
+    listener=dict(
         required=False,
         type='str'),
     id=dict(

@@ -27,20 +27,31 @@ options:
             - (Required for new resource) Catalog identifier.
         required: True
         type: str
-    offering_id:
+    content:
         description:
-            - (Required for new resource) Offering identification.
-        required: True
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
+        required: False
         type: str
     zipurl:
         description:
             - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
+    tags:
+        description:
+            - Tags array.
+        required: False
+        type: list
+        elements: str
     target_version:
         description:
             - The semver value for this new version, if not found in the zip url package content.
         required: False
+        type: str
+    offering_id:
+        description:
+            - (Required for new resource) Offering identification.
+        required: True
         type: str
     target_kinds:
         description:
@@ -48,17 +59,6 @@ options:
         required: False
         type: list
         elements: str
-    tags:
-        description:
-            - Tags array.
-        required: False
-        type: list
-        elements: str
-    content:
-        description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,12 +112,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'catalog_identifier',
-    'offering_id',
-    'zipurl',
-    'target_version',
-    'target_kinds',
-    'tags',
     'content',
+    'zipurl',
+    'tags',
+    'target_version',
+    'offering_id',
+    'target_kinds',
 ]
 
 # Params for Data source
@@ -139,26 +139,26 @@ module_args = dict(
     catalog_identifier=dict(
         required=False,
         type='str'),
-    offering_id=dict(
+    content=dict(
         required=False,
         type='str'),
     zipurl=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     target_version=dict(
+        required=False,
+        type='str'),
+    offering_id=dict(
         required=False,
         type='str'),
     target_kinds=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    content=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),

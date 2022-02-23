@@ -22,17 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    vpc:
-        description:
-            - (Required for new resource) The VPC id
-        required: True
-        type: str
-    ips:
-        description:
-            - Endpoint gateway IPs
-        required: False
-        type: list
-        elements: dict
     target:
         description:
             - (Required for new resource) Endpoint gateway target
@@ -61,6 +50,17 @@ options:
         required: False
         type: list
         elements: str
+    ips:
+        description:
+            - Endpoint gateway IPs
+        required: False
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - (Required for new resource) The VPC id
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,20 +107,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
     ('target', 'list'),
     ('name', 'str'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc',
-    'ips',
     'target',
     'tags',
     'name',
     'resource_group',
     'security_groups',
+    'ips',
+    'vpc',
 ]
 
 # Params for Data source
@@ -139,13 +139,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc=dict(
-        required=False,
-        type='str'),
-    ips=dict(
-        required=False,
-        elements='',
-        type='list'),
     target=dict(
         required=False,
         elements='',
@@ -164,6 +157,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    ips=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

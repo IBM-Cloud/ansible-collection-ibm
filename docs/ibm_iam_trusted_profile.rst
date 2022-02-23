@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Name of the trusted profile. The name is checked for uniqueness. Therefore trusted profiles with the same names can not exist in the same account.
-
-
   description (False, str, None)
     The optional description of the trusted profile. The 'description' property is only available if a description was provided during creation of trusted profile.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the trusted profile. The name is checked for uniqueness. Therefore trusted profiles with the same names can not exist in the same account.
 
 
   id (False, str, None)

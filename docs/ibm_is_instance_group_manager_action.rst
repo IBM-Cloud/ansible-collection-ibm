@@ -31,16 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_group (True, str, None)
-    (Required for new resource) instance group ID
-
-
-  membership_count (False, int, None)
-    The number of members the instance group should have at the scheduled time.
-
-
-  max_membership_count (False, int, None)
-    The maximum number of members in a managed instance group
+  name (False, str, None)
+    instance group manager action name
 
 
   target_manager (False, str, None)
@@ -51,20 +43,28 @@ Parameters
     The cron specification for a recurring scheduled action. Actions can be applied a maximum of one time within a 5 min period.
 
 
-  name (False, str, None)
-    instance group manager action name
-
-
-  min_membership_count (False, int, 1)
-    The minimum number of members in a managed instance group
+  membership_count (False, int, None)
+    The number of members the instance group should have at the scheduled time.
 
 
   instance_group_manager (True, str, None)
     (Required for new resource) Instance group manager ID of type scheduled
 
 
+  min_membership_count (False, int, 1)
+    The minimum number of members in a managed instance group
+
+
+  instance_group (True, str, None)
+    (Required for new resource) instance group ID
+
+
   run_at (False, str, None)
     The date and time the scheduled action will run.
+
+
+  max_membership_count (False, int, None)
+    The maximum number of members in a managed instance group
 
 
   id (False, str, None)

@@ -31,14 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass along to the service broker. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
-
-
   wait_time_minutes (False, int, 10)
     Define timeout to wait for the service instances to succeeded/deleted etc.
 
@@ -47,16 +39,24 @@ Parameters
     (Required for new resource) A name for the service instance
 
 
-  space_guid (True, str, None)
-    (Required for new resource) The guid of the space in which the instance will be created
-
-
   service (True, str, None)
     (Required for new resource) The name of the service offering like speech_to_text, text_to_speech etc
 
 
+  tags (False, list, None)
+    None
+
+
   plan (True, str, None)
     (Required for new resource) The plan type of the service
+
+
+  space_guid (True, str, None)
+    (Required for new resource) The guid of the space in which the instance will be created
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass along to the service broker. Must be a JSON object
 
 
   id (False, str, None)

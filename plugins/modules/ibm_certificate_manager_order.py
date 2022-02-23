@@ -22,43 +22,28 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    key_algorithm:
-        description:
-            - Keyalgorithm info
-        required: False
-        type: str
-        default: rsaEncryption 2048 bit
     auto_renew_enabled:
         description:
             - None
         required: False
         type: bool
         default: False
-    name:
-        description:
-            - (Required for new resource) Certificate name
-        required: True
-        type: str
     domains:
         description:
             - (Required for new resource) List of domain names
         required: True
         type: list
         elements: str
-    dns_provider_instance_crn:
+    domain_validation_method:
         description:
-            - DNS provider instance CRN
+            - Domain validation methods
         required: False
         type: str
+        default: dns-01
     certificate_manager_instance_id:
         description:
             - (Required for new resource) Certificate manager instance ID
         required: True
-        type: str
-    description:
-        description:
-            - Certicate description
-        required: False
         type: str
     renew_certificate:
         description:
@@ -66,18 +51,33 @@ options:
         required: False
         type: bool
         default: False
-    domain_validation_method:
+    key_algorithm:
         description:
-            - Domain validation methods
+            - Keyalgorithm info
         required: False
         type: str
-        default: dns-01
+        default: rsaEncryption 2048 bit
+    name:
+        description:
+            - (Required for new resource) Certificate name
+        required: True
+        type: str
     rotate_keys:
         description:
             - Keys are sorated if set to true
         required: False
         type: bool
         default: False
+    description:
+        description:
+            - Certicate description
+        required: False
+        type: str
+    dns_provider_instance_crn:
+        description:
+            - DNS provider instance CRN
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -124,23 +124,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('domains', 'list'),
     ('certificate_manager_instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_algorithm',
     'auto_renew_enabled',
-    'name',
     'domains',
-    'dns_provider_instance_crn',
-    'certificate_manager_instance_id',
-    'description',
-    'renew_certificate',
     'domain_validation_method',
+    'certificate_manager_instance_id',
+    'renew_certificate',
+    'key_algorithm',
+    'name',
     'rotate_keys',
+    'description',
+    'dns_provider_instance_crn',
 ]
 
 # Params for Data source
@@ -157,37 +157,37 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_algorithm=dict(
-        required=False,
-        type='str'),
     auto_renew_enabled=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     domains=dict(
         required=False,
         elements='',
         type='list'),
-    dns_provider_instance_crn=dict(
+    domain_validation_method=dict(
         required=False,
         type='str'),
     certificate_manager_instance_id=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     renew_certificate=dict(
         required=False,
         type='bool'),
-    domain_validation_method=dict(
+    key_algorithm=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     rotate_keys=dict(
         required=False,
         type='bool'),
+    description=dict(
+        required=False,
+        type='str'),
+    dns_provider_instance_crn=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),

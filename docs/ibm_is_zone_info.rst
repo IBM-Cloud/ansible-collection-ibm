@@ -29,11 +29,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
+  region_ (True, str, None)
     None
 
 
-  region_ (True, str, None)
+  name (True, str, None)
     None
 
 

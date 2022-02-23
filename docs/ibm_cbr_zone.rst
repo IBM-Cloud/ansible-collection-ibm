@@ -39,12 +39,12 @@ Parameters
     (Required for new resource) The list of addresses in the zone.
 
 
-  excluded (False, list, None)
-    The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
-
-
   name (True, str, None)
     (Required for new resource) The name of the zone.
+
+
+  excluded (False, list, None)
+    The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
 
 
   id (False, str, None)

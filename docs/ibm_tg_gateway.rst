@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (True, str, None)
-    (Required for new resource) Location of Transit Gateway Services
-
-
-  global_ (False, bool, False)
-    Allow global routing for a Transit Gateway. If unspecified, the default value is false
-
-
   tags (False, list, None)
     Tags for the transit gateway instance
 
 
+  location (True, str, None)
+    (Required for new resource) Location of Transit Gateway Services
+
+
   name (True, str, None)
     (Required for new resource) Name Transit Gateway Services
+
+
+  global_ (False, bool, False)
+    Allow global routing for a Transit Gateway. If unspecified, the default value is false
 
 
   resource_group (False, str, None)

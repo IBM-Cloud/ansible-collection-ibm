@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  port_id (True, str, None)
+    (Required for new resource)
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource)
+
+
   pi_instance_name (True, str, None)
     (Required for new resource) Instance name to attach the network port to
 
@@ -41,14 +49,6 @@ Parameters
 
   pi_network_port_description (False, str, Port Created via Terraform)
     A human readable description for this network Port
-
-
-  port_id (True, str, None)
-    (Required for new resource)
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource)
 
 
   id (False, str, None)

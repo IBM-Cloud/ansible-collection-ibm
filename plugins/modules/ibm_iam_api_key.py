@@ -22,6 +22,21 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    apikey:
+        description:
+            - You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this value.
+        required: False
+        type: str
+    description:
+        description:
+            - The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
+        required: False
+        type: str
+    store_value:
+        description:
+            - Send true or false to set whether the API key value is retrievable in the future by using the Get details of an API key request. If you create an API key for a user, you must specify `false` or omit the value. We don't allow storing of API keys for users.
+        required: False
+        type: bool
     name:
         description:
             - (Required for new resource) Name of the API key. The name is not checked for uniqueness. Therefore multiple names with the same value can exist. Access is done via the UUID of the API key.
@@ -38,21 +53,6 @@ options:
         required: False
         type: str
         default: false
-    description:
-        description:
-            - The optional description of the API key. The 'description' property is only available if a description was provided during a create of an API key.
-        required: False
-        type: str
-    apikey:
-        description:
-            - You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this value.
-        required: False
-        type: str
-    store_value:
-        description:
-            - Send true or false to set whether the API key value is retrievable in the future by using the Get details of an API key request. If you create an API key for a user, you must specify `false` or omit the value. We don't allow storing of API keys for users.
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,12 +104,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'apikey',
+    'description',
+    'store_value',
     'name',
     'file',
     'entity_lock',
-    'description',
-    'apikey',
-    'store_value',
 ]
 
 # Params for Data source
@@ -128,6 +128,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    apikey=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    store_value=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),
@@ -137,15 +146,6 @@ module_args = dict(
     entity_lock=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    apikey=dict(
-        required=False,
-        type='str'),
-    store_value=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

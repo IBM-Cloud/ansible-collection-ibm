@@ -22,36 +22,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    pool:
+        description:
+            - (Required for new resource) Loadblancer Poold ID
+        required: True
+        type: str
     lb:
         description:
             - (Required for new resource) Load balancer ID
         required: True
+        type: str
+    target_address:
+        description:
+            - Load balancer pool member target address
+        required: False
         type: str
     target_id:
         description:
             - Load balancer pool member target id
         required: False
         type: str
-    weight:
-        description:
-            - Load balcner pool member weight
-        required: False
-        type: int
-    pool:
-        description:
-            - (Required for new resource) Loadblancer Poold ID
-        required: True
-        type: str
     port:
         description:
             - (Required for new resource) Load Balancer Pool port
         required: True
         type: int
-    target_address:
+    weight:
         description:
-            - Load balancer pool member target address
+            - Load balcner pool member weight
         required: False
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,19 +98,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
     ('pool', 'str'),
+    ('lb', 'str'),
     ('port', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
-    'target_id',
-    'weight',
     'pool',
-    'port',
+    'lb',
     'target_address',
+    'target_id',
+    'port',
+    'weight',
 ]
 
 # Params for Data source
@@ -127,24 +127,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pool=dict(
+        required=False,
+        type='str'),
     lb=dict(
+        required=False,
+        type='str'),
+    target_address=dict(
         required=False,
         type='str'),
     target_id=dict(
         required=False,
         type='str'),
-    weight=dict(
-        required=False,
-        type='int'),
-    pool=dict(
-        required=False,
-        type='str'),
     port=dict(
         required=False,
         type='int'),
-    target_address=dict(
+    weight=dict(
         required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),

@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  list_bounded_services (False, bool, True)
+    If set to false bounded services won't be listed.
 
 
   name (False, str, None)
     Name or id of the cluster
 
 
-  list_bounded_services (False, bool, True)
-    If set to false bounded services won't be listed.
-
-
   alb_type (False, str, all)
     None
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

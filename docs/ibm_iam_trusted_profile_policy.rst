@@ -31,6 +31,14 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile_id (False, str, None)
+    UUID of Trusted Profile
+
+
+  iam_id (False, str, None)
+    IAM ID of Trusted Profile
+
+
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
 
@@ -53,14 +61,6 @@ Parameters
 
   description (False, str, None)
     Description of the Policy
-
-
-  profile_id (False, str, None)
-    UUID of Trusted Profile
-
-
-  iam_id (False, str, None)
-    IAM ID of Trusted Profile
 
 
   id (False, str, None)

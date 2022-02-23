@@ -31,18 +31,6 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  display_fields (True, list, None)
-    (Required for new resource) Details the fields on the credential. This will change as per credential type selected.
-
-
-  group (True, list, None)
-    (Required for new resource) Credential group details.
-
-
-  purpose (True, str, None)
-    (Required for new resource) Purpose for which the credential is created.
-
-
   enabled (True, bool, None)
     (Required for new resource) Credentials status enabled/disbaled.
 
@@ -57,6 +45,18 @@ Parameters
 
   description (True, str, None)
     (Required for new resource) Credentials description.
+
+
+  display_fields (True, list, None)
+    (Required for new resource) Details the fields on the credential. This will change as per credential type selected.
+
+
+  group (True, list, None)
+    (Required for new resource) Credential group details.
+
+
+  purpose (True, str, None)
+    (Required for new resource) Purpose for which the credential is created.
 
 
   id (False, str, None)

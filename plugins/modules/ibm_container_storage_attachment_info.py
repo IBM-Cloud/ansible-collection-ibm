@@ -21,6 +21,11 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    cluster:
+        description:
+            - Cluster name or ID
+        required: True
+        type: str
     worker:
         description:
             - Worker node ID
@@ -36,11 +41,6 @@ options:
             - The volume attachment ID
         required: True
         type: str
-    cluster:
-        description:
-            - Cluster name or ID
-        required: True
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -54,17 +54,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cluster', 'str'),
     ('worker', 'str'),
     ('volume_attachment_id', 'str'),
-    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cluster',
     'worker',
     'resource_group_id',
     'volume_attachment_id',
-    'cluster',
 ]
 
 
@@ -75,6 +75,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cluster=dict(
+        required=True,
+        type='str'),
     worker=dict(
         required=True,
         type='str'),
@@ -82,9 +85,6 @@ module_args = dict(
         required=False,
         type='str'),
     volume_attachment_id=dict(
-        required=True,
-        type='str'),
-    cluster=dict(
         required=True,
         type='str'),
     ibmcloud_api_key=dict(

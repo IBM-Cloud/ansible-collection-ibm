@@ -29,6 +29,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, str, None)
+    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
+
+
   limit (False, int, None)
     The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
 
@@ -39,10 +43,6 @@ Parameters
 
   expand (False, bool, None)
     If set to `true`, returns expanded view of the resource details.
-
-
-  tags (False, str, None)
-    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
 
 
   offset (False, int, None)

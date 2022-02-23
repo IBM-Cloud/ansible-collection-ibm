@@ -31,6 +31,10 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  profile_id (True, str, None)
+    (Required for new resource) ID of the trusted profile.
+
+
   cr_type (True, str, None)
     (Required for new resource) The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
 
@@ -41,10 +45,6 @@ Parameters
 
   name (False, str, None)
     Optional name of the Link.
-
-
-  profile_id (True, str, None)
-    (Required for new resource) ID of the trusted profile.
 
 
   id (False, str, None)

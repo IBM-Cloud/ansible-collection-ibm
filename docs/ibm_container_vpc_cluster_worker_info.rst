@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   cluster_name_id (True, str, None)
     Name or ID of the cluster
 
 
   worker_id (True, str, None)
     ID of the worker
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

@@ -93,9 +93,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'description',
     'most_recent',
     'name',
+    'description',
 ]
 
 TL_CONFLICTS_MAP = {

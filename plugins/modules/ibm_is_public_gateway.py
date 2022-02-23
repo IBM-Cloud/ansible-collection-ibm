@@ -22,14 +22,24 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name of the Public gateway instance
+        required: True
+        type: str
     floating_ip:
         description:
             - None
         required: False
         type: dict
-    vpc:
+    zone:
         description:
-            - (Required for new resource) Public gateway VPC info
+            - (Required for new resource) Public gateway zone info
         required: True
         type: str
     tags:
@@ -38,19 +48,9 @@ options:
         required: False
         type: list
         elements: str
-    name:
+    vpc:
         description:
-            - (Required for new resource) Name of the Public gateway instance
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Public gateway resource group info
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Public gateway zone info
+            - (Required for new resource) Public gateway VPC info
         required: True
         type: str
     id:
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
     ('name', 'str'),
     ('zone', 'str'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'floating_ip',
-    'vpc',
-    'tags',
-    'name',
     'resource_group',
+    'name',
+    'floating_ip',
     'zone',
+    'tags',
+    'vpc',
 ]
 
 # Params for Data source
@@ -131,23 +131,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     floating_ip=dict(
         required=False,
         type='dict'),
-    vpc=dict(
+    zone=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    zone=dict(
+    vpc=dict(
         required=False,
         type='str'),
     id=dict(

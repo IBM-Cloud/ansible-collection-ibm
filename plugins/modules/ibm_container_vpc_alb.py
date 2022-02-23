@@ -22,6 +22,16 @@ requirements:
     - Terraform v0.12.20
 
 options:
+    disable_deployment:
+        description:
+            - Disable the ALB instance in the cluster
+        required: False
+        type: bool
+    enable:
+        description:
+            - Enable the ALB instance in the cluster
+        required: False
+        type: bool
     alb_id:
         description:
             - (Required for new resource) ALB ID
@@ -32,16 +42,6 @@ options:
             - ID of the resource group.
         required: False
         type: str
-    enable:
-        description:
-            - Enable the ALB instance in the cluster
-        required: False
-        type: bool
-    disable_deployment:
-        description:
-            - Disable the ALB instance in the cluster
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,10 +73,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'disable_deployment',
+    'enable',
     'alb_id',
     'resource_group_id',
-    'enable',
-    'disable_deployment',
 ]
 
 # Params for Data source
@@ -90,26 +90,26 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'enable': ['disable_deployment'],
     'disable_deployment': ['enable'],
+    'enable': ['disable_deployment'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    disable_deployment=dict(
+        required=False,
+        type='bool'),
+    enable=dict(
+        required=False,
+        type='bool'),
     alb_id=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
-    disable_deployment=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),

@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    gateway_id:
-        description:
-            - (Required for new resource) Gateway instance ID
-        required: True
-        type: int
     network_vlan_id:
         description:
             - (Required for new resource) The Identifier of the VLAN to be associated
@@ -38,6 +33,11 @@ options:
         required: False
         type: bool
         default: True
+    gateway_id:
+        description:
+            - (Required for new resource) Gateway instance ID
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -84,15 +84,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('gateway_id', 'int'),
     ('network_vlan_id', 'int'),
+    ('gateway_id', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'gateway_id',
     'network_vlan_id',
     'bypass',
+    'gateway_id',
 ]
 
 # Params for Data source
@@ -109,15 +109,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    gateway_id=dict(
-        required=False,
-        type='int'),
     network_vlan_id=dict(
         required=False,
         type='int'),
     bypass=dict(
         required=False,
         type='bool'),
+    gateway_id=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),

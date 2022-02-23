@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
+
+
   color_code (False, str, None)
     Color code to distinguish the environment.
 
 
   name (True, str, None)
     (Required for new resource) Environment name.
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
 
 
   description (False, str, None)

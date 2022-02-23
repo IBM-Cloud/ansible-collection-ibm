@@ -22,59 +22,36 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - Description for the load balancer instance
-        required: False
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    fallback_pool_id:
-        description:
-            - (Required for new resource) fallback pool ID
-        required: True
-        type: str
-    ttl:
-        description:
-            - TTL value
-        required: False
-        type: int
-        default: 60
-    proxied:
-        description:
-            - set to true if proxy needs to be enabled
-        required: False
-        type: bool
-        default: False
-    session_affinity:
-        description:
-            - Session affinity info
-        required: False
-        type: str
-        default: none
     enabled:
         description:
             - set to true of LB needs to enabled
         required: False
         type: bool
         default: True
-    region_pools:
+    cis_id:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
         required: True
         type: str
-    name:
+    description:
         description:
-            - (Required for new resource) name
+            - Description for the load balancer instance
+        required: False
+        type: str
+    session_affinity:
+        description:
+            - Session affinity info
+        required: False
+        type: str
+        default: none
+    fallback_pool_id:
+        description:
+            - (Required for new resource) fallback pool ID
         required: True
         type: str
     default_pool_ids:
@@ -83,10 +60,16 @@ options:
         required: True
         type: list
         elements: str
-    steering_policy:
+    ttl:
         description:
-            - Steering policy info
+            - TTL value
         required: False
+        type: int
+        default: 60
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
         type: str
     pop_pools:
         description:
@@ -94,6 +77,23 @@ options:
         required: False
         type: list
         elements: dict
+    region_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    steering_policy:
+        description:
+            - Steering policy info
+        required: False
+        type: str
+    proxied:
+        description:
+            - set to true if proxy needs to be enabled
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -141,27 +141,27 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('fallback_pool_id', 'str'),
     ('domain_id', 'str'),
-    ('name', 'str'),
+    ('fallback_pool_id', 'str'),
     ('default_pool_ids', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'cis_id',
-    'fallback_pool_id',
-    'ttl',
-    'proxied',
-    'session_affinity',
     'enabled',
-    'region_pools',
+    'cis_id',
     'domain_id',
-    'name',
+    'description',
+    'session_affinity',
+    'fallback_pool_id',
     'default_pool_ids',
-    'steering_policy',
+    'ttl',
+    'name',
     'pop_pools',
+    'region_pools',
+    'steering_policy',
+    'proxied',
 ]
 
 # Params for Data source
@@ -180,48 +180,48 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
-    fallback_pool_id=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
-    proxied=dict(
-        required=False,
-        type='bool'),
-    session_affinity=dict(
-        required=False,
-        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    region_pools=dict(
+    cis_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    session_affinity=dict(
+        required=False,
+        type='str'),
+    fallback_pool_id=dict(
         required=False,
         type='str'),
     default_pool_ids=dict(
         required=False,
         elements='',
         type='list'),
-    steering_policy=dict(
+    ttl=dict(
+        required=False,
+        type='int'),
+    name=dict(
         required=False,
         type='str'),
     pop_pools=dict(
         required=False,
         elements='',
         type='list'),
+    region_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
+    steering_policy=dict(
+        required=False,
+        type='str'),
+    proxied=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),

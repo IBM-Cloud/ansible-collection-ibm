@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    resource_instance_id:
-        description:
-            - The ID or CRN of the Event Streams service instance
-        required: True
-        type: str
     schema_id:
         description:
             - The unique ID to be assigned to the schema.
+        required: True
+        type: str
+    resource_instance_id:
+        description:
+            - The ID or CRN of the Event Streams service instance
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_instance_id', 'str'),
     ('schema_id', 'str'),
+    ('resource_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
     'schema_id',
+    'resource_instance_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_instance_id=dict(
+    schema_id=dict(
         required=True,
         type='str'),
-    schema_id=dict(
+    resource_instance_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(

@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  bundle_method (False, str, ubiquitous)
-    Certificate bundle method
+  certificate (True, str, None)
+    (Required for new resource) Certificate key
 
 
   private_key (True, str, None)
     (Required for new resource) Certificate private key
 
 
+  bundle_method (False, str, ubiquitous)
+    Certificate bundle method
+
+
   priority (False, int, None)
     Certificate priority
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
 
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
 
-  certificate (True, str, None)
-    (Required for new resource) Certificate key
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   id (False, str, None)

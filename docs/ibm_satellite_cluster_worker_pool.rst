@@ -31,12 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  flavor (False, str, None)
+    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
+
+
+  disk_encryption (False, bool, None)
+    Disk encryption for worker node
+
+
+  worker_count (False, int, None)
+    Specify the desired number of workers per zone in this worker pool
+
+
   zones (False, list, None)
     Zone info for worker pool
 
 
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   name (True, str, None)
@@ -47,20 +59,8 @@ Parameters
     (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
 
 
-  flavor (False, str, None)
-    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
-
-
-  disk_encryption (False, bool, None)
-    Disk encryption for worker node
-
-
   isolation (False, str, None)
     None
-
-
-  worker_count (False, int, None)
-    Specify the desired number of workers per zone in this worker pool
 
 
   entitlement (False, str, None)
@@ -71,8 +71,8 @@ Parameters
     Labels on all the workers in the worker pool
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
 
 
   id (False, str, None)

@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    CIS instance crn
-
-
   domain_id (True, str, None)
     Associated CIS domain
+
+
+  cis_id (True, str, None)
+    CIS instance crn
 
 
   iaas_classic_username (False, any, None)

@@ -22,11 +22,6 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    instance_group:
-        description:
-            - (Required for new resource) The instance group identifier.
-        required: True
-        type: str
     name:
         description:
             - The user-defined name for this instance group membership. Names must be unique within the instance group.
@@ -38,6 +33,11 @@ options:
         required: False
         type: bool
         default: False
+    instance_group:
+        description:
+            - (Required for new resource) The instance group identifier.
+        required: True
+        type: str
     instance_group_membership:
         description:
             - (Required for new resource) The unique identifier for this instance group membership.
@@ -95,9 +95,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_group',
     'name',
     'action_delete',
+    'instance_group',
     'instance_group_membership',
 ]
 
@@ -119,15 +119,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_group=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     action_delete=dict(
         required=False,
         type='bool'),
+    instance_group=dict(
+        required=False,
+        type='str'),
     instance_group_membership=dict(
         required=False,
         type='str'),

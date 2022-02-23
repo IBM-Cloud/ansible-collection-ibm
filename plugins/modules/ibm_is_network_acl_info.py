@@ -21,14 +21,14 @@ requirements:
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The network acl name.
-        required: False
-        type: str
     vpc_name:
         description:
             - The name of the vpc the network acl resides in.
+        required: False
+        type: str
+    name:
+        description:
+            - The network acl name.
         required: False
         type: str
     network_acl:
@@ -73,8 +73,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'vpc_name',
+    'name',
     'network_acl',
 ]
 
@@ -86,10 +86,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    vpc_name=dict(
         required=False,
         type='str'),
-    vpc_name=dict(
+    name=dict(
         required=False,
         type='str'),
     network_acl=dict(

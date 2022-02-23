@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alb_id (True, str, None)
-    (Required for new resource) ALB ID
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  disable_deployment (False, bool, None)
+    Disable the ALB instance in the cluster
 
 
   enable (False, bool, None)
     Enable the ALB instance in the cluster
 
 
-  disable_deployment (False, bool, None)
-    Disable the ALB instance in the cluster
+  alb_id (True, str, None)
+    (Required for new resource) ALB ID
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)
