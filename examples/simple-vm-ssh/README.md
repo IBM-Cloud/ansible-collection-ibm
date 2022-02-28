@@ -78,5 +78,5 @@ The following parameters can be set by the user:
 [retrieve available images]: #list-available-vsi-images-and-profiles
 [retrieve available profiles]: #list-available-vsi-images-and-profiles
 [Ansible search path]:https://docs.ansible.com/ansible/latest/dev_guide/overview_architecture.html#ansible-search-path
-[Obtain an IBM Cloud API key]:https://cloud.ibm.com/docs/iam?topic=iam-userapikey
+[Obtain an IBM Cloud API key]:https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui
 [Ansible search path]: https://docs.ansible.com/ansible/latest/dev_guide/overview_architecture.html#ansible-search-path
