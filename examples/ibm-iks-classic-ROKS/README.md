@@ -50,4 +50,4 @@ The following parameters can be set by the user:
     ```
     ansible-playbook destroy.yml
     ```
-[Obtain an IBM Cloud API key]:https://cloud.ibm.com/docs/iam?topic=iam-userapikey
+[Obtain an IBM Cloud API key]:https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui
