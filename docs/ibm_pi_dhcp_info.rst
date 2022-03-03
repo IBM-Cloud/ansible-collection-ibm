@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    None
-
-
   pi_dhcp_id (True, str, None)
     The ID of the DHCP Server
+
+
+  pi_cloud_instance_id (True, str, None)
+    None
 
 
   zone (False, str, None)

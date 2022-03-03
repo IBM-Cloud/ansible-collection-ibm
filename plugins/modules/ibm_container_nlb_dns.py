@@ -18,19 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_nlb_dns' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    cluster:
         description:
-            - The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
-        required: False
+            - (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
+        required: True
         type: str
     nlb_host:
         description:
             - (Required for new resource) 
         required: True
+        type: str
+    resource_group_id:
+        description:
+            - The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
+        required: False
         type: str
     nlb_ips:
         description:
@@ -38,11 +43,6 @@ options:
         required: True
         type: list
         elements: str
-    cluster:
-        description:
-            - (Required for new resource) The name or ID of the cluster. To list the clusters that you have access to, use the `GET /v1/clusters` API or run `ibmcloud ks cluster ls`.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -69,17 +69,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cluster', 'str'),
     ('nlb_host', 'str'),
     ('nlb_ips', 'list'),
-    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'nlb_host',
-    'nlb_ips',
     'cluster',
+    'nlb_host',
+    'resource_group_id',
+    'nlb_ips',
 ]
 
 # Params for Data source
@@ -98,19 +98,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    cluster=dict(
         required=False,
         type='str'),
     nlb_host=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     nlb_ips=dict(
         required=False,
         elements='',
         type='list'),
-    cluster=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -162,7 +162,7 @@ def run_module():
         resource_type='ibm_container_nlb_dns',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -171,7 +171,7 @@ def run_module():
             resource_type='ibm_container_nlb_dns',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

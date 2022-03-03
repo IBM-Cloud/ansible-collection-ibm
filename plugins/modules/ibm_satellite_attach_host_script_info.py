@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_attach_host_script' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,16 @@ options:
     host_provider:
         description:
             - None
-        required: True
+        required: False
         type: str
     script_dir:
         description:
             - The directory where the satellite attach host script to be downloaded. Default is home directory
+        required: False
+        type: str
+    custom_script:
+        description:
+            - The custom script that has to be appended to generated host script file
         required: False
         type: str
     location:
@@ -75,7 +80,6 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_provider', 'str'),
     ('location', 'str'),
 ]
 
@@ -84,6 +88,7 @@ TL_ALL_PARAMETERS = [
     'labels',
     'host_provider',
     'script_dir',
+    'custom_script',
     'location',
 ]
 
@@ -100,9 +105,12 @@ module_args = dict(
         elements='',
         type='list'),
     host_provider=dict(
-        required=True,
+        required=False,
         type='str'),
     script_dir=dict(
+        required=False,
+        type='str'),
+    custom_script=dict(
         required=False,
         type='str'),
     location=dict(
@@ -142,7 +150,7 @@ def run_module():
         resource_type='ibm_satellite_attach_host_script',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

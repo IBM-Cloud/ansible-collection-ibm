@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  description (False, str, None)
+    Description of the Policy
+
+
   access_group_id (True, str, None)
     (Required for new resource) ID of access group
 
 
-  roles (True, list, None)
-    (Required for new resource) Role names of the policy definition
-
-
   resources (False, list, None)
     None
+
+
+  tags (False, list, None)
+    None
+
+
+  resource_tags (False, list, None)
+    Set access management tags.
+
+
+  roles (True, list, None)
+    (Required for new resource) Role names of the policy definition
 
 
   resource_attributes (False, list, None)
@@ -49,10 +61,6 @@ Parameters
 
   account_management (False, bool, False)
     Give access to all account management services
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags associated with this catalog.
+  catalog_id (True, str, None)
+    (Required for new resource) The id of the catalog containing this offering.
 
 
   label (True, str, None)
     (Required for new resource) Display Name in the requested language.
 
 
-  catalog_id (True, str, None)
-    (Required for new resource) The id of the catalog containing this offering.
+  tags (False, list, None)
+    List of tags associated with this catalog.
 
 
   id (False, str, None)

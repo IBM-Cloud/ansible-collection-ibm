@@ -18,18 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
+    authentication_algorithm:
+        description:
+            - (Required for new resource) Authentication alorothm
+        required: True
+        type: str
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption algorithm
         required: True
         type: str
-    pfs:
+    name:
         description:
-            - (Required for new resource) PFS info
+            - (Required for new resource) IPSEC name
         required: True
         type: str
     resource_group:
@@ -43,14 +48,9 @@ options:
         required: False
         type: int
         default: 3600
-    name:
+    pfs:
         description:
-            - (Required for new resource) IPSEC name
-        required: True
-        type: str
-    authentication_algorithm:
-        description:
-            - (Required for new resource) Authentication alorothm
+            - (Required for new resource) PFS info
         required: True
         type: str
     id:
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('encryption_algorithm', 'str'),
-    ('pfs', 'str'),
-    ('name', 'str'),
     ('authentication_algorithm', 'str'),
+    ('encryption_algorithm', 'str'),
+    ('name', 'str'),
+    ('pfs', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'authentication_algorithm',
     'encryption_algorithm',
-    'pfs',
+    'name',
     'resource_group',
     'key_lifetime',
-    'name',
-    'authentication_algorithm',
+    'pfs',
 ]
 
 # Params for Data source
@@ -129,10 +129,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    authentication_algorithm=dict(
+        required=False,
+        type='str'),
     encryption_algorithm=dict(
         required=False,
         type='str'),
-    pfs=dict(
+    name=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -141,10 +144,7 @@ module_args = dict(
     key_lifetime=dict(
         required=False,
         type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    authentication_algorithm=dict(
+    pfs=dict(
         required=False,
         type='str'),
     id=dict(
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

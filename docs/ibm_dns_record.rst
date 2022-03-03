@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,52 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  service (False, str, None)
-    service info
-
-
-  priority (False, int, 0)
-    priority info
-
-
   refresh (False, int, None)
     refresh rate
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  port (False, int, None)
-    port number
 
 
   weight (False, int, 0)
@@ -87,16 +43,60 @@ Parameters
     tags set for the resource
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  priority (False, int, 0)
+    priority info
 
 
   mx_priority (False, int, 0)
     Maximum priority
 
 
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
   type (True, str, None)
     (Required for new resource) DNS record type
+
+
+  port (False, int, None)
+    port number
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  service (False, str, None)
+    service info
 
 
   id (False, str, None)

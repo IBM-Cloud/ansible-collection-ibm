@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
 
   name (True, str, None)
     (Required for new resource) A name for the resource instance
@@ -43,12 +51,8 @@ Parameters
     (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
 
 
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
+  tags (False, list, None)
+    None
 
 
   parameters_json (False, str, None)
@@ -57,10 +61,6 @@ Parameters
 
   service_endpoints (False, str, None)
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  tags (False, list, None)
-    None
 
 
   location (True, str, None)

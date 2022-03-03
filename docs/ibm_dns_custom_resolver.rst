@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Name of the custom resolver
-
-
-  description (False, str, None)
-    Descriptive text of the custom resolver.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Instance ID
-
 
   enabled (False, bool, True)
     Whether the custom resolver is enabled
@@ -53,6 +41,18 @@ Parameters
 
   locations (False, list, None)
     Locations on which the custom resolver will be running
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the custom resolver
+
+
+  description (False, str, None)
+    Descriptive text of the custom resolver.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance ID
 
 
   id (False, str, None)

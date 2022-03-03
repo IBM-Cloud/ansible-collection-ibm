@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -32,14 +32,14 @@ options:
             - (Required for new resource) CIS Domain ID
         required: True
         type: str
-    group_id:
-        description:
-            - (Required for new resource) WAF Rule group id
-        required: True
-        type: str
     package_id:
         description:
             - (Required for new resource) WAF Rule package id
+        required: True
+        type: str
+    group_id:
+        description:
+            - (Required for new resource) WAF Rule group id
         required: True
         type: str
     mode:
@@ -95,8 +95,8 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
     ('domain_id', 'str'),
-    ('group_id', 'str'),
     ('package_id', 'str'),
+    ('group_id', 'str'),
     ('mode', 'str'),
 ]
 
@@ -104,8 +104,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cis_id',
     'domain_id',
-    'group_id',
     'package_id',
+    'group_id',
     'mode',
 ]
 
@@ -129,10 +129,10 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
-    group_id=dict(
+    package_id=dict(
         required=False,
         type='str'),
-    package_id=dict(
+    group_id=dict(
         required=False,
         type='str'),
     mode=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+  command_object_id (True, str, None)
+    (Required for new resource) Job command object id (workspace-id, action-id).
 
 
   data (False, list, None)
     Job data.
 
 
-  bastion (False, list, None)
-    Describes a bastion resource.
+  command_options (False, list, None)
+    Command line options for the command.
+
+
+  job_inputs (False, list, None)
+    Job inputs used by Action or Workspace.
+
+
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
   log_summary (False, list, None)
@@ -51,32 +59,24 @@ Parameters
     (Required for new resource) Name of the Schematics automation resource.
 
 
-  command_object_id (True, str, None)
-    (Required for new resource) Job command object id (workspace-id, action-id).
-
-
   command_name (True, str, None)
     (Required for new resource) Schematics job command name.
+
+
+  job_env_settings (False, list, None)
+    Environment variables used by the Job while performing Action or Workspace.
+
+
+  bastion (False, list, None)
+    Describes a bastion resource.
 
 
   command_parameter (False, str, None)
     Schematics job command parameter (playbook-name).
 
 
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
-
-
-  job_inputs (False, list, None)
-    Job inputs used by Action or Workspace.
-
-
-  job_env_settings (False, list, None)
-    Environment variables used by the Job while performing Action or Workspace.
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
 
 
   id (False, str, None)

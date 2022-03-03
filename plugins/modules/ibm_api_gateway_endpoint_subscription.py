@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_api_gateway_endpoint_subscription' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    client_id:
-        description:
-            - Subscription Id, API key that is used to create subscription
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Subscription name
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Subscription type. Allowable values are external, internal
-        required: True
-        type: str
     client_secret:
         description:
             - Client Sercret of a Subscription
@@ -50,6 +35,21 @@ options:
     artifact_id:
         description:
             - (Required for new resource) Endpoint ID
+        required: True
+        type: str
+    client_id:
+        description:
+            - Subscription Id, API key that is used to create subscription
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Subscription name
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Subscription type. Allowable values are external, internal
         required: True
         type: str
     id:
@@ -98,19 +98,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('artifact_id', 'str'),
     ('name', 'str'),
     ('type', 'str'),
-    ('artifact_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'client_id',
-    'name',
-    'type',
     'client_secret',
     'generate_secret',
     'artifact_id',
+    'client_id',
+    'name',
+    'type',
 ]
 
 # Params for Data source
@@ -129,15 +129,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    client_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     client_secret=dict(
         required=False,
         type='str'),
@@ -145,6 +136,15 @@ module_args = dict(
         required=False,
         type='bool'),
     artifact_id=dict(
+        required=False,
+        type='str'),
+    client_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -212,7 +212,7 @@ def run_module():
         resource_type='ibm_api_gateway_endpoint_subscription',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

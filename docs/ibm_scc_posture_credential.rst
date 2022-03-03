@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  enabled (True, bool, None)
-    (Required for new resource) Credentials status enabled/disbaled.
-
-
-  type (True, str, None)
-    (Required for new resource) Credentials type.
-
 
   name (True, str, None)
     (Required for new resource) Credentials name.
@@ -57,6 +49,14 @@ Parameters
 
   purpose (True, str, None)
     (Required for new resource) Purpose for which the credential is created.
+
+
+  enabled (True, bool, None)
+    (Required for new resource) Credentials status enabled/disbaled.
+
+
+  type (True, str, None)
+    (Required for new resource) Credentials type.
 
 
   id (False, str, None)

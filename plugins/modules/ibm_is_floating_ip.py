@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_floating_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
         description:
             - (Required for new resource) Name of the floating IP
         required: True
+        type: str
+    resource_group:
+        description:
+            - Resource group info
+        required: False
         type: str
     tags:
         description:
@@ -41,11 +46,6 @@ options:
     target:
         description:
             - Target info
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
         required: False
         type: str
     id:
@@ -100,10 +100,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'resource_group',
     'tags',
     'zone',
     'target',
-    'resource_group',
 ]
 
 # Params for Data source
@@ -127,6 +127,9 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -135,9 +138,6 @@ module_args = dict(
         required=False,
         type='str'),
     target=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_is_floating_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_is_floating_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

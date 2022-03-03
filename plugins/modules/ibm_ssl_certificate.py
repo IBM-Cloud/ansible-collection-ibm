@@ -18,13 +18,46 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ssl_certificate' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    billing_contact_same_as_technical_flag:
+    ssl_type:
         description:
-            - billing contact
+            - (Required for new resource) ssl type
+        required: True
+        type: str
+    organization_information:
+        description:
+            - (Required for new resource) Organization information
+        required: True
+        type: list
+        elements: dict
+    technical_contact:
+        description:
+            - (Required for new resource) Technical contact info
+        required: True
+        type: list
+        elements: dict
+    server_count:
+        description:
+            - (Required for new resource) Server count
+        required: True
+        type: int
+    server_type:
+        description:
+            - (Required for new resource) server type
+        required: True
+        type: str
+    administrative_address_same_as_organization_flag:
+        description:
+            - administrative address same as organization flag
+        required: False
+        type: bool
+        default: False
+    billing_address_same_as_organization_flag:
+        description:
+            - billing address same as organization flag
         required: False
         type: bool
         default: False
@@ -34,17 +67,33 @@ options:
         required: False
         type: list
         elements: dict
-    organization_information:
+    validity_months:
         description:
-            - (Required for new resource) Organization information
-        required: True
-        type: list
-        elements: dict
-    server_count:
-        description:
-            - (Required for new resource) Server count
+            - (Required for new resource) vslidity of the ssl certificate in month
         required: True
         type: int
+    order_approver_email_address:
+        description:
+            - (Required for new resource) Email address of the approver
+        required: True
+        type: str
+    administrative_contact_same_as_technical_flag:
+        description:
+            - Administrative contact same as technical flag
+        required: False
+        type: bool
+        default: False
+    billing_contact:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    certificate_signing_request:
+        description:
+            - (Required for new resource) certificate signing request info
+        required: True
+        type: str
     technical_contact_same_as_org_address_flag:
         description:
             - Technical contact same as org address flag
@@ -57,61 +106,12 @@ options:
         required: False
         type: bool
         default: True
-    order_approver_email_address:
+    billing_contact_same_as_technical_flag:
         description:
-            - (Required for new resource) Email address of the approver
-        required: True
-        type: str
-    billing_address_same_as_organization_flag:
-        description:
-            - billing address same as organization flag
+            - billing contact
         required: False
         type: bool
         default: False
-    ssl_type:
-        description:
-            - (Required for new resource) ssl type
-        required: True
-        type: str
-    certificate_signing_request:
-        description:
-            - (Required for new resource) certificate signing request info
-        required: True
-        type: str
-    administrative_contact_same_as_technical_flag:
-        description:
-            - Administrative contact same as technical flag
-        required: False
-        type: bool
-        default: False
-    administrative_address_same_as_organization_flag:
-        description:
-            - administrative address same as organization flag
-        required: False
-        type: bool
-        default: False
-    technical_contact:
-        description:
-            - (Required for new resource) Technical contact info
-        required: True
-        type: list
-        elements: dict
-    billing_contact:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    server_type:
-        description:
-            - (Required for new resource) server type
-        required: True
-        type: str
-    validity_months:
-        description:
-            - (Required for new resource) vslidity of the ssl certificate in month
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -158,34 +158,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('organization_information', 'list'),
-    ('server_count', 'int'),
-    ('order_approver_email_address', 'str'),
     ('ssl_type', 'str'),
-    ('certificate_signing_request', 'str'),
+    ('organization_information', 'list'),
     ('technical_contact', 'list'),
+    ('server_count', 'int'),
     ('server_type', 'str'),
     ('validity_months', 'int'),
+    ('order_approver_email_address', 'str'),
+    ('certificate_signing_request', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'billing_contact_same_as_technical_flag',
-    'administrative_contact',
+    'ssl_type',
     'organization_information',
+    'technical_contact',
     'server_count',
+    'server_type',
+    'administrative_address_same_as_organization_flag',
+    'billing_address_same_as_organization_flag',
+    'administrative_contact',
+    'validity_months',
+    'order_approver_email_address',
+    'administrative_contact_same_as_technical_flag',
+    'billing_contact',
+    'certificate_signing_request',
     'technical_contact_same_as_org_address_flag',
     'renewal_flag',
-    'order_approver_email_address',
-    'billing_address_same_as_organization_flag',
-    'ssl_type',
-    'certificate_signing_request',
-    'administrative_contact_same_as_technical_flag',
-    'administrative_address_same_as_organization_flag',
-    'technical_contact',
-    'billing_contact',
-    'server_type',
-    'validity_months',
+    'billing_contact_same_as_technical_flag',
 ]
 
 # Params for Data source
@@ -202,58 +202,58 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    billing_contact_same_as_technical_flag=dict(
+    ssl_type=dict(
         required=False,
-        type='bool'),
-    administrative_contact=dict(
+        type='str'),
+    organization_information=dict(
         required=False,
         elements='',
         type='list'),
-    organization_information=dict(
+    technical_contact=dict(
         required=False,
         elements='',
         type='list'),
     server_count=dict(
         required=False,
         type='int'),
+    server_type=dict(
+        required=False,
+        type='str'),
+    administrative_address_same_as_organization_flag=dict(
+        required=False,
+        type='bool'),
+    billing_address_same_as_organization_flag=dict(
+        required=False,
+        type='bool'),
+    administrative_contact=dict(
+        required=False,
+        elements='',
+        type='list'),
+    validity_months=dict(
+        required=False,
+        type='int'),
+    order_approver_email_address=dict(
+        required=False,
+        type='str'),
+    administrative_contact_same_as_technical_flag=dict(
+        required=False,
+        type='bool'),
+    billing_contact=dict(
+        required=False,
+        elements='',
+        type='list'),
+    certificate_signing_request=dict(
+        required=False,
+        type='str'),
     technical_contact_same_as_org_address_flag=dict(
         required=False,
         type='bool'),
     renewal_flag=dict(
         required=False,
         type='bool'),
-    order_approver_email_address=dict(
-        required=False,
-        type='str'),
-    billing_address_same_as_organization_flag=dict(
+    billing_contact_same_as_technical_flag=dict(
         required=False,
         type='bool'),
-    ssl_type=dict(
-        required=False,
-        type='str'),
-    certificate_signing_request=dict(
-        required=False,
-        type='str'),
-    administrative_contact_same_as_technical_flag=dict(
-        required=False,
-        type='bool'),
-    administrative_address_same_as_organization_flag=dict(
-        required=False,
-        type='bool'),
-    technical_contact=dict(
-        required=False,
-        elements='',
-        type='list'),
-    billing_contact=dict(
-        required=False,
-        elements='',
-        type='list'),
-    server_type=dict(
-        required=False,
-        type='str'),
-    validity_months=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -319,7 +319,7 @@ def run_module():
         resource_type='ibm_ssl_certificate',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

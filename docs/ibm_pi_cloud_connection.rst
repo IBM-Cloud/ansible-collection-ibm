@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_connection_metered (False, bool, False)
+    Enable metered for this cloud connection
+
+
+  pi_cloud_connection_networks (False, list, None)
+    Set of Networks to attach to this cloud connection
+
+
+  pi_cloud_connection_vpc_crns (False, list, None)
+    Set of VPCs to attach to this cloud connection
+
+
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
+
+
+  pi_cloud_connection_name (True, str, None)
+    (Required for new resource) Name of the cloud connection
 
 
   pi_cloud_connection_speed (True, int, None)
@@ -43,8 +59,12 @@ Parameters
     Enable global routing for this cloud connection
 
 
-  pi_cloud_connection_metered (False, bool, False)
-    Enable metered for this cloud connection
+  pi_cloud_connection_gre_cidr (False, str, None)
+    GRE network in CIDR notation
+
+
+  pi_cloud_connection_classic_enabled (False, bool, False)
+    Enable classic endpoint destination
 
 
   pi_cloud_connection_gre_destination_address (False, str, None)
@@ -53,26 +73,6 @@ Parameters
 
   pi_cloud_connection_vpc_enabled (False, bool, False)
     Enable VPC for this cloud connection
-
-
-  pi_cloud_connection_vpc_crns (False, list, None)
-    Set of VPCs to attach to this cloud connection
-
-
-  pi_cloud_connection_networks (False, list, None)
-    Set of Networks to attach to this cloud connection
-
-
-  pi_cloud_connection_classic_enabled (False, bool, False)
-    Enable classic endpoint destination
-
-
-  pi_cloud_connection_name (True, str, None)
-    (Required for new resource) Name of the cloud connection
-
-
-  pi_cloud_connection_gre_cidr (False, str, None)
-    GRE network in CIDR notation
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_link' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -104,13 +104,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('link_id', 'str'),
     ('profile_id', 'str'),
+    ('link_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'link_id',
     'profile_id',
+    'link_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_link',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -207,7 +207,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_link',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -34,6 +34,12 @@ options:
         required: False
         type: list
         elements: str
+    resource_tags:
+        description:
+            - Set access management tags.
+        required: False
+        type: list
+        elements: dict
     description:
         description:
             - Description of the Policy
@@ -116,6 +122,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'account_management',
     'tags',
+    'resource_tags',
     'description',
     'ibm_id',
     'roles',
@@ -147,6 +154,10 @@ module_args = dict(
         required=False,
         type='bool'),
     tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -233,7 +244,7 @@ def run_module():
         resource_type='ibm_iam_user_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -242,7 +253,7 @@ def run_module():
             resource_type='ibm_iam_user_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

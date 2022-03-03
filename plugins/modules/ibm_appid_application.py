@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_application' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - The type of application to be registered. Allowed types are `regularwebapp` and `singlepageapp`, default is `regularwebapp`.
+        required: False
+        type: str
+        default: regularwebapp
     tenant_id:
         description:
             - (Required for new resource) The service `tenantId`
@@ -32,12 +38,6 @@ options:
             - (Required for new resource) The application name to be registered. Application name cannot exceed 50 characters.
         required: True
         type: str
-    type:
-        description:
-            - The type of application to be registered. Allowed types are `regularwebapp` and `singlepageapp`, default is `regularwebapp`.
-        required: False
-        type: str
-        default: regularwebapp
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,20 +90,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
     'tenant_id',
     'name',
-    'type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('client_id', 'str'),
     ('tenant_id', 'str'),
+    ('client_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'client_id',
     'tenant_id',
+    'client_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -113,13 +113,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    type=dict(
+        required=False,
+        type='str'),
     tenant_id=dict(
         required=False,
         type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -187,7 +187,7 @@ def run_module():
         resource_type='ibm_appid_application',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -196,7 +196,7 @@ def run_module():
             resource_type='ibm_appid_application',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

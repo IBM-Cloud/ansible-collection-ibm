@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_idp_custom' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    public_key:
-        description:
-            - This is the public key used to validate your signed JWT. It is required to be a PEM in the RS256 or greater format.
-        required: False
-        type: str
     tenant_id:
         description:
             - (Required for new resource) The service `tenantId`
@@ -37,6 +32,11 @@ options:
             - (Required for new resource) 
         required: True
         type: bool
+    public_key:
+        description:
+            - This is the public key used to validate your signed JWT. It is required to be a PEM in the RS256 or greater format.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,9 +89,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'public_key',
     'tenant_id',
     'is_active',
+    'public_key',
 ]
 
 # Params for Data source
@@ -110,15 +110,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    public_key=dict(
-        required=False,
-        type='str'),
     tenant_id=dict(
         required=False,
         type='str'),
     is_active=dict(
         required=False,
         type='bool'),
+    public_key=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_appid_idp_custom',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_appid_idp_custom',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain (True, str, None)
-    The domain of the virtual guest
-
-
   hostname (True, str, None)
     The hostname of the virtual guest
+
+
+  domain (True, str, None)
+    The domain of the virtual guest
 
 
   most_recent (False, bool, False)

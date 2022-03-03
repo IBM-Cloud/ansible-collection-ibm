@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -39,12 +39,20 @@ Parameters
     Disk encryption for worker node
 
 
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
+
+
   worker_count (False, int, None)
     Specify the desired number of workers per zone in this worker pool
 
 
   zones (False, list, None)
     Zone info for worker pool
+
+
+  worker_pool_labels (False, dict, None)
+    Labels on all the workers in the worker pool
 
 
   resource_group_id (False, str, None)
@@ -65,14 +73,6 @@ Parameters
 
   entitlement (False, str, None)
     None
-
-
-  worker_pool_labels (False, dict, None)
-    Labels on all the workers in the worker pool
-
-
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
 
 
   id (False, str, None)

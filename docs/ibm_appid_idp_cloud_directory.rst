@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,7 +31,7 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  welcome_enabled (False, bool, True)
+  signup_enabled (False, bool, True)
     None
 
 
@@ -39,19 +39,7 @@ Parameters
     None
 
 
-  identity_confirm_methods (False, list, None)
-    None
-
-
-  signup_enabled (False, bool, True)
-    None
-
-
   reset_password_notification_enabled (False, bool, True)
-    None
-
-
-  identity_confirm_access_mode (False, str, FULL)
     None
 
 
@@ -68,6 +56,18 @@ Parameters
 
 
   self_service_enabled (False, bool, True)
+    None
+
+
+  welcome_enabled (False, bool, True)
+    None
+
+
+  identity_confirm_access_mode (False, str, FULL)
+    None
+
+
+  identity_confirm_methods (False, list, None)
     None
 
 

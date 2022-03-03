@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cr_type (False, str, None)
-    The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+  profile_id (True, str, None)
+    (Required for new resource) ID of the trusted profile to create a claim rule.
 
 
-  type (True, str, None)
-    (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+  conditions (True, list, None)
+    (Required for new resource) Conditions of this claim rule.
 
 
   name (False, str, None)
@@ -47,16 +47,16 @@ Parameters
     The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
 
 
+  cr_type (False, str, None)
+    The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+
+
   expiration (False, int, None)
     Session expiration in seconds, only required if type is 'Profile-SAML'.
-
-
-  profile_id (True, str, None)
-    (Required for new resource) ID of the trusted profile to create a claim rule.
-
-
-  conditions (True, list, None)
-    (Required for new resource) Conditions of this claim rule.
 
 
   id (False, str, None)

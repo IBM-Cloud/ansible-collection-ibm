@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -29,8 +29,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, str, None)
-    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
 
 
   limit (False, int, None)
@@ -41,8 +41,8 @@ Parameters
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
+  tags (False, str, None)
+    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
 
 
   offset (False, int, None)

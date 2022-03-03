@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_network_acl' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    vpc_name:
-        description:
-            - The name of the vpc the network acl resides in.
-        required: False
-        type: str
     name:
         description:
             - The network acl name.
+        required: False
+        type: str
+    vpc_name:
+        description:
+            - The name of the vpc the network acl resides in.
         required: False
         type: str
     network_acl:
@@ -73,8 +73,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc_name',
     'name',
+    'vpc_name',
     'network_acl',
 ]
 
@@ -86,10 +86,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc_name=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    vpc_name=dict(
         required=False,
         type='str'),
     network_acl=dict(
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_is_network_acl',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

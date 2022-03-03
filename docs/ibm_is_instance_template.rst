@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,44 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
+  metadata_service_enabled (False, bool, False)
+    Indicates whether the metadata service endpoint is available to the virtual server instance
 
 
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
 
 
-  boot_volume (False, list, None)
-    None
-
-
-  name (False, str, None)
-    Instance Template name
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
 
 
   user_data (False, str, None)
     User data given for the instance
 
 
-  resource_group (False, str, None)
-    Instance template resource group
-
-
   image (True, str, None)
     (Required for new resource) image name
+
+
+  resource_group (False, str, None)
+    Instance template resource group
 
 
   vpc (True, str, None)
@@ -79,12 +63,32 @@ Parameters
     (Required for new resource) Profile info
 
 
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
+  boot_volume (False, list, None)
+    None
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
   volume_attachments (False, list, None)
@@ -93,6 +97,14 @@ Parameters
 
   network_interfaces (False, list, None)
     None
+
+
+  name (False, str, None)
+    Instance Template name
+
+
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
 
 
   id (False, str, None)

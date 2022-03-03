@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_iam_service_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    sort:
-        description:
-            - Sort query for policies
-        required: False
-        type: str
     iam_service_id:
         description:
             - UUID of ServiceID
@@ -34,6 +29,11 @@ options:
     iam_id:
         description:
             - IAM ID of ServiceID
+        required: False
+        type: str
+    sort:
+        description:
+            - Sort query for policies
         required: False
         type: str
     iaas_classic_username:
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'sort',
     'iam_service_id',
     'iam_id',
+    'sort',
 ]
 
 
@@ -86,13 +86,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    sort=dict(
-        required=False,
-        type='str'),
     iam_service_id=dict(
         required=False,
         type='str'),
     iam_id=dict(
+        required=False,
+        type='str'),
+    sort=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -129,7 +129,7 @@ def run_module():
         resource_type='ibm_iam_service_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

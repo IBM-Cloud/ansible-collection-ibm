@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    resource_group:
+    strategy:
         description:
-            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
+            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
         required: True
         type: str
     tags:
@@ -44,10 +39,15 @@ options:
         required: False
         type: list
         elements: str
-    strategy:
+    name:
         description:
-            - (Required for new resource) The strategy for this placement group- `host_spread`: place on different compute hosts- `power_spread`: place on compute hosts that use different power sourcesThe enumerated values for this property may expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the placement group on which the unexpected strategy was encountered.
+            - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: True
+        type: str
+    resource_group:
+        description:
+            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     id:
         description:
@@ -95,17 +95,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('strategy', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
-    'name',
+    'strategy',
     'tags',
     'access_tags',
-    'strategy',
+    'name',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -124,10 +124,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    strategy=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -138,7 +135,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    strategy=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

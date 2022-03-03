@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,40 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  enabled (False, bool, True)
-    set to true of LB needs to enabled
+  steering_policy (False, str, None)
+    Steering policy info
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  description (False, str, None)
-    Description for the load balancer instance
-
-
-  session_affinity (False, str, none)
-    Session affinity info
-
-
-  fallback_pool_id (True, str, None)
-    (Required for new resource) fallback pool ID
-
-
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
-
-
-  ttl (False, int, 60)
-    TTL value
-
-
-  name (True, str, None)
-    (Required for new resource) name
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
 
 
   pop_pools (False, list, None)
@@ -75,12 +47,40 @@ Parameters
     None
 
 
-  steering_policy (False, str, None)
-    Steering policy info
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
+
+
+  session_affinity (False, str, none)
+    Session affinity info
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  fallback_pool_id (True, str, None)
+    (Required for new resource) fallback pool ID
+
+
+  description (False, str, None)
+    Description for the load balancer instance
+
+
+  ttl (False, int, 60)
+    TTL value
+
+
+  enabled (False, bool, True)
+    set to true of LB needs to enabled
+
+
+  name (True, str, None)
+    (Required for new resource) name
 
 
   id (False, str, None)

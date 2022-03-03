@@ -18,14 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    floating_ip:
+    name:
         description:
-            - The ID of the floating IP to attach to this network interface
-        required: False
+            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: True
         type: str
     allow_ip_spoofing:
         description:
@@ -43,11 +43,6 @@ options:
             - (Required for new resource) The unique identifier of the instance.
         required: True
         type: str
-    name:
-        description:
-            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: True
-        type: str
     subnet:
         description:
             - (Required for new resource) The unique identifier of the subnet.
@@ -59,6 +54,11 @@ options:
         required: False
         type: list
         elements: str
+    floating_ip:
+        description:
+            - The ID of the floating IP to attach to this network interface
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,31 +105,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance', 'str'),
     ('name', 'str'),
+    ('instance', 'str'),
     ('subnet', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'floating_ip',
+    'name',
     'allow_ip_spoofing',
     'primary_ipv4_address',
     'instance',
-    'name',
     'subnet',
     'security_groups',
+    'floating_ip',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_name', 'str'),
     ('network_interface_name', 'str'),
+    ('instance_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_name',
     'network_interface_name',
+    'instance_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -139,7 +139,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    floating_ip=dict(
+    name=dict(
         required=False,
         type='str'),
     allow_ip_spoofing=dict(
@@ -151,9 +151,6 @@ module_args = dict(
     instance=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     subnet=dict(
         required=False,
         type='str'),
@@ -161,6 +158,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    floating_ip=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -238,7 +238,7 @@ def run_module():
         resource_type='ibm_is_instance_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -247,7 +247,7 @@ def run_module():
             resource_type='ibm_is_instance_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
