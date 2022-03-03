@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_flow_log' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    storage_bucket:
+    target:
         description:
-            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+            - (Required for new resource) The target id that the flow log collector is to collect flow logs
         required: True
         type: str
     tags:
@@ -38,17 +38,17 @@ options:
             - (Required for new resource) Flow Log Collector name
         required: True
         type: str
-    target:
-        description:
-            - (Required for new resource) The target id that the flow log collector is to collect flow logs
-        required: True
-        type: str
     active:
         description:
             - Indicates whether this collector is active
         required: False
         type: bool
         default: True
+    storage_bucket:
+        description:
+            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+        required: True
+        type: str
     resource_group:
         description:
             - The resource group of flow log
@@ -100,18 +100,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('storage_bucket', 'str'),
-    ('name', 'str'),
     ('target', 'str'),
+    ('name', 'str'),
+    ('storage_bucket', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'storage_bucket',
+    'target',
     'tags',
     'name',
-    'target',
     'active',
+    'storage_bucket',
     'resource_group',
 ]
 
@@ -131,7 +131,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    storage_bucket=dict(
+    target=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -141,12 +141,12 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    target=dict(
-        required=False,
-        type='str'),
     active=dict(
         required=False,
         type='bool'),
+    storage_bucket=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_is_flow_log',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -236,7 +236,7 @@ def run_module():
             resource_type='ibm_is_flow_log',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

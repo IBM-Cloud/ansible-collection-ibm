@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_ipsec_policy_id (True, str, None)
+    (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
+
+
   pi_peer_subnets (True, list, None)
     (Required for new resource) Set of CIDR of peer subnets
 
 
-  pi_networks (True, list, None)
-    (Required for new resource) Set of network IDs to attach to this VPN connection
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
 
 
   pi_vpn_connection_name (True, str, None)
@@ -47,20 +51,16 @@ Parameters
     (Required for new resource) Unique identifier of IKE Policy selected for this VPN Connection
 
 
-  pi_ipsec_policy_id (True, str, None)
-    (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
-
-
   pi_vpn_connection_mode (True, str, None)
     (Required for new resource) Mode used by this VPN Connection, either 'policy' or 'route'
 
 
+  pi_networks (True, list, None)
+    (Required for new resource) Set of network IDs to attach to this VPN connection
+
+
   pi_peer_gateway_address (True, str, None)
     (Required for new resource) Peer Gateway address
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

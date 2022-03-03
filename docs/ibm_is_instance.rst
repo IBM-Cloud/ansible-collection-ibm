@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,32 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (False, str, None)
-    Profile info
+  volumes (False, list, None)
+    List of volumes
+
+
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
 
 
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
 
 
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  instance_template (False, str, None)
-    Id of the instance template
-
-
-  tags (False, list, None)
-    list of tags for the instance
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
 
 
   primary_network_interface (False, list, None)
     Primary Network interface info
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
+
+
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+
+
+  keys (False, list, None)
+    SSH key Ids for the instance
+
+
+  force_action (False, bool, False)
+    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
 
 
   image (False, str, None)
@@ -67,24 +83,16 @@ Parameters
     (Required for new resource) Instance name
 
 
-  boot_volume (False, list, None)
-    None
-
-
-  vpc (False, str, None)
-    VPC id
+  zone (False, str, None)
+    Zone name
 
 
   resource_group (False, str, None)
     Instance resource group
 
 
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+  metadata_service_enabled (False, bool, None)
+    Indicates whether the metadata service endpoint is available to the virtual server instance
 
 
   wait_before_delete (False, bool, True)
@@ -99,28 +107,32 @@ Parameters
     None
 
 
-  volumes (False, list, None)
-    List of volumes
+  boot_volume (False, list, None)
+    None
 
 
-  zone (False, str, None)
-    Zone name
+  profile (False, str, None)
+    Profile info
 
 
-  keys (False, list, None)
-    SSH key Ids for the instance
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
-  force_action (False, bool, False)
-    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+  tags (False, list, None)
+    list of tags for the instance
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  vpc (False, str, None)
+    VPC id
 
 
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
+  instance_template (False, str, None)
+    Id of the instance template
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
   id (False, str, None)

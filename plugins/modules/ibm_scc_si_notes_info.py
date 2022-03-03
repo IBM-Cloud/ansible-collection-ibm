@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_notes' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
+    page_size:
+        description:
+            - Number of notes to return in the list.
+        required: False
+        type: int
     page_token:
         description:
             - Token to provide to skip to a particular spot in the list.
@@ -36,11 +41,6 @@ options:
             - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
         type: str
-    page_size:
-        description:
-            - Number of notes to return in the list.
-        required: False
-        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -79,10 +79,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'page_size',
     'page_token',
     'account_id',
     'provider_id',
-    'page_size',
 ]
 
 
@@ -93,6 +93,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    page_size=dict(
+        required=False,
+        type='int'),
     page_token=dict(
         required=False,
         type='str'),
@@ -102,9 +105,6 @@ module_args = dict(
     provider_id=dict(
         required=True,
         type='str'),
-    page_size=dict(
-        required=False,
-        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -139,7 +139,7 @@ def run_module():
         resource_type='ibm_scc_si_notes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

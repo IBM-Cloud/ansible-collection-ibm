@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_note' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - None
         required: False
         type: str
-    note_id:
-        description:
-            - Second part of note `name`: providers/{provider_id}/notes/{note_id}.
-        required: True
-        type: str
     provider_id:
         description:
             - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+        required: True
+        type: str
+    note_id:
+        description:
+            - Second part of note `name`: providers/{provider_id}/notes/{note_id}.
         required: True
         type: str
     iaas_classic_username:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('note_id', 'str'),
     ('provider_id', 'str'),
+    ('note_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'account_id',
-    'note_id',
     'provider_id',
+    'note_id',
 ]
 
 
@@ -91,10 +91,10 @@ module_args = dict(
     account_id=dict(
         required=False,
         type='str'),
-    note_id=dict(
+    provider_id=dict(
         required=True,
         type='str'),
-    provider_id=dict(
+    note_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_scc_si_note',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

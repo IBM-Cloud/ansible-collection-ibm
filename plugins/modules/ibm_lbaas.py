@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - Description of a load balancer.
-        required: False
-        type: str
     subnets:
         description:
             - (Required for new resource) The subnet where this Load Balancer will be provisioned.
@@ -39,11 +34,6 @@ options:
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) The load balancer's name.
-        required: True
-        type: str
     type:
         description:
             - Specifies if a load balancer is public or private
@@ -67,6 +57,16 @@ options:
         required: False
         type: int
         default: 90
+    name:
+        description:
+            - (Required for new resource) The load balancer's name.
+        required: True
+        type: str
+    description:
+        description:
+            - Description of a load balancer.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -119,14 +119,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'subnets',
     'protocols',
-    'name',
     'type',
     'use_system_public_ip_pool',
     'ssl_ciphers',
     'wait_time_minutes',
+    'name',
+    'description',
 ]
 
 # Params for Data source
@@ -145,9 +145,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     subnets=dict(
         required=False,
         elements='',
@@ -156,9 +153,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -172,6 +166,12 @@ module_args = dict(
     wait_time_minutes=dict(
         required=False,
         type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

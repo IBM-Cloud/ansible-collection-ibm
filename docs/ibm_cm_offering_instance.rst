@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,44 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster_id (True, str, None)
-    (Required for new resource) Cluster ID.
-
-
-  cluster_all_namespaces (True, bool, None)
-    (Required for new resource) designate to install into all namespaces.
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog ID this instance was created from.
-
-
   resource_group_id (False, str, None)
     id of the resource group
 
 
-  channel (False, str, None)
-    channel to target for the operator subscription. Required for operator bundles
+  wait_until_successful (False, bool, True)
+    Whether to wait until the offering instance successfully provisions, or to return when accepted
 
 
   label (True, str, None)
     (Required for new resource) the label for this instance.
 
 
-  offering_id (True, str, None)
-    (Required for new resource) Offering ID this instance was created from.
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog ID this instance was created from.
 
 
   cluster_namespaces (True, list, None)
     (Required for new resource) List of target namespaces to install into.
 
 
+  cluster_all_namespaces (True, bool, None)
+    (Required for new resource) designate to install into all namespaces.
+
+
   kind_format (True, str, None)
     (Required for new resource) the format this instance has (helm, operator, ova...).
-
-
-  version (True, str, None)
-    (Required for new resource) The version this instance was installed from (not version id).
 
 
   cluster_region (True, str, None)
@@ -79,8 +67,20 @@ Parameters
     install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
 
 
-  wait_until_successful (False, bool, True)
-    Whether to wait until the offering instance successfully provisions, or to return when accepted
+  channel (False, str, None)
+    channel to target for the operator subscription. Required for operator bundles
+
+
+  offering_id (True, str, None)
+    (Required for new resource) Offering ID this instance was created from.
+
+
+  version (True, str, None)
+    (Required for new resource) The version this instance was installed from (not version id).
+
+
+  cluster_id (True, str, None)
+    (Required for new resource) Cluster ID.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    The description of the zone.
+  name (True, str, None)
+    (Required for new resource) The name of the zone.
 
 
   addresses (True, list, None)
     (Required for new resource) The list of addresses in the zone.
 
 
-  name (True, str, None)
-    (Required for new resource) The name of the zone.
+  description (False, str, None)
+    The description of the zone.
 
 
   excluded (False, list, None)

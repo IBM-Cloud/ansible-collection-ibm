@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway_connection' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,36 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
 
 
-  ipsec_policy (False, str, None)
-    IP security policy for vpn gateway connection
-
-
-  peer_address (True, str, None)
-    (Required for new resource) VPN gateway connection peer address
-
-
-  admin_state_up (False, bool, False)
-    VPN gateway connection admin state
-
-
-  action (False, str, restart)
-    Action detection for dead peer detection action
-
-
-  timeout (False, int, 10)
-    Timeout for dead peer detection
+  interval (False, int, 2)
+    Interval for dead peer detection interval
 
 
   ike_policy (False, str, None)
     VPN gateway connection IKE Policy
-
-
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
 
 
   preshared_key (True, str, None)
@@ -71,12 +51,32 @@ Parameters
     VPN gateway connection local CIDRs
 
 
+  action (False, str, restart)
+    Action detection for dead peer detection action
+
+
+  ipsec_policy (False, str, None)
+    IP security policy for vpn gateway connection
+
+
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
+
+
+  peer_address (True, str, None)
+    (Required for new resource) VPN gateway connection peer address
+
+
+  timeout (False, int, 10)
+    Timeout for dead peer detection
+
+
+  admin_state_up (False, bool, False)
+    VPN gateway connection admin state
+
+
   peer_cidrs (False, list, None)
     VPN gateway connection peer CIDRs
-
-
-  interval (False, int, 2)
-    Interval for dead peer detection interval
 
 
   id (False, str, None)

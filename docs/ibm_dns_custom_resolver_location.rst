@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cr_enabled (False, bool, True)
-    None
-
 
   instance_id (True, str, None)
     (Required for new resource) Instance ID
@@ -49,6 +45,10 @@ Parameters
 
   enabled (False, bool, False)
     CRLocation Enabled
+
+
+  cr_enabled (False, bool, True)
+    None
 
 
   id (False, str, None)

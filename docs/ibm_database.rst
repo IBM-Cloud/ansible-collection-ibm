@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  node_count (False, int, None)
-    Total number of nodes in the cluster
-
 
   service_endpoints (False, str, public)
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
@@ -43,24 +39,8 @@ Parameters
     None
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
-  version (False, str, None)
-    The database version to provision if specified
-
-
-  members_disk_allocation_mb (False, int, None)
-    Disk allocation required for cluster
-
-
-  node_cpu_allocation_count (False, int, None)
-    CPU allocation per node
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
 
 
   users (False, list, None)
@@ -71,32 +51,40 @@ Parameters
     The id of the resource group in which the Database instance is present
 
 
-  node_memory_allocation_mb (False, int, None)
-    Memory allocation per node
+  service (True, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
 
 
-  configuration (False, str, None)
-    The configuration in JSON format
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
-  members_cpu_allocation_count (False, int, None)
-    CPU allocation required for cluster
+  members_disk_allocation_mb (False, int, None)
+    Disk allocation required for cluster
 
 
-  backup_id (False, str, None)
-    The CRN of backup source database
+  node_count (False, int, None)
+    Total number of nodes in the cluster
 
 
   remote_leader_id (False, str, None)
     The CRN of leader database
 
 
-  service (True, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
+  tags (False, list, None)
+    None
 
 
-  members_memory_allocation_mb (False, int, None)
-    Memory allocation required for cluster
+  adminpassword (False, str, None)
+    The admin user password for the instance
+
+
+  configuration (False, str, None)
+    The configuration in JSON format
+
+
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
 
 
   auto_scaling (False, list, None)
@@ -107,32 +95,40 @@ Parameters
     (Required for new resource) Resource instance name for example, my Database instance
 
 
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
 
 
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
+  version (False, str, None)
+    The database version to provision if specified
 
 
-  adminpassword (False, str, None)
-    The admin user password for the instance
+  members_cpu_allocation_count (False, int, None)
+    CPU allocation required for cluster
 
 
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
+  node_memory_allocation_mb (False, int, None)
+    Memory allocation per node
+
+
+  node_cpu_allocation_count (False, int, None)
+    CPU allocation per node
+
+
+  backup_id (False, str, None)
+    The CRN of backup source database
+
+
+  members_memory_allocation_mb (False, int, None)
+    Memory allocation required for cluster
 
 
   plan_validation (False, bool, True)
     For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
 
 
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  tags (False, list, None)
-    None
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
 
 
   location (True, str, None)
@@ -141,6 +137,10 @@ Parameters
 
   node_disk_allocation_mb (False, int, None)
     Disk allocation per node
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
   id (False, str, None)

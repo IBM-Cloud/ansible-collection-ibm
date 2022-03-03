@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  roles (True, list, None)
+    (Required for new resource) A list of role IDs for roles that you want to be assigned to the application (this is different from AppID role access)
+
+
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
 
 
   client_id (True, str, None)
     (Required for new resource) The `client_id` is a public identifier for applications
-
-
-  roles (True, list, None)
-    (Required for new resource) A list of role IDs for roles that you want to be assigned to the application (this is different from AppID role access)
 
 
   id (False, str, None)

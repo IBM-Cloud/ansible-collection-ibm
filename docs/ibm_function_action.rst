@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -39,6 +39,14 @@ Parameters
     (Required for new resource) IBM Cloud function namespace.
 
 
+  user_defined_annotations (False, str, [])
+    Annotation values in KEY VALUE format.
+
+
+  limits (False, list, None)
+    None
+
+
   exec (True, list, None)
     (Required for new resource) Execution info
 
@@ -49,14 +57,6 @@ Parameters
 
   user_defined_parameters (False, str, [])
     Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
-
-
-  limits (False, list, None)
-    None
-
-
-  user_defined_annotations (False, str, [])
-    Annotation values in KEY VALUE format.
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,37 @@ options:
             - (Required for new resource) Load Balancer name
         required: True
         type: str
-    resource_group:
+    type:
         description:
-            - None
+            - Load Balancer type
+        required: False
+        type: str
+        default: public
+    profile:
+        description:
+            - The profile to use for this load balancer.
         required: False
         type: str
     route_mode:
         description:
             - Indicates whether route mode is enabled for this load balancer
+        required: False
+        type: bool
+        default: False
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    logging:
+        description:
+            - Logging of Load Balancer
         required: False
         type: bool
         default: False
@@ -44,29 +67,6 @@ options:
         required: True
         type: list
         elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    profile:
-        description:
-            - The profile to use for this load balancer.
-        required: False
-        type: str
-    logging:
-        description:
-            - Logging of Load Balancer
-        required: False
-        type: bool
-        default: False
-    type:
-        description:
-            - Load Balancer type
-        required: False
-        type: str
-        default: public
     security_groups:
         description:
             - Load Balancer securitygroups list
@@ -126,13 +126,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'resource_group',
-    'route_mode',
-    'subnets',
-    'tags',
-    'profile',
-    'logging',
     'type',
+    'profile',
+    'route_mode',
+    'resource_group',
+    'tags',
+    'logging',
+    'subnets',
     'security_groups',
 ]
 
@@ -158,29 +158,29 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    type=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     route_mode=dict(
+        required=False,
+        type='bool'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    logging=dict(
         required=False,
         type='bool'),
     subnets=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    profile=dict(
-        required=False,
-        type='str'),
-    logging=dict(
-        required=False,
-        type='bool'),
-    type=dict(
-        required=False,
-        type='str'),
     security_groups=dict(
         required=False,
         elements='',
@@ -262,7 +262,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -271,7 +271,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,10 @@ options:
             - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
         required: True
         type: str
-    host_group:
+    name:
         description:
-            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
-        required: True
+            - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
         type: str
     instance_placement_enabled:
         description:
@@ -38,10 +38,10 @@ options:
         required: False
         type: bool
         default: True
-    name:
+    host_group:
         description:
-            - The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
+            - (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
+        required: True
         type: str
     resource_group:
         description:
@@ -101,22 +101,22 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'profile',
-    'host_group',
-    'instance_placement_enabled',
     'name',
+    'instance_placement_enabled',
+    'host_group',
     'resource_group',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('host_group', 'str'),
     ('name', 'str'),
+    ('host_group', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'host_group',
-    'resource_group',
     'name',
+    'resource_group',
+    'host_group',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -129,13 +129,13 @@ module_args = dict(
     profile=dict(
         required=False,
         type='str'),
-    host_group=dict(
+    name=dict(
         required=False,
         type='str'),
     instance_placement_enabled=dict(
         required=False,
         type='bool'),
-    name=dict(
+    host_group=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

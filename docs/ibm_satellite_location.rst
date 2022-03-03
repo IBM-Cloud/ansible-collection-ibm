@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  description (False, str, None)
+    A description of the new Satellite location
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
   location (True, str, None)
     (Required for new resource) A unique name for the new Satellite location
+
+
+  cos_config (False, list, None)
+    COSBucket - IBM Cloud Object Storage bucket configuration details
+
+
+  tags (False, list, None)
+    List of tags associated with resource instance
 
 
   managed_from (True, str, None)
@@ -45,22 +61,6 @@ Parameters
 
   cos_credentials (False, list, None)
     COSAuthorization - IBM Cloud Object Storage authorization keys
-
-
-  tags (False, list, None)
-    List of tags associated with resource instance
-
-
-  description (False, str, None)
-    A description of the new Satellite location
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cos_config (False, list, None)
-    COSBucket - IBM Cloud Object Storage bucket configuration details
 
 
   zones (False, list, None)

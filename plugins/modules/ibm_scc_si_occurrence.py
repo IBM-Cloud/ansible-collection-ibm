@@ -18,18 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_si_occurrence' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
+    account_id:
+        description:
+            - None
+        required: False
+        type: str
     note_name:
         description:
             - (Required for new resource) An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This field can be used as a filter in list requests.
         required: True
         type: str
-    occurrence_id:
+    kind:
         description:
-            - (Required for new resource) The id of the occurrence.
+            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
         required: True
         type: str
     resource_url:
@@ -42,6 +47,12 @@ options:
             - A description of actions that can be taken to remedy the `Note`.
         required: False
         type: str
+    kpi:
+        description:
+            - Kpi provides details about a KPI occurrence.
+        required: False
+        type: list
+        elements: dict
     replace_if_exists:
         description:
             - When set to true, an existing occurrence is replaced rather than duplicated.
@@ -53,9 +64,9 @@ options:
             - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
         type: str
-    kind:
+    occurrence_id:
         description:
-            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
+            - (Required for new resource) The id of the occurrence.
         required: True
         type: str
     context:
@@ -70,17 +81,6 @@ options:
         required: False
         type: list
         elements: dict
-    kpi:
-        description:
-            - Kpi provides details about a KPI occurrence.
-        required: False
-        type: list
-        elements: dict
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -128,24 +128,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('note_name', 'str'),
-    ('occurrence_id', 'str'),
-    ('provider_id', 'str'),
     ('kind', 'str'),
+    ('provider_id', 'str'),
+    ('occurrence_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'account_id',
     'note_name',
-    'occurrence_id',
+    'kind',
     'resource_url',
     'remediation',
+    'kpi',
     'replace_if_exists',
     'provider_id',
-    'kind',
+    'occurrence_id',
     'context',
     'finding',
-    'kpi',
-    'account_id',
 ]
 
 # Params for Data source
@@ -156,8 +156,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'occurrence_id',
-    'provider_id',
     'account_id',
+    'provider_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -167,10 +167,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    account_id=dict(
+        required=False,
+        type='str'),
     note_name=dict(
         required=False,
         type='str'),
-    occurrence_id=dict(
+    kind=dict(
         required=False,
         type='str'),
     resource_url=dict(
@@ -179,13 +182,17 @@ module_args = dict(
     remediation=dict(
         required=False,
         type='str'),
+    kpi=dict(
+        required=False,
+        elements='',
+        type='list'),
     replace_if_exists=dict(
         required=False,
         type='bool'),
     provider_id=dict(
         required=False,
         type='str'),
-    kind=dict(
+    occurrence_id=dict(
         required=False,
         type='str'),
     context=dict(
@@ -196,13 +203,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    kpi=dict(
-        required=False,
-        elements='',
-        type='list'),
-    account_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -268,7 +268,7 @@ def run_module():
         resource_type='ibm_scc_si_occurrence',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -277,7 +277,7 @@ def run_module():
             resource_type='ibm_scc_si_occurrence',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.38.2',
+            ibm_provider_version='1.39.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

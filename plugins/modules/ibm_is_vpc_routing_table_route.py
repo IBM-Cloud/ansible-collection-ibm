@@ -16,23 +16,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    next_hop:
-        description:
-            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
-        required: True
-        type: str
-    action:
-        description:
-            - The action to perform with a packet matching the route.
-        required: False
-        type: str
-        default: deliver
     vpc:
         description:
             - (Required for new resource) The VPC identifier.
@@ -58,6 +47,17 @@ options:
             - (Required for new resource) The routing table identifier.
         required: True
         type: str
+    next_hop:
+        description:
+            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+        required: True
+        type: str
+    action:
+        description:
+            - The action to perform with a packet matching the route.
+        required: False
+        type: str
+        default: deliver
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -104,29 +104,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('next_hop', 'str'),
     ('vpc', 'str'),
     ('destination', 'str'),
     ('zone', 'str'),
     ('routing_table', 'str'),
+    ('next_hop', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'next_hop',
-    'action',
     'vpc',
     'destination',
     'zone',
     'name',
     'routing_table',
+    'next_hop',
+    'action',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('vpc', 'str'),
+    ('routing_table', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'name',
+    'vpc',
+    'routing_table',
+    'route_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -136,12 +142,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    next_hop=dict(
-        required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
     vpc=dict(
         required=False,
         type='str'),
@@ -155,6 +155,12 @@ module_args = dict(
         required=False,
         type='str'),
     routing_table=dict(
+        required=False,
+        type='str'),
+    next_hop=dict(
+        required=False,
+        type='str'),
+    action=dict(
         required=False,
         type='str'),
     id=dict(
@@ -230,19 +236,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_vpc_routing_table_route',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.39.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_vpc_routing_table_route',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.39.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

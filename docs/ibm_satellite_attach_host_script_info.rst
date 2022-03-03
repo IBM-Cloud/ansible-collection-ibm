@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
@@ -33,12 +33,16 @@ Parameters
     List of labels for the attach host
 
 
-  host_provider (True, str, None)
+  host_provider (False, str, None)
     None
 
 
   script_dir (False, str, None)
     The directory where the satellite attach host script to be downloaded. Default is home directory
+
+
+  custom_script (False, str, None)
+    The custom script that has to be appended to generated host script file
 
 
   location (True, str, None)

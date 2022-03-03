@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.38.2
+- IBM-Cloud terraform-provider-ibm v1.39.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  action (True, str, None)
+    (Required for new resource) Firewallrules Action
+
+
+  priority (False, int, None)
+    Firewallrules Action
+
 
   description (False, str, None)
     Firewallrules Description
@@ -49,14 +57,6 @@ Parameters
 
   filter_id (True, str, None)
     (Required for new resource) Firewallrules Existing FilterID
-
-
-  action (True, str, None)
-    (Required for new resource) Firewallrules Action
-
-
-  priority (False, int, None)
-    Firewallrules Action
 
 
   id (False, str, None)

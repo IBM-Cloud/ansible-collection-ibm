@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.38.2
+    - IBM-Cloud terraform-provider-ibm v1.39.1
     - Terraform v0.12.20
 
 options:
-    expected_body:
-        description:
-            - expected_body
-        required: False
-        type: str
     description:
         description:
             - description
@@ -39,17 +34,12 @@ options:
         required: False
         type: str
         default: GET
-    follow_redirects:
+    timeout:
         description:
-            - follow_redirects
-        required: False
-        type: bool
-        default: False
-    port:
-        description:
-            - port number
+            - timeout
         required: False
         type: int
+        default: 5
     allow_insecure:
         description:
             - allow_insecure
@@ -73,12 +63,23 @@ options:
         required: False
         type: str
         default: /
+    expected_body:
+        description:
+            - expected_body
+        required: False
+        type: str
     retries:
         description:
             - retries
         required: False
         type: int
         default: 2
+    interval:
+        description:
+            - interval
+        required: False
+        type: int
+        default: 60
     expected_codes:
         description:
             - expected_codes
@@ -90,18 +91,17 @@ options:
         required: False
         type: str
         default: http
-    timeout:
+    follow_redirects:
         description:
-            - timeout
+            - follow_redirects
+        required: False
+        type: bool
+        default: False
+    port:
+        description:
+            - port number
         required: False
         type: int
-        default: 5
-    interval:
-        description:
-            - interval
-        required: False
-        type: int
-        default: 60
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,20 +153,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'expected_body',
     'description',
     'method',
-    'follow_redirects',
-    'port',
+    'timeout',
     'allow_insecure',
     'headers',
     'cis_id',
     'path',
+    'expected_body',
     'retries',
+    'interval',
     'expected_codes',
     'type',
-    'timeout',
-    'interval',
+    'follow_redirects',
+    'port',
 ]
 
 # Params for Data source
@@ -183,19 +183,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expected_body=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
     method=dict(
         required=False,
         type='str'),
-    follow_redirects=dict(
-        required=False,
-        type='bool'),
-    port=dict(
+    timeout=dict(
         required=False,
         type='int'),
     allow_insecure=dict(
@@ -211,7 +205,13 @@ module_args = dict(
     path=dict(
         required=False,
         type='str'),
+    expected_body=dict(
+        required=False,
+        type='str'),
     retries=dict(
+        required=False,
+        type='int'),
+    interval=dict(
         required=False,
         type='int'),
     expected_codes=dict(
@@ -220,10 +220,10 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    timeout=dict(
+    follow_redirects=dict(
         required=False,
-        type='int'),
-    interval=dict(
+        type='bool'),
+    port=dict(
         required=False,
         type='int'),
     id=dict(
@@ -291,7 +291,7 @@ def run_module():
         resource_type='ibm_cis_healthcheck',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.38.2',
+        ibm_provider_version='1.39.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
