@@ -10,7 +10,7 @@
 
     - name: Check for existing Floating IP
       ibm_is_floating_ip_info:
-        name: "{{ name_prefix }}-fip"
+        name: "{{ fip_name }}"
       failed_when:
         - fip.rc != 0
         - '"No floatingIP found" not in fip.stderr'
@@ -24,7 +24,7 @@
 
     - name: Check for existing VSI
       ibm_is_instance_info:
-        name: "{{ name_prefix }}-vsi"
+        name: "{{ vsi_name }}"
       failed_when:
         - vsi.rc != 0
         - '"No Instance found" not in vsi.stderr'
@@ -45,7 +45,7 @@
 
     - name: Checking for existing SSH key
       ibm_is_ssh_key_info:
-        name: "{{ name_prefix }}-ssh-key"
+        name: "{{ ssh_key_name }}"
       failed_when:
         - ssh_key.rc != 0
         - '"No SSH Key found" not in ssh_key.stderr'
@@ -59,7 +59,7 @@
 
     - name: Checking for existing VPC Subnet
       ibm_is_subnet_info:
-        name: "{{ name_prefix }}-subnet"
+        name: "{{ subnet_name }}"
       failed_when:
         - subnet.rc != 0
         - '"No subnet found" not in subnet.stderr'
@@ -73,7 +73,7 @@
 
     - name: Checking for existing VPC
       ibm_is_vpc_info:
-        name: "{{ name_prefix }}-vpc"
+        name: "{{ vpc_name }}"
       failed_when:
         - vpc.rc != 0
         - '"No VPC found" not in vpc.stderr'

@@ -10,7 +10,7 @@
 
     - name: Configure VPC
       ibm_is_vpc:
-        name: "{{ name_prefix }}-vpc"
+        name: "{{ vpc_name }}"
         state: available
         id: "{{ vpc.id | default(omit) }}"
       register: vpc_create_output
@@ -22,7 +22,7 @@
 
     - name: Configure VPC Subnet
       ibm_is_subnet:
-        name: "{{ name_prefix }}-subnet"
+        name: "{{ subnet_name }}"
         state: available
         id: "{{ subnet.id | default(omit) }}"
         vpc: "{{ vpc.id }}"
@@ -59,7 +59,7 @@
 
     - name: Configure VSI
       ibm_is_instance:
-        name: "{{ name_prefix }}-vsi"
+        name: "{{ vsi_name }}"
         state: available
         id: "{{ vsi.id | default(omit) }}"
         vpc: "{{ vpc.id }}"
@@ -79,7 +79,7 @@
 
     - name: Configure Floating IP Address
       ibm_is_floating_ip:
-        name: "{{ name_prefix }}-fip"
+        name: "{{ fip_name }}"
         state: available
         id: "{{ fip.id | default(omit) }}"
         target: "{{ vsi.primary_network_interface[0]['id'] }}"
@@ -92,7 +92,7 @@
 
     - name: Print Floating IP Address
       debug:
-        msg: "IP Address: {{ fip.address }}"
+        msg: "{{ vsi_name }} IP Address: {{ fip.resource.address }}"
 
     - name: Configure Security Group Rule to open SSH on the VSI
       ibm_is_security_group_rule:
