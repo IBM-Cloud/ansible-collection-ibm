@@ -52,8 +52,10 @@ The following parameters can be set by the user:
 
 ### Create
 
-1. To create all resources and test public SSH connection to the VM, run the
-   'create' playbook:
+To create all resources and test public SSH connection to the VM:
+
+1. Update variables in 'vars.yml'
+2. Run the 'create' playbook:
 
     ```
     ansible-playbook create.yml
@@ -61,13 +63,14 @@ The following parameters can be set by the user:
 
 ### Destroy
 
-1. To destroy all resources run the 'destroy' playbook:
+1. To destroy all resources run the 'destroy' playbook (resource names are read
+   from 'vars.yml'):
 
     ```
-    ansible-playbook destroy.yml -e "fip=<floating_ip_address_id> vsi=<vm_instance_id> subnet=<subnet_id>"
+    ansible-playbook destroy.yml
     ```
 
-### List 
+### List
 
 1. To list available VSI Images and Profiles run the 'list_vsi_images_and_profiles' playbook:
 
