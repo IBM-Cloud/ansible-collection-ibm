@@ -1,6 +1,6 @@
 ---
 name_prefix: ansible-test
-vsi_image: ibm-ubuntu-16-04-05-64-minimal-for-vsi
+vsi_image: ibm-debian-11-2-minimal-amd64-1
 vsi_profile: bx2-2x8
 ssh_public_key: '<ssh_public_key>'
 total_ipv4_address_count: 256
