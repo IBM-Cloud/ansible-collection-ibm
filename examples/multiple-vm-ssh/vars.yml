@@ -1,0 +1,13 @@
+---
+vsi_count: 5
+name_prefix: ansible-test
+vsi_image: ibm-debian-11-2-minimal-amd64-1
+vsi_profile: bx2-2x8
+ssh_public_key: '<ssh_public_key>'
+total_ipv4_address_count: 256
+zone: us-south-3
+vpc_name: "{{ name_prefix }}-vpc"
+subnet_name: "{{ name_prefix }}-subnet"
+ssh_key_name: "{{ name_prefix }}-ssh-key"
+vsi_name: "{{ name_prefix }}-vsi"
+fip_name: "{{ name_prefix }}-fip"
