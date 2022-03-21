@@ -24,7 +24,7 @@ The following parameters can be set by the user:
 * `vsi_image`: VSI image name ([retrieve available images])
 * `vsi_profile`: VSI profile name ([retrieve available profiles])
 * `ssh_public_key`: SSH Public Key
-* `ipv4_cidr_block`: IPv4 CIDR Block for VPC Subnet
+* `total_ipv4_address_count`: Number of IPv4 addresses in VPC Subnet
 * `zone`: IBM Cloud zone
 
 ## Running
