@@ -7,53 +7,80 @@
     - name: Fetch the variables from var file
       include_vars:
         file: vars.yml
+
+    - name: Check for existing Floating IP
+      ibm_is_floating_ip_info:
+        name: "{{ name_prefix }}-fip"
+      failed_when:
+        - fip.rc != 0
+        - '"No floatingIP found" not in fip.stderr'
+      register: fip
+
     - name: Release Floating IP
       ibm_is_floating_ip:
         state: absent
-        id: "{{ fip.id }}"
-      when: fip is defined
+        id: "{{ fip.resource.id }}"
+      when: fip.resource.id is defined
+
+    - name: Check for existing VSI
+      ibm_is_instance_info:
+        name: "{{ name_prefix }}-vsi"
+      failed_when:
+        - vsi.rc != 0
+        - '"No Instance found" not in vsi.stderr'
+      register: vsi
 
     - name: Remove VSI
       ibm_is_instance:
         state: absent
-        id: "{{ vsi.id }}"
+        id: "{{ vsi.resource.id }}"
+        vpc: "{{ vsi.resource.vpc }}"
         keys: []
-      when: vsi is defined
+        image: "{{ vsi.resource.image }}"
+        profile: "{{ vsi.resource.profile }}"
+        zone: "{{ vsi.resource.zone }}"
+        primary_network_interface:
+          - subnet: "{{ vsi.resource.primary_network_interface[0].subnet }}"
+      when: vsi.resource.id is defined
 
-    - name: Get the ssh Key
+    - name: Checking for existing SSH key
       ibm_is_ssh_key_info:
         name: "{{ name_prefix }}-ssh-key"
-      register: ssh_key_output
-
-    - name: set ssh key in fact
-      set_fact:
-        cacheable: True
-        ssh_key: "{{ ssh_key_output.resource }}"
+      failed_when:
+        - ssh_key.rc != 0
+        - '"No SSH Key found" not in ssh_key.stderr'
+      register: ssh_key
 
     - name: Remove SSH Key
       ibm_is_ssh_key:
         state: absent
-        id: "{{ ssh_key.id }}"
-      when: ssh_key is defined
+        id: "{{ ssh_key.resource.id }}"
+      when: ssh_key.resource.id is defined
+
+    - name: Checking for existing VPC Subnet
+      ibm_is_subnet_info:
+        name: "{{ name_prefix }}-subnet"
+      failed_when:
+        - subnet.rc != 0
+        - '"No subnet found" not in subnet.stderr'
+      register: subnet
 
     - name: Remove VPC Subnet
       ibm_is_subnet:
         state: absent
-        id: "{{ subnet.id }}"
-      when: subnet is defined
+        id: "{{ subnet.resource.id }}"
+      when: subnet.resource.id is defined
 
-    - name: Get the vpc details
+    - name: Checking for existing VPC
       ibm_is_vpc_info:
         name: "{{ name_prefix }}-vpc"
-      register: vpc_output
-
-    - name: set subnet in fact
-      set_fact:
-        cacheable: True
-        vpc: "{{ vpc_output.resource }}"
+      failed_when:
+        - vpc.rc != 0
+        - '"No VPC found" not in vpc.stderr'
+      register: vpc
 
     - name: Remove VPC
       ibm_is_vpc:
         state: absent
-        id: "{{ vpc.id }}"
-      when: vpc is defined
+        id: "{{ vpc.resource.id }}"
+      when: vpc.resource.id is defined
