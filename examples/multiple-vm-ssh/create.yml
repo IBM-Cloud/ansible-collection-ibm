@@ -52,7 +52,7 @@
     - name: Configure SSH Key
       ibm_is_ssh_key:
         name: "{{ ssh_key_name }}"
-        public_key: "{{ (ssh_public_key|split)[:2]|join(' ') }}"
+        public_key: "{{ ssh_public_key.split()[:2]|join(' ') }}"
         id: "{{ ssh_key.resource.id | default(omit) }}"
       register: ssh_key
 
