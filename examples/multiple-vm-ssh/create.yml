@@ -130,7 +130,6 @@
       add_host:
         name: "{{ item.resource.address }}"
         ansible_user: root
-        ansible_ssh_private_key_file: ~/.ssh/id_rsa_tmp_ansible
         groups: new_vsi
         ansible_ssh_extra_args: -o StrictHostKeyChecking=no
       loop: "{{ fip_list.results }}"
