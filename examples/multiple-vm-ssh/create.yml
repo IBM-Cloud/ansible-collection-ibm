@@ -65,19 +65,22 @@
         image_dict: "{{ images_list.resource.images |
                         items2dict(key_name='name', value_name='id') }}"
 
-    - name: Check for existing VSI
+    - name: Check for existing VSIs
       ibm_is_instance_info:
-        name: "{{ vsi_name }}"
+        name: "{{ vsi_name }}-{{ ansible_loop.index}}"
       failed_when:
-        - vsi.rc != 0
-        - '"No Instance found" not in vsi.stderr'
-      register: vsi
+        - vsi_list.rc != 0
+        - '"No Instance found" not in vsi_list.stderr'
+      register: vsi_list
+      loop: "{{ range(vsi_count)|list }}"
+      loop_control:
+        extended: yes
 
-    - name: Configure VSI
+    - name: Configure VSIs
       ibm_is_instance:
-        name: "{{ vsi_name }}"
+        name: "{{ vsi_name }}-{{ ansible_loop.index}}"
         state: available
-        id: "{{ vsi.resource.id | default(omit) }}"
+        id: "{{ item.resource.id | default(omit) }}"
         vpc: "{{ vpc.resource.id }}"
         profile: "{{ vsi_profile }}"
         image: "{{ image_dict[vsi_image] }}"
@@ -86,27 +89,32 @@
         primary_network_interface:
          - subnet: "{{ subnet.resource.id }}"
         zone: "{{ zone }}"
-      register: vsi
+      register: vsi_list
+      loop: "{{ vsi_list.results }}"
+      loop_control:
+        extended: yes
 
-    - name: Check for existing Floating IP
+    - name: Check for existing Floating IP Addresses
       ibm_is_floating_ip_info:
-        name: "{{ fip_name }}"
+        name: "{{ fip_name }}-{{ ansible_loop.index}}"
       failed_when:
-        - fip.rc != 0
-        - '"No floatingIP found" not in fip.stderr'
-      register: fip
+        - fip_list.rc != 0
+        - '"No floatingIP found" not in fip_list.stderr'
+      register: fip_list
+      loop: "{{ range(vsi_count)|list }}"
+      loop_control:
+        extended: yes
 
-    - name: Configure Floating IP Address
+    - name: Configure Floating IP Addresses
       ibm_is_floating_ip:
-        name: "{{ fip_name }}"
+        name: "{{ fip_name }}-{{ ansible_loop.index}}"
         state: available
-        id: "{{ fip.resource.id | default(omit) }}"
-        target: "{{ vsi.resource.primary_network_interface[0]['id'] }}"
-      register: fip
-
-    - name: Print Floating IP Address
-      debug:
-        msg: "{{ vsi_name }} IP Address: {{ fip.resource.address }}"
+        id: "{{ fip_list[ansible_loop.index0].resource.id | default(omit) }}"
+        target: "{{ item.resource.primary_network_interface[0]['id'] }}"
+      register: fip_list
+      loop: "{{ vsi_list.results }}"
+      loop_control:
+        extended: yes
 
     - name: Configure Security Group Rule to open SSH on the VSI
       ibm_is_security_group_rule:
@@ -120,10 +128,11 @@
 
     - name: Add VSI to Ansible inventory
       add_host:
-        name: "{{ fip.resource.address }}"
+        name: "{{ item.resource.address }}"
         ansible_user: root
         groups: new_vsi
         ansible_ssh_extra_args: -o StrictHostKeyChecking=no
+      loop: "{{ fip_list.results }}"
 
 - name: Check Ansible connection to new DEMO VSI
   hosts: new_vsi
@@ -136,7 +145,7 @@
   hosts: new_vsi
   tasks:
     - name: Collect OS information
-      command: cat /etc/os-release
+      shell: hostname && cat /etc/os-release
       register: os_info
 
     - name: Print OS information

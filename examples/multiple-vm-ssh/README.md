@@ -1,9 +1,13 @@
-# IBM Cloud Ansible: VPC Virtual Server Instance
+# IBM Cloud Ansible: VPC - Multiple Virtual Server Instances
 
-This example creates a Virtual Server Instance (VSI) inside of a Virtual
-Private Cloud (VPC). The VSI is configured to allow incoming SSH connections
-through a publicly accessible IP address and authenticated using an SSH key
-pair.
+This example creates multiple Virtual Server Instances (VSI) inside of a
+Virtual Private Cloud (VPC). All VSIs are created using a common VPC, image,
+profile, SSH key, and subnet. Each VSI is attached to it's own public IP
+address and configured to allow incoming SSH connections (authenticated using
+an SSH key pair).
+
+The number of VSIs created can be configured via the 'vsi_count', defined in
+vars.yml
 
 ## VPC Resources
 
@@ -12,14 +16,15 @@ parentheses):
 
 * VPC (ibm_is_vpc)
 * Subnet (ibm_is_subnet)
-* VSI (ibm_is_instance)
-* Floating IP Address (ibm_is_floating_ip)
+* VSIs (ibm_is_instance)
+* Floating IP Addresses (ibm_is_floating_ip)
 * Security Group Rule (ibm_is_security_group_rule)
 
 ## Configuration Parameters
 
 The following parameters can be set by the user:
 
+* `vsi_count`: Number of VSIs (and associated floating IP addresses) to create
 * `name_prefix`: Prefix used to name created resources
 * `vsi_image`: VSI image name ([retrieve available images])
 * `vsi_profile`: VSI profile name ([retrieve available profiles])
@@ -72,7 +77,8 @@ To create all resources and test public SSH connection to the VM:
 
 ### List
 
-1. To list available VSI Images and Profiles run the 'list_vsi_images_and_profiles' playbook:
+1. To list available VSI Images and Profiles run the
+   'list_vsi_images_and_profiles' playbook:
 
     ```
     ansible-playbook list_vsi_images_and_profiles.yml
