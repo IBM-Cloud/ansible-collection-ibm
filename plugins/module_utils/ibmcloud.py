@@ -730,7 +730,11 @@ class Terraform:
             os.makedirs(self.directory)
         resp = open_url(url)
         zip_archive = ZipFile(BytesIO(resp.read()))
-        zip_archive.extractall(path=self.terraform_dir)
+        try:
+            zip_archive.extractall(path=self.terraform_dir)
+        except OSError as err:
+            if err.errno != 26:  # [Errno 26] Text file busy usually caused by another thread downloading terraform
+                raise err
 
     def _install_terraform(self):
         filename = 'terraform'
