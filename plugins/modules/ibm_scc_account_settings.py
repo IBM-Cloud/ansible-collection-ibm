@@ -16,17 +16,24 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_account_settings' resource
-    - This module supports idempotency
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    location_id:
+    location:
         description:
-            - (Required for new resource) The programatic ID of the location that you want to work in.
-        required: True
-        type: str
+            - Location Settings.
+        required: False
+        type: list
+        elements: dict
+    event_notifications:
+        description:
+            - The Event Notification settings to register.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,12 +80,12 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location_id',
+    'location',
+    'event_notifications',
 ]
 
 # Params for Data source
@@ -89,15 +96,21 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'location': ['location_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location_id=dict(
+    location=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
+    event_notifications=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -159,29 +172,19 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result_ds = ibmcloud_terraform(
+    result = ibmcloud_terraform(
         resource_type='ibm_scc_account_settings',
-        tf_type='data',
+        tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
-        tl_all_params=TL_ALL_PARAMETERS_DS)
+        ibm_provider_version='1.41.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS,
+        tl_all_params=TL_ALL_PARAMETERS)
 
-    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
-        result = ibmcloud_terraform(
-            resource_type='ibm_scc_account_settings',
-            tf_type='resource',
-            parameters=module.params,
-            ibm_provider_version='1.40.1',
-            tl_required_params=TL_REQUIRED_PARAMETERS,
-            tl_all_params=TL_ALL_PARAMETERS)
-        if result['rc'] > 0:
-            module.fail_json(
-                msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result['rc'] > 0:
+        module.fail_json(
+            msg=Terraform.parse_stderr(result['stderr']), **result)
 
-        module.exit_json(**result)
-    else:
-        module.exit_json(**result_ds)
+    module.exit_json(**result)
 
 
 def main():

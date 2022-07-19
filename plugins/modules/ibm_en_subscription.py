@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
@@ -26,11 +26,6 @@ options:
         description:
             - Subscription description.
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Subscription name.
-        required: True
         type: str
     destination_id:
         description:
@@ -42,17 +37,22 @@ options:
             - (Required for new resource) Topic ID.
         required: True
         type: str
-    attributes:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: dict
     instance_guid:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) Subscription name.
+        required: True
+        type: str
+    attributes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,32 +99,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('destination_id', 'str'),
     ('topic_id', 'str'),
-    ('attributes', 'list'),
     ('instance_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'description',
-    'name',
     'destination_id',
     'topic_id',
-    'attributes',
     'instance_guid',
+    'name',
+    'attributes',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('subscription_id', 'str'),
     ('instance_guid', 'str'),
+    ('subscription_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'subscription_id',
     'instance_guid',
+    'subscription_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -137,22 +136,22 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     destination_id=dict(
         required=False,
         type='str'),
     topic_id=dict(
         required=False,
         type='str'),
+    instance_guid=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     attributes=dict(
         required=False,
         elements='',
         type='list'),
-    instance_guid=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +217,7 @@ def run_module():
         resource_type='ibm_en_subscription',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +226,7 @@ def run_module():
             resource_type='ibm_en_subscription',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,16 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    service:
-        description:
-            - The service type of the instance
-        required: False
-        type: str
-        default: hs-crypto
     name:
         description:
             - Resource instance name for example, myobjectstorage
@@ -42,6 +36,12 @@ options:
             - The location or the environment in which instance exists
         required: False
         type: str
+    service:
+        description:
+            - The service type of the instance
+        required: False
+        type: str
+        default: hs-crypto
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -80,10 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service',
     'name',
     'resource_group_id',
     'location',
+    'service',
 ]
 
 
@@ -94,9 +94,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=True,
         type='str'),
@@ -104,6 +101,9 @@ module_args = dict(
         required=False,
         type='str'),
     location=dict(
+        required=False,
+        type='str'),
+    service=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_hpcs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

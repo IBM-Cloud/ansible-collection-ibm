@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_ipsec_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The IPsec policy name.
-        required: False
-        type: str
     ipsec_policy:
         description:
             - The IPsec policy identifier.
+        required: False
+        type: str
+    name:
+        description:
+            - The IPsec policy name.
         required: False
         type: str
     generation:
@@ -68,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'ipsec_policy',
+    'name',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    ipsec_policy=dict(
         required=False,
         type='str'),
-    ipsec_policy=dict(
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

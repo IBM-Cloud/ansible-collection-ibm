@@ -18,24 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    ip_version:
-        description:
-            - IP version: ipv4
-        required: False
-        type: str
-        default: ipv4
     remote:
         description:
             - Security group id: an IP address, a CIDR block, or a single security group identifier
         required: False
         type: str
-    tcp:
+    icmp:
         description:
-            - protocol=tcp
+            - protocol=icmp
         required: False
         type: list
         elements: dict
@@ -55,9 +49,15 @@ options:
             - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
-    icmp:
+    ip_version:
         description:
-            - protocol=icmp
+            - IP version: ipv4
+        required: False
+        type: str
+        default: ipv4
+    tcp:
+        description:
+            - protocol=tcp
         required: False
         type: list
         elements: dict
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ip_version',
     'remote',
-    'tcp',
+    'icmp',
     'udp',
     'group',
     'direction',
-    'icmp',
+    'ip_version',
+    'tcp',
 ]
 
 # Params for Data source
@@ -134,22 +134,19 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'tcp': ['udp', 'icmp'],
-    'udp': ['tcp', 'icmp'],
     'icmp': ['tcp', 'udp'],
+    'udp': ['tcp', 'icmp'],
+    'tcp': ['udp', 'icmp'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ip_version=dict(
-        required=False,
-        type='str'),
     remote=dict(
         required=False,
         type='str'),
-    tcp=dict(
+    icmp=dict(
         required=False,
         elements='',
         type='list'),
@@ -163,7 +160,10 @@ module_args = dict(
     direction=dict(
         required=False,
         type='str'),
-    icmp=dict(
+    ip_version=dict(
+        required=False,
+        type='str'),
+    tcp=dict(
         required=False,
         elements='',
         type='list'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_security_group_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

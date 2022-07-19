@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_feature' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
@@ -32,15 +32,15 @@ options:
             - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
         required: True
         type: str
-    collections:
+    segment_rules:
         description:
-            - List of collection id representing the collections that are associated with the specified feature flag.
+            - Specify the targeting rules that is used to set different feature flag values for different segments.
         required: False
         type: list
         elements: dict
-    environment_id:
+    name:
         description:
-            - (Required for new resource) Environment Id.
+            - (Required for new resource) Feature name.
         required: True
         type: str
     description:
@@ -48,9 +48,15 @@ options:
             - Feature description.
         required: False
         type: str
-    name:
+    collections:
         description:
-            - (Required for new resource) Feature name.
+            - List of collection id representing the collections that are associated with the specified feature flag.
+        required: False
+        type: list
+        elements: dict
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
     feature_id:
@@ -58,9 +64,9 @@ options:
             - (Required for new resource) Feature id.
         required: True
         type: str
-    guid:
+    environment_id:
         description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+            - (Required for new resource) Environment Id.
         required: True
         type: str
     disabled_value:
@@ -73,12 +79,6 @@ options:
             - Tags associated with the feature.
         required: False
         type: str
-    segment_rules:
-        description:
-            - Specify the targeting rules that is used to set different feature flag values for different segments.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,10 +127,10 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('type', 'str'),
     ('enabled_value', 'str'),
-    ('environment_id', 'str'),
     ('name', 'str'),
-    ('feature_id', 'str'),
     ('guid', 'str'),
+    ('feature_id', 'str'),
+    ('environment_id', 'str'),
     ('disabled_value', 'str'),
 ]
 
@@ -138,29 +138,29 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'type',
     'enabled_value',
-    'collections',
-    'environment_id',
-    'description',
+    'segment_rules',
     'name',
-    'feature_id',
+    'description',
+    'collections',
     'guid',
+    'feature_id',
+    'environment_id',
     'disabled_value',
     'tags',
-    'segment_rules',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('guid', 'str'),
     ('environment_id', 'str'),
+    ('guid', 'str'),
     ('feature_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'guid',
     'environment_id',
-    'includes',
+    'guid',
     'feature_id',
+    'includes',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -176,23 +176,27 @@ module_args = dict(
     enabled_value=dict(
         required=False,
         type='str'),
-    collections=dict(
+    segment_rules=dict(
         required=False,
         elements='',
         type='list'),
-    environment_id=dict(
+    name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    name=dict(
+    collections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    guid=dict(
         required=False,
         type='str'),
     feature_id=dict(
         required=False,
         type='str'),
-    guid=dict(
+    environment_id=dict(
         required=False,
         type='str'),
     disabled_value=dict(
@@ -201,10 +205,6 @@ module_args = dict(
     tags=dict(
         required=False,
         type='str'),
-    segment_rules=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -270,7 +270,7 @@ def run_module():
         resource_type='ibm_app_config_feature',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -279,7 +279,7 @@ def run_module():
             resource_type='ibm_app_config_feature',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

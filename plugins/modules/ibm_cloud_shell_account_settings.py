@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cloud_shell_account_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
@@ -32,12 +32,16 @@ options:
             - Unique revision number for the settings object.
         required: False
         type: str
-    features:
+    default_enable_new_regions:
         description:
-            - List of Cloud Shell features.
+            - Set whether Cloud Shell is enabled in a specific location for the account. The location determines where user and session data are stored. By default, users are routed to the nearest available location.
         required: False
-        type: list
-        elements: dict
+        type: bool
+    enabled:
+        description:
+            - When enabled, Cloud Shell is available to all users in the account.
+        required: False
+        type: bool
     regions:
         description:
             - List of Cloud Shell region settings.
@@ -49,16 +53,12 @@ options:
             - You can choose which Cloud Shell features are available in the account and whether any new features are enabled as they become available. The feature settings apply only to the enabled Cloud Shell locations.
         required: False
         type: bool
-    default_enable_new_regions:
+    features:
         description:
-            - Set whether Cloud Shell is enabled in a specific location for the account. The location determines where user and session data are stored. By default, users are routed to the nearest available location.
+            - List of Cloud Shell features.
         required: False
-        type: bool
-    enabled:
-        description:
-            - When enabled, Cloud Shell is available to all users in the account.
-        required: False
-        type: bool
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,11 +112,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'account_id',
     'rev',
-    'features',
-    'regions',
-    'default_enable_new_features',
     'default_enable_new_regions',
     'enabled',
+    'regions',
+    'default_enable_new_features',
+    'features',
 ]
 
 # Params for Data source
@@ -141,10 +141,12 @@ module_args = dict(
     rev=dict(
         required=False,
         type='str'),
-    features=dict(
+    default_enable_new_regions=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='bool'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     regions=dict(
         required=False,
         elements='',
@@ -152,12 +154,10 @@ module_args = dict(
     default_enable_new_features=dict(
         required=False,
         type='bool'),
-    default_enable_new_regions=dict(
+    features=dict(
         required=False,
-        type='bool'),
-    enabled=dict(
-        required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_cloud_shell_account_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_cloud_shell_account_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

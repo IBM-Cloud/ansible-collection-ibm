@@ -7,20 +7,30 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_scc_account_settings_info
-for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/scc_account_settings
+module: ibm_tg_connection_prefix_filters_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/tg_connection_prefix_filters
 
-short_description: Retrieve IBM Cloud 'ibm_scc_account_settings' resource
+short_description: Retrieve IBM Cloud 'ibm_tg_connection_prefix_filters' resource
 
 version_added: "2.8"
 
 description:
-    - Retrieve an IBM Cloud 'ibm_scc_account_settings' resource
+    - Retrieve an IBM Cloud 'ibm_tg_connection_prefix_filters' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
+    gateway:
+        description:
+            - The Transit Gateway identifier
+        required: True
+        type: str
+    connection_id:
+        description:
+            - The Transit Gateway Connection identifier
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -54,10 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('gateway', 'str'),
+    ('connection_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'gateway',
+    'connection_id',
 ]
 
 
@@ -68,6 +82,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    gateway=dict(
+        required=True,
+        type='str'),
+    connection_id=dict(
+        required=True,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -99,10 +119,10 @@ def run_module():
     )
 
     result = ibmcloud_terraform(
-        resource_type='ibm_scc_account_settings',
+        resource_type='ibm_tg_connection_prefix_filters',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
