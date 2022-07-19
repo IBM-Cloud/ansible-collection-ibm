@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
-    connection_id:
+    gateway:
         description:
-            - (Required for new resource) The Transit Gateway Connection identifier
+            - (Required for new resource) The Transit Gateway identifier
         required: True
         type: str
     action:
@@ -37,16 +37,16 @@ options:
             - Identifier of prefix filter that handles ordering
         required: False
         type: str
-    gateway:
-        description:
-            - (Required for new resource) The Transit Gateway identifier
-        required: True
-        type: str
     ge:
         description:
             - IP Prefix GE
         required: False
         type: int
+    connection_id:
+        description:
+            - (Required for new resource) The Transit Gateway Connection identifier
+        required: True
+        type: str
     le:
         description:
             - IP Prefix LE
@@ -103,34 +103,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('connection_id', 'str'),
-    ('action', 'str'),
     ('gateway', 'str'),
+    ('action', 'str'),
+    ('connection_id', 'str'),
     ('prefix', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'connection_id',
+    'gateway',
     'action',
     'before',
-    'gateway',
     'ge',
+    'connection_id',
     'le',
     'prefix',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('connection_id', 'str'),
     ('filter_id', 'str'),
     ('gateway', 'str'),
-    ('connection_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'connection_id',
     'filter_id',
     'gateway',
-    'connection_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,7 +140,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    connection_id=dict(
+    gateway=dict(
         required=False,
         type='str'),
     action=dict(
@@ -149,12 +149,12 @@ module_args = dict(
     before=dict(
         required=False,
         type='str'),
-    gateway=dict(
-        required=False,
-        type='str'),
     ge=dict(
         required=False,
         type='int'),
+    connection_id=dict(
+        required=False,
+        type='str'),
     le=dict(
         required=False,
         type='int'),
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_tg_connection_prefix_filter',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

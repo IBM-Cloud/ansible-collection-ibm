@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,19 @@ options:
             - (Required for new resource) Listener ID.
         required: True
         type: str
-    condition:
+    policy:
         description:
-            - (Required for new resource) Condition info of the rule.
+            - (Required for new resource) Listener Policy ID
         required: True
         type: str
     type:
         description:
             - (Required for new resource) Policy rule type.
+        required: True
+        type: str
+    value:
+        description:
+            - (Required for new resource) policy rule value info
         required: True
         type: str
     field:
@@ -47,14 +52,9 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: True
         type: str
-    policy:
+    condition:
         description:
-            - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) policy rule value info
+            - (Required for new resource) Condition info of the rule.
         required: True
         type: str
     id:
@@ -104,37 +104,37 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('listener', 'str'),
-    ('condition', 'str'),
-    ('type', 'str'),
-    ('lb', 'str'),
     ('policy', 'str'),
+    ('type', 'str'),
     ('value', 'str'),
+    ('lb', 'str'),
+    ('condition', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'listener',
-    'condition',
+    'policy',
     'type',
+    'value',
     'field',
     'lb',
-    'policy',
-    'value',
+    'condition',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('rule', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
     ('policy', 'str'),
-    ('rule', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'rule',
     'lb',
     'listener',
     'policy',
-    'rule',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,10 +147,13 @@ module_args = dict(
     listener=dict(
         required=False,
         type='str'),
-    condition=dict(
+    policy=dict(
         required=False,
         type='str'),
     type=dict(
+        required=False,
+        type='str'),
+    value=dict(
         required=False,
         type='str'),
     field=dict(
@@ -159,10 +162,7 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    policy=dict(
-        required=False,
-        type='str'),
-    value=dict(
+    condition=dict(
         required=False,
         type='str'),
     id=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -251,7 +251,7 @@ def run_module():
             resource_type='ibm_is_lb_listener_policy_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

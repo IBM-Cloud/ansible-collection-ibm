@@ -17,26 +17,11 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
     resource_instance_id:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_name:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_type:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_region:
         description:
             - None
         required: True
@@ -47,6 +32,26 @@ options:
         required: False
         type: str
         default: public
+    bucket_name:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_type:
+        description:
+            - None
+        required: False
+        type: str
+    bucket_region:
+        description:
+            - None
+        required: False
+        type: str
+    satellite_location_id:
+        description:
+            - None
+        required: False
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -82,21 +87,24 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('resource_instance_id', 'str'),
     ('bucket_name', 'str'),
-    ('bucket_type', 'str'),
-    ('bucket_region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_instance_id',
+    'endpoint_type',
     'bucket_name',
     'bucket_type',
     'bucket_region',
-    'endpoint_type',
+    'satellite_location_id',
 ]
 
 
 TL_CONFLICTS_MAP = {
+    'endpoint_type': ['satellite_location_id'],
+    'bucket_type': ['satellite_location_id'],
+    'bucket_region': ['satellite_location_id'],
+    'satellite_location_id': ['bucket_type', 'bucket_region'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -106,16 +114,19 @@ module_args = dict(
     resource_instance_id=dict(
         required=True,
         type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     bucket_name=dict(
         required=True,
         type='str'),
     bucket_type=dict(
-        required=True,
+        required=False,
         type='str'),
     bucket_region=dict(
-        required=True,
+        required=False,
         type='str'),
-    endpoint_type=dict(
+    satellite_location_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -152,7 +163,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

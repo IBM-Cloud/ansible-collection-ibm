@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
@@ -27,41 +27,40 @@ options:
             - The rule that this rule is immediately before. If absent, this is the last rule.
         required: False
         type: str
-    name:
-        description:
-            - The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
     action:
         description:
             - (Required for new resource) Whether to allow or deny matching traffic
         required: True
         type: str
-    source:
+    direction:
         description:
-            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
-    tcp:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     udp:
         description:
             - None
         required: False
         type: list
         elements: dict
+    name:
+        description:
+            - The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
+    destination:
+        description:
+            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+        required: True
+        type: str
     network_acl:
         description:
             - (Required for new resource) Network ACL id
         required: True
         type: str
-    destination:
+    source:
         description:
-            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
         required: True
         type: str
     icmp:
@@ -70,11 +69,12 @@ options:
         required: False
         type: list
         elements: dict
-    direction:
+    tcp:
         description:
-            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
-        required: True
-        type: str
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,24 +122,24 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('action', 'str'),
-    ('source', 'str'),
-    ('network_acl', 'str'),
-    ('destination', 'str'),
     ('direction', 'str'),
+    ('destination', 'str'),
+    ('network_acl', 'str'),
+    ('source', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'before',
-    'name',
     'action',
-    'source',
-    'tcp',
-    'udp',
-    'network_acl',
-    'destination',
-    'icmp',
     'direction',
+    'udp',
+    'name',
+    'destination',
+    'network_acl',
+    'source',
+    'icmp',
+    'tcp',
 ]
 
 # Params for Data source
@@ -154,9 +154,9 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'tcp': ['icmp', 'udp'],
     'udp': ['icmp', 'tcp'],
     'icmp': ['tcp', 'udp'],
+    'tcp': ['icmp', 'udp'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -166,36 +166,36 @@ module_args = dict(
     before=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     action=dict(
         required=False,
         type='str'),
-    source=dict(
+    direction=dict(
         required=False,
         type='str'),
-    tcp=dict(
-        required=False,
-        elements='',
-        type='list'),
     udp=dict(
         required=False,
         elements='',
         type='list'),
-    network_acl=dict(
+    name=dict(
         required=False,
         type='str'),
     destination=dict(
+        required=False,
+        type='str'),
+    network_acl=dict(
+        required=False,
+        type='str'),
+    source=dict(
         required=False,
         type='str'),
     icmp=dict(
         required=False,
         elements='',
         type='list'),
-    direction=dict(
+    tcp=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -273,7 +273,7 @@ def run_module():
         resource_type='ibm_is_network_acl_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -282,7 +282,7 @@ def run_module():
             resource_type='ibm_is_network_acl_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

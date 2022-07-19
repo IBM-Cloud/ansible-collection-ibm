@@ -18,30 +18,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
-    direction:
-        description:
-            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
-        required: True
-        type: str
     ip_version:
         description:
             - IP version: ipv4
         required: False
         type: str
         default: ipv4
-    remote:
+    udp:
         description:
-            - Security group id: an IP address, a CIDR block, or a single security group identifier
+            - protocol=udp
         required: False
-        type: str
+        type: list
+        elements: dict
     group:
         description:
             - (Required for new resource) Security group id
         required: True
+        type: str
+    remote:
+        description:
+            - Security group id: an IP address, a CIDR block, or a single security group identifier
+        required: False
         type: str
     icmp:
         description:
@@ -55,12 +56,11 @@ options:
         required: False
         type: list
         elements: dict
-    udp:
+    direction:
         description:
-            - protocol=udp
-        required: False
-        type: list
-        elements: dict
+            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,52 +107,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('direction', 'str'),
     ('group', 'str'),
+    ('direction', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'direction',
     'ip_version',
-    'remote',
+    'udp',
     'group',
+    'remote',
     'icmp',
     'tcp',
-    'udp',
+    'direction',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('security_group_rule', 'str'),
     ('security_group', 'str'),
+    ('security_group_rule', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'security_group_rule',
     'security_group',
+    'security_group_rule',
 ]
 
 TL_CONFLICTS_MAP = {
+    'udp': ['tcp', 'icmp'],
     'icmp': ['tcp', 'udp'],
     'tcp': ['udp', 'icmp'],
-    'udp': ['tcp', 'icmp'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    direction=dict(
-        required=False,
-        type='str'),
     ip_version=dict(
         required=False,
         type='str'),
-    remote=dict(
+    udp=dict(
+        required=False,
+        elements='',
+        type='list'),
+    group=dict(
         required=False,
         type='str'),
-    group=dict(
+    remote=dict(
         required=False,
         type='str'),
     icmp=dict(
@@ -163,10 +164,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    udp=dict(
+    direction=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_security_group_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_security_group_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

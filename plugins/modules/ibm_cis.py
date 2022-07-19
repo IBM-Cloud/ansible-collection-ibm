@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
@@ -27,12 +27,6 @@ options:
             - The resource group id
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     name:
         description:
             - (Required for new resource) A name for the resource instance
@@ -43,6 +37,12 @@ options:
             - (Required for new resource) The plan type of the service
         required: True
         type: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     location:
         description:
             - (Required for new resource) The location where the instance available
@@ -107,9 +107,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'tags',
     'name',
     'plan',
+    'tags',
     'location',
     'parameters',
 ]
@@ -120,8 +120,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'resource_group_id',
     'name',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -134,16 +134,16 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
     plan=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     location=dict(
         required=False,
         type='str'),
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_cis',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

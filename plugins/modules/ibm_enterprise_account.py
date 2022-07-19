@@ -18,28 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
-    parent:
-        description:
-            - (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
-        required: True
-        type: str
-    name:
-        description:
-            - The name of the account. This field must have 3 - 60 characters.
-        required: False
-        type: str
     owner_iam_id:
         description:
             - The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
-        required: False
-        type: str
-    enterprise_id:
-        description:
-            - The enterprise ID that the account is a part of.
         required: False
         type: str
     enterprise_account_id:
@@ -50,6 +35,21 @@ options:
     account_id:
         description:
             - The source account id of account to be imported
+        required: False
+        type: str
+    parent:
+        description:
+            - (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
+        required: True
+        type: str
+    name:
+        description:
+            - The name of the account. This field must have 3 - 60 characters.
+        required: False
+        type: str
+    enterprise_id:
+        description:
+            - The enterprise ID that the account is a part of.
         required: False
         type: str
     id:
@@ -103,12 +103,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parent',
-    'name',
     'owner_iam_id',
-    'enterprise_id',
     'enterprise_account_id',
     'account_id',
+    'parent',
+    'name',
+    'enterprise_id',
 ]
 
 # Params for Data source
@@ -125,22 +125,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parent=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     owner_iam_id=dict(
-        required=False,
-        type='str'),
-    enterprise_id=dict(
         required=False,
         type='str'),
     enterprise_account_id=dict(
         required=False,
         type='str'),
     account_id=dict(
+        required=False,
+        type='str'),
+    parent=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    enterprise_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_enterprise_account',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
