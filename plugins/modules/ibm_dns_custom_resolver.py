@@ -18,30 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
-    enabled:
-        description:
-            - Whether the custom resolver is enabled
-        required: False
-        type: bool
-        default: True
     locations:
         description:
             - Locations on which the custom resolver will be running
         required: False
         type: list
         elements: dict
-    instance_id:
-        description:
-            - (Required for new resource) Instance ID
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) Name of the custom resolver
+        required: True
+        type: str
+    enabled:
+        description:
+            - Whether the custom resolver is enabled
+        required: False
+        type: bool
+        default: True
+    high_availability:
+        description:
+            - Whether High Availability is enabled in custom resolver
+        required: False
+        type: bool
+        default: True
+    instance_id:
+        description:
+            - (Required for new resource) Instance ID
         required: True
         type: str
     description:
@@ -49,12 +55,6 @@ options:
             - Descriptive text of the custom resolver.
         required: False
         type: str
-    high_availability:
-        description:
-            - Whether High Availability is enabled in custom resolver
-        required: False
-        type: bool
-        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,18 +101,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enabled',
     'locations',
-    'instance_id',
     'name',
-    'description',
+    'enabled',
     'high_availability',
+    'instance_id',
+    'description',
 ]
 
 # Params for Data source
@@ -129,25 +129,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    enabled=dict(
-        required=False,
-        type='bool'),
     locations=dict(
         required=False,
         elements='',
         type='list'),
-    instance_id=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    enabled=dict(
+        required=False,
+        type='bool'),
+    high_availability=dict(
+        required=False,
+        type='bool'),
+    instance_id=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    high_availability=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

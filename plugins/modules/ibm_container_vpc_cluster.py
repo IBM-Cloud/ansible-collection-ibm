@@ -18,90 +18,128 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
-    service_subnet:
+    flavor:
         description:
-            - Custom subnet CIDR to provide private IP addresses for services
+            - (Required for new resource) Cluster nodes flavour
+        required: True
+        type: str
+    disable_public_service_endpoint:
+        description:
+            - Boolean value true if Public service endpoint to be disabled
+        required: False
+        type: bool
+        default: False
+    cos_instance_crn:
+        description:
+            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
         required: False
         type: str
+    pod_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for pods
+        required: False
+        type: str
+    worker_labels:
+        description:
+            - Labels for default worker pool
+        required: False
+        type: dict
+        elements: str
     force_delete_storage:
         description:
             - Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
         required: False
         type: bool
         default: False
-    wait_for_worker_update:
+    resource_group_id:
         description:
-            - Wait for worker node to update during kube version update.
-        required: False
-        type: bool
-        default: True
-    name:
-        description:
-            - (Required for new resource) The cluster name
-        required: True
-        type: str
-    update_all_workers:
-        description:
-            - Updates all the woker nodes if sets to true
-        required: False
-        type: bool
-        default: False
-    retry_patch_version:
-        description:
-            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-        required: False
-        type: int
-    taints:
-        description:
-            - WorkerPool Taints
-        required: False
-        type: list
-        elements: dict
-    flavor:
-        description:
-            - (Required for new resource) Cluster nodes flavour
-        required: True
-        type: str
-    wait_till:
-        description:
-            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+            - ID of the resource group.
         required: False
         type: str
-        default: IngressReady
-    cos_instance_crn:
-        description:
-            - A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-        required: False
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
-    worker_count:
-        description:
-            - Number of worker nodes in the cluster
-        required: False
-        type: int
-        default: 1
     image_security_enforcement:
         description:
             - Set true to enable image security enforcement policies
         required: False
         type: bool
         default: False
+    update_all_workers:
+        description:
+            - Updates all the woker nodes if sets to true
+        required: False
+        type: bool
+        default: False
+    worker_count:
+        description:
+            - Number of worker nodes in the cluster
+        required: False
+        type: int
+        default: 1
     host_pool_id:
         description:
             - The ID of the cluster's associated host pool
         required: False
         type: str
-    pod_subnet:
+    name:
         description:
-            - Custom subnet CIDR to provide private IP addresses for pods
+            - (Required for new resource) The cluster name
+        required: True
+        type: str
+    retry_patch_version:
+        description:
+            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+        required: False
+        type: int
+    wait_for_worker_update:
+        description:
+            - Wait for worker node to update during kube version update.
+        required: False
+        type: bool
+        default: True
+    service_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for services
+        required: False
+        type: str
+    crk:
+        description:
+            - Root Key ID for boot volume encryption
+        required: False
+        type: str
+    taints:
+        description:
+            - WorkerPool Taints
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - List of tags for the resources
+        required: False
+        type: list
+        elements: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    vpc_id:
+        description:
+            - (Required for new resource) The vpc id where the cluster is
+        required: True
+        type: str
+    kms_config:
+        description:
+            - Enables KMS on a given cluster
+        required: False
+        type: list
+        elements: dict
+    kube_version:
+        description:
+            - Kubernetes version
         required: False
         type: str
     zones:
@@ -115,54 +153,16 @@ options:
             - Kubernetes patch version
         required: False
         type: str
-    disable_public_service_endpoint:
+    wait_till:
         description:
-            - Boolean value true if Public service endpoint to be disabled
+            - wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
         required: False
-        type: bool
-        default: False
-    tags:
-        description:
-            - List of tags for the resources
-        required: False
-        type: list
-        elements: str
+        type: str
+        default: IngressReady
     kms_instance_id:
         description:
             - Instance ID for boot volume encryption
         required: False
-        type: str
-    kms_config:
-        description:
-            - Enables KMS on a given cluster
-        required: False
-        type: list
-        elements: dict
-    kube_version:
-        description:
-            - Kubernetes version
-        required: False
-        type: str
-    worker_labels:
-        description:
-            - Labels for default worker pool
-        required: False
-        type: dict
-        elements: str
-    crk:
-        description:
-            - Root Key ID for boot volume encryption
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    vpc_id:
-        description:
-            - (Required for new resource) The vpc id where the cluster is
-        required: True
         type: str
     id:
         description:
@@ -190,40 +190,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('flavor', 'str'),
-    ('zones', 'list'),
+    ('name', 'str'),
     ('vpc_id', 'str'),
+    ('zones', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_subnet',
-    'force_delete_storage',
-    'wait_for_worker_update',
-    'name',
-    'update_all_workers',
-    'retry_patch_version',
-    'taints',
     'flavor',
-    'wait_till',
-    'cos_instance_crn',
-    'entitlement',
-    'worker_count',
-    'image_security_enforcement',
-    'host_pool_id',
-    'pod_subnet',
-    'zones',
-    'patch_version',
     'disable_public_service_endpoint',
+    'cos_instance_crn',
+    'pod_subnet',
+    'worker_labels',
+    'force_delete_storage',
+    'resource_group_id',
+    'image_security_enforcement',
+    'update_all_workers',
+    'worker_count',
+    'host_pool_id',
+    'name',
+    'retry_patch_version',
+    'wait_for_worker_update',
+    'service_subnet',
+    'crk',
+    'taints',
     'tags',
-    'kms_instance_id',
+    'entitlement',
+    'vpc_id',
     'kms_config',
     'kube_version',
-    'worker_labels',
-    'crk',
-    'resource_group_id',
-    'vpc_id',
+    'zones',
+    'patch_version',
+    'wait_till',
+    'kms_instance_id',
 ]
 
 # Params for Data source
@@ -232,9 +232,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
+    'resource_group_id',
     'cluster_name_id',
     'alb_type',
-    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -244,67 +244,67 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_subnet=dict(
-        required=False,
-        type='str'),
-    force_delete_storage=dict(
-        required=False,
-        type='bool'),
-    wait_for_worker_update=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    update_all_workers=dict(
-        required=False,
-        type='bool'),
-    retry_patch_version=dict(
-        required=False,
-        type='int'),
-    taints=dict(
-        required=False,
-        elements='',
-        type='list'),
     flavor=dict(
-        required=False,
-        type='str'),
-    wait_till=dict(
-        required=False,
-        type='str'),
-    cos_instance_crn=dict(
-        required=False,
-        type='str'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    image_security_enforcement=dict(
-        required=False,
-        type='bool'),
-    host_pool_id=dict(
-        required=False,
-        type='str'),
-    pod_subnet=dict(
-        required=False,
-        type='str'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    patch_version=dict(
         required=False,
         type='str'),
     disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
+    cos_instance_crn=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
+    worker_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    force_delete_storage=dict(
+        required=False,
+        type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    image_security_enforcement=dict(
+        required=False,
+        type='bool'),
+    update_all_workers=dict(
+        required=False,
+        type='bool'),
+    worker_count=dict(
+        required=False,
+        type='int'),
+    host_pool_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    retry_patch_version=dict(
+        required=False,
+        type='int'),
+    wait_for_worker_update=dict(
+        required=False,
+        type='bool'),
+    service_subnet=dict(
+        required=False,
+        type='str'),
+    crk=dict(
+        required=False,
+        type='str'),
+    taints=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    kms_instance_id=dict(
+    entitlement=dict(
+        required=False,
+        type='str'),
+    vpc_id=dict(
         required=False,
         type='str'),
     kms_config=dict(
@@ -314,17 +314,17 @@ module_args = dict(
     kube_version=dict(
         required=False,
         type='str'),
-    worker_labels=dict(
+    zones=dict(
         required=False,
         elements='',
-        type='dict'),
-    crk=dict(
+        type='list'),
+    patch_version=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    wait_till=dict(
         required=False,
         type='str'),
-    vpc_id=dict(
+    kms_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -378,7 +378,7 @@ def run_module():
         resource_type='ibm_container_vpc_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -387,7 +387,7 @@ def run_module():
             resource_type='ibm_container_vpc_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

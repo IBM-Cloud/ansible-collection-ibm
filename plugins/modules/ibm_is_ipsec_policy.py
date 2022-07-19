@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
@@ -32,11 +32,6 @@ options:
             - (Required for new resource) Encryption algorithm
         required: True
         type: str
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
     authentication_algorithm:
         description:
             - (Required for new resource) Authentication alorothm
@@ -46,6 +41,11 @@ options:
         description:
             - (Required for new resource) PFS info
         required: True
+        type: str
+    resource_group:
+        description:
+            - Resource group info
+        required: False
         type: str
     key_lifetime:
         description:
@@ -109,9 +109,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'encryption_algorithm',
-    'resource_group',
     'authentication_algorithm',
     'pfs',
+    'resource_group',
     'key_lifetime',
 ]
 
@@ -137,13 +137,13 @@ module_args = dict(
     encryption_algorithm=dict(
         required=False,
         type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     authentication_algorithm=dict(
         required=False,
         type='str'),
     pfs=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     key_lifetime=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_is_ipsec_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

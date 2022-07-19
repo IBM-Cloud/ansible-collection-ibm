@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cbr_zone' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
@@ -28,14 +28,14 @@ options:
         required: False
         type: list
         elements: dict
-    description:
+    x_correlation_id:
         description:
-            - The description of the zone.
+            - The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
         required: False
         type: str
-    name:
+    account_id:
         description:
-            - (Required for new resource) The name of the zone.
+            - (Required for new resource) The id of the account owning this zone.
         required: True
         type: str
     addresses:
@@ -44,6 +44,21 @@ options:
         required: True
         type: list
         elements: dict
+    transaction_id:
+        description:
+            - The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name of the zone.
+        required: True
+        type: str
+    description:
+        description:
+            - The description of the zone.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,16 +105,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
+    ('account_id', 'str'),
     ('addresses', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'excluded',
-    'description',
-    'name',
+    'x_correlation_id',
+    'account_id',
     'addresses',
+    'transaction_id',
+    'name',
+    'description',
 ]
 
 # Params for Data source
@@ -122,16 +141,25 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    x_correlation_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    account_id=dict(
         required=False,
         type='str'),
     addresses=dict(
         required=False,
         elements='',
         type='list'),
+    transaction_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -197,7 +225,7 @@ def run_module():
         resource_type='ibm_cbr_zone',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -206,7 +234,7 @@ def run_module():
             resource_type='ibm_cbr_zone',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.42.0',
+            ibm_provider_version='1.43.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

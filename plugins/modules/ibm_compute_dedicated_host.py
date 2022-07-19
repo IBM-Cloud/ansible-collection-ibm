@@ -18,10 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_dedicated_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.42.0
+    - IBM-Cloud terraform-provider-ibm v1.43.0
     - Terraform v0.12.20
 
 options:
+    datacenter:
+        description:
+            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+        required: True
+        type: str
+    flavor:
+        description:
+            - The flavor of the dedicatated host.
+        required: False
+        type: str
+        default: 56_CORES_X_242_RAM_X_1_4_TB
     router_hostname:
         description:
             - (Required for new resource) The hostname of the primary router that the dedicated host is associated with.
@@ -33,9 +44,9 @@ options:
         required: False
         type: int
         default: 90
-    datacenter:
+    hostname:
         description:
-            - (Required for new resource) The data center in which the dedicatated host is to be provisioned.
+            - (Required for new resource) The host name of dedicatated host.
         required: True
         type: str
     domain:
@@ -43,29 +54,18 @@ options:
             - (Required for new resource) The domain of dedicatated host.
         required: True
         type: str
-    flavor:
-        description:
-            - The flavor of the dedicatated host.
-        required: False
-        type: str
-        default: 56_CORES_X_242_RAM_X_1_4_TB
-    hourly_billing:
-        description:
-            - The billing type for the dedicatated host.
-        required: False
-        type: bool
-        default: True
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    hostname:
+    hourly_billing:
         description:
-            - (Required for new resource) The host name of dedicatated host.
-        required: True
-        type: str
+            - The billing type for the dedicatated host.
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,22 +112,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('router_hostname', 'str'),
     ('datacenter', 'str'),
-    ('domain', 'str'),
+    ('router_hostname', 'str'),
     ('hostname', 'str'),
+    ('domain', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'datacenter',
+    'flavor',
     'router_hostname',
     'wait_time_minutes',
-    'datacenter',
-    'domain',
-    'flavor',
-    'hourly_billing',
-    'tags',
     'hostname',
+    'domain',
+    'tags',
+    'hourly_billing',
 ]
 
 # Params for Data source
@@ -144,31 +144,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    datacenter=dict(
+        required=False,
+        type='str'),
+    flavor=dict(
+        required=False,
+        type='str'),
     router_hostname=dict(
         required=False,
         type='str'),
     wait_time_minutes=dict(
         required=False,
         type='int'),
-    datacenter=dict(
+    hostname=dict(
         required=False,
         type='str'),
     domain=dict(
         required=False,
         type='str'),
-    flavor=dict(
-        required=False,
-        type='str'),
-    hourly_billing=dict(
-        required=False,
-        type='bool'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    hostname=dict(
+    hourly_billing=dict(
         required=False,
-        type='str'),
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_compute_dedicated_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.42.0',
+        ibm_provider_version='1.43.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
