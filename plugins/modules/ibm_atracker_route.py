@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_atracker_route' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -27,11 +27,6 @@ options:
             - (Required for new resource) The name of the route. The name must be 1000 characters or less and cannot include any special characters other than `(space) - . _ :`.
         required: True
         type: str
-    receive_global_events:
-        description:
-            - (Required for new resource) Indicates whether or not all global events should be forwarded to this region.
-        required: True
-        type: bool
     rules:
         description:
             - (Required for new resource) Routing rules that will be evaluated in their order of the array.
@@ -85,14 +80,12 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('receive_global_events', 'bool'),
     ('rules', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'receive_global_events',
     'rules',
 ]
 
@@ -113,9 +106,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    receive_global_events=dict(
-        required=False,
-        type='bool'),
     rules=dict(
         required=False,
         elements='',
@@ -185,7 +175,7 @@ def run_module():
         resource_type='ibm_atracker_route',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

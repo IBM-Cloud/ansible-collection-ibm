@@ -18,30 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    protocol:
+    port_min:
         description:
-            - (Required for new resource) Loadbalancer protocol
-        required: True
-        type: str
-    certificate_instance:
-        description:
-            - certificate instance for the Loadbalancer
+            - The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
         required: False
-        type: str
-    accept_proxy_protocol:
-        description:
-            - Listener will forward proxy protocol
-        required: False
-        type: bool
-    https_redirect_uri:
-        description:
-            - Target URI where traffic will be redirected
-        required: False
-        type: str
+        type: int
     port_max:
         description:
             - The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
@@ -52,11 +37,31 @@ options:
             - The HTTP status code to be returned in the redirect response
         required: False
         type: int
+    https_redirect_listener:
+        description:
+            - ID of the listener that will be set as http redirect target
+        required: False
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: True
+        type: str
+    certificate_instance:
+        description:
+            - certificate instance for the Loadbalancer
+        required: False
+        type: str
     connection_limit:
         description:
             - Connection limit for Loadbalancer
         required: False
         type: int
+    default_pool:
+        description:
+            - Loadbalancer default pool info
+        required: False
+        type: str
     lb:
         description:
             - (Required for new resource) Loadbalancer listener ID
@@ -67,19 +72,14 @@ options:
             - Loadbalancer listener port
         required: False
         type: int
-    https_redirect_listener:
+    accept_proxy_protocol:
         description:
-            - ID of the listener that will be set as http redirect target
+            - Listener will forward proxy protocol
         required: False
-        type: str
-    port_min:
+        type: bool
+    https_redirect_uri:
         description:
-            - The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
-        required: False
-        type: int
-    default_pool:
-        description:
-            - Loadbalancer default pool info
+            - Target URI where traffic will be redirected
         required: False
         type: str
     id:
@@ -134,29 +134,29 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'protocol',
-    'certificate_instance',
-    'accept_proxy_protocol',
-    'https_redirect_uri',
+    'port_min',
     'port_max',
     'https_redirect_status_code',
+    'https_redirect_listener',
+    'protocol',
+    'certificate_instance',
     'connection_limit',
+    'default_pool',
     'lb',
     'port',
-    'https_redirect_listener',
-    'port_min',
-    'default_pool',
+    'accept_proxy_protocol',
+    'https_redirect_uri',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('lb', 'str'),
     ('listener_id', 'str'),
+    ('lb', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'lb',
     'listener_id',
+    'lb',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -166,40 +166,40 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    protocol=dict(
+    port_min=dict(
         required=False,
-        type='str'),
-    certificate_instance=dict(
-        required=False,
-        type='str'),
-    accept_proxy_protocol=dict(
-        required=False,
-        type='bool'),
-    https_redirect_uri=dict(
-        required=False,
-        type='str'),
+        type='int'),
     port_max=dict(
         required=False,
         type='int'),
     https_redirect_status_code=dict(
         required=False,
         type='int'),
+    https_redirect_listener=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    certificate_instance=dict(
+        required=False,
+        type='str'),
     connection_limit=dict(
         required=False,
         type='int'),
+    default_pool=dict(
+        required=False,
+        type='str'),
     lb=dict(
         required=False,
         type='str'),
     port=dict(
         required=False,
         type='int'),
-    https_redirect_listener=dict(
+    accept_proxy_protocol=dict(
         required=False,
-        type='str'),
-    port_min=dict(
-        required=False,
-        type='int'),
-    default_pool=dict(
+        type='bool'),
+    https_redirect_uri=dict(
         required=False,
         type='str'),
     id=dict(
@@ -279,7 +279,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -288,7 +288,7 @@ def run_module():
             resource_type='ibm_is_lb_listener',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

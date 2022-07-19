@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_alias' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -34,8 +34,13 @@ options:
         type: str
     key_id:
         description:
-            - (Required for new resource) Key ID
-        required: True
+            - Key ID
+        required: False
+        type: str
+    existing_alias:
+        description:
+            - Existing Alias of the Key
+        required: False
         type: str
     endpoint_type:
         description:
@@ -90,7 +95,6 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
     ('alias', 'str'),
-    ('key_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -98,6 +102,7 @@ TL_ALL_PARAMETERS = [
     'instance_id',
     'alias',
     'key_id',
+    'existing_alias',
     'endpoint_type',
 ]
 
@@ -122,6 +127,9 @@ module_args = dict(
         required=False,
         type='str'),
     key_id=dict(
+        required=False,
+        type='str'),
+    existing_alias=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
@@ -192,7 +200,7 @@ def run_module():
         resource_type='ibm_kms_key_alias',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

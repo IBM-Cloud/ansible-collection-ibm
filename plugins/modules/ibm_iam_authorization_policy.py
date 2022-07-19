@@ -18,15 +18,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_authorization_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    source_service_name:
+    subject_attributes:
         description:
-            - The source service name
+            - Set subject attributes.
+        required: False
+        type: list
+        elements: dict
+    source_resource_type:
+        description:
+            - Resource type of source service
         required: False
         type: str
+    target_resource_instance_id:
+        description:
+            - The target resource instance Id
+        required: False
+        type: str
+    source_resource_group_id:
+        description:
+            - The source resource group Id
+        required: False
+        type: str
+    resource_attributes:
+        description:
+            - Set resource attributes.
+        required: False
+        type: list
+        elements: dict
     target_service_name:
         description:
             - The target service name
@@ -43,30 +65,9 @@ options:
             - The source resource instance Id
         required: False
         type: str
-    target_resource_instance_id:
-        description:
-            - The target resource instance Id
-        required: False
-        type: str
     target_resource_group_id:
         description:
             - The target resource group Id
-        required: False
-        type: str
-    source_resource_type:
-        description:
-            - Resource type of source service
-        required: False
-        type: str
-    resource_attributes:
-        description:
-            - Set resource attributes.
-        required: False
-        type: list
-        elements: dict
-    source_resource_group_id:
-        description:
-            - The source resource group Id
         required: False
         type: str
     target_resource_type:
@@ -79,15 +80,19 @@ options:
             - Account GUID of source service
         required: False
         type: str
-    subject_attributes:
+    source_service_name:
         description:
-            - Set subject attributes.
+            - The source service name
         required: False
-        type: list
-        elements: dict
+        type: str
     description:
         description:
             - Description of the Policy
+        required: False
+        type: str
+    transaction_id:
+        description:
+            - Set transactionID for debug
         required: False
         type: str
     id:
@@ -141,19 +146,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_service_name',
+    'subject_attributes',
+    'source_resource_type',
+    'target_resource_instance_id',
+    'source_resource_group_id',
+    'resource_attributes',
     'target_service_name',
     'roles',
     'source_resource_instance_id',
-    'target_resource_instance_id',
     'target_resource_group_id',
-    'source_resource_type',
-    'resource_attributes',
-    'source_resource_group_id',
     'target_resource_type',
     'source_service_account',
-    'subject_attributes',
+    'source_service_name',
     'description',
+    'transaction_id',
 ]
 
 # Params for Data source
@@ -164,24 +170,38 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'source_resource_instance_id': ['subject_attributes'],
-    'target_resource_instance_id': ['resource_attributes'],
-    'target_resource_group_id': ['resource_attributes'],
+    'subject_attributes': ['source_resource_instance_id', 'source_resource_group_id', 'source_resource_type', 'source_service_account'],
     'source_resource_type': ['subject_attributes'],
-    'resource_attributes': ['target_resource_instance_id', 'target_resource_group_id', 'target_resource_type'],
+    'target_resource_instance_id': ['resource_attributes'],
     'source_resource_group_id': ['subject_attributes'],
+    'resource_attributes': ['target_resource_instance_id', 'target_resource_group_id', 'target_resource_type'],
+    'source_resource_instance_id': ['subject_attributes'],
+    'target_resource_group_id': ['resource_attributes'],
     'target_resource_type': ['resource_attributes'],
     'source_service_account': ['subject_attributes'],
-    'subject_attributes': ['source_resource_instance_id', 'source_resource_group_id', 'source_resource_type', 'source_service_account'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_service_name=dict(
+    subject_attributes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    source_resource_type=dict(
         required=False,
         type='str'),
+    target_resource_instance_id=dict(
+        required=False,
+        type='str'),
+    source_resource_group_id=dict(
+        required=False,
+        type='str'),
+    resource_attributes=dict(
+        required=False,
+        elements='',
+        type='list'),
     target_service_name=dict(
         required=False,
         type='str'),
@@ -192,20 +212,7 @@ module_args = dict(
     source_resource_instance_id=dict(
         required=False,
         type='str'),
-    target_resource_instance_id=dict(
-        required=False,
-        type='str'),
     target_resource_group_id=dict(
-        required=False,
-        type='str'),
-    source_resource_type=dict(
-        required=False,
-        type='str'),
-    resource_attributes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    source_resource_group_id=dict(
         required=False,
         type='str'),
     target_resource_type=dict(
@@ -214,11 +221,13 @@ module_args = dict(
     source_service_account=dict(
         required=False,
         type='str'),
-    subject_attributes=dict(
+    source_service_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    transaction_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -286,7 +295,7 @@ def run_module():
         resource_type='ibm_iam_authorization_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

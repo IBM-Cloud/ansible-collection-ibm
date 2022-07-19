@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_table' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    routing_table:
-        description:
-            - The routing table identifier.
-        required: False
-        type: str
     name:
         description:
             - The user-defined name for this routing table.
+        required: False
+        type: str
+    routing_table:
+        description:
+            - The routing table identifier.
         required: False
         type: str
     vpc:
@@ -74,25 +74,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'routing_table',
     'name',
+    'routing_table',
     'vpc',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'routing_table': ['name'],
     'name': ['routing_table'],
+    'routing_table': ['name'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    routing_table=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    routing_table=dict(
         required=False,
         type='str'),
     vpc=dict(
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

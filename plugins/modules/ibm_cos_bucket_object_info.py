@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket_object' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    key:
-        description:
-            - COS object key
-        required: True
-        type: str
     bucket_crn:
         description:
             - COS bucket CRN
@@ -37,6 +32,11 @@ options:
         required: False
         type: str
         default: public
+    key:
+        description:
+            - COS object key
+        required: True
+        type: str
     bucket_location:
         description:
             - COS bucket location
@@ -75,16 +75,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('key', 'str'),
     ('bucket_crn', 'str'),
+    ('key', 'str'),
     ('bucket_location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key',
     'bucket_crn',
     'endpoint_type',
+    'key',
     'bucket_location',
 ]
 
@@ -96,14 +96,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key=dict(
-        required=True,
-        type='str'),
     bucket_crn=dict(
         required=True,
         type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    key=dict(
+        required=True,
         type='str'),
     bucket_location=dict(
         required=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_cos_bucket_object',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

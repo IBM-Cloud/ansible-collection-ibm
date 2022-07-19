@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_endpoint' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    endpoint_id:
-        description:
-            - The Endpoint ID.
-        required: True
-        type: str
     location:
         description:
             - The Location ID.
+        required: True
+        type: str
+    endpoint_id:
+        description:
+            - The Endpoint ID.
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('endpoint_id', 'str'),
     ('location', 'str'),
+    ('endpoint_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'endpoint_id',
     'location',
+    'endpoint_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    endpoint_id=dict(
+    location=dict(
         required=True,
         type='str'),
-    location=dict(
+    endpoint_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_satellite_endpoint',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

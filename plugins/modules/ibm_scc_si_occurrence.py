@@ -18,13 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_si_occurrence' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
     context:
         description:
             - None
+        required: False
+        type: list
+        elements: dict
+    finding:
+        description:
+            - Finding provides details about a finding occurrence.
         required: False
         type: list
         elements: dict
@@ -36,11 +42,6 @@ options:
     provider_id:
         description:
             - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
-        required: True
-        type: str
-    note_name:
-        description:
-            - (Required for new resource) An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This field can be used as a filter in list requests.
         required: True
         type: str
     occurrence_id:
@@ -64,23 +65,22 @@ options:
         required: False
         type: list
         elements: dict
-    kind:
-        description:
-            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
-        required: True
-        type: str
-    finding:
-        description:
-            - Finding provides details about a finding occurrence.
-        required: False
-        type: list
-        elements: dict
     replace_if_exists:
         description:
             - When set to true, an existing occurrence is replaced rather than duplicated.
         required: False
         type: bool
         default: False
+    note_name:
+        description:
+            - (Required for new resource) An analysis note associated with this image, in the form "{account_id}/providers/{provider_id}/notes/{note_id}" This field can be used as a filter in list requests.
+        required: True
+        type: str
+    kind:
+        description:
+            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -128,36 +128,36 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('provider_id', 'str'),
-    ('note_name', 'str'),
     ('occurrence_id', 'str'),
+    ('note_name', 'str'),
     ('kind', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'context',
+    'finding',
     'account_id',
     'provider_id',
-    'note_name',
     'occurrence_id',
     'resource_url',
     'remediation',
     'kpi',
-    'kind',
-    'finding',
     'replace_if_exists',
+    'note_name',
+    'kind',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('provider_id', 'str'),
     ('occurrence_id', 'str'),
+    ('provider_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'occurrence_id',
     'account_id',
     'provider_id',
-    'occurrence_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -171,13 +171,14 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    finding=dict(
+        required=False,
+        elements='',
+        type='list'),
     account_id=dict(
         required=False,
         type='str'),
     provider_id=dict(
-        required=False,
-        type='str'),
-    note_name=dict(
         required=False,
         type='str'),
     occurrence_id=dict(
@@ -193,16 +194,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    kind=dict(
-        required=False,
-        type='str'),
-    finding=dict(
-        required=False,
-        elements='',
-        type='list'),
     replace_if_exists=dict(
         required=False,
         type='bool'),
+    note_name=dict(
+        required=False,
+        type='str'),
+    kind=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -268,7 +268,7 @@ def run_module():
         resource_type='ibm_scc_si_occurrence',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -277,7 +277,7 @@ def run_module():
             resource_type='ibm_scc_si_occurrence',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

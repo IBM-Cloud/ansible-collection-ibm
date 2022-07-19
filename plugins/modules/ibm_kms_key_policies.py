@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_policies' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -29,21 +29,26 @@ options:
         type: str
     key_id:
         description:
-            - (Required for new resource) Key ID
-        required: True
-        type: str
-    endpoint_type:
-        description:
-            - public or private
+            - Key ID
         required: False
         type: str
-        default: public
+    alias:
+        description:
+            - None
+        required: False
+        type: str
     rotation:
         description:
             - Specifies the key rotation time interval in months, with a minimum of 1, and a maximum of 12
         required: False
         type: list
         elements: dict
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
     dual_auth_delete:
         description:
             - Data associated with the dual authorization delete policy.
@@ -97,29 +102,29 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('key_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
     'key_id',
-    'endpoint_type',
+    'alias',
     'rotation',
+    'endpoint_type',
     'dual_auth_delete',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('instance_id', 'str'),
-    ('key_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'key_id',
+    'alias',
+    'policies',
     'instance_id',
     'endpoint_type',
-    'key_id',
-    'policies',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -135,13 +140,16 @@ module_args = dict(
     key_id=dict(
         required=False,
         type='str'),
-    endpoint_type=dict(
+    alias=dict(
         required=False,
         type='str'),
     rotation=dict(
         required=False,
         elements='',
         type='list'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     dual_auth_delete=dict(
         required=False,
         elements='',
@@ -211,7 +219,7 @@ def run_module():
         resource_type='ibm_kms_key_policies',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -220,7 +228,7 @@ def run_module():
             resource_type='ibm_kms_key_policies',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

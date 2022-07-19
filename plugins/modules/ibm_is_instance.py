@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -32,46 +32,24 @@ options:
             - Unique Identifier of the Dedicated Host Group where the instance will be placed
         required: False
         type: str
-    keys:
+    name:
         description:
-            - SSH key Ids for the instance
-        required: False
-        type: list
-        elements: str
-    metadata_service_enabled:
-        description:
-            - Indicates whether the metadata service endpoint is available to the virtual server instance
-        required: False
-        type: bool
-    default_trusted_profile_auto_link:
-        description:
-            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-        required: False
-        type: bool
-    force_action:
-        description:
-            - If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
-        required: False
-        type: bool
-        default: False
+            - (Required for new resource) Instance name
+        required: True
+        type: str
     resource_group:
         description:
             - Instance resource group
         required: False
         type: str
-    vpc:
+    metadata_service_enabled:
         description:
-            - VPC id
+            - Indicates whether the metadata service endpoint is available to the virtual server instance
         required: False
-        type: str
-    instance_template:
+        type: bool
+    profile:
         description:
-            - Id of the instance template
-        required: False
-        type: str
-    placement_group:
-        description:
-            - Unique Identifier of the Placement Group for restricting the placement of the instance
+            - Profile info
         required: False
         type: str
     tags:
@@ -86,7 +64,12 @@ options:
         required: False
         type: bool
         default: True
-    network_interfaces:
+    action:
+        description:
+            - Enables stopping of instance before deleting and waits till deletion is complete
+        required: False
+        type: str
+    boot_volume:
         description:
             - None
         required: False
@@ -97,22 +80,70 @@ options:
             - Define timeout to force the instances to start/stop in minutes.
         required: False
         type: int
-    total_volume_bandwidth:
+    availability_policy_host_failure:
         description:
-            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-        required: False
-        type: int
-    user_data:
-        description:
-            - User data given for the instance
+            - The availability policy to use for this virtual server instance
         required: False
         type: str
-    boot_volume:
+    instance_template:
+        description:
+            - Id of the instance template
+        required: False
+        type: str
+    primary_network_interface:
+        description:
+            - Primary Network interface info
+        required: False
+        type: list
+        elements: dict
+    image:
+        description:
+            - image id
+        required: False
+        type: str
+    network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    zone:
+        description:
+            - Zone name
+        required: False
+        type: str
+    default_trusted_profile_auto_link:
+        description:
+            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+        required: False
+        type: bool
+    total_volume_bandwidth:
+        description:
+            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+        required: False
+        type: int
+    keys:
+        description:
+            - SSH key Ids for the instance
+        required: False
+        type: list
+        elements: str
+    force_action:
+        description:
+            - If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+        required: False
+        type: bool
+        default: False
+    placement_group:
+        description:
+            - Unique Identifier of the Placement Group for restricting the placement of the instance
+        required: False
+        type: str
     volumes:
         description:
             - List of volumes
@@ -124,45 +155,14 @@ options:
             - Auto delete volume along with instance
         required: False
         type: bool
-    zone:
+    vpc:
         description:
-            - Zone name
-        required: False
-        type: str
-    action:
-        description:
-            - Enables stopping of instance before deleting and waits till deletion is complete
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Instance name
-        required: True
-        type: str
-    profile:
-        description:
-            - Profile info
-        required: False
-        type: str
-    primary_network_interface:
-        description:
-            - Primary Network interface info
-        required: False
-        type: list
-        elements: dict
-    availability_policy_host_failure:
-        description:
-            - The availability policy to use for this virtual server instance
+            - VPC id
         required: False
         type: str
     dedicated_host:
         description:
             - Unique Identifier of the Dedicated Host where the instance will be placed
-        required: False
-        type: str
-    image:
-        description:
-            - image id
         required: False
         type: str
     id:
@@ -218,31 +218,31 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'default_trusted_profile_target',
     'dedicated_host_group',
-    'keys',
-    'metadata_service_enabled',
-    'default_trusted_profile_auto_link',
-    'force_action',
+    'name',
     'resource_group',
-    'vpc',
-    'instance_template',
-    'placement_group',
+    'metadata_service_enabled',
+    'profile',
     'tags',
     'wait_before_delete',
-    'network_interfaces',
-    'force_recovery_time',
-    'total_volume_bandwidth',
-    'user_data',
+    'action',
     'boot_volume',
+    'force_recovery_time',
+    'availability_policy_host_failure',
+    'instance_template',
+    'primary_network_interface',
+    'image',
+    'network_interfaces',
+    'user_data',
+    'zone',
+    'default_trusted_profile_auto_link',
+    'total_volume_bandwidth',
+    'keys',
+    'force_action',
+    'placement_group',
     'volumes',
     'auto_delete_volume',
-    'zone',
-    'action',
-    'name',
-    'profile',
-    'primary_network_interface',
-    'availability_policy_host_failure',
+    'vpc',
     'dedicated_host',
-    'image',
 ]
 
 # Params for Data source
@@ -251,17 +251,17 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'private_key',
-    'name',
     'passphrase',
+    'name',
+    'private_key',
 ]
 
 TL_CONFLICTS_MAP = {
     'dedicated_host_group': ['dedicated_host', 'placement_group'],
     'instance_template': ['boot_volume.0.snapshot'],
+    'image': ['boot_volume.0.snapshot'],
     'placement_group': ['dedicated_host', 'dedicated_host_group'],
     'dedicated_host': ['dedicated_host_group', 'placement_group'],
-    'image': ['boot_volume.0.snapshot'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -274,29 +274,16 @@ module_args = dict(
     dedicated_host_group=dict(
         required=False,
         type='str'),
-    keys=dict(
+    name=dict(
         required=False,
-        elements='',
-        type='list'),
-    metadata_service_enabled=dict(
-        required=False,
-        type='bool'),
-    default_trusted_profile_auto_link=dict(
-        required=False,
-        type='bool'),
-    force_action=dict(
-        required=False,
-        type='bool'),
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    metadata_service_enabled=dict(
         required=False,
-        type='str'),
-    instance_template=dict(
-        required=False,
-        type='str'),
-    placement_group=dict(
+        type='bool'),
+    profile=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -306,23 +293,55 @@ module_args = dict(
     wait_before_delete=dict(
         required=False,
         type='bool'),
-    network_interfaces=dict(
-        required=False,
-        elements='',
-        type='list'),
-    force_recovery_time=dict(
-        required=False,
-        type='int'),
-    total_volume_bandwidth=dict(
-        required=False,
-        type='int'),
-    user_data=dict(
+    action=dict(
         required=False,
         type='str'),
     boot_volume=dict(
         required=False,
         elements='',
         type='list'),
+    force_recovery_time=dict(
+        required=False,
+        type='int'),
+    availability_policy_host_failure=dict(
+        required=False,
+        type='str'),
+    instance_template=dict(
+        required=False,
+        type='str'),
+    primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    image=dict(
+        required=False,
+        type='str'),
+    network_interfaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    default_trusted_profile_auto_link=dict(
+        required=False,
+        type='bool'),
+    total_volume_bandwidth=dict(
+        required=False,
+        type='int'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
+    force_action=dict(
+        required=False,
+        type='bool'),
+    placement_group=dict(
+        required=False,
+        type='str'),
     volumes=dict(
         required=False,
         elements='',
@@ -330,29 +349,10 @@ module_args = dict(
     auto_delete_volume=dict(
         required=False,
         type='bool'),
-    zone=dict(
-        required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
-    availability_policy_host_failure=dict(
+    vpc=dict(
         required=False,
         type='str'),
     dedicated_host=dict(
-        required=False,
-        type='str'),
-    image=dict(
         required=False,
         type='str'),
     id=dict(
@@ -432,7 +432,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -441,7 +441,7 @@ def run_module():
             resource_type='ibm_is_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

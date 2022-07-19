@@ -18,24 +18,34 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_alert' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
+    description:
+        description:
+            - Policy Description
+        required: False
+        type: str
+    enabled:
+        description:
+            - (Required for new resource) Is the alert policy active
+        required: True
+        type: bool
+    conditions:
+        description:
+            - Conditions based on filter type
+        required: False
+        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
         required: True
         type: str
-    name:
+    alert_type:
         description:
-            - (Required for new resource) Policy name
+            - (Required for new resource) Condition for the alert
         required: True
-        type: str
-    description:
-        description:
-            - Policy Description
-        required: False
         type: str
     mechanisms:
         description:
@@ -48,20 +58,10 @@ options:
             - Filters based on filter type
         required: False
         type: str
-    enabled:
+    name:
         description:
-            - (Required for new resource) Is the alert policy active
+            - (Required for new resource) Policy name
         required: True
-        type: bool
-    alert_type:
-        description:
-            - (Required for new resource) Condition for the alert
-        required: True
-        type: str
-    conditions:
-        description:
-            - Conditions based on filter type
-        required: False
         type: str
     id:
         description:
@@ -109,23 +109,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
-    ('name', 'str'),
-    ('mechanisms', 'list'),
     ('enabled', 'bool'),
+    ('cis_id', 'str'),
     ('alert_type', 'str'),
+    ('mechanisms', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'name',
     'description',
+    'enabled',
+    'conditions',
+    'cis_id',
+    'alert_type',
     'mechanisms',
     'filters',
-    'enabled',
-    'alert_type',
-    'conditions',
+    'name',
 ]
 
 # Params for Data source
@@ -142,13 +142,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    description=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    conditions=dict(
+        required=False,
+        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    alert_type=dict(
         required=False,
         type='str'),
     mechanisms=dict(
@@ -158,13 +164,7 @@ module_args = dict(
     filters=dict(
         required=False,
         type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    alert_type=dict(
-        required=False,
-        type='str'),
-    conditions=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_cis_alert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
