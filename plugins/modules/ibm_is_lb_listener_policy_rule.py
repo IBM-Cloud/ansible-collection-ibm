@@ -16,30 +16,30 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    lb:
-        description:
-            - (Required for new resource) Loadbalancer ID
-        required: True
-        type: str
     listener:
         description:
             - (Required for new resource) Listener ID.
         required: True
         type: str
-    policy:
-        description:
-            - (Required for new resource) Listener Policy ID
-        required: True
-        type: str
     condition:
         description:
             - (Required for new resource) Condition info of the rule.
+        required: True
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer ID
+        required: True
+        type: str
+    policy:
+        description:
+            - (Required for new resource) Listener Policy ID
         required: True
         type: str
     type:
@@ -103,20 +103,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
     ('listener', 'str'),
-    ('policy', 'str'),
     ('condition', 'str'),
+    ('lb', 'str'),
+    ('policy', 'str'),
     ('type', 'str'),
     ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
     'listener',
-    'policy',
     'condition',
+    'lb',
+    'policy',
     'type',
     'value',
     'field',
@@ -124,9 +124,17 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('lb', 'str'),
+    ('listener', 'str'),
+    ('policy', 'str'),
+    ('rule', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'lb',
+    'listener',
+    'policy',
+    'rule',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -136,16 +144,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
-        required=False,
-        type='str'),
     listener=dict(
         required=False,
         type='str'),
-    policy=dict(
+    condition=dict(
         required=False,
         type='str'),
-    condition=dict(
+    lb=dict(
+        required=False,
+        type='str'),
+    policy=dict(
         required=False,
         type='str'),
     type=dict(
@@ -230,19 +238,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_lb_listener_policy_rule',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.40.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_lb_listener_policy_rule',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.40.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

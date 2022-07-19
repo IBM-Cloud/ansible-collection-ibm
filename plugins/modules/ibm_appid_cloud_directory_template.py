@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_cloud_directory_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    html_body:
-        description:
-            - The HTML body of the email
-        required: False
-        type: str
-    plain_text_body:
-        description:
-            - The text body of the email.
-        required: False
-        type: str
     tenant_id:
         description:
             - (Required for new resource) The AppID instance GUID
@@ -52,6 +42,16 @@ options:
         description:
             - (Required for new resource) The subject of the email
         required: True
+        type: str
+    html_body:
+        description:
+            - The HTML body of the email
+        required: False
+        type: str
+    plain_text_body:
+        description:
+            - The text body of the email.
+        required: False
         type: str
     id:
         description:
@@ -106,12 +106,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'html_body',
-    'plain_text_body',
     'tenant_id',
     'template_name',
     'language',
     'subject',
+    'html_body',
+    'plain_text_body',
 ]
 
 # Params for Data source
@@ -121,9 +121,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'language',
     'tenant_id',
     'template_name',
-    'language',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,12 +133,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    html_body=dict(
-        required=False,
-        type='str'),
-    plain_text_body=dict(
-        required=False,
-        type='str'),
     tenant_id=dict(
         required=False,
         type='str'),
@@ -149,6 +143,12 @@ module_args = dict(
         required=False,
         type='str'),
     subject=dict(
+        required=False,
+        type='str'),
+    html_body=dict(
+        required=False,
+        type='str'),
+    plain_text_body=dict(
         required=False,
         type='str'),
     id=dict(
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_appid_cloud_directory_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +225,7 @@ def run_module():
             resource_type='ibm_appid_cloud_directory_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

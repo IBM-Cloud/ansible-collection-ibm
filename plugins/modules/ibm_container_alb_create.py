@@ -18,18 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_create' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    nlb_version:
+    enable:
         description:
-            - The version of the network load balancer that you want to use for the ALB.
+            - If set to true, the ALB is enabled by default.
         required: False
-        type: str
+        type: bool
+        default: True
     alb_type:
         description:
             - (Required for new resource) The type of ALB that you want to create.
+        required: True
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) The ID of the cluster that the ALB belongs to.
         required: True
         type: str
     ip:
@@ -42,12 +48,6 @@ options:
             - (Required for new resource) The VLAN ID that you want to use for your ALBs.
         required: True
         type: str
-    enable:
-        description:
-            - If set to true, the ALB is enabled by default.
-        required: False
-        type: bool
-        default: True
     ingress_image:
         description:
             - The type of Ingress image that you want to use for your ALB deployment.
@@ -58,10 +58,10 @@ options:
             - (Required for new resource) The zone where you want to deploy the ALB.
         required: True
         type: str
-    cluster:
+    nlb_version:
         description:
-            - (Required for new resource) The ID of the cluster that the ALB belongs to.
-        required: True
+            - The version of the network load balancer that you want to use for the ALB.
+        required: False
         type: str
     id:
         description:
@@ -90,21 +90,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('alb_type', 'str'),
+    ('cluster', 'str'),
     ('vlan_id', 'str'),
     ('zone', 'str'),
-    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'nlb_version',
+    'enable',
     'alb_type',
+    'cluster',
     'ip',
     'vlan_id',
-    'enable',
     'ingress_image',
     'zone',
-    'cluster',
+    'nlb_version',
 ]
 
 # Params for Data source
@@ -121,10 +121,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    nlb_version=dict(
+    enable=dict(
+        required=False,
+        type='bool'),
+    alb_type=dict(
         required=False,
         type='str'),
-    alb_type=dict(
+    cluster=dict(
         required=False,
         type='str'),
     ip=dict(
@@ -133,16 +136,13 @@ module_args = dict(
     vlan_id=dict(
         required=False,
         type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
     ingress_image=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
-    cluster=dict(
+    nlb_version=dict(
         required=False,
         type='str'),
     id=dict(
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_container_alb_create',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

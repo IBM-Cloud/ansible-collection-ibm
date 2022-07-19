@@ -17,21 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_attach_host_script' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    labels:
-        description:
-            - List of labels for the attach host
-        required: False
-        type: list
-        elements: str
-    host_provider:
-        description:
-            - None
-        required: False
-        type: str
     script_dir:
         description:
             - The directory where the satellite attach host script to be downloaded. Default is home directory
@@ -46,6 +35,17 @@ options:
         description:
             - A unique name for the new Satellite location
         required: True
+        type: str
+    labels:
+        description:
+            - List of labels for the attach host
+        required: False
+        type: list
+        elements: str
+    host_provider:
+        description:
+            - None
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -85,11 +85,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'labels',
-    'host_provider',
     'script_dir',
     'custom_script',
     'location',
+    'labels',
+    'host_provider',
 ]
 
 
@@ -100,13 +100,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    host_provider=dict(
-        required=False,
-        type='str'),
     script_dir=dict(
         required=False,
         type='str'),
@@ -115,6 +108,13 @@ module_args = dict(
         type='str'),
     location=dict(
         required=True,
+        type='str'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
+    host_provider=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -150,7 +150,7 @@ def run_module():
         resource_type='ibm_satellite_attach_host_script',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

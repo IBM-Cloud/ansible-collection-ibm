@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_scope' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    credential_type:
-        description:
-            - (Required for new resource) The environment that the scope is targeted to.
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) A unique name for your scope.
@@ -46,6 +41,11 @@ options:
     credential_id:
         description:
             - (Required for new resource) The unique identifier of the credential.
+        required: True
+        type: str
+    credential_type:
+        description:
+            - (Required for new resource) The environment that the scope is targeted to.
         required: True
         type: str
     id:
@@ -94,20 +94,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('credential_type', 'str'),
     ('name', 'str'),
     ('description', 'str'),
     ('collector_ids', 'list'),
     ('credential_id', 'str'),
+    ('credential_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'credential_type',
     'name',
     'description',
     'collector_ids',
     'credential_id',
+    'credential_type',
 ]
 
 # Params for Data source
@@ -124,9 +124,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    credential_type=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -138,6 +135,9 @@ module_args = dict(
         elements='',
         type='list'),
     credential_id=dict(
+        required=False,
+        type='str'),
+    credential_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_scc_posture_scope',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cbr_zone' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,10 @@ options:
             - (Required for new resource) The name of the zone.
         required: True
         type: str
-    addresses:
+    excluded:
         description:
-            - (Required for new resource) The list of addresses in the zone.
-        required: True
+            - The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
+        required: False
         type: list
         elements: dict
     description:
@@ -38,10 +38,10 @@ options:
             - The description of the zone.
         required: False
         type: str
-    excluded:
+    addresses:
         description:
-            - The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
-        required: False
+            - (Required for new resource) The list of addresses in the zone.
+        required: True
         type: list
         elements: dict
     id:
@@ -97,9 +97,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'addresses',
-    'description',
     'excluded',
+    'description',
+    'addresses',
 ]
 
 # Params for Data source
@@ -121,14 +121,14 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    addresses=dict(
+    excluded=dict(
         required=False,
         elements='',
         type='list'),
     description=dict(
         required=False,
         type='str'),
-    excluded=dict(
+    addresses=dict(
         required=False,
         elements='',
         type='list'),
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_cbr_zone',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -206,7 +206,7 @@ def run_module():
             resource_type='ibm_cbr_zone',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

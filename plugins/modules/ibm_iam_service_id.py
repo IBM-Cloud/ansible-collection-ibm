@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_id' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    description:
-        description:
-            - Description of the serviceID
-        required: False
-        type: str
     tags:
         description:
             - None
@@ -37,6 +32,11 @@ options:
         description:
             - (Required for new resource) Name of the serviceID
         required: True
+        type: str
+    description:
+        description:
+            - Description of the serviceID
+        required: False
         type: str
     id:
         description:
@@ -89,9 +89,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'tags',
     'name',
+    'description',
 ]
 
 # Params for Data source
@@ -110,14 +110,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
     name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -185,7 +185,7 @@ def run_module():
         resource_type='ibm_iam_service_id',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -194,7 +194,7 @@ def run_module():
             resource_type='ibm_iam_service_id',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

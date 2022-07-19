@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    route_vpc_zone_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - The user-defined name for this routing table.
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) The VPC identifier.
@@ -50,6 +39,17 @@ options:
         required: False
         type: bool
         default: False
+    route_vpc_zone_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+        required: False
+        type: bool
+        default: False
+    name:
+        description:
+            - The user-defined name for this routing table.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'route_vpc_zone_ingress',
-    'name',
     'vpc',
     'route_direct_link_ingress',
     'route_transit_gateway_ingress',
+    'route_vpc_zone_ingress',
+    'name',
 ]
 
 # Params for Data source
@@ -114,8 +114,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'routing_table',
     'vpc',
+    'routing_table',
     'name',
 ]
 
@@ -126,12 +126,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    route_vpc_zone_ingress=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     vpc=dict(
         required=False,
         type='str'),
@@ -141,6 +135,12 @@ module_args = dict(
     route_transit_gateway_ingress=dict(
         required=False,
         type='bool'),
+    route_vpc_zone_ingress=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_occurrence' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    occurrence_id:
-        description:
-            - Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
-        required: True
-        type: str
     account_id:
         description:
             - None
@@ -34,6 +29,11 @@ options:
     provider_id:
         description:
             - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+        required: True
+        type: str
+    occurrence_id:
+        description:
+            - Second part of occurrence `name`: providers/{provider_id}/occurrences/{occurrence_id}.
         required: True
         type: str
     iaas_classic_username:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('occurrence_id', 'str'),
     ('provider_id', 'str'),
+    ('occurrence_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'occurrence_id',
     'account_id',
     'provider_id',
+    'occurrence_id',
 ]
 
 
@@ -88,13 +88,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    occurrence_id=dict(
-        required=True,
-        type='str'),
     account_id=dict(
         required=False,
         type='str'),
     provider_id=dict(
+        required=True,
+        type='str'),
+    occurrence_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -131,7 +131,7 @@ def run_module():
         resource_type='ibm_scc_si_occurrence',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

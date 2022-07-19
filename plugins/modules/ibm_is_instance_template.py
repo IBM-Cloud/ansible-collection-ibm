@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
@@ -28,31 +28,6 @@ options:
         required: False
         type: bool
         default: False
-    default_trusted_profile_auto_link:
-        description:
-            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-        required: False
-        type: bool
-    default_trusted_profile_target:
-        description:
-            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-        required: False
-        type: str
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
-    image:
-        description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Instance template resource group
-        required: False
-        type: str
     vpc:
         description:
             - (Required for new resource) VPC id
@@ -63,15 +38,9 @@ options:
             - (Required for new resource) Profile info
         required: True
         type: str
-    keys:
+    resource_group:
         description:
-            - (Required for new resource) SSH key Ids for the instance template
-        required: True
-        type: list
-        elements: str
-    dedicated_host_group:
-        description:
-            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+            - Instance template resource group
         required: False
         type: str
     primary_network_interface:
@@ -80,16 +49,47 @@ options:
         required: True
         type: list
         elements: dict
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
+        type: str
     boot_volume:
         description:
             - None
         required: False
         type: list
         elements: dict
+    availability_policy_host_failure:
+        description:
+            - The availability policy to use for this virtual server instance
+        required: False
+        type: str
     zone:
         description:
             - (Required for new resource) Zone name
         required: True
+        type: str
+    dedicated_host_group:
+        description:
+            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+        required: False
+        type: str
+    volume_attachments:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - Instance Template name
+        required: False
         type: str
     dedicated_host:
         description:
@@ -101,21 +101,20 @@ options:
             - Unique Identifier of the Placement Group for restricting the placement of the instance
         required: False
         type: str
-    volume_attachments:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
-    name:
+    default_trusted_profile_auto_link:
         description:
-            - Instance Template name
+            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+        required: False
+        type: bool
+    default_trusted_profile_target:
+        description:
+            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
         required: False
         type: str
     total_volume_bandwidth:
@@ -123,6 +122,12 @@ options:
             - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
         required: False
         type: int
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance template
+        required: True
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -169,35 +174,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('image', 'str'),
     ('vpc', 'str'),
     ('profile', 'str'),
-    ('keys', 'list'),
     ('primary_network_interface', 'list'),
+    ('image', 'str'),
     ('zone', 'str'),
+    ('keys', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'metadata_service_enabled',
-    'default_trusted_profile_auto_link',
-    'default_trusted_profile_target',
-    'user_data',
-    'image',
-    'resource_group',
     'vpc',
     'profile',
-    'keys',
-    'dedicated_host_group',
+    'resource_group',
     'primary_network_interface',
+    'user_data',
+    'image',
     'boot_volume',
+    'availability_policy_host_failure',
     'zone',
+    'dedicated_host_group',
+    'volume_attachments',
+    'name',
     'dedicated_host',
     'placement_group',
-    'volume_attachments',
     'network_interfaces',
-    'name',
+    'default_trusted_profile_auto_link',
+    'default_trusted_profile_target',
     'total_volume_bandwidth',
+    'keys',
 ]
 
 # Params for Data source
@@ -222,43 +228,43 @@ module_args = dict(
     metadata_service_enabled=dict(
         required=False,
         type='bool'),
-    default_trusted_profile_auto_link=dict(
-        required=False,
-        type='bool'),
-    default_trusted_profile_target=dict(
-        required=False,
-        type='str'),
-    user_data=dict(
-        required=False,
-        type='str'),
-    image=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     vpc=dict(
         required=False,
         type='str'),
     profile=dict(
         required=False,
         type='str'),
-    keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    dedicated_host_group=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     primary_network_interface=dict(
         required=False,
         elements='',
         type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    image=dict(
+        required=False,
+        type='str'),
     boot_volume=dict(
         required=False,
         elements='',
         type='list'),
+    availability_policy_host_failure=dict(
+        required=False,
+        type='str'),
     zone=dict(
+        required=False,
+        type='str'),
+    dedicated_host_group=dict(
+        required=False,
+        type='str'),
+    volume_attachments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     dedicated_host=dict(
@@ -267,20 +273,23 @@ module_args = dict(
     placement_group=dict(
         required=False,
         type='str'),
-    volume_attachments=dict(
-        required=False,
-        elements='',
-        type='list'),
     network_interfaces=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    default_trusted_profile_auto_link=dict(
+        required=False,
+        type='bool'),
+    default_trusted_profile_target=dict(
         required=False,
         type='str'),
     total_volume_bandwidth=dict(
         required=False,
         type='int'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -358,7 +367,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -367,7 +376,7 @@ def run_module():
             resource_type='ibm_is_instance_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

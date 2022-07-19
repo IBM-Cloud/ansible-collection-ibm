@@ -18,13 +18,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_claim_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
+    expiration:
+        description:
+            - Session expiration in seconds, only required if type is 'Profile-SAML'.
+        required: False
+        type: int
+    name:
+        description:
+            - Name of the claim rule to be created or updated.
+        required: False
+        type: str
+    cr_type:
+        description:
+            - The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+        required: False
+        type: str
+    realm_name:
+        description:
+            - The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
+        required: False
+        type: str
     profile_id:
         description:
             - (Required for new resource) ID of the trusted profile to create a claim rule.
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
         required: True
         type: str
     conditions:
@@ -33,31 +58,6 @@ options:
         required: True
         type: list
         elements: dict
-    name:
-        description:
-            - Name of the claim rule to be created or updated.
-        required: False
-        type: str
-    realm_name:
-        description:
-            - The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
-        required: False
-        type: str
-    cr_type:
-        description:
-            - The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
-        required: True
-        type: str
-    expiration:
-        description:
-            - Session expiration in seconds, only required if type is 'Profile-SAML'.
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,19 +105,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('profile_id', 'str'),
-    ('conditions', 'list'),
     ('type', 'str'),
+    ('conditions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile_id',
-    'conditions',
-    'name',
-    'realm_name',
-    'cr_type',
-    'type',
     'expiration',
+    'name',
+    'cr_type',
+    'realm_name',
+    'profile_id',
+    'type',
+    'conditions',
 ]
 
 # Params for Data source
@@ -138,28 +138,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    expiration=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    cr_type=dict(
+        required=False,
+        type='str'),
+    realm_name=dict(
+        required=False,
+        type='str'),
     profile_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     conditions=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    realm_name=dict(
-        required=False,
-        type='str'),
-    cr_type=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    expiration=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_claim_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +234,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_claim_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

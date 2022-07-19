@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_images' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
+    visibility:
+        description:
+            - Whether the image is publicly visible or private to the account
+        required: False
+        type: str
     resource_group:
         description:
             - The id of the resource group
@@ -29,11 +34,6 @@ options:
     name:
         description:
             - The name of the image
-        required: False
-        type: str
-    visibility:
-        description:
-            - Whether the image is publicly visible or private to the account
         required: False
         type: str
     generation:
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'visibility',
     'resource_group',
     'name',
-    'visibility',
 ]
 
 
@@ -86,13 +86,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    visibility=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    visibility=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_is_images',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
