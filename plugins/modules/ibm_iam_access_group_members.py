@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_members' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
@@ -34,6 +34,12 @@ options:
         type: list
         elements: str
     iam_service_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    iam_profile_ids:
         description:
             - None
         required: False
@@ -93,6 +99,7 @@ TL_ALL_PARAMETERS = [
     'access_group_id',
     'ibm_ids',
     'iam_service_ids',
+    'iam_profile_ids',
 ]
 
 # Params for Data source
@@ -117,6 +124,10 @@ module_args = dict(
         elements='',
         type='list'),
     iam_service_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    iam_profile_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -185,7 +196,7 @@ def run_module():
         resource_type='ibm_iam_access_group_members',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,18 +16,58 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
+    action:
+        description:
+            - (Required for new resource) Policy Action
+        required: True
+        type: str
+    target_https_redirect_listener:
+        description:
+            - ID of the listener that will be set as http redirect target
+        required: False
+        type: str
+    target_id:
+        description:
+            - Listener Policy Target ID
+        required: False
+        type: str
+    target_url:
+        description:
+            - Policy Target URL
+        required: False
+        type: str
+    target_https_redirect_uri:
+        description:
+            - Target URI where traffic will be redirected
+        required: False
+        type: str
+    priority:
+        description:
+            - (Required for new resource) Listener Policy Priority
+        required: True
+        type: int
     rules:
         description:
             - Policy Rules
         required: False
         type: list
         elements: dict
+    target_http_status_code:
+        description:
+            - Listener Policy target HTTPS Status code.
+        required: False
+        type: int
+    listener:
+        description:
+            - (Required for new resource) Listener ID
+        required: True
+        type: str
     target_https_redirect_status_code:
         description:
             - The HTTP status code to be returned in the redirect response
@@ -41,46 +81,6 @@ options:
     lb:
         description:
             - (Required for new resource) Load Balancer Listener Policy
-        required: True
-        type: str
-    target_https_redirect_listener:
-        description:
-            - ID of the listener that will be set as http redirect target
-        required: False
-        type: str
-    listener:
-        description:
-            - (Required for new resource) Listener ID
-        required: True
-        type: str
-    priority:
-        description:
-            - (Required for new resource) Listener Policy Priority
-        required: True
-        type: int
-    target_id:
-        description:
-            - Listener Policy Target ID
-        required: False
-        type: str
-    target_http_status_code:
-        description:
-            - Listener Policy target HTTPS Status code.
-        required: False
-        type: int
-    target_url:
-        description:
-            - Policy Target URL
-        required: False
-        type: str
-    target_https_redirect_uri:
-        description:
-            - Target URI where traffic will be redirected
-        required: False
-        type: str
-    action:
-        description:
-            - (Required for new resource) Policy Action
         required: True
         type: str
     id:
@@ -129,33 +129,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
-    ('listener', 'str'),
-    ('priority', 'int'),
     ('action', 'str'),
+    ('priority', 'int'),
+    ('listener', 'str'),
+    ('lb', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'action',
+    'target_https_redirect_listener',
+    'target_id',
+    'target_url',
+    'target_https_redirect_uri',
+    'priority',
     'rules',
+    'target_http_status_code',
+    'listener',
     'target_https_redirect_status_code',
     'name',
     'lb',
-    'target_https_redirect_listener',
-    'listener',
-    'priority',
-    'target_id',
-    'target_http_status_code',
-    'target_url',
-    'target_https_redirect_uri',
-    'action',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('lb', 'str'),
+    ('listener', 'str'),
+    ('policy_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'lb',
+    'listener',
+    'policy_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -165,10 +171,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    action=dict(
+        required=False,
+        type='str'),
+    target_https_redirect_listener=dict(
+        required=False,
+        type='str'),
+    target_id=dict(
+        required=False,
+        type='str'),
+    target_url=dict(
+        required=False,
+        type='str'),
+    target_https_redirect_uri=dict(
+        required=False,
+        type='str'),
+    priority=dict(
+        required=False,
+        type='int'),
     rules=dict(
         required=False,
         elements='',
         type='list'),
+    target_http_status_code=dict(
+        required=False,
+        type='int'),
+    listener=dict(
+        required=False,
+        type='str'),
     target_https_redirect_status_code=dict(
         required=False,
         type='int'),
@@ -176,30 +206,6 @@ module_args = dict(
         required=False,
         type='str'),
     lb=dict(
-        required=False,
-        type='str'),
-    target_https_redirect_listener=dict(
-        required=False,
-        type='str'),
-    listener=dict(
-        required=False,
-        type='str'),
-    priority=dict(
-        required=False,
-        type='int'),
-    target_id=dict(
-        required=False,
-        type='str'),
-    target_http_status_code=dict(
-        required=False,
-        type='int'),
-    target_url=dict(
-        required=False,
-        type='str'),
-    target_https_redirect_uri=dict(
-        required=False,
-        type='str'),
-    action=dict(
         required=False,
         type='str'),
     id=dict(
@@ -275,19 +281,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_lb_listener_policy',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.40.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_lb_listener_policy',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.40.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

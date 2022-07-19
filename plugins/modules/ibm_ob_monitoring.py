@@ -18,23 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ob_monitoring' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    private_endpoint:
-        description:
-            - Add this option to connect to your Sysdig service instance through the private service endpoint
-        required: False
-        type: bool
-    cluster:
-        description:
-            - (Required for new resource) Name or ID of the cluster to be used.
-        required: True
-        type: str
     instance_id:
         description:
             - (Required for new resource) ID of the Sysdig service instance to latch
+        required: True
+        type: str
+    cluster:
+        description:
+            - (Required for new resource) Name or ID of the cluster to be used.
         required: True
         type: str
     sysdig_access_key:
@@ -42,6 +37,11 @@ options:
             - Sysdig ingestion key
         required: False
         type: str
+    private_endpoint:
+        description:
+            - Add this option to connect to your Sysdig service instance through the private service endpoint
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,16 +88,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('instance_id', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'private_endpoint',
-    'cluster',
     'instance_id',
+    'cluster',
     'sysdig_access_key',
+    'private_endpoint',
 ]
 
 # Params for Data source
@@ -114,18 +114,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    private_endpoint=dict(
-        required=False,
-        type='bool'),
-    cluster=dict(
+    instance_id=dict(
         required=False,
         type='str'),
-    instance_id=dict(
+    cluster=dict(
         required=False,
         type='str'),
     sysdig_access_key=dict(
         required=False,
         type='str'),
+    private_endpoint=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_ob_monitoring',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

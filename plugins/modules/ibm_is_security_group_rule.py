@@ -16,12 +16,23 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group_rule' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
+    ip_version:
+        description:
+            - IP version: ipv4
+        required: False
+        type: str
+        default: ipv4
+    remote:
+        description:
+            - Security group id: an IP address, a CIDR block, or a single security group identifier
+        required: False
+        type: str
     tcp:
         description:
             - protocol=tcp
@@ -34,25 +45,14 @@ options:
         required: False
         type: list
         elements: dict
-    direction:
-        description:
-            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
-        required: True
-        type: str
-    ip_version:
-        description:
-            - IP version: ipv4
-        required: False
-        type: str
-        default: ipv4
-    remote:
-        description:
-            - Security group id: an IP address, a CIDR block, or a single security group identifier
-        required: False
-        type: str
     group:
         description:
             - (Required for new resource) Security group id
+        required: True
+        type: str
+    direction:
+        description:
+            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
         required: True
         type: str
     icmp:
@@ -107,26 +107,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('direction', 'str'),
     ('group', 'str'),
+    ('direction', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tcp',
-    'udp',
-    'direction',
     'ip_version',
     'remote',
+    'tcp',
+    'udp',
     'group',
+    'direction',
     'icmp',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('security_group', 'str'),
+    ('security_group_rule', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'security_group',
+    'security_group_rule',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -139,6 +143,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    ip_version=dict(
+        required=False,
+        type='str'),
+    remote=dict(
+        required=False,
+        type='str'),
     tcp=dict(
         required=False,
         elements='',
@@ -147,16 +157,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    direction=dict(
-        required=False,
-        type='str'),
-    ip_version=dict(
-        required=False,
-        type='str'),
-    remote=dict(
-        required=False,
-        type='str'),
     group=dict(
+        required=False,
+        type='str'),
+    direction=dict(
         required=False,
         type='str'),
     icmp=dict(
@@ -236,19 +240,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_security_group_rule',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.40.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_security_group_rule',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.40.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

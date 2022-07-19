@@ -16,25 +16,30 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    authentication_algorithm:
-        description:
-            - (Required for new resource) Authentication alorothm
-        required: True
-        type: str
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption algorithm
         required: True
         type: str
+    pfs:
+        description:
+            - (Required for new resource) PFS info
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) IPSEC name
+        required: True
+        type: str
+    authentication_algorithm:
+        description:
+            - (Required for new resource) Authentication alorothm
         required: True
         type: str
     resource_group:
@@ -48,11 +53,6 @@ options:
         required: False
         type: int
         default: 3600
-    pfs:
-        description:
-            - (Required for new resource) PFS info
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
-    ('name', 'str'),
     ('pfs', 'str'),
+    ('name', 'str'),
+    ('authentication_algorithm', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'authentication_algorithm',
     'encryption_algorithm',
+    'pfs',
     'name',
+    'authentication_algorithm',
     'resource_group',
     'key_lifetime',
-    'pfs',
 ]
 
 # Params for Data source
@@ -120,6 +120,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'name',
+    'ipsec_policy',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -129,13 +131,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    authentication_algorithm=dict(
-        required=False,
-        type='str'),
     encryption_algorithm=dict(
         required=False,
         type='str'),
+    pfs=dict(
+        required=False,
+        type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    authentication_algorithm=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -144,9 +149,6 @@ module_args = dict(
     key_lifetime=dict(
         required=False,
         type='int'),
-    pfs=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -220,19 +222,29 @@ def run_module():
                 msg=("VPC generation=2 missing required argument: "
                      "ibmcloud_api_key"))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_is_ipsec_policy',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.40.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_is_ipsec_policy',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.40.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_cluster_worker_pool_zone_attachment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    cluster:
-        description:
-            - Name or id of the cluster
-        required: True
-        type: str
     worker_pool:
         description:
             - worker pool name
@@ -40,6 +35,11 @@ options:
         description:
             - The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
         required: False
+        type: str
+    cluster:
+        description:
+            - Name or id of the cluster
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -74,17 +74,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('worker_pool', 'str'),
     ('zone', 'str'),
+    ('cluster', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'worker_pool',
     'zone',
     'resource_group_id',
+    'cluster',
 ]
 
 
@@ -95,9 +95,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
-        required=True,
-        type='str'),
     worker_pool=dict(
         required=True,
         type='str'),
@@ -106,6 +103,9 @@ module_args = dict(
         type='str'),
     resource_group_id=dict(
         required=False,
+        type='str'),
+    cluster=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool_zone_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

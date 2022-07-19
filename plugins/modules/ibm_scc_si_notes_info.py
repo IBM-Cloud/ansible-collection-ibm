@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_si_notes' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    page_size:
-        description:
-            - Number of notes to return in the list.
-        required: False
-        type: int
-    page_token:
-        description:
-            - Token to provide to skip to a particular spot in the list.
-        required: False
-        type: str
     account_id:
         description:
             - None
@@ -40,6 +30,16 @@ options:
         description:
             - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
         required: True
+        type: str
+    page_size:
+        description:
+            - Number of notes to return in the list.
+        required: False
+        type: int
+    page_token:
+        description:
+            - Token to provide to skip to a particular spot in the list.
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -79,10 +79,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'page_size',
-    'page_token',
     'account_id',
     'provider_id',
+    'page_size',
+    'page_token',
 ]
 
 
@@ -93,17 +93,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    page_size=dict(
-        required=False,
-        type='int'),
-    page_token=dict(
-        required=False,
-        type='str'),
     account_id=dict(
         required=False,
         type='str'),
     provider_id=dict(
         required=True,
+        type='str'),
+    page_size=dict(
+        required=False,
+        type='int'),
+    page_token=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -139,7 +139,7 @@ def run_module():
         resource_type='ibm_scc_si_notes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

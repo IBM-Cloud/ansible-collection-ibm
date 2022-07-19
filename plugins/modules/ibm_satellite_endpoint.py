@@ -18,18 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_endpoint' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    display_name:
+    server_mutual_auth:
         description:
-            - (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
-        required: True
-        type: str
-    client_protocol:
+            - Whether enable mutual auth in the server application side, when client_protocol is 'tls', this field is required.
+        required: False
+        type: bool
+        default: False
+    timeout:
         description:
-            - (Required for new resource) The protocol in the client application side.
+            - The inactivity timeout in the Endpoint side.
+        required: False
+        type: int
+    connection_type:
+        description:
+            - (Required for new resource) The type of the endpoint.
         required: True
         type: str
     client_mutual_auth:
@@ -38,36 +44,31 @@ options:
         required: False
         type: bool
         default: False
-    server_mutual_auth:
-        description:
-            - Whether enable mutual auth in the server application side, when client_protocol is 'tls', this field is required.
-        required: False
-        type: bool
-        default: False
-    created_by:
-        description:
-            - The service or person who created the endpoint. Must be 1000 characters or fewer.
-        required: False
-        type: str
-    location:
-        description:
-            - (Required for new resource) The Location ID.
-        required: True
-        type: str
-    server_port:
-        description:
-            - (Required for new resource) The port number of the server endpoint. For 'http-tunnel' protocol, server_port can be 0, which means any port. Such as 0 is good for 80 (http) and 443 (https).
-        required: True
-        type: int
     server_protocol:
         description:
             - The protocol in the server application side. This parameter will change to default value if it is omitted even when using PATCH API. If client_protocol is 'udp', server_protocol must be 'udp'. If client_protocol is 'tcp'/'http', server_protocol could be 'tcp'/'tls' and default to 'tcp'. If client_protocol is 'tls'/'https', server_protocol could be 'tcp'/'tls' and default to 'tls'. If client_protocol is 'http-tunnel', server_protocol must be 'tcp'.
         required: False
         type: str
-    server_host:
+    certs:
         description:
-            - (Required for new resource) The host name or IP address of the server endpoint. For 'http-tunnel' protocol, server_host can start with '*.' , which means a wildcard to it's sub domains. Such as '*.example.com' can accept request to 'api.example.com' and 'www.example.com'.
+            - The certs.
+        required: False
+        type: list
+        elements: dict
+    server_port:
+        description:
+            - (Required for new resource) The port number of the server endpoint. For 'http-tunnel' protocol, server_port can be 0, which means any port. Such as 0 is good for 80 (http) and 443 (https).
         required: True
+        type: int
+    sni:
+        description:
+            - The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
+        required: False
+        type: str
+    created_by:
+        description:
+            - The service or person who created the endpoint. Must be 1000 characters or fewer.
+        required: False
         type: str
     reject_unauth:
         description:
@@ -75,27 +76,26 @@ options:
         required: False
         type: bool
         default: False
-    certs:
+    location:
         description:
-            - The certs.
-        required: False
-        type: list
-        elements: dict
-    connection_type:
-        description:
-            - (Required for new resource) The type of the endpoint.
+            - (Required for new resource) The Location ID.
         required: True
         type: str
-    sni:
+    display_name:
         description:
-            - The server name indicator (SNI) which used to connect to the server endpoint. Only useful if server side requires SNI.
-        required: False
+            - (Required for new resource) The display name of the endpoint. Endpoint names must start with a letter and end with an alphanumeric character, can contain letters, numbers, and hyphen (-), and must be 63 characters or fewer.
+        required: True
         type: str
-    timeout:
+    server_host:
         description:
-            - The inactivity timeout in the Endpoint side.
-        required: False
-        type: int
+            - (Required for new resource) The host name or IP address of the server endpoint. For 'http-tunnel' protocol, server_host can start with '*.' , which means a wildcard to it's sub domains. Such as '*.example.com' can accept request to 'api.example.com' and 'www.example.com'.
+        required: True
+        type: str
+    client_protocol:
+        description:
+            - (Required for new resource) The protocol in the client application side.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -142,30 +142,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('display_name', 'str'),
-    ('client_protocol', 'str'),
-    ('location', 'str'),
-    ('server_port', 'int'),
-    ('server_host', 'str'),
     ('connection_type', 'str'),
+    ('server_port', 'int'),
+    ('location', 'str'),
+    ('display_name', 'str'),
+    ('server_host', 'str'),
+    ('client_protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'display_name',
-    'client_protocol',
-    'client_mutual_auth',
     'server_mutual_auth',
-    'created_by',
-    'location',
-    'server_port',
-    'server_protocol',
-    'server_host',
-    'reject_unauth',
-    'certs',
-    'connection_type',
-    'sni',
     'timeout',
+    'connection_type',
+    'client_mutual_auth',
+    'server_protocol',
+    'certs',
+    'server_port',
+    'sni',
+    'created_by',
+    'reject_unauth',
+    'location',
+    'display_name',
+    'server_host',
+    'client_protocol',
 ]
 
 # Params for Data source
@@ -186,49 +186,49 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    display_name=dict(
+    server_mutual_auth=dict(
         required=False,
-        type='str'),
-    client_protocol=dict(
+        type='bool'),
+    timeout=dict(
+        required=False,
+        type='int'),
+    connection_type=dict(
         required=False,
         type='str'),
     client_mutual_auth=dict(
         required=False,
         type='bool'),
-    server_mutual_auth=dict(
-        required=False,
-        type='bool'),
-    created_by=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    server_port=dict(
-        required=False,
-        type='int'),
     server_protocol=dict(
         required=False,
         type='str'),
-    server_host=dict(
+    certs=dict(
+        required=False,
+        elements='',
+        type='list'),
+    server_port=dict(
+        required=False,
+        type='int'),
+    sni=dict(
+        required=False,
+        type='str'),
+    created_by=dict(
         required=False,
         type='str'),
     reject_unauth=dict(
         required=False,
         type='bool'),
-    certs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    connection_type=dict(
+    location=dict(
         required=False,
         type='str'),
-    sni=dict(
+    display_name=dict(
         required=False,
         type='str'),
-    timeout=dict(
+    server_host=dict(
         required=False,
-        type='int'),
+        type='str'),
+    client_protocol=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -294,7 +294,7 @@ def run_module():
         resource_type='ibm_satellite_endpoint',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -303,7 +303,7 @@ def run_module():
             resource_type='ibm_satellite_endpoint',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

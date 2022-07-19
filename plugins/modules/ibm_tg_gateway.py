@@ -18,13 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.39.1
+    - IBM-Cloud terraform-provider-ibm v1.40.1
     - Terraform v0.12.20
 
 options:
-    location:
+    tags:
         description:
-            - (Required for new resource) Location of Transit Gateway Services
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Name Transit Gateway Services
         required: True
         type: str
     global_:
@@ -33,22 +39,16 @@ options:
         required: False
         type: bool
         default: False
+    location:
+        description:
+            - (Required for new resource) Location of Transit Gateway Services
+        required: True
+        type: str
     resource_group:
         description:
             - None
         required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) Name Transit Gateway Services
-        required: True
-        type: str
-    tags:
-        description:
-            - Tags for the transit gateway instance
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,17 +95,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('name', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'global_',
-    'resource_group',
-    'name',
     'tags',
+    'name',
+    'global_',
+    'location',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -124,22 +124,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     global_=dict(
         required=False,
         type='bool'),
+    location=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_tg_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.39.1',
+        ibm_provider_version='1.40.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -214,7 +214,7 @@ def run_module():
             resource_type='ibm_tg_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.39.1',
+            ibm_provider_version='1.40.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
