@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
@@ -31,17 +31,17 @@ options:
             - The id of the resource instance
         required: False
         type: str
+    resource_alias_id:
+        description:
+            - The id of the resource alias
+        required: False
+        type: str
     most_recent:
         description:
             - If true and multiple entries are found, the most recently created resource key is used. If false, an error is returned
         required: False
         type: bool
         default: False
-    resource_alias_id:
-        description:
-            - The id of the resource alias
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -82,8 +82,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'name',
     'resource_instance_id',
-    'most_recent',
     'resource_alias_id',
+    'most_recent',
 ]
 
 
@@ -102,12 +102,12 @@ module_args = dict(
     resource_instance_id=dict(
         required=False,
         type='str'),
-    most_recent=dict(
-        required=False,
-        type='bool'),
     resource_alias_id=dict(
         required=False,
         type='str'),
+    most_recent=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_resource_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

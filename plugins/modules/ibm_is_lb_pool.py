@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
@@ -32,9 +32,14 @@ options:
             - (Required for new resource) Load Balancer Protocol
         required: True
         type: str
-    health_monitor_url:
+    health_monitor_port:
         description:
-            - Health monitor URL of LB Pool
+            - Health monitor Port the LB Pool
+        required: False
+        type: int
+    session_persistence_type:
+        description:
+            - Load Balancer Pool session persisence type.
         required: False
         type: str
     name:
@@ -47,34 +52,9 @@ options:
             - (Required for new resource) Load Balancer Pool algorithm
         required: True
         type: str
-    session_persistence_type:
-        description:
-            - Load Balancer Pool session persisence type.
-        required: False
-        type: str
-    session_persistence_app_cookie_name:
-        description:
-            - Load Balancer Pool session persisence app cookie name.
-        required: False
-        type: str
     health_retries:
         description:
             - (Required for new resource) Load Balancer health retry count
-        required: True
-        type: int
-    health_monitor_port:
-        description:
-            - Health monitor Port the LB Pool
-        required: False
-        type: int
-    proxy_protocol:
-        description:
-            - PROXY protocol setting for this pool
-        required: False
-        type: str
-    health_delay:
-        description:
-            - (Required for new resource) Load Blancer health delay time period
         required: True
         type: int
     health_timeout:
@@ -86,6 +66,26 @@ options:
         description:
             - (Required for new resource) Load Balancer health type
         required: True
+        type: str
+    session_persistence_app_cookie_name:
+        description:
+            - Load Balancer Pool session persisence app cookie name.
+        required: False
+        type: str
+    health_delay:
+        description:
+            - (Required for new resource) Load Blancer health delay time period
+        required: True
+        type: int
+    health_monitor_url:
+        description:
+            - Health monitor URL of LB Pool
+        required: False
+        type: str
+    proxy_protocol:
+        description:
+            - PROXY protocol setting for this pool
+        required: False
         type: str
     id:
         description:
@@ -138,26 +138,26 @@ TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
     ('algorithm', 'str'),
     ('health_retries', 'int'),
-    ('health_delay', 'int'),
     ('health_timeout', 'int'),
     ('health_type', 'str'),
+    ('health_delay', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
     'protocol',
-    'health_monitor_url',
+    'health_monitor_port',
+    'session_persistence_type',
     'name',
     'algorithm',
-    'session_persistence_type',
-    'session_persistence_app_cookie_name',
     'health_retries',
-    'health_monitor_port',
-    'proxy_protocol',
-    'health_delay',
     'health_timeout',
     'health_type',
+    'session_persistence_app_cookie_name',
+    'health_delay',
+    'health_monitor_url',
+    'proxy_protocol',
 ]
 
 # Params for Data source
@@ -166,9 +166,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'lb',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -184,7 +184,10 @@ module_args = dict(
     protocol=dict(
         required=False,
         type='str'),
-    health_monitor_url=dict(
+    health_monitor_port=dict(
+        required=False,
+        type='int'),
+    session_persistence_type=dict(
         required=False,
         type='str'),
     name=dict(
@@ -193,28 +196,25 @@ module_args = dict(
     algorithm=dict(
         required=False,
         type='str'),
-    session_persistence_type=dict(
-        required=False,
-        type='str'),
-    session_persistence_app_cookie_name=dict(
-        required=False,
-        type='str'),
     health_retries=dict(
-        required=False,
-        type='int'),
-    health_monitor_port=dict(
-        required=False,
-        type='int'),
-    proxy_protocol=dict(
-        required=False,
-        type='str'),
-    health_delay=dict(
         required=False,
         type='int'),
     health_timeout=dict(
         required=False,
         type='int'),
     health_type=dict(
+        required=False,
+        type='str'),
+    session_persistence_app_cookie_name=dict(
+        required=False,
+        type='str'),
+    health_delay=dict(
+        required=False,
+        type='int'),
+    health_monitor_url=dict(
+        required=False,
+        type='str'),
+    proxy_protocol=dict(
         required=False,
         type='str'),
     id=dict(
@@ -294,7 +294,7 @@ def run_module():
         resource_type='ibm_is_lb_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -303,7 +303,7 @@ def run_module():
             resource_type='ibm_is_lb_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

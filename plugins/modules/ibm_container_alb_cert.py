@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_cert' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN id
-        required: True
-        type: str
     namespace:
         description:
             - Namespace of the secret
@@ -38,6 +33,11 @@ options:
             - Persistence of secret
         required: False
         type: bool
+    cert_crn:
+        description:
+            - (Required for new resource) Certificate CRN id
+        required: True
+        type: str
     cluster_id:
         description:
             - (Required for new resource) Cluster ID
@@ -81,22 +81,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cert_crn',
     'namespace',
     'persistence',
+    'cert_crn',
     'cluster_id',
     'secret_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('cluster_id', 'str'),
     ('secret_name', 'str'),
+    ('cluster_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'cluster_id',
     'secret_name',
+    'cluster_id',
     'namespace',
 ]
 
@@ -107,15 +107,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cert_crn=dict(
-        required=False,
-        type='str'),
     namespace=dict(
         required=False,
         type='str'),
     persistence=dict(
         required=False,
         type='bool'),
+    cert_crn=dict(
+        required=False,
+        type='str'),
     cluster_id=dict(
         required=False,
         type='str'),
@@ -173,7 +173,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -182,7 +182,7 @@ def run_module():
             resource_type='ibm_container_alb_cert',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.40.1',
+            ibm_provider_version='1.41.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

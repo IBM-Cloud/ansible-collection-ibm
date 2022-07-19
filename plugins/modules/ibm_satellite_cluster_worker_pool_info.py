@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_cluster_worker_pool' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.40.1
+    - IBM-Cloud terraform-provider-ibm v1.41.1
     - Terraform v0.12.20
 
 options:
-    name:
+    cluster:
         description:
-            - worker pool name
+            - Cluster name
         required: True
         type: str
     resource_group_id:
@@ -31,9 +31,9 @@ options:
             - ID of the resource group
         required: False
         type: str
-    cluster:
+    name:
         description:
-            - Cluster name
+            - worker pool name
         required: True
         type: str
     region:
@@ -74,15 +74,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('cluster', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'resource_group_id',
     'cluster',
+    'resource_group_id',
+    'name',
     'region',
 ]
 
@@ -94,13 +94,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    cluster=dict(
         required=True,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
-    cluster=dict(
+    name=dict(
         required=True,
         type='str'),
     region=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.40.1',
+        ibm_provider_version='1.41.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
