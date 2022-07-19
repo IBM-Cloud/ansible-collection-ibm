@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - Specifies if a load balancer is public or private
-        required: False
-        type: str
-        default: PUBLIC
     use_system_public_ip_pool:
         description:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
@@ -39,12 +33,12 @@ options:
         required: False
         type: list
         elements: str
-    protocols:
+    subnets:
         description:
-            - Protocols to be assigned to this load balancer.
-        required: False
+            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
+        required: True
         type: list
-        elements: dict
+        elements: int
     name:
         description:
             - (Required for new resource) The load balancer's name.
@@ -55,18 +49,24 @@ options:
             - Description of a load balancer.
         required: False
         type: str
+    type:
+        description:
+            - Specifies if a load balancer is public or private
+        required: False
+        type: str
+        default: PUBLIC
     wait_time_minutes:
         description:
             - None
         required: False
         type: int
         default: 90
-    subnets:
+    protocols:
         description:
-            - (Required for new resource) The subnet where this Load Balancer will be provisioned.
-        required: True
+            - Protocols to be assigned to this load balancer.
+        required: False
         type: list
-        elements: int
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,20 +113,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnets', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
     'use_system_public_ip_pool',
     'ssl_ciphers',
-    'protocols',
+    'subnets',
     'name',
     'description',
+    'type',
     'wait_time_minutes',
-    'subnets',
+    'protocols',
 ]
 
 # Params for Data source
@@ -145,9 +145,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
@@ -155,7 +152,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    protocols=dict(
+    subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -165,10 +162,13 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     wait_time_minutes=dict(
         required=False,
         type='int'),
-    subnets=dict(
+    protocols=dict(
         required=False,
         elements='',
         type='list'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

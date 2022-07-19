@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    pi_network_name:
-        description:
-            - None
-        required: True
-        type: str
     pi_instance_name:
         description:
             - Server Name to be used for pvminstances
+        required: True
+        type: str
+    pi_network_name:
+        description:
+            - None
         required: True
         type: str
     pi_cloud_instance_id:
@@ -65,15 +65,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_network_name', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_network_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_network_name',
     'pi_instance_name',
+    'pi_network_name',
     'pi_cloud_instance_id',
 ]
 
@@ -85,10 +85,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_network_name=dict(
+    pi_instance_name=dict(
         required=True,
         type='str'),
-    pi_instance_name=dict(
+    pi_network_name=dict(
         required=True,
         type='str'),
     pi_cloud_instance_id=dict(
@@ -121,7 +121,7 @@ def run_module():
         resource_type='ibm_pi_instance_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

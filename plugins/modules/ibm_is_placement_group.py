@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -32,9 +32,9 @@ options:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
         required: False
         type: str
-    access_tags:
+    tags:
         description:
-            - List of access management tags
+            - List of tags
         required: False
         type: list
         elements: str
@@ -43,9 +43,9 @@ options:
             - (Required for new resource) The unique user-defined name for this placement group. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: True
         type: str
-    tags:
+    access_tags:
         description:
-            - List of tags
+            - List of access management tags
         required: False
         type: list
         elements: str
@@ -103,9 +103,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'strategy',
     'resource_group',
-    'access_tags',
-    'name',
     'tags',
+    'name',
+    'access_tags',
 ]
 
 # Params for Data source
@@ -130,14 +130,14 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    access_tags=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
     name=dict(
         required=False,
         type='str'),
-    tags=dict(
+    access_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

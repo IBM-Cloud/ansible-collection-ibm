@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) VPN Gateway instance name
-        required: True
-        type: str
     subnet:
         description:
             - (Required for new resource) VPNGateway subnet info
@@ -38,17 +33,22 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) VPN Gateway instance name
+        required: True
+        type: str
+    resource_group:
+        description:
+            - The resource group for this VPN gateway
+        required: False
+        type: str
     mode:
         description:
             - mode in VPN gateway(route/policy)
         required: False
         type: str
         default: route
-    resource_group:
-        description:
-            - The resource group for this VPN gateway
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,17 +95,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('subnet', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'subnet',
     'tags',
-    'mode',
+    'name',
     'resource_group',
+    'mode',
 ]
 
 # Params for Data source
@@ -113,8 +113,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'vpn_gateway',
     'vpn_gateway_name',
+    'vpn_gateway',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -124,9 +124,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     subnet=dict(
         required=False,
         type='str'),
@@ -134,10 +131,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    mode=dict(
+    name=dict(
         required=False,
         type='str'),
     resource_group=dict(
+        required=False,
+        type='str'),
+    mode=dict(
         required=False,
         type='str'),
     id=dict(
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_is_vpn_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

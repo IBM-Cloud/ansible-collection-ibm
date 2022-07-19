@@ -17,21 +17,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_catalog_images' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    vtl:
-        description:
-            - None
-        required: False
-        type: bool
     pi_cloud_instance_id:
         description:
             - None
         required: True
         type: str
     sap:
+        description:
+            - None
+        required: False
+        type: bool
+    vtl:
         description:
             - None
         required: False
@@ -70,9 +70,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vtl',
     'pi_cloud_instance_id',
     'sap',
+    'vtl',
 ]
 
 
@@ -83,13 +83,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vtl=dict(
-        required=False,
-        type='bool'),
     pi_cloud_instance_id=dict(
         required=True,
         type='str'),
     sap=dict(
+        required=False,
+        type='bool'),
+    vtl=dict(
         required=False,
         type='bool'),
     zone=dict(
@@ -119,7 +119,7 @@ def run_module():
         resource_type='ibm_pi_catalog_images',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

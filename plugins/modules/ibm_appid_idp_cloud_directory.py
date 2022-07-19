@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_idp_cloud_directory' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    welcome_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
-    tenant_id:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
     self_service_enabled:
         description:
             - None
@@ -45,6 +34,22 @@ options:
         required: False
         type: bool
         default: True
+    welcome_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    tenant_id:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    is_active:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: bool
     identity_confirm_access_mode:
         description:
             - None
@@ -62,11 +67,6 @@ options:
             - None
         required: False
         type: str
-    is_active:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: bool
     reset_password_enabled:
         description:
             - None
@@ -131,14 +131,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'welcome_enabled',
-    'tenant_id',
     'self_service_enabled',
     'signup_enabled',
+    'welcome_enabled',
+    'tenant_id',
+    'is_active',
     'identity_confirm_access_mode',
     'identity_confirm_methods',
     'identity_field',
-    'is_active',
     'reset_password_enabled',
     'reset_password_notification_enabled',
 ]
@@ -159,16 +159,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    self_service_enabled=dict(
+        required=False,
+        type='bool'),
+    signup_enabled=dict(
+        required=False,
+        type='bool'),
     welcome_enabled=dict(
         required=False,
         type='bool'),
     tenant_id=dict(
         required=False,
         type='str'),
-    self_service_enabled=dict(
-        required=False,
-        type='bool'),
-    signup_enabled=dict(
+    is_active=dict(
         required=False,
         type='bool'),
     identity_confirm_access_mode=dict(
@@ -181,9 +184,6 @@ module_args = dict(
     identity_field=dict(
         required=False,
         type='str'),
-    is_active=dict(
-        required=False,
-        type='bool'),
     reset_password_enabled=dict(
         required=False,
         type='bool'),
@@ -255,7 +255,7 @@ def run_module():
         resource_type='ibm_appid_idp_cloud_directory',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +264,7 @@ def run_module():
             resource_type='ibm_appid_idp_cloud_directory',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

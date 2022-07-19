@@ -18,21 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    type:
-        description:
-            - (Required for new resource) The type of Destination Webhook.
-        required: True
-        type: str
     config:
         description:
             - Payload describing a destination configuration.
         required: False
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) The Destintion name.
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) The type of Destination Webhook.
+        required: True
+        type: str
     description:
         description:
             - The Destination description.
@@ -41,11 +46,6 @@ options:
     instance_guid:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The Destintion name.
         required: True
         type: str
     id:
@@ -94,18 +94,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('type', 'str'),
     ('instance_guid', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'type',
     'config',
+    'name',
+    'type',
     'description',
     'instance_guid',
-    'name',
 ]
 
 # Params for Data source
@@ -126,20 +126,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    type=dict(
-        required=False,
-        type='str'),
     config=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
     instance_guid=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_en_destination',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +216,7 @@ def run_module():
             resource_type='ibm_en_destination',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

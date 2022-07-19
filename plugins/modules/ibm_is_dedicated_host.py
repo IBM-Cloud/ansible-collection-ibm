@@ -18,14 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    profile:
+    resource_group:
         description:
-            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
-        required: True
+            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+        required: False
         type: str
     instance_placement_enabled:
         description:
@@ -33,10 +33,10 @@ options:
         required: False
         type: bool
         default: True
-    resource_group:
+    profile:
         description:
-            - The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
+            - (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
+        required: True
         type: str
     host_group:
         description:
@@ -100,9 +100,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile',
-    'instance_placement_enabled',
     'resource_group',
+    'instance_placement_enabled',
+    'profile',
     'host_group',
     'name',
 ]
@@ -115,8 +115,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'host_group',
     'resource_group',
+    'host_group',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -126,13 +126,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     instance_placement_enabled=dict(
         required=False,
         type='bool'),
-    resource_group=dict(
+    profile=dict(
         required=False,
         type='str'),
     host_group=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_is_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_is_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

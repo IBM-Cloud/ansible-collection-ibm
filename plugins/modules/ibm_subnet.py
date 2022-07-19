@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,21 @@ options:
             - VLAN ID for the subnet
         required: False
         type: int
-    notes:
+    endpoint_ip:
         description:
-            - Notes
+            - endpoint IP
         required: False
+        type: str
+    private:
+        description:
+            - private subnet
+        required: False
+        type: bool
+        default: False
+    type:
+        description:
+            - (Required for new resource) subnet type
+        required: True
         type: str
     ip_version:
         description:
@@ -43,9 +54,9 @@ options:
             - (Required for new resource) number of ip addresses in the subnet
         required: True
         type: int
-    endpoint_ip:
+    notes:
         description:
-            - endpoint IP
+            - Notes
         required: False
         type: str
     tags:
@@ -54,17 +65,6 @@ options:
         required: False
         type: list
         elements: str
-    private:
-        description:
-            - private subnet
-        required: False
-        type: bool
-        default: False
-    type:
-        description:
-            - (Required for new resource) subnet type
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +111,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('capacity', 'int'),
     ('type', 'str'),
+    ('capacity', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vlan_id',
-    'notes',
-    'ip_version',
-    'capacity',
     'endpoint_ip',
-    'tags',
     'private',
     'type',
+    'ip_version',
+    'capacity',
+    'notes',
+    'tags',
 ]
 
 # Params for Data source
@@ -146,7 +146,13 @@ module_args = dict(
     vlan_id=dict(
         required=False,
         type='int'),
-    notes=dict(
+    endpoint_ip=dict(
+        required=False,
+        type='str'),
+    private=dict(
+        required=False,
+        type='bool'),
+    type=dict(
         required=False,
         type='str'),
     ip_version=dict(
@@ -155,19 +161,13 @@ module_args = dict(
     capacity=dict(
         required=False,
         type='int'),
-    endpoint_ip=dict(
+    notes=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    private=dict(
-        required=False,
-        type='bool'),
-    type=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

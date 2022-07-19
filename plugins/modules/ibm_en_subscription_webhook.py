@@ -18,26 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_webhook' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    instance_guid:
-        description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
     destination_id:
         description:
             - (Required for new resource) Destination ID.
         required: True
         type: str
-    attributes:
+    topic_id:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
+            - (Required for new resource) Topic ID.
+        required: True
+        type: str
+    instance_guid:
+        description:
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Subscription name.
@@ -48,11 +47,12 @@ options:
             - Subscription description.
         required: False
         type: str
-    topic_id:
+    attributes:
         description:
-            - (Required for new resource) Topic ID.
-        required: True
-        type: str
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_guid', 'str'),
     ('destination_id', 'str'),
-    ('name', 'str'),
     ('topic_id', 'str'),
+    ('instance_guid', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_guid',
     'destination_id',
-    'attributes',
+    'topic_id',
+    'instance_guid',
     'name',
     'description',
-    'topic_id',
+    'attributes',
 ]
 
 # Params for Data source
@@ -133,25 +133,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_guid=dict(
-        required=False,
-        type='str'),
     destination_id=dict(
         required=False,
         type='str'),
-    attributes=dict(
+    topic_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    instance_guid=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    topic_id=dict(
+    attributes=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_en_subscription_webhook',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_en_subscription_webhook',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

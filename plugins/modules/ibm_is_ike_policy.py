@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.41.1
+    - IBM-Cloud terraform-provider-ibm v1.42.0
     - Terraform v0.12.20
 
 options:
-    ike_version:
-        description:
-            - IKE version
-        required: False
-        type: int
     name:
         description:
             - (Required for new resource) IKE name
@@ -37,6 +32,11 @@ options:
             - (Required for new resource) Authentication algorithm type
         required: True
         type: str
+    ike_version:
+        description:
+            - IKE version
+        required: False
+        type: int
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption alogorithm type
@@ -112,9 +112,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ike_version',
     'name',
     'authentication_algorithm',
+    'ike_version',
     'encryption_algorithm',
     'dh_group',
     'resource_group',
@@ -137,15 +137,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ike_version=dict(
-        required=False,
-        type='int'),
     name=dict(
         required=False,
         type='str'),
     authentication_algorithm=dict(
         required=False,
         type='str'),
+    ike_version=dict(
+        required=False,
+        type='int'),
     encryption_algorithm=dict(
         required=False,
         type='str'),
@@ -235,7 +235,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.41.1',
+        ibm_provider_version='1.42.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -244,7 +244,7 @@ def run_module():
             resource_type='ibm_is_ike_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.41.1',
+            ibm_provider_version='1.42.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
