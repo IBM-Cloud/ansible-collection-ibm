@@ -62,7 +62,6 @@ TL_ALL_PARAMETERS = [
     'visibility',
 ]
 
-
 TL_CONFLICTS_MAP = {
 }
 
