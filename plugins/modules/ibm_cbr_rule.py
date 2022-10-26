@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cbr_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    description:
+    x_correlation_id:
         description:
-            - The description of the rule.
+            - The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
         required: False
         type: str
     transaction_id:
@@ -32,15 +32,15 @@ options:
             - The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
         required: False
         type: str
-    contexts:
-        description:
-            - (Required for new resource) The contexts this rule applies to.
-        required: True
-        type: list
-        elements: dict
     resources:
         description:
             - (Required for new resource) The resources this rule apply to.
+        required: True
+        type: list
+        elements: dict
+    contexts:
+        description:
+            - (Required for new resource) The contexts this rule applies to.
         required: True
         type: list
         elements: dict
@@ -50,9 +50,15 @@ options:
         required: False
         type: str
         default: enabled
-    x_correlation_id:
+    operations:
         description:
-            - The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
+            - The operations this rule applies to.
+        required: False
+        type: list
+        elements: dict
+    description:
+        description:
+            - The description of the rule.
         required: False
         type: str
     id:
@@ -101,18 +107,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('contexts', 'list'),
     ('resources', 'list'),
+    ('contexts', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'transaction_id',
-    'contexts',
-    'resources',
-    'enforcement_mode',
     'x_correlation_id',
+    'transaction_id',
+    'resources',
+    'contexts',
+    'enforcement_mode',
+    'operations',
+    'description',
 ]
 
 # Params for Data source
@@ -131,24 +138,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
+    x_correlation_id=dict(
         required=False,
         type='str'),
     transaction_id=dict(
         required=False,
         type='str'),
-    contexts=dict(
+    resources=dict(
         required=False,
         elements='',
         type='list'),
-    resources=dict(
+    contexts=dict(
         required=False,
         elements='',
         type='list'),
     enforcement_mode=dict(
         required=False,
         type='str'),
-    x_correlation_id=dict(
+    operations=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -216,7 +227,7 @@ def run_module():
         resource_type='ibm_cbr_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +236,7 @@ def run_module():
             resource_type='ibm_cbr_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

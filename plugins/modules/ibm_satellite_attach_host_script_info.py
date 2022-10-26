@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_attach_host_script' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -32,11 +32,6 @@ options:
             - None
         required: False
         type: str
-    script_dir:
-        description:
-            - The directory where the satellite attach host script to be downloaded. Default is home directory
-        required: False
-        type: str
     custom_script:
         description:
             - The custom script that has to be appended to generated host script file
@@ -46,6 +41,16 @@ options:
         description:
             - A unique name for the new Satellite location
         required: True
+        type: str
+    coreos_host:
+        description:
+            - If true, returns a CoreOS ignition file for the host. Otherwise, returns a RHEL attach script
+        required: False
+        type: bool
+    script_dir:
+        description:
+            - The directory where the satellite attach host script to be downloaded. Default is home directory
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -87,9 +92,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'labels',
     'host_provider',
-    'script_dir',
     'custom_script',
     'location',
+    'coreos_host',
+    'script_dir',
 ]
 
 
@@ -107,14 +113,17 @@ module_args = dict(
     host_provider=dict(
         required=False,
         type='str'),
-    script_dir=dict(
-        required=False,
-        type='str'),
     custom_script=dict(
         required=False,
         type='str'),
     location=dict(
         required=True,
+        type='str'),
+    coreos_host=dict(
+        required=False,
+        type='bool'),
+    script_dir=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -150,7 +159,7 @@ def run_module():
         resource_type='ibm_satellite_attach_host_script',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

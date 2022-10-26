@@ -7,40 +7,36 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_scc_si_notes_info
-for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/scc_si_notes
+module: ibm_app_config_segment_info
+for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/app_config_segment
 
-short_description: Retrieve IBM Cloud 'ibm_scc_si_notes' resource
+short_description: Retrieve IBM Cloud 'ibm_app_config_segment' resource
 
 version_added: "2.8"
 
 description:
-    - Retrieve an IBM Cloud 'ibm_scc_si_notes' resource
+    - Retrieve an IBM Cloud 'ibm_app_config_segment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    page_token:
+    guid:
         description:
-            - Token to provide to skip to a particular spot in the list.
-        required: False
-        type: str
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
-    provider_id:
-        description:
-            - Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    page_size:
+    segment_id:
         description:
-            - Number of notes to return in the list.
+            - Segment id.
+        required: True
+        type: str
+    includes:
+        description:
+            - Include feature and property details in the response.
         required: False
-        type: int
+        type: list
+        elements: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -74,15 +70,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('provider_id', 'str'),
+    ('guid', 'str'),
+    ('segment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'page_token',
-    'account_id',
-    'provider_id',
-    'page_size',
+    'guid',
+    'segment_id',
+    'includes',
 ]
 
 
@@ -93,18 +89,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    page_token=dict(
-        required=False,
-        type='str'),
-    account_id=dict(
-        required=False,
-        type='str'),
-    provider_id=dict(
+    guid=dict(
         required=True,
         type='str'),
-    page_size=dict(
+    segment_id=dict(
+        required=True,
+        type='str'),
+    includes=dict(
         required=False,
-        type='int'),
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -136,10 +130,10 @@ def run_module():
     )
 
     result = ibmcloud_terraform(
-        resource_type='ibm_scc_si_notes',
+        resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_address_prefix' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    address_prefix_name:
-        description:
-            - The address prefix name.
-        required: False
-        type: str
     vpc:
         description:
             - The VPC identifier.
+        required: False
+        type: str
+    address_prefix_name:
+        description:
+            - The address prefix name.
         required: False
         type: str
     vpc_name:
@@ -78,8 +78,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'address_prefix_name',
     'vpc',
+    'address_prefix_name',
     'vpc_name',
     'address_prefix',
 ]
@@ -92,10 +92,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    address_prefix_name=dict(
+    vpc=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    address_prefix_name=dict(
         required=False,
         type='str'),
     vpc_name=dict(
@@ -150,7 +150,7 @@ def run_module():
         resource_type='ibm_is_vpc_address_prefix',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

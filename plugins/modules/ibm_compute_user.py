@@ -18,54 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_user' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    first_name:
-        description:
-            - (Required for new resource) First name of the user
-        required: True
-        type: str
-    company_name:
-        description:
-            - (Required for new resource) comapany name
-        required: True
-        type: str
-    address1:
-        description:
-            - (Required for new resource) Address info of the user
-        required: True
-        type: str
-    address2:
-        description:
-            - Address info of the user
-        required: False
-        type: str
-    country:
-        description:
-            - (Required for new resource) Country name
-        required: True
-        type: str
-    tags:
-        description:
-            - Tags set for the resources
-        required: False
-        type: list
-        elements: str
-    username:
-        description:
-            - user name
-        required: False
-        type: str
     city:
         description:
             - (Required for new resource) City name
-        required: True
-        type: str
-    state_:
-        description:
-            - (Required for new resource) Satate name
         required: True
         type: str
     password:
@@ -73,35 +32,9 @@ options:
             - password for the user
         required: False
         type: str
-    email:
+    tags:
         description:
-            - (Required for new resource) email address of the user
-        required: True
-        type: str
-    timezone:
-        description:
-            - (Required for new resource) time zone info
-        required: True
-        type: str
-    has_api_key:
-        description:
-            - API Key info of the user
-        required: False
-        type: bool
-        default: False
-    api_key:
-        description:
-            - API key for the user
-        required: False
-        type: str
-    last_name:
-        description:
-            - (Required for new resource) Last name of the user
-        required: True
-        type: str
-    permissions:
-        description:
-            - set of persmissions assigned for the user
+            - Tags set for the resources
         required: False
         type: list
         elements: str
@@ -111,6 +44,73 @@ options:
         required: False
         type: str
         default: ACTIVE
+    has_api_key:
+        description:
+            - API Key info of the user
+        required: False
+        type: bool
+        default: False
+    first_name:
+        description:
+            - (Required for new resource) First name of the user
+        required: True
+        type: str
+    last_name:
+        description:
+            - (Required for new resource) Last name of the user
+        required: True
+        type: str
+    address1:
+        description:
+            - (Required for new resource) Address info of the user
+        required: True
+        type: str
+    state_:
+        description:
+            - (Required for new resource) Satate name
+        required: True
+        type: str
+    timezone:
+        description:
+            - (Required for new resource) time zone info
+        required: True
+        type: str
+    username:
+        description:
+            - user name
+        required: False
+        type: str
+    email:
+        description:
+            - (Required for new resource) email address of the user
+        required: True
+        type: str
+    address2:
+        description:
+            - Address info of the user
+        required: False
+        type: str
+    permissions:
+        description:
+            - set of persmissions assigned for the user
+        required: False
+        type: list
+        elements: str
+    company_name:
+        description:
+            - (Required for new resource) comapany name
+        required: True
+        type: str
+    country:
+        description:
+            - (Required for new resource) Country name
+        required: True
+        type: str
+    api_key:
+        description:
+            - API key for the user
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -157,36 +157,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('first_name', 'str'),
-    ('company_name', 'str'),
-    ('address1', 'str'),
-    ('country', 'str'),
     ('city', 'str'),
-    ('state_', 'str'),
-    ('email', 'str'),
-    ('timezone', 'str'),
+    ('first_name', 'str'),
     ('last_name', 'str'),
+    ('address1', 'str'),
+    ('state_', 'str'),
+    ('timezone', 'str'),
+    ('email', 'str'),
+    ('company_name', 'str'),
+    ('country', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'first_name',
-    'company_name',
-    'address1',
-    'address2',
-    'country',
-    'tags',
-    'username',
     'city',
-    'state_',
     'password',
-    'email',
-    'timezone',
-    'has_api_key',
-    'api_key',
-    'last_name',
-    'permissions',
+    'tags',
     'user_status',
+    'has_api_key',
+    'first_name',
+    'last_name',
+    'address1',
+    'state_',
+    'timezone',
+    'username',
+    'email',
+    'address2',
+    'permissions',
+    'company_name',
+    'country',
+    'api_key',
 ]
 
 # Params for Data source
@@ -203,57 +203,57 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    first_name=dict(
+    city=dict(
         required=False,
         type='str'),
-    company_name=dict(
-        required=False,
-        type='str'),
-    address1=dict(
-        required=False,
-        type='str'),
-    address2=dict(
-        required=False,
-        type='str'),
-    country=dict(
+    password=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    username=dict(
-        required=False,
-        type='str'),
-    city=dict(
-        required=False,
-        type='str'),
-    state_=dict(
-        required=False,
-        type='str'),
-    password=dict(
-        required=False,
-        type='str'),
-    email=dict(
-        required=False,
-        type='str'),
-    timezone=dict(
+    user_status=dict(
         required=False,
         type='str'),
     has_api_key=dict(
         required=False,
         type='bool'),
-    api_key=dict(
+    first_name=dict(
         required=False,
         type='str'),
     last_name=dict(
+        required=False,
+        type='str'),
+    address1=dict(
+        required=False,
+        type='str'),
+    state_=dict(
+        required=False,
+        type='str'),
+    timezone=dict(
+        required=False,
+        type='str'),
+    username=dict(
+        required=False,
+        type='str'),
+    email=dict(
+        required=False,
+        type='str'),
+    address2=dict(
         required=False,
         type='str'),
     permissions=dict(
         required=False,
         elements='',
         type='list'),
-    user_status=dict(
+    company_name=dict(
+        required=False,
+        type='str'),
+    country=dict(
+        required=False,
+        type='str'),
+    api_key=dict(
         required=False,
         type='str'),
     id=dict(
@@ -321,7 +321,7 @@ def run_module():
         resource_type='ibm_compute_user',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

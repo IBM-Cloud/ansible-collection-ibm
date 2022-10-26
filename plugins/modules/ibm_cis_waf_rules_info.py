@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cis_waf_rules' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -28,7 +28,7 @@ options:
         type: str
     cis_id:
         description:
-            - CIS object id
+            - CIS instance crn
         required: True
         type: str
     domain_id:
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_cis_waf_rules',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

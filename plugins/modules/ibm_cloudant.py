@@ -18,46 +18,41 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cloudant' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    parameters:
-        description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
+    service_endpoints:
+        description:
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+        required: False
+        type: str
     capacity:
         description:
             - A number of blocks of throughput units. A block consists of 100 reads/sec, 50 writes/sec, and 5 global queries/sec of provisioned throughput capacity.
         required: False
         type: int
         default: 1
-    name:
-        description:
-            - (Required for new resource) A name for the resource instance
-        required: True
-        type: str
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-        required: False
-        type: str
     cors_config:
         description:
             - Configuration for CORS.
         required: False
         type: list
         elements: dict
-    parameters_json:
+    name:
         description:
-            - Arbitrary parameters to pass in Json string format
+            - (Required for new resource) A name for the resource instance
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The resource group id
         required: False
         type: str
     include_data_events:
@@ -66,11 +61,17 @@ options:
         required: False
         type: bool
         default: False
-    resource_group_id:
+    enable_cors:
         description:
-            - The resource group id
+            - Boolean value to turn CORS on and off.
         required: False
-        type: str
+        type: bool
+        default: True
+    parameters:
+        description:
+            - Arbitrary parameters to pass. Must be a JSON object
+        required: False
+        type: dict
     legacy_credentials:
         description:
             - Use both legacy credentials and IAM for authentication
@@ -82,21 +83,20 @@ options:
             - (Required for new resource) The plan type of the service
         required: True
         type: str
-    environment_crn:
-        description:
-            - CRN of the IBM Cloudant Dedicated Hardware plan instance
-        required: False
-        type: str
-    enable_cors:
-        description:
-            - Boolean value to turn CORS on and off.
-        required: False
-        type: bool
-        default: True
     location:
         description:
             - (Required for new resource) The location where the instance available
         required: True
+        type: str
+    parameters_json:
+        description:
+            - Arbitrary parameters to pass in Json string format
+        required: False
+        type: str
+    environment_crn:
+        description:
+            - CRN of the IBM Cloudant Dedicated Hardware plan instance
+        required: False
         type: str
     id:
         description:
@@ -151,20 +151,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameters',
     'tags',
-    'capacity',
-    'name',
     'service_endpoints',
+    'capacity',
     'cors_config',
-    'parameters_json',
-    'include_data_events',
+    'name',
     'resource_group_id',
+    'include_data_events',
+    'enable_cors',
+    'parameters',
     'legacy_credentials',
     'plan',
-    'environment_crn',
-    'enable_cors',
     'location',
+    'parameters_json',
+    'environment_crn',
 ]
 
 # Params for Data source
@@ -174,8 +174,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'resource_group_id',
     'location',
+    'resource_group_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -187,48 +187,48 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameters=dict(
-        required=False,
-        type='dict'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
     service_endpoints=dict(
         required=False,
         type='str'),
+    capacity=dict(
+        required=False,
+        type='int'),
     cors_config=dict(
         required=False,
         elements='',
         type='list'),
-    parameters_json=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     include_data_events=dict(
         required=False,
         type='bool'),
-    resource_group_id=dict(
+    enable_cors=dict(
         required=False,
-        type='str'),
+        type='bool'),
+    parameters=dict(
+        required=False,
+        type='dict'),
     legacy_credentials=dict(
         required=False,
         type='bool'),
     plan=dict(
         required=False,
         type='str'),
-    environment_crn=dict(
+    location=dict(
         required=False,
         type='str'),
-    enable_cors=dict(
+    parameters_json=dict(
         required=False,
-        type='bool'),
-    location=dict(
+        type='str'),
+    environment_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -296,7 +296,7 @@ def run_module():
         resource_type='ibm_cloudant',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -305,7 +305,7 @@ def run_module():
             resource_type='ibm_cloudant',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_backup_policy_plan' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - The backup policy identifier.
         required: True
         type: str
-    name:
-        description:
-            - The unique user-defined name for this backup policy plan.
-        required: False
-        type: str
     identifier:
         description:
             - The backup policy plan identifier.
+        required: False
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this backup policy plan.
         required: False
         type: str
     generation:
@@ -75,8 +75,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'backup_policy_id',
-    'name',
     'identifier',
+    'name',
 ]
 
 
@@ -90,10 +90,10 @@ module_args = dict(
     backup_policy_id=dict(
         required=True,
         type='str'),
-    name=dict(
+    identifier=dict(
         required=False,
         type='str'),
-    identifier=dict(
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

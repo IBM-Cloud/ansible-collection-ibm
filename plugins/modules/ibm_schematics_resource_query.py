@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_resource_query' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -30,6 +30,11 @@ options:
     name:
         description:
             - Resource query name.
+        required: False
+        type: str
+    location:
+        description:
+            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
         required: False
         type: str
     queries:
@@ -90,6 +95,7 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'type',
     'name',
+    'location',
     'queries',
 ]
 
@@ -100,6 +106,7 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'query_id',
+    'location',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -113,6 +120,9 @@ module_args = dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    location=dict(
         required=False,
         type='str'),
     queries=dict(
@@ -184,7 +194,7 @@ def run_module():
         resource_type='ibm_schematics_resource_query',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +203,7 @@ def run_module():
             resource_type='ibm_schematics_resource_query',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

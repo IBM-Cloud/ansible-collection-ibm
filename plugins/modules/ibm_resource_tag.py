@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_tag' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
+    tag_type:
+        description:
+            - Type of the tag. Only allowed values are: user, or service or access (default value : user)
+        required: False
+        type: str
     resource_id:
         description:
             - (Required for new resource) CRN of the resource on which the tags should be attached
@@ -36,11 +41,6 @@ options:
     resource_type:
         description:
             - Resource type on which the tags should be attached
-        required: False
-        type: str
-    tag_type:
-        description:
-            - Type of the tag. Only allowed values are: user, or service or access (default value : user)
         required: False
         type: str
     id:
@@ -94,10 +94,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tag_type',
     'resource_id',
     'tags',
     'resource_type',
-    'tag_type',
 ]
 
 # Params for Data source
@@ -117,6 +117,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tag_type=dict(
+        required=False,
+        type='str'),
     resource_id=dict(
         required=False,
         type='str'),
@@ -125,9 +128,6 @@ module_args = dict(
         elements='',
         type='list'),
     resource_type=dict(
-        required=False,
-        type='str'),
-    tag_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_resource_tag',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -204,7 +204,7 @@ def run_module():
             resource_type='ibm_resource_tag',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

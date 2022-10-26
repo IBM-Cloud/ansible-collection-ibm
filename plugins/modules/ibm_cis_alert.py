@@ -18,29 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_alert' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Policy name
         required: True
-        type: str
-    description:
-        description:
-            - Policy Description
-        required: False
         type: str
     enabled:
         description:
             - (Required for new resource) Is the alert policy active
         required: True
         type: bool
-    cis_id:
+    description:
         description:
-            - (Required for new resource) CIS instance crn
-        required: True
+            - Policy Description
+        required: False
         type: str
     alert_type:
         description:
@@ -109,19 +109,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cis_id', 'str'),
     ('name', 'str'),
     ('enabled', 'bool'),
-    ('cis_id', 'str'),
     ('alert_type', 'str'),
     ('mechanisms', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'description',
-    'enabled',
     'cis_id',
+    'name',
+    'enabled',
+    'description',
     'alert_type',
     'mechanisms',
     'filters',
@@ -142,16 +142,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    cis_id=dict(
         required=False,
         type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    cis_id=dict(
+    description=dict(
         required=False,
         type='str'),
     alert_type=dict(
@@ -232,7 +232,7 @@ def run_module():
         resource_type='ibm_cis_alert',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

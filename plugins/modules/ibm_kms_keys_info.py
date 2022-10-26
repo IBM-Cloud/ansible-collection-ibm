@@ -17,10 +17,16 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_kms_keys' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
     instance_id:
         description:
             - Key protect or hpcs instance GUID
@@ -46,12 +52,6 @@ options:
             - None
         required: False
         type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -90,12 +90,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'endpoint_type',
     'instance_id',
     'key_name',
     'limit',
     'alias',
     'key_id',
-    'endpoint_type',
 ]
 
 
@@ -109,6 +109,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=True,
         type='str'),
@@ -122,9 +125,6 @@ module_args = dict(
         required=False,
         type='str'),
     key_id=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -161,7 +161,7 @@ def run_module():
         resource_type='ibm_kms_keys',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

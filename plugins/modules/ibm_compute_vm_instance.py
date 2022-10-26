@@ -18,80 +18,77 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_vm_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    hostname:
-        description:
-            - None
-        required: False
-        type: str
     flavor_key_name:
         description:
             - Flavor key name used to provision vm.
         required: False
         type: str
-    cores:
+    public_bandwidth_limited:
         description:
             - None
         required: False
         type: int
-    datacenter:
+    transient:
         description:
             - None
         required: False
-        type: str
-    datacenter_choice:
-        description:
-            - The user provided datacenter options
-        required: False
-        type: list
-        elements: dict
-    notes:
+        type: bool
+    private_vlan_id:
         description:
             - None
         required: False
-        type: str
+        type: int
+    network_speed:
+        description:
+            - None
+        required: False
+        type: int
+        default: 100
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    public_bandwidth_limited:
+    file_storage_ids:
         description:
             - None
         required: False
-        type: int
-    reserved_capacity_id:
-        description:
-            - The reserved group id
-        required: False
-        type: int
-    reserved_capacity_name:
-        description:
-            - The reserved group id
-        required: False
-        type: str
-    post_install_script_uri:
-        description:
-            - None
-        required: False
-        type: str
+        type: list
+        elements: int
     image_id:
         description:
             - None
         required: False
         type: int
-    os_reference_code:
+    hostname:
         description:
             - None
         required: False
         type: str
-    placement_group_name:
+    memory:
         description:
-            - The placement group name
+            - None
+        required: False
+        type: int
+    dedicated_host_name:
+        description:
+            - None
+        required: False
+        type: str
+    block_storage_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    user_metadata:
+        description:
+            - None
         required: False
         type: str
     private_network_only:
@@ -100,9 +97,84 @@ options:
         required: False
         type: bool
         default: False
-    reserved_instance_primary_disk:
+    datacenter_choice:
         description:
-            - The primary disk of reserved instance
+            - The user provided datacenter options
+        required: False
+        type: list
+        elements: dict
+    datacenter:
+        description:
+            - None
+        required: False
+        type: str
+    ssh_key_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    secondary_ip_count:
+        description:
+            - None
+        required: False
+        type: int
+    local_disk:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    post_install_script_uri:
+        description:
+            - None
+        required: False
+        type: str
+    public_vlan_id:
+        description:
+            - None
+        required: False
+        type: int
+    private_security_group_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
+    public_bandwidth_unlimited:
+        description:
+            - None
+        required: False
+        type: bool
+        default: False
+    evault:
+        description:
+            - None
+        required: False
+        type: int
+    domain:
+        description:
+            - None
+        required: False
+        type: str
+    dedicated_acct_host_only:
+        description:
+            - None
+        required: False
+        type: bool
+    quote_id:
+        description:
+            - Quote ID for Quote based provisioning
+        required: False
+        type: int
+    placement_group_name:
+        description:
+            - The placement group name
+        required: False
+        type: str
+    reserved_capacity_id:
+        description:
+            - The reserved group id
         required: False
         type: int
     private_subnet:
@@ -110,50 +182,18 @@ options:
             - None
         required: False
         type: str
-    ipv6_static_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    local_disk:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
-    domain:
-        description:
-            - None
-        required: False
-        type: str
-    public_security_group_ids:
+    disks:
         description:
             - None
         required: False
         type: list
         elements: int
-    private_vlan_id:
+    cores:
         description:
             - None
         required: False
         type: int
-    dedicated_acct_host_only:
-        description:
-            - None
-        required: False
-        type: bool
-    public_vlan_id:
-        description:
-            - None
-        required: False
-        type: int
-    public_subnet:
-        description:
-            - None
-        required: False
-        type: str
-    file_storage_ids:
+    public_security_group_ids:
         description:
             - None
         required: False
@@ -165,99 +205,59 @@ options:
         required: False
         type: list
         elements: dict
+    reserved_instance_primary_disk:
+        description:
+            - The primary disk of reserved instance
+        required: False
+        type: int
     dedicated_host_id:
         description:
             - None
         required: False
         type: int
-    public_bandwidth_unlimited:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    ipv6_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: False
-    secondary_ip_count:
-        description:
-            - None
-        required: False
-        type: int
-    memory:
-        description:
-            - None
-        required: False
-        type: int
-    disks:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
     placement_group_id:
         description:
             - The placement group id
         required: False
         type: int
-    network_speed:
+    public_subnet:
         description:
             - None
         required: False
-        type: int
-        default: 100
-    block_storage_ids:
+        type: str
+    os_reference_code:
         description:
             - None
         required: False
-        type: list
-        elements: int
-    evault:
-        description:
-            - None
-        required: False
-        type: int
-    quote_id:
-        description:
-            - Quote ID for Quote based provisioning
-        required: False
-        type: int
+        type: str
     hourly_billing:
         description:
             - None
         required: False
         type: bool
         default: True
-    dedicated_host_name:
+    reserved_capacity_name:
+        description:
+            - The reserved group id
+        required: False
+        type: str
+    notes:
         description:
             - None
         required: False
         type: str
-    transient:
+    ipv6_enabled:
         description:
             - None
         required: False
         type: bool
-    private_security_group_ids:
+        default: False
+    ipv6_static_enabled:
         description:
             - None
         required: False
-        type: list
-        elements: int
-    ssh_key_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
-    user_metadata:
-        description:
-            - None
-        required: False
-        type: str
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -308,172 +308,197 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'hostname',
     'flavor_key_name',
-    'cores',
-    'datacenter',
-    'datacenter_choice',
-    'notes',
-    'tags',
     'public_bandwidth_limited',
-    'reserved_capacity_id',
-    'reserved_capacity_name',
-    'post_install_script_uri',
-    'image_id',
-    'os_reference_code',
-    'placement_group_name',
-    'private_network_only',
-    'reserved_instance_primary_disk',
-    'private_subnet',
-    'ipv6_static_enabled',
-    'local_disk',
-    'domain',
-    'public_security_group_ids',
-    'private_vlan_id',
-    'dedicated_acct_host_only',
-    'public_vlan_id',
-    'public_subnet',
-    'file_storage_ids',
-    'bulk_vms',
-    'dedicated_host_id',
-    'public_bandwidth_unlimited',
-    'ipv6_enabled',
-    'secondary_ip_count',
-    'memory',
-    'disks',
-    'placement_group_id',
-    'network_speed',
-    'block_storage_ids',
-    'evault',
-    'quote_id',
-    'hourly_billing',
-    'dedicated_host_name',
     'transient',
-    'private_security_group_ids',
-    'ssh_key_ids',
+    'private_vlan_id',
+    'network_speed',
+    'tags',
+    'file_storage_ids',
+    'image_id',
+    'hostname',
+    'memory',
+    'dedicated_host_name',
+    'block_storage_ids',
     'user_metadata',
+    'private_network_only',
+    'datacenter_choice',
+    'datacenter',
+    'ssh_key_ids',
+    'secondary_ip_count',
+    'local_disk',
+    'post_install_script_uri',
+    'public_vlan_id',
+    'private_security_group_ids',
+    'public_bandwidth_unlimited',
+    'evault',
+    'domain',
+    'dedicated_acct_host_only',
+    'quote_id',
+    'placement_group_name',
+    'reserved_capacity_id',
+    'private_subnet',
+    'disks',
+    'cores',
+    'public_security_group_ids',
+    'bulk_vms',
+    'reserved_instance_primary_disk',
+    'dedicated_host_id',
+    'placement_group_id',
+    'public_subnet',
+    'os_reference_code',
+    'hourly_billing',
+    'reserved_capacity_name',
+    'notes',
+    'ipv6_enabled',
+    'ipv6_static_enabled',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('hostname', 'str'),
     ('domain', 'str'),
+    ('hostname', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'hostname',
     'most_recent',
     'domain',
+    'hostname',
 ]
 
 TL_CONFLICTS_MAP = {
-    'hostname': ['bulk_vms'],
     'flavor_key_name': ['cores', 'memory'],
-    'cores': ['flavor_key_name'],
-    'datacenter': ['datacenter_choice'],
-    'datacenter_choice': ['datacenter', 'public_vlan_id', 'private_vlan_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_id', 'reserved_capacity_name'],
     'public_bandwidth_limited': ['private_network_only', 'public_bandwidth_unlimited'],
-    'reserved_capacity_id': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_name', 'flavor_key_name', 'cores', 'memory'],
-    'reserved_capacity_name': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_id', 'flavor_key_name', 'cores', 'memory'],
-    'image_id': ['os_reference_code'],
-    'os_reference_code': ['image_id'],
-    'placement_group_name': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_id', 'reserved_capacity_id', 'reserved_capacity_name'],
-    'domain': ['bulk_vms'],
+    'transient': ['dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'cores', 'memory', 'public_bandwidth_limited', 'public_bandwidth_unlimited'],
     'private_vlan_id': ['datacenter_choice'],
-    'dedicated_acct_host_only': ['dedicated_host_name', 'dedicated_host_id', 'placement_group_id', 'placement_group_name'],
+    'image_id': ['os_reference_code'],
+    'hostname': ['bulk_vms'],
+    'memory': ['flavor_key_name'],
+    'dedicated_host_name': ['dedicated_acct_host_only', 'dedicated_host_id', 'placement_group_name', 'placement_group_id'],
+    'datacenter_choice': ['datacenter', 'public_vlan_id', 'private_vlan_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_id', 'reserved_capacity_name'],
+    'datacenter': ['datacenter_choice'],
     'public_vlan_id': ['datacenter_choice'],
+    'public_bandwidth_unlimited': ['private_network_only', 'public_bandwidth_limited'],
+    'domain': ['bulk_vms'],
+    'dedicated_acct_host_only': ['dedicated_host_name', 'dedicated_host_id', 'placement_group_id', 'placement_group_name'],
+    'placement_group_name': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_id', 'reserved_capacity_id', 'reserved_capacity_name'],
+    'reserved_capacity_id': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_name', 'flavor_key_name', 'cores', 'memory'],
+    'cores': ['flavor_key_name'],
     'bulk_vms': ['hostname', 'domain'],
     'dedicated_host_id': ['dedicated_acct_host_only', 'dedicated_host_name', 'placement_group_name', 'placement_group_id'],
-    'public_bandwidth_unlimited': ['private_network_only', 'public_bandwidth_limited'],
-    'memory': ['flavor_key_name'],
     'placement_group_id': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_name', 'reserved_capacity_id', 'reserved_capacity_name'],
-    'dedicated_host_name': ['dedicated_acct_host_only', 'dedicated_host_id', 'placement_group_name', 'placement_group_id'],
-    'transient': ['dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'cores', 'memory', 'public_bandwidth_limited', 'public_bandwidth_unlimited'],
+    'os_reference_code': ['image_id'],
+    'reserved_capacity_name': ['datacenter_choice', 'dedicated_acct_host_only', 'dedicated_host_name', 'dedicated_host_id', 'placement_group_name', 'placement_group_id', 'reserved_capacity_id', 'flavor_key_name', 'cores', 'memory'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    hostname=dict(
-        required=False,
-        type='str'),
     flavor_key_name=dict(
         required=False,
         type='str'),
-    cores=dict(
+    public_bandwidth_limited=dict(
         required=False,
         type='int'),
-    datacenter=dict(
+    transient=dict(
         required=False,
-        type='str'),
-    datacenter_choice=dict(
+        type='bool'),
+    private_vlan_id=dict(
         required=False,
-        elements='',
-        type='list'),
-    notes=dict(
+        type='int'),
+    network_speed=dict(
         required=False,
-        type='str'),
+        type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    public_bandwidth_limited=dict(
+    file_storage_ids=dict(
         required=False,
-        type='int'),
-    reserved_capacity_id=dict(
-        required=False,
-        type='int'),
-    reserved_capacity_name=dict(
-        required=False,
-        type='str'),
-    post_install_script_uri=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     image_id=dict(
         required=False,
         type='int'),
-    os_reference_code=dict(
+    hostname=dict(
         required=False,
         type='str'),
-    placement_group_name=dict(
+    memory=dict(
+        required=False,
+        type='int'),
+    dedicated_host_name=dict(
+        required=False,
+        type='str'),
+    block_storage_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    user_metadata=dict(
         required=False,
         type='str'),
     private_network_only=dict(
         required=False,
         type='bool'),
-    reserved_instance_primary_disk=dict(
+    datacenter_choice=dict(
+        required=False,
+        elements='',
+        type='list'),
+    datacenter=dict(
+        required=False,
+        type='str'),
+    ssh_key_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    secondary_ip_count=dict(
+        required=False,
+        type='int'),
+    local_disk=dict(
+        required=False,
+        type='bool'),
+    post_install_script_uri=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
+    private_security_group_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    public_bandwidth_unlimited=dict(
+        required=False,
+        type='bool'),
+    evault=dict(
+        required=False,
+        type='int'),
+    domain=dict(
+        required=False,
+        type='str'),
+    dedicated_acct_host_only=dict(
+        required=False,
+        type='bool'),
+    quote_id=dict(
+        required=False,
+        type='int'),
+    placement_group_name=dict(
+        required=False,
+        type='str'),
+    reserved_capacity_id=dict(
         required=False,
         type='int'),
     private_subnet=dict(
         required=False,
         type='str'),
-    ipv6_static_enabled=dict(
-        required=False,
-        type='bool'),
-    local_disk=dict(
-        required=False,
-        type='bool'),
-    domain=dict(
-        required=False,
-        type='str'),
-    public_security_group_ids=dict(
+    disks=dict(
         required=False,
         elements='',
         type='list'),
-    private_vlan_id=dict(
+    cores=dict(
         required=False,
         type='int'),
-    dedicated_acct_host_only=dict(
-        required=False,
-        type='bool'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    public_subnet=dict(
-        required=False,
-        type='str'),
-    file_storage_ids=dict(
+    public_security_group_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -481,61 +506,36 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    reserved_instance_primary_disk=dict(
+        required=False,
+        type='int'),
     dedicated_host_id=dict(
         required=False,
         type='int'),
-    public_bandwidth_unlimited=dict(
-        required=False,
-        type='bool'),
-    ipv6_enabled=dict(
-        required=False,
-        type='bool'),
-    secondary_ip_count=dict(
-        required=False,
-        type='int'),
-    memory=dict(
-        required=False,
-        type='int'),
-    disks=dict(
-        required=False,
-        elements='',
-        type='list'),
     placement_group_id=dict(
         required=False,
         type='int'),
-    network_speed=dict(
+    public_subnet=dict(
         required=False,
-        type='int'),
-    block_storage_ids=dict(
+        type='str'),
+    os_reference_code=dict(
         required=False,
-        elements='',
-        type='list'),
-    evault=dict(
-        required=False,
-        type='int'),
-    quote_id=dict(
-        required=False,
-        type='int'),
+        type='str'),
     hourly_billing=dict(
         required=False,
         type='bool'),
-    dedicated_host_name=dict(
+    reserved_capacity_name=dict(
         required=False,
         type='str'),
-    transient=dict(
+    notes=dict(
+        required=False,
+        type='str'),
+    ipv6_enabled=dict(
         required=False,
         type='bool'),
-    private_security_group_ids=dict(
+    ipv6_static_enabled=dict(
         required=False,
-        elements='',
-        type='list'),
-    ssh_key_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    user_metadata=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -601,7 +601,7 @@ def run_module():
         resource_type='ibm_compute_vm_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -610,7 +610,7 @@ def run_module():
             resource_type='ibm_compute_vm_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

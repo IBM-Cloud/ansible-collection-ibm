@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_output' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -25,6 +25,11 @@ options:
         description:
             - The ID of the workspace for which you want to retrieve output values. To find the workspace ID, use the `GET /workspaces` API.
         required: True
+        type: str
+    location:
+        description:
+            - The Region of the workspace.
+        required: False
         type: str
     template_id:
         description:
@@ -76,6 +81,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'workspace_id',
+    'location',
     'template_id',
     'output_json',
 ]
@@ -90,6 +96,9 @@ from ansible.module_utils.basic import env_fallback
 module_args = dict(
     workspace_id=dict(
         required=True,
+        type='str'),
+    location=dict(
+        required=False,
         type='str'),
     template_id=dict(
         required=True,
@@ -131,7 +140,7 @@ def run_module():
         resource_type='ibm_schematics_output',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

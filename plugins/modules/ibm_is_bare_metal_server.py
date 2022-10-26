@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -28,31 +28,32 @@ options:
         required: False
         type: list
         elements: dict
+    vpc:
+        description:
+            - The VPC the bare metal server is to be a part of
+        required: False
+        type: str
     keys:
         description:
             - (Required for new resource) SSH key Ids for the bare metal server
         required: True
         type: list
         elements: str
-    vpc:
+    image:
         description:
-            - The VPC the bare metal server is to be a part of
-        required: False
+            - (Required for new resource) image id
+        required: True
         type: str
-    name:
+    tags:
         description:
-            - Bare metal server name
+            - Tags for the Bare metal server
         required: False
-        type: str
+        type: list
+        elements: str
     action:
         description:
             - This restart/start/stops a bare metal server.
         required: False
-        type: str
-    profile:
-        description:
-            - (Required for new resource) profile name
-        required: True
         type: str
     delete_type:
         description:
@@ -60,6 +61,27 @@ options:
         required: False
         type: str
         default: hard
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: True
+        type: list
+        elements: dict
+    resource_group:
+        description:
+            - Resource group name
+        required: False
+        type: str
+    name:
+        description:
+            - Bare metal server name
+        required: False
+        type: str
+    profile:
+        description:
+            - (Required for new resource) profile name
+        required: True
+        type: str
     user_data:
         description:
             - User data given for the bare metal server
@@ -68,28 +90,6 @@ options:
     zone:
         description:
             - (Required for new resource) Zone name
-        required: True
-        type: str
-    resource_group:
-        description:
-            - Resource group name
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags for the Bare metal server
-        required: False
-        type: list
-        elements: str
-    primary_network_interface:
-        description:
-            - (Required for new resource) Primary Network interface info
-        required: True
-        type: list
-        elements: dict
-    image:
-        description:
-            - (Required for new resource) image id
         required: True
         type: str
     id:
@@ -139,27 +139,27 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('keys', 'list'),
+    ('image', 'str'),
+    ('primary_network_interface', 'list'),
     ('profile', 'str'),
     ('zone', 'str'),
-    ('primary_network_interface', 'list'),
-    ('image', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'network_interfaces',
-    'keys',
     'vpc',
-    'name',
+    'keys',
+    'image',
+    'tags',
     'action',
-    'profile',
     'delete_type',
+    'primary_network_interface',
+    'resource_group',
+    'name',
+    'profile',
     'user_data',
     'zone',
-    'resource_group',
-    'tags',
-    'primary_network_interface',
-    'image',
 ]
 
 # Params for Data source
@@ -182,43 +182,43 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    vpc=dict(
+        required=False,
+        type='str'),
     keys=dict(
         required=False,
         elements='',
         type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    action=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    delete_type=dict(
-        required=False,
-        type='str'),
-    user_data=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
+    image=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    action=dict(
+        required=False,
+        type='str'),
+    delete_type=dict(
+        required=False,
+        type='str'),
     primary_network_interface=dict(
         required=False,
         elements='',
         type='list'),
-    image=dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -298,7 +298,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -307,7 +307,7 @@ def run_module():
             resource_type='ibm_is_bare_metal_server',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_key_template' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    template_id:
+    region:
         description:
-            - UUID of the template.
+            - The region of the UKO instance this resource exists in.
         required: True
         type: str
     instance_id:
@@ -31,9 +31,9 @@ options:
             - The ID of the UKO instance this resource exists in.
         required: True
         type: str
-    region:
+    template_id:
         description:
-            - The region of the UKO instance this resource exists in.
+            - UUID of the template.
         required: True
         type: str
     uko_vault:
@@ -74,17 +74,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('template_id', 'str'),
-    ('instance_id', 'str'),
     ('region', 'str'),
+    ('instance_id', 'str'),
+    ('template_id', 'str'),
     ('uko_vault', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'template_id',
-    'instance_id',
     'region',
+    'instance_id',
+    'template_id',
     'uko_vault',
 ]
 
@@ -96,13 +96,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    template_id=dict(
+    region=dict(
         required=True,
         type='str'),
     instance_id=dict(
         required=True,
         type='str'),
-    region=dict(
+    template_id=dict(
         required=True,
         type='str'),
     uko_vault=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_key_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

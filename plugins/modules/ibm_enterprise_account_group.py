@@ -18,18 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account_group' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    parent:
-        description:
-            - (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
+        required: True
+        type: str
+    parent:
+        description:
+            - (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
         required: True
         type: str
     primary_contact_iam_id:
@@ -83,15 +83,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('parent', 'str'),
     ('name', 'str'),
+    ('parent', 'str'),
     ('primary_contact_iam_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parent',
     'name',
+    'parent',
     'primary_contact_iam_id',
 ]
 
@@ -109,10 +109,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parent=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    parent=dict(
         required=False,
         type='str'),
     primary_contact_iam_id=dict(
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_enterprise_account_group',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

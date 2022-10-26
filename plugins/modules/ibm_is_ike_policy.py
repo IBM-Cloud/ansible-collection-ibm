@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -27,26 +27,26 @@ options:
             - (Required for new resource) IKE name
         required: True
         type: str
-    authentication_algorithm:
-        description:
-            - (Required for new resource) Authentication algorithm type
-        required: True
-        type: str
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption alogorithm type
         required: True
         type: str
-    resource_group:
+    authentication_algorithm:
         description:
-            - IKE resource group ID
-        required: False
+            - (Required for new resource) Authentication algorithm type
+        required: True
         type: str
     dh_group:
         description:
             - (Required for new resource) IKE DH group
         required: True
         type: int
+    resource_group:
+        description:
+            - IKE resource group ID
+        required: False
+        type: str
     key_lifetime:
         description:
             - IKE Key lifetime
@@ -105,18 +105,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
-    ('authentication_algorithm', 'str'),
     ('encryption_algorithm', 'str'),
+    ('authentication_algorithm', 'str'),
     ('dh_group', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'authentication_algorithm',
     'encryption_algorithm',
-    'resource_group',
+    'authentication_algorithm',
     'dh_group',
+    'resource_group',
     'key_lifetime',
     'ike_version',
 ]
@@ -126,8 +126,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'ike_policy',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,18 +140,18 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    authentication_algorithm=dict(
-        required=False,
-        type='str'),
     encryption_algorithm=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    authentication_algorithm=dict(
         required=False,
         type='str'),
     dh_group=dict(
         required=False,
         type='int'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     key_lifetime=dict(
         required=False,
         type='int'),
@@ -235,7 +235,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -244,7 +244,7 @@ def run_module():
             resource_type='ibm_is_ike_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

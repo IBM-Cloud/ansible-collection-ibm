@@ -18,30 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_trigger_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    default:
-        description:
-            - Default option for SINGLE_SELECT property type.
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Property type.
-        required: True
-        type: str
-    path:
-        description:
-            - property path for INTEGRATION type properties.
-        required: False
-        type: str
-    pipeline_id:
-        description:
-            - (Required for new resource) The tekton pipeline ID.
-        required: True
-        type: str
     trigger_id:
         description:
             - (Required for new resource) The trigger ID.
@@ -63,6 +43,26 @@ options:
         required: False
         type: list
         elements: str
+    default:
+        description:
+            - Default option for SINGLE_SELECT property type.
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) Property type.
+        required: True
+        type: str
+    path:
+        description:
+            - property path for INTEGRATION type properties.
+        required: False
+        type: str
+    pipeline_id:
+        description:
+            - (Required for new resource) The tekton pipeline ID.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,35 +109,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
-    ('pipeline_id', 'str'),
     ('trigger_id', 'str'),
     ('name', 'str'),
+    ('type', 'str'),
+    ('pipeline_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'default',
-    'type',
-    'path',
-    'pipeline_id',
     'trigger_id',
     'name',
     'value',
     'enum',
+    'default',
+    'type',
+    'path',
+    'pipeline_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('trigger_id', 'str'),
     ('property_name', 'str'),
     ('pipeline_id', 'str'),
-    ('trigger_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'trigger_id',
     'property_name',
     'pipeline_id',
-    'trigger_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,18 +147,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    default=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    path=dict(
-        required=False,
-        type='str'),
-    pipeline_id=dict(
-        required=False,
-        type='str'),
     trigger_id=dict(
         required=False,
         type='str'),
@@ -172,6 +160,18 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    default=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    path=dict(
+        required=False,
+        type='str'),
+    pipeline_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_trigger_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_trigger_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

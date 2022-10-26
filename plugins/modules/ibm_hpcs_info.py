@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - Resource instance name for example, myobjectstorage
         required: True
         type: str
-    location:
-        description:
-            - The location or the environment in which instance exists
-        required: False
-        type: str
     resource_group_id:
         description:
             - The id of the resource group in which the instance is present
+        required: False
+        type: str
+    location:
+        description:
+            - The location or the environment in which instance exists
         required: False
         type: str
     service:
@@ -81,8 +81,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'location',
     'resource_group_id',
+    'location',
     'service',
 ]
 
@@ -97,10 +97,10 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    location=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    location=dict(
         required=False,
         type='str'),
     service=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_hpcs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

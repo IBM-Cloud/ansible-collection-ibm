@@ -7,93 +7,52 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_scc_si_note
-for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/scc_si_note
+module: ibm_app_config_segment
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/app_config_segment
 
-short_description: Configure IBM Cloud 'ibm_scc_si_note' resource
+short_description: Configure IBM Cloud 'ibm_app_config_segment' resource
 
 version_added: "2.8"
 
 description:
-    - Create, update or destroy an IBM Cloud 'ibm_scc_si_note' resource
+    - Create, update or destroy an IBM Cloud 'ibm_app_config_segment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    kind:
+    name:
         description:
-            - (Required for new resource) The type of note. Use this field to filter notes and occurences by kind. - FINDING&#58; The note and occurrence represent a finding. - KPI&#58; The note and occurrence represent a KPI value. - CARD&#58; The note represents a card showing findings and related metric values. - CARD_CONFIGURED&#58; The note represents a card configured for a user account. - SECTION&#58; The note represents a section in a dashboard.
+            - (Required for new resource) Segment name.
         required: True
         type: str
-    reported_by:
+    segment_id:
         description:
-            - (Required for new resource) The entity reporting a note.
+            - (Required for new resource) Segment id.
+        required: True
+        type: str
+    description:
+        description:
+            - Segment description.
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags associated with the segments.
+        required: False
+        type: str
+    rules:
+        description:
+            - (Required for new resource) List of rules that determine if the entity belongs to the segment during feature / property evaluation. An entity is identified by an unique identifier and the attributes that it defines.
         required: True
         type: list
         elements: dict
-    finding:
+    guid:
         description:
-            - FindingType provides details about a finding note.
-        required: False
-        type: list
-        elements: dict
-    provider_id:
-        description:
-            - (Required for new resource) Part of the parent. This field contains the provider ID. For example: providers/{provider_id}.
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    long_description:
-        description:
-            - (Required for new resource) A more detailed description of your note.
-        required: True
-        type: str
-    card:
-        description:
-            - Card provides details about a card kind of note.
-        required: False
-        type: list
-        elements: dict
-    section:
-        description:
-            - Card provides details about a card kind of note.
-        required: False
-        type: list
-        elements: dict
-    account_id:
-        description:
-            - None
-        required: False
-        type: str
-    short_description:
-        description:
-            - (Required for new resource) A one sentence description of your note.
-        required: True
-        type: str
-    note_id:
-        description:
-            - (Required for new resource) The ID of the note.
-        required: True
-        type: str
-    shared:
-        description:
-            - True if this note can be shared by multiple accounts.
-        required: False
-        type: bool
-        default: True
-    related_url:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    kpi:
-        description:
-            - KpiType provides details about a KPI note.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -140,41 +99,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('kind', 'str'),
-    ('reported_by', 'list'),
-    ('provider_id', 'str'),
-    ('long_description', 'str'),
-    ('short_description', 'str'),
-    ('note_id', 'str'),
+    ('name', 'str'),
+    ('segment_id', 'str'),
+    ('rules', 'list'),
+    ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'kind',
-    'reported_by',
-    'finding',
-    'provider_id',
-    'long_description',
-    'card',
-    'section',
-    'account_id',
-    'short_description',
-    'note_id',
-    'shared',
-    'related_url',
-    'kpi',
+    'name',
+    'segment_id',
+    'description',
+    'tags',
+    'rules',
+    'guid',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('provider_id', 'str'),
-    ('note_id', 'str'),
+    ('guid', 'str'),
+    ('segment_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'provider_id',
-    'note_id',
-    'account_id',
+    'guid',
+    'segment_id',
+    'includes',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -184,51 +134,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    kind=dict(
+    name=dict(
         required=False,
         type='str'),
-    reported_by=dict(
+    segment_id=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        type='str'),
+    rules=dict(
         required=False,
         elements='',
         type='list'),
-    finding=dict(
-        required=False,
-        elements='',
-        type='list'),
-    provider_id=dict(
+    guid=dict(
         required=False,
         type='str'),
-    long_description=dict(
-        required=False,
-        type='str'),
-    card=dict(
-        required=False,
-        elements='',
-        type='list'),
-    section=dict(
-        required=False,
-        elements='',
-        type='list'),
-    account_id=dict(
-        required=False,
-        type='str'),
-    short_description=dict(
-        required=False,
-        type='str'),
-    note_id=dict(
-        required=False,
-        type='str'),
-    shared=dict(
-        required=False,
-        type='bool'),
-    related_url=dict(
-        required=False,
-        elements='',
-        type='list'),
-    kpi=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -291,19 +215,19 @@ def run_module():
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
     result_ds = ibmcloud_terraform(
-        resource_type='ibm_scc_si_note',
+        resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
     if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
         result = ibmcloud_terraform(
-            resource_type='ibm_scc_si_note',
+            resource_type='ibm_app_config_segment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

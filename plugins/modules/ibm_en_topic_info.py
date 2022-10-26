@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_en_topic' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    topic_id:
-        description:
-            - Unique identifier for Topic.
-        required: True
-        type: str
     instance_guid:
         description:
             - Unique identifier for IBM Cloud Event Notifications instance.
+        required: True
+        type: str
+    topic_id:
+        description:
+            - Unique identifier for Topic.
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('topic_id', 'str'),
     ('instance_guid', 'str'),
+    ('topic_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'topic_id',
     'instance_guid',
+    'topic_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    topic_id=dict(
+    instance_guid=dict(
         required=True,
         type='str'),
-    instance_guid=dict(
+    topic_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_en_topic',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -7,35 +7,39 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_scc_si_providers_info
-for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/scc_si_providers
+module: ibm_iam_access_group_account_settings
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_access_group_account_settings
 
-short_description: Retrieve IBM Cloud 'ibm_scc_si_providers' resource
+short_description: Configure IBM Cloud 'ibm_iam_access_group_account_settings' resource
 
 version_added: "2.8"
 
 description:
-    - Retrieve an IBM Cloud 'ibm_scc_si_providers' resource
+    - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_account_settings' resource
+    - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    skip:
+    public_access_enabled:
         description:
-            - The offset is the index of the item from which you want to start returning data from. The default is 0.
-        required: False
-        type: int
-    account_id:
+            - (Required for new resource) Flag to enable/disable public access groups
+        required: True
+        type: bool
+    id:
         description:
-            - None
+            - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
         required: False
         type: str
-    limit:
+    state:
         description:
-            - The number of elements returned in the current instance. The default is 200.
+            - State of resource
+        choices:
+            - available
+            - absent
+        default: available
         required: False
-        type: int
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -69,15 +73,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('public_access_enabled', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'skip',
-    'account_id',
-    'limit',
+    'public_access_enabled',
 ]
 
+# Params for Data source
+TL_REQUIRED_PARAMETERS_DS = [
+]
+
+TL_ALL_PARAMETERS_DS = [
+]
 
 TL_CONFLICTS_MAP = {
 }
@@ -86,15 +95,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    skip=dict(
+    public_access_enabled=dict(
         required=False,
-        type='int'),
-    account_id=dict(
+        type='bool'),
+    id=dict(
         required=False,
         type='str'),
-    limit=dict(
+    state=dict(
+        type='str',
         required=False,
-        type='int'),
+        default='available',
+        choices=(['available', 'absent'])),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -125,11 +136,34 @@ def run_module():
         supports_check_mode=False
     )
 
+    # New resource required arguments checks
+    missing_args = []
+    if module.params['id'] is None:
+        for arg, _ in TL_REQUIRED_PARAMETERS:
+            if module.params[arg] is None:
+                missing_args.append(arg)
+        if missing_args:
+            module.fail_json(msg=(
+                "missing required arguments: " + ", ".join(missing_args)))
+
+    conflicts = {}
+    if len(TL_CONFLICTS_MAP) != 0:
+        for arg in TL_CONFLICTS_MAP:
+            if module.params[arg]:
+                for conflict in TL_CONFLICTS_MAP[arg]:
+                    try:
+                        if module.params[conflict]:
+                            conflicts[arg] = conflict
+                    except KeyError:
+                        pass
+    if len(conflicts):
+        module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
+
     result = ibmcloud_terraform(
-        resource_type='ibm_scc_si_providers',
-        tf_type='data',
+        resource_type='ibm_iam_access_group_account_settings',
+        tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

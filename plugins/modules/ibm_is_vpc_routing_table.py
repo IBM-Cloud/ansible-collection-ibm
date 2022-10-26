@@ -18,16 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.44.2
+    - IBM-Cloud terraform-provider-ibm v1.45.1
     - Terraform v0.12.20
 
 options:
-    accept_routes_from_resource_type:
+    vpc:
         description:
-            - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
-        required: False
-        type: list
-        elements: str
+            - (Required for new resource) The VPC identifier.
+        required: True
+        type: str
     route_direct_link_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
@@ -46,15 +45,16 @@ options:
         required: False
         type: bool
         default: False
+    accept_routes_from_resource_type:
+        description:
+            - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - The user-defined name for this routing table.
         required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) The VPC identifier.
-        required: True
         type: str
     id:
         description:
@@ -107,12 +107,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'accept_routes_from_resource_type',
+    'vpc',
     'route_direct_link_ingress',
     'route_transit_gateway_ingress',
     'route_vpc_zone_ingress',
+    'accept_routes_from_resource_type',
     'name',
-    'vpc',
 ]
 
 # Params for Data source
@@ -121,8 +121,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'vpc',
     'name',
+    'vpc',
     'routing_table',
 ]
 
@@ -133,10 +133,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    accept_routes_from_resource_type=dict(
+    vpc=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     route_direct_link_ingress=dict(
         required=False,
         type='bool'),
@@ -146,10 +145,11 @@ module_args = dict(
     route_vpc_zone_ingress=dict(
         required=False,
         type='bool'),
-    name=dict(
+    accept_routes_from_resource_type=dict(
         required=False,
-        type='str'),
-    vpc=dict(
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.44.2',
+        ibm_provider_version='1.45.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -238,7 +238,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.44.2',
+            ibm_provider_version='1.45.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
