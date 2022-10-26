@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_trigger_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    value:
-        description:
-            - String format property value.
-        required: False
-        type: str
-    enum:
-        description:
-            - Options for SINGLE_SELECT property type.
-        required: False
-        type: list
-        elements: str
     default:
         description:
             - Default option for SINGLE_SELECT property type.
@@ -63,6 +52,17 @@ options:
             - (Required for new resource) Property name.
         required: True
         type: str
+    value:
+        description:
+            - String format property value.
+        required: False
+        type: str
+    enum:
+        description:
+            - Options for SINGLE_SELECT property type.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,27 +117,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'value',
-    'enum',
     'default',
     'type',
     'path',
     'pipeline_id',
     'trigger_id',
     'name',
+    'value',
+    'enum',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('property_name', 'str'),
     ('pipeline_id', 'str'),
     ('trigger_id', 'str'),
-    ('property_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'property_name',
     'pipeline_id',
     'trigger_id',
-    'property_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,13 +147,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    value=dict(
-        required=False,
-        type='str'),
-    enum=dict(
-        required=False,
-        elements='',
-        type='list'),
     default=dict(
         required=False,
         type='str'),
@@ -172,6 +165,13 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    value=dict(
+        required=False,
+        type='str'),
+    enum=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_trigger_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_trigger_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

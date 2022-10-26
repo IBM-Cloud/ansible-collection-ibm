@@ -17,11 +17,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
+    bucket_type:
+        description:
+            - None
+        required: False
+        type: str
     resource_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_name:
         description:
             - None
         required: True
@@ -32,16 +42,6 @@ options:
         required: False
         type: str
         default: public
-    bucket_name:
-        description:
-            - None
-        required: True
-        type: str
-    bucket_type:
-        description:
-            - None
-        required: False
-        type: str
     bucket_region:
         description:
             - None
@@ -91,18 +91,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_instance_id',
-    'endpoint_type',
-    'bucket_name',
     'bucket_type',
+    'resource_instance_id',
+    'bucket_name',
+    'endpoint_type',
     'bucket_region',
     'satellite_location_id',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'endpoint_type': ['satellite_location_id'],
     'bucket_type': ['satellite_location_id'],
+    'endpoint_type': ['satellite_location_id'],
     'bucket_region': ['satellite_location_id'],
     'satellite_location_id': ['bucket_type', 'bucket_region'],
 }
@@ -111,16 +111,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    bucket_type=dict(
+        required=False,
+        type='str'),
     resource_instance_id=dict(
         required=True,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
         type='str'),
     bucket_name=dict(
         required=True,
         type='str'),
-    bucket_type=dict(
+    endpoint_type=dict(
         required=False,
         type='str'),
     bucket_region=dict(
@@ -163,7 +163,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

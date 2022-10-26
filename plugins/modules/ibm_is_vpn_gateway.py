@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -28,6 +28,11 @@ options:
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - (Required for new resource) VPN Gateway instance name
+        required: True
+        type: str
     subnet:
         description:
             - (Required for new resource) VPNGateway subnet info
@@ -37,11 +42,6 @@ options:
         description:
             - The resource group for this VPN gateway
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) VPN Gateway instance name
-        required: True
         type: str
     mode:
         description:
@@ -95,16 +95,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnet', 'str'),
     ('name', 'str'),
+    ('subnet', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'tags',
+    'name',
     'subnet',
     'resource_group',
-    'name',
     'mode',
 ]
 
@@ -113,8 +113,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'vpn_gateway',
     'vpn_gateway_name',
+    'vpn_gateway',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -128,13 +128,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     subnet=dict(
         required=False,
         type='str'),
     resource_group=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     mode=dict(
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_is_vpn_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_is_vpn_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

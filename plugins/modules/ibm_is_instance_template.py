@@ -18,33 +18,45 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    dedicated_host_group:
+    resource_group:
         description:
-            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+            - Instance template resource group
         required: False
         type: str
-    image:
+    metadata_service_enabled:
         description:
-            - (Required for new resource) image name
-        required: True
-        type: str
-    availability_policy_host_failure:
-        description:
-            - The availability policy to use for this virtual server instance
+            - Indicates whether the metadata service endpoint is available to the virtual server instance
         required: False
-        type: str
+        type: bool
+        default: False
     vpc:
         description:
             - (Required for new resource) VPC id
         required: True
         type: str
-    default_trusted_profile_target:
+    zone:
         description:
-            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    profile:
+        description:
+            - (Required for new resource) Profile info
+        required: True
+        type: str
+    primary_network_interface:
+        description:
+            - (Required for new resource) Primary Network interface info
+        required: True
+        type: list
+        elements: dict
+    name:
+        description:
+            - Instance Template name
         required: False
         type: str
     total_volume_bandwidth:
@@ -58,11 +70,6 @@ options:
         required: True
         type: list
         elements: str
-    dedicated_host:
-        description:
-            - Unique Identifier of the Dedicated Host where the instance will be placed
-        required: False
-        type: str
     volume_attachments:
         description:
             - None
@@ -75,15 +82,24 @@ options:
         required: False
         type: list
         elements: dict
-    metadata_service_enabled:
+    default_trusted_profile_auto_link:
         description:
-            - Indicates whether the metadata service endpoint is available to the virtual server instance
+            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
         required: False
         type: bool
-        default: False
-    resource_group:
+    default_trusted_profile_target:
         description:
-            - Instance template resource group
+            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+        required: False
+        type: str
+    dedicated_host:
+        description:
+            - Unique Identifier of the Dedicated Host where the instance will be placed
+        required: False
+        type: str
+    dedicated_host_group:
+        description:
+            - Unique Identifier of the Dedicated Host Group where the instance will be placed
         required: False
         type: str
     placement_group:
@@ -91,31 +107,20 @@ options:
             - Unique Identifier of the Placement Group for restricting the placement of the instance
         required: False
         type: str
-    zone:
+    availability_policy_host_failure:
         description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
-        type: str
-    default_trusted_profile_auto_link:
-        description:
-            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+            - The availability policy to use for this virtual server instance
         required: False
-        type: bool
-    primary_network_interface:
-        description:
-            - (Required for new resource) Primary Network interface info
-        required: True
-        type: list
-        elements: dict
+        type: str
     user_data:
         description:
             - User data given for the instance
         required: False
+        type: str
+    image:
+        description:
+            - (Required for new resource) image name
+        required: True
         type: str
     boot_volume:
         description:
@@ -123,11 +128,6 @@ options:
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - Instance Template name
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -174,36 +174,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('image', 'str'),
     ('vpc', 'str'),
-    ('keys', 'list'),
     ('zone', 'str'),
     ('profile', 'str'),
     ('primary_network_interface', 'list'),
+    ('keys', 'list'),
+    ('image', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'dedicated_host_group',
-    'image',
-    'availability_policy_host_failure',
-    'vpc',
-    'default_trusted_profile_target',
-    'total_volume_bandwidth',
-    'keys',
-    'dedicated_host',
-    'volume_attachments',
-    'network_interfaces',
-    'metadata_service_enabled',
     'resource_group',
-    'placement_group',
+    'metadata_service_enabled',
+    'vpc',
     'zone',
     'profile',
-    'default_trusted_profile_auto_link',
     'primary_network_interface',
-    'user_data',
-    'boot_volume',
     'name',
+    'total_volume_bandwidth',
+    'keys',
+    'volume_attachments',
+    'network_interfaces',
+    'default_trusted_profile_auto_link',
+    'default_trusted_profile_target',
+    'dedicated_host',
+    'dedicated_host_group',
+    'placement_group',
+    'availability_policy_host_failure',
+    'user_data',
+    'image',
+    'boot_volume',
 ]
 
 # Params for Data source
@@ -216,8 +216,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'dedicated_host_group': ['dedicated_host', 'placement_group'],
     'dedicated_host': ['dedicated_host_group', 'placement_group'],
+    'dedicated_host_group': ['dedicated_host', 'placement_group'],
     'placement_group': ['dedicated_host', 'dedicated_host_group'],
 }
 
@@ -225,19 +225,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    dedicated_host_group=dict(
+    resource_group=dict(
         required=False,
         type='str'),
-    image=dict(
+    metadata_service_enabled=dict(
         required=False,
-        type='str'),
-    availability_policy_host_failure=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     vpc=dict(
         required=False,
         type='str'),
-    default_trusted_profile_target=dict(
+    zone=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
+    primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     total_volume_bandwidth=dict(
@@ -247,9 +254,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    dedicated_host=dict(
-        required=False,
-        type='str'),
     volume_attachments=dict(
         required=False,
         elements='',
@@ -258,38 +262,34 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    metadata_service_enabled=dict(
+    default_trusted_profile_auto_link=dict(
         required=False,
         type='bool'),
-    resource_group=dict(
+    default_trusted_profile_target=dict(
+        required=False,
+        type='str'),
+    dedicated_host=dict(
+        required=False,
+        type='str'),
+    dedicated_host_group=dict(
         required=False,
         type='str'),
     placement_group=dict(
         required=False,
         type='str'),
-    zone=dict(
+    availability_policy_host_failure=dict(
         required=False,
         type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    default_trusted_profile_auto_link=dict(
-        required=False,
-        type='bool'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
     user_data=dict(
+        required=False,
+        type='str'),
+    image=dict(
         required=False,
         type='str'),
     boot_volume=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -367,7 +367,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -376,7 +376,7 @@ def run_module():
             resource_type='ibm_is_instance_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

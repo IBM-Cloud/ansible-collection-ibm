@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb_create' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,6 @@ options:
     vlan_id:
         description:
             - (Required for new resource) The VLAN ID that you want to use for your ALBs.
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) The zone where you want to deploy the ALB.
         required: True
         type: str
     cluster:
@@ -61,6 +56,11 @@ options:
     alb_type:
         description:
             - (Required for new resource) The type of ALB that you want to create.
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) The zone where you want to deploy the ALB.
         required: True
         type: str
     id:
@@ -90,21 +90,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vlan_id', 'str'),
-    ('zone', 'str'),
     ('cluster', 'str'),
     ('alb_type', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'nlb_version',
     'vlan_id',
-    'zone',
     'cluster',
     'enable',
     'ingress_image',
     'ip',
     'alb_type',
+    'zone',
 ]
 
 # Params for Data source
@@ -127,9 +127,6 @@ module_args = dict(
     vlan_id=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -143,6 +140,9 @@ module_args = dict(
         required=False,
         type='str'),
     alb_type=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_container_alb_create',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

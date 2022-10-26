@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -27,15 +27,15 @@ options:
             - (Required for new resource) Resource group where toolchain will be created.
         required: True
         type: str
-    name:
-        description:
-            - (Required for new resource) Toolchain name.
-        required: True
-        type: str
     description:
         description:
             - Describes the toolchain.
         required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) Toolchain name.
+        required: True
         type: str
     id:
         description:
@@ -90,8 +90,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
-    'name',
     'description',
+    'name',
 ]
 
 # Params for Data source
@@ -113,10 +113,10 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_cd_toolchain',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_cd_toolchain',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

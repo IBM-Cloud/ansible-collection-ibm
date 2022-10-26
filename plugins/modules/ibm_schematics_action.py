@@ -18,29 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    settings:
+    user_state:
         description:
-            - Environment variables for the Action.
-        required: False
-        type: list
-        elements: dict
-    location:
-        description:
-            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-        required: False
-        type: str
-    source_type:
-        description:
-            - Type of source for the Template.
-        required: False
-        type: str
-    bastion:
-        description:
-            - Describes a bastion resource.
+            - User defined status of the Schematics object.
         required: False
         type: list
         elements: dict
@@ -49,9 +33,92 @@ options:
             - Target inventory record ID, used by the action or ansible playbook.
         required: False
         type: str
+    targets_ini:
+        description:
+            - Inventory of host and host group for the playbook in `INI` file format. For example, `"targets_ini": "[webserverhost]  172.22.192.6  [dbhost]  172.22.192.5"`. For more information, about an inventory host group syntax, see [Inventory host groups](https://cloud.ibm.com/docs/schematics?topic=schematics-schematics-cli-reference#schematics-inventory-host-grps).
+        required: False
+        type: str
+    sys_lock:
+        description:
+            - System lock status.
+        required: False
+        type: list
+        elements: dict
+    location:
+        description:
+            - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+        required: False
+        type: str
+    tags:
+        description:
+            - Action tags.
+        required: False
+        type: list
+        elements: str
+    bastion:
+        description:
+            - Describes a bastion resource.
+        required: False
+        type: list
+        elements: dict
+    settings:
+        description:
+            - Environment variables for the Action.
+        required: False
+        type: list
+        elements: dict
+    description:
+        description:
+            - Action description.
+        required: False
+        type: str
+    source_type:
+        description:
+            - Type of source for the Template.
+        required: False
+        type: str
+    credentials:
+        description:
+            - credentials of the Action.
+        required: False
+        type: list
+        elements: dict
+    bastion_credential:
+        description:
+            - User editable variable data & system generated reference to value.
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) The unique name of your action. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores. **Example** you can use the name to stop action.
+        required: True
+        type: str
+    source_readme_url:
+        description:
+            - URL of the `README` file, for the source URL.
+        required: False
+        type: str
+    action_inputs:
+        description:
+            - Input variables for the Action.
+        required: False
+        type: list
+        elements: dict
     x_github_token:
         description:
             - The personal access token to authenticate with your private GitHub or GitLab repository and access your Terraform template.
+        required: False
+        type: str
+    source:
+        description:
+            - Source of templates, playbooks, or controls.
+        required: False
+        type: list
+        elements: dict
+    command_parameter:
+        description:
+            - Schematics job command parameter (playbook-name).
         required: False
         type: str
     action_outputs:
@@ -65,73 +132,6 @@ options:
             - Resource-group name for an action.  By default, action is created in default resource group.
         required: False
         type: str
-    command_parameter:
-        description:
-            - Schematics job command parameter (playbook-name).
-        required: False
-        type: str
-    credentials:
-        description:
-            - credentials of the Action.
-        required: False
-        type: list
-        elements: dict
-    action_inputs:
-        description:
-            - Input variables for the Action.
-        required: False
-        type: list
-        elements: dict
-    sys_lock:
-        description:
-            - System lock status.
-        required: False
-        type: list
-        elements: dict
-    description:
-        description:
-            - Action description.
-        required: False
-        type: str
-    user_state:
-        description:
-            - User defined status of the Schematics object.
-        required: False
-        type: list
-        elements: dict
-    targets_ini:
-        description:
-            - Inventory of host and host group for the playbook in `INI` file format. For example, `"targets_ini": "[webserverhost]  172.22.192.6  [dbhost]  172.22.192.5"`. For more information, about an inventory host group syntax, see [Inventory host groups](https://cloud.ibm.com/docs/schematics?topic=schematics-schematics-cli-reference#schematics-inventory-host-grps).
-        required: False
-        type: str
-    tags:
-        description:
-            - Action tags.
-        required: False
-        type: list
-        elements: str
-    source_readme_url:
-        description:
-            - URL of the `README` file, for the source URL.
-        required: False
-        type: str
-    source:
-        description:
-            - Source of templates, playbooks, or controls.
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) The unique name of your action. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores. **Example** you can use the name to stop action.
-        required: True
-        type: str
-    bastion_credential:
-        description:
-            - User editable variable data & system generated reference to value.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -183,26 +183,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'settings',
-    'location',
-    'source_type',
-    'bastion',
+    'user_state',
     'inventory',
+    'targets_ini',
+    'sys_lock',
+    'location',
+    'tags',
+    'bastion',
+    'settings',
+    'description',
+    'source_type',
+    'credentials',
+    'bastion_credential',
+    'name',
+    'source_readme_url',
+    'action_inputs',
     'x_github_token',
+    'source',
+    'command_parameter',
     'action_outputs',
     'resource_group',
-    'command_parameter',
-    'credentials',
-    'action_inputs',
-    'sys_lock',
-    'description',
-    'user_state',
-    'targets_ini',
-    'tags',
-    'source_readme_url',
-    'source',
-    'name',
-    'bastion_credential',
 ]
 
 # Params for Data source
@@ -221,24 +221,67 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    settings=dict(
-        required=False,
-        elements='',
-        type='list'),
-    location=dict(
-        required=False,
-        type='str'),
-    source_type=dict(
-        required=False,
-        type='str'),
-    bastion=dict(
+    user_state=dict(
         required=False,
         elements='',
         type='list'),
     inventory=dict(
         required=False,
         type='str'),
+    targets_ini=dict(
+        required=False,
+        type='str'),
+    sys_lock=dict(
+        required=False,
+        elements='',
+        type='list'),
+    location=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    bastion=dict(
+        required=False,
+        elements='',
+        type='list'),
+    settings=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    source_type=dict(
+        required=False,
+        type='str'),
+    credentials=dict(
+        required=False,
+        elements='',
+        type='list'),
+    bastion_credential=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    source_readme_url=dict(
+        required=False,
+        type='str'),
+    action_inputs=dict(
+        required=False,
+        elements='',
+        type='list'),
     x_github_token=dict(
+        required=False,
+        type='str'),
+    source=dict(
+        required=False,
+        elements='',
+        type='list'),
+    command_parameter=dict(
         required=False,
         type='str'),
     action_outputs=dict(
@@ -248,49 +291,6 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    command_parameter=dict(
-        required=False,
-        type='str'),
-    credentials=dict(
-        required=False,
-        elements='',
-        type='list'),
-    action_inputs=dict(
-        required=False,
-        elements='',
-        type='list'),
-    sys_lock=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    user_state=dict(
-        required=False,
-        elements='',
-        type='list'),
-    targets_ini=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    source_readme_url=dict(
-        required=False,
-        type='str'),
-    source=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    bastion_credential=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -356,7 +356,7 @@ def run_module():
         resource_type='ibm_schematics_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -365,7 +365,7 @@ def run_module():
             resource_type='ibm_schematics_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

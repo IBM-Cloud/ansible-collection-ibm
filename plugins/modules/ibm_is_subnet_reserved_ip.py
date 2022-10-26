@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The user-defined or system-provided name for this reserved IP.
-        required: False
-        type: str
     subnet:
         description:
             - (Required for new resource) The subnet identifier.
@@ -37,14 +32,19 @@ options:
             - If set to true, this reserved IP will be automatically deleted
         required: False
         type: bool
-    target:
-        description:
-            - The unique identifier for target.
-        required: False
-        type: str
     address:
         description:
             - The address for this reserved IP.
+        required: False
+        type: str
+    name:
+        description:
+            - The user-defined or system-provided name for this reserved IP.
+        required: False
+        type: str
+    target:
+        description:
+            - The unique identifier for target.
         required: False
         type: str
     id:
@@ -98,22 +98,22 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'subnet',
     'auto_delete',
-    'target',
     'address',
+    'name',
+    'target',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('subnet', 'str'),
     ('reserved_ip', 'str'),
+    ('subnet', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'subnet',
     'reserved_ip',
+    'subnet',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -123,19 +123,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     subnet=dict(
         required=False,
         type='str'),
     auto_delete=dict(
         required=False,
         type='bool'),
-    target=dict(
+    address=dict(
         required=False,
         type='str'),
-    address=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    target=dict(
         required=False,
         type='str'),
     id=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_is_subnet_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_is_subnet_reserved_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

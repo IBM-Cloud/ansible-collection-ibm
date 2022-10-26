@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_cloud_directory_user' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -28,25 +28,30 @@ options:
         required: False
         type: bool
         default: True
-    locked_until:
-        description:
-            - Integer (epoch time in milliseconds), determines till when the user account will be locked
-        required: False
-        type: int
     display_name:
         description:
             - Cloud Directory user display name
-        required: False
-        type: str
-    user_name:
-        description:
-            - Optional username
         required: False
         type: str
     password:
         description:
             - (Required for new resource) User password
         required: True
+        type: str
+    tenant_id:
+        description:
+            - (Required for new resource) The AppID instance GUID
+        required: True
+        type: str
+    locked_until:
+        description:
+            - Integer (epoch time in milliseconds), determines till when the user account will be locked
+        required: False
+        type: int
+    user_name:
+        description:
+            - Optional username
+        required: False
         type: str
     status:
         description:
@@ -60,11 +65,6 @@ options:
         required: True
         type: list
         elements: dict
-    tenant_id:
-        description:
-            - (Required for new resource) The AppID instance GUID
-        required: True
-        type: str
     create_profile:
         description:
             - A boolean indication if a profile should be created for the Cloud Directory user
@@ -118,20 +118,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('password', 'str'),
-    ('email', 'list'),
     ('tenant_id', 'str'),
+    ('email', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'active',
-    'locked_until',
     'display_name',
-    'user_name',
     'password',
+    'tenant_id',
+    'locked_until',
+    'user_name',
     'status',
     'email',
-    'tenant_id',
     'create_profile',
 ]
 
@@ -156,16 +156,19 @@ module_args = dict(
     active=dict(
         required=False,
         type='bool'),
-    locked_until=dict(
-        required=False,
-        type='int'),
     display_name=dict(
         required=False,
         type='str'),
-    user_name=dict(
+    password=dict(
         required=False,
         type='str'),
-    password=dict(
+    tenant_id=dict(
+        required=False,
+        type='str'),
+    locked_until=dict(
+        required=False,
+        type='int'),
+    user_name=dict(
         required=False,
         type='str'),
     status=dict(
@@ -175,9 +178,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tenant_id=dict(
-        required=False,
-        type='str'),
     create_profile=dict(
         required=False,
         type='bool'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_appid_cloud_directory_user',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_appid_cloud_directory_user',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

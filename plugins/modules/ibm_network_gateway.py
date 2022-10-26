@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_network_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) The name of the gateway
-        required: True
-        type: str
-    ssh_key_ids:
-        description:
-            - None
-        required: False
-        type: list
-        elements: int
     post_install_script_uri:
         description:
             - None
@@ -44,6 +33,17 @@ options:
         required: True
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) The name of the gateway
+        required: True
+        type: str
+    ssh_key_ids:
+        description:
+            - None
+        required: False
+        type: list
+        elements: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,16 +90,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('members', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'ssh_key_ids',
     'post_install_script_uri',
     'members',
+    'name',
+    'ssh_key_ids',
 ]
 
 # Params for Data source
@@ -116,17 +116,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    ssh_key_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
     post_install_script_uri=dict(
         required=False,
         type='str'),
     members=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    ssh_key_ids=dict(
         required=False,
         elements='',
         type='list'),
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_network_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

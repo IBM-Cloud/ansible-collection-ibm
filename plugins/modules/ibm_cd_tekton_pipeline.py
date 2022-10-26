@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    pipeline_id:
-        description:
-            - (Required for new resource) String.
-        required: True
-        type: str
     pipeline_definition:
         description:
             - Tekton pipeline definition document detail object. If this property is absent, the pipeline has no definitions added.
@@ -39,6 +34,11 @@ options:
         required: False
         type: list
         elements: dict
+    pipeline_id:
+        description:
+            - (Required for new resource) String.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,9 +90,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pipeline_id',
     'pipeline_definition',
     'worker',
+    'pipeline_id',
 ]
 
 # Params for Data source
@@ -111,9 +111,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pipeline_id=dict(
-        required=False,
-        type='str'),
     pipeline_definition=dict(
         required=False,
         elements='',
@@ -122,6 +119,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    pipeline_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -187,7 +187,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -196,7 +196,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

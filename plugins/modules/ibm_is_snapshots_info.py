@@ -17,10 +17,25 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_snapshots' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
+    source_volume:
+        description:
+            - Filters the snapshot collection by source volume id
+        required: False
+        type: str
+    backup_policy_plan_id:
+        description:
+            - Filters the collection to backup policy jobs with the backup plan with the specified identifier
+        required: False
+        type: str
+    tag:
+        description:
+            - Filters the collection to resources with the exact tag value
+        required: False
+        type: str
     resource_group:
         description:
             - Filters the snapshot collection by resources group id
@@ -34,11 +49,6 @@ options:
     source_image:
         description:
             - Filters the snapshot collection by source image id
-        required: False
-        type: str
-    source_volume:
-        description:
-            - Filters the snapshot collection by source volume id
         required: False
         type: str
     generation:
@@ -78,10 +88,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'source_volume',
+    'backup_policy_plan_id',
+    'tag',
     'resource_group',
     'name',
     'source_image',
-    'source_volume',
 ]
 
 
@@ -92,6 +104,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    source_volume=dict(
+        required=False,
+        type='str'),
+    backup_policy_plan_id=dict(
+        required=False,
+        type='str'),
+    tag=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -99,9 +120,6 @@ module_args = dict(
         required=False,
         type='str'),
     source_image=dict(
-        required=False,
-        type='str'),
-    source_volume=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -150,7 +168,7 @@ def run_module():
         resource_type='ibm_is_snapshots',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

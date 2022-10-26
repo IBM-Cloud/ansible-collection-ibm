@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -31,14 +31,14 @@ options:
             - The load balancer identifier.
         required: True
         type: str
-    listener:
-        description:
-            - The listener identifier.
-        required: True
-        type: str
     policy:
         description:
             - The policy identifier.
+        required: True
+        type: str
+    listener:
+        description:
+            - The listener identifier.
         required: True
         type: str
     generation:
@@ -76,16 +76,16 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('rule', 'str'),
     ('lb', 'str'),
-    ('listener', 'str'),
     ('policy', 'str'),
+    ('listener', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'rule',
     'lb',
-    'listener',
     'policy',
+    'listener',
 ]
 
 
@@ -102,10 +102,10 @@ module_args = dict(
     lb=dict(
         required=True,
         type='str'),
-    listener=dict(
+    policy=dict(
         required=True,
         type='str'),
-    policy=dict(
+    listener=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -154,7 +154,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

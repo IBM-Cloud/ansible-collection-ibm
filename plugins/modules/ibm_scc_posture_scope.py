@@ -16,9 +16,9 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_scope' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -112,9 +112,11 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('scope_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'scope_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -201,19 +203,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_scc_posture_scope',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.44.2',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_scc_posture_scope',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.44.2',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

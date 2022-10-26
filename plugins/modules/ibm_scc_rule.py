@@ -18,30 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    labels:
-        description:
-            - Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
-        required: False
-        type: list
-        elements: str
-    required_config:
-        description:
-            - (Required for new resource) The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (and/or) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the and array. To add conditions to a property check, use or.
-        required: True
-        type: list
-        elements: dict
     account_id:
         description:
             - (Required for new resource) Your IBM Cloud account ID.
-        required: True
-        type: str
-    description:
-        description:
-            - (Required for new resource) An extended description of your rule.
         required: True
         type: str
     enforcement_actions:
@@ -50,9 +33,9 @@ options:
         required: False
         type: list
         elements: dict
-    target:
+    required_config:
         description:
-            - (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+            - (Required for new resource) The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (and/or) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the and array. To add conditions to a property check, use or.
         required: True
         type: list
         elements: dict
@@ -61,6 +44,23 @@ options:
             - (Required for new resource) A human-readable alias to assign to your rule.
         required: True
         type: str
+    description:
+        description:
+            - (Required for new resource) An extended description of your rule.
+        required: True
+        type: str
+    labels:
+        description:
+            - Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
+        required: False
+        type: list
+        elements: str
+    target:
+        description:
+            - (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,22 +107,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('required_config', 'list'),
     ('account_id', 'str'),
+    ('required_config', 'list'),
+    ('name', 'str'),
     ('description', 'str'),
     ('target', 'list'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'labels',
-    'required_config',
     'account_id',
-    'description',
     'enforcement_actions',
-    'target',
+    'required_config',
     'name',
+    'description',
+    'labels',
+    'target',
 ]
 
 # Params for Data source
@@ -139,7 +139,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    labels=dict(
+    account_id=dict(
+        required=False,
+        type='str'),
+    enforcement_actions=dict(
         required=False,
         elements='',
         type='list'),
@@ -147,13 +150,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    account_id=dict(
+    name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    enforcement_actions=dict(
+    labels=dict(
         required=False,
         elements='',
         type='list'),
@@ -161,9 +164,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_scc_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

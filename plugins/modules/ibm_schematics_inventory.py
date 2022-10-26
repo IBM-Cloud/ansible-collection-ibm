@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_inventory' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -32,17 +32,6 @@ options:
             - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
         required: False
         type: str
-    resource_queries:
-        description:
-            - Input resource query definitions that is used to dynamically generate the inventory of host and host group for the playbook.
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - The unique name of your Inventory definition. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores.
-        required: False
-        type: str
     resource_group:
         description:
             - Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
@@ -53,6 +42,17 @@ options:
             - Input inventory of host and host group for the playbook, in the `.ini` file format.
         required: False
         type: str
+    name:
+        description:
+            - The unique name of your Inventory definition. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores.
+        required: False
+        type: str
+    resource_queries:
+        description:
+            - Input resource query definitions that is used to dynamically generate the inventory of host and host group for the playbook.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,10 +105,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'description',
     'location',
-    'resource_queries',
-    'name',
     'resource_group',
     'inventories_ini',
+    'name',
+    'resource_queries',
 ]
 
 # Params for Data source
@@ -133,19 +133,19 @@ module_args = dict(
     location=dict(
         required=False,
         type='str'),
-    resource_queries=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
     inventories_ini=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_queries=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -211,7 +211,7 @@ def run_module():
         resource_type='ibm_schematics_inventory',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -220,7 +220,7 @@ def run_module():
             resource_type='ibm_schematics_inventory',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

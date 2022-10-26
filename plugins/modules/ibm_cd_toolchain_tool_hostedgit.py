@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_hostedgit' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
@@ -26,11 +26,6 @@ options:
         description:
             - (Required for new resource) ID of the toolchain to bind tool to.
         required: True
-        type: str
-    name:
-        description:
-            - Name of tool.
-        required: False
         type: str
     parameters:
         description:
@@ -44,6 +39,11 @@ options:
         required: True
         type: list
         elements: dict
+    name:
+        description:
+            - Name of tool.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,9 +98,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'toolchain_id',
-    'name',
     'parameters',
     'initialization',
+    'name',
 ]
 
 # Params for Data source
@@ -124,9 +124,6 @@ module_args = dict(
     toolchain_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     parameters=dict(
         required=False,
         elements='',
@@ -135,6 +132,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_hostedgit',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -209,7 +209,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_hostedgit',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

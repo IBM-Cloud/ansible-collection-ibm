@@ -18,18 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_vpn_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: True
+        type: str
     pi_ipsec_policy_id:
         description:
             - (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
         required: True
         type: str
-    pi_cloud_instance_id:
+    pi_vpn_connection_mode:
         description:
-            - (Required for new resource) PI cloud instance ID
+            - (Required for new resource) Mode used by this VPN Connection, either 'policy' or 'route'
+        required: True
+        type: str
+    pi_peer_gateway_address:
+        description:
+            - (Required for new resource) Peer Gateway address
         required: True
         type: str
     pi_vpn_connection_name:
@@ -42,28 +52,18 @@ options:
             - (Required for new resource) Unique identifier of IKE Policy selected for this VPN Connection
         required: True
         type: str
-    pi_peer_subnets:
-        description:
-            - (Required for new resource) Set of CIDR of peer subnets
-        required: True
-        type: list
-        elements: str
-    pi_vpn_connection_mode:
-        description:
-            - (Required for new resource) Mode used by this VPN Connection, either 'policy' or 'route'
-        required: True
-        type: str
     pi_networks:
         description:
             - (Required for new resource) Set of network IDs to attach to this VPN connection
         required: True
         type: list
         elements: str
-    pi_peer_gateway_address:
+    pi_peer_subnets:
         description:
-            - (Required for new resource) Peer Gateway address
+            - (Required for new resource) Set of CIDR of peer subnets
         required: True
-        type: str
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,26 +106,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_ipsec_policy_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_ipsec_policy_id', 'str'),
+    ('pi_vpn_connection_mode', 'str'),
+    ('pi_peer_gateway_address', 'str'),
     ('pi_vpn_connection_name', 'str'),
     ('pi_ike_policy_id', 'str'),
-    ('pi_peer_subnets', 'list'),
-    ('pi_vpn_connection_mode', 'str'),
     ('pi_networks', 'list'),
-    ('pi_peer_gateway_address', 'str'),
+    ('pi_peer_subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_ipsec_policy_id',
     'pi_cloud_instance_id',
+    'pi_ipsec_policy_id',
+    'pi_vpn_connection_mode',
+    'pi_peer_gateway_address',
     'pi_vpn_connection_name',
     'pi_ike_policy_id',
-    'pi_peer_subnets',
-    'pi_vpn_connection_mode',
     'pi_networks',
-    'pi_peer_gateway_address',
+    'pi_peer_subnets',
 ]
 
 # Params for Data source
@@ -142,10 +142,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_ipsec_policy_id=dict(
         required=False,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_vpn_connection_mode=dict(
+        required=False,
+        type='str'),
+    pi_peer_gateway_address=dict(
         required=False,
         type='str'),
     pi_vpn_connection_name=dict(
@@ -154,20 +160,14 @@ module_args = dict(
     pi_ike_policy_id=dict(
         required=False,
         type='str'),
-    pi_peer_subnets=dict(
-        required=False,
-        elements='',
-        type='list'),
-    pi_vpn_connection_mode=dict(
-        required=False,
-        type='str'),
     pi_networks=dict(
         required=False,
         elements='',
         type='list'),
-    pi_peer_gateway_address=dict(
+    pi_peer_subnets=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_pi_vpn_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

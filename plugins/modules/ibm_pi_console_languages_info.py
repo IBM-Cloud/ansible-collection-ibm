@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_console_languages' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - None
-        required: True
-        type: str
     pi_instance_name:
         description:
             - The unique identifier or name of the instance
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - None
         required: True
         type: str
     zone:
@@ -60,14 +60,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
     'pi_instance_name',
+    'pi_cloud_instance_id',
 ]
 
 
@@ -78,10 +78,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
+    pi_instance_name=dict(
         required=True,
         type='str'),
-    pi_instance_name=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
     zone=dict(
@@ -111,7 +111,7 @@ def run_module():
         resource_type='ibm_pi_console_languages',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,21 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    tags:
-        description:
-            - Tags array.
-        required: False
-        type: list
-        elements: str
-    content:
-        description:
-            - byte array representing the content to be imported.  Only supported for OVA images at this time.
-        required: False
-        type: str
     catalog_identifier:
         description:
             - (Required for new resource) Catalog identifier.
@@ -44,14 +33,14 @@ options:
         required: False
         type: list
         elements: str
-    offering_id:
-        description:
-            - (Required for new resource) Offering identification.
-        required: True
-        type: str
     zipurl:
         description:
             - URL path to zip location.  If not specified, must provide content in the body of this call.
+        required: False
+        type: str
+    content:
+        description:
+            - byte array representing the content to be imported.  Only supported for OVA images at this time.
         required: False
         type: str
     target_version:
@@ -59,6 +48,17 @@ options:
             - The semver value for this new version, if not found in the zip url package content.
         required: False
         type: str
+    offering_id:
+        description:
+            - (Required for new resource) Offering identification.
+        required: True
+        type: str
+    tags:
+        description:
+            - Tags array.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,13 +111,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tags',
-    'content',
     'catalog_identifier',
     'target_kinds',
-    'offering_id',
     'zipurl',
+    'content',
     'target_version',
+    'offering_id',
+    'tags',
 ]
 
 # Params for Data source
@@ -136,13 +136,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    content=dict(
-        required=False,
-        type='str'),
     catalog_identifier=dict(
         required=False,
         type='str'),
@@ -150,15 +143,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    offering_id=dict(
+    zipurl=dict(
         required=False,
         type='str'),
-    zipurl=dict(
+    content=dict(
         required=False,
         type='str'),
     target_version=dict(
         required=False,
         type='str'),
+    offering_id=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -224,7 +224,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -233,7 +233,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.43.0',
+            ibm_provider_version='1.44.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - Resource instance name for example, myobjectstorage
+        required: True
+        type: str
     resource_group_id:
         description:
             - The id of the resource group in which the instance is present
@@ -30,11 +35,6 @@ options:
         description:
             - The location or the environment in which instance exists
         required: False
-        type: str
-    name:
-        description:
-            - Resource instance name for example, myobjectstorage
-        required: True
         type: str
     service:
         description:
@@ -79,9 +79,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'resource_group_id',
     'location',
-    'name',
     'service',
 ]
 
@@ -93,14 +93,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=True,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     location=dict(
         required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     service=dict(
         required=False,
@@ -139,7 +139,7 @@ def run_module():
         resource_type='ibm_resource_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -16,22 +16,12 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_collector' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    passphrase:
-        description:
-            - To protect the credentials that you add to the service, a passphrase is used to generate a data encryption key. The key is used to securely store your credentials and prevent anyone from accessing them.
-        required: False
-        type: str
-    is_ubi_image:
-        description:
-            - Determines whether the collector has a Ubi image.
-        required: False
-        type: bool
     name:
         description:
             - (Required for new resource) A unique name for your collector.
@@ -53,6 +43,16 @@ options:
         required: False
         type: str
         default: 
+    passphrase:
+        description:
+            - To protect the credentials that you add to the service, a passphrase is used to generate a data encryption key. The key is used to securely store your credentials and prevent anyone from accessing them.
+        required: False
+        type: str
+    is_ubi_image:
+        description:
+            - Determines whether the collector has a Ubi image.
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,19 +106,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'passphrase',
-    'is_ubi_image',
     'name',
     'is_public',
     'managed_by',
     'description',
+    'passphrase',
+    'is_ubi_image',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('collector_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'collector_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -128,12 +130,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    passphrase=dict(
-        required=False,
-        type='str'),
-    is_ubi_image=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
@@ -146,6 +142,12 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
+    passphrase=dict(
+        required=False,
+        type='str'),
+    is_ubi_image=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -207,19 +209,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_scc_posture_collector',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.44.2',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_scc_posture_collector',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.44.2',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

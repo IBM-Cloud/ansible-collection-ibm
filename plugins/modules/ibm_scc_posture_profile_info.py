@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_posture_profile' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.43.0
+    - IBM-Cloud terraform-provider-ibm v1.44.2
     - Terraform v0.12.20
 
 options:
-    profile_type:
-        description:
-            - The profile type ID. This will be 4 for profiles and 6 for group profiles.
-        required: True
-        type: str
     profile_id:
         description:
             - The id for the given API.
+        required: True
+        type: str
+    profile_type:
+        description:
+            - The profile type ID. This will be 4 for profiles and 6 for group profiles.
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile_type', 'str'),
     ('profile_id', 'str'),
+    ('profile_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile_type',
     'profile_id',
+    'profile_type',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile_type=dict(
+    profile_id=dict(
         required=True,
         type='str'),
-    profile_id=dict(
+    profile_type=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_scc_posture_profile',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.43.0',
+        ibm_provider_version='1.44.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
