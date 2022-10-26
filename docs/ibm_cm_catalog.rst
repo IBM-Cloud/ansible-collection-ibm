@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    Resource Group ID
-
-
-  label (True, str, None)
-    (Required for new resource) Display Name in the requested language.
-
-
   short_description (False, str, None)
     Description in the requested language.
 
 
-  catalog_icon_url (False, str, None)
-    URL for an icon associated with this catalog.
+  tags (False, list, None)
+    List of tags associated with this catalog.
+
+
+  resource_group_id (False, str, None)
+    Resource Group ID
 
 
   kind (False, str, offering)
     Kind of catalog, offering or vpe.
 
 
-  tags (False, list, None)
-    List of tags associated with this catalog.
+  label (True, str, None)
+    (Required for new resource) Display Name in the requested language.
+
+
+  catalog_icon_url (False, str, None)
+    URL for an icon associated with this catalog.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   name (True, str, None)
     (Required for new resource) The name of the target. The name must be 1000 characters or less, and cannot include any special characters other than `(space) - . _ :`.
 
 
   target_type (True, str, None)
-    (Required for new resource) The type of the target.
+    (Required for new resource) The type of the target. It can be cloud_object_storage or logdna. Based on this type you must include cos_endpoint or logdna_endpoint.
 
 
-  cos_endpoint (True, list, None)
-    (Required for new resource) Property values for a Cloud Object Storage Endpoint.
+  cos_endpoint (False, list, None)
+    Property values for a Cloud Object Storage Endpoint.
+
+
+  logdna_endpoint (False, list, None)
+    Property values for a LogDNA Endpoint.
 
 
   id (False, str, None)
@@ -57,10 +65,6 @@ Parameters
 
   iaas_classic_api_key (False, any, None)
     (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
-
-
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   ibmcloud_api_key (True, any, None)

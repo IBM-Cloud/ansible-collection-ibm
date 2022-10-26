@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance (True, str, None)
-    Instance id
-
-
   name (True, str, None)
     The user-defined name for this volume attachment.
+
+
+  instance (True, str, None)
+    Instance id
 
 
   generation (False, int, 2)

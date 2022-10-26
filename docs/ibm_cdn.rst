@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  header (False, str, None)
-    Header info
+  https_port (False, int, 443)
+    HTTPS port number
 
 
   respect_headers (False, bool, True)
     respect headers info
+
+
+  certificate_type (False, str, None)
+    Certificate type
+
+
+  path (False, str, /*)
+    Path details
+
+
+  bucket_name (False, str, None)
+    Bucket name
 
 
   protocol (False, str, HTTP)
@@ -47,18 +59,6 @@ Parameters
     cname info
 
 
-  origin_type (False, str, HOST_SERVER)
-    Origin type info
-
-
-  http_port (False, int, 80)
-    HTTP port number
-
-
-  https_port (False, int, 443)
-    HTTPS port number
-
-
   file_extension (False, str, None)
     File extension info
 
@@ -67,8 +67,24 @@ Parameters
     query rule info
 
 
-  path (False, str, /*)
-    Path details
+  origin_type (False, str, HOST_SERVER)
+    Origin type info
+
+
+  http_port (False, int, 80)
+    HTTP port number
+
+
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
+  origin_address (True, str, None)
+    (Required for new resource) origin address info
+
+
+  header (False, str, None)
+    Header info
 
 
   host_name (True, str, None)
@@ -77,22 +93,6 @@ Parameters
 
   vendor_name (False, str, akamai)
     Vendor name
-
-
-  origin_address (True, str, None)
-    (Required for new resource) origin address info
-
-
-  bucket_name (False, str, None)
-    Bucket name
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
 
 
   id (False, str, None)

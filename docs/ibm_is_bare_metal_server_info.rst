@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  identifier (False, str, None)
-    None
-
-
   name (False, str, None)
     Bare metal server name
+
+
+  identifier (False, str, None)
+    None
 
 
   generation (False, int, 2)

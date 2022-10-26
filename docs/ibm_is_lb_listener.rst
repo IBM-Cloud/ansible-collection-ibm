@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  https_redirect_listener (False, str, None)
-    ID of the listener that will be set as http redirect target
-
-
-  connection_limit (False, int, None)
-    Connection limit for Loadbalancer
-
-
-  default_pool (False, str, None)
-    Loadbalancer default pool info
-
-
-  protocol (True, str, None)
-    (Required for new resource) Loadbalancer protocol
+  port_min (False, int, None)
+    The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
 
 
   certificate_instance (False, str, None)
@@ -53,6 +41,10 @@ Parameters
 
   https_redirect_status_code (False, int, None)
     The HTTP status code to be returned in the redirect response
+
+
+  connection_limit (False, int, None)
+    Connection limit for Loadbalancer
 
 
   lb (True, str, None)
@@ -67,8 +59,24 @@ Parameters
     Listener will forward proxy protocol
 
 
+  port_max (False, int, None)
+    The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
+
+
+  protocol (True, str, None)
+    (Required for new resource) Loadbalancer protocol
+
+
+  default_pool (False, str, None)
+    Loadbalancer default pool info
+
+
   https_redirect_uri (False, str, None)
     Target URI where traffic will be redirected
+
+
+  https_redirect_listener (False, str, None)
+    ID of the listener that will be set as http redirect target
 
 
   id (False, str, None)

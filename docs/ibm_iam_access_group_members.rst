@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -40,6 +40,10 @@ Parameters
 
 
   iam_service_ids (False, list, None)
+    None
+
+
+  iam_profile_ids (False, list, None)
     None
 
 

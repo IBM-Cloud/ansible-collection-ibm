@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  type (False, str, dedicated)
-    certificate type
-
 
   hosts (True, list, None)
     (Required for new resource) Hosts which certificate need to be ordered
@@ -45,6 +41,10 @@ Parameters
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  type (False, str, dedicated)
+    certificate type
 
 
   id (False, str, None)

@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  language (False, str, en)
+    Preferred language for resource. Format as described at RFC5646. According to the configured languages codes returned from the `GET /management/v4/{tenantId}/config/ui/languages API`.
+
+
+  subject (True, str, None)
+    (Required for new resource) The subject of the email
+
 
   html_body (False, str, None)
     The HTML body of the email
@@ -45,14 +53,6 @@ Parameters
 
   template_name (True, str, None)
     (Required for new resource) The type of email template. This can be `USER_VERIFICATION`, `WELCOME`, `PASSWORD_CHANGED`, `RESET_PASSWORD` or `MFA_VERIFICATION`
-
-
-  language (False, str, en)
-    Preferred language for resource. Format as described at RFC5646. According to the configured languages codes returned from the `GET /management/v4/{tenantId}/config/ui/languages API`.
-
-
-  subject (True, str, None)
-    (Required for new resource) The subject of the email
 
 
   id (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    Full url-encoded cloud resource name (CRN) of resource instance.
-
-
   domain_id (True, str, None)
     Zone identifier of the zone for which firewall rules are listed.
+
+
+  cis_id (True, str, None)
+    Full url-encoded cloud resource name (CRN) of resource instance.
 
 
   iaas_classic_username (False, any, None)

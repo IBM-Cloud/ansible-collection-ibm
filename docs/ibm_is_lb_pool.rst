@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -35,40 +35,16 @@ Parameters
     (Required for new resource) Load Balancer health timeout interval
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
 
 
   session_persistence_app_cookie_name (False, str, None)
     Load Balancer Pool session persisence app cookie name.
 
 
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
-
-
   protocol (True, str, None)
     (Required for new resource) Load Balancer Protocol
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
 
 
   health_retries (True, int, None)
@@ -79,8 +55,32 @@ Parameters
     Health monitor URL of LB Pool
 
 
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
   lb (True, str, None)
     (Required for new resource) Load Balancer ID
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
 
 
   id (False, str, None)

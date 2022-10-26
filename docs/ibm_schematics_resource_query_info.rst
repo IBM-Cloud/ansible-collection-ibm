@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,6 +31,10 @@ Parameters
 
   query_id (True, str, None)
     Resource query Id.  Use `GET /v2/resource_query` API to look up the Resource query definition Ids  in your IBM Cloud account.
+
+
+  location (False, str, None)
+    The Region of the workspace.
 
 
   iaas_classic_username (False, any, None)

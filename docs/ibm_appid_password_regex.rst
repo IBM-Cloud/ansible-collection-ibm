@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  regex (True, str, None)
+    (Required for new resource) The escaped regex expression rule for acceptable password
+
+
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
 
 
   error_message (False, str, None)
     Custom error message
-
-
-  regex (True, str, None)
-    (Required for new resource) The escaped regex expression rule for acceptable password
 
 
   id (False, str, None)

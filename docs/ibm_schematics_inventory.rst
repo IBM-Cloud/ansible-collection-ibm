@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+  name (False, str, None)
+    The unique name of your Inventory definition. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores.
 
 
-  inventories_ini (False, str, None)
-    Input inventory of host and host group for the playbook, in the `.ini` file format.
+  resource_group (False, str, None)
+    Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
 
 
   resource_queries (False, list, None)
     Input resource query definitions that is used to dynamically generate the inventory of host and host group for the playbook.
 
 
-  name (False, str, None)
-    The unique name of your Inventory definition. The name can be up to 128 characters long and can include alphanumeric characters, spaces, dashes, and underscores.
-
-
   description (False, str, None)
     The description of your Inventory definition. The description can be up to 2048 characters long in size.
 
 
-  resource_group (False, str, None)
-    Resource-group name for the Inventory definition.   By default, Inventory definition will be created in Default Resource Group.
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+
+
+  inventories_ini (False, str, None)
+    Input inventory of host and host group for the playbook, in the `.ini` file format.
 
 
   id (False, str, None)

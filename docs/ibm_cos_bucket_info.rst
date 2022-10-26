@@ -21,13 +21,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  bucket_region (False, str, None)
+    None
+
+
+  resource_instance_id (True, str, None)
+    None
+
+
+  satellite_location_id (False, str, None)
+    None
+
 
   endpoint_type (False, str, public)
     public or private
@@ -37,15 +49,7 @@ Parameters
     None
 
 
-  bucket_region (True, str, None)
-    None
-
-
-  bucket_type (True, str, None)
-    None
-
-
-  resource_instance_id (True, str, None)
+  bucket_type (False, str, None)
     None
 
 

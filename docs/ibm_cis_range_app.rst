@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  edge_ips_connectivity (False, str, all)
+    Specifies the IP version.
+
+
   traffic_type (False, str, direct)
     Configure how traffic is handled at the edge.
 
 
-  tls (False, str, False)
-    Configure if and how TLS connections are terminated at the edge.
-
-
-  dns (True, str, None)
-    (Required for new resource) Name of the DNS record for this application
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
 
 
   origin_port (False, int, None)
     Port at the origin that listens to traffic
 
 
-  proxy_protocol (False, str, None)
-    Allows for the true client IP to be passed to the service.
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
-
-
-  edge_ips_type (False, str, dynamic)
-    The type of edge IP configuration.
+  dns (True, str, None)
+    (Required for new resource) Name of the DNS record for this application
 
 
   origin_direct (False, list, None)
@@ -67,24 +59,32 @@ Parameters
     DNS record pointing to the origin for this Range application.
 
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
+  ip_firewall (False, bool, None)
+    Enables the IP Firewall for this application. Only available for TCP applications.
+
+
+  edge_ips_type (False, str, dynamic)
+    The type of edge IP configuration.
+
+
+  tls (False, str, False)
+    Configure if and how TLS connections are terminated at the edge.
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
   protocol (True, str, None)
     (Required for new resource) Defines the protocol and port for this application
 
 
+  proxy_protocol (False, str, None)
+    Allows for the true client IP to be passed to the service.
+
+
   dns_type (True, str, None)
     (Required for new resource) Type of the DNS record for this application
-
-
-  ip_firewall (False, bool, None)
-    Enables the IP Firewall for this application. Only available for TCP applications.
-
-
-  edge_ips_connectivity (False, str, all)
-    Specifies the IP version.
 
 
   id (False, str, None)

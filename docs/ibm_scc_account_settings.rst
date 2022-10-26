@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_scc_account_settings' resource
 
-This module supports idempotency
+This module does not support idempotency
 
 
 ForMoreInfoRefer
@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location_id (True, str, None)
-    (Required for new resource) The programatic ID of the location that you want to work in.
+  location (False, list, None)
+    Location Settings.
+
+
+  event_notifications (False, list, None)
+    The Event Notification settings to register.
 
 
   id (False, str, None)

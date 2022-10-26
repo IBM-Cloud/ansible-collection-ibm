@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
+  cis_id (True, str, None)
+    (Required for new resource) CIS Intance CRN
 
 
   rule_id (True, str, None)
@@ -47,8 +47,8 @@ Parameters
     (Required for new resource) CIS WAF Rule mode
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS Intance CRN
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
 
 
   id (False, str, None)

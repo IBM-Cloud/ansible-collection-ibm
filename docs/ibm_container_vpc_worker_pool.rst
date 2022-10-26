@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
-
-
-  zones (True, list, None)
-    (Required for new resource) Zones info
-
-
   labels (False, dict, None)
     Labels
 
 
   taints (False, list, None)
     WorkerPool Taints
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
 
 
   entitlement (False, str, None)
@@ -69,6 +49,38 @@ Parameters
 
   flavor (True, str, None)
     (Required for new resource) cluster node falvor
+
+
+  host_pool_id (False, str, None)
+    The ID of the dedicated host pool associated with the worker pool
+
+
+  crk (False, str, None)
+    Root Key ID for boot volume encryption
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
+
+
+  zones (True, list, None)
+    (Required for new resource) Zones info
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
+
+
+  kms_instance_id (False, str, None)
+    Instance ID for boot volume encryption
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

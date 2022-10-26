@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    IKE resource group ID
-
-
   key_lifetime (False, int, 28800)
     IKE Key lifetime
 
 
-  ike_version (False, int, None)
-    IKE version
+  name (True, str, None)
+    (Required for new resource) IKE name
 
 
   dh_group (True, int, None)
     (Required for new resource) IKE DH group
 
 
-  name (True, str, None)
-    (Required for new resource) IKE name
+  resource_group (False, str, None)
+    IKE resource group ID
+
+
+  ike_version (False, int, None)
+    IKE version
 
 
   authentication_algorithm (True, str, None)

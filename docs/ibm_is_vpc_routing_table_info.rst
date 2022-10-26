@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  routing_table (False, str, None)
-    The routing table identifier.
+  name (False, str, None)
+    The user-defined name for this routing table.
 
 
   vpc (True, str, None)
     The VPC identifier.
 
 
-  name (False, str, None)
-    The user-defined name for this routing table.
+  routing_table (False, str, None)
+    The routing table identifier.
 
 
   generation (False, int, 2)

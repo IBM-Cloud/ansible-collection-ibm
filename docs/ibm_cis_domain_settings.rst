@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  security_header (False, list, None)
-    Security Header Setting
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
 
 
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  websockets (False, str, None)
-    websockets setting
-
-
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  max_upload (False, int, None)
-    Maximum upload
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
+  ipv6 (False, str, None)
+    ipv6 setting
 
 
   pseudo_ipv4 (False, str, None)
     pseudo_ipv4 setting
 
 
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  minify (False, list, None)
+    Minify setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  always_use_https (False, str, None)
+    always_use_https setting
+
+
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
 
 
   server_side_exclude (False, str, None)
@@ -75,56 +83,12 @@ Parameters
     tls_client_auth setting
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
-
-
-  dnssec (False, str, None)
-    DNS Sec setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  response_buffering (False, str, None)
-    response_buffering setting
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
-
-
-  always_use_https (False, str, None)
-    always_use_https setting
-
-
   mobile_redirect (False, list, None)
     None
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  ssl (False, str, None)
-    SSL/TLS setting
+  dnssec (False, str, None)
+    DNS Sec setting
 
 
   browser_check (False, str, None)
@@ -135,16 +99,56 @@ Parameters
     http2 setting
 
 
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
-  cname_flattening (False, str, None)
-    cname_flattening setting
+  waf (False, str, None)
+    WAF setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
 
 
   hotlink_protection (False, str, None)
     hotlink_protection setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   origin_error_page_pass_thru (False, str, None)
@@ -155,12 +159,8 @@ Parameters
     brotli setting
 
 
-  cipher (False, list, None)
-    Cipher settings
-
-
-  minify (False, list, None)
-    Minify setting
+  websockets (False, str, None)
+    websockets setting
 
 
   id (False, str, None)

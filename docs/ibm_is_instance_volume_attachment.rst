@@ -23,13 +23,45 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    The user-defined name for this volume attachment.
+
+
+  volume (False, str, None)
+    Instance id
+
+
+  iops (False, int, None)
+    The maximum I/O operations per second (IOPS) for the volume.
+
+
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
+
+
+  profile (False, str, None)
+    The  globally unique name for the volume profile to use for this volume.
+
+
+  delete_volume_on_instance_delete (False, bool, None)
+    If set to true, when deleting the instance the volume will also be deleted.
+
+
+  volume_name (False, str, None)
+    The unique user-defined name for this volume
+
+
+  tags (False, list, None)
+    UserTags for the volume instance
+
 
   instance (True, str, None)
     (Required for new resource) Instance id
@@ -39,36 +71,8 @@ Parameters
     If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
 
 
-  iops (False, int, None)
-    The maximum I/O operations per second (IOPS) for the volume.
-
-
   encryption_key (False, str, None)
     The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
-
-
-  name (False, str, None)
-    The user-defined name for this volume attachment.
-
-
-  delete_volume_on_instance_delete (False, bool, None)
-    If set to true, when deleting the instance the volume will also be deleted.
-
-
-  volume (False, str, None)
-    Instance id
-
-
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-
-
-  volume_name (False, str, None)
-    The unique user-defined name for this volume
-
-
-  profile (False, str, None)
-    The  globally unique name for the volume profile to use for this volume.
 
 
   snapshot (False, str, None)

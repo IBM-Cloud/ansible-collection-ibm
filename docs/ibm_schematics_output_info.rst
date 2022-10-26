@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  template_id (True, str, None)
+    The id of template
+
 
   output_json (False, str, None)
     The json output in string
@@ -37,8 +41,8 @@ Parameters
     The ID of the workspace for which you want to retrieve output values. To find the workspace ID, use the `GET /workspaces` API.
 
 
-  template_id (True, str, None)
-    The id of template
+  location (False, str, None)
+    The Region of the workspace.
 
 
   iaas_classic_username (False, any, None)

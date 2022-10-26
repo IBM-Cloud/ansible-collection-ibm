@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_scc_posture_credential' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Credentials name.
-
 
   description (True, str, None)
     (Required for new resource) Credentials description.
@@ -57,6 +53,10 @@ Parameters
 
   type (True, str, None)
     (Required for new resource) Credentials type.
+
+
+  name (True, str, None)
+    (Required for new resource) Credentials name.
 
 
   id (False, str, None)

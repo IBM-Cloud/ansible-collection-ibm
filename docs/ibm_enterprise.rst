@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain (False, str, None)
-    A domain or subdomain for the enterprise, such as `example.com` or `my.example.com`.
-
-
   source_account_id (True, str, None)
     (Required for new resource) The ID of the account that is used to create the enterprise.
+
+
+  domain (False, str, None)
+    A domain or subdomain for the enterprise, such as `example.com` or `my.example.com`.
 
 
   name (True, str, None)

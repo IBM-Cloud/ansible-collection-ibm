@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,48 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  disabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
   environment_id (True, str, None)
     (Required for new resource) Environment Id.
 
 
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different feature flag values for different segments.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified feature flag.
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
 
 
   tags (False, str, None)
     Tags associated with the feature.
 
 
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified feature flag.
+
+
   name (True, str, None)
     (Required for new resource) Feature name.
 
 
-  type (True, str, None)
-    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
-
-
-  description (False, str, None)
-    Feature description.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+  disabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
   enabled_value (True, str, None)
     (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
+  description (False, str, None)
+    Feature description.
+
+
+  rollout_percentage (False, int, None)
+    Rollout percentage of the feature.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+
+
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different feature flag values for different segments.
 
 
   id (False, str, None)

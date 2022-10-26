@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  target (False, str, None)
-    The unique identifier for target.
-
-
-  subnet (True, str, None)
-    (Required for new resource) The subnet identifier.
+  address (False, str, None)
+    The address for this reserved IP.
 
 
   auto_delete (False, bool, None)
@@ -45,6 +41,14 @@ Parameters
 
   name (False, str, None)
     The user-defined or system-provided name for this reserved IP.
+
+
+  target (False, str, None)
+    The unique identifier for target.
+
+
+  subnet (True, str, None)
+    (Required for new resource) The subnet identifier.
 
 
   id (False, str, None)

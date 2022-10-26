@@ -1,6 +1,6 @@
 
-ibm_is_vpc_routing_table -- Configure IBM Cloud 'ibm_is_vpc_routing_table' resource
-===================================================================================
+ibm_is_subnet_routing_table_attachment -- Configure IBM Cloud 'ibm_is_subnet_routing_table_attachment' resource
+===============================================================================================================
 
 .. contents::
    :local:
@@ -10,20 +10,20 @@ ibm_is_vpc_routing_table -- Configure IBM Cloud 'ibm_is_vpc_routing_table' resou
 Synopsis
 --------
 
-Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
+Create, update or destroy an IBM Cloud 'ibm_is_subnet_routing_table_attachment' resource
 
-This module supports idempotency
+This module does not support idempotency
 
 
 ForMoreInfoRefer
 ----------------
-refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_vpc_routing_table
+refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_subnet_routing_table_attachment
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  route_vpc_zone_ingress (False, bool, False)
-    If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+  subnet (True, str, None)
+    (Required for new resource) The subnet identifier
 
 
-  name (False, str, None)
-    The user-defined name for this routing table.
-
-
-  vpc (True, str, None)
-    (Required for new resource) The VPC identifier.
-
-
-  route_direct_link_ingress (False, bool, False)
-    If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
-
-
-  route_transit_gateway_ingress (False, bool, False)
-    If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
+  routing_table (True, str, None)
+    (Required for new resource) The unique identifier of routing table
 
 
   id (False, str, None)

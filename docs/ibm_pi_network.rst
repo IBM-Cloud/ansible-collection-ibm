@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_dns (False, list, None)
+    List of PI network DNS name
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
+  pi_gateway (False, str, None)
+    PI network gateway
+
+
   pi_network_jumbo (False, bool, None)
     PI network enable MTU Jumbo option
+
+
+  pi_ipaddress_range (False, list, None)
+    List of one or more ip address range(s)
 
 
   pi_network_type (True, str, None)
@@ -43,20 +59,8 @@ Parameters
     (Required for new resource) PI network name
 
 
-  pi_dns (False, list, None)
-    List of PI network DNS name
-
-
   pi_cidr (False, str, None)
     PI network CIDR
-
-
-  pi_gateway (False, str, None)
-    PI network gateway
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

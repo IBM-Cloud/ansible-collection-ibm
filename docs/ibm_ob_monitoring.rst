@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  private_endpoint (False, bool, None)
-    Add this option to connect to your Sysdig service instance through the private service endpoint
-
 
   cluster (True, str, None)
     (Required for new resource) Name or ID of the cluster to be used.
@@ -45,6 +41,10 @@ Parameters
 
   sysdig_access_key (False, str, None)
     Sysdig ingestion key
+
+
+  private_endpoint (False, bool, None)
+    Add this option to connect to your Sysdig service instance through the private service endpoint
 
 
   id (False, str, None)

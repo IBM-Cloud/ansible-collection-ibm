@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  network_interfaces (False, list, None)
-    None
-
-
-  action (False, str, None)
-    This restart/start/stops a bare metal server.
-
 
   keys (True, list, None)
     (Required for new resource) SSH key Ids for the bare metal server
@@ -51,36 +43,44 @@ Parameters
     (Required for new resource) Zone name
 
 
-  vpc (False, str, None)
-    The VPC the bare metal server is to be a part of
+  name (False, str, None)
+    Bare metal server name
+
+
+  action (False, str, None)
+    This restart/start/stops a bare metal server.
 
 
   primary_network_interface (True, list, None)
     (Required for new resource) Primary Network interface info
 
 
+  tags (False, list, None)
+    Tags for the Bare metal server
+
+
+  network_interfaces (False, list, None)
+    None
+
+
   image (True, str, None)
     (Required for new resource) image id
-
-
-  delete_type (False, str, hard)
-    Enables stopping type of the bare metal server before deleting
-
-
-  user_data (False, str, None)
-    User data given for the bare metal server
 
 
   resource_group (False, str, None)
     Resource group name
 
 
-  tags (False, list, None)
-    Tags for the Bare metal server
+  user_data (False, str, None)
+    User data given for the bare metal server
 
 
-  name (False, str, None)
-    Bare metal server name
+  vpc (False, str, None)
+    The VPC the bare metal server is to be a part of
+
+
+  delete_type (False, str, hard)
+    Enables stopping type of the bare metal server before deleting
 
 
   id (False, str, None)

@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  datacenter (True, str, None)
-    (Required for new resource) Dataceneter name
-
 
   pod (True, str, None)
     (Required for new resource) Pod name
@@ -57,6 +53,10 @@ Parameters
 
   force_create (False, bool, None)
     Force the creation of reserved capacity with same name
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Dataceneter name
 
 
   id (False, str, None)

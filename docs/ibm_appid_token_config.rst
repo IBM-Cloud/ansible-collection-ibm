@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  refresh_token_expires_in (False, int, 2592000)
+    The length of time for which refresh tokens are valid in seconds
+
+
+  anonymous_token_expires_in (False, int, 2592000)
+    None
+
+
+  anonymous_access_enabled (False, bool, None)
+    The length of time for which an anonymous token is valid in seconds
+
 
   refresh_token_enabled (False, bool, None)
     None
@@ -49,18 +61,6 @@ Parameters
 
   access_token_expires_in (False, int, None)
     The length of time for which access tokens are valid in seconds
-
-
-  refresh_token_expires_in (False, int, 2592000)
-    The length of time for which refresh tokens are valid in seconds
-
-
-  anonymous_token_expires_in (False, int, 2592000)
-    None
-
-
-  anonymous_access_enabled (False, bool, None)
-    The length of time for which an anonymous token is valid in seconds
 
 
   id (False, str, None)

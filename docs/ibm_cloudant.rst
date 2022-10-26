@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  parameters_json (False, str, None)
+    Arbitrary parameters to pass in Json string format
 
 
-  resource_group_id (False, str, None)
-    The resource group id
+  cors_config (False, list, None)
+    Configuration for CORS.
 
 
-  include_data_events (False, bool, False)
-    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
-
-
-  legacy_credentials (False, bool, False)
-    Use both legacy credentials and IAM for authentication
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
   environment_crn (False, str, None)
     CRN of the IBM Cloudant Dedicated Hardware plan instance
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
+  capacity (False, int, 1)
+    A number of blocks of throughput units. A block consists of 100 reads/sec, 50 writes/sec, and 5 global queries/sec of provisioned throughput capacity.
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  legacy_credentials (False, bool, False)
+    Use both legacy credentials and IAM for authentication
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  include_data_events (False, bool, False)
+    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
 
 
   enable_cors (False, bool, True)
@@ -63,28 +75,16 @@ Parameters
     (Required for new resource) A name for the resource instance
 
 
-  cors_config (False, list, None)
-    Configuration for CORS.
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  tags (False, list, None)
-    None
-
-
-  capacity (False, int, 1)
-    A number of blocks of throughput units. A block consists of 100 reads/sec, 50 writes/sec, and 5 global queries/sec of provisioned throughput capacity.
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
 
 
-  parameters_json (False, str, None)
-    Arbitrary parameters to pass in Json string format
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)

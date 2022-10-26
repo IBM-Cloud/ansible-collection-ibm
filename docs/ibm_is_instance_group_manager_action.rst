@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.39.1
+- IBM-Cloud terraform-provider-ibm v1.46.0
 - Terraform v0.12.20
 
 
@@ -35,20 +35,8 @@ Parameters
     The cron specification for a recurring scheduled action. Actions can be applied a maximum of one time within a 5 min period.
 
 
-  membership_count (False, int, None)
-    The number of members the instance group should have at the scheduled time.
-
-
-  max_membership_count (False, int, None)
-    The maximum number of members in a managed instance group
-
-
-  target_manager (False, str, None)
-    The unique identifier for this instance group manager of type autoscale.
-
-
-  instance_group (True, str, None)
-    (Required for new resource) instance group ID
+  instance_group_manager (True, str, None)
+    (Required for new resource) Instance group manager ID of type scheduled
 
 
   run_at (False, str, None)
@@ -59,12 +47,24 @@ Parameters
     The minimum number of members in a managed instance group
 
 
+  target_manager (False, str, None)
+    The unique identifier for this instance group manager of type autoscale.
+
+
   name (False, str, None)
     instance group manager action name
 
 
-  instance_group_manager (True, str, None)
-    (Required for new resource) Instance group manager ID of type scheduled
+  membership_count (False, int, None)
+    The number of members the instance group should have at the scheduled time.
+
+
+  instance_group (True, str, None)
+    (Required for new resource) instance group ID
+
+
+  max_membership_count (False, int, None)
+    The maximum number of members in a managed instance group
 
 
   id (False, str, None)
