@@ -18,14 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_server_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    name:
+    destination:
         description:
-            - The user-defined name for this VPN route. If unspecified, the name will be a hyphenated list of randomly-selected words. Names must be unique within the VPN server the VPN route resides in.
-        required: False
+            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
+        required: True
         type: str
     action:
         description:
@@ -38,10 +38,10 @@ options:
             - (Required for new resource) The VPN server identifier.
         required: True
         type: str
-    destination:
+    name:
         description:
-            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
-        required: True
+            - The user-defined name for this VPN route. If unspecified, the name will be a hyphenated list of randomly-selected words. Names must be unique within the VPN server the VPN route resides in.
+        required: False
         type: str
     id:
         description:
@@ -89,16 +89,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpn_server', 'str'),
     ('destination', 'str'),
+    ('vpn_server', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'destination',
     'action',
     'vpn_server',
-    'destination',
+    'name',
 ]
 
 # Params for Data source
@@ -107,9 +107,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'identifier',
     'name',
     'vpn_server',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -119,7 +119,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    destination=dict(
         required=False,
         type='str'),
     action=dict(
@@ -128,7 +128,7 @@ module_args = dict(
     vpn_server=dict(
         required=False,
         type='str'),
-    destination=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_vpn_server_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_vpn_server_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

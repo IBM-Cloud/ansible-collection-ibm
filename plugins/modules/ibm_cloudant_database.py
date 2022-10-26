@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cloudant_database' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    shards:
-        description:
-            - The number of shards in the database. Each shard is a partition of the hash value range. You are encouraged to talk to support about appropriate values before changing this.
-        required: False
-        type: int
-    instance_crn:
-        description:
-            - (Required for new resource) Cloudant Instance CRN.
-        required: True
-        type: str
     db:
         description:
             - (Required for new resource) Path parameter to specify the database name.
@@ -42,6 +32,16 @@ options:
             - Query parameter to specify whether to enable database partitions when creating a database.
         required: False
         type: bool
+    shards:
+        description:
+            - The number of shards in the database. Each shard is a partition of the hash value range. You are encouraged to talk to support about appropriate values before changing this.
+        required: False
+        type: int
+    instance_crn:
+        description:
+            - (Required for new resource) Cloudant Instance CRN.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,16 +88,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_crn', 'str'),
     ('db', 'str'),
+    ('instance_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'shards',
-    'instance_crn',
     'db',
     'partitioned',
+    'shards',
+    'instance_crn',
 ]
 
 # Params for Data source
@@ -118,18 +118,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    shards=dict(
-        required=False,
-        type='int'),
-    instance_crn=dict(
-        required=False,
-        type='str'),
     db=dict(
         required=False,
         type='str'),
     partitioned=dict(
         required=False,
         type='bool'),
+    shards=dict(
+        required=False,
+        type='int'),
+    instance_crn=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -195,7 +195,7 @@ def run_module():
         resource_type='ibm_cloudant_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -204,7 +204,7 @@ def run_module():
             resource_type='ibm_cloudant_database',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

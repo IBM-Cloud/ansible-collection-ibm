@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    reserved_ip:
-        description:
-            - The reserved IP identifier.
-        required: True
-        type: str
     subnet:
         description:
             - The subnet identifier.
+        required: True
+        type: str
+    reserved_ip:
+        description:
+            - The reserved IP identifier.
         required: True
         type: str
     generation:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('reserved_ip', 'str'),
     ('subnet', 'str'),
+    ('reserved_ip', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'reserved_ip',
     'subnet',
+    'reserved_ip',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    reserved_ip=dict(
+    subnet=dict(
         required=True,
         type='str'),
-    subnet=dict(
+    reserved_ip=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -134,7 +134,7 @@ def run_module():
         resource_type='ibm_is_subnet_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_trigger_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
@@ -34,20 +34,15 @@ options:
         type: str
     value:
         description:
-            - String format property value.
+            - Property value.
         required: False
         type: str
     enum:
         description:
-            - Options for SINGLE_SELECT property type.
+            - Options for `single_select` property type. Only needed for `single_select` property type.
         required: False
         type: list
         elements: str
-    default:
-        description:
-            - Default option for SINGLE_SELECT property type.
-        required: False
-        type: str
     type:
         description:
             - (Required for new resource) Property type.
@@ -55,12 +50,12 @@ options:
         type: str
     path:
         description:
-            - property path for INTEGRATION type properties.
+            - A dot notation path for `integration` type properties to select a value from the tool integration. If left blank the full tool integration data will be used.
         required: False
         type: str
     pipeline_id:
         description:
-            - (Required for new resource) The tekton pipeline ID.
+            - (Required for new resource) The Tekton pipeline ID.
         required: True
         type: str
     id:
@@ -121,7 +116,6 @@ TL_ALL_PARAMETERS = [
     'name',
     'value',
     'enum',
-    'default',
     'type',
     'path',
     'pipeline_id',
@@ -129,15 +123,15 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('pipeline_id', 'str'),
     ('trigger_id', 'str'),
     ('property_name', 'str'),
-    ('pipeline_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'pipeline_id',
     'trigger_id',
     'property_name',
-    'pipeline_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -160,9 +154,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    default=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -237,7 +228,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_trigger_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +237,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_trigger_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

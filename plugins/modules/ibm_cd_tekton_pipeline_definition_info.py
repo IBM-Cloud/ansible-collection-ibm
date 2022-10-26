@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cd_tekton_pipeline_definition' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
     pipeline_id:
         description:
-            - The tekton pipeline ID.
+            - The Tekton pipeline ID.
         required: True
         type: str
     definition_id:
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_definition',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

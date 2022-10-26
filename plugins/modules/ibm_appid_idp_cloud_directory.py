@@ -18,50 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_idp_cloud_directory' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    tenant_id:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
-    signup_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
-    identity_confirm_methods:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    identity_field:
-        description:
-            - None
-        required: False
-        type: str
     identity_confirm_access_mode:
         description:
             - None
         required: False
         type: str
         default: FULL
+    identity_confirm_methods:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     is_active:
         description:
             - (Required for new resource) 
         required: True
         type: bool
-    self_service_enabled:
-        description:
-            - None
-        required: False
-        type: bool
-        default: True
-    welcome_enabled:
+    signup_enabled:
         description:
             - None
         required: False
@@ -79,6 +57,28 @@ options:
         required: False
         type: bool
         default: True
+    tenant_id:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    self_service_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    welcome_enabled:
+        description:
+            - None
+        required: False
+        type: bool
+        default: True
+    identity_field:
+        description:
+            - None
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,22 +125,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('tenant_id', 'str'),
     ('is_active', 'bool'),
+    ('tenant_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tenant_id',
-    'signup_enabled',
-    'identity_confirm_methods',
-    'identity_field',
     'identity_confirm_access_mode',
+    'identity_confirm_methods',
     'is_active',
-    'self_service_enabled',
-    'welcome_enabled',
+    'signup_enabled',
     'reset_password_enabled',
     'reset_password_notification_enabled',
+    'tenant_id',
+    'self_service_enabled',
+    'welcome_enabled',
+    'identity_field',
 ]
 
 # Params for Data source
@@ -159,29 +159,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tenant_id=dict(
+    identity_confirm_access_mode=dict(
         required=False,
         type='str'),
-    signup_enabled=dict(
-        required=False,
-        type='bool'),
     identity_confirm_methods=dict(
         required=False,
         elements='',
         type='list'),
-    identity_field=dict(
-        required=False,
-        type='str'),
-    identity_confirm_access_mode=dict(
-        required=False,
-        type='str'),
     is_active=dict(
         required=False,
         type='bool'),
-    self_service_enabled=dict(
-        required=False,
-        type='bool'),
-    welcome_enabled=dict(
+    signup_enabled=dict(
         required=False,
         type='bool'),
     reset_password_enabled=dict(
@@ -190,6 +178,18 @@ module_args = dict(
     reset_password_notification_enabled=dict(
         required=False,
         type='bool'),
+    tenant_id=dict(
+        required=False,
+        type='str'),
+    self_service_enabled=dict(
+        required=False,
+        type='bool'),
+    welcome_enabled=dict(
+        required=False,
+        type='bool'),
+    identity_field=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -255,7 +255,7 @@ def run_module():
         resource_type='ibm_appid_idp_cloud_directory',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +264,7 @@ def run_module():
             resource_type='ibm_appid_idp_cloud_directory',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

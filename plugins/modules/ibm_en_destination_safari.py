@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_safari' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
     instance_guid:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) The type of Destination type push_ios.
         required: True
         type: str
     description:
@@ -42,12 +37,7 @@ options:
             - The Certificate File.
         required: False
         type: str
-    icon_128x128_2x_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_32x32_2x:
+    icon_32x32:
         description:
             - The Certificate File.
         required: False
@@ -57,32 +47,12 @@ options:
             - The Certificate File.
         required: False
         type: str
-    icon_128x128_2x:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_16x16_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
     certificate:
         description:
             - (Required for new resource) The Certificate File.
         required: True
         type: str
-    icon_16x16_2x:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_16x16_2x_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_32x32_2x_content_type:
+    icon_128x128_content_type:
         description:
             - The Certificate File.
         required: False
@@ -98,17 +68,47 @@ options:
             - (Required for new resource) The Destintion name.
         required: True
         type: str
-    icon_32x32:
+    icon_128x128_2x:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_32x32_2x_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_128x128_2x_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) The type of Destination type push_ios.
+        required: True
+        type: str
+    icon_16x16_2x:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_32x32_2x:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_16x16_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_16x16_2x_content_type:
         description:
             - The Certificate File.
         required: False
         type: str
     icon_32x32_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_128x128_content_type:
         description:
             - The Certificate File.
         required: False
@@ -160,42 +160,42 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_guid', 'str'),
-    ('type', 'str'),
     ('certificate', 'str'),
     ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_guid',
-    'type',
     'description',
     'icon_16x16',
-    'icon_128x128_2x_content_type',
-    'icon_32x32_2x',
+    'icon_32x32',
     'icon_128x128',
-    'icon_128x128_2x',
-    'icon_16x16_content_type',
     'certificate',
-    'icon_16x16_2x',
-    'icon_16x16_2x_content_type',
-    'icon_32x32_2x_content_type',
+    'icon_128x128_content_type',
     'config',
     'name',
-    'icon_32x32',
+    'icon_128x128_2x',
+    'icon_32x32_2x_content_type',
+    'icon_128x128_2x_content_type',
+    'type',
+    'icon_16x16_2x',
+    'icon_32x32_2x',
+    'icon_16x16_content_type',
+    'icon_16x16_2x_content_type',
     'icon_32x32_content_type',
-    'icon_128x128_content_type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_guid', 'str'),
     ('destination_id', 'str'),
+    ('instance_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_guid',
     'destination_id',
+    'instance_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -208,40 +208,22 @@ module_args = dict(
     instance_guid=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
     icon_16x16=dict(
         required=False,
         type='str'),
-    icon_128x128_2x_content_type=dict(
-        required=False,
-        type='str'),
-    icon_32x32_2x=dict(
+    icon_32x32=dict(
         required=False,
         type='str'),
     icon_128x128=dict(
         required=False,
         type='str'),
-    icon_128x128_2x=dict(
-        required=False,
-        type='str'),
-    icon_16x16_content_type=dict(
-        required=False,
-        type='str'),
     certificate=dict(
         required=False,
         type='str'),
-    icon_16x16_2x=dict(
-        required=False,
-        type='str'),
-    icon_16x16_2x_content_type=dict(
-        required=False,
-        type='str'),
-    icon_32x32_2x_content_type=dict(
+    icon_128x128_content_type=dict(
         required=False,
         type='str'),
     config=dict(
@@ -251,13 +233,31 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    icon_32x32=dict(
+    icon_128x128_2x=dict(
+        required=False,
+        type='str'),
+    icon_32x32_2x_content_type=dict(
+        required=False,
+        type='str'),
+    icon_128x128_2x_content_type=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    icon_16x16_2x=dict(
+        required=False,
+        type='str'),
+    icon_32x32_2x=dict(
+        required=False,
+        type='str'),
+    icon_16x16_content_type=dict(
+        required=False,
+        type='str'),
+    icon_16x16_2x_content_type=dict(
         required=False,
         type='str'),
     icon_32x32_content_type=dict(
-        required=False,
-        type='str'),
-    icon_128x128_content_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -325,7 +325,7 @@ def run_module():
         resource_type='ibm_en_destination_safari',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -334,7 +334,7 @@ def run_module():
             resource_type='ibm_en_destination_safari',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

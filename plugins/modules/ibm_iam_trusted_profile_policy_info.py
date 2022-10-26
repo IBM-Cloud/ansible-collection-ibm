@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_iam_trusted_profile_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    sort:
-        description:
-            - Sort query for policies
-        required: False
-        type: str
-    transaction_id:
-        description:
-            - Set transactionID for debug
-        required: False
-        type: str
     profile_id:
         description:
             - UUID of trusted profile
@@ -39,6 +29,16 @@ options:
     iam_id:
         description:
             - IAM ID of trusted profile
+        required: False
+        type: str
+    sort:
+        description:
+            - Sort query for policies
+        required: False
+        type: str
+    transaction_id:
+        description:
+            - Set transactionID for debug
         required: False
         type: str
     iaas_classic_username:
@@ -78,10 +78,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'sort',
-    'transaction_id',
     'profile_id',
     'iam_id',
+    'sort',
+    'transaction_id',
 ]
 
 
@@ -92,16 +92,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    sort=dict(
-        required=False,
-        type='str'),
-    transaction_id=dict(
-        required=False,
-        type='str'),
     profile_id=dict(
         required=False,
         type='str'),
     iam_id=dict(
+        required=False,
+        type='str'),
+    sort=dict(
+        required=False,
+        type='str'),
+    transaction_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -138,7 +138,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

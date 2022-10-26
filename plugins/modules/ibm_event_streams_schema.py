@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_event_streams_schema' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    schema:
-        description:
-            - (Required for new resource) The schema in JSON format
-        required: True
-        type: str
     schema_id:
         description:
             - The ID to be assigned to schema, which must be unique. If this value is not specified, a generated UUID is assigned.
@@ -35,6 +30,11 @@ options:
     resource_instance_id:
         description:
             - (Required for new resource) The ID or the CRN of the Event Streams service instance
+        required: True
+        type: str
+    schema:
+        description:
+            - (Required for new resource) The schema in JSON format
         required: True
         type: str
     id:
@@ -83,26 +83,26 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('schema', 'str'),
     ('resource_instance_id', 'str'),
+    ('schema', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'schema',
     'schema_id',
     'resource_instance_id',
+    'schema',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('schema_id', 'str'),
     ('resource_instance_id', 'str'),
+    ('schema_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'schema_id',
     'resource_instance_id',
+    'schema_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -112,13 +112,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    schema=dict(
-        required=False,
-        type='str'),
     schema_id=dict(
         required=False,
         type='str'),
     resource_instance_id=dict(
+        required=False,
+        type='str'),
+    schema=dict(
         required=False,
         type='str'),
     id=dict(
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_event_streams_schema',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -195,7 +195,7 @@ def run_module():
             resource_type='ibm_event_streams_schema',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -7,35 +7,45 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ibm_pi_operations
-for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/pi_operations
+module: ibm_app_config_collection
+for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/app_config_collection
 
-short_description: Configure IBM Cloud 'ibm_pi_operations' resource
+short_description: Configure IBM Cloud 'ibm_app_config_collection' resource
 
 version_added: "2.8"
 
 description:
-    - Create, update or destroy an IBM Cloud 'ibm_pi_operations' resource
-    - This module does not support idempotency
+    - Create, update or destroy an IBM Cloud 'ibm_app_config_collection' resource
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    pi_operation:
+    guid:
         description:
-            - (Required for new resource) PI instance operation type
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    pi_cloud_instance_id:
+    name:
         description:
-            - (Required for new resource) PI Cloud instnce id
+            - (Required for new resource) Collection name.
         required: True
         type: str
-    pi_instance_name:
+    collection_id:
         description:
-            - (Required for new resource) PI instance Operation server name
+            - (Required for new resource) Collection Id.
         required: True
+        type: str
+    description:
+        description:
+            - Collection description
+        required: False
+        type: str
+    tags:
+        description:
+            - Tags associated with the collection
+        required: False
         type: str
     id:
         description:
@@ -50,13 +60,18 @@ options:
             - absent
         default: available
         required: False
-    zone:
+    iaas_classic_username:
         description:
-            - Denotes which IBM Cloud zone to connect to in multizone
-              environment. This can also be provided via the environment
-              variable 'IC_ZONE'.
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure (SoftLayer) user name. This can also be provided
+              via the environment variable 'IAAS_CLASSIC_USERNAME'.
         required: False
-        type: str
+    iaas_classic_api_key:
+        description:
+            - (Required when generation = 1) The IBM Cloud Classic
+              Infrastructure API key. This can also be provided via the
+              environment variable 'IAAS_CLASSIC_API_KEY'.
+        required: False
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -65,7 +80,6 @@ options:
               environment variable 'IC_REGION'.
         default: us-south
         required: False
-        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -79,23 +93,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_operation', 'str'),
-    ('pi_cloud_instance_id', 'str'),
-    ('pi_instance_name', 'str'),
+    ('guid', 'str'),
+    ('name', 'str'),
+    ('collection_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_operation',
-    'pi_cloud_instance_id',
-    'pi_instance_name',
+    'guid',
+    'name',
+    'collection_id',
+    'description',
+    'tags',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('guid', 'str'),
+    ('collection_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'guid',
+    'collection_id',
+    'include',
+    'expand',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -105,13 +127,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_operation=dict(
+    guid=dict(
         required=False,
         type='str'),
-    pi_cloud_instance_id=dict(
+    name=dict(
         required=False,
         type='str'),
-    pi_instance_name=dict(
+    collection_id=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    tags=dict(
         required=False,
         type='str'),
     id=dict(
@@ -122,9 +150,16 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    zone=dict(
+    iaas_classic_username=dict(
         type='str',
-        fallback=(env_fallback, ['IC_ZONE'])),
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
+        required=False),
+    iaas_classic_api_key=dict(
+        type='str',
+        no_log=True,
+        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
+        required=False),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -168,19 +203,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
-        resource_type='ibm_pi_operations',
-        tf_type='resource',
+    result_ds = ibmcloud_terraform(
+        resource_type='ibm_app_config_collection',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.46.0',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_app_config_collection',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.46.0',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_topic' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
+        type: str
+    description:
+        description:
+            - Description of the topic.
+        required: False
         type: str
     name:
         description:
@@ -38,11 +43,6 @@ options:
         required: False
         type: list
         elements: dict
-    description:
-        description:
-            - Description of the topic.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,20 +96,20 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_guid',
+    'description',
     'name',
     'sources',
-    'description',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_guid', 'str'),
     ('topic_id', 'str'),
+    ('instance_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_guid',
     'topic_id',
+    'instance_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -122,6 +122,9 @@ module_args = dict(
     instance_guid=dict(
         required=False,
         type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -129,9 +132,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_en_topic',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -206,7 +206,7 @@ def run_module():
             resource_type='ibm_en_topic',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

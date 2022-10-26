@@ -17,14 +17,14 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_segments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    guid:
+    tags:
         description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
+            - Filter the resources to be returned based on the associated tags.
+        required: False
         type: str
     sort:
         description:
@@ -41,10 +41,10 @@ options:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
-    tags:
+    guid:
         description:
-            - Filter the resources to be returned based on the associated tags.
-        required: False
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
         type: str
     include:
         description:
@@ -99,11 +99,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
+    'tags',
     'sort',
     'total_count',
     'offset',
-    'tags',
+    'guid',
     'include',
     'expand',
     'limit',
@@ -117,8 +117,8 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=True,
+    tags=dict(
+        required=False,
         type='str'),
     sort=dict(
         required=False,
@@ -129,8 +129,8 @@ module_args = dict(
     offset=dict(
         required=False,
         type='int'),
-    tags=dict(
-        required=False,
+    guid=dict(
+        required=True,
         type='str'),
     include=dict(
         required=False,
@@ -175,7 +175,7 @@ def run_module():
         resource_type='ibm_app_config_segments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

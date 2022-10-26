@@ -18,19 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket_object' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    content_file:
+    content_base64:
         description:
-            - COS object content file path
+            - COS object content in base64 encoding
         required: False
         type: str
-    key:
+    etag:
         description:
-            - (Required for new resource) COS object key
-        required: True
+            - COS object MD5 hexdigest
+        required: False
         type: str
     force_delete:
         description:
@@ -38,9 +38,15 @@ options:
         required: False
         type: bool
         default: True
-    bucket_location:
+    endpoint_type:
         description:
-            - (Required for new resource) COS bucket location
+            - COS endpoint type: public, private, direct
+        required: False
+        type: str
+        default: public
+    key:
+        description:
+            - (Required for new resource) COS object key
         required: True
         type: str
     bucket_crn:
@@ -48,25 +54,19 @@ options:
             - (Required for new resource) COS bucket CRN
         required: True
         type: str
-    etag:
+    bucket_location:
         description:
-            - COS object MD5 hexdigest
-        required: False
-        type: str
-    endpoint_type:
-        description:
-            - COS endpoint type: public, private, direct
-        required: False
-        type: str
-        default: public
-    content_base64:
-        description:
-            - COS object content in base64 encoding
-        required: False
+            - (Required for new resource) COS bucket location
+        required: True
         type: str
     content:
         description:
             - COS object content
+        required: False
+        type: str
+    content_file:
+        description:
+            - COS object content file path
         required: False
         type: str
     id:
@@ -116,21 +116,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('key', 'str'),
-    ('bucket_location', 'str'),
     ('bucket_crn', 'str'),
+    ('bucket_location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'content_file',
-    'key',
-    'force_delete',
-    'bucket_location',
-    'bucket_crn',
-    'etag',
-    'endpoint_type',
     'content_base64',
+    'etag',
+    'force_delete',
+    'endpoint_type',
+    'key',
+    'bucket_crn',
+    'bucket_location',
     'content',
+    'content_file',
 ]
 
 # Params for Data source
@@ -143,45 +143,45 @@ TL_REQUIRED_PARAMETERS_DS = [
 TL_ALL_PARAMETERS_DS = [
     'key',
     'bucket_crn',
-    'endpoint_type',
     'bucket_location',
+    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
-    'content_file': ['content', 'content_base64'],
     'content_base64': ['content', 'content_file'],
     'content': ['content_base64', 'content_file'],
+    'content_file': ['content', 'content_base64'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    content_file=dict(
-        required=False,
-        type='str'),
-    key=dict(
-        required=False,
-        type='str'),
-    force_delete=dict(
-        required=False,
-        type='bool'),
-    bucket_location=dict(
-        required=False,
-        type='str'),
-    bucket_crn=dict(
+    content_base64=dict(
         required=False,
         type='str'),
     etag=dict(
         required=False,
         type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
     endpoint_type=dict(
         required=False,
         type='str'),
-    content_base64=dict(
+    key=dict(
+        required=False,
+        type='str'),
+    bucket_crn=dict(
+        required=False,
+        type='str'),
+    bucket_location=dict(
         required=False,
         type='str'),
     content=dict(
+        required=False,
+        type='str'),
+    content_file=dict(
         required=False,
         type='str'),
     id=dict(
@@ -249,7 +249,7 @@ def run_module():
         resource_type='ibm_cos_bucket_object',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -258,7 +258,7 @@ def run_module():
             resource_type='ibm_cos_bucket_object',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

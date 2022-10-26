@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool_member' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
@@ -32,6 +32,11 @@ options:
             - (Required for new resource) Load Balancer Pool port
         required: True
         type: int
+    target_id:
+        description:
+            - Load balancer pool member target id
+        required: False
+        type: str
     weight:
         description:
             - Load balcner pool member weight
@@ -45,11 +50,6 @@ options:
     target_address:
         description:
             - Load balancer pool member target address
-        required: False
-        type: str
-    target_id:
-        description:
-            - Load balancer pool member target id
         required: False
         type: str
     id:
@@ -107,23 +107,23 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'lb',
     'port',
+    'target_id',
     'weight',
     'pool',
     'target_address',
-    'target_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('lb', 'str'),
-    ('pool', 'str'),
     ('member', 'str'),
+    ('pool', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'lb',
-    'pool',
     'member',
+    'pool',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -139,6 +139,9 @@ module_args = dict(
     port=dict(
         required=False,
         type='int'),
+    target_id=dict(
+        required=False,
+        type='str'),
     weight=dict(
         required=False,
         type='int'),
@@ -146,9 +149,6 @@ module_args = dict(
         required=False,
         type='str'),
     target_address=dict(
-        required=False,
-        type='str'),
-    target_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_is_lb_pool_member',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

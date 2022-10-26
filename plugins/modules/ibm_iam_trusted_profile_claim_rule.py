@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_claim_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
+    profile_id:
+        description:
+            - (Required for new resource) ID of the trusted profile to create a claim rule.
+        required: True
+        type: str
     realm_name:
         description:
             - The realm name of the Idp this claim rule applies to. This field is required only if the type is specified as 'Profile-SAML'.
@@ -32,9 +37,9 @@ options:
             - Session expiration in seconds, only required if type is 'Profile-SAML'.
         required: False
         type: int
-    profile_id:
+    type:
         description:
-            - (Required for new resource) ID of the trusted profile to create a claim rule.
+            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
         required: True
         type: str
     conditions:
@@ -43,11 +48,6 @@ options:
         required: True
         type: list
         elements: dict
-    type:
-        description:
-            - (Required for new resource) Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
-        required: True
-        type: str
     name:
         description:
             - Name of the claim rule to be created or updated.
@@ -105,30 +105,30 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('profile_id', 'str'),
-    ('conditions', 'list'),
     ('type', 'str'),
+    ('conditions', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'profile_id',
     'realm_name',
     'expiration',
-    'profile_id',
-    'conditions',
     'type',
+    'conditions',
     'name',
     'cr_type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('profile_id', 'str'),
     ('rule_id', 'str'),
+    ('profile_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'profile_id',
     'rule_id',
+    'profile_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,22 +138,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    profile_id=dict(
+        required=False,
+        type='str'),
     realm_name=dict(
         required=False,
         type='str'),
     expiration=dict(
         required=False,
         type='int'),
-    profile_id=dict(
+    type=dict(
         required=False,
         type='str'),
     conditions=dict(
         required=False,
         elements='',
         type='list'),
-    type=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_claim_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +234,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_claim_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

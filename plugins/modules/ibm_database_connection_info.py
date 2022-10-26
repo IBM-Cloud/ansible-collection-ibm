@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database_connection' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    user_type:
+    endpoint_type:
         description:
-            - User type.
+            - Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
         required: True
         type: str
     user_id:
@@ -36,9 +36,9 @@ options:
             - Deployment ID.
         required: True
         type: str
-    endpoint_type:
+    user_type:
         description:
-            - Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
+            - User type.
         required: True
         type: str
     iaas_classic_username:
@@ -74,18 +74,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('user_type', 'str'),
+    ('endpoint_type', 'str'),
     ('user_id', 'str'),
     ('deployment_id', 'str'),
-    ('endpoint_type', 'str'),
+    ('user_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_type',
+    'endpoint_type',
     'user_id',
     'deployment_id',
-    'endpoint_type',
+    'user_type',
 ]
 
 
@@ -96,7 +96,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_type=dict(
+    endpoint_type=dict(
         required=True,
         type='str'),
     user_id=dict(
@@ -105,7 +105,7 @@ module_args = dict(
     deployment_id=dict(
         required=True,
         type='str'),
-    endpoint_type=dict(
+    user_type=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_database_connection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

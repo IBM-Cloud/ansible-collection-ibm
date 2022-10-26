@@ -18,18 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server_network_interface_floating_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    network_interface:
-        description:
-            - (Required for new resource) Bare metal server network interface identifier
-        required: True
-        type: str
     bare_metal_server:
         description:
             - (Required for new resource) Bare metal server identifier
+        required: True
+        type: str
+    network_interface:
+        description:
+            - (Required for new resource) Bare metal server network interface identifier
         required: True
         type: str
     floating_ip:
@@ -83,28 +83,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('network_interface', 'str'),
     ('bare_metal_server', 'str'),
+    ('network_interface', 'str'),
     ('floating_ip', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'network_interface',
     'bare_metal_server',
+    'network_interface',
     'floating_ip',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('bare_metal_server', 'str'),
     ('network_interface', 'str'),
+    ('bare_metal_server', 'str'),
     ('floating_ip', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bare_metal_server',
     'network_interface',
+    'bare_metal_server',
     'floating_ip',
 ]
 
@@ -115,10 +115,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    network_interface=dict(
+    bare_metal_server=dict(
         required=False,
         type='str'),
-    bare_metal_server=dict(
+    network_interface=dict(
         required=False,
         type='str'),
     floating_ip=dict(
@@ -201,7 +201,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_interface_floating_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -210,7 +210,7 @@ def run_module():
             resource_type='ibm_is_bare_metal_server_network_interface_floating_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

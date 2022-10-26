@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hpcs_vault' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
     instance_id:
         description:
             - (Required for new resource) The ID of the UKO instance this resource exists in.
-        required: True
-        type: str
-    region:
-        description:
-            - (Required for new resource) The region of the UKO instance this resource exists in.
         required: True
         type: str
     name:
@@ -41,6 +36,11 @@ options:
         description:
             - Description of the vault.
         required: False
+        type: str
+    region:
+        description:
+            - (Required for new resource) The region of the UKO instance this resource exists in.
+        required: True
         type: str
     id:
         description:
@@ -89,29 +89,29 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('region', 'str'),
     ('name', 'str'),
+    ('region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
-    'region',
     'name',
     'description',
+    'region',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('region', 'str'),
     ('vault_id', 'str'),
     ('instance_id', 'str'),
+    ('region', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'region',
     'vault_id',
     'instance_id',
+    'region',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -124,13 +124,13 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
-    region=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_hpcs_vault',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -207,7 +207,7 @@ def run_module():
             resource_type='ibm_hpcs_vault',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

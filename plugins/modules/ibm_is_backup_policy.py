@@ -18,15 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_backup_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    name:
+    match_user_tags:
         description:
-            - (Required for new resource) The user-defined name for this backup policy. Names must be unique within the region this backup policy resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+            - (Required for new resource) The user tags this backup policy applies to. Resources that have both a matching user tag and a matching type will be subject to the backup policy.
         required: True
-        type: str
+        type: list
+        elements: str
     resource_group:
         description:
             - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
@@ -38,12 +39,11 @@ options:
         required: False
         type: list
         elements: str
-    match_user_tags:
+    name:
         description:
-            - (Required for new resource) The user tags this backup policy applies to. Resources that have both a matching user tag and a matching type will be subject to the backup policy.
+            - (Required for new resource) The user-defined name for this backup policy. Names must be unique within the region this backup policy resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: True
-        type: list
-        elements: str
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,16 +90,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('match_user_tags', 'list'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'match_user_tags',
     'resource_group',
     'match_resource_types',
-    'match_user_tags',
+    'name',
 ]
 
 # Params for Data source
@@ -107,8 +107,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -118,9 +118,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    match_user_tags=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -128,10 +129,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    match_user_tags=dict(
+    name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -209,7 +209,7 @@ def run_module():
         resource_type='ibm_is_backup_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -218,7 +218,7 @@ def run_module():
             resource_type='ibm_is_backup_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

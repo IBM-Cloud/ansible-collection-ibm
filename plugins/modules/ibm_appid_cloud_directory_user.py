@@ -18,18 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_cloud_directory_user' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    tenant_id:
-        description:
-            - (Required for new resource) The AppID instance GUID
-        required: True
-        type: str
     active:
         description:
             - Determines if the user account is active or not
+        required: False
+        type: bool
+        default: True
+    create_profile:
+        description:
+            - A boolean indication if a profile should be created for the Cloud Directory user
         required: False
         type: bool
         default: True
@@ -38,22 +39,21 @@ options:
             - Integer (epoch time in milliseconds), determines till when the user account will be locked
         required: False
         type: int
+    display_name:
+        description:
+            - Cloud Directory user display name
+        required: False
+        type: str
     status:
         description:
             - Accepted values `PENDING` or `CONFIRMED`
         required: False
         type: str
         default: PENDING
-    create_profile:
+    tenant_id:
         description:
-            - A boolean indication if a profile should be created for the Cloud Directory user
-        required: False
-        type: bool
-        default: True
-    display_name:
-        description:
-            - Cloud Directory user display name
-        required: False
+            - (Required for new resource) The AppID instance GUID
+        required: True
         type: str
     user_name:
         description:
@@ -124,12 +124,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'tenant_id',
     'active',
-    'locked_until',
-    'status',
     'create_profile',
+    'locked_until',
     'display_name',
+    'status',
+    'tenant_id',
     'user_name',
     'password',
     'email',
@@ -153,22 +153,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    tenant_id=dict(
-        required=False,
-        type='str'),
     active=dict(
+        required=False,
+        type='bool'),
+    create_profile=dict(
         required=False,
         type='bool'),
     locked_until=dict(
         required=False,
         type='int'),
+    display_name=dict(
+        required=False,
+        type='str'),
     status=dict(
         required=False,
         type='str'),
-    create_profile=dict(
-        required=False,
-        type='bool'),
-    display_name=dict(
+    tenant_id=dict(
         required=False,
         type='str'),
     user_name=dict(
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_appid_cloud_directory_user',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_appid_cloud_directory_user',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

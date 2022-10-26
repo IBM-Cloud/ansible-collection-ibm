@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Toolchain name.
+        required: True
+        type: str
     resource_group_id:
         description:
             - (Required for new resource) Resource group where toolchain will be created.
@@ -31,11 +36,6 @@ options:
         description:
             - Describes the toolchain.
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Toolchain name.
-        required: True
         type: str
     id:
         description:
@@ -83,15 +83,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resource_group_id', 'str'),
     ('name', 'str'),
+    ('resource_group_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'resource_group_id',
     'description',
-    'name',
 ]
 
 # Params for Data source
@@ -110,13 +110,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     description=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_cd_toolchain',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_cd_toolchain',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

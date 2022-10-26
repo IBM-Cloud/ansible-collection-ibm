@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
@@ -27,26 +27,27 @@ options:
             - (Required for new resource) The unique identifier of the instance.
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: True
+        type: str
     allow_ip_spoofing:
         description:
             - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
         required: False
         type: bool
         default: False
-    name:
+    security_groups:
         description:
-            - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: True
-        type: str
+            - None
+        required: False
+        type: list
+        elements: str
     subnet:
         description:
             - (Required for new resource) The unique identifier of the subnet.
         required: True
-        type: str
-    floating_ip:
-        description:
-            - The ID of the floating IP to attach to this network interface
-        required: False
         type: str
     primary_ip:
         description:
@@ -54,12 +55,11 @@ options:
         required: False
         type: list
         elements: dict
-    security_groups:
+    floating_ip:
         description:
-            - None
+            - The ID of the floating IP to attach to this network interface
         required: False
-        type: list
-        elements: str
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,12 +114,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance',
-    'allow_ip_spoofing',
     'name',
-    'subnet',
-    'floating_ip',
-    'primary_ip',
+    'allow_ip_spoofing',
     'security_groups',
+    'subnet',
+    'primary_ip',
+    'floating_ip',
 ]
 
 # Params for Data source
@@ -143,26 +143,26 @@ module_args = dict(
     instance=dict(
         required=False,
         type='str'),
-    allow_ip_spoofing=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
-    subnet=dict(
+    allow_ip_spoofing=dict(
         required=False,
-        type='str'),
-    floating_ip=dict(
+        type='bool'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    subnet=dict(
         required=False,
         type='str'),
     primary_ip=dict(
         required=False,
         elements='',
         type='list'),
-    security_groups=dict(
+    floating_ip=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_is_instance_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +249,7 @@ def run_module():
             resource_type='ibm_is_instance_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

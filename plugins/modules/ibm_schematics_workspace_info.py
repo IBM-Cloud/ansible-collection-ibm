@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
@@ -26,17 +26,17 @@ options:
             - Has uploaded Git repository tar.
         required: False
         type: bool
+    location:
+        description:
+            - The IBM Cloud location where your workspace was provisioned.
+        required: False
+        type: str
     template_values_metadata:
         description:
             - A list of input variables that are associated with the workspace.
         required: False
         type: list
         elements: dict
-    location:
-        description:
-            - The IBM Cloud location where your workspace was provisioned.
-        required: False
-        type: str
     workspace_id:
         description:
             - The ID of the workspace.  To find the workspace ID, use the `GET /v1/workspaces` API.
@@ -81,8 +81,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'template_git_has_uploadedgitrepotar',
-    'template_values_metadata',
     'location',
+    'template_values_metadata',
     'workspace_id',
 ]
 
@@ -97,13 +97,13 @@ module_args = dict(
     template_git_has_uploadedgitrepotar=dict(
         required=False,
         type='bool'),
+    location=dict(
+        required=False,
+        type='str'),
     template_values_metadata=dict(
         required=False,
         elements='',
         type='list'),
-    location=dict(
-        required=False,
-        type='str'),
     workspace_id=dict(
         required=True,
         type='str'),
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

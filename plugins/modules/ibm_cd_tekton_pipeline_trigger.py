@@ -18,19 +18,78 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_trigger' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
     pipeline_id:
         description:
-            - (Required for new resource) The tekton pipeline ID.
+            - (Required for new resource) The Tekton pipeline ID.
         required: True
         type: str
-    trigger:
+    name:
         description:
-            - (Required for new resource) Tekton pipeline trigger object.
+            - (Required for new resource) Trigger name.
         required: True
+        type: str
+    worker:
+        description:
+            - Worker used to run the trigger. If not specified the trigger will use the default pipeline worker.
+        required: False
+        type: list
+        elements: dict
+    cron:
+        description:
+            - Only needed for timer triggers. Cron expression for timer trigger.
+        required: False
+        type: str
+    tags:
+        description:
+            - Trigger tags array.
+        required: False
+        type: list
+        elements: str
+    secret:
+        description:
+            - Only needed for generic webhook trigger type. Secret used to start generic webhook trigger.
+        required: False
+        type: list
+        elements: dict
+    event_listener:
+        description:
+            - (Required for new resource) Event listener name. The name of the event listener to which the trigger is associated. The event listeners are defined in the definition repositories of the Tekton pipeline.
+        required: True
+        type: str
+    max_concurrent_runs:
+        description:
+            - Defines the maximum number of concurrent runs for this trigger. Omit this property to disable the concurrency limit.
+        required: False
+        type: int
+    disabled:
+        description:
+            - Flag whether the trigger is disabled. If omitted the trigger is enabled by default.
+        required: False
+        type: bool
+    events:
+        description:
+            - Only needed for Git triggers. Events object defines the events to which this Git trigger listens.
+        required: False
+        type: list
+        elements: dict
+    type:
+        description:
+            - (Required for new resource) Trigger type.
+        required: True
+        type: str
+    timezone:
+        description:
+            - Only needed for timer triggers. Timezone for timer trigger.
+        required: False
+        type: str
+    scm_source:
+        description:
+            - SCM source repository for a Git trigger. Only needed for Git triggers.
+        required: False
         type: list
         elements: dict
     id:
@@ -80,24 +139,37 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pipeline_id', 'str'),
-    ('trigger', 'list'),
+    ('name', 'str'),
+    ('event_listener', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pipeline_id',
-    'trigger',
+    'name',
+    'worker',
+    'cron',
+    'tags',
+    'secret',
+    'event_listener',
+    'max_concurrent_runs',
+    'disabled',
+    'events',
+    'type',
+    'timezone',
+    'scm_source',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('trigger_id', 'str'),
     ('pipeline_id', 'str'),
+    ('trigger_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'trigger_id',
     'pipeline_id',
+    'trigger_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -110,7 +182,44 @@ module_args = dict(
     pipeline_id=dict(
         required=False,
         type='str'),
-    trigger=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    worker=dict(
+        required=False,
+        elements='',
+        type='list'),
+    cron=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    secret=dict(
+        required=False,
+        elements='',
+        type='list'),
+    event_listener=dict(
+        required=False,
+        type='str'),
+    max_concurrent_runs=dict(
+        required=False,
+        type='int'),
+    disabled=dict(
+        required=False,
+        type='bool'),
+    events=dict(
+        required=False,
+        elements='',
+        type='list'),
+    type=dict(
+        required=False,
+        type='str'),
+    timezone=dict(
+        required=False,
+        type='str'),
+    scm_source=dict(
         required=False,
         elements='',
         type='list'),
@@ -179,7 +288,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_trigger',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -188,7 +297,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_trigger',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

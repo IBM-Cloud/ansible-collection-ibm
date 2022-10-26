@@ -18,25 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
-    labels:
-        description:
-            - Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
-        required: False
-        type: list
-        elements: str
-    enforcement_actions:
-        description:
-            - The actions that the service must run on your behalf when a request to create or modify the target resource does not comply with your conditions.
-        required: False
-        type: list
-        elements: dict
     account_id:
         description:
             - (Required for new resource) Your IBM Cloud account ID.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) A human-readable alias to assign to your rule.
         required: True
         type: str
     description:
@@ -50,15 +43,22 @@ options:
         required: True
         type: list
         elements: dict
-    name:
-        description:
-            - (Required for new resource) A human-readable alias to assign to your rule.
-        required: True
-        type: str
     target:
         description:
             - (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
         required: True
+        type: list
+        elements: dict
+    labels:
+        description:
+            - Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
+        required: False
+        type: list
+        elements: str
+    enforcement_actions:
+        description:
+            - The actions that the service must run on your behalf when a request to create or modify the target resource does not comply with your conditions.
+        required: False
         type: list
         elements: dict
     id:
@@ -108,21 +108,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('account_id', 'str'),
+    ('name', 'str'),
     ('description', 'str'),
     ('required_config', 'list'),
-    ('name', 'str'),
     ('target', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'labels',
-    'enforcement_actions',
     'account_id',
+    'name',
     'description',
     'required_config',
-    'name',
     'target',
+    'labels',
+    'enforcement_actions',
 ]
 
 # Params for Data source
@@ -139,15 +139,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    enforcement_actions=dict(
-        required=False,
-        elements='',
-        type='list'),
     account_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     description=dict(
@@ -157,10 +152,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     target=dict(
+        required=False,
+        elements='',
+        type='list'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
+    enforcement_actions=dict(
         required=False,
         elements='',
         type='list'),
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_scc_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

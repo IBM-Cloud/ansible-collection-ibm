@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_cloud_directory_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.45.1
+    - IBM-Cloud terraform-provider-ibm v1.46.0
     - Terraform v0.12.20
 
 options:
+    language:
+        description:
+            - Preferred language for resource. Format as described at RFC5646. According to the configured languages codes returned from the `GET /management/v4/{tenantId}/config/ui/languages API`.
+        required: False
+        type: str
+        default: en
     subject:
         description:
             - (Required for new resource) The subject of the email
@@ -47,12 +53,6 @@ options:
             - (Required for new resource) The type of email template. This can be `USER_VERIFICATION`, `WELCOME`, `PASSWORD_CHANGED`, `RESET_PASSWORD` or `MFA_VERIFICATION`
         required: True
         type: str
-    language:
-        description:
-            - Preferred language for resource. Format as described at RFC5646. According to the configured languages codes returned from the `GET /management/v4/{tenantId}/config/ui/languages API`.
-        required: False
-        type: str
-        default: en
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,12 +106,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'language',
     'subject',
     'html_body',
     'plain_text_body',
     'tenant_id',
     'template_name',
-    'language',
 ]
 
 # Params for Data source
@@ -121,9 +121,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'language',
     'tenant_id',
     'template_name',
+    'language',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,6 +133,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    language=dict(
+        required=False,
+        type='str'),
     subject=dict(
         required=False,
         type='str'),
@@ -146,9 +149,6 @@ module_args = dict(
         required=False,
         type='str'),
     template_name=dict(
-        required=False,
-        type='str'),
-    language=dict(
         required=False,
         type='str'),
     id=dict(
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_appid_cloud_directory_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.45.1',
+        ibm_provider_version='1.46.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +225,7 @@ def run_module():
             resource_type='ibm_appid_cloud_directory_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.45.1',
+            ibm_provider_version='1.46.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
