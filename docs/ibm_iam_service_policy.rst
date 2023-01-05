@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  roles (True, list, None)
-    (Required for new resource) Role names of the policy definition
+  resource_tags (False, list, None)
+    Set access management tags.
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
+
+
+  iam_service_id (False, str, None)
+    UUID of ServiceID
+
+
+  resources (False, list, None)
+    None
 
 
   resource_attributes (False, list, None)
@@ -43,32 +55,20 @@ Parameters
     Give access to all account management services
 
 
-  description (False, str, None)
-    Description of the Policy
-
-
-  iam_service_id (False, str, None)
-    UUID of ServiceID
+  tags (False, list, None)
+    None
 
 
   iam_id (False, str, None)
     IAM ID of ServiceID
 
 
-  resources (False, list, None)
-    None
+  roles (True, list, None)
+    (Required for new resource) Role names of the policy definition
 
 
-  tags (False, list, None)
-    None
-
-
-  resource_tags (False, list, None)
-    Set access management tags.
-
-
-  transaction_id (False, str, None)
-    Set transactionID for debug
+  description (False, str, None)
+    Description of the Policy
 
 
   id (False, str, None)

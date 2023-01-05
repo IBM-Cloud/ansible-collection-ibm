@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,80 +31,84 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile (False, str, None)
-    Profile info
-
-
-  auto_delete_volume (False, bool, None)
-    Auto delete volume along with instance
-
-
-  resource_group (False, str, None)
-    Instance resource group
-
-
-  instance_template (False, str, None)
-    Id of the instance template
-
-
-  keys (False, list, None)
-    SSH key Ids for the instance
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) Instance name
-
-
-  zone (False, str, None)
-    Zone name
-
-
-  default_trusted_profile_target (False, str, None)
-    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
   total_volume_bandwidth (False, int, None)
     The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  image (False, str, None)
-    image id
-
-
-  metadata_service_enabled (False, bool, None)
-    Indicates whether the metadata service endpoint is available to the virtual server instance
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  availability_policy_host_failure (False, str, None)
-    The availability policy to use for this virtual server instance
 
 
   force_recovery_time (False, int, None)
     Define timeout to force the instances to start/stop in minutes.
 
 
+  availability_policy_host_failure (False, str, None)
+    The availability policy to use for this virtual server instance
+
+
+  instance_template (False, str, None)
+    Id of the instance template
+
+
+  zone (False, str, None)
+    Zone name
+
+
+  action (False, str, None)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  access_tags (False, list, None)
+    list of access tags for the instance
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  metadata_service_enabled (False, bool, None)
+    Indicates whether the metadata service endpoint is available to the virtual server instance
+
+
+  tags (False, list, None)
+    list of tags for the instance
+
+
+  name (True, str, None)
+    (Required for new resource) Instance name
+
+
   vpc (False, str, None)
     VPC id
 
 
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
   force_action (False, bool, False)
     If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+
+
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
+
+
+  keys (False, list, None)
+    SSH key Ids for the instance
 
 
   primary_network_interface (False, list, None)
@@ -115,32 +119,32 @@ Parameters
     None
 
 
-  volumes (False, list, None)
-    List of volumes
+  profile (False, str, None)
+    Profile info
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  default_trusted_profile_auto_link (False, bool, None)
-    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+  image (False, str, None)
+    image id
 
 
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
+  auto_delete_volume (False, bool, None)
+    Auto delete volume along with instance
 
 
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  action (False, str, None)
-    Enables stopping of instance before deleting and waits till deletion is complete
+  resource_group (False, str, None)
+    Instance resource group
 
 
   catalog_offering (False, list, None)
     The catalog offering or offering version to use when provisioning this virtual server instance. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
+
+
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

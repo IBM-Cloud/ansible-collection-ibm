@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -35,60 +35,60 @@ Parameters
     ID of the resource group.
 
 
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
+  host_pool_id (False, str, None)
+    The ID of the dedicated host pool associated with the worker pool
 
 
   kms_instance_id (False, str, None)
     Instance ID for boot volume encryption
 
 
-  crk (False, str, None)
-    Root Key ID for boot volume encryption
+  kms_account_id (False, str, None)
+    Account ID of kms instance holder - if not provided, defaults to the account in use
 
 
   flavor (True, str, None)
     (Required for new resource) cluster node falvor
 
 
+  zones (True, list, None)
+    (Required for new resource) Zones info
+
+
   labels (False, dict, None)
     Labels
-
-
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
-
-
-  kms_account_id (False, str, None)
-    Account ID of kms instance holder - if not provided, defaults to the account in use
 
 
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
 
 
-  taints (False, list, None)
-    WorkerPool Taints
+  crk (False, str, None)
+    Root Key ID for boot volume encryption
 
 
-  zones (True, list, None)
-    (Required for new resource) Zones info
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
   operating_system (False, str, None)
     The operating system of the workers in the worker pool.
-
-
-  host_pool_id (False, str, None)
-    The ID of the dedicated host pool associated with the worker pool
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
 
 
   id (False, str, None)

@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    destination:
+    zone:
         description:
-            - (Required for new resource) The destination of the route.
+            - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
         required: True
         type: str
     next_hop:
@@ -48,9 +48,9 @@ options:
             - (Required for new resource) The VPC identifier.
         required: True
         type: str
-    zone:
+    destination:
         description:
-            - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
+            - (Required for new resource) The destination of the route.
         required: True
         type: str
     name:
@@ -104,21 +104,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('destination', 'str'),
+    ('zone', 'str'),
     ('next_hop', 'str'),
     ('routing_table', 'str'),
     ('vpc', 'str'),
-    ('zone', 'str'),
+    ('destination', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'destination',
+    'zone',
     'next_hop',
     'action',
     'routing_table',
     'vpc',
-    'zone',
+    'destination',
     'name',
 ]
 
@@ -130,8 +130,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'vpc',
-    'name',
     'routing_table',
+    'name',
     'route_id',
 ]
 
@@ -142,7 +142,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    destination=dict(
+    zone=dict(
         required=False,
         type='str'),
     next_hop=dict(
@@ -157,7 +157,7 @@ module_args = dict(
     vpc=dict(
         required=False,
         type='str'),
-    zone=dict(
+    destination=dict(
         required=False,
         type='str'),
     name=dict(
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +249,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

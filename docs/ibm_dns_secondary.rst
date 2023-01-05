@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  zone_name (True, str, None)
+    (Required for new resource) Zone name
+
 
   tags (False, list, None)
     List of tags
@@ -41,10 +45,6 @@ Parameters
 
   transfer_frequency (True, int, None)
     (Required for new resource) Transfer frequency value
-
-
-  zone_name (True, str, None)
-    (Required for new resource) Zone name
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_devopsinsights' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -89,13 +89,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('toolchain_id', 'str'),
     ('tool_id', 'str'),
+    ('toolchain_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'toolchain_id',
     'tool_id',
+    'toolchain_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_devopsinsights',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -185,7 +185,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_devopsinsights',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

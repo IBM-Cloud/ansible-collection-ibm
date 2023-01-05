@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (False, str, None)
+    The name of the image
+
+
+  status (False, str, None)
+    The status of the image
+
 
   visibility (False, str, None)
     Whether the image is publicly visible or private to the account
@@ -39,14 +47,6 @@ Parameters
 
   catalog_managed (False, bool, None)
     Lists images managed as part of a catalog offering. If an image is managed, accounts in the same enterprise with access to that catalog can specify the image's catalog offering version CRN to provision virtual server instances using the image
-
-
-  name (False, str, None)
-    The name of the image
-
-
-  status (False, str, None)
-    The status of the image
 
 
   generation (False, int, 2)

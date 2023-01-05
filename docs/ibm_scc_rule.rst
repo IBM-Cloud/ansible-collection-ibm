@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  target (True, list, None)
+    (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+
+
   account_id (True, str, None)
     (Required for new resource) Your IBM Cloud account ID.
+
+
+  name (True, str, None)
+    (Required for new resource) A human-readable alias to assign to your rule.
+
+
+  description (True, str, None)
+    (Required for new resource) An extended description of your rule.
 
 
   labels (False, list, None)
@@ -45,18 +57,6 @@ Parameters
 
   required_config (True, list, None)
     (Required for new resource) The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (and/or) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the and array. To add conditions to a property check, use or.
-
-
-  target (True, list, None)
-    (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
-
-
-  name (True, str, None)
-    (Required for new resource) A human-readable alias to assign to your rule.
-
-
-  description (True, str, None)
-    (Required for new resource) An extended description of your rule.
 
 
   id (False, str, None)

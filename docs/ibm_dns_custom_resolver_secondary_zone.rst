@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) The unique identifier of a service instance.
+  transfer_from (True, list, None)
+    (Required for new resource) The addresses of DNS servers where the secondary zone data should be transferred from
+
+
+  enabled (True, bool, None)
+    (Required for new resource) Enable/Disable the secondary zone
+
+
+  description (False, str, None)
+    Descriptive text of the secondary zone
 
 
   resolver_id (True, str, None)
@@ -43,16 +51,8 @@ Parameters
     (Required for new resource) The name of the zone.
 
 
-  enabled (True, bool, None)
-    (Required for new resource) Enable/Disable the secondary zone
-
-
-  transfer_from (True, list, None)
-    (Required for new resource) The addresses of DNS servers where the secondary zone data should be transferred from
-
-
-  description (False, str, None)
-    Descriptive text of the secondary zone
+  instance_id (True, str, None)
+    (Required for new resource) The unique identifier of a service instance.
 
 
   id (False, str, None)

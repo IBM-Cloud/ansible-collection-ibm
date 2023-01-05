@@ -18,19 +18,76 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_database' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    key_protect_key:
+        description:
+            - The CRN of Key protect key
+        required: False
+        type: str
+    users:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    key_protect_instance:
+        description:
+            - The CRN of Key protect instance
+        required: False
+        type: str
+    remote_leader_id:
+        description:
+            - The CRN of leader database
+        required: False
+        type: str
+    point_in_time_recovery_time:
+        description:
+            - The point in time recovery time stamp of the deployed instance
+        required: False
+        type: str
+    allowlist:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) Resource instance name for example, my Database instance
+        required: True
+        type: str
+    backup_id:
+        description:
+            - The CRN of backup source database
+        required: False
+        type: str
     group:
         description:
             - None
         required: False
         type: list
         elements: dict
-    version:
+    location:
         description:
-            - The database version to provision if specified
+            - (Required for new resource) The location or the region in which Database instance exists
+        required: True
+        type: str
+    plan:
+        description:
+            - (Required for new resource) The plan type of the Database instance
+        required: True
+        type: str
+    adminpassword:
+        description:
+            - The admin user password for the instance
+        required: False
+        type: str
+    configuration:
+        description:
+            - The configuration in JSON format
         required: False
         type: str
     plan_validation:
@@ -44,84 +101,16 @@ options:
             - (Required for new resource) The name of the Cloud Internet database service
         required: True
         type: str
-    point_in_time_recovery_deployment_id:
-        description:
-            - The CRN of source instance
-        required: False
-        type: str
-    allowlist:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     auto_scaling:
         description:
             - ICD Auto Scaling
         required: False
         type: list
         elements: dict
-    name:
+    backup_encryption_key_crn:
         description:
-            - (Required for new resource) Resource instance name for example, my Database instance
-        required: True
-        type: str
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+            - The Backup Encryption Key CRN
         required: False
-        type: str
-        default: public
-    adminpassword:
-        description:
-            - The admin user password for the instance
-        required: False
-        type: str
-    configuration:
-        description:
-            - The configuration in JSON format
-        required: False
-        type: str
-    remote_leader_id:
-        description:
-            - The CRN of leader database
-        required: False
-        type: str
-    users:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_group_id:
-        description:
-            - The id of the resource group in which the Database instance is present
-        required: False
-        type: str
-    location:
-        description:
-            - (Required for new resource) The location or the region in which Database instance exists
-        required: True
-        type: str
-    backup_id:
-        description:
-            - The CRN of backup source database
-        required: False
-        type: str
-    key_protect_key:
-        description:
-            - The CRN of Key protect key
-        required: False
-        type: str
-    point_in_time_recovery_time:
-        description:
-            - The point in time recovery time stamp of the deployed instance
-        required: False
-        type: str
-    plan:
-        description:
-            - (Required for new resource) The plan type of the Database instance
-        required: True
         type: str
     tags:
         description:
@@ -129,14 +118,31 @@ options:
         required: False
         type: list
         elements: str
-    key_protect_instance:
+    point_in_time_recovery_deployment_id:
         description:
-            - The CRN of Key protect instance
+            - The CRN of source instance
         required: False
         type: str
-    backup_encryption_key_crn:
+    logical_replication_slot:
         description:
-            - The Backup Encryption Key CRN
+            - None
+        required: False
+        type: list
+        elements: dict
+    version:
+        description:
+            - The database version to provision if specified
+        required: False
+        type: str
+    service_endpoints:
+        description:
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+        required: False
+        type: str
+        default: public
+    resource_group_id:
+        description:
+            - The id of the resource group in which the Database instance is present
         required: False
         type: str
     id:
@@ -185,36 +191,37 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('service', 'str'),
     ('name', 'str'),
     ('location', 'str'),
     ('plan', 'str'),
+    ('service', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'group',
-    'version',
-    'plan_validation',
-    'service',
-    'point_in_time_recovery_deployment_id',
+    'key_protect_key',
+    'users',
+    'key_protect_instance',
+    'remote_leader_id',
+    'point_in_time_recovery_time',
     'allowlist',
-    'auto_scaling',
     'name',
-    'service_endpoints',
+    'backup_id',
+    'group',
+    'location',
+    'plan',
     'adminpassword',
     'configuration',
-    'remote_leader_id',
-    'users',
-    'resource_group_id',
-    'location',
-    'backup_id',
-    'key_protect_key',
-    'point_in_time_recovery_time',
-    'plan',
-    'tags',
-    'key_protect_instance',
+    'plan_validation',
+    'service',
+    'auto_scaling',
     'backup_encryption_key_crn',
+    'tags',
+    'point_in_time_recovery_deployment_id',
+    'logical_replication_slot',
+    'version',
+    'service_endpoints',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -223,50 +230,56 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'service',
+    'resource_group_id',
     'location',
     'tags',
-    'resource_group_id',
-    'service',
     'name',
 ]
 
 TL_CONFLICTS_MAP = {
-    'group': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count', 'node_count'],
     'allowlist': ['whitelist'],
+    'group': ['members_memory_allocation_mb', 'members_disk_allocation_mb', 'members_cpu_allocation_count', 'node_memory_allocation_mb', 'node_disk_allocation_mb', 'node_cpu_allocation_count', 'node_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    group=dict(
+    key_protect_key=dict(
+        required=False,
+        type='str'),
+    users=dict(
         required=False,
         elements='',
         type='list'),
-    version=dict(
+    key_protect_instance=dict(
         required=False,
         type='str'),
-    plan_validation=dict(
-        required=False,
-        type='bool'),
-    service=dict(
+    remote_leader_id=dict(
         required=False,
         type='str'),
-    point_in_time_recovery_deployment_id=dict(
+    point_in_time_recovery_time=dict(
         required=False,
         type='str'),
     allowlist=dict(
         required=False,
         elements='',
         type='list'),
-    auto_scaling=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
-    service_endpoints=dict(
+    backup_id=dict(
+        required=False,
+        type='str'),
+    group=dict(
+        required=False,
+        elements='',
+        type='list'),
+    location=dict(
+        required=False,
+        type='str'),
+    plan=dict(
         required=False,
         type='str'),
     adminpassword=dict(
@@ -275,39 +288,37 @@ module_args = dict(
     configuration=dict(
         required=False,
         type='str'),
-    remote_leader_id=dict(
+    plan_validation=dict(
+        required=False,
+        type='bool'),
+    service=dict(
         required=False,
         type='str'),
-    users=dict(
+    auto_scaling=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    location=dict(
-        required=False,
-        type='str'),
-    backup_id=dict(
-        required=False,
-        type='str'),
-    key_protect_key=dict(
-        required=False,
-        type='str'),
-    point_in_time_recovery_time=dict(
-        required=False,
-        type='str'),
-    plan=dict(
+    backup_encryption_key_crn=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    key_protect_instance=dict(
+    point_in_time_recovery_deployment_id=dict(
         required=False,
         type='str'),
-    backup_encryption_key_crn=dict(
+    logical_replication_slot=dict(
+        required=False,
+        elements='',
+        type='list'),
+    version=dict(
+        required=False,
+        type='str'),
+    service_endpoints=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -375,7 +386,7 @@ def run_module():
         resource_type='ibm_database',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -384,7 +395,7 @@ def run_module():
             resource_type='ibm_database',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

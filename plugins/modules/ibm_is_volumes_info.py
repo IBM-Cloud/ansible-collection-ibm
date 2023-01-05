@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_volumes' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    zone_name:
-        description:
-            - Zone name identifier.
-        required: False
-        type: str
     volume_name:
         description:
             - Volume name identifier.
+        required: False
+        type: str
+    zone_name:
+        description:
+            - Zone name identifier.
         required: False
         type: str
     generation:
@@ -68,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone_name',
     'volume_name',
+    'zone_name',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone_name=dict(
+    volume_name=dict(
         required=False,
         type='str'),
-    volume_name=dict(
+    zone_name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_is_volumes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

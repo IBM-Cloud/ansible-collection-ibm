@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     The bare metal server identifier
 
 
-  network_interface (True, str, None)
-    The network interface identifier of bare metal server
-
-
   floating_ip (True, str, None)
     The floating ip identifier of the network interface associated with the bare metal server
+
+
+  network_interface (True, str, None)
+    The network interface identifier of bare metal server
 
 
   generation (False, int, 2)

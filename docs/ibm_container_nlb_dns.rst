@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  nlb_ips (True, list, None)
+    (Required for new resource)
+
 
   resource_group_id (False, str, None)
     The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
@@ -40,10 +44,6 @@ Parameters
 
 
   nlb_host (True, str, None)
-    (Required for new resource)
-
-
-  nlb_ips (True, list, None)
     (Required for new resource)
 
 

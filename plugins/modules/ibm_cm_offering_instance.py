@@ -18,55 +18,50 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_offering_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
+    kind_format:
         description:
-            - id of the resource group
+            - (Required for new resource) the format this instance has (helm, operator, ova...).
+        required: True
+        type: str
+    channel:
+        description:
+            - channel to target for the operator subscription. Required for operator bundles
         required: False
-        type: str
-    label:
-        description:
-            - (Required for new resource) the label for this instance.
-        required: True
-        type: str
-    version:
-        description:
-            - (Required for new resource) The version this instance was installed from (not version id).
-        required: True
         type: str
     cluster_id:
         description:
             - (Required for new resource) Cluster ID.
         required: True
         type: str
-    cluster_namespaces:
-        description:
-            - (Required for new resource) List of target namespaces to install into.
-        required: True
-        type: list
-        elements: str
     cluster_all_namespaces:
         description:
             - (Required for new resource) designate to install into all namespaces.
         required: True
         type: bool
-    catalog_id:
-        description:
-            - (Required for new resource) Catalog ID this instance was created from.
-        required: True
-        type: str
     wait_until_successful:
         description:
             - Whether to wait until the offering instance successfully provisions, or to return when accepted
         required: False
         type: bool
         default: True
-    channel:
+    cluster_namespaces:
         description:
-            - channel to target for the operator subscription. Required for operator bundles
+            - (Required for new resource) List of target namespaces to install into.
+        required: True
+        type: list
+        elements: str
+    resource_group_id:
+        description:
+            - id of the resource group
+        required: False
+        type: str
+    install_plan:
+        description:
+            - install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
         required: False
         type: str
     offering_id:
@@ -74,9 +69,9 @@ options:
             - (Required for new resource) Offering ID this instance was created from.
         required: True
         type: str
-    kind_format:
+    version:
         description:
-            - (Required for new resource) the format this instance has (helm, operator, ova...).
+            - (Required for new resource) The version this instance was installed from (not version id).
         required: True
         type: str
     cluster_region:
@@ -84,10 +79,15 @@ options:
             - (Required for new resource) Cluster region (e.g., us-south).
         required: True
         type: str
-    install_plan:
+    label:
         description:
-            - install plan for the subscription of the operator- can be either automatic or manual. Required for operator bundles
-        required: False
+            - (Required for new resource) the label for this instance.
+        required: True
+        type: str
+    catalog_id:
+        description:
+            - (Required for new resource) Catalog ID this instance was created from.
+        required: True
         type: str
     id:
         description:
@@ -135,32 +135,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('label', 'str'),
-    ('version', 'str'),
-    ('cluster_id', 'str'),
-    ('cluster_namespaces', 'list'),
-    ('cluster_all_namespaces', 'bool'),
-    ('catalog_id', 'str'),
-    ('offering_id', 'str'),
     ('kind_format', 'str'),
+    ('cluster_id', 'str'),
+    ('cluster_all_namespaces', 'bool'),
+    ('cluster_namespaces', 'list'),
+    ('offering_id', 'str'),
+    ('version', 'str'),
     ('cluster_region', 'str'),
+    ('label', 'str'),
+    ('catalog_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'label',
-    'version',
-    'cluster_id',
-    'cluster_namespaces',
-    'cluster_all_namespaces',
-    'catalog_id',
-    'wait_until_successful',
-    'channel',
-    'offering_id',
     'kind_format',
-    'cluster_region',
+    'channel',
+    'cluster_id',
+    'cluster_all_namespaces',
+    'wait_until_successful',
+    'cluster_namespaces',
+    'resource_group_id',
     'install_plan',
+    'offering_id',
+    'version',
+    'cluster_region',
+    'label',
+    'catalog_id',
 ]
 
 # Params for Data source
@@ -179,44 +179,44 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    kind_format=dict(
         required=False,
         type='str'),
-    label=dict(
-        required=False,
-        type='str'),
-    version=dict(
+    channel=dict(
         required=False,
         type='str'),
     cluster_id=dict(
         required=False,
         type='str'),
+    cluster_all_namespaces=dict(
+        required=False,
+        type='bool'),
+    wait_until_successful=dict(
+        required=False,
+        type='bool'),
     cluster_namespaces=dict(
         required=False,
         elements='',
         type='list'),
-    cluster_all_namespaces=dict(
-        required=False,
-        type='bool'),
-    catalog_id=dict(
+    resource_group_id=dict(
         required=False,
         type='str'),
-    wait_until_successful=dict(
-        required=False,
-        type='bool'),
-    channel=dict(
+    install_plan=dict(
         required=False,
         type='str'),
     offering_id=dict(
         required=False,
         type='str'),
-    kind_format=dict(
+    version=dict(
         required=False,
         type='str'),
     cluster_region=dict(
         required=False,
         type='str'),
-    install_plan=dict(
+    label=dict(
+        required=False,
+        type='str'),
+    catalog_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -284,7 +284,7 @@ def run_module():
         resource_type='ibm_cm_offering_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -293,7 +293,7 @@ def run_module():
             resource_type='ibm_cm_offering_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,6 +31,14 @@ Parameters
 
   guid (True, str, None)
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  environment_id (True, str, None)
+    Environment Id.
+
+
+  include (False, list, None)
+    Include the associated collections or targeting rules details in the response.
 
 
   sort (False, str, None)
@@ -45,20 +53,12 @@ Parameters
     Filter features by a list of comma separated collections.
 
 
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
-
-
-  include (False, list, None)
-    Include the associated collections or targeting rules details in the response.
-
-
-  environment_id (True, str, None)
-    Environment Id.
-
-
   segments (False, list, None)
     Filter features by a list of comma separated segments.
+
+
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
 
 
   limit (False, int, None)

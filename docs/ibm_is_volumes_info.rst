@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone_name (False, str, None)
-    Zone name identifier.
-
-
   volume_name (False, str, None)
     Volume name identifier.
+
+
+  zone_name (False, str, None)
+    Zone name identifier.
 
 
   generation (False, int, 2)

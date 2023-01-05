@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ttl (False, int, 60)
-    TTL value
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  default_pool_ids (True, list, None)
+    (Required for new resource) List of default Pool IDs
 
 
   session_affinity (False, str, none)
@@ -43,44 +47,40 @@ Parameters
     None
 
 
-  name (True, str, None)
-    (Required for new resource) name
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   fallback_pool_id (True, str, None)
     (Required for new resource) fallback pool ID
 
 
-  description (False, str, None)
-    Description for the load balancer instance
-
-
-  steering_policy (False, str, None)
-    Steering policy info
+  ttl (False, int, 60)
+    TTL value
 
 
   proxied (False, bool, False)
     set to true if proxy needs to be enabled
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  name (True, str, None)
+    (Required for new resource) name
 
 
-  default_pool_ids (True, list, None)
-    (Required for new resource) List of default Pool IDs
-
-
-  region_pools (False, list, None)
-    None
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  description (False, str, None)
+    Description for the load balancer instance
 
 
   enabled (False, bool, True)
     set to true of LB needs to enabled
+
+
+  steering_policy (False, str, None)
+    Steering policy info
+
+
+  region_pools (False, list, None)
+    None
 
 
   id (False, str, None)

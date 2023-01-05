@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  url (False, str, None)
+    Webhook URL
+
 
   secret (False, str, None)
     API key needed to use the webhook
@@ -41,10 +45,6 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Webhook Name
-
-
-  url (False, str, None)
-    Webhook URL
 
 
   id (False, str, None)

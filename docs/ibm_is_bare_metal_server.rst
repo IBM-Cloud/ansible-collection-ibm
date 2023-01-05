@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  delete_type (False, str, hard)
-    Enables stopping type of the bare metal server before deleting
-
-
-  user_data (False, str, None)
-    User data given for the bare metal server
-
-
-  resource_group (False, str, None)
-    Resource group name
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  tags (False, list, None)
-    Tags for the Bare metal server
-
-
-  name (False, str, None)
-    Bare metal server name
+  action (False, str, None)
+    This restart/start/stops a bare metal server.
 
 
   profile (True, str, None)
@@ -63,20 +43,44 @@ Parameters
     The VPC the bare metal server is to be a part of
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  resource_group (False, str, None)
+    Resource group name
 
 
-  action (False, str, None)
-    This restart/start/stops a bare metal server.
+  tags (False, list, None)
+    Tags for the Bare metal server
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the bare metal server
+
+
+  name (False, str, None)
+    Bare metal server name
+
+
+  delete_type (False, str, hard)
+    Enables stopping type of the bare metal server before deleting
 
 
   network_interfaces (False, list, None)
     None
 
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the bare metal server
+  user_data (False, str, None)
+    User data given for the bare metal server
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   image (True, str, None)

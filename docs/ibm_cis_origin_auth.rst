@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  certificate (True, str, None)
+    (Required for new resource) Certificate content which needs to be uploaded
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
 
 
   level (True, str, None)
@@ -47,12 +47,12 @@ Parameters
     Host name needed for host level authentication
 
 
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
   enabled (False, bool, True)
     Enabel-disable origin auth for a zone or host
-
-
-  certificate (True, str, None)
-    (Required for new resource) Certificate content which needs to be uploaded
 
 
   private_key (True, str, None)

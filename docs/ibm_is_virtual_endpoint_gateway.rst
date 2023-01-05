@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Endpoint gateway name
+  resource_group (False, str, None)
+    The resource group id
+
+
+  ips (False, list, None)
+    Endpoint gateway IPs
+
+
+  tags (False, list, None)
+    List of tags for VPE
+
+
+  security_groups (False, list, None)
+    Endpoint gateway securitygroups list
 
 
   target (True, list, None)
@@ -43,20 +55,12 @@ Parameters
     (Required for new resource) The VPC id
 
 
-  tags (False, list, None)
-    List of tags for VPE
+  access_tags (False, list, None)
+    List of access management tags
 
 
-  resource_group (False, str, None)
-    The resource group id
-
-
-  security_groups (False, list, None)
-    Endpoint gateway securitygroups list
-
-
-  ips (False, list, None)
-    Endpoint gateway IPs
+  name (True, str, None)
+    (Required for new resource) Endpoint gateway name
 
 
   id (False, str, None)

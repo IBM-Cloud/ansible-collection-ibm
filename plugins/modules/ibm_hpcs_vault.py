@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hpcs_vault' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) A human-readable name to assign to your vault. To protect your privacy, do not use personal data, such as your name or location.
+        required: True
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) The ID of the UKO instance this resource exists in.
+        required: True
+        type: str
     region:
         description:
             - (Required for new resource) The region of the UKO instance this resource exists in.
@@ -31,16 +41,6 @@ options:
         description:
             - Description of the vault.
         required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) The ID of the UKO instance this resource exists in.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) A human-readable name to assign to your vault. To protect your privacy, do not use personal data, such as your name or location.
-        required: True
         type: str
     id:
         description:
@@ -88,30 +88,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('region', 'str'),
-    ('instance_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
+    ('region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'instance_id',
     'region',
     'description',
-    'instance_id',
-    'name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('instance_id', 'str'),
-    ('vault_id', 'str'),
     ('region', 'str'),
+    ('vault_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'instance_id',
-    'vault_id',
     'region',
+    'vault_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -121,16 +121,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
     instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    region=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_hpcs_vault',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -207,7 +207,7 @@ def run_module():
             resource_type='ibm_hpcs_vault',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

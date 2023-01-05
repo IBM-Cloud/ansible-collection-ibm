@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  private_key (True, str, None)
+    (Required for new resource) Certificate private key
 
 
   certificate (True, str, None)
     (Required for new resource) Certificate key
+
+
+  bundle_method (False, str, ubiquitous)
+    Certificate bundle method
 
 
   priority (False, int, None)
@@ -47,12 +51,8 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
-  bundle_method (False, str, ubiquitous)
-    Certificate bundle method
-
-
-  private_key (True, str, None)
-    (Required for new resource) Certificate private key
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)

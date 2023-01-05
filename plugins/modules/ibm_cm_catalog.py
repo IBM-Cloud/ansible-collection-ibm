@@ -18,49 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_catalog' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    short_description_i18n:
+    metadata:
         description:
-            - A map of translated strings, by language code.
+            - Catalog specific metadata.
         required: False
         type: dict
         elements: str
-    tags:
-        description:
-            - List of tags associated with this catalog.
-        required: False
-        type: list
-        elements: str
-    disabled:
-        description:
-            - Denotes whether a catalog is disabled.
-        required: False
-        type: bool
     label:
         description:
             - Display Name in the requested language.
         required: False
         type: str
-    features:
-        description:
-            - List of features associated with this catalog.
-        required: False
-        type: list
-        elements: dict
-    kind:
-        description:
-            - Kind of catalog. Supported kinds are offering and vpe.
-        required: False
-        type: str
-    label_i18n:
-        description:
-            - A map of translated strings, by language code.
-        required: False
-        type: dict
-        elements: str
     short_description:
         description:
             - Description in the requested language.
@@ -71,12 +43,45 @@ options:
             - URL for an icon associated with this catalog.
         required: False
         type: str
-    metadata:
+    disabled:
         description:
-            - Catalog specific metadata.
+            - Denotes whether a catalog is disabled.
+        required: False
+        type: bool
+    resource_group_id:
+        description:
+            - Resource group id the catalog is owned by.
+        required: False
+        type: str
+    kind:
+        description:
+            - Kind of catalog. Supported kinds are offering and vpe.
+        required: False
+        type: str
+    tags:
+        description:
+            - List of tags associated with this catalog.
+        required: False
+        type: list
+        elements: str
+    label_i18n:
+        description:
+            - A map of translated strings, by language code.
         required: False
         type: dict
         elements: str
+    short_description_i18n:
+        description:
+            - A map of translated strings, by language code.
+        required: False
+        type: dict
+        elements: str
+    features:
+        description:
+            - List of features associated with this catalog.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,16 +132,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'short_description_i18n',
-    'tags',
-    'disabled',
+    'metadata',
     'label',
-    'features',
-    'kind',
-    'label_i18n',
     'short_description',
     'catalog_icon_url',
-    'metadata',
+    'disabled',
+    'resource_group_id',
+    'kind',
+    'tags',
+    'label_i18n',
+    'short_description_i18n',
+    'features',
 ]
 
 # Params for Data source
@@ -155,41 +161,44 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    short_description_i18n=dict(
+    metadata=dict(
         required=False,
         elements='',
         type='dict'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    disabled=dict(
-        required=False,
-        type='bool'),
     label=dict(
         required=False,
         type='str'),
-    features=dict(
-        required=False,
-        elements='',
-        type='list'),
-    kind=dict(
-        required=False,
-        type='str'),
-    label_i18n=dict(
-        required=False,
-        elements='',
-        type='dict'),
     short_description=dict(
         required=False,
         type='str'),
     catalog_icon_url=dict(
         required=False,
         type='str'),
-    metadata=dict(
+    disabled=dict(
+        required=False,
+        type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    kind=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    label_i18n=dict(
         required=False,
         elements='',
         type='dict'),
+    short_description_i18n=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    features=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -255,7 +264,7 @@ def run_module():
         resource_type='ibm_cm_catalog',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +273,7 @@ def run_module():
             resource_type='ibm_cm_catalog',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

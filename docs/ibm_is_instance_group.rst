@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  load_balancer (False, str, None)
-    load balancer ID
+  tags (False, list, None)
+    List of tags for instance group
+
+
+  subnets (True, list, None)
+    (Required for new resource) list of subnet IDs
+
+
+  access_tags (False, list, None)
+    List of access management tags
 
 
   name (True, str, None)
     (Required for new resource) The user-defined name for this instance group
 
 
+  resource_group (False, str, None)
+    Resource group ID
+
+
   instance_template (True, str, None)
     (Required for new resource) instance template ID
 
 
-  application_port (False, int, None)
-    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
-
-
-  instance_count (False, int, 0)
-    The number of instances in the instance group
+  load_balancer (False, str, None)
+    load balancer ID
 
 
   load_balancer_pool (False, str, None)
     load balancer pool ID
 
 
-  tags (False, list, None)
-    List of tags for instance group
+  instance_count (False, int, 0)
+    The number of instances in the instance group
 
 
-  resource_group (False, str, None)
-    Resource group ID
-
-
-  subnets (True, list, None)
-    (Required for new resource) list of subnet IDs
+  application_port (False, int, None)
+    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
 
 
   id (False, str, None)

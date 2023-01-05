@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  source_service_name (False, str, None)
-    The source service name
+  source_resource_group_id (False, str, None)
+    The source resource group Id
+
+
+  target_resource_group_id (False, str, None)
+    The target resource group Id
 
 
   source_resource_type (False, str, None)
@@ -43,48 +47,44 @@ Parameters
     Set resource attributes.
 
 
-  roles (True, list, None)
-    (Required for new resource) Role names of the policy definition
-
-
-  source_resource_group_id (False, str, None)
-    The source resource group Id
-
-
-  target_resource_group_id (False, str, None)
-    The target resource group Id
-
-
-  source_service_account (False, str, None)
-    Account GUID of source service
-
-
-  subject_attributes (False, list, None)
-    Set subject attributes.
-
-
-  description (False, str, None)
-    Description of the Policy
-
-
-  transaction_id (False, str, None)
-    Set transactionID for debug
-
-
-  source_resource_instance_id (False, str, None)
-    The source resource instance Id
+  target_service_name (False, str, None)
+    The target service name
 
 
   target_resource_instance_id (False, str, None)
     The target resource instance Id
 
 
-  target_service_name (False, str, None)
-    The target service name
+  subject_attributes (False, list, None)
+    Set subject attributes.
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
+
+
+  roles (True, list, None)
+    (Required for new resource) Role names of the policy definition
+
+
+  source_resource_instance_id (False, str, None)
+    The source resource instance Id
 
 
   target_resource_type (False, str, None)
     Resource type of target service
+
+
+  source_service_name (False, str, None)
+    The source service name
+
+
+  source_service_account (False, str, None)
+    Account GUID of source service
+
+
+  description (False, str, None)
+    Description of the Policy
 
 
   id (False, str, None)

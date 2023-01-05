@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    Subscription description.
-
-
   destination_id (True, str, None)
     (Required for new resource) Destination ID.
-
-
-  topic_id (True, str, None)
-    (Required for new resource) Topic ID.
 
 
   instance_guid (True, str, None)
@@ -49,6 +41,14 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Subscription name.
+
+
+  description (False, str, None)
+    Subscription description.
+
+
+  topic_id (True, str, None)
+    (Required for new resource) Topic ID.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
   policy_name (False, str, mtls-policy)
     Policy Name
-
-
-  domain (True, str, None)
-    (Required for new resource) Associated host domain value
-
-
-  cert_rule_val (False, str, CA root certificate)
-    Policy certificate rule value
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
 
 
   name (True, str, None)
     (Required for new resource) App Name
 
 
-  session_duration (False, str, 24h)
-    Duration for app validatidity
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  policy_decision (False, str, non_identity)
+    Policy Action
 
 
   common_rule_val (False, str, None)
     Policy common rule value
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
+  cert_rule_val (False, str, CA root certificate)
+    Policy certificate rule value
 
 
-  policy_decision (False, str, non_identity)
-    Policy Action
+  domain (True, str, None)
+    (Required for new resource) Associated host domain value
+
+
+  session_duration (False, str, 24h)
+    Duration for app validatidity
 
 
   id (False, str, None)

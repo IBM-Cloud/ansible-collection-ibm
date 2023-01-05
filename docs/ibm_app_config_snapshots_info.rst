@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  collection_id (False, str, None)
+    Filters the response based on the specified collection_id.
+
 
   environment_id (False, str, None)
     Filters the response based on the specified environment_id.
@@ -39,14 +47,6 @@ Parameters
 
   offset (False, int, None)
     The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
-
-
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  collection_id (False, str, None)
-    Filters the response based on the specified collection_id.
 
 
   iaas_classic_username (False, any, None)

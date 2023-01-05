@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,44 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  billing_address_same_as_organization_flag (False, bool, False)
-    billing address same as organization flag
-
-
-  organization_information (True, list, None)
-    (Required for new resource) Organization information
-
-
   validity_months (True, int, None)
     (Required for new resource) vslidity of the ssl certificate in month
-
-
-  administrative_address_same_as_organization_flag (False, bool, False)
-    administrative address same as organization flag
-
-
-  administrative_contact_same_as_technical_flag (False, bool, False)
-    Administrative contact same as technical flag
-
-
-  order_approver_email_address (True, str, None)
-    (Required for new resource) Email address of the approver
 
 
   technical_contact_same_as_org_address_flag (False, bool, False)
     Technical contact same as org address flag
 
 
-  billing_contact (False, list, None)
+  server_type (True, str, None)
+    (Required for new resource) server type
+
+
+  billing_contact_same_as_technical_flag (False, bool, False)
+    billing contact
+
+
+  administrative_address_same_as_organization_flag (False, bool, False)
+    administrative address same as organization flag
+
+
+  billing_address_same_as_organization_flag (False, bool, False)
+    billing address same as organization flag
+
+
+  administrative_contact (False, list, None)
     None
 
 
   ssl_type (True, str, None)
     (Required for new resource) ssl type
-
-
-  billing_contact_same_as_technical_flag (False, bool, False)
-    billing contact
 
 
   certificate_signing_request (True, str, None)
@@ -79,20 +71,28 @@ Parameters
     Renewal flag
 
 
+  order_approver_email_address (True, str, None)
+    (Required for new resource) Email address of the approver
+
+
   technical_contact (True, list, None)
     (Required for new resource) Technical contact info
-
-
-  administrative_contact (False, list, None)
-    None
 
 
   server_count (True, int, None)
     (Required for new resource) Server count
 
 
-  server_type (True, str, None)
-    (Required for new resource) server type
+  organization_information (True, list, None)
+    (Required for new resource) Organization information
+
+
+  billing_contact (False, list, None)
+    None
+
+
+  administrative_contact_same_as_technical_flag (False, bool, False)
+    Administrative contact same as technical flag
 
 
   id (False, str, None)

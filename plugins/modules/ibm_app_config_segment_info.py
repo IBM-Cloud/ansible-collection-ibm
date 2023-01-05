@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_segment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    guid:
-        description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
     segment_id:
         description:
             - Segment id.
@@ -37,6 +32,11 @@ options:
         required: False
         type: list
         elements: str
+    guid:
+        description:
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -70,15 +70,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guid', 'str'),
     ('segment_id', 'str'),
+    ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
     'segment_id',
     'includes',
+    'guid',
 ]
 
 
@@ -89,9 +89,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=True,
-        type='str'),
     segment_id=dict(
         required=True,
         type='str'),
@@ -99,6 +96,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    guid=dict(
+        required=True,
+        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -133,7 +133,7 @@ def run_module():
         resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

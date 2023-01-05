@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or hpcs instance GUID or CRN
-
 
   dual_auth_delete (False, list, None)
     Data associated with the dual authorization delete policy for instance
@@ -49,6 +45,10 @@ Parameters
 
   metrics (False, list, None)
     Data associated with the metric policy for instance
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or hpcs instance GUID or CRN
 
 
   id (False, str, None)

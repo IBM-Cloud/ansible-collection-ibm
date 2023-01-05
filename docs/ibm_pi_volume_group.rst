@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     The name of consistency group at storage controller level
 
 
-  pi_volume_ids (True, list, None)
-    (Required for new resource) List of volumes to add in volume group
-
-
   pi_volume_group_name (False, str, None)
     Volume Group Name to create
+
+
+  pi_volume_ids (True, list, None)
+    (Required for new resource) List of volumes to add in volume group
 
 
   id (False, str, None)

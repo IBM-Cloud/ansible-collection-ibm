@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) VLAN type
+  name (False, str, None)
+    VLAN name
 
 
   router_hostname (False, str, None)
@@ -43,12 +43,12 @@ Parameters
     (Required for new resource) Datacenter name
 
 
+  type (True, str, None)
+    (Required for new resource) VLAN type
+
+
   tags (False, list, None)
     List of tags
-
-
-  name (False, str, None)
-    VLAN name
 
 
   id (False, str, None)

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -26,15 +26,15 @@ options:
             - The VPC identifier.
         required: True
         type: str
-    name:
-        description:
-            - The user-defined name for this route.
-        required: False
-        type: str
     routing_table:
         description:
             - The routing table identifier.
         required: True
+        type: str
+    name:
+        description:
+            - The user-defined name for this route.
+        required: False
         type: str
     route_id:
         description:
@@ -81,8 +81,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
-    'name',
     'routing_table',
+    'name',
     'route_id',
 ]
 
@@ -99,11 +99,11 @@ module_args = dict(
     vpc=dict(
         required=True,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     routing_table=dict(
         required=True,
+        type='str'),
+    name=dict(
+        required=False,
         type='str'),
     route_id=dict(
         required=False,
@@ -154,7 +154,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

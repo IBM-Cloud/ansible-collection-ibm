@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  db (True, str, None)
-    Path parameter to specify the database name.
-
-
   instance_crn (True, str, None)
     Cloudant Instance CRN.
+
+
+  db (True, str, None)
+    Path parameter to specify the database name.
 
 
   iaas_classic_username (False, any, None)

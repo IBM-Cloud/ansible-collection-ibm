@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+  job_inputs (False, list, None)
+    Job inputs used by Action or Workspace.
+
+
+  data (False, list, None)
+    Job data.
 
 
   command_options (False, list, None)
     Command line options for the command.
+
+
+  command_parameter (False, str, None)
+    Schematics job command parameter (playbook-name).
 
 
   job_env_settings (False, list, None)
@@ -47,36 +55,28 @@ Parameters
     User defined tags, while running the job.
 
 
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
-
-
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
-
-
-  command_parameter (False, str, None)
-    Schematics job command parameter (playbook-name).
-
-
-  bastion (False, list, None)
-    Describes a bastion resource.
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
 
 
   log_summary (False, list, None)
     Job log summary record.
 
 
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
+
+
+  bastion (False, list, None)
+    Describes a bastion resource.
+
+
   command_object_id (True, str, None)
     (Required for new resource) Job command object id (workspace-id, action-id).
-
-
-  job_inputs (False, list, None)
-    Job inputs used by Action or Workspace.
-
-
-  data (False, list, None)
-    Job data.
 
 
   id (False, str, None)

@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  forward_to (False, list, None)
+    The upstream DNS servers will be forwarded to.
+
 
   instance_id (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
@@ -49,10 +53,6 @@ Parameters
 
   match (False, str, None)
     The matching zone or hostname.
-
-
-  forward_to (False, list, None)
-    The upstream DNS servers will be forwarded to.
 
 
   id (False, str, None)

@@ -18,15 +18,33 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_endpoint_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    name:
+    resource_group:
         description:
-            - (Required for new resource) Endpoint gateway name
-        required: True
+            - The resource group id
+        required: False
         type: str
+    ips:
+        description:
+            - Endpoint gateway IPs
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - List of tags for VPE
+        required: False
+        type: list
+        elements: str
+    security_groups:
+        description:
+            - Endpoint gateway securitygroups list
+        required: False
+        type: list
+        elements: str
     target:
         description:
             - (Required for new resource) Endpoint gateway target
@@ -38,29 +56,17 @@ options:
             - (Required for new resource) The VPC id
         required: True
         type: str
-    tags:
+    access_tags:
         description:
-            - List of tags for VPE
+            - List of access management tags
         required: False
         type: list
         elements: str
-    resource_group:
+    name:
         description:
-            - The resource group id
-        required: False
+            - (Required for new resource) Endpoint gateway name
+        required: True
         type: str
-    security_groups:
-        description:
-            - Endpoint gateway securitygroups list
-        required: False
-        type: list
-        elements: str
-    ips:
-        description:
-            - Endpoint gateway IPs
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,20 +113,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('target', 'list'),
     ('vpc', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'resource_group',
+    'ips',
+    'tags',
+    'security_groups',
     'target',
     'vpc',
-    'tags',
-    'resource_group',
-    'security_groups',
-    'ips',
+    'access_tags',
+    'name',
 ]
 
 # Params for Data source
@@ -139,9 +146,21 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
+    ips=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
     target=dict(
         required=False,
         elements='',
@@ -149,21 +168,13 @@ module_args = dict(
     vpc=dict(
         required=False,
         type='str'),
-    tags=dict(
+    access_tags=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    ips=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +252,7 @@ def run_module():
         resource_type='ibm_is_virtual_endpoint_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -250,7 +261,7 @@ def run_module():
             resource_type='ibm_is_virtual_endpoint_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    Filters the snapshot collection by resources group id
+
 
   name (False, str, None)
     Filters the snapshot collection by snapshot name
@@ -47,10 +51,6 @@ Parameters
 
   tag (False, str, None)
     Filters the collection to resources with the exact tag value
-
-
-  resource_group (False, str, None)
-    Filters the snapshot collection by resources group id
 
 
   generation (False, int, 2)

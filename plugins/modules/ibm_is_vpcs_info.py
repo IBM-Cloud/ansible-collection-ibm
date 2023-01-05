@@ -17,10 +17,20 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpcs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    resource_group:
+        description:
+            - The unique identifier of the resource group this vpc belongs to
+        required: False
+        type: str
+    classic_access:
+        description:
+            - Filters the collection to VPCs with the specified classic_access value
+        required: False
+        type: bool
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -58,6 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_group',
+    'classic_access',
 ]
 
 
@@ -68,6 +80,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_group=dict(
+        required=False,
+        type='str'),
+    classic_access=dict(
+        required=False,
+        type='bool'),
     generation=dict(
         type='int',
         required=False,
@@ -114,7 +132,7 @@ def run_module():
         resource_type='ibm_is_vpcs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

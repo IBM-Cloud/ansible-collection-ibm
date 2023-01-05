@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  firewall_type (True, str, None)
-    (Required for new resource) Firewall type
-
-
   virtual_instance_id (False, int, None)
     Virtual instance ID
 
 
   hardware_instance_id (False, int, None)
     Hardware instance ID
+
+
+  firewall_type (True, str, None)
+    (Required for new resource) Firewall type
 
 
   id (False, str, None)

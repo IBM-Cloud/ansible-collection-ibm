@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  sort (False, str, None)
-    Sort the segment details based on the specified attribute.
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  include (False, str, None)
-    Segment details to include the associated rules in the response
+  tags (False, str, None)
+    Filter the resources to be returned based on the associated tags.
 
 
   expand (False, bool, None)
@@ -45,16 +45,16 @@ Parameters
     The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
 
 
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  tags (False, str, None)
-    Filter the resources to be returned based on the associated tags.
-
-
   total_count (False, int, None)
     Total number of records.
+
+
+  sort (False, str, None)
+    Sort the segment details based on the specified attribute.
+
+
+  include (False, str, None)
+    Segment details to include the associated rules in the response
 
 
   offset (False, int, None)

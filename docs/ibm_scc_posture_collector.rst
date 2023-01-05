@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) A unique name for your collector.
-
 
   is_public (True, bool, None)
     (Required for new resource) Determines whether the collector endpoint is accessible on a public network. If set to `true`, the collector connects to resources in your account over a public network. If set to `false`, the collector connects to resources by using a private IP that is accessible only through the IBM Cloud private network.
@@ -53,6 +49,10 @@ Parameters
 
   is_ubi_image (False, bool, None)
     Determines whether the collector has a Ubi image.
+
+
+  name (True, str, None)
+    (Required for new resource) A unique name for your collector.
 
 
   id (False, str, None)

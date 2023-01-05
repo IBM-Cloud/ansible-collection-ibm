@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group
-
-
   name (True, str, None)
     worker pool name
 
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
   cluster (True, str, None)
     Cluster name
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   iaas_classic_username (False, any, None)

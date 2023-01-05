@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  profile_id (True, str, None)
-    ID of the trusted profile.
-
-
   rule_id (True, str, None)
     ID of the claim rule to get.
+
+
+  profile_id (True, str, None)
+    ID of the trusted profile.
 
 
   iaas_classic_username (False, any, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_backup_policy_plan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -31,11 +31,6 @@ options:
         description:
             - (Required for new resource) The cron specification for the backup schedule.
         required: True
-        type: str
-    name:
-        description:
-            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
         type: str
     active:
         description:
@@ -60,6 +55,11 @@ options:
         required: False
         type: list
         elements: dict
+    name:
+        description:
+            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,11 +114,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'backup_policy_id',
     'cron_spec',
-    'name',
     'active',
     'attach_user_tags',
     'copy_user_tags',
     'deletion_trigger',
+    'name',
 ]
 
 # Params for Data source
@@ -128,8 +128,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'backup_policy_id',
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -143,9 +143,6 @@ module_args = dict(
         required=False,
         type='str'),
     cron_spec=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     active=dict(
@@ -162,6 +159,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -239,7 +239,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -248,7 +248,7 @@ def run_module():
             resource_type='ibm_is_backup_policy_plan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

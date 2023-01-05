@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_segment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -28,19 +28,9 @@ options:
         required: True
         type: list
         elements: dict
-    guid:
-        description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) Segment name.
-        required: True
-        type: str
-    segment_id:
-        description:
-            - (Required for new resource) Segment id.
         required: True
         type: str
     tags:
@@ -52,6 +42,16 @@ options:
         description:
             - Segment description.
         required: False
+        type: str
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
+    segment_id:
+        description:
+            - (Required for new resource) Segment id.
+        required: True
         type: str
     id:
         description:
@@ -100,31 +100,31 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('rules', 'list'),
-    ('guid', 'str'),
     ('name', 'str'),
+    ('guid', 'str'),
     ('segment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'rules',
-    'guid',
     'name',
-    'segment_id',
     'tags',
     'description',
+    'guid',
+    'segment_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('guid', 'str'),
     ('segment_id', 'str'),
+    ('guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'guid',
     'segment_id',
     'includes',
+    'guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,19 +138,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    guid=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    segment_id=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    guid=dict(
+        required=False,
+        type='str'),
+    segment_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_app_config_segment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

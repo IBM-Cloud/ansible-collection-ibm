@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  group (False, list, None)
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  users (False, list, None)
     None
 
 
-  version (False, str, None)
-    The database version to provision if specified
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
 
 
-  plan_validation (False, bool, True)
-    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
+  remote_leader_id (False, str, None)
+    The CRN of leader database
 
 
-  service (True, str, None)
-    (Required for new resource) The name of the Cloud Internet database service
-
-
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
   allowlist (False, list, None)
     None
 
 
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
   name (True, str, None)
     (Required for new resource) Resource instance name for example, my Database instance
 
 
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  backup_id (False, str, None)
+    The CRN of backup source database
+
+
+  group (False, list, None)
+    None
+
+
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   adminpassword (False, str, None)
@@ -75,48 +83,44 @@ Parameters
     The configuration in JSON format
 
 
-  remote_leader_id (False, str, None)
-    The CRN of leader database
+  plan_validation (False, bool, True)
+    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
 
 
-  users (False, list, None)
-    None
+  service (True, str, None)
+    (Required for new resource) The name of the Cloud Internet database service
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
 
 
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
-
-
-  backup_id (False, str, None)
-    The CRN of backup source database
-
-
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
 
 
   tags (False, list, None)
     None
 
 
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
 
 
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
+  logical_replication_slot (False, list, None)
+    None
+
+
+  version (False, str, None)
+    The database version to provision if specified
+
+
+  service_endpoints (False, str, public)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
 
 
   id (False, str, None)

@@ -18,10 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    tags:
+        description:
+            - Tags for the transit gateway instance
+        required: False
+        type: list
+        elements: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
     location:
         description:
             - (Required for new resource) Location of Transit Gateway Services
@@ -38,17 +49,6 @@ options:
         required: False
         type: bool
         default: False
-    tags:
-        description:
-            - Tags for the transit gateway instance
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'tags',
+    'resource_group',
     'location',
     'name',
     'global_',
-    'tags',
-    'resource_group',
 ]
 
 # Params for Data source
@@ -124,6 +124,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     location=dict(
         required=False,
         type='str'),
@@ -133,13 +140,6 @@ module_args = dict(
     global_=dict(
         required=False,
         type='bool'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -205,7 +205,7 @@ def run_module():
         resource_type='ibm_tg_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -214,7 +214,7 @@ def run_module():
             resource_type='ibm_tg_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

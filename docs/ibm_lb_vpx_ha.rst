@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  primary_id (True, int, None)
+    (Required for new resource) primary ID
+
 
   secondary_id (True, int, None)
     (Required for new resource) Secondary ID
@@ -41,10 +45,6 @@ Parameters
 
   tags (False, list, None)
     Tags set for the resource
-
-
-  primary_id (True, int, None)
-    (Required for new resource) primary ID
 
 
   id (False, str, None)

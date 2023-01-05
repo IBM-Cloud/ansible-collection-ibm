@@ -18,25 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_ipsec_vpn' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    preshared_key:
         description:
-            - (Required for new resource) Datacenter name
-        required: True
+            - Preshared Key data
+        required: False
         type: str
     customer_peer_ip:
         description:
             - Customer Peer IP Address
         required: False
         type: str
-    internal_subnet_id:
-        description:
-            - Internal subnet ID value
-        required: False
-        type: int
     remote_subnet_id:
         description:
             - Remote subnet ID value
@@ -48,12 +43,16 @@ options:
         required: False
         type: list
         elements: dict
-    phase_one:
+    service_subnet_id:
         description:
-            - None
+            - Service subnet ID value
         required: False
-        type: list
-        elements: dict
+        type: int
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
+        required: True
+        type: str
     phase_two:
         description:
             - None
@@ -66,16 +65,17 @@ options:
         required: False
         type: list
         elements: dict
-    preshared_key:
+    internal_subnet_id:
         description:
-            - Preshared Key data
-        required: False
-        type: str
-    service_subnet_id:
-        description:
-            - Service subnet ID value
+            - Internal subnet ID value
         required: False
         type: int
+    phase_one:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,16 +127,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
+    'preshared_key',
     'customer_peer_ip',
-    'internal_subnet_id',
     'remote_subnet_id',
     'remote_subnet',
-    'phase_one',
+    'service_subnet_id',
+    'datacenter',
     'phase_two',
     'address_translation',
-    'preshared_key',
-    'service_subnet_id',
+    'internal_subnet_id',
+    'phase_one',
 ]
 
 # Params for Data source
@@ -155,15 +155,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    preshared_key=dict(
         required=False,
         type='str'),
     customer_peer_ip=dict(
         required=False,
         type='str'),
-    internal_subnet_id=dict(
-        required=False,
-        type='int'),
     remote_subnet_id=dict(
         required=False,
         type='int'),
@@ -171,10 +168,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    phase_one=dict(
+    service_subnet_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='int'),
+    datacenter=dict(
+        required=False,
+        type='str'),
     phase_two=dict(
         required=False,
         elements='',
@@ -183,12 +182,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    preshared_key=dict(
-        required=False,
-        type='str'),
-    service_subnet_id=dict(
+    internal_subnet_id=dict(
         required=False,
         type='int'),
+    phase_one=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_ipsec_vpn',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

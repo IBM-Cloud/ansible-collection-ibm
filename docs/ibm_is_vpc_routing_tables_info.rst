@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,6 +31,10 @@ Parameters
 
   vpc (True, str, None)
     VPC identifier
+
+
+  is_default (False, bool, None)
+    Filters the collection to routing tables with the specified is_default value
 
 
   generation (False, int, 2)

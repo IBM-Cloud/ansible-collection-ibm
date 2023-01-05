@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -35,16 +35,16 @@ Parameters
     (Required for new resource) The instance group identifier.
 
 
+  action_delete (False, bool, False)
+    The delete flag for this instance group membership. Must be set to true to delete instance group membership.
+
+
   instance_group_membership (True, str, None)
     (Required for new resource) The unique identifier for this instance group membership.
 
 
   name (False, str, None)
     The user-defined name for this instance group membership. Names must be unique within the instance group.
-
-
-  action_delete (False, bool, False)
-    The delete flag for this instance group membership. Must be set to true to delete instance group membership.
 
 
   id (False, str, None)

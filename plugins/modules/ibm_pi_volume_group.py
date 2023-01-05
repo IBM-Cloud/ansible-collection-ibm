@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -32,17 +32,17 @@ options:
             - The name of consistency group at storage controller level
         required: False
         type: str
+    pi_volume_group_name:
+        description:
+            - Volume Group Name to create
+        required: False
+        type: str
     pi_volume_ids:
         description:
             - (Required for new resource) List of volumes to add in volume group
         required: True
         type: list
         elements: str
-    pi_volume_group_name:
-        description:
-            - Volume Group Name to create
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -93,8 +93,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
     'pi_consistency_group_name',
-    'pi_volume_ids',
     'pi_volume_group_name',
+    'pi_volume_ids',
 ]
 
 # Params for Data source
@@ -123,13 +123,13 @@ module_args = dict(
     pi_consistency_group_name=dict(
         required=False,
         type='str'),
+    pi_volume_group_name=dict(
+        required=False,
+        type='str'),
     pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
-    pi_volume_group_name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -188,7 +188,7 @@ def run_module():
         resource_type='ibm_pi_volume_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -197,7 +197,7 @@ def run_module():
             resource_type='ibm_pi_volume_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -35,28 +35,28 @@ Parameters
     (Required for new resource) Whether to permit or deny the prefix filter
 
 
+  before (False, str, None)
+    Identifier of prefix filter that handles ordering
+
+
   ge (False, int, None)
     IP Prefix GE
+
+
+  connection_id (True, str, None)
+    (Required for new resource) The Transit Gateway Connection identifier
 
 
   le (False, int, None)
     IP Prefix LE
 
 
-  gateway (True, str, None)
-    (Required for new resource) The Transit Gateway identifier
-
-
-  before (False, str, None)
-    Identifier of prefix filter that handles ordering
-
-
   prefix (True, str, None)
     (Required for new resource) IP Prefix
 
 
-  connection_id (True, str, None)
-    (Required for new resource) The Transit Gateway Connection identifier
+  gateway (True, str, None)
+    (Required for new resource) The Transit Gateway identifier
 
 
   id (False, str, None)

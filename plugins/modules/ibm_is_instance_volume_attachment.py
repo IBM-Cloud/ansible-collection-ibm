@@ -18,18 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_volume_attachment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    name:
+    snapshot:
         description:
-            - The user-defined name for this volume attachment.
+            - The snapshot of the volume to be attached
         required: False
         type: str
-    volume_name:
+    instance:
         description:
-            - The unique user-defined name for this volume
+            - (Required for new resource) Instance id
+        required: True
+        type: str
+    profile:
+        description:
+            - The  globally unique name for the volume profile to use for this volume.
         required: False
         type: str
     tags:
@@ -38,24 +43,19 @@ options:
         required: False
         type: list
         elements: str
-    capacity:
-        description:
-            - The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-        required: False
-        type: int
     encryption_key:
         description:
             - The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
         required: False
         type: str
-    iops:
+    name:
         description:
-            - The maximum I/O operations per second (IOPS) for the volume.
+            - The user-defined name for this volume attachment.
         required: False
-        type: int
-    snapshot:
+        type: str
+    volume_name:
         description:
-            - The snapshot of the volume to be attached
+            - The unique user-defined name for this volume
         required: False
         type: str
     delete_volume_on_instance_delete:
@@ -69,21 +69,21 @@ options:
         required: False
         type: bool
         default: True
+    capacity:
+        description:
+            - The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
+        required: False
+        type: int
     volume:
         description:
             - Instance id
         required: False
         type: str
-    profile:
+    iops:
         description:
-            - The  globally unique name for the volume profile to use for this volume.
+            - The maximum I/O operations per second (IOPS) for the volume.
         required: False
-        type: str
-    instance:
-        description:
-            - (Required for new resource) Instance id
-        required: True
-        type: str
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -135,18 +135,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'snapshot',
+    'instance',
+    'profile',
+    'tags',
+    'encryption_key',
     'name',
     'volume_name',
-    'tags',
-    'capacity',
-    'encryption_key',
-    'iops',
-    'snapshot',
     'delete_volume_on_instance_delete',
     'delete_volume_on_attachment_delete',
+    'capacity',
     'volume',
-    'profile',
-    'instance',
+    'iops',
 ]
 
 # Params for Data source
@@ -161,38 +161,38 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'snapshot': ['volume'],
+    'profile': ['volume'],
     'tags': ['volume'],
     'capacity': ['volume'],
-    'iops': ['volume'],
-    'snapshot': ['volume'],
     'volume': ['iops', 'volume_name', 'profile', 'capacity', 'snapshot', 'tags'],
-    'profile': ['volume'],
+    'iops': ['volume'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    snapshot=dict(
         required=False,
         type='str'),
-    volume_name=dict(
+    instance=dict(
+        required=False,
+        type='str'),
+    profile=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    capacity=dict(
-        required=False,
-        type='int'),
     encryption_key=dict(
         required=False,
         type='str'),
-    iops=dict(
+    name=dict(
         required=False,
-        type='int'),
-    snapshot=dict(
+        type='str'),
+    volume_name=dict(
         required=False,
         type='str'),
     delete_volume_on_instance_delete=dict(
@@ -201,15 +201,15 @@ module_args = dict(
     delete_volume_on_attachment_delete=dict(
         required=False,
         type='bool'),
+    capacity=dict(
+        required=False,
+        type='int'),
     volume=dict(
         required=False,
         type='str'),
-    profile=dict(
+    iops=dict(
         required=False,
-        type='str'),
-    instance=dict(
-        required=False,
-        type='str'),
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_is_instance_volume_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -296,7 +296,7 @@ def run_module():
             resource_type='ibm_is_instance_volume_attachment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

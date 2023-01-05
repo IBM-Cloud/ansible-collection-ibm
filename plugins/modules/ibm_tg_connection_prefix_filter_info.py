@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    filter_id:
-        description:
-            - The Transit Gateway Connection Prefix Filter identifier
-        required: True
-        type: str
     gateway:
         description:
             - The Transit Gateway identifier
@@ -34,6 +29,11 @@ options:
     connection_id:
         description:
             - The Transit Gateway Connection identifier
+        required: True
+        type: str
+    filter_id:
+        description:
+            - The Transit Gateway Connection Prefix Filter identifier
         required: True
         type: str
     iaas_classic_username:
@@ -69,16 +69,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('filter_id', 'str'),
     ('gateway', 'str'),
     ('connection_id', 'str'),
+    ('filter_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'filter_id',
     'gateway',
     'connection_id',
+    'filter_id',
 ]
 
 
@@ -89,13 +89,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    filter_id=dict(
-        required=True,
-        type='str'),
     gateway=dict(
         required=True,
         type='str'),
     connection_id=dict(
+        required=True,
+        type='str'),
+    filter_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

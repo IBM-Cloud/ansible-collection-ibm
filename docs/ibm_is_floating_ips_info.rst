@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    The unique identifier of the resource group this floating ips belongs to
+
 
   name (False, str, None)
     The unique user-defined name for this floating IP.

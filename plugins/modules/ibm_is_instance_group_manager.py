@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - instance group manager name
+        required: False
+        type: str
     cooldown:
         description:
             - The duration of time in seconds to pause further scale actions after scaling has taken place
@@ -34,11 +39,12 @@ options:
         required: False
         type: int
         default: 1
-    name:
+    enable_manager:
         description:
-            - instance group manager name
+            - enable instance group manager
         required: False
-        type: str
+        type: bool
+        default: True
     instance_group:
         description:
             - (Required for new resource) instance group ID
@@ -56,12 +62,6 @@ options:
         required: False
         type: int
         default: 90
-    enable_manager:
-        description:
-            - enable instance group manager
-        required: False
-        type: bool
-        default: True
     max_membership_count:
         description:
             - The maximum number of members in a managed instance group
@@ -118,25 +118,25 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'cooldown',
     'min_membership_count',
-    'name',
+    'enable_manager',
     'instance_group',
     'manager_type',
     'aggregation_window',
-    'enable_manager',
     'max_membership_count',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_group', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'instance_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -146,15 +146,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     cooldown=dict(
         required=False,
         type='int'),
     min_membership_count=dict(
         required=False,
         type='int'),
-    name=dict(
+    enable_manager=dict(
         required=False,
-        type='str'),
+        type='bool'),
     instance_group=dict(
         required=False,
         type='str'),
@@ -164,9 +167,6 @@ module_args = dict(
     aggregation_window=dict(
         required=False,
         type='int'),
-    enable_manager=dict(
-        required=False,
-        type='bool'),
     max_membership_count=dict(
         required=False,
         type='int'),
@@ -247,7 +247,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -256,7 +256,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

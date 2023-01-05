@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -28,17 +28,17 @@ options:
         required: False
         type: bool
         default: False
-    vpc:
-        description:
-            - (Required for new resource) The VPC identifier.
-        required: True
-        type: str
     route_vpc_zone_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
         required: False
         type: bool
         default: False
+    name:
+        description:
+            - The user-defined name for this routing table.
+        required: False
+        type: str
     accept_routes_from_resource_type:
         description:
             - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
@@ -51,17 +51,17 @@ options:
         required: False
         type: bool
         default: False
+    vpc:
+        description:
+            - (Required for new resource) The VPC identifier.
+        required: True
+        type: str
     route_transit_gateway_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
         required: False
         type: bool
         default: False
-    name:
-        description:
-            - The user-defined name for this routing table.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,12 +114,12 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'route_internet_ingress',
-    'vpc',
     'route_vpc_zone_ingress',
+    'name',
     'accept_routes_from_resource_type',
     'route_direct_link_ingress',
+    'vpc',
     'route_transit_gateway_ingress',
-    'name',
 ]
 
 # Params for Data source
@@ -143,12 +143,12 @@ module_args = dict(
     route_internet_ingress=dict(
         required=False,
         type='bool'),
-    vpc=dict(
-        required=False,
-        type='str'),
     route_vpc_zone_ingress=dict(
         required=False,
         type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     accept_routes_from_resource_type=dict(
         required=False,
         elements='',
@@ -156,12 +156,12 @@ module_args = dict(
     route_direct_link_ingress=dict(
         required=False,
         type='bool'),
+    vpc=dict(
+        required=False,
+        type='str'),
     route_transit_gateway_ingress=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -239,7 +239,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -248,7 +248,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

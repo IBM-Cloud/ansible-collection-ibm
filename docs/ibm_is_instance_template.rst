@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
 
 
-  default_trusted_profile_auto_link (False, bool, None)
-    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-
-
-  default_trusted_profile_target (False, str, None)
-    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  image (True, str, None)
-    (Required for new resource) image name
-
-
-  network_interfaces (False, list, None)
-    None
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
   user_data (False, str, None)
     User data given for the instance
 
 
-  metadata_service_enabled (False, bool, False)
-    Indicates whether the metadata service endpoint is available to the virtual server instance
+  boot_volume (False, list, None)
+    None
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
 
 
   zone (True, str, None)
     (Required for new resource) Zone name
+
+
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  catalog_offering (False, list, None)
+    The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
+
+
+  image (False, str, None)
+    image name
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  name (False, str, None)
+    Instance Template name
 
 
   total_volume_bandwidth (False, int, None)
@@ -75,39 +91,27 @@ Parameters
     Unique Identifier of the Dedicated Host where the instance will be placed
 
 
-  volume_attachments (False, list, None)
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+
+
+  network_interfaces (False, list, None)
     None
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  resource_group (False, str, None)
-    Instance template resource group
 
 
   availability_policy_host_failure (False, str, None)
     The availability policy to use for this virtual server instance
 
 
-  name (False, str, None)
-    Instance Template name
+  metadata_service_enabled (False, bool, False)
+    Indicates whether the metadata service endpoint is available to the virtual server instance
 
 
-  profile (True, str, None)
-    (Required for new resource) Profile info
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
-
-
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  boot_volume (False, list, None)
+  volume_attachments (False, list, None)
     None
 
 

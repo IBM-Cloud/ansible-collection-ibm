@@ -17,18 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_address_prefix' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
     vpc:
         description:
             - The VPC identifier.
-        required: False
-        type: str
-    address_prefix:
-        description:
-            - The address prefix identifier.
         required: False
         type: str
     address_prefix_name:
@@ -39,6 +34,11 @@ options:
     vpc_name:
         description:
             - The VPC name.
+        required: False
+        type: str
+    address_prefix:
+        description:
+            - The address prefix identifier.
         required: False
         type: str
     generation:
@@ -79,9 +79,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
-    'address_prefix',
     'address_prefix_name',
     'vpc_name',
+    'address_prefix',
 ]
 
 
@@ -95,13 +95,13 @@ module_args = dict(
     vpc=dict(
         required=False,
         type='str'),
-    address_prefix=dict(
-        required=False,
-        type='str'),
     address_prefix_name=dict(
         required=False,
         type='str'),
     vpc_name=dict(
+        required=False,
+        type='str'),
+    address_prefix=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -150,7 +150,7 @@ def run_module():
         resource_type='ibm_is_vpc_address_prefix',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

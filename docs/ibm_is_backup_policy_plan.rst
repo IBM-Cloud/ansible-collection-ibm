@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -37,10 +37,6 @@ Parameters
 
   cron_spec (True, str, None)
     (Required for new resource) The cron specification for the backup schedule.
-
-
-  name (False, str, None)
-    The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   active (False, bool, None)
@@ -57,6 +53,10 @@ Parameters
 
   deletion_trigger (False, list, None)
     None
+
+
+  name (False, str, None)
+    The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,48 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
-
-
-  enabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  disabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified feature flag.
-
-
   guid (True, str, None)
     (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  name (True, str, None)
-    (Required for new resource) Feature name.
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
-
-
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
-
-
-  description (False, str, None)
-    Feature description.
 
 
   tags (False, str, None)
     Tags associated with the feature.
 
 
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified feature flag.
+
+
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
+
+
+  disabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
   rollout_percentage (False, int, None)
     Rollout percentage of the feature.
+
+
+  description (False, str, None)
+    Feature description.
+
+
+  name (True, str, None)
+    (Required for new resource) Feature name.
+
+
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+
+
+  enabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
   segment_rules (False, list, None)

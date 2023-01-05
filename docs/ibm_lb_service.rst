@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  weight (True, int, None)
-    (Required for new resource) Weight value
-
-
-  tags (False, list, None)
-    Tags for the resource
-
 
   service_group_id (True, int, None)
     (Required for new resource) service group ID
@@ -57,6 +49,14 @@ Parameters
 
   health_check_type (True, str, None)
     (Required for new resource) health check type
+
+
+  weight (True, int, None)
+    (Required for new resource) Weight value
+
+
+  tags (False, list, None)
+    Tags for the resource
 
 
   id (False, str, None)

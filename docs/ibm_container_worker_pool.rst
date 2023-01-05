@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  machine_type (True, str, None)
-    (Required for new resource) worker nodes machine type
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  hardware (False, str, shared)
-    Hardware type
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
   size_per_zone (True, int, None)
     (Required for new resource) Number of nodes per zone
 
 
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
-
-
-  operating_system (False, str, None)
-    The operating system of the workers in the worker pool.
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   disk_encryption (False, bool, True)
@@ -67,12 +47,32 @@ Parameters
     (Required for new resource) Cluster name
 
 
-  labels (False, dict, None)
-    list of labels to worker pool
+  operating_system (False, str, None)
+    The operating system of the workers in the worker pool.
+
+
+  hardware (False, str, shared)
+    Hardware type
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   taints (False, list, None)
     WorkerPool Taints
+
+
+  labels (False, dict, None)
+    list of labels to worker pool
 
 
   id (False, str, None)

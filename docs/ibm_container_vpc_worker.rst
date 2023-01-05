@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cluster_name (True, str, None)
-    (Required for new resource) Cluster name
-
 
   replace_worker (True, str, None)
     (Required for new resource) Worker name/id that needs to be replaced
@@ -53,6 +49,10 @@ Parameters
 
   ptx_timeout (False, str, 15m)
     Timeout for checking ptx pods/status
+
+
+  cluster_name (True, str, None)
+    (Required for new resource) Cluster name
 
 
   id (False, str, None)

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_tables' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
             - VPC identifier
         required: True
         type: str
+    is_default:
+        description:
+            - Filters the collection to routing tables with the specified is_default value
+        required: False
+        type: bool
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -65,6 +70,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
+    'is_default',
 ]
 
 
@@ -78,6 +84,9 @@ module_args = dict(
     vpc=dict(
         required=True,
         type='str'),
+    is_default=dict(
+        required=False,
+        type='bool'),
     generation=dict(
         type='int',
         required=False,
@@ -124,7 +133,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_tables',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

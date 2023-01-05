@@ -18,10 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_scan_initiate_validation' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    frequency:
+        description:
+            - The frequency at which a scan is run specified in milliseconds.
+        required: False
+        type: int
+    end_time:
+        description:
+            - The date on which a scan should stop running specified in UTC.
+        required: False
+        type: str
+    name:
+        description:
+            - The name of a scheduled scan.
+        required: False
+        type: str
+    description:
+        description:
+            - The description of a scheduled scan.
+        required: False
+        type: str
+    group_profile_id:
+        description:
+            - The ID of the profile group.
+        required: False
+        type: str
+    no_of_occurrences:
+        description:
+            - The number of times that a scan should be run.
+        required: False
+        type: int
     scope_id:
         description:
             - (Required for new resource) The unique ID of the scope.
@@ -31,36 +61,6 @@ options:
         description:
             - (Required for new resource) The unique ID of the profile.
         required: True
-        type: str
-    name:
-        description:
-            - The name of a scheduled scan.
-        required: False
-        type: str
-    frequency:
-        description:
-            - The frequency at which a scan is run specified in milliseconds.
-        required: False
-        type: int
-    group_profile_id:
-        description:
-            - The ID of the profile group.
-        required: False
-        type: str
-    description:
-        description:
-            - The description of a scheduled scan.
-        required: False
-        type: str
-    no_of_occurrences:
-        description:
-            - The number of times that a scan should be run.
-        required: False
-        type: int
-    end_time:
-        description:
-            - The date on which a scan should stop running specified in UTC.
-        required: False
         type: str
     id:
         description:
@@ -114,14 +114,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'frequency',
+    'end_time',
+    'name',
+    'description',
+    'group_profile_id',
+    'no_of_occurrences',
     'scope_id',
     'profile_id',
-    'name',
-    'frequency',
-    'group_profile_id',
-    'description',
-    'no_of_occurrences',
-    'end_time',
 ]
 
 # Params for Data source
@@ -138,28 +138,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    scope_id=dict(
+    frequency=dict(
         required=False,
-        type='str'),
-    profile_id=dict(
+        type='int'),
+    end_time=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    frequency=dict(
-        required=False,
-        type='int'),
-    group_profile_id=dict(
+    description=dict(
         required=False,
         type='str'),
-    description=dict(
+    group_profile_id=dict(
         required=False,
         type='str'),
     no_of_occurrences=dict(
         required=False,
         type='int'),
-    end_time=dict(
+    scope_id=dict(
+        required=False,
+        type='str'),
+    profile_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_scc_posture_scan_initiate_validation',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

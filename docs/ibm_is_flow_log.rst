@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The resource group of flow log
-
-
-  active (False, bool, True)
-    Indicates whether this collector is active
-
-
-  tags (False, list, None)
-    Tags for the VPC Flow logs
+  target (True, str, None)
+    (Required for new resource) The target id that the flow log collector is to collect flow logs
 
 
   name (True, str, None)
     (Required for new resource) Flow Log Collector name
 
 
-  target (True, str, None)
-    (Required for new resource) The target id that the flow log collector is to collect flow logs
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  resource_group (False, str, None)
+    The resource group of flow log
+
+
+  tags (False, list, None)
+    Tags for the VPC Flow logs
 
 
   storage_bucket (True, str, None)
     (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+
+
+  active (False, bool, True)
+    Indicates whether this collector is active
 
 
   id (False, str, None)

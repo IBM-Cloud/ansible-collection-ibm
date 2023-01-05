@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cr_retention_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
+    retain_untagged:
+        description:
+            - Determines if untagged images are retained when executing the retention policy. This is false by default meaning untagged images will be deleted when the policy is executed.
+        required: False
+        type: bool
+        default: False
     namespace:
         description:
             - (Required for new resource) The namespace to which the retention policy is attached.
@@ -32,12 +38,6 @@ options:
             - (Required for new resource) Determines how many images will be retained for each repository when the retention policy is executed. The value -1 denotes 'Unlimited' (all images are retained).
         required: True
         type: int
-    retain_untagged:
-        description:
-            - Determines if untagged images are retained when executing the retention policy. This is false by default meaning untagged images will be deleted when the policy is executed.
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,9 +90,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'retain_untagged',
     'namespace',
     'images_per_repo',
-    'retain_untagged',
 ]
 
 # Params for Data source
@@ -109,15 +109,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    retain_untagged=dict(
+        required=False,
+        type='bool'),
     namespace=dict(
         required=False,
         type='str'),
     images_per_repo=dict(
         required=False,
         type='int'),
-    retain_untagged=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_cr_retention_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -35,48 +35,48 @@ Parameters
     (Required for new resource) A name for the HPCS instance
 
 
-  tags (False, list, None)
-    None
-
-
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
-
-
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
+  resource_group_id (False, str, None)
+    The resource group id
 
 
   plan (True, str, None)
     (Required for new resource) The plan type of the HPCS Instance
 
 
-  service (False, str, hs-crypto)
-    The name of the service offering `hs-crypto`
-
-
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
-
-
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
 
 
   location (True, str, None)
     (Required for new resource) The location where the HPCS instance available
 
 
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
   failover_units (False, int, None)
     The number of failover crypto units for your service instance
+
+
+  tags (False, list, None)
+    None
+
+
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
+
+
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
+
+
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
+
+
+  service (False, str, hs-crypto)
+    The name of the service offering `hs-crypto`
 
 
   service_endpoints (False, str, None)

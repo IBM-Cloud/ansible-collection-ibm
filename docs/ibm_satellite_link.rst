@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  crn (True, str, None)
-    (Required for new resource) CRN of the Location.
-
-
   ws_endpoint (False, str, None)
     The ws endpoint of the location.
+
+
+  crn (True, str, None)
+    (Required for new resource) CRN of the Location.
 
 
   location (True, str, None)

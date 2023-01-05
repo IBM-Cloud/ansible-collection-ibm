@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The user-defined name for this volume attachment.
+  snapshot (False, str, None)
+    The snapshot of the volume to be attached
 
 
-  volume_name (False, str, None)
-    The unique user-defined name for this volume
+  instance (True, str, None)
+    (Required for new resource) Instance id
+
+
+  profile (False, str, None)
+    The  globally unique name for the volume profile to use for this volume.
 
 
   tags (False, list, None)
     UserTags for the volume instance
 
 
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-
-
   encryption_key (False, str, None)
     The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
 
 
-  iops (False, int, None)
-    The maximum I/O operations per second (IOPS) for the volume.
+  name (False, str, None)
+    The user-defined name for this volume attachment.
 
 
-  snapshot (False, str, None)
-    The snapshot of the volume to be attached
+  volume_name (False, str, None)
+    The unique user-defined name for this volume
 
 
   delete_volume_on_instance_delete (False, bool, None)
@@ -67,16 +67,16 @@ Parameters
     If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
 
 
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
+
+
   volume (False, str, None)
     Instance id
 
 
-  profile (False, str, None)
-    The  globally unique name for the volume profile to use for this volume.
-
-
-  instance (True, str, None)
-    (Required for new resource) Instance id
+  iops (False, int, None)
+    The maximum I/O operations per second (IOPS) for the volume.
 
 
   id (False, str, None)

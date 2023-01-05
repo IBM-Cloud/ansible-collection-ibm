@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_instance (False, str, None)
-    certificate instance for the Loadbalancer
+  https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
 
 
   default_pool (False, str, None)
@@ -43,40 +43,40 @@ Parameters
     Loadbalancer listener port
 
 
-  port_min (False, int, None)
-    The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
-
-
   port_max (False, int, None)
     The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
-
-
-  https_redirect_status_code (False, int, None)
-    The HTTP status code to be returned in the redirect response
-
-
-  accept_proxy_protocol (False, bool, None)
-    Listener will forward proxy protocol
-
-
-  https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
-
-
-  lb (True, str, None)
-    (Required for new resource) Loadbalancer listener ID
 
 
   protocol (True, str, None)
     (Required for new resource) Loadbalancer protocol
 
 
+  connection_limit (False, int, None)
+    Connection limit for Loadbalancer
+
+
+  lb (True, str, None)
+    (Required for new resource) Loadbalancer listener ID
+
+
+  port_min (False, int, None)
+    The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
+
+
   https_redirect_listener (False, str, None)
     ID of the listener that will be set as http redirect target
 
 
-  connection_limit (False, int, None)
-    Connection limit for Loadbalancer
+  certificate_instance (False, str, None)
+    certificate instance for the Loadbalancer
+
+
+  accept_proxy_protocol (False, bool, None)
+    Listener will forward proxy protocol
+
+
+  https_redirect_status_code (False, int, None)
+    The HTTP status code to be returned in the redirect response
 
 
   id (False, str, None)

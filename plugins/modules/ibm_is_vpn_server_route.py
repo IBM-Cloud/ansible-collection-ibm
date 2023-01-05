@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_server_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
@@ -27,17 +27,17 @@ options:
             - (Required for new resource) The VPN server identifier.
         required: True
         type: str
-    destination:
-        description:
-            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
-        required: True
-        type: str
     action:
         description:
             - The action to perform with a packet matching the VPN route:- `translate`: translate the source IP address to one of the private IP addresses of the VPN server, then deliver the packet to target.- `deliver`: deliver the packet to the target.- `drop`: drop the packetThe enumerated values for this property are expected to expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the VPN route on which the unexpected property value was encountered.
         required: False
         type: str
         default: deliver
+    destination:
+        description:
+            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
+        required: True
+        type: str
     name:
         description:
             - The user-defined name for this VPN route. If unspecified, the name will be a hyphenated list of randomly-selected words. Names must be unique within the VPN server the VPN route resides in.
@@ -96,8 +96,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpn_server',
-    'destination',
     'action',
+    'destination',
     'name',
 ]
 
@@ -107,9 +107,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'vpn_server',
     'identifier',
     'name',
-    'vpn_server',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -122,10 +122,10 @@ module_args = dict(
     vpn_server=dict(
         required=False,
         type='str'),
-    destination=dict(
+    action=dict(
         required=False,
         type='str'),
-    action=dict(
+    destination=dict(
         required=False,
         type='str'),
     name=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_vpn_server_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_vpn_server_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

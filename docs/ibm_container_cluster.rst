@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  patch_version (False, str, None)
-    Kubernetes patch version
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  subnet_id (False, list, None)
-    List of subnet IDs
+  name (True, str, None)
+    (Required for new resource) The cluster name
 
 
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
+  public_service_endpoint (False, bool, None)
+    None
 
 
   kube_version (False, str, None)
@@ -59,12 +51,28 @@ Parameters
     Updates all the woker nodes if sets to true
 
 
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
+  patch_version (False, str, None)
+    Kubernetes patch version
 
 
-  labels (False, dict, None)
-    list of labels to the default worker pool
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  workers_info (False, list, None)
+    The IDs of the worker node
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  webhook (False, list, None)
+    None
+
+
+  private_vlan_id (False, str, None)
+    Private VLAN ID
 
 
   entitlement (False, str, None)
@@ -75,80 +83,60 @@ Parameters
     Custom subnet CIDR to provide private IP addresses for services
 
 
-  webhook (False, list, None)
-    None
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
 
 
-  public_service_endpoint (False, bool, None)
-    None
+  tags (False, list, None)
+    Tags for the resource
 
 
-  workers_info (False, list, None)
-    The IDs of the worker node
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  image_security_enforcement (False, bool, False)
-    Set true to enable image security enforcement policies
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  operating_system (False, str, None)
-    The operating system of the workers in the default worker pool.
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
   taints (False, list, None)
     WorkerPool Taints
 
 
+  public_vlan_id (False, str, None)
+    Public VLAN ID
+
+
   disk_encryption (False, bool, True)
     disc encryption done, if set to true.
+
+
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
 
 
   wait_till (False, str, IngressReady)
     wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
 
 
-  machine_type (False, str, None)
-    Machine type
+  subnet_id (False, list, None)
+    List of subnet IDs
 
 
-  private_vlan_id (False, str, None)
-    Private VLAN ID
+  image_security_enforcement (False, bool, False)
+    Set true to enable image security enforcement policies
 
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
 
 
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
+  labels (False, dict, None)
+    list of labels to the default worker pool
 
 
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  public_vlan_id (False, str, None)
-    Public VLAN ID
-
-
-  tags (False, list, None)
-    Tags for the resource
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
 
 
   retry_patch_version (False, int, None)
@@ -157,6 +145,18 @@ Parameters
 
   no_subnet (False, bool, False)
     Boolean value set to true when subnet creation is not required.
+
+
+  operating_system (False, str, None)
+    The operating system of the workers in the default worker pool.
+
+
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  machine_type (False, str, None)
+    Machine type
 
 
   id (False, str, None)

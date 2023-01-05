@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  response_action_id (True, int, None)
+    (Required for new resource) Response action ID
+
+
+  wait_cycles (False, int, None)
+    wait cycles count
+
 
   notified_users (False, list, None)
     List of users notified
@@ -49,14 +57,6 @@ Parameters
 
   query_type_id (True, int, None)
     (Required for new resource) Query Type ID
-
-
-  response_action_id (True, int, None)
-    (Required for new resource) Response action ID
-
-
-  wait_cycles (False, int, None)
-    wait cycles count
 
 
   id (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -33,16 +33,16 @@ Parameters
     CISzone - Domain
 
 
-  cis_id (True, str, None)
-    CIS instance crn
-
-
   verification_key (False, str, None)
     None
 
 
   cname_suffix (False, str, None)
     None
+
+
+  cis_id (True, str, None)
+    CIS instance crn
 
 
   iaas_classic_username (False, any, None)

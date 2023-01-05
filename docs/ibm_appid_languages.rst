@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  languages (True, list, None)
-    (Required for new resource) The list of languages that can be used to customize email templates for Cloud Directory
-
-
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
+
+
+  languages (True, list, None)
+    (Required for new resource) The list of languages that can be used to customize email templates for Cloud Directory
 
 
   id (False, str, None)

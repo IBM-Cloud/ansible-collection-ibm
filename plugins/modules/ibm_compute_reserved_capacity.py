@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_compute_reserved_capacity' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) Name
-        required: True
-        type: str
-    instances:
-        description:
-            - (Required for new resource) no of the instances
-        required: True
-        type: int
-    flavor:
-        description:
-            - (Required for new resource) flavor of the reserved capacity
-        required: True
-        type: str
     tags:
         description:
             - List of tags
@@ -56,6 +41,21 @@ options:
     pod:
         description:
             - (Required for new resource) Pod name
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Name
+        required: True
+        type: str
+    instances:
+        description:
+            - (Required for new resource) no of the instances
+        required: True
+        type: int
+    flavor:
+        description:
+            - (Required for new resource) flavor of the reserved capacity
         required: True
         type: str
     id:
@@ -104,22 +104,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('datacenter', 'str'),
+    ('pod', 'str'),
     ('name', 'str'),
     ('instances', 'int'),
     ('flavor', 'str'),
-    ('datacenter', 'str'),
-    ('pod', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'instances',
-    'flavor',
     'tags',
     'force_create',
     'datacenter',
     'pod',
+    'name',
+    'instances',
+    'flavor',
 ]
 
 # Params for Data source
@@ -139,15 +139,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    instances=dict(
-        required=False,
-        type='int'),
-    flavor=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -159,6 +150,15 @@ module_args = dict(
         required=False,
         type='str'),
     pod=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    instances=dict(
+        required=False,
+        type='int'),
+    flavor=dict(
         required=False,
         type='str'),
     id=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_compute_reserved_capacity',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_compute_reserved_capacity',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.48.0',
+            ibm_provider_version='1.49.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.48.0
+- IBM-Cloud terraform-provider-ibm v1.49.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (True, str, None)
-    The zone of the dedicated host flavor
-
-
   host_flavor_id (True, str, None)
     The id of the dedicated host flavor
+
+
+  zone (True, str, None)
+    The zone of the dedicated host flavor
 
 
   ibmcloud_api_key (True, any, None)

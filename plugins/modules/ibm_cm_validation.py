@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_validation' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.48.0
+    - IBM-Cloud terraform-provider-ibm v1.49.0
     - Terraform v0.12.20
 
 options:
-    schematics:
-        description:
-            - Other values to pass to the schematics workspace.
-        required: False
-        type: list
-        elements: dict
     revalidate_if_validated:
         description:
             - If the version should be revalidated if it is already validated.
@@ -38,14 +32,26 @@ options:
             - If the version should be marked as consumable or "ready to share".
         required: False
         type: bool
-    version_locator:
+    schematics:
         description:
-            - (Required for new resource) Version locator - the version that will be validated.
-        required: True
-        type: str
+            - Other values to pass to the schematics workspace.
+        required: False
+        type: list
+        elements: dict
+    override_values:
+        description:
+            - Override values during validation.
+        required: False
+        type: dict
+        elements: str
     x_auth_refresh_token:
         description:
             - (Required for new resource) Authentication token used to submit validation job.
+        required: True
+        type: str
+    version_locator:
+        description:
+            - (Required for new resource) Version locator - the version that will be validated.
         required: True
         type: str
     region:
@@ -53,12 +59,6 @@ options:
             - Validation region.
         required: False
         type: str
-    override_values:
-        description:
-            - Override values during validation.
-        required: False
-        type: dict
-        elements: str
     environment_variables:
         description:
             - Environment variables to include in the schematics workspace.
@@ -111,19 +111,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('version_locator', 'str'),
     ('x_auth_refresh_token', 'str'),
+    ('version_locator', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'schematics',
     'revalidate_if_validated',
     'mark_version_consumable',
-    'version_locator',
-    'x_auth_refresh_token',
-    'region',
+    'schematics',
     'override_values',
+    'x_auth_refresh_token',
+    'version_locator',
+    'region',
     'environment_variables',
 ]
 
@@ -141,29 +141,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    schematics=dict(
-        required=False,
-        elements='',
-        type='list'),
     revalidate_if_validated=dict(
         required=False,
         type='bool'),
     mark_version_consumable=dict(
         required=False,
         type='bool'),
-    version_locator=dict(
+    schematics=dict(
+        required=False,
+        elements='',
+        type='list'),
+    override_values=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    x_auth_refresh_token=dict(
         required=False,
         type='str'),
-    x_auth_refresh_token=dict(
+    version_locator=dict(
         required=False,
         type='str'),
     region=dict(
         required=False,
         type='str'),
-    override_values=dict(
-        required=False,
-        elements='',
-        type='dict'),
     environment_variables=dict(
         required=False,
         elements='',
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_cm_validation',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.48.0',
+        ibm_provider_version='1.49.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
