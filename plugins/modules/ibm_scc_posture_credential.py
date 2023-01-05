@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_credential' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -35,12 +35,6 @@ options:
     display_fields:
         description:
             - (Required for new resource) Details the fields on the credential. This will change as per credential type selected.
-        required: True
-        type: list
-        elements: dict
-    group:
-        description:
-            - (Required for new resource) Credential group details.
         required: True
         type: list
         elements: dict
@@ -108,7 +102,6 @@ TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
     ('description', 'str'),
     ('display_fields', 'list'),
-    ('group', 'list'),
     ('purpose', 'str'),
     ('enabled', 'bool'),
     ('type', 'str'),
@@ -119,7 +112,6 @@ TL_ALL_PARAMETERS = [
     'name',
     'description',
     'display_fields',
-    'group',
     'purpose',
     'enabled',
     'type',
@@ -148,10 +140,6 @@ module_args = dict(
         required=False,
         type='str'),
     display_fields=dict(
-        required=False,
-        elements='',
-        type='list'),
-    group=dict(
         required=False,
         elements='',
         type='list'),
@@ -229,7 +217,7 @@ def run_module():
         resource_type='ibm_scc_posture_credential',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -238,7 +226,7 @@ def run_module():
             resource_type='ibm_scc_posture_credential',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

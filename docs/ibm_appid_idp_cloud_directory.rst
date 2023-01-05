@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,7 +31,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  identity_confirm_methods (False, list, None)
+  is_active (True, bool, None)
+    (Required for new resource)
+
+
+  self_service_enabled (False, bool, True)
+    None
+
+
+  welcome_enabled (False, bool, True)
+    None
+
+
+  reset_password_enabled (False, bool, True)
+    None
+
+
+  identity_confirm_access_mode (False, str, FULL)
     None
 
 
@@ -43,31 +59,15 @@ Parameters
     None
 
 
-  identity_confirm_access_mode (False, str, FULL)
-    None
-
-
-  reset_password_enabled (False, bool, True)
-    None
-
-
   reset_password_notification_enabled (False, bool, True)
     None
 
 
+  identity_confirm_methods (False, list, None)
+    None
+
+
   identity_field (False, str, None)
-    None
-
-
-  is_active (True, bool, None)
-    (Required for new resource)
-
-
-  self_service_enabled (False, bool, True)
-    None
-
-
-  welcome_enabled (False, bool, True)
     None
 
 

@@ -18,10 +18,73 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_healthcheck' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
+    type:
+        description:
+            - type
+        required: False
+        type: str
+        default: http
+    retries:
+        description:
+            - retries
+        required: False
+        type: int
+        default: 2
+    interval:
+        description:
+            - interval
+        required: False
+        type: int
+        default: 60
+    path:
+        description:
+            - path
+        required: False
+        type: str
+        default: /
+    method:
+        description:
+            - method
+        required: False
+        type: str
+        default: GET
+    allow_insecure:
+        description:
+            - allow_insecure
+        required: False
+        type: bool
+        default: False
+    expected_body:
+        description:
+            - expected_body
+        required: False
+        type: str
+    follow_redirects:
+        description:
+            - follow_redirects
+        required: False
+        type: bool
+        default: False
+    port:
+        description:
+            - port number
+        required: False
+        type: int
+    headers:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
     expected_codes:
         description:
             - expected_codes
@@ -33,75 +96,12 @@ options:
         required: False
         type: str
         default:  
-    type:
-        description:
-            - type
-        required: False
-        type: str
-        default: http
-    method:
-        description:
-            - method
-        required: False
-        type: str
-        default: GET
     timeout:
         description:
             - timeout
         required: False
         type: int
         default: 5
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    interval:
-        description:
-            - interval
-        required: False
-        type: int
-        default: 60
-    follow_redirects:
-        description:
-            - follow_redirects
-        required: False
-        type: bool
-        default: False
-    allow_insecure:
-        description:
-            - allow_insecure
-        required: False
-        type: bool
-        default: False
-    port:
-        description:
-            - port number
-        required: False
-        type: int
-    path:
-        description:
-            - path
-        required: False
-        type: str
-        default: /
-    expected_body:
-        description:
-            - expected_body
-        required: False
-        type: str
-    retries:
-        description:
-            - retries
-        required: False
-        type: int
-        default: 2
-    headers:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -153,20 +153,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'type',
+    'retries',
+    'interval',
+    'path',
+    'method',
+    'allow_insecure',
+    'expected_body',
+    'follow_redirects',
+    'port',
+    'headers',
+    'cis_id',
     'expected_codes',
     'description',
-    'type',
-    'method',
     'timeout',
-    'cis_id',
-    'interval',
-    'follow_redirects',
-    'allow_insecure',
-    'port',
-    'path',
-    'expected_body',
-    'retries',
-    'headers',
 ]
 
 # Params for Data source
@@ -183,49 +183,49 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    expected_codes=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
-    method=dict(
-        required=False,
-        type='str'),
-    timeout=dict(
+    retries=dict(
         required=False,
         type='int'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     interval=dict(
-        required=False,
-        type='int'),
-    follow_redirects=dict(
-        required=False,
-        type='bool'),
-    allow_insecure=dict(
-        required=False,
-        type='bool'),
-    port=dict(
         required=False,
         type='int'),
     path=dict(
         required=False,
         type='str'),
+    method=dict(
+        required=False,
+        type='str'),
+    allow_insecure=dict(
+        required=False,
+        type='bool'),
     expected_body=dict(
         required=False,
         type='str'),
-    retries=dict(
+    follow_redirects=dict(
+        required=False,
+        type='bool'),
+    port=dict(
         required=False,
         type='int'),
     headers=dict(
         required=False,
         elements='',
         type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    expected_codes=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    timeout=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -291,7 +291,7 @@ def run_module():
         resource_type='ibm_cis_healthcheck',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

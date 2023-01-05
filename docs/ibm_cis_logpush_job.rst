@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  logdna (True, str, None)
-    (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
-
-
-  name (False, str, None)
-    Logpush Job Name
-
 
   enabled (False, bool, None)
     Whether the logpush job enabled or not
@@ -61,6 +49,18 @@ Parameters
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  logdna (True, str, None)
+    (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
+
+
+  name (False, str, None)
+    Logpush Job Name
 
 
   id (False, str, None)

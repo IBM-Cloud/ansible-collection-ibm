@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,72 +31,72 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   port (False, int, None)
     port number
 
 
-  tags (False, list, None)
-    tags set for the resource
-
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
+  priority (False, int, 0)
+    priority info
 
 
   mx_priority (False, int, 0)
     Maximum priority
 
 
-  service (False, str, None)
-    service info
+  refresh (False, int, None)
+    refresh rate
 
 
   responsible_person (False, str, None)
     Responsible person for DNS record
 
 
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
   protocol (False, str, None)
     protocol info
 
 
-  priority (False, int, 0)
-    priority info
+  service (False, str, None)
+    service info
+
+
+  weight (False, int, 0)
+    weight info
 
 
   data (True, str, None)
     (Required for new resource) DNS record data
 
 
+  expire (False, int, None)
+    DNS record expiry info
+
+
   host (True, str, None)
     (Required for new resource) Hostname
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  tags (False, list, None)
+    tags set for the resource
 
 
   id (False, str, None)

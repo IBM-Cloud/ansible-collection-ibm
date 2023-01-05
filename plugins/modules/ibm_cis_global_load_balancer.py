@@ -18,38 +18,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_global_load_balancer' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    cis_id:
+    ttl:
         description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
-        type: str
-    region_pools:
-        description:
-            - None
+            - TTL value
         required: False
-        type: list
-        elements: dict
-    default_pool_ids:
+        type: int
+        default: 60
+    session_affinity:
         description:
-            - (Required for new resource) List of default Pool IDs
-        required: True
-        type: list
-        elements: str
+            - Session affinity info
+        required: False
+        type: str
+        default: none
     pop_pools:
         description:
             - None
         required: False
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
+    fallback_pool_id:
+        description:
+            - (Required for new resource) fallback pool ID
+        required: True
+        type: str
     description:
         description:
             - Description for the load balancer instance
@@ -66,34 +66,34 @@ options:
         required: False
         type: bool
         default: False
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    default_pool_ids:
+        description:
+            - (Required for new resource) List of default Pool IDs
+        required: True
+        type: list
+        elements: str
+    region_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
     enabled:
         description:
             - set to true of LB needs to enabled
         required: False
         type: bool
         default: True
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    session_affinity:
-        description:
-            - Session affinity info
-        required: False
-        type: str
-        default: none
-    fallback_pool_id:
-        description:
-            - (Required for new resource) fallback pool ID
-        required: True
-        type: str
-    ttl:
-        description:
-            - TTL value
-        required: False
-        type: int
-        default: 60
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -140,28 +140,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('name', 'str'),
+    ('fallback_pool_id', 'str'),
+    ('cis_id', 'str'),
     ('default_pool_ids', 'list'),
     ('domain_id', 'str'),
-    ('fallback_pool_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'name',
-    'region_pools',
-    'default_pool_ids',
+    'ttl',
+    'session_affinity',
     'pop_pools',
+    'name',
+    'fallback_pool_id',
     'description',
     'steering_policy',
     'proxied',
-    'enabled',
+    'cis_id',
+    'default_pool_ids',
+    'region_pools',
     'domain_id',
-    'session_affinity',
-    'fallback_pool_id',
-    'ttl',
+    'enabled',
 ]
 
 # Params for Data source
@@ -172,32 +172,30 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'proxied': ['ttl'],
     'ttl': ['proxied'],
+    'proxied': ['ttl'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    ttl=dict(
+        required=False,
+        type='int'),
+    session_affinity=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    region_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
-    default_pool_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
     pop_pools=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    fallback_pool_id=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -207,21 +205,23 @@ module_args = dict(
     proxied=dict(
         required=False,
         type='bool'),
-    enabled=dict(
+    cis_id=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    default_pool_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    region_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
     domain_id=dict(
         required=False,
         type='str'),
-    session_affinity=dict(
+    enabled=dict(
         required=False,
-        type='str'),
-    fallback_pool_id=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_cis_global_load_balancer',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

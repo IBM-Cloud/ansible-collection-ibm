@@ -23,13 +23,57 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  type (False, str, http)
+    type
+
+
+  retries (False, int, 2)
+    retries
+
+
+  interval (False, int, 60)
+    interval
+
+
+  path (False, str, /)
+    path
+
+
+  method (False, str, GET)
+    method
+
+
+  allow_insecure (False, bool, False)
+    allow_insecure
+
+
+  expected_body (False, str, None)
+    expected_body
+
+
+  follow_redirects (False, bool, False)
+    follow_redirects
+
+
+  port (False, int, None)
+    port number
+
+
+  headers (False, list, None)
+    None
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
 
   expected_codes (False, str, None)
     expected_codes
@@ -39,52 +83,8 @@ Parameters
     description
 
 
-  type (False, str, http)
-    type
-
-
-  method (False, str, GET)
-    method
-
-
   timeout (False, int, 5)
     timeout
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  interval (False, int, 60)
-    interval
-
-
-  follow_redirects (False, bool, False)
-    follow_redirects
-
-
-  allow_insecure (False, bool, False)
-    allow_insecure
-
-
-  port (False, int, None)
-    port number
-
-
-  path (False, str, /)
-    path
-
-
-  expected_body (False, str, None)
-    expected_body
-
-
-  retries (False, int, 2)
-    retries
-
-
-  headers (False, list, None)
-    None
 
 
   id (False, str, None)

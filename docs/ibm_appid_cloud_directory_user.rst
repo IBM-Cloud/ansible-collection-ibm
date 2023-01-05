@@ -23,13 +23,29 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  user_name (False, str, None)
+    Optional username
+
+
+  password (True, str, None)
+    (Required for new resource) User password
+
+
+  status (False, str, PENDING)
+    Accepted values `PENDING` or `CONFIRMED`
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The AppID instance GUID
+
 
   locked_until (False, int, None)
     Integer (epoch time in milliseconds), determines till when the user account will be locked
@@ -39,32 +55,16 @@ Parameters
     Cloud Directory user display name
 
 
-  user_name (False, str, None)
-    Optional username
-
-
-  status (False, str, PENDING)
-    Accepted values `PENDING` or `CONFIRMED`
-
-
   email (True, list, None)
     (Required for new resource) A set of user emails
-
-
-  create_profile (False, bool, True)
-    A boolean indication if a profile should be created for the Cloud Directory user
 
 
   active (False, bool, True)
     Determines if the user account is active or not
 
 
-  password (True, str, None)
-    (Required for new resource) User password
-
-
-  tenant_id (True, str, None)
-    (Required for new resource) The AppID instance GUID
+  create_profile (False, bool, True)
+    A boolean indication if a profile should be created for the Cloud Directory user
 
 
   id (False, str, None)

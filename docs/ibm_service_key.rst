@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) The name of the service key
-
 
   service_instance_guid (True, str, None)
     (Required for new resource) The guid of the service instance for which to create service key
@@ -45,6 +41,10 @@ Parameters
 
   tags (False, list, None)
     None
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the service key
 
 
   id (False, str, None)

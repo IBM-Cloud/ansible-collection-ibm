@@ -18,34 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_resource_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
     instance_id:
         description:
             - (Required for new resource) Instance ID
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) DNS record Type
-        required: True
-        type: str
-    preference:
-        description:
-            - DNS maximum preference
-        required: False
-        type: int
-        default: 0
-    service:
-        description:
-            - Service info
-        required: False
-        type: str
-    zone_id:
-        description:
-            - (Required for new resource) Zone ID
         required: True
         type: str
     name:
@@ -58,34 +37,55 @@ options:
             - (Required for new resource) DNS record Data
         required: True
         type: str
+    zone_id:
+        description:
+            - (Required for new resource) Zone ID
+        required: True
+        type: str
     priority:
         description:
             - DNS server Priority
         required: False
         type: int
         default: 0
+    service:
+        description:
+            - Service info
+        required: False
+        type: str
+    protocol:
+        description:
+            - Protocol
+        required: False
+        type: str
     ttl:
         description:
             - DNS record TTL
         required: False
         type: int
         default: 900
+    preference:
+        description:
+            - DNS maximum preference
+        required: False
+        type: int
+        default: 0
     port:
         description:
             - DNS server Port
         required: False
         type: int
+    type:
+        description:
+            - (Required for new resource) DNS record Type
+        required: True
+        type: str
     weight:
         description:
             - DNS server weight
         required: False
         type: int
         default: 0
-    protocol:
-        description:
-            - Protocol
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -133,26 +133,26 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('type', 'str'),
-    ('zone_id', 'str'),
     ('name', 'str'),
     ('rdata', 'str'),
+    ('zone_id', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
-    'type',
-    'preference',
-    'service',
-    'zone_id',
     'name',
     'rdata',
+    'zone_id',
     'priority',
-    'ttl',
-    'port',
-    'weight',
+    'service',
     'protocol',
+    'ttl',
+    'preference',
+    'port',
+    'type',
+    'weight',
 ]
 
 # Params for Data source
@@ -172,39 +172,39 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    preference=dict(
-        required=False,
-        type='int'),
-    service=dict(
-        required=False,
-        type='str'),
-    zone_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     rdata=dict(
         required=False,
         type='str'),
+    zone_id=dict(
+        required=False,
+        type='str'),
     priority=dict(
         required=False,
         type='int'),
+    service=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
     ttl=dict(
+        required=False,
+        type='int'),
+    preference=dict(
         required=False,
         type='int'),
     port=dict(
         required=False,
         type='int'),
+    type=dict(
+        required=False,
+        type='str'),
     weight=dict(
         required=False,
         type='int'),
-    protocol=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -270,7 +270,7 @@ def run_module():
         resource_type='ibm_dns_resource_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  account_id (True, str, None)
-    (Required for new resource) The id of the account owning this zone.
+  description (False, str, None)
+    The description of the zone.
 
 
   addresses (True, list, None)
@@ -43,20 +43,20 @@ Parameters
     The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
 
 
-  name (True, str, None)
-    (Required for new resource) The name of the zone.
+  transaction_id (False, str, None)
+    The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
 
 
-  description (False, str, None)
-    The description of the zone.
+  account_id (True, str, None)
+    (Required for new resource) The id of the account owning this zone.
 
 
   excluded (False, list, None)
     The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
 
 
-  transaction_id (False, str, None)
-    The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
+  name (True, str, None)
+    (Required for new resource) The name of the zone.
 
 
   id (False, str, None)

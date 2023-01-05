@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_ios' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -37,14 +37,14 @@ options:
             - Subscription description.
         required: False
         type: str
-    topic_id:
-        description:
-            - (Required for new resource) Topic ID.
-        required: True
-        type: str
     destination_id:
         description:
             - (Required for new resource) Destination ID.
+        required: True
+        type: str
+    topic_id:
+        description:
+            - (Required for new resource) Topic ID.
         required: True
         type: str
     id:
@@ -95,8 +95,8 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('instance_guid', 'str'),
     ('name', 'str'),
-    ('topic_id', 'str'),
     ('destination_id', 'str'),
+    ('topic_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -104,8 +104,8 @@ TL_ALL_PARAMETERS = [
     'instance_guid',
     'name',
     'description',
-    'topic_id',
     'destination_id',
+    'topic_id',
 ]
 
 # Params for Data source
@@ -135,10 +135,10 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    topic_id=dict(
+    destination_id=dict(
         required=False,
         type='str'),
-    destination_id=dict(
+    topic_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_en_subscription_ios',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_en_subscription_ios',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

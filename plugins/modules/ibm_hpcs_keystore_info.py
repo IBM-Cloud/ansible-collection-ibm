@@ -17,13 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_keystore' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
     region:
         description:
             - The region of the UKO instance this resource exists in.
+        required: True
+        type: str
+    keystore_id:
+        description:
+            - UUID of the keystore.
         required: True
         type: str
     instance_id:
@@ -34,11 +39,6 @@ options:
     uko_vault:
         description:
             - The UUID of the Vault in which the update is to take place.
-        required: True
-        type: str
-    keystore_id:
-        description:
-            - UUID of the keystore.
         required: True
         type: str
     iaas_classic_username:
@@ -75,17 +75,17 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('region', 'str'),
+    ('keystore_id', 'str'),
     ('instance_id', 'str'),
     ('uko_vault', 'str'),
-    ('keystore_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'region',
+    'keystore_id',
     'instance_id',
     'uko_vault',
-    'keystore_id',
 ]
 
 
@@ -99,13 +99,13 @@ module_args = dict(
     region=dict(
         required=True,
         type='str'),
+    keystore_id=dict(
+        required=True,
+        type='str'),
     instance_id=dict(
         required=True,
         type='str'),
     uko_vault=dict(
-        required=True,
-        type='str'),
-    keystore_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_keystore',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

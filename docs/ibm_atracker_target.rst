@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  logdna_endpoint (False, list, None)
-    Property values for a LogDNA Endpoint.
-
-
   name (True, str, None)
     (Required for new resource) The name of the target. The name must be 1000 characters or less, and cannot include any special characters other than `(space) - . _ :`.
 
 
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   target_type (True, str, None)
-    (Required for new resource) The type of the target. It can be cloud_object_storage or logdna. Based on this type you must include cos_endpoint or logdna_endpoint.
+    (Required for new resource) The type of the target. It can be cloud_object_storage, logdna or event_streams. Based on this type you must include cos_endpoint, logdna_endpoint or eventstreams_endpoint.
+
+
+  logdna_endpoint (False, list, None)
+    Property values for a LogDNA Endpoint.
 
 
   cos_endpoint (False, list, None)
     Property values for a Cloud Object Storage Endpoint.
 
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+  eventstreams_endpoint (False, list, None)
+    Property values for an Event Streams Endpoint in requests.
 
 
   id (False, str, None)

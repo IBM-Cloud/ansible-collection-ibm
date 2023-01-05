@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  connection_id (True, str, None)
-    The Transit Gateway Connection identifier
-
-
   filter_id (True, str, None)
     The Transit Gateway Connection Prefix Filter identifier
 
 
   gateway (True, str, None)
     The Transit Gateway identifier
+
+
+  connection_id (True, str, None)
+    The Transit Gateway Connection identifier
 
 
   iaas_classic_username (False, any, None)

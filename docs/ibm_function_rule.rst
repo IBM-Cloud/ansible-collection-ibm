@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  namespace (True, str, None)
-    (Required for new resource) IBM Cloud function namespace.
-
-
-  name (True, str, None)
-    (Required for new resource) Name of rule.
-
-
   trigger_name (True, str, None)
     (Required for new resource) Name of trigger.
 
 
   action_name (True, str, None)
     (Required for new resource) Name of action.
+
+
+  namespace (True, str, None)
+    (Required for new resource) IBM Cloud function namespace.
+
+
+  name (True, str, None)
+    (Required for new resource) Name of rule.
 
 
   id (False, str, None)

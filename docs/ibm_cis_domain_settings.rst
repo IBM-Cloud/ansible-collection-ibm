@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,116 +31,96 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  websockets (False, str, None)
-    websockets setting
-
-
-  opportunistic_encryption (False, str, None)
-    opportunistic_encryption setting
-
-
-  browser_check (False, str, None)
-    browser_check setting
-
-
-  minify (False, list, None)
-    Minify setting
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  ssl (False, str, None)
-    SSL/TLS setting
-
-
   automatic_https_rewrites (False, str, None)
     automatic_https_rewrites setting
 
 
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
-
-
-  mobile_redirect (False, list, None)
-    None
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  hotlink_protection (False, str, None)
-    hotlink_protection setting
-
-
-  http2 (False, str, None)
-    http2 setting
-
-
-  brotli (False, str, None)
-    brotli setting
-
-
-  pseudo_ipv4 (False, str, None)
-    pseudo_ipv4 setting
-
-
-  prefetch_preload (False, str, None)
-    prefetch_preload setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
-
-
-  response_buffering (False, str, None)
-    response_buffering setting
-
-
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
   true_client_ip_header (False, str, None)
     true_client_ip_header setting
 
 
-  dnssec (False, str, None)
-    DNS Sec setting
-
-
   ip_geolocation (False, str, None)
     ip_geolocation setting
 
 
-  max_upload (False, int, None)
-    Maximum upload
+  pseudo_ipv4 (False, str, None)
+    pseudo_ipv4 setting
 
 
-  security_header (False, list, None)
-    Security Header Setting
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  ssl (False, str, None)
+    SSL/TLS setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  cname_flattening (False, str, None)
+    cname_flattening setting
+
+
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
+
+
+  minify (False, list, None)
+    Minify setting
+
+
+  mobile_redirect (False, list, None)
+    None
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  http2 (False, str, None)
+    http2 setting
 
 
   image_size_optimization (False, str, None)
     image_size_optimization setting
 
 
-  always_use_https (False, str, None)
-    always_use_https setting
+  prefetch_preload (False, str, None)
+    prefetch_preload setting
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  browser_check (False, str, None)
+    browser_check setting
 
 
   script_load_optimization (False, str, None)
@@ -151,16 +131,36 @@ Parameters
     server_side_exclude setting
 
 
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
+  websockets (False, str, None)
+    websockets setting
+
+
+  max_upload (False, int, None)
+    Maximum upload
+
+
+  dnssec (False, str, None)
+    DNS Sec setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  opportunistic_encryption (False, str, None)
+    opportunistic_encryption setting
+
+
+  hotlink_protection (False, str, None)
+    hotlink_protection setting
+
+
+  response_buffering (False, str, None)
+    response_buffering setting
 
 
   cipher (False, list, None)
     Cipher settings
-
-
-  cname_flattening (False, str, None)
-    cname_flattening setting
 
 
   id (False, str, None)

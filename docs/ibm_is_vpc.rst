@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -33,6 +33,18 @@ Parameters
 
   classic_access (False, bool, False)
     Set to true if classic access needs to enabled to VPC
+
+
+  default_routing_table_name (False, str, None)
+    Default routing table name
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  tags (False, list, None)
+    List of tags
 
 
   name (True, str, None)
@@ -47,20 +59,8 @@ Parameters
     Default security group name
 
 
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  default_routing_table_name (False, str, None)
-    Default routing table name
-
-
   resource_group (False, str, None)
     Resource group info
-
-
-  tags (False, list, None)
-    List of tags
 
 
   id (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  host_id (True, str, None)
-    The id of the dedicated host
-
-
   host_pool_id (True, str, None)
     The id of the dedicated host pool the dedicated host is associated with
+
+
+  host_id (True, str, None)
+    The id of the dedicated host
 
 
   ibmcloud_api_key (True, any, None)

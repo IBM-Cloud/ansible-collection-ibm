@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_storage_attachment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    worker:
-        description:
-            - Worker node ID
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     volume_attachment_id:
         description:
             - The volume attachment ID
@@ -40,6 +30,16 @@ options:
         description:
             - Cluster name or ID
         required: True
+        type: str
+    worker:
+        description:
+            - Worker node ID
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
         type: str
     ibmcloud_api_key:
         description:
@@ -54,17 +54,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker', 'str'),
     ('volume_attachment_id', 'str'),
     ('cluster', 'str'),
+    ('worker', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker',
-    'resource_group_id',
     'volume_attachment_id',
     'cluster',
+    'worker',
+    'resource_group_id',
 ]
 
 
@@ -75,17 +75,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker=dict(
-        required=True,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     volume_attachment_id=dict(
         required=True,
         type='str'),
     cluster=dict(
         required=True,
+        type='str'),
+    worker=dict(
+        required=True,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -107,7 +107,7 @@ def run_module():
         resource_type='ibm_container_storage_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

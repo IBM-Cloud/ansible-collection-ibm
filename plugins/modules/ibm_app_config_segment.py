@@ -18,26 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_segment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    guid:
-        description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
-    description:
-        description:
-            - Segment description.
-        required: False
-        type: str
     rules:
         description:
             - (Required for new resource) List of rules that determine if the entity belongs to the segment during feature / property evaluation. An entity is identified by an unique identifier and the attributes that it defines.
         required: True
         type: list
         elements: dict
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) Segment name.
@@ -51,6 +46,11 @@ options:
     tags:
         description:
             - Tags associated with the segments.
+        required: False
+        type: str
+    description:
+        description:
+            - Segment description.
         required: False
         type: str
     id:
@@ -99,20 +99,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guid', 'str'),
     ('rules', 'list'),
+    ('guid', 'str'),
     ('name', 'str'),
     ('segment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
-    'description',
     'rules',
+    'guid',
     'name',
     'segment_id',
     'tags',
+    'description',
 ]
 
 # Params for Data source
@@ -134,16 +134,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     rules=dict(
         required=False,
         elements='',
         type='list'),
+    guid=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -151,6 +148,9 @@ module_args = dict(
         required=False,
         type='str'),
     tags=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_app_config_segment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

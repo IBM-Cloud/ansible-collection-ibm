@@ -23,41 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  session_persistence_type (False, str, None)
-    Load Balancer Pool session persisence type.
-
-
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
 
   health_delay (True, int, None)
     (Required for new resource) Load Blancer health delay time period
@@ -67,20 +39,48 @@ Parameters
     (Required for new resource) Load Balancer health retry count
 
 
-  session_persistence_app_cookie_name (False, str, None)
-    Load Balancer Pool session persisence app cookie name.
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
 
 
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   protocol (True, str, None)
     (Required for new resource) Load Balancer Protocol
 
 
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
+  session_persistence_type (False, str, None)
+    Load Balancer Pool session persisence type.
+
+
+  session_persistence_app_cookie_name (False, str, None)
+    Load Balancer Pool session persisence app cookie name.
+
+
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
 
 
   id (False, str, None)

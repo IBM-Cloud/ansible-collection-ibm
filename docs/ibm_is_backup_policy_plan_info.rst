@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     The backup policy identifier.
 
 
-  identifier (False, str, None)
-    The backup policy plan identifier.
-
-
   name (False, str, None)
     The unique user-defined name for this backup policy plan.
+
+
+  identifier (False, str, None)
+    The backup policy plan identifier.
 
 
   generation (False, int, 2)

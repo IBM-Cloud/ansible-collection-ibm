@@ -18,42 +18,65 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_catalog' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    short_description:
+    short_description_i18n:
         description:
-            - Description in the requested language.
+            - A map of translated strings, by language code.
         required: False
-        type: str
+        type: dict
+        elements: str
     tags:
         description:
             - List of tags associated with this catalog.
         required: False
         type: list
         elements: str
-    kind:
+    disabled:
         description:
-            - Kind of catalog, offering or vpe.
+            - Denotes whether a catalog is disabled.
         required: False
-        type: str
-        default: offering
+        type: bool
     label:
         description:
-            - (Required for new resource) Display Name in the requested language.
-        required: True
+            - Display Name in the requested language.
+        required: False
+        type: str
+    features:
+        description:
+            - List of features associated with this catalog.
+        required: False
+        type: list
+        elements: dict
+    kind:
+        description:
+            - Kind of catalog. Supported kinds are offering and vpe.
+        required: False
+        type: str
+    label_i18n:
+        description:
+            - A map of translated strings, by language code.
+        required: False
+        type: dict
+        elements: str
+    short_description:
+        description:
+            - Description in the requested language.
+        required: False
         type: str
     catalog_icon_url:
         description:
             - URL for an icon associated with this catalog.
         required: False
         type: str
-    resource_group_id:
+    metadata:
         description:
-            - Resource Group ID
+            - Catalog specific metadata.
         required: False
-        type: str
+        type: dict
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,17 +123,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('label', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'short_description',
+    'short_description_i18n',
     'tags',
-    'kind',
+    'disabled',
     'label',
+    'features',
+    'kind',
+    'label_i18n',
+    'short_description',
     'catalog_icon_url',
-    'resource_group_id',
+    'metadata',
 ]
 
 # Params for Data source
@@ -129,25 +155,41 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    short_description=dict(
+    short_description_i18n=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    disabled=dict(
+        required=False,
+        type='bool'),
+    label=dict(
         required=False,
         type='str'),
-    tags=dict(
+    features=dict(
         required=False,
         elements='',
         type='list'),
     kind=dict(
         required=False,
         type='str'),
-    label=dict(
+    label_i18n=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    short_description=dict(
         required=False,
         type='str'),
     catalog_icon_url=dict(
         required=False,
         type='str'),
-    resource_group_id=dict(
+    metadata=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +255,7 @@ def run_module():
         resource_type='ibm_cm_catalog',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -222,7 +264,7 @@ def run_module():
             resource_type='ibm_cm_catalog',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

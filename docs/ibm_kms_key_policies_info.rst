@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,24 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  alias (False, str, None)
-    Alias of the Key
-
-
-  policies (False, list, None)
-    Creates or updates one or more policies for the specified key
-
-
-  instance_id (True, str, None)
-    Key protect or hpcs instance GUID
-
-
   endpoint_type (False, str, public)
     public or private
 
 
   key_id (False, str, None)
     Key ID of the Key
+
+
+  alias (False, str, None)
+    Alias of the Key
+
+
+  instance_id (True, str, None)
+    Key protect or hpcs instance GUID
 
 
   iaas_classic_username (False, any, None)

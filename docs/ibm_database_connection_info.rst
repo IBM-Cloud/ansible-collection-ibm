@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  user_type (True, str, None)
-    User type.
-
-
-  endpoint_type (True, str, None)
-    Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
-
-
   user_id (True, str, None)
     User ID.
 
 
   deployment_id (True, str, None)
     Deployment ID.
+
+
+  user_type (True, str, None)
+    User type.
+
+
+  endpoint_type (True, str, None)
+    Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
 
 
   iaas_classic_username (False, any, None)

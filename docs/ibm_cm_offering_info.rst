@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -30,10 +30,10 @@ Parameters
 ----------
 
   offering_id (True, str, None)
-    The id of the catalog containing this offering.
+    Offering identifier.
 
 
-  catalog_identifier (True, str, None)
+  catalog_id (True, str, None)
     Catalog identifier.
 
 

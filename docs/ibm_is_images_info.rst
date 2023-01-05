@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  visibility (False, str, None)
+    Whether the image is publicly visible or private to the account
+
 
   resource_group (False, str, None)
     The id of the resource group
@@ -43,10 +47,6 @@ Parameters
 
   status (False, str, None)
     The status of the image
-
-
-  visibility (False, str, None)
-    Whether the image is publicly visible or private to the account
 
 
   generation (False, int, 2)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  type (True, str, None)
-    (Required for new resource) The type of Destination type push_chrome.
-
-
-  instance_guid (True, str, None)
-    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-
-
   description (False, str, None)
     The Destination description.
 
 
   config (False, list, None)
     Payload describing a destination configuration.
+
+
+  instance_guid (True, str, None)
+    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  type (True, str, None)
+    (Required for new resource) The type of Destination type push_chrome.
 
 
   id (False, str, None)

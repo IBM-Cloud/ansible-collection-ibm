@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    encrypted_data_key:
+    href:
         description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
-        type: str
-    source_volume:
-        description:
-            - Image volume id
+            - Image Href value
         required: False
         type: str
     resource_group:
@@ -42,25 +37,30 @@ options:
             - Image Operating system
         required: False
         type: str
+    encryption_key:
+        description:
+            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+        required: False
+        type: str
     tags:
         description:
             - Tags for the image
         required: False
         type: list
         elements: str
-    encryption_key:
-        description:
-            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Image name
         required: True
         type: str
-    href:
+    encrypted_data_key:
         description:
-            - Image Href value
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
+        type: str
+    source_volume:
+        description:
+            - Image volume id
         required: False
         type: str
     id:
@@ -114,14 +114,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'encrypted_data_key',
-    'source_volume',
+    'href',
     'resource_group',
     'operating_system',
-    'tags',
     'encryption_key',
+    'tags',
     'name',
-    'href',
+    'encrypted_data_key',
+    'source_volume',
 ]
 
 # Params for Data source
@@ -129,9 +129,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
-    'identifier',
     'visibility',
+    'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -141,10 +141,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    encrypted_data_key=dict(
-        required=False,
-        type='str'),
-    source_volume=dict(
+    href=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -153,17 +150,20 @@ module_args = dict(
     operating_system=dict(
         required=False,
         type='str'),
+    encryption_key=dict(
+        required=False,
+        type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    encryption_key=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
-    href=dict(
+    encrypted_data_key=dict(
+        required=False,
+        type='str'),
+    source_volume=dict(
         required=False,
         type='str'),
     id=dict(
@@ -243,7 +243,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -252,7 +252,7 @@ def run_module():
             resource_type='ibm_is_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

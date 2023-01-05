@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
 
 
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
 
 
   kms_instance_id (False, str, None)
     Instance ID for boot volume encryption
+
+
+  crk (False, str, None)
+    Root Key ID for boot volume encryption
 
 
   flavor (True, str, None)
@@ -55,32 +55,40 @@ Parameters
     Labels
 
 
-  host_pool_id (False, str, None)
-    The ID of the dedicated host pool associated with the worker pool
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
 
 
-  crk (False, str, None)
-    Root Key ID for boot volume encryption
+  kms_account_id (False, str, None)
+    Account ID of kms instance holder - if not provided, defaults to the account in use
 
 
   worker_pool_name (True, str, None)
     (Required for new resource) worker pool name
 
 
+  taints (False, list, None)
+    WorkerPool Taints
+
+
   zones (True, list, None)
     (Required for new resource) Zones info
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  taints (False, list, None)
-    WorkerPool Taints
+  operating_system (False, str, None)
+    The operating system of the workers in the worker pool.
+
+
+  host_pool_id (False, str, None)
+    The ID of the dedicated host pool associated with the worker pool
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
 
 
   id (False, str, None)

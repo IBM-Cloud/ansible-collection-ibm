@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  alias (False, str, None)
-    None
-
-
-  endpoint_type (False, str, public)
-    public or private
-
 
   instance_id (True, str, None)
     (Required for new resource) Key protect or hpcs instance GUID
@@ -47,12 +39,20 @@ Parameters
     Key ID
 
 
+  alias (False, str, None)
+    None
+
+
   rotation (False, list, None)
     Specifies the key rotation time interval in months, with a minimum of 1, and a maximum of 12
 
 
   dual_auth_delete (False, list, None)
     Data associated with the dual authorization delete policy.
+
+
+  endpoint_type (False, str, public)
+    public or private
 
 
   id (False, str, None)

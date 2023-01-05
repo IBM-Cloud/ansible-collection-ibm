@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -28,6 +28,23 @@ options:
         required: False
         type: bool
         default: False
+    default_routing_table_name:
+        description:
+            - Default routing table name
+        required: False
+        type: str
+    address_prefix_management:
+        description:
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
     name:
         description:
             - (Required for new resource) VPC name
@@ -43,28 +60,11 @@ options:
             - Default security group name
         required: False
         type: str
-    address_prefix_management:
-        description:
-            - Address Prefix management value
-        required: False
-        type: str
-        default: auto
-    default_routing_table_name:
-        description:
-            - Default routing table name
-        required: False
-        type: str
     resource_group:
         description:
             - Resource group info
         required: False
         type: str
-    tags:
-        description:
-            - List of tags
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,13 +117,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'classic_access',
+    'default_routing_table_name',
+    'address_prefix_management',
+    'tags',
     'name',
     'default_network_acl_name',
     'default_security_group_name',
-    'address_prefix_management',
-    'default_routing_table_name',
     'resource_group',
-    'tags',
 ]
 
 # Params for Data source
@@ -131,8 +131,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'identifier',
     'name',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -145,6 +145,16 @@ module_args = dict(
     classic_access=dict(
         required=False,
         type='bool'),
+    default_routing_table_name=dict(
+        required=False,
+        type='str'),
+    address_prefix_management=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
@@ -154,19 +164,9 @@ module_args = dict(
     default_security_group_name=dict(
         required=False,
         type='str'),
-    address_prefix_management=dict(
-        required=False,
-        type='str'),
-    default_routing_table_name=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -253,7 +253,7 @@ def run_module():
             resource_type='ibm_is_vpc',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

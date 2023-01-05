@@ -18,15 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    payload:
+    standard_key:
         description:
-            - None
+            - Standard key type
         required: False
-        type: str
+        type: bool
+        default: False
     encrypted_nonce:
         description:
             - Only for imported root key
@@ -47,12 +48,11 @@ options:
             - (Required for new resource) Key name
         required: True
         type: str
-    standard_key:
+    payload:
         description:
-            - Standard key type
+            - None
         required: False
-        type: bool
-        default: False
+        type: str
     force_delete:
         description:
             - set to true to force delete the key
@@ -111,12 +111,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'payload',
+    'standard_key',
     'encrypted_nonce',
     'iv_value',
     'key_protect_id',
     'key_name',
-    'standard_key',
+    'payload',
     'force_delete',
 ]
 
@@ -137,9 +137,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    payload=dict(
+    standard_key=dict(
         required=False,
-        type='str'),
+        type='bool'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
@@ -152,9 +152,9 @@ module_args = dict(
     key_name=dict(
         required=False,
         type='str'),
-    standard_key=dict(
+    payload=dict(
         required=False,
-        type='bool'),
+        type='str'),
     force_delete=dict(
         required=False,
         type='bool'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

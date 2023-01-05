@@ -17,15 +17,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cm_version' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
     version_loc_id:
         description:
-            - Catalog identifier.
+            - A dotted value of `catalogID`.`versionID`.
         required: True
         type: str
+    metadata:
+        description:
+            - Generic data to be included with content being onboarded. Required for virtual server image for VPC.
+        required: False
+        type: list
+        elements: dict
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -65,6 +71,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'version_loc_id',
+    'metadata',
 ]
 
 
@@ -78,6 +85,10 @@ module_args = dict(
     version_loc_id=dict(
         required=True,
         type='str'),
+    metadata=dict(
+        required=False,
+        elements='',
+        type='list'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -112,7 +123,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

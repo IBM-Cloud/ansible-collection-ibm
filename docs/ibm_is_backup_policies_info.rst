@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  resource_group (False, str, None)
+    Filters the collection to resources in the resource group with the specified identifier
+
+
   name (False, str, None)
     Filters the collection to resources with the exact specified name
 
 
   tag (False, str, None)
     Filters the collection to resources with the exact tag value
-
-
-  resource_group (False, str, None)
-    Filters the collection to resources in the resource group with the specified identifier
 
 
   generation (False, int, 2)

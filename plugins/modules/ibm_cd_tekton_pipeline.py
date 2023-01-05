@@ -18,33 +18,33 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    enable_partial_cloning:
-        description:
-            - Flag whether to enable partial cloning for this pipeline. When partial clone is enabled, only the files contained within the paths specified in definition repositories will be read and cloned. This means symbolic links may not work.
-        required: False
-        type: bool
-        default: False
-    pipeline_id:
-        description:
-            - (Required for new resource) String.
-        required: True
-        type: str
-    enable_slack_notifications:
-        description:
-            - Flag whether to enable slack notifications for this pipeline. When enabled, pipeline run events will be published on all slack integration specified channels in the enclosing toolchain.
-        required: False
-        type: bool
-        default: False
     worker:
         description:
             - Worker object containing worker ID only. If omitted the IBM Managed shared workers are used by default.
         required: False
         type: list
         elements: dict
+    pipeline_id:
+        description:
+            - (Required for new resource) String.
+        required: True
+        type: str
+    enable_partial_cloning:
+        description:
+            - Flag whether to enable partial cloning for this pipeline. When partial clone is enabled, only the files contained within the paths specified in definition repositories are read and cloned, this means that symbolic links might not work.
+        required: False
+        type: bool
+        default: False
+    enable_notifications:
+        description:
+            - Flag whether to enable notifications for this pipeline. When enabled, pipeline run events are published on all slack integration specified channels in the parent toolchain.
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,10 +96,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enable_partial_cloning',
-    'pipeline_id',
-    'enable_slack_notifications',
     'worker',
+    'pipeline_id',
+    'enable_partial_cloning',
+    'enable_notifications',
 ]
 
 # Params for Data source
@@ -118,19 +118,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    enable_partial_cloning=dict(
-        required=False,
-        type='bool'),
-    pipeline_id=dict(
-        required=False,
-        type='str'),
-    enable_slack_notifications=dict(
-        required=False,
-        type='bool'),
     worker=dict(
         required=False,
         elements='',
         type='list'),
+    pipeline_id=dict(
+        required=False,
+        type='str'),
+    enable_partial_cloning=dict(
+        required=False,
+        type='bool'),
+    enable_notifications=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -205,7 +205,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

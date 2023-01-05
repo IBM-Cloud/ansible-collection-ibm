@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
+  host_group (True, str, None)
+    (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
 
 
   resource_group (False, str, None)
     The unique identifier for the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
 
 
+  name (False, str, None)
+    The unique user-defined name for this dedicated host. If unspecified, the name will be a hyphenated list of randomly-selected words.
+
+
   profile (True, str, None)
     (Required for new resource) The Globally unique name of the dedicated host profile to use for this dedicated host.
-
-
-  host_group (True, str, None)
-    (Required for new resource) The unique identifier of the dedicated host group for this dedicated host.
 
 
   instance_placement_enabled (False, bool, True)

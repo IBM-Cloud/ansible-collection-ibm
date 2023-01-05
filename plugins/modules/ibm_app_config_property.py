@@ -18,38 +18,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    description:
+    property_id:
         description:
-            - Property description.
-        required: False
+            - (Required for new resource) Property id.
+        required: True
         type: str
-    format:
+    collections:
         description:
-            - Format of the feature (TEXT, JSON, YAML).
+            - List of collection id representing the collections that are associated with the specified property.
         required: False
+        type: list
+        elements: dict
+    environment_id:
+        description:
+            - (Required for new resource) Environment Id.
+        required: True
         type: str
     name:
         description:
             - (Required for new resource) Property name.
         required: True
         type: str
-    property_id:
+    value:
         description:
-            - (Required for new resource) Property id.
+            - (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
         required: True
         type: str
-    guid:
+    description:
         description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
+            - Property description.
+        required: False
         type: str
     tags:
         description:
             - Tags associated with the property.
+        required: False
+        type: str
+    format:
+        description:
+            - Format of the feature (TEXT, JSON, YAML).
         required: False
         type: str
     segment_rules:
@@ -58,25 +69,14 @@ options:
         required: False
         type: list
         elements: dict
-    collections:
+    guid:
         description:
-            - List of collection id representing the collections that are associated with the specified property.
-        required: False
-        type: list
-        elements: dict
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     type:
         description:
             - (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
-        required: True
-        type: str
-    environment_id:
-        description:
-            - (Required for new resource) Environment Id.
         required: True
         type: str
     id:
@@ -125,27 +125,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('property_id', 'str'),
+    ('environment_id', 'str'),
+    ('name', 'str'),
+    ('value', 'str'),
     ('guid', 'str'),
     ('type', 'str'),
-    ('value', 'str'),
-    ('environment_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'format',
-    'name',
     'property_id',
-    'guid',
-    'tags',
-    'segment_rules',
     'collections',
-    'type',
-    'value',
     'environment_id',
+    'name',
+    'value',
+    'description',
+    'tags',
+    'format',
+    'segment_rules',
+    'guid',
+    'type',
 ]
 
 # Params for Data source
@@ -169,39 +169,39 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
+    property_id=dict(
         required=False,
         type='str'),
-    format=dict(
+    collections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    environment_id=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    property_id=dict(
+    value=dict(
         required=False,
         type='str'),
-    guid=dict(
+    description=dict(
         required=False,
         type='str'),
     tags=dict(
+        required=False,
+        type='str'),
+    format=dict(
         required=False,
         type='str'),
     segment_rules=dict(
         required=False,
         elements='',
         type='list'),
-    collections=dict(
+    guid=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     type=dict(
-        required=False,
-        type='str'),
-    value=dict(
-        required=False,
-        type='str'),
-    environment_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -269,7 +269,7 @@ def run_module():
         resource_type='ibm_app_config_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -278,7 +278,7 @@ def run_module():
             resource_type='ibm_app_config_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

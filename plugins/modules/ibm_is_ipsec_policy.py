@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ipsec_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption algorithm
-        required: True
-        type: str
-    pfs:
-        description:
-            - (Required for new resource) PFS info
         required: True
         type: str
     resource_group:
@@ -45,6 +40,11 @@ options:
     authentication_algorithm:
         description:
             - (Required for new resource) Authentication alorothm
+        required: True
+        type: str
+    pfs:
+        description:
+            - (Required for new resource) PFS info
         required: True
         type: str
     key_lifetime:
@@ -100,18 +100,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('encryption_algorithm', 'str'),
-    ('pfs', 'str'),
     ('name', 'str'),
     ('authentication_algorithm', 'str'),
+    ('pfs', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'encryption_algorithm',
-    'pfs',
     'resource_group',
     'name',
     'authentication_algorithm',
+    'pfs',
     'key_lifetime',
 ]
 
@@ -134,9 +134,6 @@ module_args = dict(
     encryption_algorithm=dict(
         required=False,
         type='str'),
-    pfs=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -144,6 +141,9 @@ module_args = dict(
         required=False,
         type='str'),
     authentication_algorithm=dict(
+        required=False,
+        type='str'),
+    pfs=dict(
         required=False,
         type='str'),
     key_lifetime=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_is_ipsec_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_is_ipsec_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

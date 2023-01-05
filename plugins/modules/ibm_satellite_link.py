@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_link' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -27,15 +27,15 @@ options:
             - (Required for new resource) CRN of the Location.
         required: True
         type: str
-    location:
-        description:
-            - (Required for new resource) Location ID.
-        required: True
-        type: str
     ws_endpoint:
         description:
             - The ws endpoint of the location.
         required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) Location ID.
+        required: True
         type: str
     id:
         description:
@@ -90,8 +90,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'crn',
-    'location',
     'ws_endpoint',
+    'location',
 ]
 
 # Params for Data source
@@ -113,10 +113,10 @@ module_args = dict(
     crn=dict(
         required=False,
         type='str'),
-    location=dict(
+    ws_endpoint=dict(
         required=False,
         type='str'),
-    ws_endpoint=dict(
+    location=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_satellite_link',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_satellite_link',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

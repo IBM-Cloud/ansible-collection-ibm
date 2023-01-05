@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_instance_name (True, str, None)
-    (Required for new resource) Instance name / id of the pvm
-
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) Cloud Instance ID - This is the service_instance_id.
@@ -49,6 +45,10 @@ Parameters
 
   pi_volume_ids (False, list, None)
     List of PI volumes
+
+
+  pi_instance_name (True, str, None)
+    (Required for new resource) Instance name / id of the pvm
 
 
   id (False, str, None)

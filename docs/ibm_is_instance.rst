@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,68 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc (False, str, None)
-    VPC id
-
-
   profile (False, str, None)
     Profile info
-
-
-  wait_before_delete (False, bool, True)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  metadata_service_enabled (False, bool, None)
-    Indicates whether the metadata service endpoint is available to the virtual server instance
-
-
-  default_trusted_profile_target (False, str, None)
-    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  keys (False, list, None)
-    SSH key Ids for the instance
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    list of tags for the instance
-
-
-  force_action (False, bool, False)
-    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
-
-
-  image (False, str, None)
-    image id
-
-
-  instance_template (False, str, None)
-    Id of the instance template
-
-
-  zone (False, str, None)
-    Zone name
-
-
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  force_recovery_time (False, int, None)
-    Define timeout to force the instances to start/stop in minutes.
 
 
   auto_delete_volume (False, bool, None)
@@ -103,44 +43,104 @@ Parameters
     Instance resource group
 
 
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
+  instance_template (False, str, None)
+    Id of the instance template
 
 
-  catalog_offering (False, list, None)
-    The catalog offering or offering version to use when provisioning this virtual server instance. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
+  keys (False, list, None)
+    SSH key Ids for the instance
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  tags (False, list, None)
+    list of tags for the instance
 
 
-  volumes (False, list, None)
-    List of volumes
-
-
-  default_trusted_profile_auto_link (False, bool, None)
-    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-
-
-  action (False, str, None)
-    Enables stopping of instance before deleting and waits till deletion is complete
-
-
-  primary_network_interface (False, list, None)
-    Primary Network interface info
-
-
-  availability_policy_host_failure (False, str, None)
-    The availability policy to use for this virtual server instance
+  boot_volume (False, list, None)
+    None
 
 
   name (True, str, None)
     (Required for new resource) Instance name
 
 
+  zone (False, str, None)
+    Zone name
+
+
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+
+
+  wait_before_delete (False, bool, True)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
+
+
+  image (False, str, None)
+    image id
+
+
+  metadata_service_enabled (False, bool, None)
+    Indicates whether the metadata service endpoint is available to the virtual server instance
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  availability_policy_host_failure (False, str, None)
+    The availability policy to use for this virtual server instance
+
+
+  force_recovery_time (False, int, None)
+    Define timeout to force the instances to start/stop in minutes.
+
+
+  vpc (False, str, None)
+    VPC id
+
+
+  force_action (False, bool, False)
+    If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+
+
+  primary_network_interface (False, list, None)
+    Primary Network interface info
+
+
+  network_interfaces (False, list, None)
+    None
+
+
+  volumes (False, list, None)
+    List of volumes
+
+
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+
+
   dedicated_host (False, str, None)
     Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
+
+
+  action (False, str, None)
+    Enables stopping of instance before deleting and waits till deletion is complete
+
+
+  catalog_offering (False, list, None)
+    The catalog offering or offering version to use when provisioning this virtual server instance. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
 
 
   id (False, str, None)

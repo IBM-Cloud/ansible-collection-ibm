@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,40 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
-
-
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
-
-
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
-
-
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  signature_server_url (False, str, None)
-    URL of signing service
-
-
   name (True, str, None)
     (Required for new resource) A name for the HPCS instance
 
 
   tags (False, list, None)
     None
+
+
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
+
+
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
 
 
   plan (True, str, None)
@@ -75,12 +55,32 @@ Parameters
     The name of the service offering `hs-crypto`
 
 
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
+
+
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  signature_server_url (False, str, None)
+    URL of signing service
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
+
+
   failover_units (False, int, None)
     The number of failover crypto units for your service instance
 
 
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
 
 
   id (False, str, None)

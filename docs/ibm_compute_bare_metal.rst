@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,23 +31,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  hostname (False, str, None)
-    Host name
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  storage_groups (False, list, None)
-    None
-
-
   block_storage_ids (False, list, None)
+    None
+
+
+  os_key_name (False, str, None)
     None
 
 
@@ -59,28 +47,48 @@ Parameters
     OS refernece code value
 
 
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
   software_guard_extensions (False, bool, False)
     None
 
 
-  process_key_name (False, str, None)
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  package_key_name (False, str, None)
     None
 
 
-  ipv6_enabled (False, bool, False)
-    Boolean value true if IPV6 ia enabled or false
+  unbonded_network (False, bool, False)
+    None
 
 
   domain (True, str, None)
     (Required for new resource) Domain name
+
+
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  notes (False, str, None)
+    Optional notes info
+
+
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
+
+
+  image_template_id (False, int, None)
+    OS image template ID
 
 
   network_speed (False, int, 100)
@@ -91,23 +99,7 @@ Parameters
     TCP monitoring enabled if set as true
 
 
-  gpu_secondary_key_name (False, str, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  package_key_name (False, str, None)
-    None
-
-
   public_subnet (False, str, None)
-    None
-
-
-  private_vlan_id (False, int, None)
     None
 
 
@@ -115,11 +107,11 @@ Parameters
     None
 
 
-  disk_key_names (False, list, None)
-    None
+  private_network_only (False, bool, False)
+    only private network configured if is true
 
 
-  unbonded_network (False, bool, False)
+  storage_groups (False, list, None)
     None
 
 
@@ -127,59 +119,19 @@ Parameters
     None
 
 
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
+  ipv6_enabled (False, bool, False)
+    Boolean value true if IPV6 ia enabled or false
 
 
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  redundant_power_supply (False, bool, None)
+  process_key_name (False, str, None)
     None
 
 
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  public_vlan_id (False, int, None)
+  gpu_secondary_key_name (False, str, None)
     None
 
 
-  file_storage_ids (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  gpu_key_name (False, str, None)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  notes (False, str, None)
-    Optional notes info
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  image_template_id (False, int, None)
-    OS image template ID
-
-
-  os_key_name (False, str, None)
+  disk_key_names (False, list, None)
     None
 
 
@@ -187,8 +139,56 @@ Parameters
     None
 
 
+  public_bandwidth (False, int, None)
+    None
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
   restricted_network (False, bool, False)
     None
+
+
+  extended_hardware_testing (False, bool, False)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  hostname (False, str, None)
+    Host name
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
 
 
   id (False, str, None)

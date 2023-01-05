@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_policy_encryption (True, str, None)
+    (Required for new resource) Encryption of the IKE Policy
+
+
   pi_policy_key_lifetime (True, int, None)
     (Required for new resource) Policy key lifetime
+
+
+  pi_policy_version (True, int, None)
+    (Required for new resource) Version of the IKE Policy
 
 
   pi_policy_preshared_key (True, str, None)
@@ -43,10 +51,6 @@ Parameters
     Authentication for the IKE Policy
 
 
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
-
-
   pi_policy_name (True, str, None)
     (Required for new resource) Name of the IKE Policy
 
@@ -55,12 +59,8 @@ Parameters
     (Required for new resource) DH group of the IKE Policy
 
 
-  pi_policy_encryption (True, str, None)
-    (Required for new resource) Encryption of the IKE Policy
-
-
-  pi_policy_version (True, int, None)
-    (Required for new resource) Version of the IKE Policy
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

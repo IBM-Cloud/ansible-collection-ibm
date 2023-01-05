@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -34,7 +34,7 @@ options:
         type: str
     value:
         description:
-            - Property value.
+            - Property value. Any string value is valid.
         required: False
         type: str
     enum:
@@ -50,7 +50,7 @@ options:
         type: str
     path:
         description:
-            - A dot notation path for `integration` type properties to select a value from the tool integration.
+            - A dot notation path for `integration` type properties only, to select a value from the tool integration. If left blank the full tool integration data will be used.
         required: False
         type: str
     id:
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +225,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

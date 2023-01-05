@@ -18,38 +18,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_function_trigger' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Name of Trigger.
+        required: True
+        type: str
     user_defined_parameters:
         description:
             - Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the trigger.
         required: False
         type: str
         default: []
-    user_defined_annotations:
+    namespace:
         description:
-            - Annotation values in KEY VALUE format.
-        required: False
+            - (Required for new resource) IBM Cloud function namespace.
+        required: True
         type: str
-        default: []
     feed:
         description:
             - Trigger feed
         required: False
         type: list
         elements: dict
-    namespace:
+    user_defined_annotations:
         description:
-            - (Required for new resource) IBM Cloud function namespace.
-        required: True
+            - Annotation values in KEY VALUE format.
+        required: False
         type: str
-    name:
-        description:
-            - (Required for new resource) Name of Trigger.
-        required: True
-        type: str
+        default: []
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -82,17 +82,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace', 'str'),
     ('name', 'str'),
+    ('namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_defined_parameters',
-    'user_defined_annotations',
-    'feed',
-    'namespace',
     'name',
+    'user_defined_parameters',
+    'namespace',
+    'feed',
+    'user_defined_annotations',
 ]
 
 # Params for Data source
@@ -113,20 +113,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     user_defined_parameters=dict(
         required=False,
         type='str'),
-    user_defined_annotations=dict(
+    namespace=dict(
         required=False,
         type='str'),
     feed=dict(
         required=False,
         elements='',
         type='list'),
-    namespace=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    user_defined_annotations=dict(
         required=False,
         type='str'),
     id=dict(
@@ -184,7 +184,7 @@ def run_module():
         resource_type='ibm_function_trigger',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +193,7 @@ def run_module():
             resource_type='ibm_function_trigger',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

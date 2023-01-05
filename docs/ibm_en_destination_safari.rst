@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,15 +31,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_guid (True, str, None)
-    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+  certificate (True, str, None)
+    (Required for new resource) The Certificate File.
 
 
-  icon_32x32_2x (False, str, None)
-    The Certificate File.
-
-
-  icon_128x128 (False, str, None)
+  icon_16x16 (False, str, None)
     The Certificate File.
 
 
@@ -51,15 +47,7 @@ Parameters
     The Certificate File.
 
 
-  icon_32x32_content_type (False, str, None)
-    The Certificate File.
-
-
-  icon_16x16 (False, str, None)
-    The Certificate File.
-
-
-  icon_32x32_2x_content_type (False, str, None)
+  icon_16x16_2x_content_type (False, str, None)
     The Certificate File.
 
 
@@ -71,18 +59,6 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  certificate (True, str, None)
-    (Required for new resource) The Certificate File.
-
-
-  icon_16x16_2x (False, str, None)
-    The Certificate File.
-
-
-  icon_128x128_content_type (False, str, None)
-    The Certificate File.
-
-
   type (True, str, None)
     (Required for new resource) The type of Destination type push_ios.
 
@@ -91,15 +67,39 @@ Parameters
     The Destination description.
 
 
-  icon_32x32 (False, str, None)
-    The Certificate File.
-
-
-  icon_16x16_2x_content_type (False, str, None)
+  icon_128x128_content_type (False, str, None)
     The Certificate File.
 
 
   icon_128x128_2x_content_type (False, str, None)
+    The Certificate File.
+
+
+  icon_128x128 (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_content_type (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32 (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_2x (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_2x_content_type (False, str, None)
+    The Certificate File.
+
+
+  instance_guid (True, str, None)
+    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  icon_16x16_2x (False, str, None)
     The Certificate File.
 
 

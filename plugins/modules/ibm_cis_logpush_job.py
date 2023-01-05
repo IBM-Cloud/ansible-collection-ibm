@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_logpush_job' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    logdna:
-        description:
-            - (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
-        required: True
-        type: str
-    name:
-        description:
-            - Logpush Job Name
-        required: False
-        type: str
     enabled:
         description:
             - Whether the logpush job enabled or not
@@ -61,6 +46,21 @@ options:
         description:
             - (Required for new resource) CIS instance crn
         required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    logdna:
+        description:
+            - (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
+        required: True
+        type: str
+    name:
+        description:
+            - Logpush Job Name
+        required: False
         type: str
     id:
         description:
@@ -108,22 +108,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
-    ('logdna', 'str'),
     ('dataset', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
+    ('logdna', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'logdna',
-    'name',
     'enabled',
     'logpull_options',
     'dataset',
     'frequency',
     'cis_id',
+    'domain_id',
+    'logdna',
+    'name',
 ]
 
 # Params for Data source
@@ -140,15 +140,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
-        required=False,
-        type='str'),
-    logdna=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
@@ -162,6 +153,15 @@ module_args = dict(
         required=False,
         type='str'),
     cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    logdna=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_cis_logpush_job',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

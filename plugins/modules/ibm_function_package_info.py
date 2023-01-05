@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_function_package' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - Name of the package.
-        required: True
-        type: str
     namespace:
         description:
             - Name of the namespace.
+        required: True
+        type: str
+    name:
+        description:
+            - Name of the package.
         required: True
         type: str
     function_namespace:
@@ -50,14 +50,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('namespace', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'namespace',
+    'name',
 ]
 
 
@@ -68,10 +68,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    namespace=dict(
         required=True,
         type='str'),
-    namespace=dict(
+    name=dict(
         required=True,
         type='str'),
     function_namespace=dict(
@@ -98,7 +98,7 @@ def run_module():
         resource_type='ibm_function_package',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

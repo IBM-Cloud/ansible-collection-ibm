@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver_secondary_zone' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -27,27 +27,27 @@ options:
             - (Required for new resource) The unique identifier of a service instance.
         required: True
         type: str
-    zone:
-        description:
-            - (Required for new resource) The name of the zone.
-        required: True
-        type: str
     resolver_id:
         description:
             - (Required for new resource) The unique identifier of a custom resolver.
         required: True
         type: str
+    zone:
+        description:
+            - (Required for new resource) The name of the zone.
+        required: True
+        type: str
+    enabled:
+        description:
+            - (Required for new resource) Enable/Disable the secondary zone
+        required: True
+        type: bool
     transfer_from:
         description:
             - (Required for new resource) The addresses of DNS servers where the secondary zone data should be transferred from
         required: True
         type: list
         elements: str
-    enabled:
-        description:
-            - (Required for new resource) Enable/Disable the secondary zone
-        required: True
-        type: bool
     description:
         description:
             - Descriptive text of the secondary zone
@@ -100,19 +100,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('zone', 'str'),
     ('resolver_id', 'str'),
-    ('transfer_from', 'list'),
+    ('zone', 'str'),
     ('enabled', 'bool'),
+    ('transfer_from', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
-    'zone',
     'resolver_id',
-    'transfer_from',
+    'zone',
     'enabled',
+    'transfer_from',
     'description',
 ]
 
@@ -133,19 +133,19 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
     resolver_id=dict(
         required=False,
         type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     transfer_from=dict(
         required=False,
         elements='',
         type='list'),
-    enabled=dict(
-        required=False,
-        type='bool'),
     description=dict(
         required=False,
         type='str'),
@@ -214,7 +214,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver_secondary_zone',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

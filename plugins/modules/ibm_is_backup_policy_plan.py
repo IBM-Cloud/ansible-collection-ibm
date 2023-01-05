@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_backup_policy_plan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,21 @@ options:
             - (Required for new resource) The backup policy identifier.
         required: True
         type: str
+    cron_spec:
+        description:
+            - (Required for new resource) The cron specification for the backup schedule.
+        required: True
+        type: str
+    name:
+        description:
+            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
+    active:
+        description:
+            - Indicates whether the plan is active.
+        required: False
+        type: bool
     attach_user_tags:
         description:
             - User tags to attach to each backup (snapshot) created by this plan. If unspecified, no user tags will be attached.
@@ -39,21 +54,6 @@ options:
         required: False
         type: bool
         default: True
-    name:
-        description:
-            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
-    cron_spec:
-        description:
-            - (Required for new resource) The cron specification for the backup schedule.
-        required: True
-        type: str
-    active:
-        description:
-            - Indicates whether the plan is active.
-        required: False
-        type: bool
     deletion_trigger:
         description:
             - None
@@ -113,11 +113,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'backup_policy_id',
+    'cron_spec',
+    'name',
+    'active',
     'attach_user_tags',
     'copy_user_tags',
-    'name',
-    'cron_spec',
-    'active',
     'deletion_trigger',
 ]
 
@@ -128,8 +128,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'backup_policy_id',
-    'identifier',
     'name',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -142,20 +142,20 @@ module_args = dict(
     backup_policy_id=dict(
         required=False,
         type='str'),
+    cron_spec=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    active=dict(
+        required=False,
+        type='bool'),
     attach_user_tags=dict(
         required=False,
         elements='',
         type='list'),
     copy_user_tags=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    cron_spec=dict(
-        required=False,
-        type='str'),
-    active=dict(
         required=False,
         type='bool'),
     deletion_trigger=dict(
@@ -239,7 +239,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -248,7 +248,7 @@ def run_module():
             resource_type='ibm_is_backup_policy_plan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

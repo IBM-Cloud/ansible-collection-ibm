@@ -17,16 +17,16 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cm_offering' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
     offering_id:
         description:
-            - The id of the catalog containing this offering.
+            - Offering identifier.
         required: True
         type: str
-    catalog_identifier:
+    catalog_id:
         description:
             - Catalog identifier.
         required: True
@@ -65,13 +65,13 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('offering_id', 'str'),
-    ('catalog_identifier', 'str'),
+    ('catalog_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'offering_id',
-    'catalog_identifier',
+    'catalog_id',
 ]
 
 
@@ -85,7 +85,7 @@ module_args = dict(
     offering_id=dict(
         required=True,
         type='str'),
-    catalog_identifier=dict(
+    catalog_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_cm_offering',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

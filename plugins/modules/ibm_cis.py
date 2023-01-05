@@ -18,40 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    name:
+    location:
         description:
-            - (Required for new resource) A name for the resource instance
+            - (Required for new resource) The location where the instance available
         required: True
         type: str
-    plan:
+    parameters:
         description:
-            - (Required for new resource) The plan type of the service
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - The resource group id
+            - Arbitrary parameters to pass. Must be a JSON object
         required: False
-        type: str
+        type: dict
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
-    parameters:
+    plan:
         description:
-            - Arbitrary parameters to pass. Must be a JSON object
-        required: False
-        type: dict
-    location:
-        description:
-            - (Required for new resource) The location where the instance available
+            - (Required for new resource) The plan type of the service
         required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) A name for the resource instance
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
         type: str
     id:
         description:
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('plan', 'str'),
     ('location', 'str'),
+    ('plan', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'plan',
-    'resource_group_id',
-    'tags',
-    'parameters',
     'location',
+    'parameters',
+    'tags',
+    'plan',
+    'name',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -120,8 +120,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'resource_group_id',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -131,23 +131,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    location=dict(
         required=False,
         type='str'),
-    plan=dict(
+    parameters=dict(
         required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
+        type='dict'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    parameters=dict(
+    plan=dict(
         required=False,
-        type='dict'),
-    location=dict(
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +224,7 @@ def run_module():
             resource_type='ibm_cis',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

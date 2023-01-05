@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  instance_group (True, str, None)
-    (Required for new resource) instance group ID
-
-
-  instance_group_manager (True, str, None)
-    (Required for new resource) Instance group manager ID
-
 
   metric_type (True, str, None)
     (Required for new resource) The type of metric to be evaluated
@@ -53,6 +45,14 @@ Parameters
 
   name (False, str, None)
     instance group manager policy name
+
+
+  instance_group (True, str, None)
+    (Required for new resource) instance group ID
+
+
+  instance_group_manager (True, str, None)
+    (Required for new resource) Instance group manager ID
 
 
   id (False, str, None)

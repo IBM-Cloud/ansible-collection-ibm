@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,32 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  managed_from (True, str, None)
-    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+  description (False, str, None)
+    A description of the new Satellite location
 
 
-  cos_config (False, list, None)
-    COSBucket - IBM Cloud Object Storage bucket configuration details
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  zones (False, list, None)
+    The names of at least three high availability zones to use for the location
 
 
   tags (False, list, None)
     List of tags associated with resource instance
 
 
-  location (True, str, None)
-    (Required for new resource) A unique name for the new Satellite location
-
-
-  cos_credentials (False, list, None)
-    COSAuthorization - IBM Cloud Object Storage authorization keys
-
-
-  zones (False, list, None)
-    The names of at least three high availability zones to use for the location
+  managed_from (True, str, None)
+    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
 
 
   coreos_enabled (False, bool, None)
@@ -67,8 +55,20 @@ Parameters
     The account ID for IBM Log Analysis with LogDNA log forwarding
 
 
-  description (False, str, None)
-    A description of the new Satellite location
+  cos_config (False, list, None)
+    COSBucket - IBM Cloud Object Storage bucket configuration details
+
+
+  location (True, str, None)
+    (Required for new resource) A unique name for the new Satellite location
+
+
+  cos_credentials (False, list, None)
+    COSAuthorization - IBM Cloud Object Storage authorization keys
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

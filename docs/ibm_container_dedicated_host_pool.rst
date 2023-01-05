@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
 
   name (True, str, None)
     (Required for new resource) The name of the dedicated host pool
@@ -45,6 +41,10 @@ Parameters
 
   flavor_class (True, str, None)
     (Required for new resource) The flavor class of the dedicated host pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   id (False, str, None)

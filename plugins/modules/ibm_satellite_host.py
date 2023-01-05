@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -27,25 +27,20 @@ options:
             - The zone within the cluster to assign the host to
         required: False
         type: str
-    host_provider:
-        description:
-            - Host Provider
-        required: False
-        type: str
     wait_till:
         description:
             - Wait until location is normal
         required: False
         type: str
+    location:
+        description:
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
+        type: str
     cluster:
         description:
             - The name or ID of a Satellite location or cluster to assign the host to
         required: False
-        type: str
-    host_id:
-        description:
-            - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
-        required: True
         type: str
     labels:
         description:
@@ -53,15 +48,20 @@ options:
         required: False
         type: list
         elements: str
+    host_id:
+        description:
+            - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
+        required: True
+        type: str
     worker_pool:
         description:
             - The name or ID of the worker pool within the cluster to assign the host to
         required: False
         type: str
-    location:
+    host_provider:
         description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
+            - Host Provider
+        required: False
         type: str
     id:
         description:
@@ -109,20 +109,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_id', 'str'),
     ('location', 'str'),
+    ('host_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'zone',
-    'host_provider',
     'wait_till',
-    'cluster',
-    'host_id',
-    'labels',
-    'worker_pool',
     'location',
+    'cluster',
+    'labels',
+    'host_id',
+    'worker_pool',
+    'host_provider',
 ]
 
 # Params for Data source
@@ -142,26 +142,26 @@ module_args = dict(
     zone=dict(
         required=False,
         type='str'),
-    host_provider=dict(
-        required=False,
-        type='str'),
     wait_till=dict(
         required=False,
         type='str'),
-    cluster=dict(
+    location=dict(
         required=False,
         type='str'),
-    host_id=dict(
+    cluster=dict(
         required=False,
         type='str'),
     labels=dict(
         required=False,
         elements='',
         type='list'),
+    host_id=dict(
+        required=False,
+        type='str'),
     worker_pool=dict(
         required=False,
         type='str'),
-    location=dict(
+    host_provider=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_satellite_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

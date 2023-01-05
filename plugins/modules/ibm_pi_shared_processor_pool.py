@@ -18,25 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_shared_processor_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    pi_shared_processor_pool_name:
+    spp_placement_groups:
         description:
-            - (Required for new resource) Name of the shared processor pool
-        required: True
-        type: str
-    pi_shared_processor_pool_reserved_cores:
-        description:
-            - (Required for new resource) The amount of reserved cores for the shared processor pool
-        required: True
-        type: int
-    pi_shared_processor_pool_host_group:
-        description:
-            - (Required for new resource) Host group of the shared processor pool
-        required: True
-        type: str
+            - SPP placement groups the shared processor pool are in
+        required: False
+        type: list
+        elements: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
@@ -47,12 +38,21 @@ options:
             - Placement group the shared processor pool is created in
         required: False
         type: str
-    spp_placement_groups:
+    pi_shared_processor_pool_name:
         description:
-            - SPP placement groups the shared processor pool are in
-        required: False
-        type: list
-        elements: str
+            - (Required for new resource) Name of the shared processor pool
+        required: True
+        type: str
+    pi_shared_processor_pool_host_group:
+        description:
+            - (Required for new resource) Host group of the shared processor pool
+        required: True
+        type: str
+    pi_shared_processor_pool_reserved_cores:
+        description:
+            - (Required for new resource) The amount of reserved cores for the shared processor pool
+        required: True
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,20 +95,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_shared_processor_pool_name', 'str'),
-    ('pi_shared_processor_pool_reserved_cores', 'int'),
-    ('pi_shared_processor_pool_host_group', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_shared_processor_pool_name', 'str'),
+    ('pi_shared_processor_pool_host_group', 'str'),
+    ('pi_shared_processor_pool_reserved_cores', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_shared_processor_pool_name',
-    'pi_shared_processor_pool_reserved_cores',
-    'pi_shared_processor_pool_host_group',
+    'spp_placement_groups',
     'pi_cloud_instance_id',
     'pi_shared_processor_pool_placement_group_id',
-    'spp_placement_groups',
+    'pi_shared_processor_pool_name',
+    'pi_shared_processor_pool_host_group',
+    'pi_shared_processor_pool_reserved_cores',
 ]
 
 # Params for Data source
@@ -129,25 +129,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_shared_processor_pool_name=dict(
+    spp_placement_groups=dict(
         required=False,
-        type='str'),
-    pi_shared_processor_pool_reserved_cores=dict(
-        required=False,
-        type='int'),
-    pi_shared_processor_pool_host_group=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_shared_processor_pool_placement_group_id=dict(
         required=False,
         type='str'),
-    spp_placement_groups=dict(
+    pi_shared_processor_pool_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    pi_shared_processor_pool_host_group=dict(
+        required=False,
+        type='str'),
+    pi_shared_processor_pool_reserved_cores=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_pi_shared_processor_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_pi_shared_processor_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_keyprotect' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
@@ -29,13 +29,13 @@ options:
         type: str
     parameters:
         description:
-            - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool.
+            - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
         required: True
         type: list
         elements: dict
     name:
         description:
-            - Name of tool.
+            - Name of the tool.
         required: False
         type: str
     id:
@@ -97,13 +97,13 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('toolchain_id', 'str'),
     ('tool_id', 'str'),
+    ('toolchain_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'toolchain_id',
     'tool_id',
+    'toolchain_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -188,7 +188,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_keyprotect',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -197,7 +197,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_keyprotect',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.47.1',
+            ibm_provider_version='1.48.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

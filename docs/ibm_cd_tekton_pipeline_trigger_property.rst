@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pipeline_id (True, str, None)
+    (Required for new resource) The Tekton pipeline ID.
+
 
   trigger_id (True, str, None)
     (Required for new resource) The trigger ID.
@@ -40,7 +44,7 @@ Parameters
 
 
   value (False, str, None)
-    Property value.
+    Property value. Any string value is valid.
 
 
   enum (False, list, None)
@@ -52,11 +56,7 @@ Parameters
 
 
   path (False, str, None)
-    A dot notation path for `integration` type properties to select a value from the tool integration. If left blank the full tool integration data will be used.
-
-
-  pipeline_id (True, str, None)
-    (Required for new resource) The Tekton pipeline ID.
+    A dot notation path for `integration` type properties only, to select a value from the tool integration. If left blank the full tool integration data will be used.
 
 
   id (False, str, None)

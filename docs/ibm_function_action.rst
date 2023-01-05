@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -35,8 +35,16 @@ Parameters
     (Required for new resource) Execution info
 
 
+  publish (False, bool, None)
+    Action visibilty.
+
+
   user_defined_annotations (False, str, [])
     Annotation values in KEY VALUE format.
+
+
+  user_defined_parameters (False, str, [])
+    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
 
 
   name (True, str, None)
@@ -49,14 +57,6 @@ Parameters
 
   limits (False, list, None)
     None
-
-
-  publish (False, bool, None)
-    Action visibilty.
-
-
-  user_defined_parameters (False, str, [])
-    Parameters values in KEY VALUE format. Parameter bindings included in the context passed to the action.
 
 
   id (False, str, None)

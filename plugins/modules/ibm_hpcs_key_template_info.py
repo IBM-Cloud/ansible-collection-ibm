@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_key_template' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    uko_vault:
-        description:
-            - The UUID of the Vault in which the update is to take place.
-        required: True
-        type: str
     instance_id:
         description:
             - The ID of the UKO instance this resource exists in.
+        required: True
+        type: str
+    region:
+        description:
+            - The region of the UKO instance this resource exists in.
         required: True
         type: str
     template_id:
@@ -36,9 +36,9 @@ options:
             - UUID of the template.
         required: True
         type: str
-    region:
+    uko_vault:
         description:
-            - The region of the UKO instance this resource exists in.
+            - The UUID of the Vault in which the update is to take place.
         required: True
         type: str
     iaas_classic_username:
@@ -74,18 +74,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('uko_vault', 'str'),
     ('instance_id', 'str'),
-    ('template_id', 'str'),
     ('region', 'str'),
+    ('template_id', 'str'),
+    ('uko_vault', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'uko_vault',
     'instance_id',
-    'template_id',
     'region',
+    'template_id',
+    'uko_vault',
 ]
 
 
@@ -96,16 +96,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    uko_vault=dict(
+    instance_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
+    region=dict(
         required=True,
         type='str'),
     template_id=dict(
         required=True,
         type='str'),
-    region=dict(
+    uko_vault=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_key_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

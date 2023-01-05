@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Public gateway resource group info
+  vpc (True, str, None)
+    (Required for new resource) Public gateway VPC info
 
 
   tags (False, list, None)
@@ -47,8 +47,8 @@ Parameters
     None
 
 
-  vpc (True, str, None)
-    (Required for new resource) Public gateway VPC info
+  resource_group (False, str, None)
+    Public gateway resource group info
 
 
   zone (True, str, None)

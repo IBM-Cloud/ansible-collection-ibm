@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  destination_id (True, str, None)
-    Unique identifier for Destination.
-
-
   instance_guid (True, str, None)
     Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  destination_id (True, str, None)
+    Unique identifier for Destination.
 
 
   iaas_classic_username (False, any, None)

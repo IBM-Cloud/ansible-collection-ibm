@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.48.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  worker (True, str, None)
-    (Required for new resource) worker node ID
-
 
   resource_group_id (False, str, None)
     ID of the resource group.
@@ -45,6 +41,10 @@ Parameters
 
   cluster (True, str, None)
     (Required for new resource) Cluster name or ID
+
+
+  worker (True, str, None)
+    (Required for new resource) worker node ID
 
 
   id (False, str, None)

@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_dedicated_host' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.47.1
+    - IBM-Cloud terraform-provider-ibm v1.48.0
     - Terraform v0.12.20
 
 options:
-    host_id:
-        description:
-            - The id of the dedicated host
-        required: True
-        type: str
     host_pool_id:
         description:
             - The id of the dedicated host pool the dedicated host is associated with
+        required: True
+        type: str
+    host_id:
+        description:
+            - The id of the dedicated host
         required: True
         type: str
     ibmcloud_api_key:
@@ -44,14 +44,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('host_id', 'str'),
     ('host_pool_id', 'str'),
+    ('host_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'host_id',
     'host_pool_id',
+    'host_id',
 ]
 
 
@@ -62,10 +62,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    host_id=dict(
+    host_pool_id=dict(
         required=True,
         type='str'),
-    host_pool_id=dict(
+    host_id=dict(
         required=True,
         type='str'),
     ibmcloud_api_key=dict(
@@ -88,7 +88,7 @@ def run_module():
         resource_type='ibm_container_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.47.1',
+        ibm_provider_version='1.48.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
