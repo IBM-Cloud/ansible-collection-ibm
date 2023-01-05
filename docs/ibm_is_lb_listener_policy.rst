@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,32 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    Policy name
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer Listener Policy
+  target_id (False, str, None)
+    Listener Policy Target ID
 
 
   listener (True, str, None)
     (Required for new resource) Listener ID
 
 
-  target_https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
-
-
-  target_https_redirect_listener (False, str, None)
-    ID of the listener that will be set as http redirect target
-
-
-  action (True, str, None)
-    (Required for new resource) Policy Action
-
-
-  rules (False, list, None)
-    Policy Rules
+  name (False, str, None)
+    Policy name
 
 
   target_http_status_code (False, int, None)
@@ -67,16 +51,32 @@ Parameters
     Policy Target URL
 
 
+  lb (True, str, None)
+    (Required for new resource) Load Balancer Listener Policy
+
+
   target_https_redirect_status_code (False, int, None)
     The HTTP status code to be returned in the redirect response
+
+
+  target_https_redirect_listener (False, str, None)
+    ID of the listener that will be set as http redirect target
 
 
   priority (True, int, None)
     (Required for new resource) Listener Policy Priority
 
 
-  target_id (False, str, None)
-    Listener Policy Target ID
+  rules (False, list, None)
+    Policy Rules
+
+
+  target_https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
+
+
+  action (True, str, None)
+    (Required for new resource) Policy Action
 
 
   id (False, str, None)

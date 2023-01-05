@@ -18,42 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    name:
+    primary_ip:
         description:
-            - The user-defined name for this network interface
+            - title: IPv4, The IP address.
         required: False
-        type: str
-    subnet:
-        description:
-            - (Required for new resource) The id of the associated subnet
-        required: True
-        type: str
-    allow_interface_to_float:
-        description:
-            - Indicates if the interface can float to any other server within the same resource_group. The interface will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to vlan type interfaces.
-        required: False
-        type: bool
+        type: list
+        elements: dict
     vlan:
         description:
             - Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this interface
         required: False
         type: int
-    hard_stop:
-        description:
-            - Only used for PCI network interfaces, whether to hard/immediately stop server
-        required: False
-        type: bool
-        default: True
-    security_groups:
-        description:
-            - Collection of security groups ids
-        required: False
-        type: list
-        elements: str
     bare_metal_server:
         description:
             - (Required for new resource) Bare metal server identifier
@@ -65,22 +44,43 @@ options:
         required: False
         type: list
         elements: int
-    allow_ip_spoofing:
+    allow_interface_to_float:
         description:
-            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+            - Indicates if the interface can float to any other server within the same resource_group. The interface will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to vlan type interfaces.
         required: False
         type: bool
+    name:
+        description:
+            - The user-defined name for this network interface
+        required: False
+        type: str
+    security_groups:
+        description:
+            - Collection of security groups ids
+        required: False
+        type: list
+        elements: str
+    hard_stop:
+        description:
+            - Only used for PCI network interfaces, whether to hard/immediately stop server
+        required: False
+        type: bool
+        default: True
     enable_infrastructure_nat:
         description:
             - If true, the VPC infrastructure performs any needed NAT operations. If false, the packet is passed unmodified to/from the network interface, allowing the workload to perform any needed NAT operations.
         required: False
         type: bool
-    primary_ip:
+    subnet:
         description:
-            - title: IPv4, The IP address.
+            - (Required for new resource) The id of the associated subnet
+        required: True
+        type: str
+    allow_ip_spoofing:
+        description:
+            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
         required: False
-        type: list
-        elements: dict
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -127,65 +127,53 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnet', 'str'),
     ('bare_metal_server', 'str'),
+    ('subnet', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'subnet',
-    'allow_interface_to_float',
+    'primary_ip',
     'vlan',
-    'hard_stop',
-    'security_groups',
     'bare_metal_server',
     'allowed_vlans',
-    'allow_ip_spoofing',
+    'allow_interface_to_float',
+    'name',
+    'security_groups',
+    'hard_stop',
     'enable_infrastructure_nat',
-    'primary_ip',
+    'subnet',
+    'allow_ip_spoofing',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('bare_metal_server', 'str'),
     ('network_interface', 'str'),
+    ('bare_metal_server', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bare_metal_server',
     'network_interface',
+    'bare_metal_server',
 ]
 
 TL_CONFLICTS_MAP = {
-    'allow_interface_to_float': ['allowed_vlans'],
     'vlan': ['allowed_vlans'],
     'allowed_vlans': ['allow_interface_to_float', 'vlan'],
+    'allow_interface_to_float': ['allowed_vlans'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    subnet=dict(
-        required=False,
-        type='str'),
-    allow_interface_to_float=dict(
-        required=False,
-        type='bool'),
-    vlan=dict(
-        required=False,
-        type='int'),
-    hard_stop=dict(
-        required=False,
-        type='bool'),
-    security_groups=dict(
+    primary_ip=dict(
         required=False,
         elements='',
         type='list'),
+    vlan=dict(
+        required=False,
+        type='int'),
     bare_metal_server=dict(
         required=False,
         type='str'),
@@ -193,16 +181,28 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    allow_ip_spoofing=dict(
+    allow_interface_to_float=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    hard_stop=dict(
         required=False,
         type='bool'),
     enable_infrastructure_nat=dict(
         required=False,
         type='bool'),
-    primary_ip=dict(
+    subnet=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
+    allow_ip_spoofing=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -280,7 +280,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -289,7 +289,7 @@ def run_module():
             resource_type='ibm_is_bare_metal_server_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

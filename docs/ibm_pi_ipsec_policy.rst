@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  pi_policy_pfs (True, bool, None)
-    (Required for new resource) Perfect Forward Secrecy
-
 
   pi_policy_authentication (False, str, none)
     Authentication for the IPSec Policy
@@ -57,6 +53,10 @@ Parameters
 
   pi_policy_key_lifetime (True, int, None)
     (Required for new resource) Policy key lifetime
+
+
+  pi_policy_pfs (True, bool, None)
+    (Required for new resource) Perfect Forward Secrecy
 
 
   id (False, str, None)

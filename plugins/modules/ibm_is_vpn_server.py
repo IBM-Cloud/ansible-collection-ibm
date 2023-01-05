@@ -18,44 +18,68 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_server' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    resource_type:
-        description:
-            - The type of resource referenced.
-        required: False
-        type: str
-        default: vpn_server
-    certificate_crn:
-        description:
-            - (Required for new resource) The crn of certificate instance for this VPN server.
-        required: True
-        type: str
-    enable_split_tunneling:
-        description:
-            - Indicates whether the split tunneling is enabled on this VPN server.
-        required: False
-        type: bool
-        default: False
-    client_dns_server_ips:
-        description:
-            - The DNS server addresses that will be provided to VPN clients connected to this VPN server. The IP address. This property may add support for IPv6 addresses in the future. When processing a value in this property, verify that the address is in an expected format. If it is not, log an error. Optionally halt processing and surface the error, or bypass the resource on which the unexpected IP address format was encountered.
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - The unique identifier for this resource group. The resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
-        required: False
-        type: str
     security_groups:
         description:
             - The unique identifier for this security group. The security groups to use for this VPN server. If unspecified, the VPC's default security group is used.
         required: False
         type: list
         elements: str
+    client_authentication:
+        description:
+            - (Required for new resource) The methods used to authenticate VPN clients to this VPN server. VPN clients must authenticate against all provided methods.
+        required: True
+        type: list
+        elements: dict
+    client_ip_pool:
+        description:
+            - (Required for new resource) The VPN client IPv4 address pool, expressed in CIDR format. The request must not overlap with any existing address prefixes in the VPC or any of the following reserved address ranges:  - `127.0.0.0/8` (IPv4 loopback addresses)  - `161.26.0.0/16` (IBM services)  - `166.8.0.0/14` (Cloud Service Endpoints)  - `169.254.0.0/16` (IPv4 link-local addresses)  - `224.0.0.0/4` (IPv4 multicast addresses)The prefix length of the client IP address pool's CIDR must be between`/9` (8,388,608 addresses) and `/22` (1024 addresses). A CIDR block that contains twice the number of IP addresses that are required to enable the maximum number of concurrent connections is recommended.
+        required: True
+        type: str
+    protocol:
+        description:
+            - The transport protocol to use for this VPN server.
+        required: False
+        type: str
+        default: udp
+    enable_split_tunneling:
+        description:
+            - Indicates whether the split tunneling is enabled on this VPN server.
+        required: False
+        type: bool
+        default: False
+    subnets:
+        description:
+            - (Required for new resource) The unique identifier for this subnet. The subnets to provision this VPN server in.  Use subnets in different zones for high availability.
+        required: True
+        type: list
+        elements: str
+    certificate_crn:
+        description:
+            - (Required for new resource) The crn of certificate instance for this VPN server.
+        required: True
+        type: str
+    client_dns_server_ips:
+        description:
+            - The DNS server addresses that will be provided to VPN clients connected to this VPN server. The IP address. This property may add support for IPv6 addresses in the future. When processing a value in this property, verify that the address is in an expected format. If it is not, log an error. Optionally halt processing and surface the error, or bypass the resource on which the unexpected IP address format was encountered.
+        required: False
+        type: list
+        elements: str
+    port:
+        description:
+            - The port number to use for this VPN server.
+        required: False
+        type: int
+        default: 443
+    resource_type:
+        description:
+            - The type of resource referenced.
+        required: False
+        type: str
+        default: vpn_server
     name:
         description:
             - The user-defined name for this VPN server. If unspecified, the name will be a hyphenated list of randomly-selected words. Names must be unique within the VPC this VPN server is serving.
@@ -67,35 +91,11 @@ options:
         required: False
         type: int
         default: 600
-    client_ip_pool:
+    resource_group:
         description:
-            - (Required for new resource) The VPN client IPv4 address pool, expressed in CIDR format. The request must not overlap with any existing address prefixes in the VPC or any of the following reserved address ranges:  - `127.0.0.0/8` (IPv4 loopback addresses)  - `161.26.0.0/16` (IBM services)  - `166.8.0.0/14` (Cloud Service Endpoints)  - `169.254.0.0/16` (IPv4 link-local addresses)  - `224.0.0.0/4` (IPv4 multicast addresses)The prefix length of the client IP address pool's CIDR must be between`/9` (8,388,608 addresses) and `/22` (1024 addresses). A CIDR block that contains twice the number of IP addresses that are required to enable the maximum number of concurrent connections is recommended.
-        required: True
-        type: str
-    port:
-        description:
-            - The port number to use for this VPN server.
-        required: False
-        type: int
-        default: 443
-    protocol:
-        description:
-            - The transport protocol to use for this VPN server.
+            - The unique identifier for this resource group. The resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
         required: False
         type: str
-        default: udp
-    subnets:
-        description:
-            - (Required for new resource) The unique identifier for this subnet. The subnets to provision this VPN server in.  Use subnets in different zones for high availability.
-        required: True
-        type: list
-        elements: str
-    client_authentication:
-        description:
-            - (Required for new resource) The methods used to authenticate VPN clients to this VPN server. VPN clients must authenticate against all provided methods.
-        required: True
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -142,27 +142,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate_crn', 'str'),
+    ('client_authentication', 'list'),
     ('client_ip_pool', 'str'),
     ('subnets', 'list'),
-    ('client_authentication', 'list'),
+    ('certificate_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_type',
-    'certificate_crn',
-    'enable_split_tunneling',
-    'client_dns_server_ips',
-    'resource_group',
     'security_groups',
+    'client_authentication',
+    'client_ip_pool',
+    'protocol',
+    'enable_split_tunneling',
+    'subnets',
+    'certificate_crn',
+    'client_dns_server_ips',
+    'port',
+    'resource_type',
     'name',
     'client_idle_timeout',
-    'client_ip_pool',
-    'port',
-    'protocol',
-    'subnets',
-    'client_authentication',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -170,8 +170,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'identifier',
     'name',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -181,42 +181,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_type=dict(
-        required=False,
-        type='str'),
-    certificate_crn=dict(
-        required=False,
-        type='str'),
-    enable_split_tunneling=dict(
-        required=False,
-        type='bool'),
-    client_dns_server_ips=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    client_idle_timeout=dict(
-        required=False,
-        type='int'),
-    client_ip_pool=dict(
-        required=False,
-        type='str'),
-    port=dict(
-        required=False,
-        type='int'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -224,6 +189,41 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    client_ip_pool=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    enable_split_tunneling=dict(
+        required=False,
+        type='bool'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
+    certificate_crn=dict(
+        required=False,
+        type='str'),
+    client_dns_server_ips=dict(
+        required=False,
+        elements='',
+        type='list'),
+    port=dict(
+        required=False,
+        type='int'),
+    resource_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    client_idle_timeout=dict(
+        required=False,
+        type='int'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -301,7 +301,7 @@ def run_module():
         resource_type='ibm_is_vpn_server',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -310,7 +310,7 @@ def run_module():
             resource_type='ibm_is_vpn_server',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

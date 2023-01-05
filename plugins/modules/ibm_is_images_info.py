@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_images' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
             - The id of the resource group
         required: False
         type: str
+    catalog_managed:
+        description:
+            - Lists images managed as part of a catalog offering. If an image is managed, accounts in the same enterprise with access to that catalog can specify the image's catalog offering version CRN to provision virtual server instances using the image
+        required: False
+        type: bool
     name:
         description:
             - The name of the image
@@ -79,6 +84,7 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group',
+    'catalog_managed',
     'name',
     'status',
     'visibility',
@@ -95,6 +101,9 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
+    catalog_managed=dict(
+        required=False,
+        type='bool'),
     name=dict(
         required=False,
         type='str'),
@@ -150,7 +159,7 @@ def run_module():
         resource_type='ibm_is_images',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -33,12 +33,23 @@ options:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
         required: False
         type: bool
+    protocols:
+        description:
+            - Protocols to be assigned to this load balancer.
+        required: False
+        type: list
+        elements: dict
     type:
         description:
             - Specifies if a load balancer is public or private
         required: False
         type: str
         default: PUBLIC
+    description:
+        description:
+            - Description of a load balancer.
+        required: False
+        type: str
     ssl_ciphers:
         description:
             - None
@@ -50,17 +61,6 @@ options:
             - (Required for new resource) The load balancer's name.
         required: True
         type: str
-    description:
-        description:
-            - Description of a load balancer.
-        required: False
-        type: str
-    protocols:
-        description:
-            - Protocols to be assigned to this load balancer.
-        required: False
-        type: list
-        elements: dict
     wait_time_minutes:
         description:
             - None
@@ -121,11 +121,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'subnets',
     'use_system_public_ip_pool',
+    'protocols',
     'type',
+    'description',
     'ssl_ciphers',
     'name',
-    'description',
-    'protocols',
     'wait_time_minutes',
 ]
 
@@ -152,7 +152,14 @@ module_args = dict(
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
+    protocols=dict(
+        required=False,
+        elements='',
+        type='list'),
     type=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     ssl_ciphers=dict(
@@ -162,13 +169,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    protocols=dict(
-        required=False,
-        elements='',
-        type='list'),
     wait_time_minutes=dict(
         required=False,
         type='int'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

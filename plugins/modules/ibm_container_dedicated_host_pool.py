@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_dedicated_host_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) The name of the dedicated host pool
@@ -36,11 +41,6 @@ options:
         description:
             - (Required for new resource) The flavor class of the dedicated host pool
         required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
         type: str
     id:
         description:
@@ -75,10 +75,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_group_id',
     'name',
     'metro',
     'flavor_class',
-    'resource_group_id',
 ]
 
 # Params for Data source
@@ -97,6 +97,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -104,9 +107,6 @@ module_args = dict(
         required=False,
         type='str'),
     flavor_class=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -160,7 +160,7 @@ def run_module():
         resource_type='ibm_container_dedicated_host_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -169,7 +169,7 @@ def run_module():
             resource_type='ibm_container_dedicated_host_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,28 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_volume' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    profile:
+    zone:
         description:
-            - (Required for new resource) Volume profile name
+            - (Required for new resource) Zone name
         required: True
         type: str
-    iops:
+    resource_group:
         description:
-            - IOPS value for the Volume
-        required: False
-        type: int
-    name:
-        description:
-            - (Required for new resource) Volume name
-        required: True
-        type: str
-    encryption_key:
-        description:
-            - Volume encryption key info
+            - Resource group name
         required: False
         type: str
     delete_all_snapshots:
@@ -53,9 +43,9 @@ options:
         required: False
         type: list
         elements: str
-    zone:
+    name:
         description:
-            - (Required for new resource) Zone name
+            - (Required for new resource) Volume name
         required: True
         type: str
     capacity:
@@ -64,10 +54,20 @@ options:
         required: False
         type: int
         default: 100
-    resource_group:
+    encryption_key:
         description:
-            - Resource group name
+            - Volume encryption key info
         required: False
+        type: str
+    iops:
+        description:
+            - IOPS value for the Volume
+        required: False
+        type: int
+    profile:
+        description:
+            - (Required for new resource) Volume profile name
+        required: True
         type: str
     id:
         description:
@@ -115,22 +115,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('profile', 'str'),
-    ('name', 'str'),
     ('zone', 'str'),
+    ('name', 'str'),
+    ('profile', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile',
-    'iops',
-    'name',
-    'encryption_key',
+    'zone',
+    'resource_group',
     'delete_all_snapshots',
     'tags',
-    'zone',
+    'name',
     'capacity',
-    'resource_group',
+    'encryption_key',
+    'iops',
+    'profile',
 ]
 
 # Params for Data source
@@ -139,8 +139,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'zone',
     'name',
+    'zone',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -150,16 +150,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile=dict(
+    zone=dict(
         required=False,
         type='str'),
-    iops=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
-    encryption_key=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     delete_all_snapshots=dict(
@@ -169,13 +163,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    zone=dict(
+    name=dict(
         required=False,
         type='str'),
     capacity=dict(
         required=False,
         type='int'),
-    resource_group=dict(
+    encryption_key=dict(
+        required=False,
+        type='str'),
+    iops=dict(
+        required=False,
+        type='int'),
+    profile=dict(
         required=False,
         type='str'),
     id=dict(
@@ -255,7 +255,7 @@ def run_module():
         resource_type='ibm_is_volume',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +264,7 @@ def run_module():
             resource_type='ibm_is_volume',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

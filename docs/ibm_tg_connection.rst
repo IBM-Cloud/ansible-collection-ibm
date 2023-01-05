@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
-
 
   network_id (False, str, None)
     The ID of the network being connected via this connection. This field is required for some types, such as 'vpc' or 'directlink'. The value of this is the CRN of the VPC or direct link gateway to be connected. This field is required to be unspecified for network type 'classic'.
@@ -43,40 +39,44 @@ Parameters
     The ID of a network_type 'classic' connection a tunnel is configured over. This field only applies to network type 'gre_tunnel' connections.
 
 
-  local_tunnel_ip (False, str, None)
-    The local tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
-
-
-  gateway (True, str, None)
-    (Required for new resource) The Transit Gateway identifier
-
-
-  remote_bgp_asn (False, int, None)
-    The remote network BGP ASN. This field only applies to network type 'gre_tunnel' connections.
-
-
-  remote_tunnel_ip (False, str, None)
-    The remote tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
-
-
-  network_type (True, str, None)
-    (Required for new resource) Defines what type of network is connected via this connection. Allowable values (classic,directlink,vpc,gre_tunnel)
-
-
-  network_account_id (False, str, None)
-    The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
+  local_gateway_ip (False, str, None)
+    The local gateway IP address. This field only applies to network type 'gre_tunnel' connections.
 
 
   remote_gateway_ip (False, str, None)
     The remote gateway IP address. This field only applies to network type 'gre_tunnel' connections.
 
 
-  local_gateway_ip (False, str, None)
-    The local gateway IP address. This field only applies to network type 'gre_tunnel' connections.
+  remote_tunnel_ip (False, str, None)
+    The remote tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
 
 
   zone (False, str, None)
     Location of GRE tunnel. This field only applies to network type 'gre_tunnel' connections.
+
+
+  name (False, str, None)
+    The user-defined name for this transit gateway. If unspecified, the name will be the network name (the name of the VPC in the case of network type 'vpc', and the word Classic, in the case of network type 'classic').
+
+
+  network_account_id (False, str, None)
+    The ID of the account which owns the network that is being connected. Generally only used if the network is in a different account than the gateway.
+
+
+  local_tunnel_ip (False, str, None)
+    The local tunnel IP address. This field only applies to network type 'gre_tunnel' connections.
+
+
+  remote_bgp_asn (False, int, None)
+    The remote network BGP ASN. This field only applies to network type 'gre_tunnel' connections.
+
+
+  gateway (True, str, None)
+    (Required for new resource) The Transit Gateway identifier
+
+
+  network_type (True, str, None)
+    (Required for new resource) Defines what type of network is connected via this connection. Allowable values (classic,directlink,vpc,gre_tunnel)
 
 
   id (False, str, None)

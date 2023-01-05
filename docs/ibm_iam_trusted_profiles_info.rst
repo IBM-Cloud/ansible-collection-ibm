@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  include_history (False, bool, None)
-    Defines if the entity history is included in the response. Default is false
-
-
   account_id (False, str, None)
     Account ID to query for trusted profiles.
 
 
   name (False, str, None)
     Name of the profile
+
+
+  include_history (False, bool, None)
+    Defines if the entity history is included in the response. Default is false
 
 
   iaas_classic_username (False, any, None)

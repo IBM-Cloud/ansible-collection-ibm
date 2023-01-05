@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -28,17 +28,16 @@ options:
         required: False
         type: bool
         default: False
+    expiration_date:
+        description:
+            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+        required: False
+        type: str
     instance_id:
         description:
             - (Required for new resource) Key protect or hpcs instance GUID or CRN
         required: True
         type: str
-    key_ring_id:
-        description:
-            - Key Ring for the Key
-        required: False
-        type: str
-        default: default
     key_name:
         description:
             - (Required for new resource) Key name
@@ -49,17 +48,23 @@ options:
             - public or private
         required: False
         type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
     standard_key:
         description:
             - Standard key type
         required: False
         type: bool
         default: False
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    key_ring_id:
+        description:
+            - Key Ring for the Key
+        required: False
+        type: str
+        default: default
     encrypted_nonce:
         description:
             - Only for imported root key
@@ -68,11 +73,6 @@ options:
     iv_value:
         description:
             - Only for imported root key
-        required: False
-        type: str
-    expiration_date:
-        description:
-            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
         required: False
         type: str
     id:
@@ -128,15 +128,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'force_delete',
+    'expiration_date',
     'instance_id',
-    'key_ring_id',
     'key_name',
     'endpoint_type',
-    'payload',
     'standard_key',
+    'payload',
+    'key_ring_id',
     'encrypted_nonce',
     'iv_value',
-    'expiration_date',
 ]
 
 # Params for Data source
@@ -145,12 +145,12 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_id',
-    'limit',
-    'key_id',
     'key_name',
     'alias',
     'endpoint_type',
+    'instance_id',
+    'limit',
+    'key_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -163,10 +163,10 @@ module_args = dict(
     force_delete=dict(
         required=False,
         type='bool'),
-    instance_id=dict(
+    expiration_date=dict(
         required=False,
         type='str'),
-    key_ring_id=dict(
+    instance_id=dict(
         required=False,
         type='str'),
     key_name=dict(
@@ -175,19 +175,19 @@ module_args = dict(
     endpoint_type=dict(
         required=False,
         type='str'),
-    payload=dict(
-        required=False,
-        type='str'),
     standard_key=dict(
         required=False,
         type='bool'),
+    payload=dict(
+        required=False,
+        type='str'),
+    key_ring_id=dict(
+        required=False,
+        type='str'),
     encrypted_nonce=dict(
         required=False,
         type='str'),
     iv_value=dict(
-        required=False,
-        type='str'),
-    expiration_date=dict(
         required=False,
         type='str'),
     id=dict(
@@ -255,7 +255,7 @@ def run_module():
         resource_type='ibm_kms_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +264,7 @@ def run_module():
             resource_type='ibm_kms_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

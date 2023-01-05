@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_dns_custom_resolver_forwarding_rules' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    resolver_id:
-        description:
-            - The unique identifier of a custom resolver.
-        required: True
-        type: str
     instance_id:
         description:
             - The unique identifier of a service instance.
+        required: True
+        type: str
+    resolver_id:
+        description:
+            - The unique identifier of a custom resolver.
         required: True
         type: str
     iaas_classic_username:
@@ -64,14 +64,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('resolver_id', 'str'),
     ('instance_id', 'str'),
+    ('resolver_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resolver_id',
     'instance_id',
+    'resolver_id',
 ]
 
 
@@ -82,10 +82,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resolver_id=dict(
+    instance_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
+    resolver_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -122,7 +122,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver_forwarding_rules',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

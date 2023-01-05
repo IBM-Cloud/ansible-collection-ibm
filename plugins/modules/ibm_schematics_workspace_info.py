@@ -17,30 +17,30 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_schematics_workspace' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    template_git_has_uploadedgitrepotar:
-        description:
-            - Has uploaded Git repository tar.
-        required: False
-        type: bool
-    location:
-        description:
-            - The IBM Cloud location where your workspace was provisioned.
-        required: False
-        type: str
     template_values_metadata:
         description:
             - A list of input variables that are associated with the workspace.
         required: False
         type: list
         elements: dict
+    template_git_has_uploadedgitrepotar:
+        description:
+            - Has uploaded Git repository tar.
+        required: False
+        type: bool
     workspace_id:
         description:
             - The ID of the workspace.  To find the workspace ID, use the `GET /v1/workspaces` API.
         required: True
+        type: str
+    location:
+        description:
+            - The IBM Cloud location where your workspace was provisioned.
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -80,10 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'template_git_has_uploadedgitrepotar',
-    'location',
     'template_values_metadata',
+    'template_git_has_uploadedgitrepotar',
     'workspace_id',
+    'location',
 ]
 
 
@@ -94,18 +94,18 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    template_git_has_uploadedgitrepotar=dict(
-        required=False,
-        type='bool'),
-    location=dict(
-        required=False,
-        type='str'),
     template_values_metadata=dict(
         required=False,
         elements='',
         type='list'),
+    template_git_has_uploadedgitrepotar=dict(
+        required=False,
+        type='bool'),
     workspace_id=dict(
         required=True,
+        type='str'),
+    location=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_schematics_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

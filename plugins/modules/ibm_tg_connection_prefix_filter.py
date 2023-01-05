@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    before:
+        description:
+            - Identifier of prefix filter that handles ordering
+        required: False
+        type: str
+    le:
+        description:
+            - IP Prefix LE
+        required: False
+        type: int
     gateway:
         description:
             - (Required for new resource) The Transit Gateway identifier
@@ -37,19 +47,9 @@ options:
             - (Required for new resource) Whether to permit or deny the prefix filter
         required: True
         type: str
-    before:
-        description:
-            - Identifier of prefix filter that handles ordering
-        required: False
-        type: str
     ge:
         description:
             - IP Prefix GE
-        required: False
-        type: int
-    le:
-        description:
-            - IP Prefix LE
         required: False
         type: int
     prefix:
@@ -111,26 +111,26 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'before',
+    'le',
     'gateway',
     'connection_id',
     'action',
-    'before',
     'ge',
-    'le',
     'prefix',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('connection_id', 'str'),
     ('filter_id', 'str'),
     ('gateway', 'str'),
-    ('connection_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'connection_id',
     'filter_id',
     'gateway',
-    'connection_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,6 +140,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    before=dict(
+        required=False,
+        type='str'),
+    le=dict(
+        required=False,
+        type='int'),
     gateway=dict(
         required=False,
         type='str'),
@@ -149,13 +155,7 @@ module_args = dict(
     action=dict(
         required=False,
         type='str'),
-    before=dict(
-        required=False,
-        type='str'),
     ge=dict(
-        required=False,
-        type='int'),
-    le=dict(
         required=False,
         type='int'),
     prefix=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_tg_connection_prefix_filter',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

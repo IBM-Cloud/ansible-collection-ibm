@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    high_availability:
-        description:
-            - Whether High Availability is enabled in custom resolver
-        required: False
-        type: bool
-        default: True
     name:
         description:
             - (Required for new resource) Name of the custom resolver
@@ -38,12 +32,6 @@ options:
             - Descriptive text of the custom resolver.
         required: False
         type: str
-    enabled:
-        description:
-            - Whether the custom resolver is enabled
-        required: False
-        type: bool
-        default: True
     locations:
         description:
             - Locations on which the custom resolver will be running
@@ -55,6 +43,18 @@ options:
             - (Required for new resource) Instance ID
         required: True
         type: str
+    enabled:
+        description:
+            - Whether the custom resolver is enabled
+        required: False
+        type: bool
+        default: True
+    high_availability:
+        description:
+            - Whether High Availability is enabled in custom resolver
+        required: False
+        type: bool
+        default: True
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -107,12 +107,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'high_availability',
     'name',
     'description',
-    'enabled',
     'locations',
     'instance_id',
+    'enabled',
+    'high_availability',
 ]
 
 # Params for Data source
@@ -129,18 +129,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    high_availability=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
     locations=dict(
         required=False,
         elements='',
@@ -148,6 +142,12 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    high_availability=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+  logdna_endpoint (False, list, None)
+    Property values for a LogDNA Endpoint.
 
 
   name (True, str, None)
@@ -47,8 +47,8 @@ Parameters
     Property values for a Cloud Object Storage Endpoint.
 
 
-  logdna_endpoint (False, list, None)
-    Property values for a LogDNA Endpoint.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   id (False, str, None)

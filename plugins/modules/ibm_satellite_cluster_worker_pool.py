@@ -18,47 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    host_labels:
-        description:
-            - Labels that describe a Satellite host
-        required: False
-        type: list
-        elements: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The name for the worker pool
-        required: True
-        type: str
-    disk_encryption:
-        description:
-            - Disk encryption for worker node
-        required: False
-        type: bool
-    entitlement:
-        description:
-            - None
-        required: False
-        type: str
-    worker_count:
-        description:
-            - Specify the desired number of workers per zone in this worker pool
-        required: False
-        type: int
-    worker_pool_labels:
-        description:
-            - Labels on all the workers in the worker pool
-        required: False
-        type: dict
-        elements: str
     cluster:
         description:
             - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
@@ -74,12 +37,54 @@ options:
             - None
         required: False
         type: str
+    operating_system:
+        description:
+            - Operating system of the worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
+        required: False
+        type: str
+    worker_count:
+        description:
+            - Specify the desired number of workers per zone in this worker pool
+        required: False
+        type: int
     zones:
         description:
             - Zone info for worker pool
         required: False
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) The name for the worker pool
+        required: True
+        type: str
+    disk_encryption:
+        description:
+            - Disk encryption for worker node
+        required: False
+        type: bool
+    entitlement:
+        description:
+            - None
+        required: False
+        type: str
+    worker_pool_labels:
+        description:
+            - Labels on all the workers in the worker pool
+        required: False
+        type: dict
+        elements: str
+    host_labels:
+        description:
+            - Labels that describe a Satellite host
+        required: False
+        type: list
+        elements: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -126,36 +131,37 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('cluster', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'host_labels',
-    'resource_group_id',
-    'name',
-    'disk_encryption',
-    'entitlement',
-    'worker_count',
-    'worker_pool_labels',
     'cluster',
     'flavor',
     'isolation',
+    'operating_system',
+    'worker_count',
     'zones',
+    'name',
+    'disk_encryption',
+    'entitlement',
+    'worker_pool_labels',
+    'host_labels',
+    'resource_group_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('cluster', 'str'),
     ('name', 'str'),
+    ('cluster', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'cluster',
     'resource_group_id',
     'region',
     'name',
+    'cluster',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -165,29 +171,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    host_labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    disk_encryption=dict(
-        required=False,
-        type='bool'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
     cluster=dict(
         required=False,
         type='str'),
@@ -197,10 +180,36 @@ module_args = dict(
     isolation=dict(
         required=False,
         type='str'),
+    operating_system=dict(
+        required=False,
+        type='str'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    disk_encryption=dict(
+        required=False,
+        type='bool'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    worker_pool_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    host_labels=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -266,7 +275,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -275,7 +284,7 @@ def run_module():
             resource_type='ibm_satellite_cluster_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

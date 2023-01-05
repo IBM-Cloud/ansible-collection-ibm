@@ -18,19 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    zone:
+        description:
+            - The zone within the cluster to assign the host to
+        required: False
+        type: str
     host_provider:
         description:
             - Host Provider
         required: False
         type: str
-    location:
+    wait_till:
         description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
+            - Wait until location is normal
+        required: False
         type: str
     cluster:
         description:
@@ -53,15 +58,10 @@ options:
             - The name or ID of the worker pool within the cluster to assign the host to
         required: False
         type: str
-    zone:
+    location:
         description:
-            - The zone within the cluster to assign the host to
-        required: False
-        type: str
-    wait_till:
-        description:
-            - Wait until location is normal
-        required: False
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
         type: str
     id:
         description:
@@ -109,20 +109,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('location', 'str'),
     ('host_id', 'str'),
+    ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zone',
     'host_provider',
-    'location',
+    'wait_till',
     'cluster',
     'host_id',
     'labels',
     'worker_pool',
-    'zone',
-    'wait_till',
+    'location',
 ]
 
 # Params for Data source
@@ -139,10 +139,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    zone=dict(
+        required=False,
+        type='str'),
     host_provider=dict(
         required=False,
         type='str'),
-    location=dict(
+    wait_till=dict(
         required=False,
         type='str'),
     cluster=dict(
@@ -158,10 +161,7 @@ module_args = dict(
     worker_pool=dict(
         required=False,
         type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    wait_till=dict(
+    location=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_satellite_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

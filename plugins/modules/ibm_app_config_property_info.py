@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_property' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -31,15 +31,15 @@ options:
             - Environment Id.
         required: True
         type: str
-    include:
-        description:
-            - Include the associated collections in the response.
-        required: False
-        type: str
     property_id:
         description:
             - Property Id.
         required: True
+        type: str
+    include:
+        description:
+            - Include the associated collections in the response.
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -83,8 +83,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'guid',
     'environment_id',
-    'include',
     'property_id',
+    'include',
 ]
 
 
@@ -101,11 +101,11 @@ module_args = dict(
     environment_id=dict(
         required=True,
         type='str'),
-    include=dict(
-        required=False,
-        type='str'),
     property_id=dict(
         required=True,
+        type='str'),
+    include=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -141,7 +141,7 @@ def run_module():
         resource_type='ibm_app_config_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

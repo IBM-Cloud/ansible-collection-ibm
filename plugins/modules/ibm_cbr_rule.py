@@ -18,25 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cbr_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    contexts:
-        description:
-            - (Required for new resource) The contexts this rule applies to.
-        required: True
-        type: list
-        elements: dict
     transaction_id:
         description:
             - The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
         required: False
         type: str
-    resources:
+    operations:
         description:
-            - (Required for new resource) The resources this rule apply to.
-        required: True
+            - The operations this rule applies to.
+        required: False
         type: list
         elements: dict
     x_correlation_id:
@@ -49,18 +43,24 @@ options:
             - The description of the rule.
         required: False
         type: str
-    operations:
-        description:
-            - The operations this rule applies to.
-        required: False
-        type: list
-        elements: dict
     enforcement_mode:
         description:
             - The rule enforcement mode: * `enabled` - The restrictions are enforced and reported. This is the default. * `disabled` - The restrictions are disabled. Nothing is enforced or reported. * `report` - The restrictions are evaluated and reported, but not enforced.
         required: False
         type: str
         default: enabled
+    contexts:
+        description:
+            - (Required for new resource) The contexts this rule applies to.
+        required: True
+        type: list
+        elements: dict
+    resources:
+        description:
+            - (Required for new resource) The resources this rule apply to.
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,13 +113,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'contexts',
     'transaction_id',
-    'resources',
+    'operations',
     'x_correlation_id',
     'description',
-    'operations',
     'enforcement_mode',
+    'contexts',
+    'resources',
 ]
 
 # Params for Data source
@@ -138,14 +138,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    contexts=dict(
-        required=False,
-        elements='',
-        type='list'),
     transaction_id=dict(
         required=False,
         type='str'),
-    resources=dict(
+    operations=dict(
         required=False,
         elements='',
         type='list'),
@@ -155,13 +151,17 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    operations=dict(
-        required=False,
-        elements='',
-        type='list'),
     enforcement_mode=dict(
         required=False,
         type='str'),
+    contexts=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resources=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_cbr_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -236,7 +236,7 @@ def run_module():
             resource_type='ibm_cbr_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

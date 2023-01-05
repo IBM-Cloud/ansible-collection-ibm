@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_domain' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    domain:
+        description:
+            - (Required for new resource) CISzone - Domain
+        required: True
+        type: str
     type:
         description:
             - CISzone - Domain Type
@@ -31,11 +36,6 @@ options:
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    domain:
-        description:
-            - (Required for new resource) CISzone - Domain
         required: True
         type: str
     id:
@@ -84,15 +84,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain',
     'type',
     'cis_id',
-    'domain',
 ]
 
 # Params for Data source
@@ -103,9 +103,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'cis_id',
+    'verification_key',
     'cname_suffix',
     'domain',
-    'verification_key',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -115,13 +115,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain=dict(
+        required=False,
+        type='str'),
     type=dict(
         required=False,
         type='str'),
     cis_id=dict(
-        required=False,
-        type='str'),
-    domain=dict(
         required=False,
         type='str'),
     id=dict(
@@ -189,7 +189,7 @@ def run_module():
         resource_type='ibm_cis_domain',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -198,7 +198,7 @@ def run_module():
             resource_type='ibm_cis_domain',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

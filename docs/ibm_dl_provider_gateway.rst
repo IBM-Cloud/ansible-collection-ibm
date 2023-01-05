@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,8 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The unique user-defined name for this gateway
+  customer_account_id (True, str, None)
+    (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+
+
+  vlan (False, int, None)
+    VLAN allocated for this gateway
 
 
   tags (False, list, None)
@@ -51,20 +55,16 @@ Parameters
     (Required for new resource) Gateway port
 
 
+  name (True, str, None)
+    (Required for new resource) The unique user-defined name for this gateway
+
+
   speed_mbps (True, int, None)
     (Required for new resource) Gateway speed in megabits per second
 
 
-  vlan (False, int, None)
-    VLAN allocated for this gateway
-
-
   bgp_asn (True, int, None)
     (Required for new resource) BGP ASN
-
-
-  customer_account_id (True, str, None)
-    (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
 
 
   id (False, str, None)

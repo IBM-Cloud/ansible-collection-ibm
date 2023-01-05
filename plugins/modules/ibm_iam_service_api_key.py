@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_api_key' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Name of the Service API key
+        required: True
+        type: str
     locked:
         description:
             - The API key cannot be changed if set to true
@@ -32,10 +37,10 @@ options:
             - Boolean value deciding whether API key value is retrievable in the future
         required: False
         type: bool
-    name:
+    file:
         description:
-            - (Required for new resource) Name of the Service API key
-        required: True
+            - File where api key is to be stored
+        required: False
         type: str
     description:
         description:
@@ -50,11 +55,6 @@ options:
     apikey:
         description:
             - API key value for this API key
-        required: False
-        type: str
-    file:
-        description:
-            - File where api key is to be stored
         required: False
         type: str
     id:
@@ -109,13 +109,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'locked',
     'store_value',
-    'name',
+    'file',
     'description',
     'iam_service_id',
     'apikey',
-    'file',
 ]
 
 # Params for Data source
@@ -132,13 +132,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     locked=dict(
         required=False,
         type='bool'),
     store_value=dict(
         required=False,
         type='bool'),
-    name=dict(
+    file=dict(
         required=False,
         type='str'),
     description=dict(
@@ -148,9 +151,6 @@ module_args = dict(
         required=False,
         type='str'),
     apikey=dict(
-        required=False,
-        type='str'),
-    file=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_iam_service_api_key',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

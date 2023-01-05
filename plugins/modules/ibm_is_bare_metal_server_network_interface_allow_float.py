@@ -18,52 +18,52 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server_network_interface_allow_float' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    bare_metal_server:
-        description:
-            - (Required for new resource) Bare metal server identifier
-        required: True
-        type: str
-    enable_infrastructure_nat:
-        description:
-            - If true, the VPC infrastructure performs any needed NAT operations. If false, the packet is passed unmodified to/from the network interface, allowing the workload to perform any needed NAT operations.
-        required: False
-        type: bool
-    allow_ip_spoofing:
-        description:
-            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
-        required: False
-        type: bool
-    name:
-        description:
-            - The user-defined name for this network interface
-        required: False
-        type: str
     primary_ip:
         description:
             - title: IPv4, The IP address.
         required: False
         type: list
         elements: dict
+    vlan:
+        description:
+            - (Required for new resource) Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this interface
+        required: True
+        type: int
+    allow_ip_spoofing:
+        description:
+            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+        required: False
+        type: bool
+    bare_metal_server:
+        description:
+            - (Required for new resource) Bare metal server identifier
+        required: True
+        type: str
     security_groups:
         description:
             - Collection of security groups ids
         required: False
         type: list
         elements: str
+    name:
+        description:
+            - The user-defined name for this network interface
+        required: False
+        type: str
+    enable_infrastructure_nat:
+        description:
+            - If true, the VPC infrastructure performs any needed NAT operations. If false, the packet is passed unmodified to/from the network interface, allowing the workload to perform any needed NAT operations.
+        required: False
+        type: bool
     subnet:
         description:
             - (Required for new resource) The id of the associated subnet
         required: True
         type: str
-    vlan:
-        description:
-            - (Required for new resource) Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this interface
-        required: True
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,21 +110,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('vlan', 'int'),
     ('bare_metal_server', 'str'),
     ('subnet', 'str'),
-    ('vlan', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bare_metal_server',
-    'enable_infrastructure_nat',
-    'allow_ip_spoofing',
-    'name',
     'primary_ip',
-    'security_groups',
-    'subnet',
     'vlan',
+    'allow_ip_spoofing',
+    'bare_metal_server',
+    'security_groups',
+    'name',
+    'enable_infrastructure_nat',
+    'subnet',
 ]
 
 # Params for Data source
@@ -141,32 +141,32 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    primary_ip=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vlan=dict(
+        required=False,
+        type='int'),
+    allow_ip_spoofing=dict(
+        required=False,
+        type='bool'),
     bare_metal_server=dict(
+        required=False,
+        type='str'),
+    security_groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     enable_infrastructure_nat=dict(
         required=False,
         type='bool'),
-    allow_ip_spoofing=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    primary_ip=dict(
-        required=False,
-        elements='',
-        type='list'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
     subnet=dict(
         required=False,
         type='str'),
-    vlan=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_interface_allow_float',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,10 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_subnet' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    ip_version:
+        description:
+            - ip version
+        required: False
+        type: int
+        default: 4
+    capacity:
+        description:
+            - (Required for new resource) number of ip addresses in the subnet
+        required: True
+        type: int
+    vlan_id:
+        description:
+            - VLAN ID for the subnet
+        required: False
+        type: int
     private:
         description:
             - private subnet
@@ -33,30 +49,14 @@ options:
             - (Required for new resource) subnet type
         required: True
         type: str
-    capacity:
-        description:
-            - (Required for new resource) number of ip addresses in the subnet
-        required: True
-        type: int
-    notes:
-        description:
-            - Notes
-        required: False
-        type: str
-    ip_version:
-        description:
-            - ip version
-        required: False
-        type: int
-        default: 4
-    vlan_id:
-        description:
-            - VLAN ID for the subnet
-        required: False
-        type: int
     endpoint_ip:
         description:
             - endpoint IP
+        required: False
+        type: str
+    notes:
+        description:
+            - Notes
         required: False
         type: str
     tags:
@@ -111,19 +111,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('capacity', 'int'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'ip_version',
+    'capacity',
+    'vlan_id',
     'private',
     'type',
-    'capacity',
-    'notes',
-    'ip_version',
-    'vlan_id',
     'endpoint_ip',
+    'notes',
     'tags',
 ]
 
@@ -143,25 +143,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    ip_version=dict(
+        required=False,
+        type='int'),
+    capacity=dict(
+        required=False,
+        type='int'),
+    vlan_id=dict(
+        required=False,
+        type='int'),
     private=dict(
         required=False,
         type='bool'),
     type=dict(
         required=False,
         type='str'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    notes=dict(
+    endpoint_ip=dict(
         required=False,
         type='str'),
-    ip_version=dict(
-        required=False,
-        type='int'),
-    vlan_id=dict(
-        required=False,
-        type='int'),
-    endpoint_ip=dict(
+    notes=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_subnet',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

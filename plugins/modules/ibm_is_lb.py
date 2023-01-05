@@ -18,16 +18,39 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
+        required: True
+        type: str
+    security_groups:
+        description:
+            - Load Balancer securitygroups list
+        required: False
+        type: list
+        elements: str
     logging:
         description:
             - Logging of Load Balancer
         required: False
         type: bool
         default: False
+    subnets:
+        description:
+            - (Required for new resource) Load Balancer subnets list
+        required: True
+        type: list
+        elements: str
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     type:
         description:
             - Load Balancer type
@@ -39,40 +62,17 @@ options:
             - The profile to use for this load balancer.
         required: False
         type: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
     route_mode:
         description:
             - Indicates whether route mode is enabled for this load balancer
         required: False
         type: bool
         default: False
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
-    subnets:
-        description:
-            - (Required for new resource) Load Balancer subnets list
-        required: True
-        type: list
-        elements: str
-    security_groups:
-        description:
-            - Load Balancer securitygroups list
-        required: False
-        type: list
-        elements: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,15 +125,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
+    'security_groups',
     'logging',
+    'subnets',
+    'tags',
     'type',
     'profile',
-    'route_mode',
-    'name',
-    'subnets',
-    'security_groups',
-    'tags',
     'resource_group',
+    'route_mode',
 ]
 
 # Params for Data source
@@ -146,35 +146,26 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'security_groups': ['profile'],
     'logging': ['profile'],
     'profile': ['logging'],
-    'security_groups': ['profile'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    logging=dict(
-        required=False,
-        type='bool'),
-    type=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    route_mode=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    security_groups=dict(
         required=False,
         elements='',
         type='list'),
-    security_groups=dict(
+    logging=dict(
+        required=False,
+        type='bool'),
+    subnets=dict(
         required=False,
         elements='',
         type='list'),
@@ -182,9 +173,18 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    type=dict(
+        required=False,
+        type='str'),
+    profile=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
+    route_mode=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -262,7 +262,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -271,7 +271,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

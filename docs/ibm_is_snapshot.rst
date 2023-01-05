@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -35,16 +35,16 @@ Parameters
     Resource group info
 
 
-  source_volume (True, str, None)
-    (Required for new resource) Snapshot source volume
+  tags (False, list, None)
+    User Tags for the snapshot
 
 
   name (False, str, None)
     Snapshot name
 
 
-  tags (False, list, None)
-    User Tags for the snapshot
+  source_volume (True, str, None)
+    (Required for new resource) Snapshot source volume
 
 
   id (False, str, None)

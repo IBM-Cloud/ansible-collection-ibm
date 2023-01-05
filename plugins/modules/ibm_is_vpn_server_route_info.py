@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpn_server_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The unique user-defined name for this VPN server route
-        required: False
-        type: str
     vpn_server:
         description:
             - The VPN server identifier.
@@ -34,6 +29,11 @@ options:
     identifier:
         description:
             - The unique identifier for this VPN server route
+        required: False
+        type: str
+    name:
+        description:
+            - The unique user-defined name for this VPN server route
         required: False
         type: str
     generation:
@@ -74,9 +74,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'vpn_server',
     'identifier',
+    'name',
 ]
 
 
@@ -87,13 +87,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     vpn_server=dict(
         required=True,
         type='str'),
     identifier=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_is_vpn_server_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

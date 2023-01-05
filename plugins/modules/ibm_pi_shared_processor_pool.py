@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_shared_processor_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -27,9 +27,19 @@ options:
             - (Required for new resource) Name of the shared processor pool
         required: True
         type: str
+    pi_shared_processor_pool_reserved_cores:
+        description:
+            - (Required for new resource) The amount of reserved cores for the shared processor pool
+        required: True
+        type: int
     pi_shared_processor_pool_host_group:
         description:
             - (Required for new resource) Host group of the shared processor pool
+        required: True
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
         required: True
         type: str
     pi_shared_processor_pool_placement_group_id:
@@ -43,16 +53,6 @@ options:
         required: False
         type: list
         elements: str
-    pi_shared_processor_pool_reserved_cores:
-        description:
-            - (Required for new resource) The amount of reserved cores for the shared processor pool
-        required: True
-        type: int
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,19 +96,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_shared_processor_pool_name', 'str'),
-    ('pi_shared_processor_pool_host_group', 'str'),
     ('pi_shared_processor_pool_reserved_cores', 'int'),
+    ('pi_shared_processor_pool_host_group', 'str'),
     ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_shared_processor_pool_name',
+    'pi_shared_processor_pool_reserved_cores',
     'pi_shared_processor_pool_host_group',
+    'pi_cloud_instance_id',
     'pi_shared_processor_pool_placement_group_id',
     'spp_placement_groups',
-    'pi_shared_processor_pool_reserved_cores',
-    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
@@ -132,7 +132,13 @@ module_args = dict(
     pi_shared_processor_pool_name=dict(
         required=False,
         type='str'),
+    pi_shared_processor_pool_reserved_cores=dict(
+        required=False,
+        type='int'),
     pi_shared_processor_pool_host_group=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_shared_processor_pool_placement_group_id=dict(
@@ -142,12 +148,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_shared_processor_pool_reserved_cores=dict(
-        required=False,
-        type='int'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_pi_shared_processor_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_pi_shared_processor_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

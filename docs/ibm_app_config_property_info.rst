@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -37,12 +37,12 @@ Parameters
     Environment Id.
 
 
-  include (False, str, None)
-    Include the associated collections in the response.
-
-
   property_id (True, str, None)
     Property Id.
+
+
+  include (False, str, None)
+    Include the associated collections in the response.
 
 
   iaas_classic_username (False, any, None)

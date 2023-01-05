@@ -17,14 +17,14 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    name:
+    routing_table:
         description:
-            - The user-defined name for this route.
-        required: False
+            - The routing table identifier.
+        required: True
         type: str
     route_id:
         description:
@@ -36,10 +36,10 @@ options:
             - The VPC identifier.
         required: True
         type: str
-    routing_table:
+    name:
         description:
-            - The routing table identifier.
-        required: True
+            - The user-defined name for this route.
+        required: False
         type: str
     generation:
         description:
@@ -74,30 +74,30 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
     ('routing_table', 'str'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'routing_table',
     'route_id',
     'vpc',
-    'routing_table',
+    'name',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'name': ['route_id'],
     'route_id': ['name'],
+    'name': ['route_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
+    routing_table=dict(
+        required=True,
         type='str'),
     route_id=dict(
         required=False,
@@ -105,8 +105,8 @@ module_args = dict(
     vpc=dict(
         required=True,
         type='str'),
-    routing_table=dict(
-        required=True,
+    name=dict(
+        required=False,
         type='str'),
     generation=dict(
         type='int',
@@ -154,7 +154,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

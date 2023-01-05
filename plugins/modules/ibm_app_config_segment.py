@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_segment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -27,25 +27,10 @@ options:
             - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
-    name:
-        description:
-            - (Required for new resource) Segment name.
-        required: True
-        type: str
     description:
         description:
             - Segment description.
         required: False
-        type: str
-    tags:
-        description:
-            - Tags associated with the segments.
-        required: False
-        type: str
-    segment_id:
-        description:
-            - (Required for new resource) Segment id.
-        required: True
         type: str
     rules:
         description:
@@ -53,6 +38,21 @@ options:
         required: True
         type: list
         elements: dict
+    name:
+        description:
+            - (Required for new resource) Segment name.
+        required: True
+        type: str
+    segment_id:
+        description:
+            - (Required for new resource) Segment id.
+        required: True
+        type: str
+    tags:
+        description:
+            - Tags associated with the segments.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -100,19 +100,19 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('guid', 'str'),
+    ('rules', 'list'),
     ('name', 'str'),
     ('segment_id', 'str'),
-    ('rules', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'guid',
-    'name',
     'description',
-    'tags',
-    'segment_id',
     'rules',
+    'name',
+    'segment_id',
+    'tags',
 ]
 
 # Params for Data source
@@ -137,22 +137,22 @@ module_args = dict(
     guid=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     description=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        type='str'),
-    segment_id=dict(
         required=False,
         type='str'),
     rules=dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    segment_id=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_app_config_segment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_app_config_segment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

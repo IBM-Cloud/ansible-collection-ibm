@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  load_balancer_id (True, int, None)
-    (Required for new resource) Loadbalancer ID
-
-
-  allocation (True, int, None)
-    (Required for new resource) Allocation type
-
-
   routing_type (True, str, None)
     (Required for new resource) Routing type
 
 
   tags (False, list, None)
     List of tags
+
+
+  allocation (True, int, None)
+    (Required for new resource) Allocation type
 
 
   port (True, int, None)
@@ -57,6 +53,10 @@ Parameters
 
   timeout (False, int, None)
     Timeout value
+
+
+  load_balancer_id (True, int, None)
+    (Required for new resource) Loadbalancer ID
 
 
   id (False, str, None)

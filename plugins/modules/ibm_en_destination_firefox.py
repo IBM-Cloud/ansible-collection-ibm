@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_firefox' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -26,11 +26,6 @@ options:
         description:
             - (Required for new resource) The type of Destination type push_firefox.
         required: True
-        type: str
-    description:
-        description:
-            - The Destination description.
-        required: False
         type: str
     config:
         description:
@@ -47,6 +42,11 @@ options:
         description:
             - (Required for new resource) The Destintion name.
         required: True
+        type: str
+    description:
+        description:
+            - The Destination description.
+        required: False
         type: str
     id:
         description:
@@ -102,10 +102,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'description',
     'config',
     'instance_guid',
     'name',
+    'description',
 ]
 
 # Params for Data source
@@ -129,9 +129,6 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
     config=dict(
         required=False,
         elements='',
@@ -140,6 +137,9 @@ module_args = dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_en_destination_firefox',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +216,7 @@ def run_module():
             resource_type='ibm_en_destination_firefox',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

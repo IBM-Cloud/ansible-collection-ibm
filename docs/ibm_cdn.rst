@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,40 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  https_port (False, int, 443)
-    HTTPS port number
-
-
-  respect_headers (False, bool, True)
-    respect headers info
-
-
-  certificate_type (False, str, None)
-    Certificate type
-
-
-  path (False, str, /*)
-    Path details
-
-
   bucket_name (False, str, None)
     Bucket name
 
 
-  protocol (False, str, HTTP)
-    Protocol name
+  header (False, str, None)
+    Header info
 
 
-  cname (False, str, None)
-    cname info
+  cache_key_query_rule (False, str, include-all)
+    query rule info
+
+
+  https_port (False, int, 443)
+    HTTPS port number
 
 
   file_extension (False, str, None)
     File extension info
 
 
-  cache_key_query_rule (False, str, include-all)
-    query rule info
+  performance_configuration (False, str, General web delivery)
+    performance configuration info
+
+
+  path (False, str, /*)
+    Path details
+
+
+  vendor_name (False, str, akamai)
+    Vendor name
 
 
   origin_type (False, str, HOST_SERVER)
@@ -75,24 +71,28 @@ Parameters
     HTTP port number
 
 
-  performance_configuration (False, str, General web delivery)
-    performance configuration info
+  host_name (True, str, None)
+    (Required for new resource) Host name
+
+
+  protocol (False, str, HTTP)
+    Protocol name
+
+
+  certificate_type (False, str, None)
+    Certificate type
 
 
   origin_address (True, str, None)
     (Required for new resource) origin address info
 
 
-  header (False, str, None)
-    Header info
+  cname (False, str, None)
+    cname info
 
 
-  host_name (True, str, None)
-    (Required for new resource) Host name
-
-
-  vendor_name (False, str, akamai)
-    Vendor name
+  respect_headers (False, bool, True)
+    respect headers info
 
 
   id (False, str, None)

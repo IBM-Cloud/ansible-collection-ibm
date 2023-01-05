@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    routing_table:
+    vpc:
         description:
-            - (Required for new resource) The routing table identifier.
-        required: True
-        type: str
-    next_hop:
-        description:
-            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+            - (Required for new resource) The VPC identifier.
         required: True
         type: str
     action:
@@ -38,9 +33,19 @@ options:
         required: False
         type: str
         default: deliver
-    vpc:
+    next_hop:
         description:
-            - (Required for new resource) The VPC identifier.
+            - (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
+        required: True
+        type: str
+    name:
+        description:
+            - The user-defined name for this route.
+        required: False
+        type: str
+    routing_table:
+        description:
+            - (Required for new resource) The routing table identifier.
         required: True
         type: str
     destination:
@@ -52,11 +57,6 @@ options:
         description:
             - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
         required: True
-        type: str
-    name:
-        description:
-            - The user-defined name for this route.
-        required: False
         type: str
     id:
         description:
@@ -104,35 +104,35 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('routing_table', 'str'),
-    ('next_hop', 'str'),
     ('vpc', 'str'),
+    ('next_hop', 'str'),
+    ('routing_table', 'str'),
     ('destination', 'str'),
     ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'routing_table',
-    'next_hop',
-    'action',
     'vpc',
+    'action',
+    'next_hop',
+    'name',
+    'routing_table',
     'destination',
     'zone',
-    'name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('vpc', 'str'),
     ('routing_table', 'str'),
+    ('vpc', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
+    'routing_table',
     'route_id',
     'vpc',
-    'routing_table',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -142,25 +142,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    routing_table=dict(
-        required=False,
-        type='str'),
-    next_hop=dict(
+    vpc=dict(
         required=False,
         type='str'),
     action=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    next_hop=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    routing_table=dict(
         required=False,
         type='str'),
     destination=dict(
         required=False,
         type='str'),
     zone=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +249,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

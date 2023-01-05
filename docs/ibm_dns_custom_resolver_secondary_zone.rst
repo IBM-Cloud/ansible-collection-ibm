@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resolver_id (True, str, None)
-    (Required for new resource) The unique identifier of a custom resolver.
+  instance_id (True, str, None)
+    (Required for new resource) The unique identifier of a service instance.
 
 
   zone (True, str, None)
     (Required for new resource) The name of the zone.
+
+
+  resolver_id (True, str, None)
+    (Required for new resource) The unique identifier of a custom resolver.
 
 
   transfer_from (True, list, None)
@@ -49,10 +53,6 @@ Parameters
 
   description (False, str, None)
     Descriptive text of the secondary zone
-
-
-  instance_id (True, str, None)
-    (Required for new resource) The unique identifier of a service instance.
 
 
   id (False, str, None)

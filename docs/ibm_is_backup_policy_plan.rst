@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  backup_policy_id (True, str, None)
+    (Required for new resource) The backup policy identifier.
+
+
   attach_user_tags (False, list, None)
     User tags to attach to each backup (snapshot) created by this plan. If unspecified, no user tags will be attached.
 
 
-  deletion_trigger (False, list, None)
-    None
+  copy_user_tags (False, bool, True)
+    Indicates whether to copy the source's user tags to the created backups (snapshots).
 
 
-  backup_policy_id (True, str, None)
-    (Required for new resource) The backup policy identifier.
+  name (False, str, None)
+    The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   cron_spec (True, str, None)
@@ -51,12 +55,8 @@ Parameters
     Indicates whether the plan is active.
 
 
-  copy_user_tags (False, bool, True)
-    Indicates whether to copy the source's user tags to the created backups (snapshots).
-
-
-  name (False, str, None)
-    The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+  deletion_trigger (False, list, None)
+    None
 
 
   id (False, str, None)

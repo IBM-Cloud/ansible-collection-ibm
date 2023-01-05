@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pipeline_id (True, str, None)
-    (Required for new resource) The Tekton pipeline ID.
+  event_listener (True, str, None)
+    (Required for new resource) Event listener name. The name of the event listener to which the trigger is associated. The event listeners are defined in the definition repositories of the Tekton pipeline.
+
+
+  max_concurrent_runs (False, int, None)
+    Defines the maximum number of concurrent runs for this trigger. Omit this property to disable the concurrency limit.
+
+
+  timezone (False, str, None)
+    Only needed for timer triggers. Timezone for timer trigger.
+
+
+  scm_source (False, list, None)
+    SCM source repository for a Git trigger. Only needed for Git triggers.
+
+
+  events (False, list, None)
+    Only needed for Git triggers. Events object defines the events to which this Git trigger listens.
 
 
   name (True, str, None)
     (Required for new resource) Trigger name.
+
+
+  disabled (False, bool, None)
+    Flag whether the trigger is disabled. If omitted the trigger is enabled by default.
 
 
   worker (False, list, None)
@@ -55,32 +75,12 @@ Parameters
     Only needed for generic webhook trigger type. Secret used to start generic webhook trigger.
 
 
-  event_listener (True, str, None)
-    (Required for new resource) Event listener name. The name of the event listener to which the trigger is associated. The event listeners are defined in the definition repositories of the Tekton pipeline.
-
-
-  max_concurrent_runs (False, int, None)
-    Defines the maximum number of concurrent runs for this trigger. Omit this property to disable the concurrency limit.
-
-
-  disabled (False, bool, None)
-    Flag whether the trigger is disabled. If omitted the trigger is enabled by default.
-
-
-  events (False, list, None)
-    Only needed for Git triggers. Events object defines the events to which this Git trigger listens.
+  pipeline_id (True, str, None)
+    (Required for new resource) The Tekton pipeline ID.
 
 
   type (True, str, None)
     (Required for new resource) Trigger type.
-
-
-  timezone (False, str, None)
-    Only needed for timer triggers. Timezone for timer trigger.
-
-
-  scm_source (False, list, None)
-    SCM source repository for a Git trigger. Only needed for Git triggers.
 
 
   id (False, str, None)

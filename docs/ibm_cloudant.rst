@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters_json (False, str, None)
-    Arbitrary parameters to pass in Json string format
+  include_data_events (False, bool, False)
+    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
 
 
-  cors_config (False, list, None)
-    Configuration for CORS.
+  name (True, str, None)
+    (Required for new resource) A name for the resource instance
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
-
-
-  environment_crn (False, str, None)
-    CRN of the IBM Cloudant Dedicated Hardware plan instance
+  enable_cors (False, bool, True)
+    Boolean value to turn CORS on and off.
 
 
   capacity (False, int, 1)
@@ -55,36 +51,40 @@ Parameters
     The resource group id
 
 
-  legacy_credentials (False, bool, False)
-    Use both legacy credentials and IAM for authentication
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  include_data_events (False, bool, False)
-    Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
-
-
-  enable_cors (False, bool, True)
-    Boolean value to turn CORS on and off.
-
-
-  name (True, str, None)
-    (Required for new resource) A name for the resource instance
+  tags (False, list, None)
+    None
 
 
   service_endpoints (False, str, None)
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
+
+
+  legacy_credentials (False, bool, False)
+    Use both legacy credentials and IAM for authentication
+
+
+  environment_crn (False, str, None)
+    CRN of the IBM Cloudant Dedicated Hardware plan instance
+
+
+  parameters_json (False, str, None)
+    Arbitrary parameters to pass in Json string format
+
+
+  cors_config (False, list, None)
+    Configuration for CORS.
+
+
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

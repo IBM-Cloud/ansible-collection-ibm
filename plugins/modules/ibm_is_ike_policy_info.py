@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_ike_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    ike_policy:
-        description:
-            - The IKE policy identifier.
-        required: False
-        type: str
     name:
         description:
             - The IKE policy name.
+        required: False
+        type: str
+    ike_policy:
+        description:
+            - The IKE policy identifier.
         required: False
         type: str
     generation:
@@ -68,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ike_policy',
     'name',
+    'ike_policy',
 ]
 
 
@@ -80,10 +80,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ike_policy=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    ike_policy=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

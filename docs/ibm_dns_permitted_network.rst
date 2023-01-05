@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone Id
+
 
   type (False, str, vpc)
     Network Type
@@ -41,10 +45,6 @@ Parameters
 
   instance_id (True, str, None)
     (Required for new resource) Instance Id
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone Id
 
 
   id (False, str, None)

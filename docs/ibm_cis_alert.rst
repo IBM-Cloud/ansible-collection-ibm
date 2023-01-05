@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,36 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  conditions (False, str, None)
-    Conditions based on filter type
-
-
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
+
+
+  mechanisms (True, list, None)
+    (Required for new resource) Delivery mechanisms for the alert, can include an email, a webhook, or both.
 
 
   name (True, str, None)
     (Required for new resource) Policy name
 
 
-  enabled (True, bool, None)
-    (Required for new resource) Is the alert policy active
-
-
-  filters (False, str, None)
-    Filters based on filter type
-
-
   description (False, str, None)
     Policy Description
+
+
+  enabled (True, bool, None)
+    (Required for new resource) Is the alert policy active
 
 
   alert_type (True, str, None)
     (Required for new resource) Condition for the alert
 
 
-  mechanisms (True, list, None)
-    (Required for new resource) Delivery mechanisms for the alert, can include an email, a webhook, or both.
+  filters (False, str, None)
+    Filters based on filter type
+
+
+  conditions (False, str, None)
+    Conditions based on filter type
 
 
   id (False, str, None)

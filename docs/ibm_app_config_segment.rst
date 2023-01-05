@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -35,24 +35,24 @@ Parameters
     (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  name (True, str, None)
-    (Required for new resource) Segment name.
-
-
   description (False, str, None)
     Segment description.
 
 
-  tags (False, str, None)
-    Tags associated with the segments.
+  rules (True, list, None)
+    (Required for new resource) List of rules that determine if the entity belongs to the segment during feature / property evaluation. An entity is identified by an unique identifier and the attributes that it defines.
+
+
+  name (True, str, None)
+    (Required for new resource) Segment name.
 
 
   segment_id (True, str, None)
     (Required for new resource) Segment id.
 
 
-  rules (True, list, None)
-    (Required for new resource) List of rules that determine if the entity belongs to the segment during feature / property evaluation. An entity is identified by an unique identifier and the attributes that it defines.
+  tags (False, str, None)
+    Tags associated with the segments.
 
 
   id (False, str, None)

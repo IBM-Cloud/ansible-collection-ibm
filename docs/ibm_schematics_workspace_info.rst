@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  template_git_has_uploadedgitrepotar (False, bool, None)
-    Has uploaded Git repository tar.
-
-
-  location (False, str, None)
-    The IBM Cloud location where your workspace was provisioned.
-
-
   template_values_metadata (False, list, None)
     A list of input variables that are associated with the workspace.
 
 
+  template_git_has_uploadedgitrepotar (False, bool, None)
+    Has uploaded Git repository tar.
+
+
   workspace_id (True, str, None)
     The ID of the workspace.  To find the workspace ID, use the `GET /v1/workspaces` API.
+
+
+  location (False, str, None)
+    The IBM Cloud location where your workspace was provisioned.
 
 
   iaas_classic_username (False, any, None)

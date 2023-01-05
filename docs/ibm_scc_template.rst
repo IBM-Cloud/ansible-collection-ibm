@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  account_id (True, str, None)
+    (Required for new resource) Your IBM Cloud account ID.
+
 
   name (True, str, None)
     (Required for new resource) A human-readablse alias to assign to your template.
@@ -45,10 +49,6 @@ Parameters
 
   customized_defaults (True, list, None)
     (Required for new resource) A list of default property values to apply to your template.
-
-
-  account_id (True, str, None)
-    (Required for new resource) Your IBM Cloud account ID.
 
 
   id (False, str, None)

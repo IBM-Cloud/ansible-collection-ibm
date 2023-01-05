@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_collector' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) A unique name for your collector.
+        required: True
+        type: str
     is_public:
         description:
             - (Required for new resource) Determines whether the collector endpoint is accessible on a public network. If set to `true`, the collector connects to resources in your account over a public network. If set to `false`, the collector connects to resources by using a private IP that is accessible only through the IBM Cloud private network.
@@ -48,11 +53,6 @@ options:
             - Determines whether the collector has a Ubi image.
         required: False
         type: bool
-    name:
-        description:
-            - (Required for new resource) A unique name for your collector.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('is_public', 'bool'),
     ('managed_by', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'is_public',
     'managed_by',
     'description',
     'passphrase',
     'is_ubi_image',
-    'name',
 ]
 
 # Params for Data source
@@ -130,6 +130,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     is_public=dict(
         required=False,
         type='bool'),
@@ -145,9 +148,6 @@ module_args = dict(
     is_ubi_image=dict(
         required=False,
         type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_scc_posture_collector',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -222,7 +222,7 @@ def run_module():
             resource_type='ibm_scc_posture_collector',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

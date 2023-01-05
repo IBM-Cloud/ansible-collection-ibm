@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  template_id (True, str, None)
+    (Required for new resource) The UUID that uniquely identifies the template.
+
 
   account_id (True, str, None)
     (Required for new resource) Your IBM Cloud account ID.
@@ -41,10 +45,6 @@ Parameters
 
   excluded_scopes (False, list, None)
     None
-
-
-  template_id (True, str, None)
-    (Required for new resource) The UUID that uniquely identifies the template.
 
 
   id (False, str, None)

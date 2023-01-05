@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,19 +31,19 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  identity_confirm_access_mode (False, str, FULL)
-    None
-
-
   identity_confirm_methods (False, list, None)
     None
 
 
-  is_active (True, bool, None)
+  tenant_id (True, str, None)
     (Required for new resource)
 
 
   signup_enabled (False, bool, True)
+    None
+
+
+  identity_confirm_access_mode (False, str, FULL)
     None
 
 
@@ -55,7 +55,11 @@ Parameters
     None
 
 
-  tenant_id (True, str, None)
+  identity_field (False, str, None)
+    None
+
+
+  is_active (True, bool, None)
     (Required for new resource)
 
 
@@ -64,10 +68,6 @@ Parameters
 
 
   welcome_enabled (False, bool, True)
-    None
-
-
-  identity_field (False, str, None)
     None
 
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,20 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  level (True, str, None)
+    (Required for new resource) Origin auth level zone or hostname
 
 
   hostname (False, str, None)
     Host name needed for host level authentication
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  level (True, str, None)
-    (Required for new resource) Origin auth level zone or hostname
 
 
   enabled (False, bool, True)
@@ -57,6 +49,14 @@ Parameters
 
   private_key (True, str, None)
     (Required for new resource) Private key content which needs to be uploaded
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  gateway (True, str, None)
-    (Required for new resource) Endpoint gateway ID
-
-
   reserved_ip (True, str, None)
     (Required for new resource) Endpoint gateway IP id
+
+
+  gateway (True, str, None)
+    (Required for new resource) Endpoint gateway ID
 
 
   id (False, str, None)

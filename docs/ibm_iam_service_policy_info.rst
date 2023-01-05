@@ -21,17 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  transaction_id (False, str, None)
-    Set transactionID for debug
-
 
   iam_service_id (False, str, None)
     UUID of ServiceID
@@ -43,6 +39,10 @@ Parameters
 
   sort (False, str, None)
     Sort query for policies
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
 
 
   iaas_classic_username (False, any, None)

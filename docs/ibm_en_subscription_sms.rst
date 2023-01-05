@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  attributes (False, list, None)
-    None
-
 
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
@@ -47,12 +43,16 @@ Parameters
     (Required for new resource) Destination ID.
 
 
+  topic_id (True, str, None)
+    (Required for new resource) Topic ID.
+
+
   description (False, str, None)
     Subscription description.
 
 
-  topic_id (True, str, None)
-    (Required for new resource) Topic ID.
+  attributes (False, list, None)
+    None
 
 
   id (False, str, None)

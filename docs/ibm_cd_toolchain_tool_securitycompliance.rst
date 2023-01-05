@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  parameters (True, list, None)
+    (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool.
+
+
   name (False, str, None)
     Name of tool.
 
 
   toolchain_id (True, str, None)
     (Required for new resource) ID of the toolchain to bind the tool to.
-
-
-  parameters (True, list, None)
-    (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool.
 
 
   id (False, str, None)

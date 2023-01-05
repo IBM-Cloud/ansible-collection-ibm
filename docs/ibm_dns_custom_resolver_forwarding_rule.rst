@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  description (False, str, None)
+    Descriptive text of the forwarding rule.
+
 
   type (False, str, None)
     Type of the forwarding rule.
@@ -49,10 +53,6 @@ Parameters
 
   resolver_id (True, str, None)
     (Required for new resource) The unique identifier of a custom resolver.
-
-
-  description (False, str, None)
-    Descriptive text of the forwarding rule.
 
 
   id (False, str, None)

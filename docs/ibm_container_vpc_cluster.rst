@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,88 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  image_security_enforcement (False, bool, False)
-    Set true to enable image security enforcement policies
-
-
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  crk (False, str, None)
-    Root Key ID for boot volume encryption
-
-
-  kms_instance_id (False, str, None)
-    Instance ID for boot volume encryption
-
-
-  retry_patch_version (False, int, None)
-    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-
-
-  worker_count (False, int, 1)
-    Number of worker nodes in the cluster
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  cos_instance_crn (False, str, None)
-    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
-
-
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  kms_config (False, list, None)
-    Enables KMS on a given cluster
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  disable_public_service_endpoint (False, bool, False)
-    Boolean value true if Public service endpoint to be disabled
-
-
-  tags (False, list, None)
-    List of tags for the resources
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  zones (True, list, None)
-    (Required for new resource) Zone info
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
-
-
-  worker_labels (False, dict, None)
-    Labels for default worker pool
-
-
-  host_pool_id (False, str, None)
-    The ID of the cluster's associated host pool
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
   flavor (True, str, None)
@@ -123,16 +47,92 @@ Parameters
     (Required for new resource) The cluster name
 
 
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  worker_labels (False, dict, None)
+    Labels for default worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  crk (False, str, None)
+    Root Key ID for boot volume encryption
+
+
+  image_security_enforcement (False, bool, False)
+    Set true to enable image security enforcement policies
+
+
+  zones (True, list, None)
+    (Required for new resource) Zone info
+
+
+  worker_count (False, int, 1)
+    Number of worker nodes in the cluster
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  kms_instance_id (False, str, None)
+    Instance ID for boot volume encryption
+
+
+  patch_version (False, str, None)
+    Kubernetes patch version
+
+
+  retry_patch_version (False, int, None)
+    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  tags (False, list, None)
+    List of tags for the resources
+
+
+  host_pool_id (False, str, None)
+    The ID of the cluster's associated host pool
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  disable_public_service_endpoint (False, bool, False)
+    Boolean value true if Public service endpoint to be disabled
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready or Ingress Ready
+
+
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  kms_config (False, list, None)
+    Enables KMS on a given cluster
 
 
   kube_version (False, str, None)
     Kubernetes version
 
 
-  patch_version (False, str, None)
-    Kubernetes patch version
+  cos_instance_crn (False, str, None)
+    A standard cloud object storage instance CRN to back up the internal registry in your OpenShift on VPC Gen 2 cluster
 
 
   id (False, str, None)

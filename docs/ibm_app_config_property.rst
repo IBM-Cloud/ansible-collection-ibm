@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,48 +31,48 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  property_id (True, str, None)
-    (Required for new resource) Property id.
-
-
-  value (True, str, None)
-    (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified property.
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
-
-
   description (False, str, None)
     Property description.
-
-
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different property values for different segments.
-
-
-  name (True, str, None)
-    (Required for new resource) Property name.
-
-
-  tags (False, str, None)
-    Tags associated with the property.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   format (False, str, None)
     Format of the feature (TEXT, JSON, YAML).
 
 
+  name (True, str, None)
+    (Required for new resource) Property name.
+
+
+  property_id (True, str, None)
+    (Required for new resource) Property id.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  tags (False, str, None)
+    Tags associated with the property.
+
+
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different property values for different segments.
+
+
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified property.
+
+
   type (True, str, None)
     (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
+
+
+  value (True, str, None)
+    (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
+
+
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
 
 
   id (False, str, None)

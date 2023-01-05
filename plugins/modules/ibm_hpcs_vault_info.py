@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_vault' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    vault_id:
-        description:
-            - UUID of the vault.
-        required: True
-        type: str
     instance_id:
         description:
             - The ID of the UKO instance this resource exists in.
@@ -34,6 +29,11 @@ options:
     region:
         description:
             - The region of the UKO instance this resource exists in.
+        required: True
+        type: str
+    vault_id:
+        description:
+            - UUID of the vault.
         required: True
         type: str
     iaas_classic_username:
@@ -69,16 +69,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vault_id', 'str'),
     ('instance_id', 'str'),
     ('region', 'str'),
+    ('vault_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vault_id',
     'instance_id',
     'region',
+    'vault_id',
 ]
 
 
@@ -89,13 +89,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vault_id=dict(
-        required=True,
-        type='str'),
     instance_id=dict(
         required=True,
         type='str'),
     region=dict(
+        required=True,
+        type='str'),
+    vault_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_hpcs_vault',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

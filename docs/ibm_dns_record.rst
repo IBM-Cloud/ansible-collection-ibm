@@ -23,37 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  responsible_person (False, str, None)
-    Responsible person for DNS record
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  weight (False, int, 0)
-    weight info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
 
   type (True, str, None)
     (Required for new resource) DNS record type
@@ -63,12 +39,16 @@ Parameters
     port number
 
 
-  host (True, str, None)
-    (Required for new resource) Hostname
+  tags (False, list, None)
+    tags set for the resource
 
 
-  refresh (False, int, None)
-    refresh rate
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  retry (False, int, None)
+    Retry count
 
 
   minimum_ttl (False, int, None)
@@ -79,12 +59,16 @@ Parameters
     (Required for new resource) TTL configuration
 
 
-  priority (False, int, 0)
-    priority info
+  weight (False, int, 0)
+    weight info
 
 
-  tags (False, list, None)
-    tags set for the resource
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   mx_priority (False, int, 0)
@@ -95,8 +79,24 @@ Parameters
     service info
 
 
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
   protocol (False, str, None)
     protocol info
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
 
 
   id (False, str, None)

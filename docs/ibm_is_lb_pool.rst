@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,24 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
   health_timeout (True, int, None)
     (Required for new resource) Load Balancer health timeout interval
-
-
-  health_monitor_port (False, int, None)
-    Health monitor Port the LB Pool
-
-
-  session_persistence_app_cookie_name (False, str, None)
-    Load Balancer Pool session persisence app cookie name.
-
-
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
 
 
   health_monitor_url (False, str, None)
@@ -59,28 +51,36 @@ Parameters
     Load Balancer Pool session persisence type.
 
 
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
+
+
   name (True, str, None)
     (Required for new resource) Load Balancer Pool name
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
+
+
+  session_persistence_app_cookie_name (False, str, None)
+    Load Balancer Pool session persisence app cookie name.
 
 
   algorithm (True, str, None)
     (Required for new resource) Load Balancer Pool algorithm
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
 
 
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
+  health_monitor_port (False, int, None)
+    Health monitor Port the LB Pool
 
 
   id (False, str, None)

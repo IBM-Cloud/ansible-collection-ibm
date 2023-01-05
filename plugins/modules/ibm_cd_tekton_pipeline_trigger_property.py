@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_trigger_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -123,15 +123,15 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pipeline_id', 'str'),
     ('trigger_id', 'str'),
     ('property_name', 'str'),
+    ('pipeline_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pipeline_id',
     'trigger_id',
     'property_name',
+    'pipeline_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -228,7 +228,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_trigger_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +237,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_trigger_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

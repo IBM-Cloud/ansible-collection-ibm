@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_lb_pool_member' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
-    lb:
-        description:
-            - The load balancer identifier.
-        required: True
-        type: str
     member:
         description:
             - The member identifier.
+        required: True
+        type: str
+    lb:
+        description:
+            - The load balancer identifier.
         required: True
         type: str
     pool:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('lb', 'str'),
     ('member', 'str'),
+    ('lb', 'str'),
     ('pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'lb',
     'member',
+    'lb',
     'pool',
 ]
 
@@ -89,10 +89,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    lb=dict(
+    member=dict(
         required=True,
         type='str'),
-    member=dict(
+    lb=dict(
         required=True,
         type='str'),
     pool=dict(
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_is_lb_pool_member',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_alb_cert' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -26,17 +26,17 @@ options:
             - Cluster ID
         required: True
         type: str
-    secret_name:
-        description:
-            - Secret name
-        required: True
-        type: str
     namespace:
         description:
             - Namespace of the secret
         required: False
         type: str
         default: ibm-cert-store
+    secret_name:
+        description:
+            - Secret name
+        required: True
+        type: str
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -57,8 +57,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cluster_id',
-    'secret_name',
     'namespace',
+    'secret_name',
 ]
 
 
@@ -72,11 +72,11 @@ module_args = dict(
     cluster_id=dict(
         required=True,
         type='str'),
-    secret_name=dict(
-        required=True,
-        type='str'),
     namespace=dict(
         required=False,
+        type='str'),
+    secret_name=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -98,7 +98,7 @@ def run_module():
         resource_type='ibm_container_alb_cert',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

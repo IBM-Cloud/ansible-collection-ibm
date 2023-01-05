@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ipsec_policy (False, str, None)
-    The IPsec policy identifier.
-
-
   name (False, str, None)
     The IPsec policy name.
+
+
+  ipsec_policy (False, str, None)
+    The IPsec policy identifier.
 
 
   generation (False, int, 2)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_collection' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -26,6 +26,11 @@ options:
         description:
             - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
+        type: str
+    tags:
+        description:
+            - Tags associated with the collection
+        required: False
         type: str
     name:
         description:
@@ -40,11 +45,6 @@ options:
     description:
         description:
             - Collection description
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags associated with the collection
         required: False
         type: str
     id:
@@ -101,10 +101,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'guid',
+    'tags',
     'name',
     'collection_id',
     'description',
-    'tags',
 ]
 
 # Params for Data source
@@ -116,8 +116,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 TL_ALL_PARAMETERS_DS = [
     'guid',
     'collection_id',
-    'include',
     'expand',
+    'include',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -130,6 +130,9 @@ module_args = dict(
     guid=dict(
         required=False,
         type='str'),
+    tags=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
@@ -137,9 +140,6 @@ module_args = dict(
         required=False,
         type='str'),
     description=dict(
-        required=False,
-        type='str'),
-    tags=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_app_config_collection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +216,7 @@ def run_module():
             resource_type='ibm_app_config_collection',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

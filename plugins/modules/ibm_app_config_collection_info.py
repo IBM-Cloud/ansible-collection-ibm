@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_collection' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -31,17 +31,17 @@ options:
             - Collection Id of the collection.
         required: True
         type: str
+    expand:
+        description:
+            - If set to true, returns expanded view of the resource details.
+        required: False
+        type: bool
     include:
         description:
             - Include feature, property details in the response.
         required: False
         type: list
         elements: str
-    expand:
-        description:
-            - If set to true, returns expanded view of the resource details.
-        required: False
-        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -83,8 +83,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'guid',
     'collection_id',
-    'include',
     'expand',
+    'include',
 ]
 
 
@@ -101,13 +101,13 @@ module_args = dict(
     collection_id=dict(
         required=True,
         type='str'),
+    expand=dict(
+        required=False,
+        type='bool'),
     include=dict(
         required=False,
         elements='',
         type='list'),
-    expand=dict(
-        required=False,
-        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_app_config_collection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

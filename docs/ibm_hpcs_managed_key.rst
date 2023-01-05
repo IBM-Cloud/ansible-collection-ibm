@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,24 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
-  tags (False, list, None)
-    Key-value pairs associated with the key.
-
-
-  description (False, str, None)
-    Description of the managed key.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) The ID of the UKO instance this resource exists in.
+  state_ (False, str, None)
+    The state of the key.
 
 
   uko_vault (True, str, None)
     (Required for new resource) The UUID of the Vault in which the update is to take place.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) The ID of the UKO instance this resource exists in.
 
 
   template_name (False, str, None)
@@ -59,12 +51,20 @@ Parameters
     (Required for new resource) ID of the Vault where the entity is to be created in.
 
 
+  tags (False, list, None)
+    Key-value pairs associated with the key.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
   label (True, str, None)
     (Required for new resource) The label of the key.
 
 
-  state_ (False, str, None)
-    The state of the key.
+  description (False, str, None)
+    Description of the managed key.
 
 
   id (False, str, None)

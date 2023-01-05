@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
@@ -27,12 +27,6 @@ options:
             - (Required for new resource) ID of access group
         required: True
         type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
-        type: list
-        elements: str
     resources:
         description:
             - None
@@ -45,11 +39,18 @@ options:
         required: False
         type: list
         elements: str
-    description:
+    resource_tags:
         description:
-            - Description of the Policy
+            - Set access management tags.
         required: False
-        type: str
+        type: list
+        elements: dict
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
     resource_attributes:
         description:
             - Set resource attributes.
@@ -62,12 +63,11 @@ options:
         required: False
         type: bool
         default: False
-    resource_tags:
+    description:
         description:
-            - Set access management tags.
+            - Description of the Policy
         required: False
-        type: list
-        elements: dict
+        type: str
     transaction_id:
         description:
             - Set transactionID for debug
@@ -126,13 +126,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'access_group_id',
-    'roles',
     'resources',
     'tags',
-    'description',
+    'resource_tags',
+    'roles',
     'resource_attributes',
     'account_management',
-    'resource_tags',
+    'description',
     'transaction_id',
 ]
 
@@ -160,10 +160,6 @@ module_args = dict(
     access_group_id=dict(
         required=False,
         type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
     resources=dict(
         required=False,
         elements='',
@@ -172,9 +168,14 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    resource_tags=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     resource_attributes=dict(
         required=False,
         elements='',
@@ -182,10 +183,9 @@ module_args = dict(
     account_management=dict(
         required=False,
         type='bool'),
-    resource_tags=dict(
+    description=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     transaction_id=dict(
         required=False,
         type='str'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -263,7 +263,7 @@ def run_module():
             resource_type='ibm_iam_access_group_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

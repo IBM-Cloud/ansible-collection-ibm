@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  backup_policy_plan_id (False, str, None)
+    Filters the collection to backup policy jobs with the backup plan with the specified identifier
+
+
+  tag (False, str, None)
+    Filters the collection to resources with the exact tag value
+
 
   resource_group (False, str, None)
     Filters the snapshot collection by resources group id
@@ -43,14 +51,6 @@ Parameters
 
   source_volume (False, str, None)
     Filters the snapshot collection by source volume id
-
-
-  backup_policy_plan_id (False, str, None)
-    Filters the collection to backup policy jobs with the backup plan with the specified identifier
-
-
-  tag (False, str, None)
-    Filters the collection to resources with the exact tag value
 
 
   generation (False, int, 2)

@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_role' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    tenant_id:
+        description:
+            - (Required for new resource) The service `tenantId`
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) Unique role name
+        required: True
+        type: str
     description:
         description:
             - Optional role description
@@ -33,16 +43,6 @@ options:
         required: False
         type: list
         elements: dict
-    tenant_id:
-        description:
-            - (Required for new resource) The service `tenantId`
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Unique role name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,10 +95,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'access',
     'tenant_id',
     'name',
+    'description',
+    'access',
 ]
 
 # Params for Data source
@@ -119,6 +119,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    tenant_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -126,12 +132,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tenant_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -197,7 +197,7 @@ def run_module():
         resource_type='ibm_appid_role',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -206,7 +206,7 @@ def run_module():
             resource_type='ibm_appid_role',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

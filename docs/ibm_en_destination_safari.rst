@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -35,15 +35,7 @@ Parameters
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
 
 
-  description (False, str, None)
-    The Destination description.
-
-
-  icon_16x16 (False, str, None)
-    The Certificate File.
-
-
-  icon_32x32 (False, str, None)
+  icon_32x32_2x (False, str, None)
     The Certificate File.
 
 
@@ -51,11 +43,23 @@ Parameters
     The Certificate File.
 
 
-  certificate (True, str, None)
-    (Required for new resource) The Certificate File.
+  icon_128x128_2x (False, str, None)
+    The Certificate File.
 
 
-  icon_128x128_content_type (False, str, None)
+  icon_16x16_content_type (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_content_type (False, str, None)
+    The Certificate File.
+
+
+  icon_16x16 (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_2x_content_type (False, str, None)
     The Certificate File.
 
 
@@ -67,15 +71,15 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  icon_128x128_2x (False, str, None)
+  certificate (True, str, None)
+    (Required for new resource) The Certificate File.
+
+
+  icon_16x16_2x (False, str, None)
     The Certificate File.
 
 
-  icon_32x32_2x_content_type (False, str, None)
-    The Certificate File.
-
-
-  icon_128x128_2x_content_type (False, str, None)
+  icon_128x128_content_type (False, str, None)
     The Certificate File.
 
 
@@ -83,15 +87,11 @@ Parameters
     (Required for new resource) The type of Destination type push_ios.
 
 
-  icon_16x16_2x (False, str, None)
-    The Certificate File.
+  description (False, str, None)
+    The Destination description.
 
 
-  icon_32x32_2x (False, str, None)
-    The Certificate File.
-
-
-  icon_16x16_content_type (False, str, None)
+  icon_32x32 (False, str, None)
     The Certificate File.
 
 
@@ -99,7 +99,7 @@ Parameters
     The Certificate File.
 
 
-  icon_32x32_content_type (False, str, None)
+  icon_128x128_2x_content_type (False, str, None)
     The Certificate File.
 
 

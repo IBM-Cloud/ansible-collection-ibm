@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_credential' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.46.0
+    - IBM-Cloud terraform-provider-ibm v1.47.1
     - Terraform v0.12.20
 
 options:
+    name:
+        description:
+            - (Required for new resource) Credentials name.
+        required: True
+        type: str
     description:
         description:
             - (Required for new resource) Credentials description.
@@ -52,11 +57,6 @@ options:
     type:
         description:
             - (Required for new resource) Credentials type.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) Credentials name.
         required: True
         type: str
     id:
@@ -105,24 +105,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('description', 'str'),
     ('display_fields', 'list'),
     ('group', 'list'),
     ('purpose', 'str'),
     ('enabled', 'bool'),
     ('type', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'description',
     'display_fields',
     'group',
     'purpose',
     'enabled',
     'type',
-    'name',
 ]
 
 # Params for Data source
@@ -141,6 +141,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -159,9 +162,6 @@ module_args = dict(
         required=False,
         type='bool'),
     type=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_scc_posture_credential',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.46.0',
+        ibm_provider_version='1.47.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -238,7 +238,7 @@ def run_module():
             resource_type='ibm_scc_posture_credential',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.46.0',
+            ibm_provider_version='1.47.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

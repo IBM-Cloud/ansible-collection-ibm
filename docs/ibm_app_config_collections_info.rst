@@ -21,21 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  offset (False, int, None)
-    Skipped number of records.
-
-
-  include (False, list, None)
-    Include feature, property details in the response.
-
 
   expand (False, bool, None)
     If set to true, returns expanded view of the resource details.
@@ -47,6 +39,14 @@ Parameters
 
   limit (False, int, None)
     The number of records to retrieve.
+
+
+  offset (False, int, None)
+    Skipped number of records.
+
+
+  include (False, list, None)
+    Include feature, property details in the response.
 
 
   iaas_classic_username (False, any, None)

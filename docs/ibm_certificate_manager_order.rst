@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
@@ -31,44 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  description (False, str, None)
-    Certicate description
-
-
-  name (True, str, None)
-    (Required for new resource) Certificate name
-
-
-  renew_certificate (False, bool, False)
-    Invokes renew functionality
-
-
-  domain_validation_method (False, str, dns-01)
-    Domain validation methods
-
-
-  key_algorithm (False, str, rsaEncryption 2048 bit)
-    Keyalgorithm info
-
-
-  auto_renew_enabled (False, bool, False)
-    None
-
-
   certificate_manager_instance_id (True, str, None)
     (Required for new resource) Certificate manager instance ID
-
-
-  domains (True, list, None)
-    (Required for new resource) List of domain names
 
 
   rotate_keys (False, bool, False)
     Keys are sorated if set to true
 
 
+  auto_renew_enabled (False, bool, False)
+    None
+
+
+  name (True, str, None)
+    (Required for new resource) Certificate name
+
+
+  description (False, str, None)
+    Certicate description
+
+
+  domain_validation_method (False, str, dns-01)
+    Domain validation methods
+
+
   dns_provider_instance_crn (False, str, None)
     DNS provider instance CRN
+
+
+  domains (True, list, None)
+    (Required for new resource) List of domain names
+
+
+  renew_certificate (False, bool, False)
+    Invokes renew functionality
+
+
+  key_algorithm (False, str, rsaEncryption 2048 bit)
+    Keyalgorithm info
 
 
   id (False, str, None)

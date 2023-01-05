@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.46.0
+- IBM-Cloud terraform-provider-ibm v1.47.1
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
 
   filter_id (True, str, None)
     (Required for new resource) Firewallrules Existing FilterID
@@ -49,14 +57,6 @@ Parameters
 
   paused (False, bool, None)
     Firewallrules Paused
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)
