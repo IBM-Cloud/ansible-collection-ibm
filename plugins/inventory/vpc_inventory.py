@@ -15,7 +15,7 @@ requirements:
     - Python >= 3
 short_description: Inventory source for IBM Cloud Virtual Private Cloud virtual server instances
 description:
-    - This plugin utilizes the cloudcollection modules to build a dynamic inventory
+    - This plugin utilizes the ibmcloud_terraform modules to build a dynamic inventory
       of defined virtual server instances (VSIs). Inventory sources must be structured as *.vpc.yml
       or *.vpc.yaml.
     - Valid VSI properties that can be used for groups, keyed groups, filters, and composite variables can be found in the
@@ -89,7 +89,7 @@ options:
 '''
 
 EXAMPLES = '''
-# The most minimal example, targeting only a single regions
+# The most minimal example, targeting only a single region
 plugin: ibm.cloudcollection.vpc_inventory
 regions:
   - us-south
@@ -292,7 +292,8 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             )
 
             if result['rc'] > 0:
-                logging.error(Terraform.parse_stderr(result['stderr']))
+                logging.error(result['stderr'])
+                instances = {}
             else:
                 instances = result.get("resource").get("instances")
                 for i in instances:
@@ -310,6 +311,9 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                     tl_required_params=TL_REQUIRED_PARAMETERS,
                     tl_all_params=TL_ALL_PARAMETERS
                 )
+
+                if result['rc'] > 0:
+                    logging.error(result['stderr'])
 
                 fips = result.get("resource").get("floating_ips")
                 bound_fips = [f for f in fips if len(f.get("target")) > 0]
