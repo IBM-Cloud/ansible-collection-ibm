@@ -61,6 +61,7 @@
       failed_when:
         - pi_network_existing_output.rc != 0
         - '"unable to get network" not in pi_network_existing_output.stderr'
+        - '"Error:item not found" not in pi_network_existing_output.stderr'
       register: pi_network_existing_output
 
     - name: Save existing network as fact
