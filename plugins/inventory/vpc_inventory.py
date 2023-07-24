@@ -165,7 +165,7 @@ compose:
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
 from ansible.module_utils.six import string_types, viewitems
 from ansible.errors import AnsibleParserError
-from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
+from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import ibmcloud_terraform
 from ansible.config.manager import ensure_type
 from ansible.template import Templar
 
