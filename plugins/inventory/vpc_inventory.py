@@ -162,11 +162,8 @@ compose:
   memory: memory
 '''
 
-import xml.etree.ElementTree as ET
-import json
-import sys
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
-from ansible.module_utils.six import string_types, viewitems, reraise
+from ansible.module_utils.six import string_types, viewitems
 from ansible.errors import AnsibleParserError
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.config.manager import ensure_type
