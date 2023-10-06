@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,23 +31,15 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) The type of Destination type push_ios.
-
-
-  description (False, str, None)
-    The Destination description.
-
-
-  icon_32x32_2x (False, str, None)
-    The Certificate File.
+  name (True, str, None)
+    (Required for new resource) The Destintion name.
 
 
   certificate (True, str, None)
     (Required for new resource) The Certificate File.
 
 
-  icon_16x16 (False, str, None)
+  icon_16x16_2x (False, str, None)
     The Certificate File.
 
 
@@ -55,16 +47,32 @@ Parameters
     The Certificate File.
 
 
-  name (True, str, None)
-    (Required for new resource) The Destintion name.
+  icon_16x16_2x_content_type (False, str, None)
+    The Certificate File.
 
 
-  icon_32x32 (False, str, None)
+  description (False, str, None)
+    The Destination description.
+
+
+  icon_16x16 (False, str, None)
+    The Certificate File.
+
+
+  icon_32x32_2x (False, str, None)
     The Certificate File.
 
 
   icon_128x128_2x (False, str, None)
     The Certificate File.
+
+
+  instance_guid (True, str, None)
+    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  config (False, list, None)
+    Payload describing a destination configuration.
 
 
   icon_32x32_2x_content_type (False, str, None)
@@ -79,11 +87,11 @@ Parameters
     The Certificate File.
 
 
-  instance_guid (True, str, None)
-    (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+  type (True, str, None)
+    (Required for new resource) The type of Destination type push_ios.
 
 
-  icon_16x16_2x (False, str, None)
+  icon_32x32 (False, str, None)
     The Certificate File.
 
 
@@ -91,16 +99,8 @@ Parameters
     The Certificate File.
 
 
-  icon_16x16_2x_content_type (False, str, None)
-    The Certificate File.
-
-
   icon_32x32_content_type (False, str, None)
     The Certificate File.
-
-
-  config (False, list, None)
-    Payload describing a destination configuration.
 
 
   id (False, str, None)

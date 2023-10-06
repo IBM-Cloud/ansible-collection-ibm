@@ -18,35 +18,38 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_account_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    user_mfa:
+    allowed_ip_addresses:
         description:
-            - List of users that are exempted from the MFA requirement of the account.
+            - Defines the IP addresses and subnets from which IAM tokens can be created for the account.
         required: False
-        type: list
-        elements: dict
+        type: str
+    mfa:
+        description:
+            - Defines the MFA trait for the account. Valid values:  * NONE - No MFA trait set  * TOTP - For all non-federated IBMId users  * TOTP4ALL - For all users  * LEVEL1 - Email-based MFA for all users  * LEVEL2 - TOTP-based MFA for all users  * LEVEL3 - U2F MFA for all users.
+        required: False
+        type: str
     session_invalidation_in_seconds:
         description:
             - Defines the period of time in seconds in which a session will be invalidated due to inactivity. Valid values:  * Any whole number between '900' and '7200'  * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
-    include_history:
+    system_refresh_token_expiration_in_seconds:
         description:
-            - Defines if the entity history is included in the response.
+            - Defines the refresh token expiration in seconds. Valid values:  * Any whole number between '900' and '2592000'  * NOT_SET - To unset account setting and use service default.
         required: False
-        type: bool
-        default: False
+        type: str
     restrict_create_platform_apikey:
         description:
             - Defines whether or not creating platform API keys is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
         required: False
         type: str
-    allowed_ip_addresses:
+    entity_tag:
         description:
-            - Defines the IP addresses and subnets from which IAM tokens can be created for the account.
+            - Version of the account settings.
         required: False
         type: str
     if_match:
@@ -55,14 +58,15 @@ options:
         required: False
         type: str
         default: *
-    system_access_token_expiration_in_seconds:
+    user_mfa:
         description:
-            - Defines the access token expiration in seconds. Valid values:  * Any whole number between '900' and '3600'  * NOT_SET - To unset account setting and use service default.
+            - List of users that are exempted from the MFA requirement of the account.
         required: False
-        type: str
-    system_refresh_token_expiration_in_seconds:
+        type: list
+        elements: dict
+    max_sessions_per_identity:
         description:
-            - Defines the refresh token expiration in seconds. Valid values:  * Any whole number between '900' and '2592000'  * NOT_SET - To unset account setting and use service default.
+            - Defines the max allowed sessions per identity required by the account. Value values:  * Any whole number greater than 0  * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
     restrict_create_service_id:
@@ -70,24 +74,20 @@ options:
             - Defines whether or not creating a Service Id is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
         required: False
         type: str
-    mfa:
-        description:
-            - Defines the MFA trait for the account. Valid values:  * NONE - No MFA trait set  * TOTP - For all non-federated IBMId users  * TOTP4ALL - For all users  * LEVEL1 - Email-based MFA for all users  * LEVEL2 - TOTP-based MFA for all users  * LEVEL3 - U2F MFA for all users.
-        required: False
-        type: str
     session_expiration_in_seconds:
         description:
             - Defines the session expiration in seconds for the account. Valid values:  * Any whole number between between '900' and '86400'  * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
-    max_sessions_per_identity:
+    include_history:
         description:
-            - Defines the max allowed sessions per identity required by the account. Value values:  * Any whole number greater than 0  * NOT_SET - To unset account setting and use service default.
+            - Defines if the entity history is included in the response.
         required: False
-        type: str
-    entity_tag:
+        type: bool
+        default: False
+    system_access_token_expiration_in_seconds:
         description:
-            - Version of the account settings.
+            - Defines the access token expiration in seconds. Valid values:  * Any whole number between '900' and '3600'  * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
     id:
@@ -140,19 +140,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_mfa',
-    'session_invalidation_in_seconds',
-    'include_history',
-    'restrict_create_platform_apikey',
     'allowed_ip_addresses',
-    'if_match',
-    'system_access_token_expiration_in_seconds',
-    'system_refresh_token_expiration_in_seconds',
-    'restrict_create_service_id',
     'mfa',
-    'session_expiration_in_seconds',
-    'max_sessions_per_identity',
+    'session_invalidation_in_seconds',
+    'system_refresh_token_expiration_in_seconds',
+    'restrict_create_platform_apikey',
     'entity_tag',
+    'if_match',
+    'user_mfa',
+    'max_sessions_per_identity',
+    'restrict_create_service_id',
+    'session_expiration_in_seconds',
+    'include_history',
+    'system_access_token_expiration_in_seconds',
 ]
 
 # Params for Data source
@@ -170,44 +170,44 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_mfa=dict(
-        required=False,
-        elements='',
-        type='list'),
-    session_invalidation_in_seconds=dict(
-        required=False,
-        type='str'),
-    include_history=dict(
-        required=False,
-        type='bool'),
-    restrict_create_platform_apikey=dict(
-        required=False,
-        type='str'),
     allowed_ip_addresses=dict(
-        required=False,
-        type='str'),
-    if_match=dict(
-        required=False,
-        type='str'),
-    system_access_token_expiration_in_seconds=dict(
-        required=False,
-        type='str'),
-    system_refresh_token_expiration_in_seconds=dict(
-        required=False,
-        type='str'),
-    restrict_create_service_id=dict(
         required=False,
         type='str'),
     mfa=dict(
         required=False,
         type='str'),
-    session_expiration_in_seconds=dict(
+    session_invalidation_in_seconds=dict(
         required=False,
         type='str'),
-    max_sessions_per_identity=dict(
+    system_refresh_token_expiration_in_seconds=dict(
+        required=False,
+        type='str'),
+    restrict_create_platform_apikey=dict(
         required=False,
         type='str'),
     entity_tag=dict(
+        required=False,
+        type='str'),
+    if_match=dict(
+        required=False,
+        type='str'),
+    user_mfa=dict(
+        required=False,
+        elements='',
+        type='list'),
+    max_sessions_per_identity=dict(
+        required=False,
+        type='str'),
+    restrict_create_service_id=dict(
+        required=False,
+        type='str'),
+    session_expiration_in_seconds=dict(
+        required=False,
+        type='str'),
+    include_history=dict(
+        required=False,
+        type='bool'),
+    system_access_token_expiration_in_seconds=dict(
         required=False,
         type='str'),
     id=dict(
@@ -275,7 +275,7 @@ def run_module():
         resource_type='ibm_iam_account_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -284,7 +284,7 @@ def run_module():
             resource_type='ibm_iam_account_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

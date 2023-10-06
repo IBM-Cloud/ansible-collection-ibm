@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  alb_type (False, str, all)
+    None
 
 
   name (False, str, None)
     Name or id of the cluster
 
 
-  alb_type (False, str, all)
-    None
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   ibmcloud_api_key (True, any, None)

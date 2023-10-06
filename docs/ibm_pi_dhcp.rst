@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_dhcp_snat_enabled (False, bool, True)
-    Indicates if SNAT will be enabled for the DHCP service
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
+  pi_dns_server (False, str, None)
+    Optional DNS Server for DHCP service
+
+
+  pi_dhcp_name (False, str, None)
+    Optional name of DHCP Service (will be prefixed by DHCP identifier)
 
 
   pi_cidr (False, str, None)
@@ -43,16 +51,8 @@ Parameters
     Optional cloud connection uuid to connect with DHCP private network
 
 
-  pi_dhcp_name (False, str, None)
-    Optional name of DHCP Service (will be prefixed by DHCP identifier)
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
-
-
-  pi_dns_server (False, str, None)
-    Optional DNS Server for DHCP service
+  pi_dhcp_snat_enabled (False, bool, True)
+    Indicates if SNAT will be enabled for the DHCP service
 
 
   id (False, str, None)

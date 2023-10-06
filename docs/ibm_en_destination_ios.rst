@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -35,8 +35,8 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  certificate_content_type (True, str, None)
-    (Required for new resource) The Certificate Content Type to be set p8/p12.
+  type (True, str, None)
+    (Required for new resource) The type of Destination type push_ios.
 
 
   config (False, list, None)
@@ -47,12 +47,12 @@ Parameters
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
 
 
-  type (True, str, None)
-    (Required for new resource) The type of Destination type push_ios.
-
-
   description (False, str, None)
     The Destination description.
+
+
+  certificate_content_type (True, str, None)
+    (Required for new resource) The Certificate Content Type to be set p8/p12.
 
 
   certificate (True, str, None)

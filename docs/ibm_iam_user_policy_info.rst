@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  transaction_id (False, str, None)
-    Set transactionID for debug
-
-
   ibm_id (True, str, None)
     The ibm id or email of user
 
 
   sort (False, str, None)
     Sort query for policies
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
 
 
   iaas_classic_username (False, any, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  uko_vault (True, str, None)
-    The UUID of the Vault in which the update is to take place.
-
-
   key_id (True, str, None)
     UUID of the key.
+
+
+  uko_vault (True, str, None)
+    The UUID of the Vault in which the update is to take place.
 
 
   region (False, any, us-south)

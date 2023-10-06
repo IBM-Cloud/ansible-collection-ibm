@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_nlb_dns' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    nlb_ips:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: str
     resource_group_id:
         description:
             - The ID of the resource group that the cluster is in. To check the resource group ID of the cluster, use the GET /v1/clusters/idOrName API. To list available resource group IDs, run ibmcloud resource groups.
@@ -43,6 +37,12 @@ options:
             - (Required for new resource) 
         required: True
         type: str
+    nlb_ips:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -69,17 +69,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('nlb_ips', 'list'),
     ('cluster', 'str'),
     ('nlb_host', 'str'),
+    ('nlb_ips', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'nlb_ips',
     'resource_group_id',
     'cluster',
     'nlb_host',
+    'nlb_ips',
 ]
 
 # Params for Data source
@@ -98,10 +98,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    nlb_ips=dict(
-        required=False,
-        elements='',
-        type='list'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -111,6 +107,10 @@ module_args = dict(
     nlb_host=dict(
         required=False,
         type='str'),
+    nlb_ips=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -162,7 +162,7 @@ def run_module():
         resource_type='ibm_container_nlb_dns',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -171,7 +171,7 @@ def run_module():
             resource_type='ibm_container_nlb_dns',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

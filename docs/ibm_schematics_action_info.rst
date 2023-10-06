@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  action_id (True, str, None)
-    Action Id.  Use GET /actions API to look up the Action Ids in your IBM Cloud account.
-
-
   location (False, str, None)
     List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+
+
+  action_id (True, str, None)
+    Action Id.  Use GET /actions API to look up the Action Ids in your IBM Cloud account.
 
 
   iaas_classic_username (False, any, None)

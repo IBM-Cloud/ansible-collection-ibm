@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
+  property_id (True, str, None)
+    (Required for new resource) Property id.
 
 
   type (True, str, None)
     (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
 
 
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
+
+
   name (True, str, None)
     (Required for new resource) Property name.
+
+
+  format (False, str, None)
+    Format of the feature (TEXT, JSON, YAML).
+
+
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified property.
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   value (True, str, None)
     (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
 
 
-  format (False, str, None)
-    Format of the feature (TEXT, JSON, YAML).
+  description (False, str, None)
+    Property description.
 
 
   tags (False, str, None)
@@ -61,18 +73,6 @@ Parameters
 
   segment_rules (False, list, None)
     Specify the targeting rules that is used to set different property values for different segments.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified property.
-
-
-  property_id (True, str, None)
-    (Required for new resource) Property id.
-
-
-  description (False, str, None)
-    Property description.
 
 
   id (False, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,36 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  frequency (False, str, None)
+    The frequency at which CIS sends batches of logs to your destination
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  name (False, str, None)
-    Logpush Job Name
-
-
-  logpull_options (False, str, None)
-    Configuration string
 
 
   logdna (True, str, None)
     (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
 
 
+  name (False, str, None)
+    Logpush Job Name
+
+
   enabled (False, bool, None)
     Whether the logpush job enabled or not
 
 
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
+
+
+  logpull_options (False, str, None)
+    Configuration string
+
+
   dataset (True, str, None)
     (Required for new resource) Dataset to be pulled
-
-
-  frequency (False, str, None)
-    The frequency at which CIS sends batches of logs to your destination
 
 
   id (False, str, None)

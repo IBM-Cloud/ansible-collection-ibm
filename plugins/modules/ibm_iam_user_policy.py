@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_user_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    resource_tags:
+        description:
+            - Set access management tags.
+        required: False
+        type: list
+        elements: dict
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -34,18 +40,22 @@ options:
         required: False
         type: list
         elements: dict
-    account_management:
-        description:
-            - Give access to all account management services
-        required: False
-        type: bool
-        default: False
     tags:
         description:
             - None
         required: False
         type: list
         elements: str
+    description:
+        description:
+            - Description of the Policy
+        required: False
+        type: str
+    transaction_id:
+        description:
+            - Set transactionID for debug
+        required: False
+        type: str
     ibm_id:
         description:
             - (Required for new resource) The ibm id or email of user
@@ -57,22 +67,12 @@ options:
         required: False
         type: list
         elements: dict
-    resource_tags:
+    account_management:
         description:
-            - Set access management tags.
+            - Give access to all account management services
         required: False
-        type: list
-        elements: dict
-    description:
-        description:
-            - Description of the Policy
-        required: False
-        type: str
-    transaction_id:
-        description:
-            - Set transactionID for debug
-        required: False
-        type: str
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,15 +125,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_tags',
     'roles',
     'resource_attributes',
-    'account_management',
     'tags',
-    'ibm_id',
-    'resources',
-    'resource_tags',
     'description',
     'transaction_id',
+    'ibm_id',
+    'resources',
+    'account_management',
 ]
 
 # Params for Data source
@@ -142,21 +142,25 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'transaction_id',
     'ibm_id',
     'sort',
+    'transaction_id',
 ]
 
 TL_CONFLICTS_MAP = {
     'resource_attributes': ['resources', 'account_management'],
-    'account_management': ['resources', 'resource_attributes'],
     'resources': ['account_management', 'resource_attributes'],
+    'account_management': ['resources', 'resource_attributes'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     roles=dict(
         required=False,
         elements='',
@@ -165,21 +169,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    account_management=dict(
-        required=False,
-        type='bool'),
     tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    ibm_id=dict(
-        required=False,
-        type='str'),
-    resources=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -189,6 +179,16 @@ module_args = dict(
     transaction_id=dict(
         required=False,
         type='str'),
+    ibm_id=dict(
+        required=False,
+        type='str'),
+    resources=dict(
+        required=False,
+        elements='',
+        type='list'),
+    account_management=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_iam_user_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -263,7 +263,7 @@ def run_module():
             resource_type='ibm_iam_user_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

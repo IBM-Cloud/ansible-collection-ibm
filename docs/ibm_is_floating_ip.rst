@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  zone (False, str, None)
-    Zone name
+  name (True, str, None)
+    (Required for new resource) Name of the floating IP
 
 
   target (False, str, None)
@@ -43,16 +43,16 @@ Parameters
     Resource group info
 
 
-  tags (False, list, None)
-    Floating IP tags
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the floating IP
-
-
   access_tags (False, list, None)
     List of access management tags
+
+
+  zone (False, str, None)
+    Zone name
+
+
+  tags (False, list, None)
+    Floating IP tags
 
 
   id (False, str, None)

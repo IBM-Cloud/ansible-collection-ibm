@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster_worker_pool_zone_attachment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    worker_pool:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: str
     zone:
         description:
             - (Required for new resource) 
@@ -38,6 +33,11 @@ options:
         required: False
         type: str
     cluster:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: str
+    worker_pool:
         description:
             - (Required for new resource) 
         required: True
@@ -88,17 +88,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker_pool', 'str'),
     ('zone', 'str'),
     ('cluster', 'str'),
+    ('worker_pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker_pool',
     'zone',
     'resource_group_id',
     'cluster',
+    'worker_pool',
 ]
 
 # Params for Data source
@@ -122,9 +122,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker_pool=dict(
-        required=False,
-        type='str'),
     zone=dict(
         required=False,
         type='str'),
@@ -132,6 +129,9 @@ module_args = dict(
         required=False,
         type='str'),
     cluster=dict(
+        required=False,
+        type='str'),
+    worker_pool=dict(
         required=False,
         type='str'),
     id=dict(
@@ -199,7 +199,7 @@ def run_module():
         resource_type='ibm_satellite_cluster_worker_pool_zone_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -208,7 +208,7 @@ def run_module():
             resource_type='ibm_satellite_cluster_worker_pool_zone_attachment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

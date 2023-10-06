@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_segments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -25,11 +25,6 @@ options:
         description:
             - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
-        type: str
-    tags:
-        description:
-            - Filter the resources to be returned based on the associated tags.
-        required: False
         type: str
     expand:
         description:
@@ -41,11 +36,16 @@ options:
             - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
         required: False
         type: int
-    total_count:
+    offset:
         description:
-            - Total number of records.
+            - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
+    tags:
+        description:
+            - Filter the resources to be returned based on the associated tags.
+        required: False
+        type: str
     sort:
         description:
             - Sort the segment details based on the specified attribute.
@@ -56,9 +56,9 @@ options:
             - Segment details to include the associated rules in the response
         required: False
         type: str
-    offset:
+    total_count:
         description:
-            - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
+            - Total number of records.
         required: False
         type: int
     iaas_classic_username:
@@ -100,13 +100,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'guid',
-    'tags',
     'expand',
     'limit',
-    'total_count',
+    'offset',
+    'tags',
     'sort',
     'include',
-    'offset',
+    'total_count',
 ]
 
 
@@ -120,25 +120,25 @@ module_args = dict(
     guid=dict(
         required=True,
         type='str'),
-    tags=dict(
-        required=False,
-        type='str'),
     expand=dict(
         required=False,
         type='bool'),
     limit=dict(
         required=False,
         type='int'),
-    total_count=dict(
+    offset=dict(
         required=False,
         type='int'),
+    tags=dict(
+        required=False,
+        type='str'),
     sort=dict(
         required=False,
         type='str'),
     include=dict(
         required=False,
         type='str'),
-    offset=dict(
+    total_count=dict(
         required=False,
         type='int'),
     iaas_classic_username=dict(
@@ -175,7 +175,7 @@ def run_module():
         resource_type='ibm_app_config_segments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

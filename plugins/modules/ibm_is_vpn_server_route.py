@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpn_server_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -33,15 +33,15 @@ options:
         required: False
         type: str
         default: deliver
-    destination:
-        description:
-            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
-        required: True
-        type: str
     name:
         description:
             - The user-defined name for this VPN route. If unspecified, the name will be a hyphenated list of randomly-selected words. Names must be unique within the VPN server the VPN route resides in.
         required: False
+        type: str
+    destination:
+        description:
+            - (Required for new resource) The destination to use for this VPN route in the VPN server. Must be unique within the VPN server. If an incoming packet does not match any destination, it will be dropped.
+        required: True
         type: str
     id:
         description:
@@ -97,8 +97,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'vpn_server',
     'action',
-    'destination',
     'name',
+    'destination',
 ]
 
 # Params for Data source
@@ -125,10 +125,10 @@ module_args = dict(
     action=dict(
         required=False,
         type='str'),
-    destination=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    destination=dict(
         required=False,
         type='str'),
     id=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_vpn_server_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_vpn_server_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

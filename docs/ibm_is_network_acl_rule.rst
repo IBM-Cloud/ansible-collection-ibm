@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,44 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  direction (True, str, None)
-    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+  network_acl (True, str, None)
+    (Required for new resource) Network ACL id
 
 
   destination (True, str, None)
     (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
 
 
-  before (False, str, None)
-    The rule that this rule is immediately before. If absent, this is the last rule.
-
-
-  icmp (False, list, None)
-    None
-
-
-  network_acl (True, str, None)
-    (Required for new resource) Network ACL id
-
-
-  source (True, str, None)
-    (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-
-
   tcp (False, list, None)
     None
+
+
+  action (True, str, None)
+    (Required for new resource) Whether to allow or deny matching traffic
+
+
+  direction (True, str, None)
+    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
 
 
   udp (False, list, None)
     None
 
 
+  source (True, str, None)
+    (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+
+
+  icmp (False, list, None)
+    None
+
+
+  before (False, str, None)
+    The rule that this rule is immediately before. If absent, this is the last rule.
+
+
   name (False, str, None)
     The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-
-
-  action (True, str, None)
-    (Required for new resource) Whether to allow or deny matching traffic
 
 
   id (False, str, None)

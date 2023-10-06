@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  ibm_variant (False, str, None)
-    Possible IBM Cloud KMS variants.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
-  ibm_iam_endpoint (False, str, None)
-    Endpoint of the IAM service for this IBM Cloud keystore.
+  aws_access_key_id (False, str, None)
+    The access key id used for connecting to this instance of AWS KMS.
 
 
-  ibm_key_ring (False, str, None)
-    The key ring of an IBM Cloud KMS Keystore.
+  azure_resource_group (False, str, None)
+    Resource group in Azure.
+
+
+  aws_secret_access_key (False, str, None)
+    The secret access key used for connecting to this instance of AWS KMS.
 
 
   azure_service_name (False, str, None)
     Service name of the key vault instance from the Azure portal.
+
+
+  groups (False, list, None)
+    List of groups that this keystore belongs to.
+
+
+  azure_service_principal_client_id (False, str, None)
+    Azure service principal client ID.
+
+
+  ibm_iam_endpoint (False, str, None)
+    Endpoint of the IAM service for this IBM Cloud keystore.
 
 
   ibm_api_key (False, str, None)
@@ -55,48 +71,44 @@ Parameters
     The instance ID of the IBM Cloud keystore.
 
 
-  vault (True, list, None)
-    (Required for new resource) Reference to a vault.
-
-
-  azure_subscription_id (False, str, None)
-    Subscription ID in Azure.
-
-
-  description (False, str, None)
-    Description of the keystore.
-
-
-  aws_secret_access_key (False, str, None)
-    The secret access key used for connecting to this instance of AWS KMS.
+  type (True, str, None)
+    (Required for new resource) Type of keystore.
 
 
   azure_location (False, str, None)
     Location of the Azure Key Vault.
 
 
-  azure_environment (False, str, None)
-    Azure environment, usually 'Azure'.
+  azure_subscription_id (False, str, None)
+    Subscription ID in Azure.
 
 
-  name (False, str, None)
-    Name of the target keystore. It can be changed in the future.
-
-
-  groups (False, list, None)
-    List of groups that this keystore belongs to.
-
-
-  azure_tenant (False, str, None)
-    Azure tenant that the Key Vault is associated with,.
+  ibm_variant (False, str, None)
+    Possible IBM Cloud KMS variants.
 
 
   ibm_api_endpoint (False, str, None)
     API endpoint of the IBM Cloud keystore.
 
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+  azure_tenant (False, str, None)
+    Azure tenant that the Key Vault is associated with,.
+
+
+  ibm_key_ring (False, str, None)
+    The key ring of an IBM Cloud KMS Keystore.
+
+
+  vault (True, list, None)
+    (Required for new resource) Reference to a vault.
+
+
+  name (False, str, None)
+    Name of the target keystore. It can be changed in the future.
+
+
+  description (False, str, None)
+    Description of the keystore.
 
 
   uko_vault (True, str, None)
@@ -107,24 +119,12 @@ Parameters
     AWS Region.
 
 
-  azure_resource_group (False, str, None)
-    Resource group in Azure.
+  azure_environment (False, str, None)
+    Azure environment, usually 'Azure'.
 
 
   instance_id (True, str, None)
     (Required for new resource) The ID of the UKO instance this resource exists in.
-
-
-  aws_access_key_id (False, str, None)
-    The access key id used for connecting to this instance of AWS KMS.
-
-
-  azure_service_principal_client_id (False, str, None)
-    Azure service principal client ID.
-
-
-  type (True, str, None)
-    (Required for new resource) Type of keystore.
 
 
   azure_service_principal_password (False, str, None)

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,28 +29,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  script_dir (False, str, None)
-    The directory where the satellite attach host script to be downloaded. Default is home directory
+  location (True, str, None)
+    A unique name for the new Satellite location
 
 
   custom_script (False, str, None)
     The custom script that has to be appended to generated host script file
 
 
-  labels (False, list, None)
-    List of labels for the attach host
-
-
   coreos_host (False, bool, None)
     If true, returns a CoreOS ignition file for the host. Otherwise, returns a RHEL attach script
+
+
+  labels (False, list, None)
+    List of labels for the attach host
 
 
   host_provider (False, str, None)
     None
 
 
-  location (True, str, None)
-    A unique name for the new Satellite location
+  script_dir (False, str, None)
+    The directory where the satellite attach host script to be downloaded. Default is home directory
 
 
   iaas_classic_username (False, any, None)

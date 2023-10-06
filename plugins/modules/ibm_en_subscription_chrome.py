@@ -18,18 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_chrome' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
     instance_guid:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
-    topic_id:
-        description:
-            - (Required for new resource) Topic ID.
         required: True
         type: str
     name:
@@ -41,6 +36,11 @@ options:
         description:
             - Subscription description.
         required: False
+        type: str
+    topic_id:
+        description:
+            - (Required for new resource) Topic ID.
+        required: True
         type: str
     destination_id:
         description:
@@ -94,29 +94,29 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_guid', 'str'),
-    ('topic_id', 'str'),
     ('name', 'str'),
+    ('topic_id', 'str'),
     ('destination_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_guid',
-    'topic_id',
     'name',
     'description',
+    'topic_id',
     'destination_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('subscription_id', 'str'),
     ('instance_guid', 'str'),
+    ('subscription_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'subscription_id',
     'instance_guid',
+    'subscription_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -129,13 +129,13 @@ module_args = dict(
     instance_guid=dict(
         required=False,
         type='str'),
-    topic_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     description=dict(
+        required=False,
+        type='str'),
+    topic_id=dict(
         required=False,
         type='str'),
     destination_id=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_en_subscription_chrome',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_en_subscription_chrome',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

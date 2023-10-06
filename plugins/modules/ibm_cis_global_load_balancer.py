@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_global_load_balancer' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -33,18 +33,17 @@ options:
         required: True
         type: list
         elements: str
-    session_affinity:
+    steering_policy:
         description:
-            - Session affinity info
+            - Steering policy info
         required: False
         type: str
-        default: none
-    pop_pools:
+    proxied:
         description:
-            - None
+            - set to true if proxy needs to be enabled
         required: False
-        type: list
-        elements: dict
+        type: bool
+        default: False
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
@@ -55,23 +54,29 @@ options:
             - (Required for new resource) fallback pool ID
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) name
+        required: True
+        type: str
     ttl:
         description:
             - TTL value
         required: False
         type: int
         default: 60
-    proxied:
+    session_affinity:
         description:
-            - set to true if proxy needs to be enabled
+            - Session affinity info
         required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - (Required for new resource) name
-        required: True
         type: str
+        default: none
+    region_pools:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     description:
         description:
             - Description for the load balancer instance
@@ -83,12 +88,7 @@ options:
         required: False
         type: bool
         default: True
-    steering_policy:
-        description:
-            - Steering policy info
-        required: False
-        type: str
-    region_pools:
+    pop_pools:
         description:
             - None
         required: False
@@ -151,17 +151,17 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cis_id',
     'default_pool_ids',
-    'session_affinity',
-    'pop_pools',
+    'steering_policy',
+    'proxied',
     'domain_id',
     'fallback_pool_id',
-    'ttl',
-    'proxied',
     'name',
+    'ttl',
+    'session_affinity',
+    'region_pools',
     'description',
     'enabled',
-    'steering_policy',
-    'region_pools',
+    'pop_pools',
 ]
 
 # Params for Data source
@@ -172,8 +172,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'ttl': ['proxied'],
     'proxied': ['ttl'],
+    'ttl': ['proxied'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -187,38 +187,38 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    session_affinity=dict(
+    steering_policy=dict(
         required=False,
         type='str'),
-    pop_pools=dict(
+    proxied=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='bool'),
     domain_id=dict(
         required=False,
         type='str'),
     fallback_pool_id=dict(
         required=False,
         type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
-    proxied=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
+    ttl=dict(
+        required=False,
+        type='int'),
+    session_affinity=dict(
+        required=False,
+        type='str'),
+    region_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
     description=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    steering_policy=dict(
-        required=False,
-        type='str'),
-    region_pools=dict(
+    pop_pools=dict(
         required=False,
         elements='',
         type='list'),
@@ -287,7 +287,7 @@ def run_module():
         resource_type='ibm_cis_global_load_balancer',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

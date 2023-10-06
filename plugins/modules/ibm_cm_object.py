@@ -18,20 +18,31 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_object' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    catalog_id:
+        description:
+            - (Required for new resource) Catalog identifier.
+        required: True
+        type: str
+    kind:
+        description:
+            - (Required for new resource) Kind of object. Options are "vpe", "preset_configuration", or "proxy_source".
+        required: True
+        type: str
     name:
         description:
             - (Required for new resource) The programmatic name of this object.
         required: True
         type: str
-    label:
+    label_i18n:
         description:
-            - Display name in the requested language.
+            - A map of translated strings, by language code.
         required: False
-        type: str
+        type: dict
+        elements: str
     short_description:
         description:
             - Short description in the requested language.
@@ -43,31 +54,15 @@ options:
         required: False
         type: dict
         elements: str
-    data:
-        description:
-            - Stringified map of data values for this object.
-        required: False
-        type: str
-    kind:
-        description:
-            - (Required for new resource) Kind of object. Options are "vpe", "preset_configuration", or "proxy_source".
-        required: True
-        type: str
     parent_id:
         description:
             - The parent for this specific object.
         required: False
         type: str
-    label_i18n:
+    label:
         description:
-            - A map of translated strings, by language code.
+            - Display name in the requested language.
         required: False
-        type: dict
-        elements: str
-    catalog_id:
-        description:
-            - (Required for new resource) Catalog identifier.
-        required: True
         type: str
     tags:
         description:
@@ -75,6 +70,11 @@ options:
         required: False
         type: list
         elements: str
+    data:
+        description:
+            - Stringified map of data values for this object.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -121,23 +121,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('kind', 'str'),
     ('catalog_id', 'str'),
+    ('kind', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'catalog_id',
+    'kind',
     'name',
-    'label',
+    'label_i18n',
     'short_description',
     'short_description_i18n',
-    'data',
-    'kind',
     'parent_id',
-    'label_i18n',
-    'catalog_id',
+    'label',
     'tags',
+    'data',
 ]
 
 # Params for Data source
@@ -158,12 +158,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    catalog_id=dict(
+        required=False,
+        type='str'),
+    kind=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    label=dict(
+    label_i18n=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='dict'),
     short_description=dict(
         required=False,
         type='str'),
@@ -171,26 +178,19 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    data=dict(
-        required=False,
-        type='str'),
-    kind=dict(
-        required=False,
-        type='str'),
     parent_id=dict(
         required=False,
         type='str'),
-    label_i18n=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    catalog_id=dict(
+    label=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    data=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -256,7 +256,7 @@ def run_module():
         resource_type='ibm_cm_object',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -265,7 +265,7 @@ def run_module():
             resource_type='ibm_cm_object',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

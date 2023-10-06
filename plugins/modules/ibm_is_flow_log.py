@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_flow_log' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -27,21 +27,20 @@ options:
             - (Required for new resource) The target id that the flow log collector is to collect flow logs
         required: True
         type: str
+    resource_group:
+        description:
+            - The resource group of flow log
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) Flow Log Collector name
         required: True
         type: str
-    access_tags:
+    storage_bucket:
         description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    resource_group:
-        description:
-            - The resource group of flow log
-        required: False
+            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
+        required: True
         type: str
     tags:
         description:
@@ -49,11 +48,12 @@ options:
         required: False
         type: list
         elements: str
-    storage_bucket:
+    access_tags:
         description:
-            - (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
-        required: True
-        type: str
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
     active:
         description:
             - Indicates whether this collector is active
@@ -114,11 +114,11 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'target',
-    'name',
-    'access_tags',
     'resource_group',
-    'tags',
+    'name',
     'storage_bucket',
+    'tags',
+    'access_tags',
     'active',
 ]
 
@@ -141,23 +141,23 @@ module_args = dict(
     target=dict(
         required=False,
         type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
+    storage_bucket=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    storage_bucket=dict(
+    access_tags=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     active=dict(
         required=False,
         type='bool'),
@@ -238,7 +238,7 @@ def run_module():
         resource_type='ibm_is_flow_log',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -247,7 +247,7 @@ def run_module():
             resource_type='ibm_is_flow_log',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

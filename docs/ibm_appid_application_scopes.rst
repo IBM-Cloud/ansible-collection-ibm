@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  scopes (True, list, None)
+    (Required for new resource) A `scope` is a runtime action in your application that you register with IBM Cloud App ID to create an access permission
+
+
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
 
 
   client_id (True, str, None)
     (Required for new resource) The `client_id` is a public identifier for applications
-
-
-  scopes (True, list, None)
-    (Required for new resource) A `scope` is a runtime action in your application that you register with IBM Cloud App ID to create an access permission
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_webhook' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -33,9 +33,9 @@ options:
         required: False
         type: list
         elements: dict
-    type:
+    instance_guid:
         description:
-            - (Required for new resource) The type of Destination Webhook.
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
     name:
@@ -43,9 +43,9 @@ options:
             - (Required for new resource) The Destintion name.
         required: True
         type: str
-    instance_guid:
+    type:
         description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+            - (Required for new resource) The type of Destination Webhook.
         required: True
         type: str
     id:
@@ -94,29 +94,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
-    ('name', 'str'),
     ('instance_guid', 'str'),
+    ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'description',
     'config',
-    'type',
-    'name',
     'instance_guid',
+    'name',
+    'type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_guid', 'str'),
     ('destination_id', 'str'),
+    ('instance_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_guid',
     'destination_id',
+    'instance_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,13 +133,13 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    type=dict(
+    instance_guid=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    instance_guid=dict(
+    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,7 +207,7 @@ def run_module():
         resource_type='ibm_en_destination_webhook',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +216,7 @@ def run_module():
             resource_type='ibm_en_destination_webhook',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

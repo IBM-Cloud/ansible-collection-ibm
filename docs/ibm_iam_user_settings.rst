@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  iam_id (True, str, None)
-    (Required for new resource) User's IAM ID or or email of user
-
-
   allowed_ip_addresses (False, list, None)
     List of allowed IPv4 or IPv6 addresses
+
+
+  iam_id (True, str, None)
+    (Required for new resource) User's IAM ID or or email of user
 
 
   id (False, str, None)

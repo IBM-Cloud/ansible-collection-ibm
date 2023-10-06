@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, list, None)
-    Location Settings.
-
-
   event_notifications (False, list, None)
     The Event Notification settings to register.
+
+
+  location (False, list, None)
+    Location Settings.
 
 
   id (False, str, None)

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -31,14 +31,14 @@ options:
             - The routing table identifier.
         required: True
         type: str
-    name:
-        description:
-            - The user-defined name for this route.
-        required: False
-        type: str
     route_id:
         description:
             - The VPC routing table route identifier.
+        required: False
+        type: str
+    name:
+        description:
+            - The user-defined name for this route.
         required: False
         type: str
     generation:
@@ -82,14 +82,14 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'vpc',
     'routing_table',
-    'name',
     'route_id',
+    'name',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'name': ['route_id'],
     'route_id': ['name'],
+    'name': ['route_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -102,10 +102,10 @@ module_args = dict(
     routing_table=dict(
         required=True,
         type='str'),
-    name=dict(
+    route_id=dict(
         required=False,
         type='str'),
-    route_id=dict(
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -154,7 +154,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

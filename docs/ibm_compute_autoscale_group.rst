@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -39,8 +39,12 @@ Parameters
     None
 
 
-  name (True, str, None)
-    (Required for new resource) Name
+  virtual_guest_member_template (True, list, None)
+    (Required for new resource) Virtual guest member template
+
+
+  network_vlan_ids (False, list, None)
+    List of network VLAN ids
 
 
   regional_group (True, str, None)
@@ -51,10 +55,6 @@ Parameters
     (Required for new resource) Minimum member count
 
 
-  maximum_member_count (True, int, None)
-    (Required for new resource) Maximum member count
-
-
   cooldown (True, int, None)
     (Required for new resource) Cooldown value
 
@@ -63,12 +63,12 @@ Parameters
     virtual server ID
 
 
-  virtual_guest_member_template (True, list, None)
-    (Required for new resource) Virtual guest member template
+  name (True, str, None)
+    (Required for new resource) Name
 
 
-  network_vlan_ids (False, list, None)
-    List of network VLAN ids
+  maximum_member_count (True, int, None)
+    (Required for new resource) Maximum member count
 
 
   termination_policy (True, str, None)

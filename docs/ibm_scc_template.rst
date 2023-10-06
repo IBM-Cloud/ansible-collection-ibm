@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  target (True, list, None)
-    (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
-
-
-  customized_defaults (True, list, None)
-    (Required for new resource) A list of default property values to apply to your template.
-
 
   account_id (True, str, None)
     (Required for new resource) Your IBM Cloud account ID.
@@ -49,6 +41,14 @@ Parameters
 
   description (True, str, None)
     (Required for new resource) An extended description of your template.
+
+
+  target (True, list, None)
+    (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+
+
+  customized_defaults (True, list, None)
+    (Required for new resource) A list of default property values to apply to your template.
 
 
   id (False, str, None)

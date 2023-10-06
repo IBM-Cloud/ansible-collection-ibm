@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  catalog_id (True, str, None)
+    (Required for new resource) Catalog identifier.
+
+
+  kind (True, str, None)
+    (Required for new resource) Kind of object. Options are "vpe", "preset_configuration", or "proxy_source".
+
+
   name (True, str, None)
     (Required for new resource) The programmatic name of this object.
 
 
-  label (False, str, None)
-    Display name in the requested language.
+  label_i18n (False, dict, None)
+    A map of translated strings, by language code.
 
 
   short_description (False, str, None)
@@ -47,28 +55,20 @@ Parameters
     A map of translated strings, by language code.
 
 
-  data (False, str, None)
-    Stringified map of data values for this object.
-
-
-  kind (True, str, None)
-    (Required for new resource) Kind of object. Options are "vpe", "preset_configuration", or "proxy_source".
-
-
   parent_id (False, str, None)
     The parent for this specific object.
 
 
-  label_i18n (False, dict, None)
-    A map of translated strings, by language code.
-
-
-  catalog_id (True, str, None)
-    (Required for new resource) Catalog identifier.
+  label (False, str, None)
+    Display name in the requested language.
 
 
   tags (False, list, None)
     List of tags associated with this catalog.
+
+
+  data (False, str, None)
+    Stringified map of data values for this object.
 
 
   id (False, str, None)

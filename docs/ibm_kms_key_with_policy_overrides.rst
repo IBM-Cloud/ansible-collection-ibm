@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,52 +31,52 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  endpoint_type (False, str, None)
-    Public or Private
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
-
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  iv_value (False, str, None)
+    Only for imported root key
 
 
   rotation (False, list, None)
     Data associated with the key rotation policy
 
 
-  encrypted_nonce (False, str, None)
-    Only for imported root key
+  endpoint_type (False, str, None)
+    Public or Private
 
 
-  iv_value (False, str, None)
-    Only for imported root key
+  key_name (True, str, None)
+    (Required for new resource) Key name
 
 
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or HPCS instance GUID or CRN
-
-
-  expiration_date (False, str, None)
-    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+  standard_key (False, bool, False)
+    Standard key type
 
 
   dual_auth_delete (False, list, None)
     Data associated with the dual authorization delete policy.
 
 
-  key_ring_id (False, str, default)
-    Key Ring for the Key
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or HPCS instance GUID or CRN
 
 
   payload (False, str, None)
     None
+
+
+  expiration_date (False, str, None)
+    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  key_ring_id (False, str, default)
+    Key Ring for the Key
+
+
+  encrypted_nonce (False, str, None)
+    Only for imported root key
 
 
   id (False, str, None)

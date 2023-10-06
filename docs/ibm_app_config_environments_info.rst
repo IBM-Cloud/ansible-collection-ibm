@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, str, None)
-    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
-
-
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
-
-
   offset (False, int, None)
     The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
 
 
   guid (True, str, None)
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
+
+
+  tags (False, str, None)
+    filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
 
 
   limit (False, int, None)

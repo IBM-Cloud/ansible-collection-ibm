@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_atracker_settings' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    metadata_region_primary:
-        description:
-            - (Required for new resource) To store all your meta data in a single region.
-        required: True
-        type: str
     private_api_endpoint_only:
         description:
             - (Required for new resource) If you set this true then you cannot access api through public network.
@@ -48,6 +43,11 @@ options:
         description:
             - Provide a back up region to store meta data.
         required: False
+        type: str
+    metadata_region_primary:
+        description:
+            - (Required for new resource) To store all your meta data in a single region.
+        required: True
         type: str
     id:
         description:
@@ -95,17 +95,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('metadata_region_primary', 'str'),
     ('private_api_endpoint_only', 'bool'),
+    ('metadata_region_primary', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'metadata_region_primary',
     'private_api_endpoint_only',
     'default_targets',
     'permitted_target_regions',
     'metadata_region_backup',
+    'metadata_region_primary',
 ]
 
 # Params for Data source
@@ -122,9 +122,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    metadata_region_primary=dict(
-        required=False,
-        type='str'),
     private_api_endpoint_only=dict(
         required=False,
         type='bool'),
@@ -137,6 +134,9 @@ module_args = dict(
         elements='',
         type='list'),
     metadata_region_backup=dict(
+        required=False,
+        type='str'),
+    metadata_region_primary=dict(
         required=False,
         type='str'),
     id=dict(
@@ -204,7 +204,7 @@ def run_module():
         resource_type='ibm_atracker_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

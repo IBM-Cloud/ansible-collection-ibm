@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Name
+
+
+  instances (True, int, None)
+    (Required for new resource) no of the instances
+
+
+  flavor (True, str, None)
+    (Required for new resource) flavor of the reserved capacity
+
 
   tags (False, list, None)
     List of tags
@@ -45,18 +57,6 @@ Parameters
 
   pod (True, str, None)
     (Required for new resource) Pod name
-
-
-  name (True, str, None)
-    (Required for new resource) Name
-
-
-  instances (True, int, None)
-    (Required for new resource) no of the instances
-
-
-  flavor (True, str, None)
-    (Required for new resource) flavor of the reserved capacity
 
 
   id (False, str, None)

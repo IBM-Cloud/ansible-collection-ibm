@@ -18,64 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_offering' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    deprecate_pending:
-        description:
-            - Deprecation information for an Offering.
-        required: False
-        type: list
-        elements: dict
-    publish_to_access_list:
-        description:
-            - A list of account IDs to add to this offering's access list.
-        required: False
-        type: list
-        elements: str
-    public_original_crn:
-        description:
-            - The original offering CRN that this publish entry came from.
-        required: False
-        type: str
-    portal_approval_record:
-        description:
-            - The portal's approval record ID.
-        required: False
-        type: str
-    metadata:
-        description:
-            - Map of metadata values for this offering.
-        required: False
-        type: dict
-        elements: str
-    pc_managed:
-        description:
-            - Offering is managed by Partner Center.
-        required: False
-        type: bool
-    portal_ui_url:
-        description:
-            - The portal UI URL.
-        required: False
-        type: str
-    product_kind:
-        description:
-            - The product kind.  Valid values are module, solution, or empty string.
-        required: False
-        type: str
-    image_pull_keys:
-        description:
-            - Image pull keys for this offering.
-        required: False
-        type: list
-        elements: dict
-    catalog_id:
-        description:
-            - (Required for new resource) Catalog identifier.
-        required: True
-        type: str
     label:
         description:
             - Display Name in the requested language.
@@ -86,24 +32,15 @@ options:
             - URL for an additional docs with this offering.
         required: False
         type: str
-    share_enabled:
+    short_description_i18n:
         description:
-            - Denotes sharing including access list availability of an Offering is enabled.
+            - A map of translated strings, by language code.
         required: False
-        type: bool
-    long_description:
-        description:
-            - Long description in the requested language.
-        required: False
-        type: str
+        type: dict
+        elements: str
     publish_to_ibm:
         description:
             - Whether you would like to publish this offering to IBM or not.
-        required: False
-        type: bool
-    publish_approved:
-        description:
-            - Offering has been approved to publish to permitted to IBM or Public Catalog.
         required: False
         type: bool
     provider_info:
@@ -112,31 +49,9 @@ options:
         required: False
         type: list
         elements: dict
-    long_description_i18n:
+    product_kind:
         description:
-            - A map of translated strings, by language code.
-        required: False
-        type: dict
-        elements: str
-    short_description_i18n:
-        description:
-            - A map of translated strings, by language code.
-        required: False
-        type: dict
-        elements: str
-    share_with_all:
-        description:
-            - Denotes public availability of an Offering - if share_enabled is true.
-        required: False
-        type: bool
-    publish_to_public:
-        description:
-            - Whether you would like to publish this offering to the public catalog or not.
-        required: False
-        type: bool
-    offering_id:
-        description:
-            - Offering identifier.  Provide this when an offering already exists and you wish to use it as a terraform resource.
+            - The product kind.  Valid values are module, solution, or empty string.
         required: False
         type: str
     name:
@@ -144,53 +59,148 @@ options:
             - The programmatic name of this offering.
         required: False
         type: str
+    offering_support_url:
+        description:
+            - [deprecated] - Use offering.support instead.  URL to be displayed in the Consumption UI for getting support on this offering.
+        required: False
+        type: str
+    public_original_crn:
+        description:
+            - The original offering CRN that this publish entry came from.
+        required: False
+        type: str
     offering_icon_url:
         description:
             - URL for an icon associated with this offering.
         required: False
         type: str
-    tags:
-        description:
-            - List of tags associated with this catalog.
-        required: False
-        type: list
-        elements: str
-    disclaimer:
-        description:
-            - A disclaimer for this offering.
-        required: False
-        type: str
-    badges:
-        description:
-            - A list of badges for this offering.
-        required: False
-        type: list
-        elements: dict
-    hidden:
-        description:
-            - Determine if this offering should be displayed in the Consumption UI.
-        required: False
-        type: bool
-    keywords:
-        description:
-            - List of keywords associated with offering, typically used to search for it.
-        required: False
-        type: list
-        elements: str
-    share_with_ibm:
-        description:
-            - Denotes IBM employee availability of an Offering - if share_enabled is true.
-        required: False
-        type: bool
     features:
         description:
             - list of features associated with this offering.
         required: False
         type: list
         elements: dict
+    publish_to_public:
+        description:
+            - Whether you would like to publish this offering to the public catalog or not.
+        required: False
+        type: bool
     publish_public_crn:
         description:
             - The crn of the public catalog entry of this offering.
+        required: False
+        type: str
+    portal_ui_url:
+        description:
+            - The portal UI URL.
+        required: False
+        type: str
+    disclaimer:
+        description:
+            - A disclaimer for this offering.
+        required: False
+        type: str
+    offering_id:
+        description:
+            - Offering identifier.  Provide this when an offering already exists and you wish to use it as a terraform resource.
+        required: False
+        type: str
+    label_i18n:
+        description:
+            - A map of translated strings, by language code.
+        required: False
+        type: dict
+        elements: str
+    pc_managed:
+        description:
+            - Offering is managed by Partner Center.
+        required: False
+        type: bool
+    share_with_all:
+        description:
+            - Denotes public availability of an Offering - if share_enabled is true.
+        required: False
+        type: bool
+    share_with_ibm:
+        description:
+            - Denotes IBM employee availability of an Offering - if share_enabled is true.
+        required: False
+        type: bool
+    share_enabled:
+        description:
+            - Denotes sharing including access list availability of an Offering is enabled.
+        required: False
+        type: bool
+    metadata:
+        description:
+            - Map of metadata values for this offering.
+        required: False
+        type: dict
+        elements: str
+    hidden:
+        description:
+            - Determine if this offering should be displayed in the Consumption UI.
+        required: False
+        type: bool
+    catalog_id:
+        description:
+            - (Required for new resource) Catalog identifier.
+        required: True
+        type: str
+    long_description:
+        description:
+            - Long description in the requested language.
+        required: False
+        type: str
+    long_description_i18n:
+        description:
+            - A map of translated strings, by language code.
+        required: False
+        type: dict
+        elements: str
+    publish_approved:
+        description:
+            - Offering has been approved to publish to permitted to IBM or Public Catalog.
+        required: False
+        type: bool
+    publish_to_access_list:
+        description:
+            - A list of account IDs to add to this offering's access list.
+        required: False
+        type: list
+        elements: str
+    portal_approval_record:
+        description:
+            - The portal's approval record ID.
+        required: False
+        type: str
+    image_pull_keys:
+        description:
+            - Image pull keys for this offering.
+        required: False
+        type: list
+        elements: dict
+    tags:
+        description:
+            - List of tags associated with this catalog.
+        required: False
+        type: list
+        elements: str
+    keywords:
+        description:
+            - List of keywords associated with offering, typically used to search for it.
+        required: False
+        type: list
+        elements: str
+    badges:
+        description:
+            - A list of badges for this offering.
+        required: False
+        type: list
+        elements: dict
+    short_description:
+        description:
+            - Short description in the requested language.
         required: False
         type: str
     media:
@@ -199,22 +209,12 @@ options:
         required: False
         type: list
         elements: dict
-    label_i18n:
+    deprecate_pending:
         description:
-            - A map of translated strings, by language code.
+            - Deprecation information for an Offering.
         required: False
-        type: dict
-        elements: str
-    offering_support_url:
-        description:
-            - [deprecated] - Use offering.support instead.  URL to be displayed in the Consumption UI for getting support on this offering.
-        required: False
-        type: str
-    short_description:
-        description:
-            - Short description in the requested language.
-        required: False
-        type: str
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -266,53 +266,53 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'deprecate_pending',
-    'publish_to_access_list',
-    'public_original_crn',
-    'portal_approval_record',
-    'metadata',
-    'pc_managed',
-    'portal_ui_url',
-    'product_kind',
-    'image_pull_keys',
-    'catalog_id',
     'label',
     'offering_docs_url',
-    'share_enabled',
-    'long_description',
-    'publish_to_ibm',
-    'publish_approved',
-    'provider_info',
-    'long_description_i18n',
     'short_description_i18n',
-    'share_with_all',
-    'publish_to_public',
-    'offering_id',
+    'publish_to_ibm',
+    'provider_info',
+    'product_kind',
     'name',
-    'offering_icon_url',
-    'tags',
-    'disclaimer',
-    'badges',
-    'hidden',
-    'keywords',
-    'share_with_ibm',
-    'features',
-    'publish_public_crn',
-    'media',
-    'label_i18n',
     'offering_support_url',
+    'public_original_crn',
+    'offering_icon_url',
+    'features',
+    'publish_to_public',
+    'publish_public_crn',
+    'portal_ui_url',
+    'disclaimer',
+    'offering_id',
+    'label_i18n',
+    'pc_managed',
+    'share_with_all',
+    'share_with_ibm',
+    'share_enabled',
+    'metadata',
+    'hidden',
+    'catalog_id',
+    'long_description',
+    'long_description_i18n',
+    'publish_approved',
+    'publish_to_access_list',
+    'portal_approval_record',
+    'image_pull_keys',
+    'tags',
+    'keywords',
+    'badges',
     'short_description',
+    'media',
+    'deprecate_pending',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('offering_id', 'str'),
     ('catalog_id', 'str'),
+    ('offering_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'offering_id',
     'catalog_id',
+    'offering_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -322,127 +322,127 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    deprecate_pending=dict(
-        required=False,
-        elements='',
-        type='list'),
-    publish_to_access_list=dict(
-        required=False,
-        elements='',
-        type='list'),
-    public_original_crn=dict(
-        required=False,
-        type='str'),
-    portal_approval_record=dict(
-        required=False,
-        type='str'),
-    metadata=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    pc_managed=dict(
-        required=False,
-        type='bool'),
-    portal_ui_url=dict(
-        required=False,
-        type='str'),
-    product_kind=dict(
-        required=False,
-        type='str'),
-    image_pull_keys=dict(
-        required=False,
-        elements='',
-        type='list'),
-    catalog_id=dict(
-        required=False,
-        type='str'),
     label=dict(
         required=False,
         type='str'),
     offering_docs_url=dict(
         required=False,
         type='str'),
-    share_enabled=dict(
+    short_description_i18n=dict(
         required=False,
-        type='bool'),
-    long_description=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='dict'),
     publish_to_ibm=dict(
-        required=False,
-        type='bool'),
-    publish_approved=dict(
         required=False,
         type='bool'),
     provider_info=dict(
         required=False,
         elements='',
         type='list'),
-    long_description_i18n=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    short_description_i18n=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    share_with_all=dict(
-        required=False,
-        type='bool'),
-    publish_to_public=dict(
-        required=False,
-        type='bool'),
-    offering_id=dict(
+    product_kind=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    offering_support_url=dict(
+        required=False,
+        type='str'),
+    public_original_crn=dict(
+        required=False,
+        type='str'),
     offering_icon_url=dict(
         required=False,
         type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    disclaimer=dict(
-        required=False,
-        type='str'),
-    badges=dict(
-        required=False,
-        elements='',
-        type='list'),
-    hidden=dict(
-        required=False,
-        type='bool'),
-    keywords=dict(
-        required=False,
-        elements='',
-        type='list'),
-    share_with_ibm=dict(
-        required=False,
-        type='bool'),
     features=dict(
         required=False,
         elements='',
         type='list'),
+    publish_to_public=dict(
+        required=False,
+        type='bool'),
     publish_public_crn=dict(
+        required=False,
+        type='str'),
+    portal_ui_url=dict(
+        required=False,
+        type='str'),
+    disclaimer=dict(
+        required=False,
+        type='str'),
+    offering_id=dict(
+        required=False,
+        type='str'),
+    label_i18n=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    pc_managed=dict(
+        required=False,
+        type='bool'),
+    share_with_all=dict(
+        required=False,
+        type='bool'),
+    share_with_ibm=dict(
+        required=False,
+        type='bool'),
+    share_enabled=dict(
+        required=False,
+        type='bool'),
+    metadata=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    hidden=dict(
+        required=False,
+        type='bool'),
+    catalog_id=dict(
+        required=False,
+        type='str'),
+    long_description=dict(
+        required=False,
+        type='str'),
+    long_description_i18n=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    publish_approved=dict(
+        required=False,
+        type='bool'),
+    publish_to_access_list=dict(
+        required=False,
+        elements='',
+        type='list'),
+    portal_approval_record=dict(
+        required=False,
+        type='str'),
+    image_pull_keys=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    keywords=dict(
+        required=False,
+        elements='',
+        type='list'),
+    badges=dict(
+        required=False,
+        elements='',
+        type='list'),
+    short_description=dict(
         required=False,
         type='str'),
     media=dict(
         required=False,
         elements='',
         type='list'),
-    label_i18n=dict(
+    deprecate_pending=dict(
         required=False,
         elements='',
-        type='dict'),
-    offering_support_url=dict(
-        required=False,
-        type='str'),
-    short_description=dict(
-        required=False,
-        type='str'),
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -508,7 +508,7 @@ def run_module():
         resource_type='ibm_cm_offering',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -517,7 +517,7 @@ def run_module():
             resource_type='ibm_cm_offering',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

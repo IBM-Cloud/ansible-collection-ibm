@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -27,6 +27,11 @@ options:
             - Disable the ALB instance in the cluster
         required: False
         type: bool
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
     alb_id:
         description:
             - (Required for new resource) ALB ID
@@ -37,11 +42,6 @@ options:
             - Enable the ALB instance in the cluster
         required: False
         type: bool
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -74,9 +74,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'disable_deployment',
+    'resource_group_id',
     'alb_id',
     'enable',
-    'resource_group_id',
 ]
 
 # Params for Data source
@@ -101,15 +101,15 @@ module_args = dict(
     disable_deployment=dict(
         required=False,
         type='bool'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
     alb_id=dict(
         required=False,
         type='str'),
     enable=dict(
         required=False,
         type='bool'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -161,7 +161,7 @@ def run_module():
         resource_type='ibm_container_vpc_alb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -170,7 +170,7 @@ def run_module():
             resource_type='ibm_container_vpc_alb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

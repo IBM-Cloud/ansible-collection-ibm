@@ -18,28 +18,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hpcs_keystore' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    ibm_variant:
+    region:
         description:
-            - Possible IBM Cloud KMS variants.
+            - (Required for new resource) The region of the UKO instance this resource exists in.
+        required: True
+        type: str
+    aws_access_key_id:
+        description:
+            - The access key id used for connecting to this instance of AWS KMS.
         required: False
         type: str
-    ibm_iam_endpoint:
+    azure_resource_group:
         description:
-            - Endpoint of the IAM service for this IBM Cloud keystore.
+            - Resource group in Azure.
         required: False
         type: str
-    ibm_key_ring:
+    aws_secret_access_key:
         description:
-            - The key ring of an IBM Cloud KMS Keystore.
+            - The secret access key used for connecting to this instance of AWS KMS.
         required: False
         type: str
     azure_service_name:
         description:
             - Service name of the key vault instance from the Azure portal.
+        required: False
+        type: str
+    groups:
+        description:
+            - List of groups that this keystore belongs to.
+        required: False
+        type: list
+        elements: str
+    azure_service_principal_client_id:
+        description:
+            - Azure service principal client ID.
+        required: False
+        type: str
+    ibm_iam_endpoint:
+        description:
+            - Endpoint of the IAM service for this IBM Cloud keystore.
         required: False
         type: str
     ibm_api_key:
@@ -52,51 +73,24 @@ options:
             - The instance ID of the IBM Cloud keystore.
         required: False
         type: str
-    vault:
+    type:
         description:
-            - (Required for new resource) Reference to a vault.
+            - (Required for new resource) Type of keystore.
         required: True
-        type: list
-        elements: dict
-    azure_subscription_id:
-        description:
-            - Subscription ID in Azure.
-        required: False
-        type: str
-    description:
-        description:
-            - Description of the keystore.
-        required: False
-        type: str
-    aws_secret_access_key:
-        description:
-            - The secret access key used for connecting to this instance of AWS KMS.
-        required: False
         type: str
     azure_location:
         description:
             - Location of the Azure Key Vault.
         required: False
         type: str
-    azure_environment:
+    azure_subscription_id:
         description:
-            - Azure environment, usually 'Azure'.
+            - Subscription ID in Azure.
         required: False
         type: str
-    name:
+    ibm_variant:
         description:
-            - Name of the target keystore. It can be changed in the future.
-        required: False
-        type: str
-    groups:
-        description:
-            - List of groups that this keystore belongs to.
-        required: False
-        type: list
-        elements: str
-    azure_tenant:
-        description:
-            - Azure tenant that the Key Vault is associated with,.
+            - Possible IBM Cloud KMS variants.
         required: False
         type: str
     ibm_api_endpoint:
@@ -104,10 +98,31 @@ options:
             - API endpoint of the IBM Cloud keystore.
         required: False
         type: str
-    region:
+    azure_tenant:
         description:
-            - (Required for new resource) The region of the UKO instance this resource exists in.
+            - Azure tenant that the Key Vault is associated with,.
+        required: False
+        type: str
+    ibm_key_ring:
+        description:
+            - The key ring of an IBM Cloud KMS Keystore.
+        required: False
+        type: str
+    vault:
+        description:
+            - (Required for new resource) Reference to a vault.
         required: True
+        type: list
+        elements: dict
+    name:
+        description:
+            - Name of the target keystore. It can be changed in the future.
+        required: False
+        type: str
+    description:
+        description:
+            - Description of the keystore.
+        required: False
         type: str
     uko_vault:
         description:
@@ -119,29 +134,14 @@ options:
             - AWS Region.
         required: False
         type: str
-    azure_resource_group:
+    azure_environment:
         description:
-            - Resource group in Azure.
+            - Azure environment, usually 'Azure'.
         required: False
         type: str
     instance_id:
         description:
             - (Required for new resource) The ID of the UKO instance this resource exists in.
-        required: True
-        type: str
-    aws_access_key_id:
-        description:
-            - The access key id used for connecting to this instance of AWS KMS.
-        required: False
-        type: str
-    azure_service_principal_client_id:
-        description:
-            - Azure service principal client ID.
-        required: False
-        type: str
-    type:
-        description:
-            - (Required for new resource) Type of keystore.
         required: True
         type: str
     azure_service_principal_password:
@@ -195,55 +195,55 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vault', 'list'),
     ('region', 'str'),
+    ('type', 'str'),
+    ('vault', 'list'),
     ('uko_vault', 'str'),
     ('instance_id', 'str'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'ibm_variant',
-    'ibm_iam_endpoint',
-    'ibm_key_ring',
+    'region',
+    'aws_access_key_id',
+    'azure_resource_group',
+    'aws_secret_access_key',
     'azure_service_name',
+    'groups',
+    'azure_service_principal_client_id',
+    'ibm_iam_endpoint',
     'ibm_api_key',
     'ibm_instance_id',
-    'vault',
-    'azure_subscription_id',
-    'description',
-    'aws_secret_access_key',
+    'type',
     'azure_location',
-    'azure_environment',
-    'name',
-    'groups',
-    'azure_tenant',
+    'azure_subscription_id',
+    'ibm_variant',
     'ibm_api_endpoint',
-    'region',
+    'azure_tenant',
+    'ibm_key_ring',
+    'vault',
+    'name',
+    'description',
     'uko_vault',
     'aws_region',
-    'azure_resource_group',
+    'azure_environment',
     'instance_id',
-    'aws_access_key_id',
-    'azure_service_principal_client_id',
-    'type',
     'azure_service_principal_password',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('region', 'str'),
     ('keystore_id', 'str'),
-    ('instance_id', 'str'),
     ('uko_vault', 'str'),
+    ('instance_id', 'str'),
+    ('region', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'region',
     'keystore_id',
-    'instance_id',
     'uko_vault',
+    'instance_id',
+    'region',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -253,16 +253,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    ibm_variant=dict(
+    region=dict(
         required=False,
         type='str'),
-    ibm_iam_endpoint=dict(
+    aws_access_key_id=dict(
         required=False,
         type='str'),
-    ibm_key_ring=dict(
+    azure_resource_group=dict(
+        required=False,
+        type='str'),
+    aws_secret_access_key=dict(
         required=False,
         type='str'),
     azure_service_name=dict(
+        required=False,
+        type='str'),
+    groups=dict(
+        required=False,
+        elements='',
+        type='list'),
+    azure_service_principal_client_id=dict(
+        required=False,
+        type='str'),
+    ibm_iam_endpoint=dict(
         required=False,
         type='str'),
     ibm_api_key=dict(
@@ -271,39 +284,35 @@ module_args = dict(
     ibm_instance_id=dict(
         required=False,
         type='str'),
-    vault=dict(
-        required=False,
-        elements='',
-        type='list'),
-    azure_subscription_id=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    aws_secret_access_key=dict(
+    type=dict(
         required=False,
         type='str'),
     azure_location=dict(
         required=False,
         type='str'),
-    azure_environment=dict(
+    azure_subscription_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    azure_tenant=dict(
+    ibm_variant=dict(
         required=False,
         type='str'),
     ibm_api_endpoint=dict(
         required=False,
         type='str'),
-    region=dict(
+    azure_tenant=dict(
+        required=False,
+        type='str'),
+    ibm_key_ring=dict(
+        required=False,
+        type='str'),
+    vault=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     uko_vault=dict(
@@ -312,19 +321,10 @@ module_args = dict(
     aws_region=dict(
         required=False,
         type='str'),
-    azure_resource_group=dict(
+    azure_environment=dict(
         required=False,
         type='str'),
     instance_id=dict(
-        required=False,
-        type='str'),
-    aws_access_key_id=dict(
-        required=False,
-        type='str'),
-    azure_service_principal_client_id=dict(
-        required=False,
-        type='str'),
-    type=dict(
         required=False,
         type='str'),
     azure_service_principal_password=dict(
@@ -395,7 +395,7 @@ def run_module():
         resource_type='ibm_hpcs_keystore',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -404,7 +404,7 @@ def run_module():
             resource_type='ibm_hpcs_keystore',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

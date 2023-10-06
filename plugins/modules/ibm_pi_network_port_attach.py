@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network_port_attach' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -27,14 +27,19 @@ options:
             - (Required for new resource) 
         required: True
         type: str
-    pi_instance_id:
-        description:
-            - (Required for new resource) Instance id to attach the network port to
-        required: True
-        type: str
     pi_network_name:
         description:
             - (Required for new resource) Network Name - This is the subnet name  in the Cloud instance
+        required: True
+        type: str
+    pi_network_port_ipaddress:
+        description:
+            - None
+        required: False
+        type: str
+    pi_instance_id:
+        description:
+            - (Required for new resource) Instance id to attach the network port to
         required: True
         type: str
     pi_network_port_description:
@@ -43,11 +48,6 @@ options:
         required: False
         type: str
         default: Port Created via Terraform
-    pi_network_port_ipaddress:
-        description:
-            - None
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,17 +91,17 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_cloud_instance_id', 'str'),
-    ('pi_instance_id', 'str'),
     ('pi_network_name', 'str'),
+    ('pi_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
-    'pi_instance_id',
     'pi_network_name',
-    'pi_network_port_description',
     'pi_network_port_ipaddress',
+    'pi_instance_id',
+    'pi_network_port_description',
 ]
 
 # Params for Data source
@@ -121,16 +121,16 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_instance_id=dict(
-        required=False,
-        type='str'),
     pi_network_name=dict(
         required=False,
         type='str'),
-    pi_network_port_description=dict(
+    pi_network_port_ipaddress=dict(
         required=False,
         type='str'),
-    pi_network_port_ipaddress=dict(
+    pi_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_network_port_description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -191,7 +191,7 @@ def run_module():
         resource_type='ibm_pi_network_port_attach',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

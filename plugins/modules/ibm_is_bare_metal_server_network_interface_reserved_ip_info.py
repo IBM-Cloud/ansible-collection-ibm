@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_bare_metal_server_network_interface_reserved_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - The Bare Metal Server network interface identifier.
         required: True
         type: str
-    bare_metal_server:
-        description:
-            - The Bare Metal Server identifier.
-        required: True
-        type: str
     reserved_ip:
         description:
             - The reserved IP identifier.
+        required: True
+        type: str
+    bare_metal_server:
+        description:
+            - The Bare Metal Server identifier.
         required: True
         type: str
     generation:
@@ -70,15 +70,15 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('network_interface', 'str'),
-    ('bare_metal_server', 'str'),
     ('reserved_ip', 'str'),
+    ('bare_metal_server', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'network_interface',
-    'bare_metal_server',
     'reserved_ip',
+    'bare_metal_server',
 ]
 
 
@@ -92,10 +92,10 @@ module_args = dict(
     network_interface=dict(
         required=True,
         type='str'),
-    bare_metal_server=dict(
+    reserved_ip=dict(
         required=True,
         type='str'),
-    reserved_ip=dict(
+    bare_metal_server=dict(
         required=True,
         type='str'),
     generation=dict(
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_interface_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

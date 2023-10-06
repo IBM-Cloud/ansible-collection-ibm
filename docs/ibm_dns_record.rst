@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  priority (False, int, 0)
+    priority info
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  weight (False, int, 0)
+    weight info
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   port (False, int, None)
@@ -47,56 +55,48 @@ Parameters
     (Required for new resource) DNS record data
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  refresh (False, int, None)
+    refresh rate
 
 
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  retry (False, int, None)
-    Retry count
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
+  responsible_person (False, str, None)
+    Responsible person for DNS record
 
 
   protocol (False, str, None)
     protocol info
 
 
-  refresh (False, int, None)
-    refresh rate
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  weight (False, int, 0)
-    weight info
-
-
   tags (False, list, None)
     tags set for the resource
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
 
 
   mx_priority (False, int, 0)
     Maximum priority
 
 
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
   service (False, str, None)
     service info
 
 
-  priority (False, int, 0)
-    priority info
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  retry (False, int, None)
+    Retry count
 
 
   id (False, str, None)

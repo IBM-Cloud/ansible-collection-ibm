@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,60 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
-
-
-  retention_rule (False, list, None)
-    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
-
-
-  object_versioning (False, list, None)
-    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
-
-
-  hard_quota (False, int, None)
-    sets a maximum amount of storage (in bytes) available for a bucket
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
-
-
-  single_site_location (False, str, None)
-    single site location info
-
-
-  endpoint_type (False, str, public)
-    public or private
-
-
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
-
-
-  abort_incomplete_multipart_upload_days (False, list, None)
-    Enable abort incomplete multipart upload to COS Bucket after a defined period of time
-
-
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
-
-
-  storage_class (False, str, None)
-    Storage class info
 
 
   allowed_ip (False, list, None)
@@ -95,20 +43,72 @@ Parameters
     Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
+  force_delete (False, bool, True)
+    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+
+
   satellite_location_id (False, str, None)
     Provide satellite location info.
+
+
+  cross_region_location (False, str, None)
+    Cros region location info
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
 
 
   region_location (False, str, None)
     Region Location info.
 
 
+  endpoint_type (False, str, public)
+    public or private
+
+
+  retention_rule (False, list, None)
+    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+
+
+  hard_quota (False, int, None)
+    sets a maximum amount of storage (in bytes) available for a bucket
+
+
+  abort_incomplete_multipart_upload_days (False, list, None)
+    Enable abort incomplete multipart upload to COS Bucket after a defined period of time
+
+
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  single_site_location (False, str, None)
+    single site location info
+
+
+  storage_class (False, str, None)
+    Storage class info
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+
+
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
+
+
   expire_rule (False, list, None)
     Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
-  force_delete (False, bool, True)
-    COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
+  object_versioning (False, list, None)
+    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
 
 
   id (False, str, None)

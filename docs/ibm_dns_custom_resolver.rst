@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  high_availability (False, bool, True)
-    Whether High Availability is enabled in custom resolver
-
-
   instance_id (True, str, None)
     (Required for new resource) Instance ID
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the custom resolver
 
 
   description (False, str, None)
     Descriptive text of the custom resolver.
 
 
+  locations (False, list, None)
+    Locations on which the custom resolver will be running
+
+
+  name (True, str, None)
+    (Required for new resource) Name of the custom resolver
+
+
   enabled (False, bool, True)
     Whether the custom resolver is enabled
 
 
-  locations (False, list, None)
-    Locations on which the custom resolver will be running
+  high_availability (False, bool, True)
+    Whether High Availability is enabled in custom resolver
 
 
   id (False, str, None)

@@ -17,21 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cis_origin_auths' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    domain_id:
-        description:
-            - Associated CIS domain
-        required: True
-        type: str
-    hostname:
-        description:
-            - Associated CIS host name
-        required: False
-        type: str
-        default: no_host
     request_type:
         description:
             - Associated CIS Request Type
@@ -43,6 +32,17 @@ options:
             - CIS instance crn
         required: True
         type: str
+    domain_id:
+        description:
+            - Associated CIS domain
+        required: True
+        type: str
+    hostname:
+        description:
+            - Associated CIS host name
+        required: False
+        type: str
+        default: no_host
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -76,16 +76,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'hostname',
     'request_type',
     'cis_id',
+    'domain_id',
+    'hostname',
 ]
 
 
@@ -96,17 +96,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
-        required=True,
-        type='str'),
-    hostname=dict(
-        required=False,
-        type='str'),
     request_type=dict(
         required=False,
         type='str'),
     cis_id=dict(
         required=True,
+        type='str'),
+    domain_id=dict(
+        required=True,
+        type='str'),
+    hostname=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_cis_origin_auths',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

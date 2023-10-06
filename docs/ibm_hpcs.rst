@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tags (False, list, None)
+    None
+
+
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
+
 
   name (True, str, None)
     (Required for new resource) A name for the HPCS instance
@@ -39,28 +47,24 @@ Parameters
     The resource group id
 
 
-  plan (True, str, None)
-    (Required for new resource) The plan type of the HPCS Instance
-
-
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
-
-
   signature_server_url (False, str, None)
     URL of signing service
 
 
-  failover_units (False, int, None)
-    The number of failover crypto units for your service instance
+  plan (True, str, None)
+    (Required for new resource) The plan type of the HPCS Instance
 
 
-  tags (False, list, None)
-    None
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
+
+
+  signature_threshold (True, int, None)
+    (Required for new resource) Signature Threshold Value
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
 
 
   revocation_threshold (True, int, None)
@@ -71,16 +75,12 @@ Parameters
     (Required for new resource) The number of operational crypto units for your service instance
 
 
-  signature_threshold (True, int, None)
-    (Required for new resource) Signature Threshold Value
-
-
   service (False, str, hs-crypto)
     The name of the service offering `hs-crypto`
 
 
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
+  failover_units (False, int, None)
+    The number of failover crypto units for your service instance
 
 
   id (False, str, None)

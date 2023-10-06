@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  credential_id (True, str, None)
+    (Required for new resource) The unique identifier of the credential.
+
+
+  credential_type (True, str, None)
+    (Required for new resource) The environment that the scope is targeted to.
+
 
   name (True, str, None)
     (Required for new resource) A unique name for your scope.
@@ -41,14 +49,6 @@ Parameters
 
   collector_ids (True, list, None)
     (Required for new resource) The unique IDs of the collectors that are attached to the scope.
-
-
-  credential_id (True, str, None)
-    (Required for new resource) The unique identifier of the credential.
-
-
-  credential_type (True, str, None)
-    (Required for new resource) The environment that the scope is targeted to.
 
 
   id (False, str, None)
