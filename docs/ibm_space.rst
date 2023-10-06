@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  space_quota (False, str, None)
+    The name of the Space Quota Definition
+
+
+  tags (False, list, None)
+    None
+
 
   name (True, str, None)
     (Required for new resource) The name for the space
@@ -49,14 +57,6 @@ Parameters
 
   developers (False, list, None)
     The IBMID of the users who will have developer role in this space, ex - user@example.com
-
-
-  space_quota (False, str, None)
-    The name of the Space Quota Definition
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

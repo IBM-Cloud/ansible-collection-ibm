@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  paused (False, bool, None)
-    Filter Paused
-
-
-  expression (True, str, None)
-    (Required for new resource) Filter Expression
-
 
   description (False, str, None)
     Filter Description
@@ -49,6 +41,14 @@ Parameters
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
+
+
+  paused (False, bool, None)
+    Filter Paused
+
+
+  expression (True, str, None)
+    (Required for new resource) Filter Expression
 
 
   id (False, str, None)

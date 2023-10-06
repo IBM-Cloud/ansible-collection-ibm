@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -35,16 +35,16 @@ Parameters
     (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
 
 
-  toolchain_id (True, str, None)
-    (Required for new resource) ID of the toolchain to bind the tool to.
-
-
   initialization (True, list, None)
     (Required for new resource)
 
 
   name (False, str, None)
     Name of the tool.
+
+
+  toolchain_id (True, str, None)
+    (Required for new resource) ID of the toolchain to bind the tool to.
 
 
   id (False, str, None)

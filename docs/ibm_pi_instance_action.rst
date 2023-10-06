@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_action (True, str, None)
+    (Required for new resource) PVM instance action type
+
 
   pi_health_status (False, str, OK)
     Set the health status of the PVM instance to connect it faster
@@ -41,10 +45,6 @@ Parameters
 
   pi_instance_id (True, str, None)
     (Required for new resource) PVM instance ID
-
-
-  pi_action (True, str, None)
-    (Required for new resource) PVM instance action type
 
 
   id (False, str, None)

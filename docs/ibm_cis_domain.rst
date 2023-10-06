@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  domain (True, str, None)
+    (Required for new resource) CISzone - Domain
+
+
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
 
   type (False, str, full)
     CISzone - Domain Type
-
-
-  domain (True, str, None)
-    (Required for new resource) CISzone - Domain
 
 
   id (False, str, None)

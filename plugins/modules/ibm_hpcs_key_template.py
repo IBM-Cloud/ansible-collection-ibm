@@ -18,35 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_hpcs_key_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    vault:
-        description:
-            - (Required for new resource) ID of the Vault where the entity is to be created in.
-        required: True
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) Name of the template, it will be referenced when creating managed keys.
-        required: True
-        type: str
-    key:
-        description:
-            - (Required for new resource) Properties describing the properties of the managed key.
-        required: True
-        type: list
-        elements: dict
-    region:
-        description:
-            - (Required for new resource) The region of the UKO instance this resource exists in.
-        required: True
-        type: str
     keystores:
         description:
             - (Required for new resource) An array describing the type and group of target keystores the managed key is to be installed in.
+        required: True
+        type: list
+        elements: dict
+    vault:
+        description:
+            - (Required for new resource) ID of the Vault where the entity is to be created in.
         required: True
         type: list
         elements: dict
@@ -60,11 +44,27 @@ options:
             - (Required for new resource) The ID of the UKO instance this resource exists in.
         required: True
         type: str
+    region:
+        description:
+            - (Required for new resource) The region of the UKO instance this resource exists in.
+        required: True
+        type: str
     uko_vault:
         description:
             - (Required for new resource) The UUID of the Vault in which the update is to take place.
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) Name of the template, it will be referenced when creating managed keys.
+        required: True
+        type: str
+    key:
+        description:
+            - (Required for new resource) Properties describing the properties of the managed key.
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,40 +111,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('keystores', 'list'),
     ('vault', 'list'),
+    ('instance_id', 'str'),
+    ('region', 'str'),
+    ('uko_vault', 'str'),
     ('name', 'str'),
     ('key', 'list'),
-    ('region', 'str'),
-    ('keystores', 'list'),
-    ('instance_id', 'str'),
-    ('uko_vault', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vault',
-    'name',
-    'key',
-    'region',
     'keystores',
+    'vault',
     'description',
     'instance_id',
+    'region',
     'uko_vault',
+    'name',
+    'key',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('uko_vault', 'str'),
     ('region', 'str'),
     ('template_id', 'str'),
     ('instance_id', 'str'),
-    ('uko_vault', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'uko_vault',
     'region',
     'template_id',
     'instance_id',
-    'uko_vault',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -154,21 +154,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vault=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    key=dict(
-        required=False,
-        elements='',
-        type='list'),
-    region=dict(
-        required=False,
-        type='str'),
     keystores=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vault=dict(
         required=False,
         elements='',
         type='list'),
@@ -178,9 +168,19 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
+    region=dict(
+        required=False,
+        type='str'),
     uko_vault=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    key=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -246,7 +246,7 @@ def run_module():
         resource_type='ibm_hpcs_key_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -255,7 +255,7 @@ def run_module():
             resource_type='ibm_hpcs_key_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

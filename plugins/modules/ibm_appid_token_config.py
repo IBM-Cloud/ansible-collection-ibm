@@ -18,10 +18,21 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_token_config' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    access_token_expires_in:
+        description:
+            - The length of time for which access tokens are valid in seconds
+        required: False
+        type: int
+    refresh_token_expires_in:
+        description:
+            - The length of time for which refresh tokens are valid in seconds
+        required: False
+        type: int
+        default: 2592000
     anonymous_token_expires_in:
         description:
             - None
@@ -55,17 +66,6 @@ options:
             - (Required for new resource) The service `tenantId`
         required: True
         type: str
-    access_token_expires_in:
-        description:
-            - The length of time for which access tokens are valid in seconds
-        required: False
-        type: int
-    refresh_token_expires_in:
-        description:
-            - The length of time for which refresh tokens are valid in seconds
-        required: False
-        type: int
-        default: 2592000
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -117,14 +117,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'access_token_expires_in',
+    'refresh_token_expires_in',
     'anonymous_token_expires_in',
     'anonymous_access_enabled',
     'refresh_token_enabled',
     'access_token_claim',
     'id_token_claim',
     'tenant_id',
-    'access_token_expires_in',
-    'refresh_token_expires_in',
 ]
 
 # Params for Data source
@@ -143,6 +143,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    access_token_expires_in=dict(
+        required=False,
+        type='int'),
+    refresh_token_expires_in=dict(
+        required=False,
+        type='int'),
     anonymous_token_expires_in=dict(
         required=False,
         type='int'),
@@ -163,12 +169,6 @@ module_args = dict(
     tenant_id=dict(
         required=False,
         type='str'),
-    access_token_expires_in=dict(
-        required=False,
-        type='int'),
-    refresh_token_expires_in=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +234,7 @@ def run_module():
         resource_type='ibm_appid_token_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +243,7 @@ def run_module():
             resource_type='ibm_appid_token_config',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,44 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the instance template
+  zone (True, str, None)
+    (Required for new resource) Zone name
 
 
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
+  profile (True, str, None)
+    (Required for new resource) Profile info
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  total_volume_bandwidth (False, int, None)
+    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
 
 
-  boot_volume (False, list, None)
-    None
+  dedicated_host (False, str, None)
+    Unique Identifier of the Dedicated Host where the instance will be placed
+
+
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   vpc (True, str, None)
     (Required for new resource) VPC id
 
 
-  zone (True, str, None)
-    (Required for new resource) Zone name
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
-  default_trusted_profile_auto_link (False, bool, None)
-    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-
-
-  dedicated_host_group (False, str, None)
-    Unique Identifier of the Dedicated Host Group where the instance will be placed
-
-
-  catalog_offering (False, list, None)
-    The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
+  network_interfaces (False, list, None)
+    None
 
 
   image (False, str, None)
@@ -83,36 +75,44 @@ Parameters
     Instance Template name
 
 
-  total_volume_bandwidth (False, int, None)
-    The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-
-
-  dedicated_host (False, str, None)
-    Unique Identifier of the Dedicated Host where the instance will be placed
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  default_trusted_profile_auto_link (False, bool, None)
+    If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
 
 
   default_trusted_profile_target (False, str, None)
     The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
 
 
-  network_interfaces (False, list, None)
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the instance template
+
+
+  dedicated_host_group (False, str, None)
+    Unique Identifier of the Dedicated Host Group where the instance will be placed
+
+
+  volume_attachments (False, list, None)
     None
 
 
-  availability_policy_host_failure (False, str, None)
-    The availability policy to use for this virtual server instance
+  catalog_offering (False, list, None)
+    The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
 
 
   metadata_service_enabled (False, bool, False)
     Indicates whether the metadata service endpoint is available to the virtual server instance
 
 
-  volume_attachments (False, list, None)
+  user_data (False, str, None)
+    User data given for the instance
+
+
+  boot_volume (False, list, None)
     None
+
+
+  availability_policy_host_failure (False, str, None)
+    The availability policy to use for this virtual server instance
 
 
   id (False, str, None)

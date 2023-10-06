@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  metadata_region_primary (True, str, None)
-    (Required for new resource) To store all your meta data in a single region.
-
 
   private_api_endpoint_only (True, bool, None)
     (Required for new resource) If you set this true then you cannot access api through public network.
@@ -49,6 +45,10 @@ Parameters
 
   metadata_region_backup (False, str, None)
     Provide a back up region to store meta data.
+
+
+  metadata_region_primary (True, str, None)
+    (Required for new resource) To store all your meta data in a single region.
 
 
   id (False, str, None)

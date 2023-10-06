@@ -18,30 +18,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    action:
-        description:
-            - (Required for new resource) Whether to permit or deny the prefix filter
-        required: True
-        type: str
     before:
         description:
             - Identifier of prefix filter that handles ordering
         required: False
+        type: str
+    gateway:
+        description:
+            - (Required for new resource) The Transit Gateway identifier
+        required: True
+        type: str
+    connection_id:
+        description:
+            - (Required for new resource) The Transit Gateway Connection identifier
+        required: True
+        type: str
+    action:
+        description:
+            - (Required for new resource) Whether to permit or deny the prefix filter
+        required: True
         type: str
     ge:
         description:
             - IP Prefix GE
         required: False
         type: int
-    connection_id:
-        description:
-            - (Required for new resource) The Transit Gateway Connection identifier
-        required: True
-        type: str
     le:
         description:
             - IP Prefix LE
@@ -50,11 +55,6 @@ options:
     prefix:
         description:
             - (Required for new resource) IP Prefix
-        required: True
-        type: str
-    gateway:
-        description:
-            - (Required for new resource) The Transit Gateway identifier
         required: True
         type: str
     id:
@@ -103,21 +103,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('connection_id', 'str'),
-    ('prefix', 'str'),
     ('gateway', 'str'),
+    ('connection_id', 'str'),
+    ('action', 'str'),
+    ('prefix', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'action',
     'before',
-    'ge',
+    'gateway',
     'connection_id',
+    'action',
+    'ge',
     'le',
     'prefix',
-    'gateway',
 ]
 
 # Params for Data source
@@ -140,25 +140,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    action=dict(
+    before=dict(
         required=False,
         type='str'),
-    before=dict(
+    gateway=dict(
+        required=False,
+        type='str'),
+    connection_id=dict(
+        required=False,
+        type='str'),
+    action=dict(
         required=False,
         type='str'),
     ge=dict(
         required=False,
         type='int'),
-    connection_id=dict(
-        required=False,
-        type='str'),
     le=dict(
         required=False,
         type='int'),
     prefix=dict(
-        required=False,
-        type='str'),
-    gateway=dict(
         required=False,
         type='str'),
     id=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +235,7 @@ def run_module():
             resource_type='ibm_tg_connection_prefix_filter',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.47.1
+- IBM-Cloud terraform-provider-ibm v1.44.2
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tool_id (True, str, None)
-    ID of the tool bound to the toolchain.
-
-
   toolchain_id (True, str, None)
     ID of the toolchain.
+
+
+  tool_id (True, str, None)
+    ID of the tool bound to the toolchain.
 
 
   iaas_classic_username (False, any, None)

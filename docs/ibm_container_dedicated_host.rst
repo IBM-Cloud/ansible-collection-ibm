@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  zone (True, str, None)
-    (Required for new resource) The zone of the dedicated host
-
 
   placement_enabled (False, bool, None)
     Enables/disables placement on the dedicated host
@@ -45,6 +41,10 @@ Parameters
 
   host_pool_id (True, str, None)
     (Required for new resource) The id of the dedicated host pool the dedicated host is associated with
+
+
+  zone (True, str, None)
+    (Required for new resource) The zone of the dedicated host
 
 
   id (False, str, None)

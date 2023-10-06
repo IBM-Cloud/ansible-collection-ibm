@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,8 +29,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  service (False, str, None)
-    The name of the Cloud Database service
+  tags (False, list, None)
+    None
 
 
   resource_group_id (False, str, None)
@@ -41,8 +41,8 @@ Parameters
     The location or the region in which the Database instance exists
 
 
-  tags (False, list, None)
-    None
+  service (False, str, None)
+    The name of the Cloud Database service
 
 
   name (True, str, None)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Collection name.
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   description (False, str, None)
     Collection description
 
 
-  tags (False, str, None)
-    Tags associated with the collection
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+  name (True, str, None)
+    (Required for new resource) Collection name.
 
 
   collection_id (True, str, None)
     (Required for new resource) Collection Id.
+
+
+  tags (False, str, None)
+    Tags associated with the collection
 
 
   id (False, str, None)

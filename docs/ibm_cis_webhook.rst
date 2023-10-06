@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  url (False, str, None)
-    Webhook URL
-
-
-  secret (False, str, None)
-    API key needed to use the webhook
-
-
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
 
 
   name (True, str, None)
     (Required for new resource) Webhook Name
+
+
+  url (False, str, None)
+    Webhook URL
+
+
+  secret (False, str, None)
+    API key needed to use the webhook
 
 
   id (False, str, None)

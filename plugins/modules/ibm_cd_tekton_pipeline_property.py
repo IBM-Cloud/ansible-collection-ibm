@@ -18,26 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_property' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    enum:
-        description:
-            - Options for `single_select` property type. Only needed when using `single_select` property type.
-        required: False
-        type: list
-        elements: str
-    type:
-        description:
-            - (Required for new resource) Property type.
-        required: True
-        type: str
-    path:
-        description:
-            - A dot notation path for `integration` type properties only, to select a value from the tool integration. If left blank the full tool integration data will be used.
-        required: False
-        type: str
     pipeline_id:
         description:
             - (Required for new resource) The Tekton pipeline ID.
@@ -48,9 +32,25 @@ options:
             - (Required for new resource) Property name.
         required: True
         type: str
+    type:
+        description:
+            - (Required for new resource) Property type.
+        required: True
+        type: str
     value:
         description:
             - Property value. Any string value is valid.
+        required: False
+        type: str
+    enum:
+        description:
+            - Options for `single_select` property type. Only needed when using `single_select` property type.
+        required: False
+        type: list
+        elements: str
+    path:
+        description:
+            - A dot notation path for `integration` type properties only, to select a value from the tool integration. If left blank the full tool integration data will be used.
         required: False
         type: str
     id:
@@ -99,19 +99,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('type', 'str'),
     ('pipeline_id', 'str'),
     ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enum',
-    'type',
-    'path',
     'pipeline_id',
     'name',
+    'type',
     'value',
+    'enum',
+    'path',
 ]
 
 # Params for Data source
@@ -132,23 +132,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    enum=dict(
-        required=False,
-        elements='',
-        type='list'),
-    type=dict(
-        required=False,
-        type='str'),
-    path=dict(
-        required=False,
-        type='str'),
     pipeline_id=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
+    type=dict(
+        required=False,
+        type='str'),
     value=dict(
+        required=False,
+        type='str'),
+    enum=dict(
+        required=False,
+        elements='',
+        type='list'),
+    path=dict(
         required=False,
         type='str'),
     id=dict(
@@ -216,7 +216,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_property',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +225,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_property',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

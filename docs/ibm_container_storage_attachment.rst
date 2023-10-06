@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name or ID
-
 
   worker (True, str, None)
     (Required for new resource) worker node ID
@@ -45,6 +41,10 @@ Parameters
 
   volume (True, str, None)
     (Required for new resource) VPC Volume ID
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name or ID
 
 
   id (False, str, None)

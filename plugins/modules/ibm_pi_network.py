@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -27,32 +27,11 @@ options:
             - (Required for new resource) PI network type
         required: True
         type: str
-    pi_network_name:
-        description:
-            - (Required for new resource) PI network name
-        required: True
-        type: str
     pi_cidr:
         description:
             - PI network CIDR
         required: False
         type: str
-    pi_gateway:
-        description:
-            - PI network gateway
-        required: False
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
-        required: True
-        type: str
-    pi_dns:
-        description:
-            - List of PI network DNS name
-        required: False
-        type: list
-        elements: str
     pi_network_jumbo:
         description:
             - PI network enable MTU Jumbo option
@@ -64,6 +43,27 @@ options:
         required: False
         type: list
         elements: dict
+    pi_network_name:
+        description:
+            - (Required for new resource) PI network name
+        required: True
+        type: str
+    pi_dns:
+        description:
+            - List of PI network DNS name
+        required: False
+        type: list
+        elements: str
+    pi_gateway:
+        description:
+            - PI network gateway
+        required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) PI cloud instance ID
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,13 +114,13 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_network_type',
-    'pi_network_name',
     'pi_cidr',
-    'pi_gateway',
-    'pi_cloud_instance_id',
-    'pi_dns',
     'pi_network_jumbo',
     'pi_ipaddress_range',
+    'pi_network_name',
+    'pi_dns',
+    'pi_gateway',
+    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
@@ -144,22 +144,9 @@ module_args = dict(
     pi_network_type=dict(
         required=False,
         type='str'),
-    pi_network_name=dict(
-        required=False,
-        type='str'),
     pi_cidr=dict(
         required=False,
         type='str'),
-    pi_gateway=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_dns=dict(
-        required=False,
-        elements='',
-        type='list'),
     pi_network_jumbo=dict(
         required=False,
         type='bool'),
@@ -167,6 +154,19 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    pi_network_name=dict(
+        required=False,
+        type='str'),
+    pi_dns=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_gateway=dict(
+        required=False,
+        type='str'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +234,7 @@ def run_module():
             resource_type='ibm_pi_network',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

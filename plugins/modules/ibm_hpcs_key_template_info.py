@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_key_template' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    uko_vault:
+        description:
+            - The UUID of the Vault in which the update is to take place.
+        required: True
+        type: str
     region:
         description:
             - The region of the UKO instance this resource exists in.
@@ -34,11 +39,6 @@ options:
     instance_id:
         description:
             - The ID of the UKO instance this resource exists in.
-        required: True
-        type: str
-    uko_vault:
-        description:
-            - The UUID of the Vault in which the update is to take place.
         required: True
         type: str
     iaas_classic_username:
@@ -74,18 +74,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('uko_vault', 'str'),
     ('region', 'str'),
     ('template_id', 'str'),
     ('instance_id', 'str'),
-    ('uko_vault', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'uko_vault',
     'region',
     'template_id',
     'instance_id',
-    'uko_vault',
 ]
 
 
@@ -96,6 +96,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    uko_vault=dict(
+        required=True,
+        type='str'),
     region=dict(
         required=True,
         type='str'),
@@ -103,9 +106,6 @@ module_args = dict(
         required=True,
         type='str'),
     instance_id=dict(
-        required=True,
-        type='str'),
-    uko_vault=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_key_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

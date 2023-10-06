@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  version_loc_id (True, str, None)
-    A dotted value of `catalogID`.`versionID`.
-
-
   metadata (False, list, None)
     Generic data to be included with content being onboarded. Required for virtual server image for VPC.
+
+
+  version_loc_id (True, str, None)
+    A dotted value of `catalogID`.`versionID`.
 
 
   iaas_classic_username (False, any, None)

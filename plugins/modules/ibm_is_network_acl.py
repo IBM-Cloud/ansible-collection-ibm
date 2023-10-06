@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    resource_group:
+    name:
         description:
-            - Resource group ID for the network ACL
+            - Network ACL name
         required: False
         type: str
     rules:
@@ -36,6 +36,11 @@ options:
     vpc:
         description:
             - Network ACL VPC name
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group ID for the network ACL
         required: False
         type: str
     tags:
@@ -50,11 +55,6 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) Network ACL name
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,17 +101,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
+    'name',
     'rules',
     'vpc',
+    'resource_group',
     'tags',
     'access_tags',
-    'name',
 ]
 
 # Params for Data source
@@ -120,8 +119,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'vpc_name',
-    'network_acl',
     'name',
+    'network_acl',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -131,7 +130,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
+    name=dict(
         required=False,
         type='str'),
     rules=dict(
@@ -139,6 +138,9 @@ module_args = dict(
         elements='',
         type='list'),
     vpc=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -149,9 +151,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -229,7 +228,7 @@ def run_module():
         resource_type='ibm_is_network_acl',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -238,7 +237,7 @@ def run_module():
             resource_type='ibm_is_network_acl',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_tekton_pipeline_definition' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -29,8 +29,8 @@ options:
         type: str
     source:
         description:
-            - Source repository containing the Tekton pipeline definition.
-        required: False
+            - (Required for new resource) Source repository containing the Tekton pipeline definition.
+        required: True
         type: list
         elements: dict
     id:
@@ -80,6 +80,7 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pipeline_id', 'str'),
+    ('source', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -178,7 +179,7 @@ def run_module():
         resource_type='ibm_cd_tekton_pipeline_definition',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -187,7 +188,7 @@ def run_module():
             resource_type='ibm_cd_tekton_pipeline_definition',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

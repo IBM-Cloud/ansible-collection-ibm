@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  tags (False, str, None)
-    Tags associated with the environment
-
-
-  color_code (False, str, None)
-    Color code to distinguish the environment.
-
 
   guid (True, str, None)
     (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
@@ -53,6 +45,14 @@ Parameters
 
   description (False, str, None)
     Environment description
+
+
+  tags (False, str, None)
+    Tags associated with the environment
+
+
+  color_code (False, str, None)
+    Color code to distinguish the environment.
 
 
   id (False, str, None)

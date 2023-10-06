@@ -18,31 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_dns_record' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    domain_id:
+    content:
         description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) Record type
-        required: True
-        type: str
-    proxied:
-        description:
-            - Boolean value true if proxied else flase
+            - DNS record content
         required: False
-        type: bool
-        default: False
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id or CRN
-        required: True
         type: str
+    data:
+        description:
+            - None
+        required: False
+        type: dict
     priority:
         description:
             - Priority Value
@@ -53,21 +42,32 @@ options:
             - DNS record name
         required: False
         type: str
-    data:
+    proxied:
         description:
-            - None
+            - Boolean value true if proxied else flase
         required: False
-        type: dict
+        type: bool
+        default: False
     ttl:
         description:
             - TTL value
         required: False
         type: int
         default: 1
-    content:
+    cis_id:
         description:
-            - DNS record content
-        required: False
+            - (Required for new resource) CIS object id or CRN
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    type:
+        description:
+            - (Required for new resource) Record type
+        required: True
         type: str
     id:
         description:
@@ -115,22 +115,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('type', 'str'),
-    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'type',
-    'proxied',
-    'cis_id',
+    'content',
+    'data',
     'priority',
     'name',
-    'data',
+    'proxied',
     'ttl',
-    'content',
+    'cis_id',
+    'domain_id',
+    'type',
 ]
 
 # Params for Data source
@@ -141,39 +141,39 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'data': ['content'],
     'content': ['data'],
+    'data': ['content'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    domain_id=dict(
+    content=dict(
         required=False,
         type='str'),
-    type=dict(
+    data=dict(
         required=False,
-        type='str'),
-    proxied=dict(
-        required=False,
-        type='bool'),
-    cis_id=dict(
-        required=False,
-        type='str'),
+        type='dict'),
     priority=dict(
         required=False,
         type='int'),
     name=dict(
         required=False,
         type='str'),
-    data=dict(
+    proxied=dict(
         required=False,
-        type='dict'),
+        type='bool'),
     ttl=dict(
         required=False,
         type='int'),
-    content=dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_cis_dns_record',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

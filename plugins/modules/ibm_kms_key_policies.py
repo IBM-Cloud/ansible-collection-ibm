@@ -18,10 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_policies' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    alias:
+        description:
+            - None
+        required: False
+        type: str
+    key_id:
+        description:
+            - Key ID
+        required: False
+        type: str
+    endpoint_type:
+        description:
+            - public or private
+        required: False
+        type: str
+        default: public
     rotation:
         description:
             - Specifies the key rotation time interval in months, with a minimum of 1, and a maximum of 12
@@ -39,22 +55,6 @@ options:
             - (Required for new resource) Key protect or hpcs instance GUID
         required: True
         type: str
-    key_id:
-        description:
-            - Key ID
-        required: False
-        type: str
-    alias:
-        description:
-            - None
-        required: False
-        type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,12 +106,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'alias',
+    'key_id',
+    'endpoint_type',
     'rotation',
     'dual_auth_delete',
     'instance_id',
-    'key_id',
-    'alias',
-    'endpoint_type',
 ]
 
 # Params for Data source
@@ -120,10 +120,10 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'instance_id',
     'endpoint_type',
     'key_id',
     'alias',
-    'instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,6 +133,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    alias=dict(
+        required=False,
+        type='str'),
+    key_id=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
+        type='str'),
     rotation=dict(
         required=False,
         elements='',
@@ -142,15 +151,6 @@ module_args = dict(
         elements='',
         type='list'),
     instance_id=dict(
-        required=False,
-        type='str'),
-    key_id=dict(
-        required=False,
-        type='str'),
-    alias=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -218,7 +218,7 @@ def run_module():
         resource_type='ibm_kms_key_policies',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -227,7 +227,7 @@ def run_module():
             resource_type='ibm_kms_key_policies',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

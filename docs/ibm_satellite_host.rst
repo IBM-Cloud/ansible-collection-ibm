@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cluster (False, str, None)
+    The name or ID of a Satellite location or cluster to assign the host to
+
+
+  host_id (True, str, None)
+    (Required for new resource) The specific host ID to assign to a Satellite location or cluster
+
 
   location (True, str, None)
     (Required for new resource) The name or ID of the Satellite location
@@ -39,8 +47,8 @@ Parameters
     List of labels for the host
 
 
-  wait_till (False, str, None)
-    Wait until location is normal
+  zone (False, str, None)
+    The zone within the cluster to assign the host to
 
 
   worker_pool (False, str, None)
@@ -51,16 +59,8 @@ Parameters
     Host Provider
 
 
-  cluster (False, str, None)
-    The name or ID of a Satellite location or cluster to assign the host to
-
-
-  host_id (True, str, None)
-    (Required for new resource) The specific host ID to assign to a Satellite location or cluster
-
-
-  zone (False, str, None)
-    The zone within the cluster to assign the host to
+  wait_till (False, str, None)
+    Wait until location is normal
 
 
   id (False, str, None)

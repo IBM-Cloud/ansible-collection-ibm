@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  location (True, str, None)
+    (Required for new resource) A unique name for the new Satellite location
+
+
+  managed_from (True, str, None)
+    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+
+
   zones (False, list, None)
     The names of at least three high availability zones to use for the location
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
   description (False, str, None)
@@ -43,32 +55,20 @@ Parameters
     Enable Red Hat CoreOS features within the Satellite location
 
 
-  cos_credentials (False, list, None)
-    COSAuthorization - IBM Cloud Object Storage authorization keys
-
-
-  tags (False, list, None)
-    List of tags associated with resource instance
+  cos_config (False, list, None)
+    COSBucket - IBM Cloud Object Storage bucket configuration details
 
 
   logging_account_id (False, str, None)
     The account ID for IBM Log Analysis with LogDNA log forwarding
 
 
-  cos_config (False, list, None)
-    COSBucket - IBM Cloud Object Storage bucket configuration details
+  cos_credentials (False, list, None)
+    COSAuthorization - IBM Cloud Object Storage authorization keys
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  location (True, str, None)
-    (Required for new resource) A unique name for the new Satellite location
-
-
-  managed_from (True, str, None)
-    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+  tags (False, list, None)
+    List of tags associated with resource instance
 
 
   id (False, str, None)

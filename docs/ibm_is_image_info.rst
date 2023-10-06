@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  visibility (False, str, None)
-    Whether the image is publicly visible or private to the account
-
-
   name (False, str, None)
     Image name
 
 
   identifier (False, str, None)
     Image id
+
+
+  visibility (False, str, None)
+    Whether the image is publicly visible or private to the account
 
 
   generation (False, int, 2)

@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_dedicated_host' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    zone:
-        description:
-            - (Required for new resource) The zone of the dedicated host
-        required: True
-        type: str
     placement_enabled:
         description:
             - Enables/disables placement on the dedicated host
@@ -40,6 +35,11 @@ options:
     host_pool_id:
         description:
             - (Required for new resource) The id of the dedicated host pool the dedicated host is associated with
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) The zone of the dedicated host
         required: True
         type: str
     id:
@@ -68,17 +68,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('zone', 'str'),
     ('flavor', 'str'),
     ('host_pool_id', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'zone',
     'placement_enabled',
     'flavor',
     'host_pool_id',
+    'zone',
 ]
 
 # Params for Data source
@@ -99,9 +99,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    zone=dict(
-        required=False,
-        type='str'),
     placement_enabled=dict(
         required=False,
         type='bool'),
@@ -109,6 +106,9 @@ module_args = dict(
         required=False,
         type='str'),
     host_pool_id=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -162,7 +162,7 @@ def run_module():
         resource_type='ibm_container_dedicated_host',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -171,7 +171,7 @@ def run_module():
             resource_type='ibm_container_dedicated_host',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.49.0',
+            ibm_provider_version='1.50.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

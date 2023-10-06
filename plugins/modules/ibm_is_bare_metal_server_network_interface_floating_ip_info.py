@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_bare_metal_server_network_interface_floating_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    bare_metal_server:
-        description:
-            - The bare metal server identifier
-        required: True
-        type: str
     floating_ip:
         description:
             - The floating ip identifier of the network interface associated with the bare metal server
+        required: True
+        type: str
+    bare_metal_server:
+        description:
+            - The bare metal server identifier
         required: True
         type: str
     network_interface:
@@ -69,15 +69,15 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bare_metal_server', 'str'),
     ('floating_ip', 'str'),
+    ('bare_metal_server', 'str'),
     ('network_interface', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bare_metal_server',
     'floating_ip',
+    'bare_metal_server',
     'network_interface',
 ]
 
@@ -89,10 +89,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bare_metal_server=dict(
+    floating_ip=dict(
         required=True,
         type='str'),
-    floating_ip=dict(
+    bare_metal_server=dict(
         required=True,
         type='str'),
     network_interface=dict(
@@ -144,7 +144,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_interface_floating_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

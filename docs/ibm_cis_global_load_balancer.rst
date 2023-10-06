@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     (Required for new resource) List of default Pool IDs
 
 
-  session_affinity (False, str, none)
-    Session affinity info
+  steering_policy (False, str, None)
+    Steering policy info
 
 
-  pop_pools (False, list, None)
-    None
+  proxied (False, bool, False)
+    set to true if proxy needs to be enabled
 
 
   domain_id (True, str, None)
@@ -55,16 +55,20 @@ Parameters
     (Required for new resource) fallback pool ID
 
 
+  name (True, str, None)
+    (Required for new resource) name
+
+
   ttl (False, int, 60)
     TTL value
 
 
-  proxied (False, bool, False)
-    set to true if proxy needs to be enabled
+  session_affinity (False, str, none)
+    Session affinity info
 
 
-  name (True, str, None)
-    (Required for new resource) name
+  region_pools (False, list, None)
+    None
 
 
   description (False, str, None)
@@ -75,11 +79,7 @@ Parameters
     set to true of LB needs to enabled
 
 
-  steering_policy (False, str, None)
-    Steering policy info
-
-
-  region_pools (False, list, None)
+  pop_pools (False, list, None)
     None
 
 

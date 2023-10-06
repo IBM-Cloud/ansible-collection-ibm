@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver_secondary_zone' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    description:
+        description:
+            - Descriptive text of the secondary zone
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) The name of the zone.
+        required: True
+        type: str
     transfer_from:
         description:
             - (Required for new resource) The addresses of DNS servers where the secondary zone data should be transferred from
@@ -33,24 +43,14 @@ options:
             - (Required for new resource) Enable/Disable the secondary zone
         required: True
         type: bool
-    description:
+    instance_id:
         description:
-            - Descriptive text of the secondary zone
-        required: False
+            - (Required for new resource) The unique identifier of a service instance.
+        required: True
         type: str
     resolver_id:
         description:
             - (Required for new resource) The unique identifier of a custom resolver.
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) The name of the zone.
-        required: True
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) The unique identifier of a service instance.
         required: True
         type: str
     id:
@@ -99,21 +99,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('zone', 'str'),
     ('transfer_from', 'list'),
     ('enabled', 'bool'),
-    ('resolver_id', 'str'),
-    ('zone', 'str'),
     ('instance_id', 'str'),
+    ('resolver_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'description',
+    'zone',
     'transfer_from',
     'enabled',
-    'description',
-    'resolver_id',
-    'zone',
     'instance_id',
+    'resolver_id',
 ]
 
 # Params for Data source
@@ -130,6 +130,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    description=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
     transfer_from=dict(
         required=False,
         elements='',
@@ -137,16 +143,10 @@ module_args = dict(
     enabled=dict(
         required=False,
         type='bool'),
-    description=dict(
+    instance_id=dict(
         required=False,
         type='str'),
     resolver_id=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -214,7 +214,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver_secondary_zone',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

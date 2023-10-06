@@ -18,18 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_logpush_job' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
+    frequency:
+        description:
+            - The frequency at which CIS sends batches of logs to your destination
+        required: False
+        type: str
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
         required: True
         type: str
-    domain_id:
+    logdna:
         description:
-            - (Required for new resource) Associated CIS domain
+            - (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
         required: True
         type: str
     name:
@@ -37,30 +42,25 @@ options:
             - Logpush Job Name
         required: False
         type: str
-    logpull_options:
-        description:
-            - Configuration string
-        required: False
-        type: str
-    logdna:
-        description:
-            - (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
-        required: True
-        type: str
     enabled:
         description:
             - Whether the logpush job enabled or not
         required: False
         type: bool
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    logpull_options:
+        description:
+            - Configuration string
+        required: False
+        type: str
     dataset:
         description:
             - (Required for new resource) Dataset to be pulled
         required: True
-        type: str
-    frequency:
-        description:
-            - The frequency at which CIS sends batches of logs to your destination
-        required: False
         type: str
     id:
         description:
@@ -109,21 +109,21 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('cis_id', 'str'),
-    ('domain_id', 'str'),
     ('logdna', 'str'),
+    ('domain_id', 'str'),
     ('dataset', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'domain_id',
-    'name',
-    'logpull_options',
-    'logdna',
-    'enabled',
-    'dataset',
     'frequency',
+    'cis_id',
+    'logdna',
+    'name',
+    'enabled',
+    'domain_id',
+    'logpull_options',
+    'dataset',
 ]
 
 # Params for Data source
@@ -140,28 +140,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    frequency=dict(
+        required=False,
+        type='str'),
     cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    logpull_options=dict(
         required=False,
         type='str'),
     logdna=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    dataset=dict(
+    domain_id=dict(
         required=False,
         type='str'),
-    frequency=dict(
+    logpull_options=dict(
+        required=False,
+        type='str'),
+    dataset=dict(
         required=False,
         type='str'),
     id=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_cis_logpush_job',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

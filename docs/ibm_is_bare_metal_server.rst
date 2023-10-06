@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,60 +31,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  action (False, str, None)
-    This restart/start/stops a bare metal server.
+  primary_network_interface (True, list, None)
+    (Required for new resource) Primary Network interface info
 
 
   profile (True, str, None)
     (Required for new resource) profile name
 
 
-  vpc (False, str, None)
-    The VPC the bare metal server is to be a part of
-
-
-  resource_group (False, str, None)
-    Resource group name
-
-
-  tags (False, list, None)
-    Tags for the Bare metal server
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the bare metal server
-
-
   name (False, str, None)
     Bare metal server name
 
 
-  delete_type (False, str, hard)
-    Enables stopping type of the bare metal server before deleting
+  action (False, str, None)
+    This restart/start/stops a bare metal server.
 
 
-  network_interfaces (False, list, None)
-    None
+  image (True, str, None)
+    (Required for new resource) image id
 
 
   user_data (False, str, None)
     User data given for the bare metal server
 
 
+  vpc (False, str, None)
+    The VPC the bare metal server is to be a part of
+
+
+  network_interfaces (False, list, None)
+    None
+
+
   zone (True, str, None)
     (Required for new resource) Zone name
+
+
+  tags (False, list, None)
+    Tags for the Bare metal server
 
 
   access_tags (False, list, None)
     List of access management tags
 
 
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
+  delete_type (False, str, hard)
+    Enables stopping type of the bare metal server before deleting
 
 
-  image (True, str, None)
-    (Required for new resource) image id
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the bare metal server
+
+
+  resource_group (False, str, None)
+    Resource group name
 
 
   id (False, str, None)

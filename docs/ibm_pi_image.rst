@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,68 +31,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_image_bucket_access (False, str, public)
-    Indicates if the bucket has public or private access
-
-
-  pi_affinity_volume (False, str, None)
-    Volume (ID or Name) to base storage affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
-
-
-  pi_image_secret_key (False, str, None)
-    Cloud Object Storage secret key; required for buckets with private access
-
-
-  pi_image_bucket_file_name (False, str, None)
-    Cloud Object Storage image filename
-
-
-  pi_affinity_instance (False, str, None)
-    PVM Instance (ID or Name) to base storage affinity policy against; required if requesting storage affinity and pi_affinity_volume is not provided
-
-
-  pi_anti_affinity_volumes (False, list, None)
-    List of volumes to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_instances is not provided
-
-
-  pi_image_id (False, str, None)
-    Instance image id
-
-
-  pi_image_bucket_name (False, str, None)
-    Cloud Object Storage bucket name; bucket-name[/optional/folder]
-
-
-  pi_image_bucket_region (False, str, None)
-    Cloud Object Storage region
-
-
-  pi_anti_affinity_instances (False, list, None)
-    List of pvmInstances to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_volumes is not provided
-
-
-  pi_image_access_key (False, str, None)
-    Cloud Object Storage access key; required for buckets with private access
-
-
-  pi_image_storage_type (False, str, None)
-    Type of storage
-
-
-  pi_image_storage_pool (False, str, None)
-    Storage pool where the image will be loaded, if provided then pi_image_storage_type and pi_affinity_policy will be ignored
-
-
-  pi_affinity_policy (False, str, None)
-    Affinity policy for image; ignored if pi_image_storage_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
-
-
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
 
 
   pi_image_name (True, str, None)
     (Required for new resource) Image name
+
+
+  pi_image_id (False, str, None)
+    Instance image id
+
+
+  pi_image_access_key (False, str, None)
+    Cloud Object Storage access key; required for buckets with private access
+
+
+  pi_image_bucket_region (False, str, None)
+    Cloud Object Storage region
+
+
+  pi_image_bucket_file_name (False, str, None)
+    Cloud Object Storage image filename
+
+
+  pi_affinity_policy (False, str, None)
+    Affinity policy for image; ignored if pi_image_storage_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
+
+
+  pi_image_bucket_access (False, str, public)
+    Indicates if the bucket has public or private access
+
+
+  pi_image_storage_pool (False, str, None)
+    Storage pool where the image will be loaded, if provided then pi_image_storage_type and pi_affinity_policy will be ignored
+
+
+  pi_anti_affinity_volumes (False, list, None)
+    List of volumes to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_instances is not provided
+
+
+  pi_anti_affinity_instances (False, list, None)
+    List of pvmInstances to base storage anti-affinity policy against; required if requesting anti-affinity and pi_anti_affinity_volumes is not provided
+
+
+  pi_image_bucket_name (False, str, None)
+    Cloud Object Storage bucket name; bucket-name[/optional/folder]
+
+
+  pi_image_secret_key (False, str, None)
+    Cloud Object Storage secret key; required for buckets with private access
+
+
+  pi_image_storage_type (False, str, None)
+    Type of storage
+
+
+  pi_affinity_volume (False, str, None)
+    Volume (ID or Name) to base storage affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
+
+
+  pi_affinity_instance (False, str, None)
+    PVM Instance (ID or Name) to base storage affinity policy against; required if requesting storage affinity and pi_affinity_volume is not provided
 
 
   id (False, str, None)

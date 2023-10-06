@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
+  monitor (False, str, None)
+    The ID of the load balancer monitor to be associated to this pool
 
 
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
-
-
-  healthcheck_subnets (False, list, None)
-    Health check subnet crn of VSIs
 
 
   description (False, str, None)
@@ -51,6 +47,10 @@ Parameters
     Whether the load balancer pool is enabled
 
 
+  healthy_origins_threshold (False, int, None)
+    The minimum number of origins that must be healthy for this pool to serve traffic
+
+
   notification_channel (False, str, None)
     The notification channel,It is a webhook url
 
@@ -59,16 +59,16 @@ Parameters
     Health check region of VSIs
 
 
-  healthy_origins_threshold (False, int, None)
-    The minimum number of origins that must be healthy for this pool to serve traffic
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
 
 
   origins (True, list, None)
     (Required for new resource) Origins info
 
 
-  monitor (False, str, None)
-    The ID of the load balancer monitor to be associated to this pool
+  healthcheck_subnets (False, list, None)
+    Health check subnet crn of VSIs
 
 
   id (False, str, None)

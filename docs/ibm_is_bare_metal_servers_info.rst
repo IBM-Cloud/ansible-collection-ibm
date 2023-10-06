@@ -21,25 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vpc_crn (False, str, None)
-    The vpc CRN this bare metal server is in
-
-
-  network_interfaces_subnet_name (False, str, None)
-    The name of the subnet of the bare metal server network interfaces
-
-
-  resource_group (False, str, None)
-    The unique identifier of the resource group this bare metal server belongs to
-
 
   vpc (False, str, None)
     The vpc ID this bare metal server is in
@@ -49,8 +37,8 @@ Parameters
     The vpc name this bare metal server is in
 
 
-  name (False, str, None)
-    The name of the bare metal server
+  vpc_crn (False, str, None)
+    The vpc CRN this bare metal server is in
 
 
   network_interfaces_subnet (False, str, None)
@@ -59,6 +47,18 @@ Parameters
 
   network_interfaces_subnet_crn (False, str, None)
     The crn of the subnet of the bare metal server network interfaces
+
+
+  resource_group (False, str, None)
+    The unique identifier of the resource group this bare metal server belongs to
+
+
+  name (False, str, None)
+    The name of the bare metal server
+
+
+  network_interfaces_subnet_name (False, str, None)
+    The name of the subnet of the bare metal server network interfaces
 
 
   generation (False, int, 2)

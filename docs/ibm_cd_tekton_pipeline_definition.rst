@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -35,8 +35,8 @@ Parameters
     (Required for new resource) The Tekton pipeline ID.
 
 
-  source (False, list, None)
-    Source repository containing the Tekton pipeline definition.
+  source (True, list, None)
+    (Required for new resource) Source repository containing the Tekton pipeline definition.
 
 
   id (False, str, None)

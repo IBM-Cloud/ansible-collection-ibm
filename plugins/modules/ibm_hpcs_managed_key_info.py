@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_managed_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    uko_vault:
-        description:
-            - The UUID of the Vault in which the update is to take place.
-        required: True
-        type: str
     key_id:
         description:
             - UUID of the key.
+        required: True
+        type: str
+    uko_vault:
+        description:
+            - The UUID of the Vault in which the update is to take place.
         required: True
         type: str
     region:
@@ -74,16 +74,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('uko_vault', 'str'),
     ('key_id', 'str'),
+    ('uko_vault', 'str'),
     ('region', 'str'),
     ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'uko_vault',
     'key_id',
+    'uko_vault',
     'region',
     'instance_id',
 ]
@@ -96,10 +96,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    uko_vault=dict(
+    key_id=dict(
         required=True,
         type='str'),
-    key_id=dict(
+    uko_vault=dict(
         required=True,
         type='str'),
     region=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_managed_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

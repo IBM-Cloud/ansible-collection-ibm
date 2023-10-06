@@ -23,37 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  job_inputs (False, list, None)
-    Job inputs used by Action or Workspace.
-
-
-  data (False, list, None)
-    Job data.
-
-
-  command_options (False, list, None)
-    Command line options for the command.
-
-
-  command_parameter (False, str, None)
-    Schematics job command parameter (playbook-name).
-
-
-  job_env_settings (False, list, None)
-    Environment variables used by the Job while performing Action or Workspace.
-
-
-  tags (False, list, None)
-    User defined tags, while running the job.
-
 
   location (False, str, None)
     List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
@@ -63,20 +39,44 @@ Parameters
     Job log summary record.
 
 
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  tags (False, list, None)
+    User defined tags, while running the job.
 
 
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
+  data (False, list, None)
+    Job data.
 
 
   bastion (False, list, None)
     Describes a bastion resource.
 
 
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  command_parameter (False, str, None)
+    Schematics job command parameter (playbook-name).
+
+
+  command_options (False, list, None)
+    Command line options for the command.
+
+
+  job_inputs (False, list, None)
+    Job inputs used by Action or Workspace.
+
+
   command_object_id (True, str, None)
     (Required for new resource) Job command object id (workspace-id, action-id).
+
+
+  job_env_settings (False, list, None)
+    Environment variables used by the Job while performing Action or Workspace.
+
+
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
 
 
   id (False, str, None)

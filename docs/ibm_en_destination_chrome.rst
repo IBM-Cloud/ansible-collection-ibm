@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) The type of Destination type push_chrome.
-
-
-  config (False, list, None)
-    Payload describing a destination configuration.
+  description (False, str, None)
+    The Destination description.
 
 
   instance_guid (True, str, None)
@@ -47,8 +43,12 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
-  description (False, str, None)
-    The Destination description.
+  type (True, str, None)
+    (Required for new resource) The type of Destination type push_chrome.
+
+
+  config (False, list, None)
+    Payload describing a destination configuration.
 
 
   id (False, str, None)

@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
+
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
@@ -45,10 +49,6 @@ Parameters
 
   min_tls_version (False, str, 1.1)
     Minimum version of TLS required
-
-
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
 
 
   id (False, str, None)

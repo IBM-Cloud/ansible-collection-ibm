@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tab_title (False, str, None)
-    None
-
-
   footnote (False, str, None)
     None
 
 
   tenant_id (True, str, None)
     (Required for new resource) The AppID instance GUID
+
+
+  tab_title (False, str, None)
+    None
 
 
   id (False, str, None)

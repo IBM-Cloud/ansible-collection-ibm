@@ -21,25 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group (False, str, None)
-    The unique identifier of the resource group this flow log belongs to
-
-
-  vpc (False, str, None)
-    The vpc ID this flow log is in
-
-
-  vpc_name (False, str, None)
-    The vpc name this flow log is in
-
 
   vpc_crn (False, str, None)
     The vpc CRN this flow log is in
@@ -55,6 +43,18 @@ Parameters
 
   target_resource_type (False, str, None)
     The target resource type of the flow log
+
+
+  resource_group (False, str, None)
+    The unique identifier of the resource group this flow log belongs to
+
+
+  vpc (False, str, None)
+    The vpc ID this flow log is in
+
+
+  vpc_name (False, str, None)
+    The vpc name this flow log is in
 
 
   generation (False, int, 2)

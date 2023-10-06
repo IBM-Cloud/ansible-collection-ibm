@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  pi_image_bucket_region (True, str, None)
+    (Required for new resource) Cloud Object Storage region
+
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
@@ -49,10 +53,6 @@ Parameters
 
   pi_image_secret_key (True, str, None)
     (Required for new resource) Cloud Object Storage secret key; required for buckets with private access
-
-
-  pi_image_bucket_region (True, str, None)
-    (Required for new resource) Cloud Object Storage region
 
 
   id (False, str, None)

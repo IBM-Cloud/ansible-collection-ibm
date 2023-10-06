@@ -18,19 +18,30 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_with_policy_overrides' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    key_name:
+    iv_value:
         description:
-            - (Required for new resource) Key name
-        required: True
+            - Only for imported root key
+        required: False
         type: str
+    rotation:
+        description:
+            - Data associated with the key rotation policy
+        required: False
+        type: list
+        elements: dict
     endpoint_type:
         description:
             - Public or Private
         required: False
+        type: str
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: True
         type: str
     standard_key:
         description:
@@ -38,53 +49,42 @@ options:
         required: False
         type: bool
         default: False
-    force_delete:
-        description:
-            - set to true to force delete the key
-        required: False
-        type: bool
-        default: False
-    rotation:
-        description:
-            - Data associated with the key rotation policy
-        required: False
-        type: list
-        elements: dict
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
-    iv_value:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) Key protect or HPCS instance GUID or CRN
-        required: True
-        type: str
-    expiration_date:
-        description:
-            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-        required: False
-        type: str
     dual_auth_delete:
         description:
             - Data associated with the dual authorization delete policy.
         required: False
         type: list
         elements: dict
+    instance_id:
+        description:
+            - (Required for new resource) Key protect or HPCS instance GUID or CRN
+        required: True
+        type: str
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    expiration_date:
+        description:
+            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+        required: False
+        type: str
+    force_delete:
+        description:
+            - set to true to force delete the key
+        required: False
+        type: bool
+        default: False
     key_ring_id:
         description:
             - Key Ring for the Key
         required: False
         type: str
         default: default
-    payload:
+    encrypted_nonce:
         description:
-            - None
+            - Only for imported root key
         required: False
         type: str
     id:
@@ -139,18 +139,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_name',
-    'endpoint_type',
-    'standard_key',
-    'force_delete',
-    'rotation',
-    'encrypted_nonce',
     'iv_value',
-    'instance_id',
-    'expiration_date',
+    'rotation',
+    'endpoint_type',
+    'key_name',
+    'standard_key',
     'dual_auth_delete',
-    'key_ring_id',
+    'instance_id',
     'payload',
+    'expiration_date',
+    'force_delete',
+    'key_ring_id',
+    'encrypted_nonce',
 ]
 
 # Params for Data source
@@ -167,42 +167,42 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_name=dict(
+    iv_value=dict(
         required=False,
         type='str'),
+    rotation=dict(
+        required=False,
+        elements='',
+        type='list'),
     endpoint_type=dict(
+        required=False,
+        type='str'),
+    key_name=dict(
         required=False,
         type='str'),
     standard_key=dict(
         required=False,
         type='bool'),
-    force_delete=dict(
-        required=False,
-        type='bool'),
-    rotation=dict(
+    dual_auth_delete=dict(
         required=False,
         elements='',
         type='list'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
-    iv_value=dict(
-        required=False,
-        type='str'),
     instance_id=dict(
+        required=False,
+        type='str'),
+    payload=dict(
         required=False,
         type='str'),
     expiration_date=dict(
         required=False,
         type='str'),
-    dual_auth_delete=dict(
+    force_delete=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='bool'),
     key_ring_id=dict(
         required=False,
         type='str'),
-    payload=dict(
+    encrypted_nonce=dict(
         required=False,
         type='str'),
     id=dict(
@@ -270,7 +270,7 @@ def run_module():
         resource_type='ibm_kms_key_with_policy_overrides',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

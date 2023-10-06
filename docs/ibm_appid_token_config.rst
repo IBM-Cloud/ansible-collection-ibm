@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.49.0
+- IBM-Cloud terraform-provider-ibm v1.50.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  access_token_expires_in (False, int, None)
+    The length of time for which access tokens are valid in seconds
+
+
+  refresh_token_expires_in (False, int, 2592000)
+    The length of time for which refresh tokens are valid in seconds
+
 
   anonymous_token_expires_in (False, int, 2592000)
     None
@@ -53,14 +61,6 @@ Parameters
 
   tenant_id (True, str, None)
     (Required for new resource) The service `tenantId`
-
-
-  access_token_expires_in (False, int, None)
-    The length of time for which access tokens are valid in seconds
-
-
-  refresh_token_expires_in (False, int, 2592000)
-    The length of time for which refresh tokens are valid in seconds
 
 
   id (False, str, None)

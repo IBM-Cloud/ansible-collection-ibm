@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cis_domain' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
@@ -31,15 +31,15 @@ options:
             - None
         required: False
         type: str
-    cname_suffix:
-        description:
-            - None
-        required: False
-        type: str
     cis_id:
         description:
             - CIS instance crn
         required: True
+        type: str
+    cname_suffix:
+        description:
+            - None
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -82,8 +82,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'domain',
     'verification_key',
-    'cname_suffix',
     'cis_id',
+    'cname_suffix',
 ]
 
 
@@ -100,11 +100,11 @@ module_args = dict(
     verification_key=dict(
         required=False,
         type='str'),
-    cname_suffix=dict(
-        required=False,
-        type='str'),
     cis_id=dict(
         required=True,
+        type='str'),
+    cname_suffix=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_cis_domain',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,25 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_bare_metal_servers' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.49.0
+    - IBM-Cloud terraform-provider-ibm v1.50.0
     - Terraform v0.12.20
 
 options:
-    vpc_crn:
-        description:
-            - The vpc CRN this bare metal server is in
-        required: False
-        type: str
-    network_interfaces_subnet_name:
-        description:
-            - The name of the subnet of the bare metal server network interfaces
-        required: False
-        type: str
-    resource_group:
-        description:
-            - The unique identifier of the resource group this bare metal server belongs to
-        required: False
-        type: str
     vpc:
         description:
             - The vpc ID this bare metal server is in
@@ -46,9 +31,9 @@ options:
             - The vpc name this bare metal server is in
         required: False
         type: str
-    name:
+    vpc_crn:
         description:
-            - The name of the bare metal server
+            - The vpc CRN this bare metal server is in
         required: False
         type: str
     network_interfaces_subnet:
@@ -59,6 +44,21 @@ options:
     network_interfaces_subnet_crn:
         description:
             - The crn of the subnet of the bare metal server network interfaces
+        required: False
+        type: str
+    resource_group:
+        description:
+            - The unique identifier of the resource group this bare metal server belongs to
+        required: False
+        type: str
+    name:
+        description:
+            - The name of the bare metal server
+        required: False
+        type: str
+    network_interfaces_subnet_name:
+        description:
+            - The name of the subnet of the bare metal server network interfaces
         required: False
         type: str
     generation:
@@ -98,14 +98,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc_crn',
-    'network_interfaces_subnet_name',
-    'resource_group',
     'vpc',
     'vpc_name',
-    'name',
+    'vpc_crn',
     'network_interfaces_subnet',
     'network_interfaces_subnet_crn',
+    'resource_group',
+    'name',
+    'network_interfaces_subnet_name',
 ]
 
 
@@ -116,28 +116,28 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc_crn=dict(
-        required=False,
-        type='str'),
-    network_interfaces_subnet_name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     vpc=dict(
         required=False,
         type='str'),
     vpc_name=dict(
         required=False,
         type='str'),
-    name=dict(
+    vpc_crn=dict(
         required=False,
         type='str'),
     network_interfaces_subnet=dict(
         required=False,
         type='str'),
     network_interfaces_subnet_crn=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    network_interfaces_subnet_name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_servers',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.49.0',
+        ibm_provider_version='1.50.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
