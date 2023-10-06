@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -35,32 +35,32 @@ Parameters
     serivice instance name
 
 
-  tags (False, list, None)
-    List of tags for the resource
+  service_instance_id (False, str, None)
+    Service instance ID
 
 
   key (False, str, None)
     Key info
 
 
-  role (False, str, None)
-    Role info
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  tags (False, list, None)
+    List of tags for the resource
 
 
   cluster_name_id (True, str, None)
     (Required for new resource) Cluster name or ID
 
 
-  service_instance_id (False, str, None)
-    Service instance ID
-
-
   namespace_id (True, str, None)
     (Required for new resource) namespace ID
+
+
+  role (False, str, None)
+    Role info
 
 
   id (False, str, None)

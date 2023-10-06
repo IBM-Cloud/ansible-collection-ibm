@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_vault' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - UUID of the vault.
         required: True
         type: str
-    instance_id:
-        description:
-            - The ID of the UKO instance this resource exists in.
-        required: True
-        type: str
     region:
         description:
             - The region of the UKO instance this resource exists in.
+        required: True
+        type: str
+    instance_id:
+        description:
+            - The ID of the UKO instance this resource exists in.
         required: True
         type: str
     iaas_classic_username:
@@ -70,15 +70,15 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('vault_id', 'str'),
-    ('instance_id', 'str'),
     ('region', 'str'),
+    ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vault_id',
-    'instance_id',
     'region',
+    'instance_id',
 ]
 
 
@@ -92,10 +92,10 @@ module_args = dict(
     vault_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
+    region=dict(
         required=True,
         type='str'),
-    region=dict(
+    instance_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -132,7 +132,7 @@ def run_module():
         resource_type='ibm_hpcs_vault',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

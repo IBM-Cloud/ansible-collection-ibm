@@ -1,6 +1,6 @@
 namespace: "ibm"
 name: "cloudcollection"
-version: "1.49.0"
+version: "1.51.0"
 readme: "README.md"
 authors:
     - "Jay W Carman"

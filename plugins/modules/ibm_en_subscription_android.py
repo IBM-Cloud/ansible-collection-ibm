@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_android' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -27,10 +27,10 @@ options:
             - (Required for new resource) Subscription name.
         required: True
         type: str
-    description:
+    destination_id:
         description:
-            - Subscription description.
-        required: False
+            - (Required for new resource) Destination ID.
+        required: True
         type: str
     topic_id:
         description:
@@ -42,10 +42,10 @@ options:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
-    destination_id:
+    description:
         description:
-            - (Required for new resource) Destination ID.
-        required: True
+            - Subscription description.
+        required: False
         type: str
     id:
         description:
@@ -94,18 +94,18 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('name', 'str'),
+    ('destination_id', 'str'),
     ('topic_id', 'str'),
     ('instance_guid', 'str'),
-    ('destination_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'description',
+    'destination_id',
     'topic_id',
     'instance_guid',
-    'destination_id',
+    'description',
 ]
 
 # Params for Data source
@@ -129,7 +129,7 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    description=dict(
+    destination_id=dict(
         required=False,
         type='str'),
     topic_id=dict(
@@ -138,7 +138,7 @@ module_args = dict(
     instance_guid=dict(
         required=False,
         type='str'),
-    destination_id=dict(
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_en_subscription_android',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_en_subscription_android',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

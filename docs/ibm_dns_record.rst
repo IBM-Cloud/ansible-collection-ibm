@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  priority (False, int, 0)
-    priority info
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
-  weight (False, int, 0)
-    weight info
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  port (False, int, None)
-    port number
+  protocol (False, str, None)
+    protocol info
 
 
   data (True, str, None)
     (Required for new resource) DNS record data
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  expire (False, int, None)
+    DNS record expiry info
 
 
   refresh (False, int, None)
@@ -63,32 +67,20 @@ Parameters
     Responsible person for DNS record
 
 
-  protocol (False, str, None)
-    protocol info
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
   minimum_ttl (False, int, None)
     Minimun TTL configuration
 
 
-  type (True, str, None)
-    (Required for new resource) DNS record type
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
 
 
   service (False, str, None)
     service info
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
+  port (False, int, None)
+    port number
 
 
   host (True, str, None)
@@ -97,6 +89,14 @@ Parameters
 
   retry (False, int, None)
     Retry count
+
+
+  priority (False, int, 0)
+    priority info
+
+
+  weight (False, int, 0)
+    weight info
 
 
   id (False, str, None)

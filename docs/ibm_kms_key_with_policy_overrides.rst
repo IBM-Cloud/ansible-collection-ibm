@@ -23,33 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  rotation (False, list, None)
-    Data associated with the key rotation policy
-
-
-  endpoint_type (False, str, None)
-    Public or Private
-
-
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
 
   dual_auth_delete (False, list, None)
     Data associated with the dual authorization delete policy.
@@ -59,23 +39,43 @@ Parameters
     (Required for new resource) Key protect or HPCS instance GUID or CRN
 
 
-  payload (False, str, None)
-    None
+  endpoint_type (False, str, None)
+    Public or Private
 
 
-  expiration_date (False, str, None)
-    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-
-
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  rotation (False, list, None)
+    Data associated with the key rotation policy
 
 
   key_ring_id (False, str, default)
     Key Ring for the Key
 
 
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  standard_key (False, bool, False)
+    Standard key type
+
+
+  payload (False, str, None)
+    None
+
+
   encrypted_nonce (False, str, None)
+    Only for imported root key
+
+
+  expiration_date (False, str, None)
+    The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+
+
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  iv_value (False, str, None)
     Only for imported root key
 
 

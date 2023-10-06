@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  direction (False, str, None)
-    The direction of the rules to filter
-
-
   network_acl (True, str, None)
     Network ACL id
+
+
+  direction (False, str, None)
+    The direction of the rules to filter
 
 
   generation (False, int, 2)

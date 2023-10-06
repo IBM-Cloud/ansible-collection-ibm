@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_rule_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    excluded_scopes:
-        description:
-            - The extent at which the rule can be excluded from the included scope.
-        required: False
-        type: list
-        elements: dict
     rule_id:
         description:
             - (Required for new resource) The UUID that uniquely identifies the rule.
@@ -42,6 +36,12 @@ options:
         description:
             - (Required for new resource) The extent at which the rule can be attached across your accounts.
         required: True
+        type: list
+        elements: dict
+    excluded_scopes:
+        description:
+            - The extent at which the rule can be excluded from the included scope.
+        required: False
         type: list
         elements: dict
     id:
@@ -97,10 +97,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'excluded_scopes',
     'rule_id',
     'account_id',
     'included_scope',
+    'excluded_scopes',
 ]
 
 # Params for Data source
@@ -117,10 +117,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    excluded_scopes=dict(
-        required=False,
-        elements='',
-        type='list'),
     rule_id=dict(
         required=False,
         type='str'),
@@ -128,6 +124,10 @@ module_args = dict(
         required=False,
         type='str'),
     included_scope=dict(
+        required=False,
+        elements='',
+        type='list'),
+    excluded_scopes=dict(
         required=False,
         elements='',
         type='list'),
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_scc_rule_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

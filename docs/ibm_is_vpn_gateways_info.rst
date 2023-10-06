@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The unique identifier of the resource group this vpn gateway belongs to
-
-
   mode (False, str, None)
     The mode of this vpn gateway.
+
+
+  resource_group (False, str, None)
+    The unique identifier of the resource group this vpn gateway belongs to
 
 
   generation (False, int, 2)

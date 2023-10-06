@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -32,21 +32,16 @@ options:
             - BGP customer edge router CIDR
         required: False
         type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
-        type: int
     name:
         description:
             - (Required for new resource) The unique user-defined name for this gateway
         required: True
         type: str
-    bgp_ibm_cidr:
+    speed_mbps:
         description:
-            - BGP IBM CIDR
-        required: False
-        type: str
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
+        type: int
     tags:
         description:
             - Tags for the direct link gateway
@@ -62,6 +57,11 @@ options:
         description:
             - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
         required: True
+        type: str
+    bgp_ibm_cidr:
+        description:
+            - BGP IBM CIDR
+        required: False
         type: str
     vlan:
         description:
@@ -115,8 +115,8 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bgp_asn', 'int'),
-    ('speed_mbps', 'int'),
     ('name', 'str'),
+    ('speed_mbps', 'int'),
     ('port', 'str'),
     ('customer_account_id', 'str'),
 ]
@@ -125,12 +125,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'bgp_asn',
     'bgp_cer_cidr',
-    'speed_mbps',
     'name',
-    'bgp_ibm_cidr',
+    'speed_mbps',
     'tags',
     'port',
     'customer_account_id',
+    'bgp_ibm_cidr',
     'vlan',
 ]
 
@@ -154,15 +154,12 @@ module_args = dict(
     bgp_cer_cidr=dict(
         required=False,
         type='str'),
-    speed_mbps=dict(
-        required=False,
-        type='int'),
     name=dict(
         required=False,
         type='str'),
-    bgp_ibm_cidr=dict(
+    speed_mbps=dict(
         required=False,
-        type='str'),
+        type='int'),
     tags=dict(
         required=False,
         elements='',
@@ -171,6 +168,9 @@ module_args = dict(
         required=False,
         type='str'),
     customer_account_id=dict(
+        required=False,
+        type='str'),
+    bgp_ibm_cidr=dict(
         required=False,
         type='str'),
     vlan=dict(
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

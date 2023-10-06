@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  instance (True, str, None)
+    (Required for new resource) Instance identifier
+
+
   network_interface (True, str, None)
     (Required for new resource) Instance network interface identifier
 
 
   floating_ip (True, str, None)
     (Required for new resource) The floating ip identifier of the network interface associated with the Instance
-
-
-  instance (True, str, None)
-    (Required for new resource) Instance identifier
 
 
   id (False, str, None)

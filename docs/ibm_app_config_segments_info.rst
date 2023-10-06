@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,20 +29,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+  include (False, str, None)
+    Segment details to include the associated rules in the response
 
 
   expand (False, bool, None)
     If set to `true`, returns expanded view of the resource details.
 
 
-  limit (False, int, None)
-    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
-
-
   offset (False, int, None)
     The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
+
+
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   tags (False, str, None)
@@ -53,8 +53,8 @@ Parameters
     Sort the segment details based on the specified attribute.
 
 
-  include (False, str, None)
-    Segment details to include the associated rules in the response
+  limit (False, int, None)
+    The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
 
 
   total_count (False, int, None)

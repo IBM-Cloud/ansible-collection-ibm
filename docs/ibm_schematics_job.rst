@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (False, str, None)
-    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-
-
-  log_summary (False, list, None)
-    Job log summary record.
-
-
   tags (False, list, None)
     User defined tags, while running the job.
 
 
-  data (False, list, None)
-    Job data.
-
-
-  bastion (False, list, None)
-    Describes a bastion resource.
-
-
-  command_name (True, str, None)
-    (Required for new resource) Schematics job command name.
+  command_object (True, str, None)
+    (Required for new resource) Name of the Schematics automation resource.
 
 
   command_parameter (False, str, None)
@@ -67,16 +51,32 @@ Parameters
     Job inputs used by Action or Workspace.
 
 
+  data (False, list, None)
+    Job data.
+
+
   command_object_id (True, str, None)
     (Required for new resource) Job command object id (workspace-id, action-id).
+
+
+  command_name (True, str, None)
+    (Required for new resource) Schematics job command name.
+
+
+  bastion (False, list, None)
+    Describes a bastion resource.
 
 
   job_env_settings (False, list, None)
     Environment variables used by the Job while performing Action or Workspace.
 
 
-  command_object (True, str, None)
-    (Required for new resource) Name of the Schematics automation resource.
+  location (False, str, None)
+    List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+
+
+  log_summary (False, list, None)
+    Job log summary record.
 
 
   id (False, str, None)

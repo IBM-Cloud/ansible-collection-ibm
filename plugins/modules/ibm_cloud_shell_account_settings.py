@@ -18,21 +18,26 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cloud_shell_account_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    regions:
-        description:
-            - List of Cloud Shell region settings.
-        required: False
-        type: list
-        elements: dict
     account_id:
         description:
             - (Required for new resource) The account ID in which the account settings belong to.
         required: True
         type: str
+    enabled:
+        description:
+            - When enabled, Cloud Shell is available to all users in the account.
+        required: False
+        type: bool
+    features:
+        description:
+            - List of Cloud Shell features.
+        required: False
+        type: list
+        elements: dict
     rev:
         description:
             - Unique revision number for the settings object.
@@ -48,14 +53,9 @@ options:
             - Set whether Cloud Shell is enabled in a specific location for the account. The location determines where user and session data are stored. By default, users are routed to the nearest available location.
         required: False
         type: bool
-    enabled:
+    regions:
         description:
-            - When enabled, Cloud Shell is available to all users in the account.
-        required: False
-        type: bool
-    features:
-        description:
-            - List of Cloud Shell features.
+            - List of Cloud Shell region settings.
         required: False
         type: list
         elements: dict
@@ -110,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'regions',
     'account_id',
+    'enabled',
+    'features',
     'rev',
     'default_enable_new_features',
     'default_enable_new_regions',
-    'enabled',
-    'features',
+    'regions',
 ]
 
 # Params for Data source
@@ -135,13 +135,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    regions=dict(
-        required=False,
-        elements='',
-        type='list'),
     account_id=dict(
         required=False,
         type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
+    features=dict(
+        required=False,
+        elements='',
+        type='list'),
     rev=dict(
         required=False,
         type='str'),
@@ -151,10 +154,7 @@ module_args = dict(
     default_enable_new_regions=dict(
         required=False,
         type='bool'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    features=dict(
+    regions=dict(
         required=False,
         elements='',
         type='list'),
@@ -223,7 +223,7 @@ def run_module():
         resource_type='ibm_cloud_shell_account_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +232,7 @@ def run_module():
             resource_type='ibm_cloud_shell_account_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,25 +17,24 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cos_bucket' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    bucket_name:
-        description:
-            - None
-        required: True
-        type: str
-    endpoint_type:
-        description:
-            - public or private
-        required: False
-        type: str
-        default: public
     bucket_region:
         description:
             - None
         required: False
+        type: str
+    resource_instance_id:
+        description:
+            - None
+        required: True
+        type: str
+    bucket_name:
+        description:
+            - None
+        required: True
         type: str
     satellite_location_id:
         description:
@@ -47,11 +46,12 @@ options:
             - None
         required: False
         type: str
-    resource_instance_id:
+    endpoint_type:
         description:
-            - None
-        required: True
+            - public or private
+        required: False
         type: str
+        default: public
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -85,40 +85,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
+    ('bucket_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bucket_name',
-    'endpoint_type',
     'bucket_region',
+    'resource_instance_id',
+    'bucket_name',
     'satellite_location_id',
     'bucket_type',
-    'resource_instance_id',
+    'endpoint_type',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'endpoint_type': ['satellite_location_id'],
     'bucket_region': ['satellite_location_id'],
     'satellite_location_id': ['bucket_type', 'bucket_region'],
     'bucket_type': ['satellite_location_id'],
+    'endpoint_type': ['satellite_location_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bucket_name=dict(
-        required=True,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
     bucket_region=dict(
         required=False,
+        type='str'),
+    resource_instance_id=dict(
+        required=True,
+        type='str'),
+    bucket_name=dict(
+        required=True,
         type='str'),
     satellite_location_id=dict(
         required=False,
@@ -126,8 +126,8 @@ module_args = dict(
     bucket_type=dict(
         required=False,
         type='str'),
-    resource_instance_id=dict(
-        required=True,
+    endpoint_type=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -163,7 +163,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

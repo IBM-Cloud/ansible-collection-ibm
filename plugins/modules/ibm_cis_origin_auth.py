@@ -18,13 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_origin_auth' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    certificate:
+        description:
+            - (Required for new resource) Certificate content which needs to be uploaded
         required: True
         type: str
     level:
@@ -32,27 +42,17 @@ options:
             - (Required for new resource) Origin auth level zone or hostname
         required: True
         type: str
+    hostname:
+        description:
+            - Host name needed for host level authentication
+        required: False
+        type: str
     enabled:
         description:
             - Enabel-disable origin auth for a zone or host
         required: False
         type: bool
         default: True
-    certificate:
-        description:
-            - (Required for new resource) Certificate content which needs to be uploaded
-        required: True
-        type: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    hostname:
-        description:
-            - Host name needed for host level authentication
-        required: False
-        type: str
     private_key:
         description:
             - (Required for new resource) Private key content which needs to be uploaded
@@ -104,21 +104,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
-    ('level', 'str'),
-    ('certificate', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
+    ('certificate', 'str'),
+    ('level', 'str'),
     ('private_key', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'domain_id',
-    'level',
-    'enabled',
-    'certificate',
     'cis_id',
+    'domain_id',
+    'certificate',
+    'level',
     'hostname',
+    'enabled',
     'private_key',
 ]
 
@@ -136,24 +136,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
     domain_id=dict(
+        required=False,
+        type='str'),
+    certificate=dict(
         required=False,
         type='str'),
     level=dict(
         required=False,
         type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
-    certificate=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     hostname=dict(
         required=False,
         type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     private_key=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_cis_origin_auth',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

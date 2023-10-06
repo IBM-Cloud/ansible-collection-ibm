@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  prefix (True, str, None)
+    (Required for new resource) IP Prefix
+
+
   before (False, str, None)
     Identifier of prefix filter that handles ordering
+
+
+  ge (False, int, None)
+    IP Prefix GE
+
+
+  le (False, int, None)
+    IP Prefix LE
 
 
   gateway (True, str, None)
@@ -45,18 +57,6 @@ Parameters
 
   action (True, str, None)
     (Required for new resource) Whether to permit or deny the prefix filter
-
-
-  ge (False, int, None)
-    IP Prefix GE
-
-
-  le (False, int, None)
-    IP Prefix LE
-
-
-  prefix (True, str, None)
-    (Required for new resource) IP Prefix
 
 
   id (False, str, None)

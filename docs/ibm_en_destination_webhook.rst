@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -33,10 +33,6 @@ Parameters
 
   description (False, str, None)
     The Destination description.
-
-
-  config (False, list, None)
-    Payload describing a destination configuration.
 
 
   instance_guid (True, str, None)
@@ -49,6 +45,10 @@ Parameters
 
   type (True, str, None)
     (Required for new resource) The type of Destination Webhook.
+
+
+  config (False, list, None)
+    Payload describing a destination configuration.
 
 
   id (False, str, None)

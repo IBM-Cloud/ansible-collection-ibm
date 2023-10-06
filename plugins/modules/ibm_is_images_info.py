@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_images' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - The name of the image
-        required: False
-        type: str
     status:
         description:
             - The status of the image
@@ -46,6 +41,11 @@ options:
             - Lists images managed as part of a catalog offering. If an image is managed, accounts in the same enterprise with access to that catalog can specify the image's catalog offering version CRN to provision virtual server instances using the image
         required: False
         type: bool
+    name:
+        description:
+            - The name of the image
+        required: False
+        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -83,11 +83,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
     'status',
     'visibility',
     'resource_group',
     'catalog_managed',
+    'name',
 ]
 
 
@@ -98,9 +98,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
     status=dict(
         required=False,
         type='str'),
@@ -113,6 +110,9 @@ module_args = dict(
     catalog_managed=dict(
         required=False,
         type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     generation=dict(
         type='int',
         required=False,
@@ -159,7 +159,7 @@ def run_module():
         resource_type='ibm_is_images',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

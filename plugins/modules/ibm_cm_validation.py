@@ -18,21 +18,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_validation' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    x_auth_refresh_token:
+        description:
+            - (Required for new resource) Authentication token used to submit validation job.
+        required: True
+        type: str
+    override_values:
+        description:
+            - Override values during validation.
+        required: False
+        type: dict
+        elements: str
+    environment_variables:
+        description:
+            - Environment variables to include in the schematics workspace.
+        required: False
+        type: list
+        elements: dict
+    version_locator:
+        description:
+            - (Required for new resource) Version locator - the version that will be validated.
+        required: True
+        type: str
     region:
         description:
             - Validation region.
         required: False
         type: str
-    schematics:
-        description:
-            - Other values to pass to the schematics workspace.
-        required: False
-        type: list
-        elements: dict
     revalidate_if_validated:
         description:
             - If the version should be revalidated if it is already validated.
@@ -43,28 +59,12 @@ options:
             - If the version should be marked as consumable or "ready to share".
         required: False
         type: bool
-    version_locator:
+    schematics:
         description:
-            - (Required for new resource) Version locator - the version that will be validated.
-        required: True
-        type: str
-    x_auth_refresh_token:
-        description:
-            - (Required for new resource) Authentication token used to submit validation job.
-        required: True
-        type: str
-    environment_variables:
-        description:
-            - Environment variables to include in the schematics workspace.
+            - Other values to pass to the schematics workspace.
         required: False
         type: list
         elements: dict
-    override_values:
-        description:
-            - Override values during validation.
-        required: False
-        type: dict
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +111,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('version_locator', 'str'),
     ('x_auth_refresh_token', 'str'),
+    ('version_locator', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'x_auth_refresh_token',
+    'override_values',
+    'environment_variables',
+    'version_locator',
     'region',
-    'schematics',
     'revalidate_if_validated',
     'mark_version_consumable',
-    'version_locator',
-    'x_auth_refresh_token',
-    'environment_variables',
-    'override_values',
+    'schematics',
 ]
 
 # Params for Data source
@@ -141,33 +141,33 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
+    x_auth_refresh_token=dict(
         required=False,
         type='str'),
-    schematics=dict(
+    override_values=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    environment_variables=dict(
         required=False,
         elements='',
         type='list'),
+    version_locator=dict(
+        required=False,
+        type='str'),
+    region=dict(
+        required=False,
+        type='str'),
     revalidate_if_validated=dict(
         required=False,
         type='bool'),
     mark_version_consumable=dict(
         required=False,
         type='bool'),
-    version_locator=dict(
-        required=False,
-        type='str'),
-    x_auth_refresh_token=dict(
-        required=False,
-        type='str'),
-    environment_variables=dict(
+    schematics=dict(
         required=False,
         elements='',
         type='list'),
-    override_values=dict(
-        required=False,
-        elements='',
-        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +233,7 @@ def run_module():
         resource_type='ibm_cm_validation',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

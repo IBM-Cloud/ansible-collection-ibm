@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  tls_1_3 (False, str, None)
+    TLS 1.3 setting
+
+
+  min_tls_version (False, str, 1.1)
+    Minimum version of TLS required
+
 
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
@@ -41,14 +49,6 @@ Parameters
 
   universal_ssl (False, bool, None)
     Universal SSL setting
-
-
-  tls_1_3 (False, str, None)
-    TLS 1.3 setting
-
-
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
 
 
   id (False, str, None)

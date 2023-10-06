@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,11 +29,11 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
+  pi_spp_placement_group_id (True, str, None)
     None
 
 
-  pi_spp_placement_group_id (True, str, None)
+  pi_cloud_instance_id (True, str, None)
     None
 
 

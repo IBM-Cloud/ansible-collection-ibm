@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) Storage type
+  tags (False, list, None)
+    Tags set for the storage volume
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  hourly_billing (False, bool, False)
+    Hourly based billing type
 
 
   allowed_virtual_guest_ids (False, list, None)
@@ -47,12 +47,12 @@ Parameters
     Hardaware ID
 
 
-  tags (False, list, None)
-    Tags set for the storage volume
+  allowed_subnets (False, list, None)
+    Allowed network subnets
 
 
-  hourly_billing (False, bool, False)
-    Hourly based billing type
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
 
 
   capacity (True, int, None)
@@ -71,16 +71,16 @@ Parameters
     Snapshot capacity
 
 
-  allowed_subnets (False, list, None)
-    Allowed network subnets
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
-
-
   notes (False, str, None)
     Notes
+
+
+  type (True, str, None)
+    (Required for new resource) Storage type
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
   id (False, str, None)

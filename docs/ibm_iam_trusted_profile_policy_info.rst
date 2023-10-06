@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  profile_id (False, str, None)
+    UUID of trusted profile
+
 
   iam_id (False, str, None)
     IAM ID of trusted profile
@@ -39,10 +43,6 @@ Parameters
 
   transaction_id (False, str, None)
     Set transactionID for debug
-
-
-  profile_id (False, str, None)
-    UUID of trusted profile
 
 
   iaas_classic_username (False, any, None)

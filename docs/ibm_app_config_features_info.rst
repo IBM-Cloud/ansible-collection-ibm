@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, str, None)
-    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
+  segments (False, list, None)
+    Filter features by a list of comma separated segments.
 
 
   includes (False, list, None)
     Include the associated collections or targeting rules details in the response.
 
 
-  guid (True, str, None)
-    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+  tags (False, str, None)
+    Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
 
 
   expand (False, bool, None)
@@ -49,24 +49,24 @@ Parameters
     The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
 
 
-  environment_id (True, str, None)
-    Environment Id.
-
-
   sort (False, str, None)
     Sort the feature details based on the specified attribute.
 
 
-  offset (False, int, None)
-    The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
+  guid (True, str, None)
+    GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  environment_id (True, str, None)
+    Environment Id.
 
 
   collections (False, list, None)
     Filter features by a list of comma separated collections.
 
 
-  segments (False, list, None)
-    Filter features by a list of comma separated segments.
+  offset (False, int, None)
+    The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
 
 
   iaas_classic_username (False, any, None)

@@ -18,13 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_security_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
     resource_group:
         description:
             - Resource Group ID
+        required: False
+        type: str
+    name:
+        description:
+            - Security group name
         required: False
         type: str
     vpc:
@@ -44,11 +49,6 @@ options:
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - Security group name
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,10 +101,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group',
+    'name',
     'vpc',
     'tags',
     'access_tags',
-    'name',
 ]
 
 # Params for Data source
@@ -126,6 +126,9 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     vpc=dict(
         required=False,
         type='str'),
@@ -137,9 +140,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_is_security_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_is_security_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

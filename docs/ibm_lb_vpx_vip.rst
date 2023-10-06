@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  security_certificate_id (False, int, None)
-    security certificate ID
-
-
-  virtual_ip_address (True, str, None)
-    (Required for new resource) Virtual IP address
-
 
   nad_controller_id (True, int, None)
     (Required for new resource) NAD controller ID
@@ -51,20 +43,28 @@ Parameters
     (Required for new resource) Name
 
 
-  source_port (True, int, None)
-    (Required for new resource) Source Port number
-
-
   type (True, str, None)
     (Required for new resource) Type
+
+
+  tags (False, list, None)
+    List of tags
 
 
   persistence (False, str, None)
     Persistance value
 
 
-  tags (False, list, None)
-    List of tags
+  source_port (True, int, None)
+    (Required for new resource) Source Port number
+
+
+  security_certificate_id (False, int, None)
+    security certificate ID
+
+
+  virtual_ip_address (True, str, None)
+    (Required for new resource) Virtual IP address
 
 
   id (False, str, None)

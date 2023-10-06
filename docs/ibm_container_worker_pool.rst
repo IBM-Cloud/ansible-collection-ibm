@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  machine_type (True, str, None)
-    (Required for new resource) worker nodes machine type
+  labels (False, dict, None)
+    list of labels to worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  size_per_zone (True, int, None)
+    (Required for new resource) Number of nodes per zone
 
 
   operating_system (False, str, None)
     The operating system of the workers in the worker pool.
 
 
-  labels (False, dict, None)
-    list of labels to worker pool
+  taints (False, list, None)
+    WorkerPool Taints
 
 
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
 
 
   entitlement (False, str, None)
@@ -55,24 +63,16 @@ Parameters
     Hardware type
 
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
 
 
   disk_encryption (False, bool, True)
     worker node disk encrypted if set to true
 
 
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  size_per_zone (True, int, None)
-    (Required for new resource) Number of nodes per zone
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
 
 
   id (False, str, None)

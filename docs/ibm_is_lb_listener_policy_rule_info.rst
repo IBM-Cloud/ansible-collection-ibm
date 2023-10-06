@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rule (True, str, None)
-    The rule identifier.
-
-
   lb (True, str, None)
     The load balancer identifier.
+
+
+  rule (True, str, None)
+    The rule identifier.
 
 
   listener (True, str, None)

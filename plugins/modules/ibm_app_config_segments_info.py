@@ -17,30 +17,30 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_segments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    guid:
+    include:
         description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
+            - Segment details to include the associated rules in the response
+        required: False
         type: str
     expand:
         description:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    limit:
-        description:
-            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
-        required: False
-        type: int
     offset:
         description:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
+    guid:
+        description:
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     tags:
         description:
             - Filter the resources to be returned based on the associated tags.
@@ -51,11 +51,11 @@ options:
             - Sort the segment details based on the specified attribute.
         required: False
         type: str
-    include:
+    limit:
         description:
-            - Segment details to include the associated rules in the response
+            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
         required: False
-        type: str
+        type: int
     total_count:
         description:
             - Total number of records.
@@ -99,13 +99,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
+    'include',
     'expand',
-    'limit',
     'offset',
+    'guid',
     'tags',
     'sort',
-    'include',
+    'limit',
     'total_count',
 ]
 
@@ -117,27 +117,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=True,
+    include=dict(
+        required=False,
         type='str'),
     expand=dict(
         required=False,
         type='bool'),
-    limit=dict(
-        required=False,
-        type='int'),
     offset=dict(
         required=False,
         type='int'),
+    guid=dict(
+        required=True,
+        type='str'),
     tags=dict(
         required=False,
         type='str'),
     sort=dict(
         required=False,
         type='str'),
-    include=dict(
+    limit=dict(
         required=False,
-        type='str'),
+        type='int'),
     total_count=dict(
         required=False,
         type='int'),
@@ -175,7 +175,7 @@ def run_module():
         resource_type='ibm_app_config_segments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

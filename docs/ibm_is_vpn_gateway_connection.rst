@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  local_cidrs (False, list, None)
-    VPN gateway connection local CIDRs
-
-
-  peer_cidrs (False, list, None)
-    VPN gateway connection peer CIDRs
-
-
-  peer_address (True, str, None)
-    (Required for new resource) VPN gateway connection peer address
-
-
-  name (True, str, None)
-    (Required for new resource) VPN Gateway connection name
-
-
-  preshared_key (True, str, None)
-    (Required for new resource) vpn gateway
-
-
-  interval (False, int, 2)
-    Interval for dead peer detection interval
+  action (False, str, restart)
+    Action detection for dead peer detection action
 
 
   timeout (False, int, 10)
@@ -63,20 +43,40 @@ Parameters
     IP security policy for vpn gateway connection
 
 
-  ike_policy (False, str, None)
-    VPN gateway connection IKE Policy
+  peer_cidrs (False, list, None)
+    VPN gateway connection peer CIDRs
 
 
-  vpn_gateway (True, str, None)
-    (Required for new resource) VPN Gateway info
+  preshared_key (True, str, None)
+    (Required for new resource) vpn gateway
 
 
   admin_state_up (False, bool, False)
     VPN gateway connection admin state
 
 
-  action (False, str, restart)
-    Action detection for dead peer detection action
+  interval (False, int, 2)
+    Interval for dead peer detection interval
+
+
+  vpn_gateway (True, str, None)
+    (Required for new resource) VPN Gateway info
+
+
+  local_cidrs (False, list, None)
+    VPN gateway connection local CIDRs
+
+
+  name (True, str, None)
+    (Required for new resource) VPN Gateway connection name
+
+
+  ike_policy (False, str, None)
+    VPN gateway connection IKE Policy
+
+
+  peer_address (True, str, None)
+    (Required for new resource) VPN gateway connection peer address
 
 
   id (False, str, None)

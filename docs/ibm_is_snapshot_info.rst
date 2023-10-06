@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  identifier (False, str, None)
-    Snapshot identifier
-
-
   name (False, str, None)
     Snapshot name
+
+
+  identifier (False, str, None)
+    Snapshot identifier
 
 
   generation (False, int, 2)

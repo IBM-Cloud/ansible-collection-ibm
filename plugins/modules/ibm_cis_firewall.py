@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    cis_id:
-        description:
-            - (Required for new resource) CIS object id
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    firewall_type:
-        description:
-            - (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
-        required: True
-        type: str
     lockdown:
         description:
             - Lockdown Data
@@ -55,6 +40,21 @@ options:
         required: False
         type: list
         elements: dict
+    cis_id:
+        description:
+            - (Required for new resource) CIS object id
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    firewall_type:
+        description:
+            - (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -108,12 +108,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'domain_id',
-    'firewall_type',
     'lockdown',
     'access_rule',
     'ua_rule',
+    'cis_id',
+    'domain_id',
+    'firewall_type',
 ]
 
 # Params for Data source
@@ -136,15 +136,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    firewall_type=dict(
-        required=False,
-        type='str'),
     lockdown=dict(
         required=False,
         elements='',
@@ -157,6 +148,15 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    firewall_type=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_cis_firewall',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -231,7 +231,7 @@ def run_module():
             resource_type='ibm_cis_firewall',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_storage_attachment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    worker:
-        description:
-            - (Required for new resource) worker node ID
-        required: True
-        type: str
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
     volume:
         description:
             - (Required for new resource) VPC Volume ID
@@ -41,6 +31,16 @@ options:
         description:
             - (Required for new resource) Cluster name or ID
         required: True
+        type: str
+    worker:
+        description:
+            - (Required for new resource) worker node ID
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
         type: str
     id:
         description:
@@ -68,31 +68,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('worker', 'str'),
     ('volume', 'str'),
     ('cluster', 'str'),
+    ('worker', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'worker',
-    'resource_group_id',
     'volume',
     'cluster',
+    'worker',
+    'resource_group_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('volume_attachment_id', 'str'),
     ('cluster', 'str'),
     ('worker', 'str'),
+    ('volume_attachment_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'volume_attachment_id',
     'cluster',
     'worker',
     'resource_group_id',
+    'volume_attachment_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -102,16 +102,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    worker=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     volume=dict(
         required=False,
         type='str'),
     cluster=dict(
+        required=False,
+        type='str'),
+    worker=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -165,7 +165,7 @@ def run_module():
         resource_type='ibm_container_storage_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -174,7 +174,7 @@ def run_module():
             resource_type='ibm_container_storage_attachment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

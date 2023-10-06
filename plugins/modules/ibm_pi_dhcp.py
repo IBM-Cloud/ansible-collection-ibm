@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_dhcp' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -32,11 +32,12 @@ options:
             - Optional DNS Server for DHCP service
         required: False
         type: str
-    pi_dhcp_name:
+    pi_dhcp_snat_enabled:
         description:
-            - Optional name of DHCP Service (will be prefixed by DHCP identifier)
+            - Indicates if SNAT will be enabled for the DHCP service
         required: False
-        type: str
+        type: bool
+        default: True
     pi_cidr:
         description:
             - Optional cidr for DHCP private network
@@ -47,12 +48,11 @@ options:
             - Optional cloud connection uuid to connect with DHCP private network
         required: False
         type: str
-    pi_dhcp_snat_enabled:
+    pi_dhcp_name:
         description:
-            - Indicates if SNAT will be enabled for the DHCP service
+            - Optional name of DHCP Service (will be prefixed by DHCP identifier)
         required: False
-        type: bool
-        default: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -102,21 +102,21 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
     'pi_dns_server',
-    'pi_dhcp_name',
+    'pi_dhcp_snat_enabled',
     'pi_cidr',
     'pi_cloud_connection_id',
-    'pi_dhcp_snat_enabled',
+    'pi_dhcp_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_dhcp_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_dhcp_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_dhcp_id',
     'pi_cloud_instance_id',
+    'pi_dhcp_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -132,18 +132,18 @@ module_args = dict(
     pi_dns_server=dict(
         required=False,
         type='str'),
-    pi_dhcp_name=dict(
+    pi_dhcp_snat_enabled=dict(
         required=False,
-        type='str'),
+        type='bool'),
     pi_cidr=dict(
         required=False,
         type='str'),
     pi_cloud_connection_id=dict(
         required=False,
         type='str'),
-    pi_dhcp_snat_enabled=dict(
+    pi_dhcp_name=dict(
         required=False,
-        type='bool'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_pi_dhcp',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -211,7 +211,7 @@ def run_module():
             resource_type='ibm_pi_dhcp',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

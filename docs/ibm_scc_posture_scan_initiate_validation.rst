@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -39,12 +39,12 @@ Parameters
     The ID of the profile group.
 
 
-  name (False, str, None)
-    The name of a scheduled scan.
+  description (False, str, None)
+    The description of a scheduled scan.
 
 
-  frequency (False, int, None)
-    The frequency at which a scan is run specified in milliseconds.
+  no_of_occurrences (False, int, None)
+    The number of times that a scan should be run.
 
 
   end_time (False, str, None)
@@ -55,12 +55,12 @@ Parameters
     (Required for new resource) The unique ID of the profile.
 
 
-  description (False, str, None)
-    The description of a scheduled scan.
+  name (False, str, None)
+    The name of a scheduled scan.
 
 
-  no_of_occurrences (False, int, None)
-    The number of times that a scan should be run.
+  frequency (False, int, None)
+    The frequency at which a scan is run specified in milliseconds.
 
 
   id (False, str, None)

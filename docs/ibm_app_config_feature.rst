@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  type (True, str, None)
-    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
-
-
-  description (False, str, None)
-    Feature description.
-
-
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different feature flag values for different segments.
-
-
-  name (True, str, None)
-    (Required for new resource) Feature name.
+  disabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
 
 
   collections (False, list, None)
@@ -59,24 +47,36 @@ Parameters
     (Required for new resource) Environment Id.
 
 
-  feature_id (True, str, None)
-    (Required for new resource) Feature id.
-
-
-  enabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
-
-
-  disabled_value (True, str, None)
-    (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+  name (True, str, None)
+    (Required for new resource) Feature name.
 
 
   tags (False, str, None)
     Tags associated with the feature.
 
 
+  enabled_value (True, str, None)
+    (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+
+
+  description (False, str, None)
+    Feature description.
+
+
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different feature flag values for different segments.
+
+
   guid (True, str, None)
     (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
+  feature_id (True, str, None)
+    (Required for new resource) Feature id.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
 
 
   id (False, str, None)

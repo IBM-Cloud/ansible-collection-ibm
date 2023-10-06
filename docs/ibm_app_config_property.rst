@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,28 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  property_id (True, str, None)
-    (Required for new resource) Property id.
-
-
-  type (True, str, None)
-    (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
-
-
-  environment_id (True, str, None)
-    (Required for new resource) Environment Id.
-
-
   name (True, str, None)
     (Required for new resource) Property name.
 
 
-  format (False, str, None)
-    Format of the feature (TEXT, JSON, YAML).
+  property_id (True, str, None)
+    (Required for new resource) Property id.
 
 
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified property.
+  segment_rules (False, list, None)
+    Specify the targeting rules that is used to set different property values for different segments.
 
 
   guid (True, str, None)
@@ -67,12 +55,24 @@ Parameters
     Property description.
 
 
+  environment_id (True, str, None)
+    (Required for new resource) Environment Id.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
+
+
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified property.
+
+
   tags (False, str, None)
     Tags associated with the property.
 
 
-  segment_rules (False, list, None)
-    Specify the targeting rules that is used to set different property values for different segments.
+  format (False, str, None)
+    Format of the feature (TEXT, JSON, YAML).
 
 
   id (False, str, None)

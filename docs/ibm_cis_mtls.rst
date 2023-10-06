@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  certificate (True, str, None)
-    (Required for new resource) Certificate contents
-
-
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
 
   associated_hostnames (True, list, None)
     (Required for new resource) Host name list to be associated
@@ -47,8 +39,16 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
+  certificate (True, str, None)
+    (Required for new resource) Certificate contents
+
+
   name (True, str, None)
     (Required for new resource) Certificate name
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   id (False, str, None)

@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_posture_scan_initiate_validation' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -32,14 +32,14 @@ options:
             - The ID of the profile group.
         required: False
         type: str
-    name:
+    description:
         description:
-            - The name of a scheduled scan.
+            - The description of a scheduled scan.
         required: False
         type: str
-    frequency:
+    no_of_occurrences:
         description:
-            - The frequency at which a scan is run specified in milliseconds.
+            - The number of times that a scan should be run.
         required: False
         type: int
     end_time:
@@ -52,14 +52,14 @@ options:
             - (Required for new resource) The unique ID of the profile.
         required: True
         type: str
-    description:
+    name:
         description:
-            - The description of a scheduled scan.
+            - The name of a scheduled scan.
         required: False
         type: str
-    no_of_occurrences:
+    frequency:
         description:
-            - The number of times that a scan should be run.
+            - The frequency at which a scan is run specified in milliseconds.
         required: False
         type: int
     id:
@@ -116,12 +116,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'scope_id',
     'group_profile_id',
-    'name',
-    'frequency',
-    'end_time',
-    'profile_id',
     'description',
     'no_of_occurrences',
+    'end_time',
+    'profile_id',
+    'name',
+    'frequency',
 ]
 
 # Params for Data source
@@ -144,10 +144,10 @@ module_args = dict(
     group_profile_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
-    frequency=dict(
+    no_of_occurrences=dict(
         required=False,
         type='int'),
     end_time=dict(
@@ -156,10 +156,10 @@ module_args = dict(
     profile_id=dict(
         required=False,
         type='str'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
-    no_of_occurrences=dict(
+    frequency=dict(
         required=False,
         type='int'),
     id=dict(
@@ -227,7 +227,7 @@ def run_module():
         resource_type='ibm_scc_posture_scan_initiate_validation',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

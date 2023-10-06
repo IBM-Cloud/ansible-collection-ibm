@@ -18,30 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_atracker_target' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    name:
-        description:
-            - (Required for new resource) The name of the target. The name must be 1000 characters or less, and cannot include any special characters other than `(space) - . _ :`.
-        required: True
-        type: str
-    cos_endpoint:
-        description:
-            - Property values for a Cloud Object Storage Endpoint.
-        required: False
-        type: list
-        elements: dict
     eventstreams_endpoint:
         description:
             - Property values for an Event Streams Endpoint in requests.
-        required: False
-        type: list
-        elements: dict
-    logdna_endpoint:
-        description:
-            - Property values for a LogDNA Endpoint.
         required: False
         type: list
         elements: dict
@@ -50,11 +33,28 @@ options:
             - (Required for new resource) The type of the target. It can be cloud_object_storage, logdna or event_streams. Based on this type you must include cos_endpoint, logdna_endpoint or eventstreams_endpoint.
         required: True
         type: str
+    cos_endpoint:
+        description:
+            - Property values for a Cloud Object Storage Endpoint.
+        required: False
+        type: list
+        elements: dict
     region:
         description:
             - Include this optional field if you want to create a target in a different region other than the one you are connected.
         required: False
         type: str
+    name:
+        description:
+            - (Required for new resource) The name of the target. The name must be 1000 characters or less, and cannot include any special characters other than `(space) - . _ :`.
+        required: True
+        type: str
+    logdna_endpoint:
+        description:
+            - Property values for a LogDNA Endpoint.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,18 +101,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('target_type', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'cos_endpoint',
     'eventstreams_endpoint',
-    'logdna_endpoint',
     'target_type',
+    'cos_endpoint',
     'region',
+    'name',
+    'logdna_endpoint',
 ]
 
 # Params for Data source
@@ -129,27 +129,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    cos_endpoint=dict(
-        required=False,
-        elements='',
-        type='list'),
     eventstreams_endpoint=dict(
-        required=False,
-        elements='',
-        type='list'),
-    logdna_endpoint=dict(
         required=False,
         elements='',
         type='list'),
     target_type=dict(
         required=False,
         type='str'),
+    cos_endpoint=dict(
+        required=False,
+        elements='',
+        type='list'),
     region=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    logdna_endpoint=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -215,7 +215,7 @@ def run_module():
         resource_type='ibm_atracker_target',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

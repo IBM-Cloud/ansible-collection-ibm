@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     UUID of the vault.
 
 
-  instance_id (True, str, None)
-    The ID of the UKO instance this resource exists in.
-
-
   region (False, any, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
+  instance_id (True, str, None)
+    The ID of the UKO instance this resource exists in.
 
 
   iaas_classic_username (False, any, None)

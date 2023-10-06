@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  keystores (True, list, None)
-    (Required for new resource) An array describing the type and group of target keystores the managed key is to be installed in.
-
-
-  vault (True, list, None)
-    (Required for new resource) ID of the Vault where the entity is to be created in.
-
-
-  description (False, str, None)
-    Description of the key template.
-
 
   instance_id (True, str, None)
     (Required for new resource) The ID of the UKO instance this resource exists in.
@@ -55,12 +43,24 @@ Parameters
     (Required for new resource) The UUID of the Vault in which the update is to take place.
 
 
+  vault (True, list, None)
+    (Required for new resource) ID of the Vault where the entity is to be created in.
+
+
   name (True, str, None)
     (Required for new resource) Name of the template, it will be referenced when creating managed keys.
 
 
+  keystores (True, list, None)
+    (Required for new resource) An array describing the type and group of target keystores the managed key is to be installed in.
+
+
   key (True, list, None)
     (Required for new resource) Properties describing the properties of the managed key.
+
+
+  description (False, str, None)
+    Description of the key template.
 
 
   id (False, str, None)
