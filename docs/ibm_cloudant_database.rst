@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  shards (False, int, None)
+    The number of shards in the database. Each shard is a partition of the hash value range. You are encouraged to talk to support about appropriate values before changing this.
+
 
   instance_crn (True, str, None)
     (Required for new resource) Cloudant Instance CRN.
@@ -41,10 +45,6 @@ Parameters
 
   partitioned (False, bool, None)
     Query parameter to specify whether to enable database partitions when creating a database.
-
-
-  shards (False, int, None)
-    The number of shards in the database. Each shard is a partition of the hash value range. You are encouraged to talk to support about appropriate values before changing this.
 
 
   id (False, str, None)

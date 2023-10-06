@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -26,12 +26,6 @@ options:
             - Resource instance name for example, myobjectstorage
         required: True
         type: str
-    service:
-        description:
-            - The service type of the instance
-        required: False
-        type: str
-        default: hs-crypto
     resource_group_id:
         description:
             - The id of the resource group in which the instance is present
@@ -42,6 +36,12 @@ options:
             - The location or the environment in which instance exists
         required: False
         type: str
+    service:
+        description:
+            - The service type of the instance
+        required: False
+        type: str
+        default: hs-crypto
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -81,9 +81,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'service',
     'resource_group_id',
     'location',
+    'service',
 ]
 
 
@@ -97,13 +97,13 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    service=dict(
-        required=False,
-        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
     location=dict(
+        required=False,
+        type='str'),
+    service=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_hpcs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

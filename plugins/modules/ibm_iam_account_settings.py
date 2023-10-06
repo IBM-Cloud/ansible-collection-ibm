@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_account_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    session_invalidation_in_seconds:
+        description:
+            - Defines the period of time in seconds in which a session will be invalidated due to inactivity. Valid values:  * Any whole number between '900' and '7200'  * NOT_SET - To unset account setting and use service default.
+        required: False
+        type: str
     allowed_ip_addresses:
         description:
             - Defines the IP addresses and subnets from which IAM tokens can be created for the account.
@@ -30,11 +35,6 @@ options:
     mfa:
         description:
             - Defines the MFA trait for the account. Valid values:  * NONE - No MFA trait set  * TOTP - For all non-federated IBMId users  * TOTP4ALL - For all users  * LEVEL1 - Email-based MFA for all users  * LEVEL2 - TOTP-based MFA for all users  * LEVEL3 - U2F MFA for all users.
-        required: False
-        type: str
-    session_invalidation_in_seconds:
-        description:
-            - Defines the period of time in seconds in which a session will be invalidated due to inactivity. Valid values:  * Any whole number between '900' and '7200'  * NOT_SET - To unset account setting and use service default.
         required: False
         type: str
     system_refresh_token_expiration_in_seconds:
@@ -64,16 +64,6 @@ options:
         required: False
         type: list
         elements: dict
-    max_sessions_per_identity:
-        description:
-            - Defines the max allowed sessions per identity required by the account. Value values:  * Any whole number greater than 0  * NOT_SET - To unset account setting and use service default.
-        required: False
-        type: str
-    restrict_create_service_id:
-        description:
-            - Defines whether or not creating a Service Id is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
-        required: False
-        type: str
     session_expiration_in_seconds:
         description:
             - Defines the session expiration in seconds for the account. Valid values:  * Any whole number between between '900' and '86400'  * NOT_SET - To unset account setting and use service default.
@@ -85,6 +75,16 @@ options:
         required: False
         type: bool
         default: False
+    restrict_create_service_id:
+        description:
+            - Defines whether or not creating a Service Id is access controlled. Valid values:  * RESTRICTED - to apply access control  * NOT_RESTRICTED - to remove access control  * NOT_SET - to 'unset' a previous set value.
+        required: False
+        type: str
+    max_sessions_per_identity:
+        description:
+            - Defines the max allowed sessions per identity required by the account. Value values:  * Any whole number greater than 0  * NOT_SET - To unset account setting and use service default.
+        required: False
+        type: str
     system_access_token_expiration_in_seconds:
         description:
             - Defines the access token expiration in seconds. Valid values:  * Any whole number between '900' and '3600'  * NOT_SET - To unset account setting and use service default.
@@ -140,18 +140,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'session_invalidation_in_seconds',
     'allowed_ip_addresses',
     'mfa',
-    'session_invalidation_in_seconds',
     'system_refresh_token_expiration_in_seconds',
     'restrict_create_platform_apikey',
     'entity_tag',
     'if_match',
     'user_mfa',
-    'max_sessions_per_identity',
-    'restrict_create_service_id',
     'session_expiration_in_seconds',
     'include_history',
+    'restrict_create_service_id',
+    'max_sessions_per_identity',
     'system_access_token_expiration_in_seconds',
 ]
 
@@ -170,13 +170,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    session_invalidation_in_seconds=dict(
+        required=False,
+        type='str'),
     allowed_ip_addresses=dict(
         required=False,
         type='str'),
     mfa=dict(
-        required=False,
-        type='str'),
-    session_invalidation_in_seconds=dict(
         required=False,
         type='str'),
     system_refresh_token_expiration_in_seconds=dict(
@@ -195,18 +195,18 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    max_sessions_per_identity=dict(
-        required=False,
-        type='str'),
-    restrict_create_service_id=dict(
-        required=False,
-        type='str'),
     session_expiration_in_seconds=dict(
         required=False,
         type='str'),
     include_history=dict(
         required=False,
         type='bool'),
+    restrict_create_service_id=dict(
+        required=False,
+        type='str'),
+    max_sessions_per_identity=dict(
+        required=False,
+        type='str'),
     system_access_token_expiration_in_seconds=dict(
         required=False,
         type='str'),
@@ -275,7 +275,7 @@ def run_module():
         resource_type='ibm_iam_account_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -284,7 +284,7 @@ def run_module():
             resource_type='ibm_iam_account_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) The ID of the cluster that the ALB belongs to.
+  nlb_version (False, str, None)
+    The version of the network load balancer that you want to use for the ALB.
+
+
+  zone (True, str, None)
+    (Required for new resource) The zone where you want to deploy the ALB.
+
+
+  enable (False, bool, True)
+    If set to true, the ALB is enabled by default.
+
+
+  ip (False, str, None)
+    The IP address that you want to assign to the ALB.
 
 
   ingress_image (False, str, None)
@@ -47,20 +59,8 @@ Parameters
     (Required for new resource) The VLAN ID that you want to use for your ALBs.
 
 
-  enable (False, bool, True)
-    If set to true, the ALB is enabled by default.
-
-
-  ip (False, str, None)
-    The IP address that you want to assign to the ALB.
-
-
-  zone (True, str, None)
-    (Required for new resource) The zone where you want to deploy the ALB.
-
-
-  nlb_version (False, str, None)
-    The version of the network load balancer that you want to use for the ALB.
+  cluster (True, str, None)
+    (Required for new resource) The ID of the cluster that the ALB belongs to.
 
 
   id (False, str, None)

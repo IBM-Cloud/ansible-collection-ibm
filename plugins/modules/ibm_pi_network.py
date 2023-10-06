@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_network' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -32,17 +32,11 @@ options:
             - PI network CIDR
         required: False
         type: str
-    pi_network_jumbo:
+    pi_gateway:
         description:
-            - PI network enable MTU Jumbo option
+            - PI network gateway
         required: False
-        type: bool
-    pi_ipaddress_range:
-        description:
-            - List of one or more ip address range(s)
-        required: False
-        type: list
-        elements: dict
+        type: str
     pi_network_name:
         description:
             - (Required for new resource) PI network name
@@ -54,16 +48,22 @@ options:
         required: False
         type: list
         elements: str
-    pi_gateway:
+    pi_network_jumbo:
         description:
-            - PI network gateway
+            - PI network enable MTU Jumbo option
         required: False
-        type: str
+        type: bool
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
         required: True
         type: str
+    pi_ipaddress_range:
+        description:
+            - List of one or more ip address range(s)
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -115,12 +115,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'pi_network_type',
     'pi_cidr',
-    'pi_network_jumbo',
-    'pi_ipaddress_range',
+    'pi_gateway',
     'pi_network_name',
     'pi_dns',
-    'pi_gateway',
+    'pi_network_jumbo',
     'pi_cloud_instance_id',
+    'pi_ipaddress_range',
 ]
 
 # Params for Data source
@@ -147,13 +147,9 @@ module_args = dict(
     pi_cidr=dict(
         required=False,
         type='str'),
-    pi_network_jumbo=dict(
+    pi_gateway=dict(
         required=False,
-        type='bool'),
-    pi_ipaddress_range=dict(
-        required=False,
-        elements='',
-        type='list'),
+        type='str'),
     pi_network_name=dict(
         required=False,
         type='str'),
@@ -161,12 +157,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_gateway=dict(
+    pi_network_jumbo=dict(
         required=False,
-        type='str'),
+        type='bool'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
+    pi_ipaddress_range=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +225,7 @@ def run_module():
         resource_type='ibm_pi_network',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +234,7 @@ def run_module():
             resource_type='ibm_pi_network',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

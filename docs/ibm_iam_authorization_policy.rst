@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -39,52 +39,52 @@ Parameters
     The target service name
 
 
-  source_resource_instance_id (False, str, None)
-    The source resource instance Id
-
-
-  source_resource_group_id (False, str, None)
-    The source resource group Id
-
-
-  subject_attributes (False, list, None)
-    Set subject attributes.
-
-
-  description (False, str, None)
-    Description of the Policy
-
-
-  target_resource_instance_id (False, str, None)
-    The target resource instance Id
-
-
   target_resource_group_id (False, str, None)
     The target resource group Id
 
 
-  target_resource_type (False, str, None)
-    Resource type of target service
-
-
-  roles (True, list, None)
-    (Required for new resource) Role names of the policy definition
+  source_resource_type (False, str, None)
+    Resource type of source service
 
 
   source_service_account (False, str, None)
     Account GUID of source service
 
 
-  resource_attributes (False, list, None)
-    Set resource attributes.
-
-
   source_service_name (False, str, None)
     The source service name
 
 
-  source_resource_type (False, str, None)
-    Resource type of source service
+  source_resource_instance_id (False, str, None)
+    The source resource instance Id
+
+
+  target_resource_type (False, str, None)
+    Resource type of target service
+
+
+  target_resource_instance_id (False, str, None)
+    The target resource instance Id
+
+
+  source_resource_group_id (False, str, None)
+    The source resource group Id
+
+
+  resource_attributes (False, list, None)
+    Set resource attributes.
+
+
+  description (False, str, None)
+    Description of the Policy
+
+
+  roles (True, list, None)
+    (Required for new resource) Role names of the policy definition
+
+
+  subject_attributes (False, list, None)
+    Set subject attributes.
 
 
   id (False, str, None)

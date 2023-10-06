@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The name of the enterprise. This field must have 3 - 60 characters.
+  primary_contact_iam_id (True, str, None)
+    (Required for new resource) The IAM ID of the enterprise primary contact, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
 
   domain (False, str, None)
@@ -43,8 +43,8 @@ Parameters
     (Required for new resource) The ID of the account that is used to create the enterprise.
 
 
-  primary_contact_iam_id (True, str, None)
-    (Required for new resource) The IAM ID of the enterprise primary contact, such as `IBMid-0123ABC`. The IAM ID must already exist.
+  name (True, str, None)
+    (Required for new resource) The name of the enterprise. This field must have 3 - 60 characters.
 
 
   id (False, str, None)

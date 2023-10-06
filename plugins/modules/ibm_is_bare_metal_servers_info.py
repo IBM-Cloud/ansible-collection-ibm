@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_bare_metal_servers' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -31,9 +31,9 @@ options:
             - The vpc name this bare metal server is in
         required: False
         type: str
-    vpc_crn:
+    network_interfaces_subnet_name:
         description:
-            - The vpc CRN this bare metal server is in
+            - The name of the subnet of the bare metal server network interfaces
         required: False
         type: str
     network_interfaces_subnet:
@@ -51,14 +51,14 @@ options:
             - The unique identifier of the resource group this bare metal server belongs to
         required: False
         type: str
+    vpc_crn:
+        description:
+            - The vpc CRN this bare metal server is in
+        required: False
+        type: str
     name:
         description:
             - The name of the bare metal server
-        required: False
-        type: str
-    network_interfaces_subnet_name:
-        description:
-            - The name of the subnet of the bare metal server network interfaces
         required: False
         type: str
     generation:
@@ -100,12 +100,12 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'vpc',
     'vpc_name',
-    'vpc_crn',
+    'network_interfaces_subnet_name',
     'network_interfaces_subnet',
     'network_interfaces_subnet_crn',
     'resource_group',
+    'vpc_crn',
     'name',
-    'network_interfaces_subnet_name',
 ]
 
 
@@ -122,7 +122,7 @@ module_args = dict(
     vpc_name=dict(
         required=False,
         type='str'),
-    vpc_crn=dict(
+    network_interfaces_subnet_name=dict(
         required=False,
         type='str'),
     network_interfaces_subnet=dict(
@@ -134,10 +134,10 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    vpc_crn=dict(
         required=False,
         type='str'),
-    network_interfaces_subnet_name=dict(
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_servers',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

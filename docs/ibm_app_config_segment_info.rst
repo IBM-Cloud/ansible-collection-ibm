@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -33,12 +33,12 @@ Parameters
     GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
-  segment_id (True, str, None)
-    Segment id.
-
-
   includes (False, list, None)
     Include feature and property details in the response.
+
+
+  segment_id (True, str, None)
+    Segment id.
 
 
   iaas_classic_username (False, any, None)

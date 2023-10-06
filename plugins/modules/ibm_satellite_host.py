@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_host' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -30,11 +30,6 @@ options:
     host_id:
         description:
             - (Required for new resource) The specific host ID to assign to a Satellite location or cluster
-        required: True
-        type: str
-    location:
-        description:
-            - (Required for new resource) The name or ID of the Satellite location
         required: True
         type: str
     labels:
@@ -57,6 +52,11 @@ options:
         description:
             - Host Provider
         required: False
+        type: str
+    location:
+        description:
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
         type: str
     wait_till:
         description:
@@ -117,11 +117,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cluster',
     'host_id',
-    'location',
     'labels',
     'zone',
     'worker_pool',
     'host_provider',
+    'location',
     'wait_till',
 ]
 
@@ -145,9 +145,6 @@ module_args = dict(
     host_id=dict(
         required=False,
         type='str'),
-    location=dict(
-        required=False,
-        type='str'),
     labels=dict(
         required=False,
         elements='',
@@ -159,6 +156,9 @@ module_args = dict(
         required=False,
         type='str'),
     host_provider=dict(
+        required=False,
+        type='str'),
+    location=dict(
         required=False,
         type='str'),
     wait_till=dict(
@@ -229,7 +229,7 @@ def run_module():
         resource_type='ibm_satellite_host',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

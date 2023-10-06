@@ -18,18 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    account_id:
+        description:
+            - The source account id of account to be imported
+        required: False
+        type: str
+    name:
+        description:
+            - The name of the account. This field must have 3 - 60 characters.
+        required: False
+        type: str
     enterprise_account_id:
         description:
             - The enterprise account ID.
         required: False
         type: str
-    account_id:
+    enterprise_id:
         description:
-            - The source account id of account to be imported
+            - The enterprise ID that the account is a part of.
         required: False
         type: str
     parent:
@@ -40,16 +50,6 @@ options:
     owner_iam_id:
         description:
             - The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
-        required: False
-        type: str
-    enterprise_id:
-        description:
-            - The enterprise ID that the account is a part of.
-        required: False
-        type: str
-    name:
-        description:
-            - The name of the account. This field must have 3 - 60 characters.
         required: False
         type: str
     id:
@@ -103,12 +103,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enterprise_account_id',
     'account_id',
+    'name',
+    'enterprise_account_id',
+    'enterprise_id',
     'parent',
     'owner_iam_id',
-    'enterprise_id',
-    'name',
 ]
 
 # Params for Data source
@@ -125,22 +125,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    account_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     enterprise_account_id=dict(
         required=False,
         type='str'),
-    account_id=dict(
+    enterprise_id=dict(
         required=False,
         type='str'),
     parent=dict(
         required=False,
         type='str'),
     owner_iam_id=dict(
-        required=False,
-        type='str'),
-    enterprise_id=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_enterprise_account',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

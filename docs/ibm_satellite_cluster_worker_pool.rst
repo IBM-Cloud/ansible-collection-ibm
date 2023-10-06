@@ -23,41 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  flavor (False, str, None)
-    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
-
-
-  operating_system (False, str, None)
-    Operating system of the worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
-
-
-  worker_pool_labels (False, dict, None)
-    Labels on all the workers in the worker pool
-
-
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  cluster (True, str, None)
-    (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
-
-
-  disk_encryption (False, bool, None)
-    Disk encryption for worker node
-
 
   isolation (False, str, None)
     None
@@ -67,12 +39,40 @@ Parameters
     None
 
 
+  operating_system (False, str, None)
+    Operating system of the worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
+
+
   worker_count (False, int, None)
     Specify the desired number of workers per zone in this worker pool
 
 
   zones (False, list, None)
     Zone info for worker pool
+
+
+  worker_pool_labels (False, dict, None)
+    Labels on all the workers in the worker pool
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  disk_encryption (False, bool, None)
+    Disk encryption for worker node
+
+
+  cluster (True, str, None)
+    (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+
+
+  flavor (False, str, None)
+    The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
+
+
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
 
 
   name (True, str, None)

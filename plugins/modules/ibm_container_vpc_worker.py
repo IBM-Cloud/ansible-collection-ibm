@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    kube_config_path:
-        description:
-            - Path of downloaded cluster config
-        required: False
-        type: str
     check_ptx_status:
         description:
             - Check portworx status after worker replace
@@ -53,6 +43,16 @@ options:
         description:
             - (Required for new resource) Worker name/id that needs to be replaced
         required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    kube_config_path:
+        description:
+            - Path of downloaded cluster config
+        required: False
         type: str
     id:
         description:
@@ -86,12 +86,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'kube_config_path',
     'check_ptx_status',
     'ptx_timeout',
     'cluster_name',
     'replace_worker',
+    'resource_group_id',
+    'kube_config_path',
 ]
 
 # Params for Data source
@@ -108,12 +108,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    kube_config_path=dict(
-        required=False,
-        type='str'),
     check_ptx_status=dict(
         required=False,
         type='bool'),
@@ -124,6 +118,12 @@ module_args = dict(
         required=False,
         type='str'),
     replace_worker=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    kube_config_path=dict(
         required=False,
         type='str'),
     id=dict(
@@ -177,7 +177,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

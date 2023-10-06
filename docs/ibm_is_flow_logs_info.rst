@@ -21,21 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  vpc_crn (False, str, None)
-    The vpc CRN this flow log is in
-
-
-  name (False, str, None)
-    The name of the flow log
-
 
   target (False, str, None)
     The target id of the flow log
@@ -55,6 +47,14 @@ Parameters
 
   vpc_name (False, str, None)
     The vpc name this flow log is in
+
+
+  vpc_crn (False, str, None)
+    The vpc CRN this flow log is in
+
+
+  name (False, str, None)
+    The name of the flow log
 
 
   generation (False, int, 2)

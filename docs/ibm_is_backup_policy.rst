@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) The user-defined name for this backup policy. Names must be unique within the region this backup policy resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+
+
   match_resource_types (False, list, None)
     A resource type this backup policy applies to. Resources that have both a matching type and a matching user tag will be subject to the backup policy.
 
 
   match_user_tags (True, list, None)
     (Required for new resource) The user tags this backup policy applies to. Resources that have both a matching user tag and a matching type will be subject to the backup policy.
-
-
-  name (True, str, None)
-    (Required for new resource) The user-defined name for this backup policy. Names must be unique within the region this backup policy resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
   resource_group (False, str, None)

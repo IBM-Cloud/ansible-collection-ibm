@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  cloud_foundry_roles (False, list, None)
-    None
-
-
-  users (True, list, None)
-    (Required for new resource) List of ibm id or email of user
-
 
   access_groups (False, list, None)
     access group ids to associate the inviting user
@@ -49,6 +41,14 @@ Parameters
 
   classic_infra_roles (False, list, None)
     None
+
+
+  cloud_foundry_roles (False, list, None)
+    None
+
+
+  users (True, list, None)
+    (Required for new resource) List of ibm id or email of user
 
 
   id (False, str, None)

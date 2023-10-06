@@ -18,30 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_storage_block' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    datacenter:
+    capacity:
         description:
-            - (Required for new resource) Datacenter name
+            - (Required for new resource) Storage block size
         required: True
-        type: str
+        type: int
+    iops:
+        description:
+            - (Required for new resource) IOPS value required
+        required: True
+        type: float
+    allowed_virtual_guest_ids:
+        description:
+            - List of allowed virtual guest IDs
+        required: False
+        type: list
+        elements: int
     allowed_hardware_ids:
         description:
             - List of allowe hardware IDs
         required: False
         type: list
         elements: int
-    hourly_billing:
-        description:
-            - Billing done hourly, if set to true
-        required: False
-        type: bool
-        default: False
     type:
         description:
             - (Required for new resource) Storage block type
+        required: True
+        type: str
+    os_format_type:
+        description:
+            - (Required for new resource) OS formatr type
         required: True
         type: str
     notes:
@@ -49,44 +59,34 @@ options:
             - Additional note info
         required: False
         type: str
-    allowed_ip_addresses:
-        description:
-            - Allowed IP addresses
-        required: False
-        type: list
-        elements: str
-    allowed_virtual_guest_ids:
-        description:
-            - List of allowed virtual guest IDs
-        required: False
-        type: list
-        elements: int
     tags:
         description:
             - List of tags associated with the resource
         required: False
         type: list
         elements: str
-    capacity:
+    hourly_billing:
         description:
-            - (Required for new resource) Storage block size
+            - Billing done hourly, if set to true
+        required: False
+        type: bool
+        default: False
+    datacenter:
+        description:
+            - (Required for new resource) Datacenter name
         required: True
-        type: int
+        type: str
     snapshot_capacity:
         description:
             - Snapshot capacity in GB
         required: False
         type: int
-    os_format_type:
+    allowed_ip_addresses:
         description:
-            - (Required for new resource) OS formatr type
-        required: True
-        type: str
-    iops:
-        description:
-            - (Required for new resource) IOPS value required
-        required: True
-        type: float
+            - Allowed IP addresses
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -133,27 +133,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('datacenter', 'str'),
-    ('type', 'str'),
     ('capacity', 'int'),
-    ('os_format_type', 'str'),
     ('iops', 'float'),
+    ('type', 'str'),
+    ('os_format_type', 'str'),
+    ('datacenter', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'datacenter',
-    'allowed_hardware_ids',
-    'hourly_billing',
-    'type',
-    'notes',
-    'allowed_ip_addresses',
-    'allowed_virtual_guest_ids',
-    'tags',
     'capacity',
-    'snapshot_capacity',
-    'os_format_type',
     'iops',
+    'allowed_virtual_guest_ids',
+    'allowed_hardware_ids',
+    'type',
+    'os_format_type',
+    'notes',
+    'tags',
+    'hourly_billing',
+    'datacenter',
+    'snapshot_capacity',
+    'allowed_ip_addresses',
 ]
 
 # Params for Data source
@@ -170,46 +170,46 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    datacenter=dict(
+    capacity=dict(
+        required=False,
+        type='int'),
+    iops=dict(
+        required=False,
+        type='float'),
+    allowed_virtual_guest_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allowed_hardware_ids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    type=dict(
         required=False,
         type='str'),
-    allowed_hardware_ids=dict(
+    os_format_type=dict(
+        required=False,
+        type='str'),
+    notes=dict(
+        required=False,
+        type='str'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
     hourly_billing=dict(
         required=False,
         type='bool'),
-    type=dict(
+    datacenter=dict(
         required=False,
         type='str'),
-    notes=dict(
+    snapshot_capacity=dict(
         required=False,
-        type='str'),
+        type='int'),
     allowed_ip_addresses=dict(
         required=False,
         elements='',
         type='list'),
-    allowed_virtual_guest_ids=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    capacity=dict(
-        required=False,
-        type='int'),
-    snapshot_capacity=dict(
-        required=False,
-        type='int'),
-    os_format_type=dict(
-        required=False,
-        type='str'),
-    iops=dict(
-        required=False,
-        type='float'),
     id=dict(
         required=False,
         type='str'),
@@ -275,7 +275,7 @@ def run_module():
         resource_type='ibm_storage_block',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

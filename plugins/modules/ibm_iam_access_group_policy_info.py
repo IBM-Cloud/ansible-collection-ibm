@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_iam_access_group_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    access_group_id:
+        description:
+            - ID of access group
+        required: True
+        type: str
     sort:
         description:
             - Sort query for policies
@@ -30,11 +35,6 @@ options:
         description:
             - Set transactionID for debug
         required: False
-        type: str
-    access_group_id:
-        description:
-            - ID of access group
-        required: True
         type: str
     iaas_classic_username:
         description:
@@ -74,9 +74,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'access_group_id',
     'sort',
     'transaction_id',
-    'access_group_id',
 ]
 
 
@@ -87,14 +87,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    access_group_id=dict(
+        required=True,
+        type='str'),
     sort=dict(
         required=False,
         type='str'),
     transaction_id=dict(
         required=False,
-        type='str'),
-    access_group_id=dict(
-        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -130,7 +130,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The user-defined name for this route.
-
-
   routing_table (True, str, None)
     (Required for new resource) The routing table identifier.
-
-
-  vpc (True, str, None)
-    (Required for new resource) The VPC identifier.
-
-
-  destination (True, str, None)
-    (Required for new resource) The destination of the route.
 
 
   next_hop (True, str, None)
@@ -53,6 +41,18 @@ Parameters
 
   action (False, str, deliver)
     The action to perform with a packet matching the route.
+
+
+  name (False, str, None)
+    The user-defined name for this route.
+
+
+  vpc (True, str, None)
+    (Required for new resource) The VPC identifier.
+
+
+  destination (True, str, None)
+    (Required for new resource) The destination of the route.
 
 
   zone (True, str, None)

@@ -17,19 +17,29 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_satellite_attach_host_script' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    location:
+    host_provider:
         description:
-            - A unique name for the new Satellite location
-        required: True
+            - None
+        required: False
+        type: str
+    script_dir:
+        description:
+            - The directory where the satellite attach host script to be downloaded. Default is home directory
+        required: False
         type: str
     custom_script:
         description:
             - The custom script that has to be appended to generated host script file
         required: False
+        type: str
+    location:
+        description:
+            - A unique name for the new Satellite location
+        required: True
         type: str
     coreos_host:
         description:
@@ -42,16 +52,6 @@ options:
         required: False
         type: list
         elements: str
-    host_provider:
-        description:
-            - None
-        required: False
-        type: str
-    script_dir:
-        description:
-            - The directory where the satellite attach host script to be downloaded. Default is home directory
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -90,12 +90,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'custom_script',
-    'coreos_host',
-    'labels',
     'host_provider',
     'script_dir',
+    'custom_script',
+    'location',
+    'coreos_host',
+    'labels',
 ]
 
 
@@ -106,11 +106,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
-        required=True,
+    host_provider=dict(
+        required=False,
+        type='str'),
+    script_dir=dict(
+        required=False,
         type='str'),
     custom_script=dict(
         required=False,
+        type='str'),
+    location=dict(
+        required=True,
         type='str'),
     coreos_host=dict(
         required=False,
@@ -119,12 +125,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    host_provider=dict(
-        required=False,
-        type='str'),
-    script_dir=dict(
-        required=False,
-        type='str'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -159,7 +159,7 @@ def run_module():
         resource_type='ibm_satellite_attach_host_script',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

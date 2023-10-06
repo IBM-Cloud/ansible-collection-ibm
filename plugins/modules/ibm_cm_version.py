@@ -18,77 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_version' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    install_kind:
-        description:
-            - Install type. Example: instance. Required for virtual server image for VPC.
-        required: False
-        type: str
-    working_directory:
-        description:
-            - Optional - The sub-folder within the specified tgz file that contains the software being onboarded.
-        required: False
-        type: str
-    x_auth_token:
-        description:
-            - Authentication token used to access the specified zip file.
-        required: False
-        type: str
-    include_config:
-        description:
-            - Add all possible configuration values to this version when importing.
-        required: False
-        type: bool
-    repotype:
-        description:
-            - The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'.
-        required: False
-        type: str
-    catalog_id:
-        description:
-            - (Required for new resource) Catalog identifier.
-        required: True
-        type: str
-    target_kinds:
-        description:
-            - Deployment target of the content being onboarded. Current valid values are iks, roks, vcenter, power-iaas, terraform, and vpc-x86. Required for virtual server image for VPC.
-        required: False
-        type: list
-        elements: str
-    install:
-        description:
-            - Script information.
-        required: False
-        type: list
-        elements: dict
-    label:
-        description:
-            - Display name of version. Required for virtual server image for VPC.
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags array.
-        required: False
-        type: list
-        elements: str
-    licenses:
-        description:
-            - List of licenses the product was built with.
-        required: False
-        type: list
-        elements: dict
     content:
         description:
             - Byte array representing the content to be imported. Only supported for OVA images at this time.
         required: False
         type: str
-    format_kind:
+    label:
         description:
-            - Format of content being onboarded. Example: vsi-image. Required for virtual server image for VPC.
+            - Display name of version. Required for virtual server image for VPC.
         required: False
         type: str
     product_kind:
@@ -96,36 +37,90 @@ options:
             - Optional product kind for the software being onboarded.  Valid values are software, module, or solution.  Default value is software.
         required: False
         type: str
-    is_vsi:
+    offering_id:
         description:
-            - Indicates that the current terraform template is used to install a virtual server image.
+            - (Required for new resource) Offering identification.
+        required: True
+        type: str
+    include_config:
+        description:
+            - Add all possible configuration values to this version when importing.
         required: False
         type: bool
-    import_sha:
+    x_auth_token:
         description:
-            - SHA256 fingerprint of the image file. Required for virtual server image for VPC.
+            - Authentication token used to access the specified zip file.
         required: False
         type: str
-    flavor:
+    licenses:
         description:
-            - Version Flavor Information.  Only supported for Product kind Solution.
+            - List of licenses the product was built with.
         required: False
         type: list
         elements: dict
+    tags:
+        description:
+            - Tags array.
+        required: False
+        type: list
+        elements: str
+    pre_install:
+        description:
+            - Optional pre-install instructions.
+        required: False
+        type: list
+        elements: dict
+    install_kind:
+        description:
+            - Install type. Example: instance. Required for virtual server image for VPC.
+        required: False
+        type: str
+    iam_permissions:
+        description:
+            - List of IAM permissions that are required to consume this version.
+        required: False
+        type: list
+        elements: dict
+    catalog_id:
+        description:
+            - (Required for new resource) Catalog identifier.
+        required: True
+        type: str
     import_metadata:
         description:
             - Generic data to be included with content being onboarded. Required for virtual server image for VPC.
         required: False
         type: list
         elements: dict
+    target_version:
+        description:
+            - The semver value for this new version, if not found in the zip url package content.
+        required: False
+        type: str
+    install:
+        description:
+            - Script information.
+        required: False
+        type: list
+        elements: dict
+    working_directory:
+        description:
+            - Optional - The sub-folder within the specified tgz file that contains the software being onboarded.
+        required: False
+        type: str
+    import_sha:
+        description:
+            - SHA256 fingerprint of the image file. Required for virtual server image for VPC.
+        required: False
+        type: str
     zipurl:
         description:
             - URL path to zip location.  If not specified, must provide content in the body of this call.
         required: False
         type: str
-    pre_install:
+    flavor:
         description:
-            - Optional pre-install instructions.
+            - Version Flavor Information.  Only supported for Product kind Solution.
         required: False
         type: list
         elements: dict
@@ -135,32 +130,37 @@ options:
         required: False
         type: list
         elements: dict
-    name:
-        description:
-            - Name of version. Required for virtual server image for VPC.
-        required: False
-        type: str
-    iam_permissions:
-        description:
-            - List of IAM permissions that are required to consume this version.
-        required: False
-        type: list
-        elements: dict
     is_consumable:
         description:
             - Is the version able to be shared.
         required: False
         type: bool
-    offering_id:
+    format_kind:
         description:
-            - (Required for new resource) Offering identification.
-        required: True
-        type: str
-    target_version:
-        description:
-            - The semver value for this new version, if not found in the zip url package content.
+            - Format of content being onboarded. Example: vsi-image. Required for virtual server image for VPC.
         required: False
         type: str
+    is_vsi:
+        description:
+            - Indicates that the current terraform template is used to install a virtual server image.
+        required: False
+        type: bool
+    repotype:
+        description:
+            - The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'.
+        required: False
+        type: str
+    name:
+        description:
+            - Name of version. Required for virtual server image for VPC.
+        required: False
+        type: str
+    target_kinds:
+        description:
+            - Deployment target of the content being onboarded. Current valid values are iks, roks, vcenter, power-iaas, terraform, and vpc-x86. Required for virtual server image for VPC.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -207,38 +207,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('catalog_id', 'str'),
     ('offering_id', 'str'),
+    ('catalog_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'install_kind',
-    'working_directory',
-    'x_auth_token',
-    'include_config',
-    'repotype',
-    'catalog_id',
-    'target_kinds',
-    'install',
-    'label',
-    'tags',
-    'licenses',
     'content',
-    'format_kind',
+    'label',
     'product_kind',
-    'is_vsi',
-    'import_sha',
-    'flavor',
-    'import_metadata',
-    'zipurl',
-    'pre_install',
-    'solution_info',
-    'name',
-    'iam_permissions',
-    'is_consumable',
     'offering_id',
+    'include_config',
+    'x_auth_token',
+    'licenses',
+    'tags',
+    'pre_install',
+    'install_kind',
+    'iam_permissions',
+    'catalog_id',
+    'import_metadata',
     'target_version',
+    'install',
+    'working_directory',
+    'import_sha',
+    'zipurl',
+    'flavor',
+    'solution_info',
+    'is_consumable',
+    'format_kind',
+    'is_vsi',
+    'repotype',
+    'name',
+    'target_kinds',
 ]
 
 # Params for Data source
@@ -247,7 +247,6 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'metadata',
     'version_loc_id',
 ]
 
@@ -258,70 +257,67 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    install_kind=dict(
-        required=False,
-        type='str'),
-    working_directory=dict(
-        required=False,
-        type='str'),
-    x_auth_token=dict(
-        required=False,
-        type='str'),
-    include_config=dict(
-        required=False,
-        type='bool'),
-    repotype=dict(
-        required=False,
-        type='str'),
-    catalog_id=dict(
-        required=False,
-        type='str'),
-    target_kinds=dict(
-        required=False,
-        elements='',
-        type='list'),
-    install=dict(
-        required=False,
-        elements='',
-        type='list'),
-    label=dict(
-        required=False,
-        type='str'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    licenses=dict(
-        required=False,
-        elements='',
-        type='list'),
     content=dict(
         required=False,
         type='str'),
-    format_kind=dict(
+    label=dict(
         required=False,
         type='str'),
     product_kind=dict(
         required=False,
         type='str'),
-    is_vsi=dict(
-        required=False,
-        type='bool'),
-    import_sha=dict(
+    offering_id=dict(
         required=False,
         type='str'),
-    flavor=dict(
+    include_config=dict(
+        required=False,
+        type='bool'),
+    x_auth_token=dict(
+        required=False,
+        type='str'),
+    licenses=dict(
         required=False,
         elements='',
         type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pre_install=dict(
+        required=False,
+        elements='',
+        type='list'),
+    install_kind=dict(
+        required=False,
+        type='str'),
+    iam_permissions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    catalog_id=dict(
+        required=False,
+        type='str'),
     import_metadata=dict(
         required=False,
         elements='',
         type='list'),
+    target_version=dict(
+        required=False,
+        type='str'),
+    install=dict(
+        required=False,
+        elements='',
+        type='list'),
+    working_directory=dict(
+        required=False,
+        type='str'),
+    import_sha=dict(
+        required=False,
+        type='str'),
     zipurl=dict(
         required=False,
         type='str'),
-    pre_install=dict(
+    flavor=dict(
         required=False,
         elements='',
         type='list'),
@@ -329,22 +325,25 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    iam_permissions=dict(
-        required=False,
-        elements='',
-        type='list'),
     is_consumable=dict(
         required=False,
         type='bool'),
-    offering_id=dict(
+    format_kind=dict(
         required=False,
         type='str'),
-    target_version=dict(
+    is_vsi=dict(
+        required=False,
+        type='bool'),
+    repotype=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    target_kinds=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -410,7 +409,7 @@ def run_module():
         resource_type='ibm_cm_version',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -419,7 +418,7 @@ def run_module():
             resource_type='ibm_cm_version',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  kube_config_path (False, str, None)
-    Path of downloaded cluster config
-
 
   check_ptx_status (False, bool, False)
     Check portworx status after worker replace
@@ -53,6 +45,14 @@ Parameters
 
   replace_worker (True, str, None)
     (Required for new resource) Worker name/id that needs to be replaced
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  kube_config_path (False, str, None)
+    Path of downloaded cluster config
 
 
   id (False, str, None)

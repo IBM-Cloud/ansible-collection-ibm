@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_flow_logs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    vpc_crn:
-        description:
-            - The vpc CRN this flow log is in
-        required: False
-        type: str
-    name:
-        description:
-            - The name of the flow log
-        required: False
-        type: str
     target:
         description:
             - The target id of the flow log
@@ -54,6 +44,16 @@ options:
     vpc_name:
         description:
             - The vpc name this flow log is in
+        required: False
+        type: str
+    vpc_crn:
+        description:
+            - The vpc CRN this flow log is in
+        required: False
+        type: str
+    name:
+        description:
+            - The name of the flow log
         required: False
         type: str
     generation:
@@ -93,13 +93,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'vpc_crn',
-    'name',
     'target',
     'target_resource_type',
     'resource_group',
     'vpc',
     'vpc_name',
+    'vpc_crn',
+    'name',
 ]
 
 
@@ -110,12 +110,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    vpc_crn=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     target=dict(
         required=False,
         type='str'),
@@ -129,6 +123,12 @@ module_args = dict(
         required=False,
         type='str'),
     vpc_name=dict(
+        required=False,
+        type='str'),
+    vpc_crn=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -177,7 +177,7 @@ def run_module():
         resource_type='ibm_is_flow_logs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

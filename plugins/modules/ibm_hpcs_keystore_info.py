@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_keystore' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
@@ -26,14 +26,14 @@ options:
             - UUID of the keystore.
         required: True
         type: str
-    uko_vault:
-        description:
-            - The UUID of the Vault in which the update is to take place.
-        required: True
-        type: str
     instance_id:
         description:
             - The ID of the UKO instance this resource exists in.
+        required: True
+        type: str
+    uko_vault:
+        description:
+            - The UUID of the Vault in which the update is to take place.
         required: True
         type: str
     region:
@@ -75,16 +75,16 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('keystore_id', 'str'),
-    ('uko_vault', 'str'),
     ('instance_id', 'str'),
+    ('uko_vault', 'str'),
     ('region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'keystore_id',
-    'uko_vault',
     'instance_id',
+    'uko_vault',
     'region',
 ]
 
@@ -99,10 +99,10 @@ module_args = dict(
     keystore_id=dict(
         required=True,
         type='str'),
-    uko_vault=dict(
+    instance_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
+    uko_vault=dict(
         required=True,
         type='str'),
     region=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_keystore',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

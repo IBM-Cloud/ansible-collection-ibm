@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) The name of the namespace.
+
+
   resource_group_id (False, str, None)
     The ID of the resource group that the namespace will be created within.
 
 
   tags (False, list, None)
     List of tags
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the namespace.
 
 
   id (False, str, None)

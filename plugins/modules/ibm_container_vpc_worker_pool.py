@@ -18,10 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    operating_system:
+        description:
+            - The operating system of the workers in the worker pool.
+        required: False
+        type: str
+    host_pool_id:
+        description:
+            - The ID of the dedicated host pool associated with the worker pool
+        required: False
+        type: str
+    worker_pool_name:
+        description:
+            - (Required for new resource) worker pool name
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    secondary_storage:
+        description:
+            - The secondary storage option for the workers in the worker pool.
+        required: False
+        type: str
+    kms_account_id:
+        description:
+            - Account ID of kms instance holder - if not provided, defaults to the account in use
+        required: False
+        type: str
     cluster:
         description:
             - (Required for new resource) Cluster name
@@ -33,24 +63,19 @@ options:
         required: False
         type: dict
         elements: str
-    operating_system:
+    vpc_id:
         description:
-            - The operating system of the workers in the worker pool.
+            - (Required for new resource) The vpc id where the cluster is
+        required: True
+        type: str
+    kms_instance_id:
+        description:
+            - Instance ID for boot volume encryption
         required: False
         type: str
-    secondary_storage:
+    crk:
         description:
-            - The secondary storage option for the workers in the worker pool.
-        required: False
-        type: str
-    host_pool_id:
-        description:
-            - The ID of the dedicated host pool associated with the worker pool
-        required: False
-        type: str
-    kms_account_id:
-        description:
-            - Account ID of kms instance holder - if not provided, defaults to the account in use
+            - Root Key ID for boot volume encryption
         required: False
         type: str
     taints:
@@ -59,29 +84,19 @@ options:
         required: False
         type: list
         elements: dict
-    vpc_id:
-        description:
-            - (Required for new resource) The vpc id where the cluster is
-        required: True
-        type: str
     worker_count:
         description:
             - (Required for new resource) The number of workers
         required: True
         type: int
-    crk:
+    entitlement:
         description:
-            - Root Key ID for boot volume encryption
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
         type: str
     flavor:
         description:
             - (Required for new resource) cluster node falvor
-        required: True
-        type: str
-    worker_pool_name:
-        description:
-            - (Required for new resource) worker pool name
         required: True
         type: str
     zones:
@@ -90,21 +105,6 @@ options:
         required: True
         type: list
         elements: dict
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    entitlement:
-        description:
-            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-        required: False
-        type: str
-    kms_instance_id:
-        description:
-            - Instance ID for boot volume encryption
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -131,32 +131,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('worker_pool_name', 'str'),
     ('cluster', 'str'),
     ('vpc_id', 'str'),
     ('worker_count', 'int'),
     ('flavor', 'str'),
-    ('worker_pool_name', 'str'),
     ('zones', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'operating_system',
+    'host_pool_id',
+    'worker_pool_name',
+    'resource_group_id',
+    'secondary_storage',
+    'kms_account_id',
     'cluster',
     'labels',
-    'operating_system',
-    'secondary_storage',
-    'host_pool_id',
-    'kms_account_id',
-    'taints',
     'vpc_id',
-    'worker_count',
-    'crk',
-    'flavor',
-    'worker_pool_name',
-    'zones',
-    'resource_group_id',
-    'entitlement',
     'kms_instance_id',
+    'crk',
+    'taints',
+    'worker_count',
+    'entitlement',
+    'flavor',
+    'zones',
 ]
 
 # Params for Data source
@@ -177,6 +177,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    operating_system=dict(
+        required=False,
+        type='str'),
+    host_pool_id=dict(
+        required=False,
+        type='str'),
+    worker_pool_name=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    secondary_storage=dict(
+        required=False,
+        type='str'),
+    kms_account_id=dict(
+        required=False,
+        type='str'),
     cluster=dict(
         required=False,
         type='str'),
@@ -184,50 +202,32 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    operating_system=dict(
+    vpc_id=dict(
         required=False,
         type='str'),
-    secondary_storage=dict(
+    kms_instance_id=dict(
         required=False,
         type='str'),
-    host_pool_id=dict(
-        required=False,
-        type='str'),
-    kms_account_id=dict(
+    crk=dict(
         required=False,
         type='str'),
     taints=dict(
         required=False,
         elements='',
         type='list'),
-    vpc_id=dict(
-        required=False,
-        type='str'),
     worker_count=dict(
         required=False,
         type='int'),
-    crk=dict(
+    entitlement=dict(
         required=False,
         type='str'),
     flavor=dict(
-        required=False,
-        type='str'),
-    worker_pool_name=dict(
         required=False,
         type='str'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    entitlement=dict(
-        required=False,
-        type='str'),
-    kms_instance_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -279,7 +279,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -288,7 +288,7 @@ def run_module():
             resource_type='ibm_container_vpc_worker_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

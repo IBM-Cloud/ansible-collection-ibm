@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  most_recent (False, bool, False)
+    If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
+
+
   hostname (False, str, None)
     The hostname of the bare metal server
 
 
   global_identifier (False, str, None)
     The unique global identifier of the bare metal server
-
-
-  most_recent (False, bool, False)
-    If true and multiple entries are found, the most recently created bare metal is used. If false, an error is returned
 
 
   domain (False, str, None)

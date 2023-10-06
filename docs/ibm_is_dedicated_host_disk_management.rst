@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  dedicated_host (True, str, None)
-    (Required for new resource) ID of the dedicated host for which disks has to be managed
-
-
   disks (True, list, None)
     (Required for new resource) Disk information that has to be updated.
+
+
+  dedicated_host (True, str, None)
+    (Required for new resource) ID of the dedicated host for which disks has to be managed
 
 
   id (False, str, None)

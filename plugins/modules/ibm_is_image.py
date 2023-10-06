@@ -18,50 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    href:
+    encryption_key:
         description:
-            - Image Href value
+            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Image name
-        required: True
         type: str
     source_volume:
         description:
             - Image volume id
-        required: False
-        type: str
-    operating_system:
-        description:
-            - Image Operating system
-        required: False
-        type: str
-    encrypted_data_key:
-        description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
-        type: str
-    tags:
-        description:
-            - Tags for the image
-        required: False
-        type: list
-        elements: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    encryption_key:
-        description:
-            - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
         required: False
         type: str
     resource_group:
@@ -69,6 +37,38 @@ options:
             - The resource group for this image
         required: False
         type: str
+    encrypted_data_key:
+        description:
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
+        type: str
+    operating_system:
+        description:
+            - Image Operating system
+        required: False
+        type: str
+    href:
+        description:
+            - Image Href value
+        required: False
+        type: str
+    access_tags:
+        description:
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
+    name:
+        description:
+            - (Required for new resource) Image name
+        required: True
+        type: str
+    tags:
+        description:
+            - Tags for the image
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -120,15 +120,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'href',
-    'name',
-    'source_volume',
-    'operating_system',
-    'encrypted_data_key',
-    'tags',
-    'access_tags',
     'encryption_key',
+    'source_volume',
     'resource_group',
+    'encrypted_data_key',
+    'operating_system',
+    'href',
+    'access_tags',
+    'name',
+    'tags',
 ]
 
 # Params for Data source
@@ -148,35 +148,35 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    href=dict(
-        required=False,
-        type='str'),
-    name=dict(
+    encryption_key=dict(
         required=False,
         type='str'),
     source_volume=dict(
         required=False,
         type='str'),
-    operating_system=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     encrypted_data_key=dict(
+        required=False,
+        type='str'),
+    operating_system=dict(
+        required=False,
+        type='str'),
+    href=dict(
+        required=False,
+        type='str'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    encryption_key=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +254,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -263,7 +263,7 @@ def run_module():
             resource_type='ibm_is_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

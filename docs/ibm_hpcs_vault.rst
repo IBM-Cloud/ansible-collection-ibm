@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
 
   name (True, str, None)
     (Required for new resource) A human-readable name to assign to your vault. To protect your privacy, do not use personal data, such as your name or location.
@@ -41,10 +45,6 @@ Parameters
 
   instance_id (True, str, None)
     (Required for new resource) The ID of the UKO instance this resource exists in.
-
-
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   id (False, str, None)

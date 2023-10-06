@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -29,16 +29,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  vpc_name (False, str, None)
-    The name of the vpc the network acl resides in.
-
-
   name (False, str, None)
     The network acl name.
 
 
   network_acl (False, str, None)
     The network acl id.
+
+
+  vpc_name (False, str, None)
+    The name of the vpc the network acl resides in.
 
 
   generation (False, int, 2)

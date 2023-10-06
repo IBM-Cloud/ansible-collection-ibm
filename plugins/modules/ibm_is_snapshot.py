@@ -18,34 +18,40 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_snapshot' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
-    source_volume:
+    resource_group:
         description:
-            - (Required for new resource) Snapshot source volume
-        required: True
+            - Resource group info
+        required: False
         type: str
     name:
         description:
             - Snapshot name
         required: False
         type: str
-    resource_group:
+    source_volume:
         description:
-            - Resource group info
-        required: False
+            - (Required for new resource) Snapshot source volume
+        required: True
         type: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
     tags:
         description:
             - User Tags for the snapshot
+        required: False
+        type: list
+        elements: str
+    clones:
+        description:
+            - Zones for creating the snapshot clone
+        required: False
+        type: list
+        elements: str
+    access_tags:
+        description:
+            - List of access management tags
         required: False
         type: list
         elements: str
@@ -100,11 +106,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_volume',
-    'name',
     'resource_group',
-    'access_tags',
+    'name',
+    'source_volume',
     'tags',
+    'clones',
+    'access_tags',
 ]
 
 # Params for Data source
@@ -112,8 +119,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'identifier',
     'name',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -123,20 +130,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_volume=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     name=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    source_volume=dict(
         required=False,
         type='str'),
-    access_tags=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    clones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    access_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -217,7 +228,7 @@ def run_module():
         resource_type='ibm_is_snapshot',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +237,7 @@ def run_module():
             resource_type='ibm_is_snapshot',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

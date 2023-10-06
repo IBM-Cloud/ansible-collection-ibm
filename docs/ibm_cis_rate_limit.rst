@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  domain_id (True, str, None)
-    (Required for new resource) CIS Domain ID
-
-
   disabled (False, bool, False)
     Whether this rate limiting rule is currently disabled.
 
 
-  match (False, list, None)
-    Rate Limiting Match
+  period (True, int, None)
+    (Required for new resource) Rate Limiting Period
 
 
   correlate (False, list, None)
@@ -55,6 +51,10 @@ Parameters
     (Required for new resource) CIS Intance CRN
 
 
+  domain_id (True, str, None)
+    (Required for new resource) CIS Domain ID
+
+
   description (False, str, None)
     A note that you can use to describe the reason for a rate limiting rule.
 
@@ -67,8 +67,8 @@ Parameters
     (Required for new resource) Rate Limiting Threshold
 
 
-  period (True, int, None)
-    (Required for new resource) Rate Limiting Period
+  match (False, list, None)
+    Rate Limiting Match
 
 
   id (False, str, None)

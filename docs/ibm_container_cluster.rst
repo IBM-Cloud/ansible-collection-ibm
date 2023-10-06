@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,112 +31,88 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
-  public_service_endpoint (False, bool, None)
-    None
-
-
-  operating_system (False, str, None)
-    The operating system of the workers in the default worker pool.
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  private_vlan_id (False, str, None)
-    Private VLAN ID
-
-
-  name (True, str, None)
-    (Required for new resource) The cluster name
-
-
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
-
-
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
-
-
-  retry_patch_version (False, int, None)
-    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
-
-
-  wait_for_worker_update (False, bool, True)
-    Wait for worker node to update during kube version update.
-
-
-  labels (False, dict, None)
-    list of labels to the default worker pool
-
-
-  webhook (False, list, None)
-    None
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  workers_info (False, list, None)
-    The IDs of the worker node
-
-
   tags (False, list, None)
     Tags for the resource
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
-
-
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
 
 
   image_security_enforcement (False, bool, False)
     Set true to enable image security enforcement policies
 
 
+  workers_info (False, list, None)
+    The IDs of the worker node
+
+
+  retry_patch_version (False, int, None)
+    Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+
+
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
+
+
+  private_service_endpoint (False, bool, None)
+    None
+
+
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
+
+
+  private_vlan_id (False, str, None)
+    Private VLAN ID
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  name (True, str, None)
+    (Required for new resource) The cluster name
+
+
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
+
+
+  patch_version (False, str, None)
+    Kubernetes patch version
+
+
+  wait_for_worker_update (False, bool, True)
+    Wait for worker node to update during kube version update.
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
 
 
   kms_config (False, list, None)
@@ -147,16 +123,40 @@ Parameters
     Kubernetes version info
 
 
-  patch_version (False, str, None)
-    Kubernetes patch version
+  operating_system (False, str, None)
+    The operating system of the workers in the default worker pool.
+
+
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  labels (False, dict, None)
+    list of labels to the default worker pool
 
 
   public_vlan_id (False, str, None)
     Public VLAN ID
 
 
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  webhook (False, list, None)
+    None
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
+
+
+  machine_type (False, str, None)
+    Machine type
 
 
   id (False, str, None)

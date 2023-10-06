@@ -18,10 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_githubconsolidated' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.50.0
+    - IBM-Cloud terraform-provider-ibm v1.51.0
     - Terraform v0.12.20
 
 options:
+    initialization:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
     toolchain_id:
         description:
             - (Required for new resource) ID of the toolchain to bind the tool to.
@@ -30,12 +36,6 @@ options:
     parameters:
         description:
             - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
-        required: True
-        type: list
-        elements: dict
-    initialization:
-        description:
-            - (Required for new resource) 
         required: True
         type: list
         elements: dict
@@ -90,16 +90,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('initialization', 'list'),
     ('toolchain_id', 'str'),
     ('parameters', 'list'),
-    ('initialization', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'initialization',
     'toolchain_id',
     'parameters',
-    'initialization',
     'name',
 ]
 
@@ -121,14 +121,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    initialization=dict(
+        required=False,
+        elements='',
+        type='list'),
     toolchain_id=dict(
         required=False,
         type='str'),
     parameters=dict(
-        required=False,
-        elements='',
-        type='list'),
-    initialization=dict(
         required=False,
         elements='',
         type='list'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_githubconsolidated',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.50.0',
+        ibm_provider_version='1.51.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -209,7 +209,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_githubconsolidated',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.50.0',
+            ibm_provider_version='1.51.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Property name.
-
-
-  type (True, str, None)
-    (Required for new resource) Property type.
-
-
-  value (False, str, None)
-    Property value. Any string value is valid.
-
 
   enum (False, list, None)
     Options for `single_select` property type. Only needed for `single_select` property type.
@@ -57,6 +45,18 @@ Parameters
 
   trigger_id (True, str, None)
     (Required for new resource) The trigger ID.
+
+
+  name (True, str, None)
+    (Required for new resource) Property name.
+
+
+  type (True, str, None)
+    (Required for new resource) Property type.
+
+
+  value (False, str, None)
+    Property value. Any string value is valid.
 
 
   id (False, str, None)

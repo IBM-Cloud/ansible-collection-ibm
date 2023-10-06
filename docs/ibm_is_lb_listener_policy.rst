@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -31,44 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  lb (True, str, None)
-    (Required for new resource) Load Balancer Listener Policy
-
-
-  action (True, str, None)
-    (Required for new resource) Policy Action
+  priority (True, int, None)
+    (Required for new resource) Listener Policy Priority
 
 
   target_http_status_code (False, int, None)
     Listener Policy target HTTPS Status code.
 
 
-  listener (True, str, None)
-    (Required for new resource) Listener ID
-
-
-  target_https_redirect_status_code (False, int, None)
-    The HTTP status code to be returned in the redirect response
-
-
-  priority (True, int, None)
-    (Required for new resource) Listener Policy Priority
-
-
-  name (False, str, None)
-    Policy name
-
-
-  rules (False, list, None)
-    Policy Rules
-
-
-  target_url (False, str, None)
-    Policy Target URL
-
-
-  target_https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
+  lb (True, str, None)
+    (Required for new resource) Load Balancer Listener Policy
 
 
   target_https_redirect_listener (False, str, None)
@@ -77,6 +49,34 @@ Parameters
 
   target_id (False, str, None)
     Listener Policy Target ID
+
+
+  target_https_redirect_uri (False, str, None)
+    Target URI where traffic will be redirected
+
+
+  rules (False, list, None)
+    Policy Rules
+
+
+  name (False, str, None)
+    Policy name
+
+
+  target_url (False, str, None)
+    Policy Target URL
+
+
+  action (True, str, None)
+    (Required for new resource) Policy Action
+
+
+  listener (True, str, None)
+    (Required for new resource) Listener ID
+
+
+  target_https_redirect_status_code (False, int, None)
+    The HTTP status code to be returned in the redirect response
 
 
   id (False, str, None)

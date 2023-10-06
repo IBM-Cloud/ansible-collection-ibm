@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.50.0
+- IBM-Cloud terraform-provider-ibm v1.51.0
 - Terraform v0.12.20
 
 
@@ -39,30 +39,6 @@ Parameters
     (Required for new resource) Instance ID
 
 
-  zone_id (True, str, None)
-    (Required for new resource) Zone ID
-
-
-  ttl (False, int, 900)
-    DNS record TTL
-
-
-  weight (False, int, 0)
-    DNS server weight
-
-
-  preference (False, int, 0)
-    DNS maximum preference
-
-
-  service (False, str, None)
-    Service info
-
-
-  name (True, str, None)
-    (Required for new resource) DNS record name
-
-
   type (True, str, None)
     (Required for new resource) DNS record Type
 
@@ -73,6 +49,30 @@ Parameters
 
   port (False, int, None)
     DNS server Port
+
+
+  service (False, str, None)
+    Service info
+
+
+  zone_id (True, str, None)
+    (Required for new resource) Zone ID
+
+
+  preference (False, int, 0)
+    DNS maximum preference
+
+
+  weight (False, int, 0)
+    DNS server weight
+
+
+  name (True, str, None)
+    (Required for new resource) DNS record name
+
+
+  ttl (False, int, 900)
+    DNS record TTL
 
 
   priority (False, int, 0)
