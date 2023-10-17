@@ -1,0 +1,11 @@
+---
+region: "us-south"
+cos_name: "test_cos"
+plan: "standard"
+location: "global"
+kp_name: "test_kp"
+kp_plan: "tiered-pricing"
+kp_location: "us-south"
+key_name: "test_key"
+standard_key: False
+bucket_name: "test_bucket"
