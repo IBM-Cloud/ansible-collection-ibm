@@ -36,11 +36,6 @@ options:
             - ID of the resource group
         required: False
         type: str
-    region:
-        description:
-            - Name of the region
-        required: False
-        type: str
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -101,9 +96,6 @@ module_args = dict(
         required=True,
         type='str'),
     resource_group_id=dict(
-        required=False,
-        type='str'),
-    region=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
