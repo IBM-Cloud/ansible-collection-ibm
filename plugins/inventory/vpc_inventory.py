@@ -22,6 +22,8 @@ description:
       IBM Cloud (instances documentation, https://cloud.ibm.com/apidocs/vpc/latest#get-instance-template).
     - It is expected that the IC_API_KEY environment variable is set. More information about this API key can be found in
       the IBM Cloud (API keys documentation, https://cloud.ibm.com/docs/account?topic=account-classic_keys).
+extends_documentation_fragment:
+    - inventory_cache
 options:
     regions:
         description: List of IBM Cloud regions to query.
@@ -205,12 +207,14 @@ def init_logger():
 class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
     NAME = 'ibm.cloudcollection.vpc_inventory'
+    _cache = None
 
     def __init__(self):
         super().__init__()
 
         self.group_prefix = 'vpc_'
         self.template_handle = None
+        init_logger()
 
     def verify_file(self, path):
         """
@@ -226,11 +230,44 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         """
         Parse inventory source
         """
-        super().parse(inventory, loader, path, cache)
+        super(InventoryModule, self).parse(inventory, loader, path)
 
-        self.template_handle = Templar(loader=loader)
+        self.load_cache_plugin()
+
+        # Read the inventory YAML file
         self._configure(path)
-        vsis = self.get_virtual_server_instances()
+        cache_key = self.get_cache_key(path)
+
+        # cache may be True or False at this point to indicate if the inventory is being refreshed
+        # get the user's cache option too to see if we should save the cache if it is changing
+        user_cache_setting = self.get_option('cache')
+
+        # read if the user has caching enabled and the cache isn't being refreshed
+        attempt_to_read_cache = user_cache_setting and cache
+
+        # update if the user has caching enabled and the cache is being refreshed;
+        # update this value to True if the cache has expired below
+        cache_needs_update = user_cache_setting and not cache
+
+        # attempt to read the cache if inventory isn't being refreshed and the user has caching enabled
+        if attempt_to_read_cache:
+            try:
+                vsis = self._cache[cache_key]
+            except KeyError:
+                # This occurs if the cache_key is not in the cache or if the cache_key expired,
+                # so the cache needs to be updated
+                logger.debug("Cache needs to be updated: %s", cache_key)
+                cache_needs_update = True
+
+        if not attempt_to_read_cache or cache_needs_update:
+            # parse the provided inventory source
+            # submit the parsed data to the inventory object (add_host, set_variable, etc)
+            self.template_handle = Templar(loader=loader)
+            vsis = self.get_virtual_server_instances()
+
+        if cache_needs_update:
+            self._cache[cache_key] = vsis
+
         self._populate_from_vsis(vsis)
 
     def _populate_from_vsis(self, vsis):
