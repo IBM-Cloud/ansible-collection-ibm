@@ -376,7 +376,7 @@ from ansible.module_utils.six import string_types
 from ansible.errors import AnsibleError
 
 DEFAULT_TF_DIR = '/var/tmp/ansible/ibmcloud/'
-RM_OBJECT_SUBDIRS = False
+RM_OBJECT_SUBDIRS = True
 
 
 def ibmcloud_terraform(
