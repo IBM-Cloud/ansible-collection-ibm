@@ -361,6 +361,7 @@ __metaclass__ = type
 import jinja2
 from textwrap import dedent
 import os
+import platform
 import sys
 import shutil
 import re
@@ -370,6 +371,7 @@ from ansible.module_utils._text import to_text
 from ansible.module_utils.six import iteritems
 from ansible.module_utils.six import ensure_str
 from ansible.module_utils.six import string_types
+from ansible.errors import AnsibleError
 
 DEFAULT_TF_DIR = '/var/tmp/ansible/ibmcloud/'
 RM_OBJECT_SUBDIRS = True
@@ -662,11 +664,20 @@ class Terraform:
         self.terraform_dir = terraform_dir
         self.ibm_provider_version = ibm_provider_version
         self.terraform_version = terraform_version
-        self.executable = os.path.join(terraform_dir, 'terraform')
+        self.executable_dir = os.path.join(terraform_dir, "terraform", terraform_version)
+        self.executable = os.path.join(self.executable_dir, "terraform")
+        self.ibm_provider_plugin_dir = os.path.join(
+            terraform_dir,
+            "terraform_ibm_cloud_provider",
+            ibm_provider_version
+        )
         self.env = env
         self.platform = sys.platform
         if self.platform.startswith('linux'):
             self.platform = 'linux'
+        self.arch = platform.machine().lower()
+        if self.arch == 'x86_64':
+            self.arch = 'amd64'
 
         # Create global 'terraform_dir' accessible by all system users
         if not os.path.isdir(self.terraform_dir):
@@ -706,12 +717,11 @@ class Terraform:
 
         # Check for existing IBM Cloud provider
         provider_found = False
-        for item in os.listdir(self.terraform_dir):
-            if item.startswith('terraform-provider-ibm_v'):
-                if item == 'terraform-provider-ibm_v' + ibm_provider_version:
-                    provider_found = True
-                else:
-                    os.remove(os.path.join(self.terraform_dir, item))
+        if os.path.isdir(self.ibm_provider_plugin_dir):
+            for item in os.listdir(self.ibm_provider_plugin_dir):
+                if item.startswith('terraform-provider-ibm_v'):
+                    if item == 'terraform-provider-ibm_v' + ibm_provider_version:
+                        provider_found = True
 
         # Download and install IBM Cloud provider if desired version not
         # found
@@ -722,37 +732,48 @@ class Terraform:
         self.init()
         self.refresh()
 
-    def _download_extract_zip(self, url):
+    def _download_extract_zip(self, url, path):
         from ansible.module_utils.urls import open_url
         from ansible.module_utils.six import BytesIO
         from zipfile import ZipFile
-        if not os.path.isdir(self.directory):
-            os.makedirs(self.directory)
+        if not os.path.isdir(path):
+            os.makedirs(path)
         resp = open_url(url)
         zip_archive = ZipFile(BytesIO(resp.read()))
         try:
-            zip_archive.extractall(path=self.terraform_dir)
+            zip_archive.extractall(path)
         except OSError as err:
             if err.errno != 26:  # [Errno 26] Text file busy usually caused by another thread downloading terraform
                 raise err
 
     def _install_terraform(self):
-        filename = 'terraform'
-        filepath = os.path.join(self.terraform_dir, filename)
-        if os.path.isfile(filepath):
-            os.remove(filepath)
-        self._download_extract_zip(
-            "{0}{1}/terraform_{1}_{2}_amd64.zip".format(
-                self.TERRAFORM_BASE_URL, self.terraform_version, self.platform))
-        os.chmod(filepath, 0o777)
-        self.executable = filepath
+        from ansible.errors import AnsibleError
+        from ansible.module_utils.common.text.converters import to_native
+        if os.path.isfile(self.executable_dir):
+            os.remove(self.executable_dir)
+        download_url = "{0}{1}/terraform_{1}_{2}_{3}.zip".format(
+            self.TERRAFORM_BASE_URL, self.terraform_version, self.platform, self.arch)
+        try:
+            self._download_extract_zip(download_url, self.executable_dir)
+        except Exception as err:
+            raise AnsibleError(
+                "Unable to download Terraform from '%s'. Error: '%s'" %
+                    (download_url, to_native(err))
+            )
+        os.chmod(self.executable, 0o777)
 
     def _install_ibmcloud_tf_provider(self):
         filename = 'terraform-provider-ibm_v' + self.ibm_provider_version
-        self._download_extract_zip(
-            "{0}v{1}/terraform-provider-ibm_{1}_{2}_amd64.zip".format(
-                self.IBM_PROVIDER_BASE_URL, self.ibm_provider_version, self.platform))
-        os.chmod(os.path.join(self.terraform_dir, filename), 0o777)
+        download_url = "{0}v{1}/terraform-provider-ibm_{1}_{2}_{3}.zip".format(
+                self.IBM_PROVIDER_BASE_URL, self.ibm_provider_version, self.platform, self.arch)
+        try:
+            self._download_extract_zip(download_url, self.ibm_provider_plugin_dir)
+        except Exception as err:
+            raise AnsibleError(
+                "Unable to download IBM Cloud Terraform provider from '%s'. Error: '%s'" %
+                    (download_url, to_native(err))
+            )
+        os.chmod(os.path.join(self.ibm_provider_plugin_dir, filename), 0o777)
 
     def _render_provider_file(self):
         # Render terraform provider file
@@ -798,7 +819,7 @@ class Terraform:
         Returns:
             (int, str, str): Tuple with (return code, stdout, stderr)
         """
-        command = '{} init -no-color'.format(self.executable)
+        command = '{} init -no-color -plugin-dir {}'.format(self.executable, self.ibm_provider_plugin_dir)
         return run_process(command, cwd=self.directory, env=self.env)
 
     def refresh(self):
