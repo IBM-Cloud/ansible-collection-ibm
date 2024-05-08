@@ -367,6 +367,7 @@ import shutil
 import re
 import json
 from datetime import datetime
+from uuid import uuid4
 from ansible.module_utils._text import to_text
 from ansible.module_utils.six import iteritems
 from ansible.module_utils.six import ensure_str
@@ -689,7 +690,7 @@ class Terraform:
         # directory for a single object instance
         def tf_subdir_path():
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
-            return os.path.join(self.terraform_dir, timestamp)
+            return os.path.join(self.terraform_dir, timestamp + str(uuid4()))
         path = tf_subdir_path()
         while os.path.isdir(path):
             path = tf_subdir_path()
