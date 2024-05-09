@@ -366,6 +366,7 @@ import sys
 import shutil
 import re
 import json
+import time
 from datetime import datetime
 from uuid import uuid4
 from ansible.module_utils._text import to_text
@@ -625,8 +626,11 @@ class Terraform:
         "/IBM-Cloud/terraform-provider-ibm/releases/download/")
     TERRAFORM_BASE_URL = "https://releases.hashicorp.com/terraform/"
     TF_PROVIDER_TEMPLATE = """\
+    terraform {{
+        required_version = ">= 1.0"
+        required_providers {{ ibm = {{ source  = "IBM-Cloud/ibm" , version = ">= {ibm_provider_version}" }} }}
+    }}
     provider "ibm" {{
-        version          = ">= {ibm_provider_version}"
     {{% if generation is not none %}}
         generation       = "{{{{ generation }}}}"
     {{% endif %}}
@@ -647,7 +651,7 @@ class Terraform:
             parameters,
             terraform_dir,
             ibm_provider_version,
-            terraform_version='0.12.20',
+            terraform_version='1.5.5',
             env=None):
 
         self.generation = None
@@ -667,11 +671,6 @@ class Terraform:
         self.terraform_version = terraform_version
         self.executable_dir = os.path.join(terraform_dir, "terraform", terraform_version)
         self.executable = os.path.join(self.executable_dir, "terraform")
-        self.ibm_provider_plugin_dir = os.path.join(
-            terraform_dir,
-            "terraform_ibm_cloud_provider",
-            ibm_provider_version
-        )
         self.env = env
         self.platform = sys.platform
         if self.platform.startswith('linux'):
@@ -679,6 +678,19 @@ class Terraform:
         self.arch = platform.machine().lower()
         if self.arch == 'x86_64':
             self.arch = 'amd64'
+        elif "386" in self.arch:
+            self.arch = '386'
+        self.ibm_provider_plugin_dir_parent = os.path.join(
+            terraform_dir,
+            "terraform_ibm_cloud_provider"
+        )
+        self.ibm_provider_plugin_dir = os.path.join(
+            terraform_dir,
+            "terraform_ibm_cloud_provider",
+            "registry.terraform.io/ibm-cloud/ibm",
+            ibm_provider_version,
+            self.platform + '_' + self.arch
+        )
 
         # Create global 'terraform_dir' accessible by all system users
         if not os.path.isdir(self.terraform_dir):
@@ -728,6 +740,7 @@ class Terraform:
         # found
         if not provider_found:
             self._install_ibmcloud_tf_provider()
+            time.sleep(2)
 
         # Initialize Terraform
         self.init()
@@ -748,8 +761,6 @@ class Terraform:
                 raise err
 
     def _install_terraform(self):
-        from ansible.errors import AnsibleError
-        from ansible.module_utils.common.text.converters import to_native
         if os.path.isfile(self.executable_dir):
             os.remove(self.executable_dir)
         download_url = "{0}{1}/terraform_{1}_{2}_{3}.zip".format(
@@ -820,7 +831,7 @@ class Terraform:
         Returns:
             (int, str, str): Tuple with (return code, stdout, stderr)
         """
-        command = '{} init -no-color -plugin-dir {}'.format(self.executable, self.ibm_provider_plugin_dir)
+        command = '{} init -no-color -plugin-dir {}'.format(self.executable, self.ibm_provider_plugin_dir_parent)
         return run_process(command, cwd=self.directory, env=self.env)
 
     def refresh(self):
