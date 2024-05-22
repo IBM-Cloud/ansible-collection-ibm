@@ -751,7 +751,10 @@ class Terraform:
         from ansible.module_utils.six import BytesIO
         from zipfile import ZipFile
         if not os.path.isdir(path):
-            os.makedirs(path)
+            try:
+                os.makedirs(path)
+            except FileExistsError as err:
+                pass  # Concurrent makedirs are OK
         resp = open_url(url)
         zip_archive = ZipFile(BytesIO(resp.read()))
         try:
@@ -832,7 +835,14 @@ class Terraform:
             (int, str, str): Tuple with (return code, stdout, stderr)
         """
         command = '{} init -no-color -plugin-dir {}'.format(self.executable, self.ibm_provider_plugin_dir_parent)
-        return run_process(command, cwd=self.directory, env=self.env)
+        returncode, stdout, stderr = run_process(command, cwd=self.directory, env=self.env)
+
+        if returncode == 1 and "doesn't match any of the checksums" in stderr:
+            providers_lock = '{} providers lock'.format(self.executable)
+            returncode, stdout, stderr = run_process(providers_lock, cwd=self.directory, env=self.env)
+            returncode, stdout, stderr = run_process(command, cwd=self.directory, env=self.env)
+
+        return returncode, stdout, stderr
 
     def refresh(self):
         """
