@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  metadata_region_backup (False, str, None)
+    Provide a back up region to store meta data.
+
 
   metadata_region_primary (True, str, None)
     (Required for new resource) To store all your meta data in a single region.
@@ -45,10 +49,6 @@ Parameters
 
   permitted_target_regions (False, list, None)
     If present then only these regions may be used to define a target.
-
-
-  metadata_region_backup (False, str, None)
-    Provide a back up region to store meta data.
 
 
   id (False, str, None)

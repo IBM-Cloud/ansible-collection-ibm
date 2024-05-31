@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  zone (True, str, None)
-    (Required for new resource)
-
-
-  resource_group_id (False, str, None)
-    The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
-
 
   cluster (True, str, None)
     (Required for new resource)
@@ -45,6 +37,14 @@ Parameters
 
   worker_pool (True, str, None)
     (Required for new resource)
+
+
+  zone (True, str, None)
+    (Required for new resource)
+
+
+  resource_group_id (False, str, None)
+    The ID of the resource group that the Satellite location is in. To list the resource group ID of the location, use the `GET /v2/satellite/getController` API method.
 
 
   id (False, str, None)

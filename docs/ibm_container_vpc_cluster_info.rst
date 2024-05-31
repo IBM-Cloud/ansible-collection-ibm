@@ -21,20 +21,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  alb_type (False, str, all)
-    None
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  alb_type (False, str, all)
+    None
 
 
   name (False, str, None)

@@ -21,20 +21,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  identifier (False, str, None)
-    The unique identifier for this VPN server
-
-
   name (False, str, None)
     The unique user-defined name for this VPN server
+
+
+  identifier (False, str, None)
+    The unique identifier for this VPN server
 
 
   generation (False, int, 2)

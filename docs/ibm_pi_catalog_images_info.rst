@@ -21,24 +21,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  sap (False, bool, None)
-    None
-
-
-  vtl (False, bool, None)
-    None
-
-
   pi_cloud_instance_id (True, str, None)
-    None
+    The GUID of the service instance associated with an account.
+
+
+  sap (False, bool, None)
+    Set true to include SAP images. The default value is false.
 
 
   zone (False, str, None)

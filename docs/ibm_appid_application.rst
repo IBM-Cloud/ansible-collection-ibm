@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  tenant_id (True, str, None)
-    (Required for new resource) The service `tenantId`
-
 
   name (True, str, None)
     (Required for new resource) The application name to be registered. Application name cannot exceed 50 characters.
@@ -41,6 +37,10 @@ Parameters
 
   type (False, str, regularwebapp)
     The type of application to be registered. Allowed types are `regularwebapp` and `singlepageapp`, default is `regularwebapp`.
+
+
+  tenant_id (True, str, None)
+    (Required for new resource) The service `tenantId`
 
 
   id (False, str, None)

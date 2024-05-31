@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-
-
-  action (True, str, None)
-    (Required for new resource) Whether to allow or deny matching traffic
-
-
-  before (False, str, None)
-    The rule that this rule is immediately before. If absent, this is the last rule.
-
 
   source (True, str, None)
     (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
@@ -49,6 +37,18 @@ Parameters
 
   icmp (False, list, None)
     None
+
+
+  before (False, str, None)
+    The rule that this rule is immediately before. If absent, this is the last rule.
+
+
+  direction (True, str, None)
+    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+
+
+  destination (True, str, None)
+    (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
 
 
   tcp (False, list, None)
@@ -59,16 +59,16 @@ Parameters
     (Required for new resource) Network ACL id
 
 
-  destination (True, str, None)
-    (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+  name (False, str, None)
+    The user-defined name for this rule. Names must be unique within the network ACL the rule resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+
+
+  action (True, str, None)
+    (Required for new resource) Whether to allow or deny matching traffic
 
 
   udp (False, list, None)
     None
-
-
-  direction (True, str, None)
-    (Required for new resource) Direction of traffic to enforce, either inbound or outbound
 
 
   id (False, str, None)

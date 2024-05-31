@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  pi_spp_placement_group_name (True, str, None)
+    (Required for new resource) Name of the SPP placement group
+
 
   pi_spp_placement_group_policy (True, str, None)
     (Required for new resource) Policy of the SPP placement group
@@ -37,10 +41,6 @@ Parameters
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
-
-
-  pi_spp_placement_group_name (True, str, None)
-    (Required for new resource) Name of the SPP placement group
 
 
   id (False, str, None)

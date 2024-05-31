@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database_connection' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     user_id:
@@ -31,14 +31,19 @@ options:
             - Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
         required: True
         type: str
-    user_type:
+    certificate_root:
         description:
-            - User type.
-        required: True
+            - Optional certificate root path to prepend certificate names. Certificates would be stored in this directory for use by other commands.
+        required: False
         type: str
     deployment_id:
         description:
             - Deployment ID.
+        required: True
+        type: str
+    user_type:
+        description:
+            - User type.
         required: True
         type: str
     iaas_classic_username:
@@ -76,16 +81,17 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('user_id', 'str'),
     ('endpoint_type', 'str'),
-    ('user_type', 'str'),
     ('deployment_id', 'str'),
+    ('user_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'user_id',
     'endpoint_type',
-    'user_type',
+    'certificate_root',
     'deployment_id',
+    'user_type',
 ]
 
 
@@ -102,10 +108,13 @@ module_args = dict(
     endpoint_type=dict(
         required=True,
         type='str'),
-    user_type=dict(
-        required=True,
+    certificate_root=dict(
+        required=False,
         type='str'),
     deployment_id=dict(
+        required=True,
+        type='str'),
+    user_type=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +151,7 @@ def run_module():
         resource_type='ibm_database_connection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

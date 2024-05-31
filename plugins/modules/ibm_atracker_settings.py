@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_atracker_settings' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    metadata_region_backup:
+        description:
+            - Provide a back up region to store meta data.
+        required: False
+        type: str
     metadata_region_primary:
         description:
             - (Required for new resource) To store all your meta data in a single region.
@@ -44,11 +49,6 @@ options:
         required: False
         type: list
         elements: str
-    metadata_region_backup:
-        description:
-            - Provide a back up region to store meta data.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,11 +101,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'metadata_region_backup',
     'metadata_region_primary',
     'private_api_endpoint_only',
     'default_targets',
     'permitted_target_regions',
-    'metadata_region_backup',
 ]
 
 # Params for Data source
@@ -122,6 +122,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    metadata_region_backup=dict(
+        required=False,
+        type='str'),
     metadata_region_primary=dict(
         required=False,
         type='str'),
@@ -136,9 +139,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    metadata_region_backup=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -204,7 +204,7 @@ def run_module():
         resource_type='ibm_atracker_settings',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

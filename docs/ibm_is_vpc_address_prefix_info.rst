@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  address_prefix_name (False, str, None)
+    The address prefix name.
+
+
+  vpc (False, str, None)
+    The VPC identifier.
+
 
   vpc_name (False, str, None)
     The VPC name.
@@ -35,14 +43,6 @@ Parameters
 
   address_prefix (False, str, None)
     The address prefix identifier.
-
-
-  vpc (False, str, None)
-    The VPC identifier.
-
-
-  address_prefix_name (False, str, None)
-    The address prefix name.
 
 
   generation (False, int, 2)

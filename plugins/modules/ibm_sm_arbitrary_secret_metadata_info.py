@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_arbitrary_secret_metadata' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    region:
-        description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    endpoint_type:
-        description:
-            - public or private.
-        required: False
-        type: str
     secret_id:
         description:
             - The ID of the secret.
@@ -40,6 +30,16 @@ options:
         description:
             - The ID of the Secrets Manager instance.
         required: True
+        type: str
+    region:
+        description:
+            - The region of the Secrets Manager instance.
+        required: False
+        type: str
+    endpoint_type:
+        description:
+            - public or private.
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -80,10 +80,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region',
-    'endpoint_type',
     'secret_id',
     'instance_id',
+    'region',
+    'endpoint_type',
 ]
 
 
@@ -94,17 +94,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
     secret_id=dict(
         required=True,
         type='str'),
     instance_id=dict(
         required=True,
+        type='str'),
+    region=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_sm_arbitrary_secret_metadata',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

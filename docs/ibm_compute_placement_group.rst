@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  name (True, str, None)
+    (Required for new resource) Name
+
 
   rule (False, str, SPREAD)
     Rule info
@@ -45,10 +49,6 @@ Parameters
 
   pod (True, str, None)
     (Required for new resource) Pod name
-
-
-  name (True, str, None)
-    (Required for new resource) Name
 
 
   id (False, str, None)

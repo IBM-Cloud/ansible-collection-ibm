@@ -23,40 +23,40 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    Public gateway resource group info
-
-
-  zone (True, str, None)
-    (Required for new resource) Public gateway zone info
-
-
-  name (True, str, None)
-    (Required for new resource) Name of the Public gateway instance
+  access_tags (False, list, None)
+    List of access management tags
 
 
   tags (False, list, None)
     Service tags for the public gateway instance
 
 
+  name (True, str, None)
+    (Required for new resource) Name of the Public gateway instance
+
+
+  zone (True, str, None)
+    (Required for new resource) Public gateway zone info
+
+
   floating_ip (False, dict, None)
     None
 
 
+  resource_group (False, str, None)
+    Public gateway resource group info
+
+
   vpc (True, str, None)
     (Required for new resource) Public gateway VPC info
-
-
-  access_tags (False, list, None)
-    List of access management tags
 
 
   id (False, str, None)

@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  open_api_doc_name (True, str, None)
+    (Required for new resource) Json File path
+
 
   name (True, str, None)
     (Required for new resource) Endpoint name
@@ -47,16 +51,12 @@ Parameters
     (Required for new resource) Api Gateway Service Instance Crn
 
 
-  open_api_doc_name (True, str, None)
-    (Required for new resource) Json File path
+  type (False, str, unshare)
+    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
   routes (False, list, None)
     Invokable routes for an endpoint
-
-
-  type (False, str, unshare)
-    Action type of Endpoint ALoowable values are share, unshare, manage, unmanage
 
 
   id (False, str, None)

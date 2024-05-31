@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_subnet_reserved_ip' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    subnet:
-        description:
-            - (Required for new resource) The subnet identifier.
-        required: True
-        type: str
     auto_delete:
         description:
             - If set to true, this reserved IP will be automatically deleted
@@ -41,6 +36,16 @@ options:
         description:
             - The unique identifier for target.
         required: False
+        type: str
+    target_crn:
+        description:
+            - The crn for target.
+        required: False
+        type: str
+    subnet:
+        description:
+            - (Required for new resource) The subnet identifier.
+        required: True
         type: str
     address:
         description:
@@ -98,10 +103,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'subnet',
     'auto_delete',
     'name',
     'target',
+    'target_crn',
+    'subnet',
     'address',
 ]
 
@@ -123,9 +129,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnet=dict(
-        required=False,
-        type='str'),
     auto_delete=dict(
         required=False,
         type='bool'),
@@ -133,6 +136,12 @@ module_args = dict(
         required=False,
         type='str'),
     target=dict(
+        required=False,
+        type='str'),
+    target_crn=dict(
+        required=False,
+        type='str'),
+    subnet=dict(
         required=False,
         type='str'),
     address=dict(
@@ -215,7 +224,7 @@ def run_module():
         resource_type='ibm_is_subnet_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -224,7 +233,7 @@ def run_module():
             resource_type='ibm_is_subnet_reserved_ip',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

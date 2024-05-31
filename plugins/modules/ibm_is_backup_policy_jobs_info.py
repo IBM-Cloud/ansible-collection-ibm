@@ -17,21 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_backup_policy_jobs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    source_id:
-        description:
-            - Filters the collection to backup policy jobs with a source with the specified identifier
-        required: False
-        type: str
-    target_snapshots_id:
-        description:
-            - Filters the collection to resources with the target snapshot with the specified identifier
-        required: False
-        type: list
-        elements: str
     target_snapshots_crn:
         description:
             - Filters the collection to backup policy jobs with the target snapshot with the specified CRN
@@ -53,6 +42,17 @@ options:
             - The backup policy identifier.
         required: True
         type: str
+    source_id:
+        description:
+            - Filters the collection to backup policy jobs with a source with the specified identifier
+        required: False
+        type: str
+    target_snapshots_id:
+        description:
+            - Filters the collection to resources with the target snapshot with the specified identifier
+        required: False
+        type: list
+        elements: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -91,31 +91,24 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source_id',
-    'target_snapshots_id',
     'target_snapshots_crn',
     'backup_policy_plan_id',
     'status',
     'backup_policy_id',
+    'source_id',
+    'target_snapshots_id',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'target_snapshots_id': ['target_snapshots_crn'],
     'target_snapshots_crn': ['target_snapshots_id'],
+    'target_snapshots_id': ['target_snapshots_crn'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source_id=dict(
-        required=False,
-        type='str'),
-    target_snapshots_id=dict(
-        required=False,
-        elements='',
-        type='list'),
     target_snapshots_crn=dict(
         required=False,
         elements='',
@@ -129,6 +122,13 @@ module_args = dict(
     backup_policy_id=dict(
         required=True,
         type='str'),
+    source_id=dict(
+        required=False,
+        type='str'),
+    target_snapshots_id=dict(
+        required=False,
+        elements='',
+        type='list'),
     generation=dict(
         type='int',
         required=False,
@@ -175,7 +175,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_jobs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

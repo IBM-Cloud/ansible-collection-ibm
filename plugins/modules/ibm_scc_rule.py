@@ -16,48 +16,48 @@ version_added: "2.8"
 
 description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_rule' resource
-    - This module does not support idempotency
+    - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    account_id:
+    instance_id:
         description:
-            - (Required for new resource) Your IBM Cloud account ID.
+            - (Required for new resource) The ID of the Security and Compliance Center instance.
         required: True
         type: str
-    name:
+    description:
         description:
-            - (Required for new resource) A human-readable alias to assign to your rule.
+            - (Required for new resource) The details of a rule's response.
         required: True
         type: str
-    enforcement_actions:
+    version:
         description:
-            - The actions that the service must run on your behalf when a request to create or modify the target resource does not comply with your conditions.
+            - The version number of a rule.
+        required: False
+        type: str
+    import_:
+        description:
+            - The collection of import parameters.
         required: False
         type: list
         elements: dict
-    required_config:
-        description:
-            - (Required for new resource) The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (and/or) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the and array. To add conditions to a property check, use or.
-        required: True
-        type: list
-        elements: dict
-    description:
-        description:
-            - (Required for new resource) An extended description of your rule.
-        required: True
-        type: str
     labels:
         description:
-            - Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
+            - The list of labels.
         required: False
         type: list
         elements: str
+    required_config:
+        description:
+            - (Required for new resource) The required configurations.
+        required: True
+        type: list
+        elements: dict
     target:
         description:
-            - (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+            - (Required for new resource) The rule target.
         required: True
         type: list
         elements: dict
@@ -107,29 +107,32 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('account_id', 'str'),
-    ('name', 'str'),
-    ('required_config', 'list'),
+    ('instance_id', 'str'),
     ('description', 'str'),
+    ('required_config', 'list'),
     ('target', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_id',
-    'name',
-    'enforcement_actions',
-    'required_config',
+    'instance_id',
     'description',
+    'version',
+    'import_',
     'labels',
+    'required_config',
     'target',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('rule_id', 'str'),
+    ('instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'rule_id',
+    'instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -139,24 +142,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_id=dict(
+    instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
-    enforcement_actions=dict(
+    version=dict(
+        required=False,
+        type='str'),
+    import_=dict(
+        required=False,
+        elements='',
+        type='list'),
+    labels=dict(
         required=False,
         elements='',
         type='list'),
     required_config=dict(
-        required=False,
-        elements='',
-        type='list'),
-    description=dict(
-        required=False,
-        type='str'),
-    labels=dict(
         required=False,
         elements='',
         type='list'),
@@ -225,19 +228,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    result = ibmcloud_terraform(
+    result_ds = ibmcloud_terraform(
         resource_type='ibm_scc_rule',
-        tf_type='resource',
+        tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
-        tl_required_params=TL_REQUIRED_PARAMETERS,
-        tl_all_params=TL_ALL_PARAMETERS)
+        ibm_provider_version='1.65.1',
+        tl_required_params=TL_REQUIRED_PARAMETERS_DS,
+        tl_all_params=TL_ALL_PARAMETERS_DS)
 
-    if result['rc'] > 0:
-        module.fail_json(
-            msg=Terraform.parse_stderr(result['stderr']), **result)
+    if result_ds['rc'] != 0 or (result_ds['rc'] == 0 and (module.params['id'] is not None or module.params['state'] == 'absent')):
+        result = ibmcloud_terraform(
+            resource_type='ibm_scc_rule',
+            tf_type='resource',
+            parameters=module.params,
+            ibm_provider_version='1.65.1',
+            tl_required_params=TL_REQUIRED_PARAMETERS,
+            tl_all_params=TL_ALL_PARAMETERS)
+        if result['rc'] > 0:
+            module.fail_json(
+                msg=Terraform.parse_stderr(result['stderr']), **result)
 
-    module.exit_json(**result)
+        module.exit_json(**result)
+    else:
+        module.exit_json(**result_ds)
 
 
 def main():

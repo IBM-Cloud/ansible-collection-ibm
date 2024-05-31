@@ -18,19 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    description:
-        description:
-            - The optional description of the trusted profile. The 'description' property is only available if a description was provided during creation of trusted profile.
-        required: False
-        type: str
     name:
         description:
             - (Required for new resource) Name of the trusted profile. The name is checked for uniqueness. Therefore trusted profiles with the same names can not exist in the same account.
         required: True
+        type: str
+    description:
+        description:
+            - The optional description of the trusted profile. The 'description' property is only available if a description was provided during creation of trusted profile.
+        required: False
         type: str
     id:
         description:
@@ -83,8 +83,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'name',
+    'description',
 ]
 
 # Params for Data source
@@ -103,10 +103,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
     id=dict(
@@ -174,7 +174,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -183,7 +183,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

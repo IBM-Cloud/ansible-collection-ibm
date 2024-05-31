@@ -23,29 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  rule_id (True, str, None)
-    (Required for new resource) The UUID that uniquely identifies the rule.
-
-
-  account_id (True, str, None)
-    (Required for new resource) Your IBM Cloud account ID.
-
-
-  included_scope (True, list, None)
-    (Required for new resource) The extent at which the rule can be attached across your accounts.
-
-
-  excluded_scopes (False, list, None)
-    The extent at which the rule can be excluded from the included scope.
-
 
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.

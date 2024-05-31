@@ -23,68 +23,16 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
-  protocol (False, str, None)
-    protocol info
-
-
-  data (True, str, None)
-    (Required for new resource) DNS record data
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  type (True, str, None)
-    (Required for new resource) DNS record type
-
-
-  tags (False, list, None)
-    tags set for the resource
-
-
-  expire (False, int, None)
-    DNS record expiry info
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
   responsible_person (False, str, None)
     Responsible person for DNS record
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  ttl (True, int, None)
-    (Required for new resource) TTL configuration
-
-
-  service (False, str, None)
-    service info
-
-
-  port (False, int, None)
-    port number
-
-
-  host (True, str, None)
-    (Required for new resource) Hostname
 
 
   retry (False, int, None)
@@ -93,6 +41,58 @@ Parameters
 
   priority (False, int, 0)
     priority info
+
+
+  tags (False, list, None)
+    tags set for the resource
+
+
+  data (True, str, None)
+    (Required for new resource) DNS record data
+
+
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
+
+
+  host (True, str, None)
+    (Required for new resource) Hostname
+
+
+  expire (False, int, None)
+    DNS record expiry info
+
+
+  ttl (True, int, None)
+    (Required for new resource) TTL configuration
+
+
+  type (True, str, None)
+    (Required for new resource) DNS record type
+
+
+  service (False, str, None)
+    service info
+
+
+  protocol (False, str, None)
+    protocol info
+
+
+  port (False, int, None)
+    port number
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  refresh (False, int, None)
+    refresh rate
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
 
 
   weight (False, int, 0)

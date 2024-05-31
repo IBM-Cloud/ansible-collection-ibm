@@ -18,51 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    resource_group_id:
-        description:
-            - ID of the resource group.
-        required: False
-        type: str
-    coreos_enabled:
-        description:
-            - Enable Red Hat CoreOS features within the Satellite location
-        required: False
-        type: bool
-    cos_config:
-        description:
-            - COSBucket - IBM Cloud Object Storage bucket configuration details
-        required: False
-        type: list
-        elements: dict
-    cos_credentials:
-        description:
-            - COSAuthorization - IBM Cloud Object Storage authorization keys
-        required: False
-        type: list
-        elements: dict
-    tags:
-        description:
-            - List of tags associated with resource instance
-        required: False
-        type: list
-        elements: str
     location:
         description:
             - (Required for new resource) A unique name for the new Satellite location
-        required: True
-        type: str
-    description:
-        description:
-            - A description of the new Satellite location
-        required: False
-        type: str
-    managed_from:
-        description:
-            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
         required: True
         type: str
     logging_account_id:
@@ -76,6 +38,54 @@ options:
         required: False
         type: list
         elements: str
+    managed_from:
+        description:
+            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+        required: True
+        type: str
+    tags:
+        description:
+            - List of tags associated with resource instance
+        required: False
+        type: list
+        elements: str
+    description:
+        description:
+            - A description of the new Satellite location
+        required: False
+        type: str
+    coreos_enabled:
+        description:
+            - Enable Red Hat CoreOS features within the Satellite location
+        required: False
+        type: bool
+    cos_config:
+        description:
+            - COSBucket - IBM Cloud Object Storage bucket configuration details
+        required: False
+        type: list
+        elements: dict
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    service_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for services
+        required: False
+        type: str
+    pod_subnet:
+        description:
+            - Custom subnet CIDR to provide private IP addresses for pods
+        required: False
+        type: str
+    cos_credentials:
+        description:
+            - COSAuthorization - IBM Cloud Object Storage authorization keys
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -128,16 +138,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
-    'coreos_enabled',
-    'cos_config',
-    'cos_credentials',
-    'tags',
     'location',
-    'description',
-    'managed_from',
     'logging_account_id',
     'zones',
+    'managed_from',
+    'tags',
+    'description',
+    'coreos_enabled',
+    'cos_config',
+    'resource_group_id',
+    'service_subnet',
+    'pod_subnet',
+    'cos_credentials',
 ]
 
 # Params for Data source
@@ -156,7 +168,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
+    location=dict(
+        required=False,
+        type='str'),
+    logging_account_id=dict(
+        required=False,
+        type='str'),
+    zones=dict(
+        required=False,
+        elements='',
+        type='list'),
+    managed_from=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
         required=False,
         type='str'),
     coreos_enabled=dict(
@@ -166,27 +195,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    service_subnet=dict(
+        required=False,
+        type='str'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
     cos_credentials=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    location=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    managed_from=dict(
-        required=False,
-        type='str'),
-    logging_account_id=dict(
-        required=False,
-        type='str'),
-    zones=dict(
         required=False,
         elements='',
         type='list'),
@@ -255,7 +273,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -264,7 +282,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -17,15 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cloudant' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    resource_group_id:
-        description:
-            - The id of the resource group in which the instance is present
-        required: False
-        type: str
     location:
         description:
             - The location or the environment in which instance exists
@@ -34,7 +29,17 @@ options:
     name:
         description:
             - Resource instance name for example, myobjectstorage
-        required: True
+        required: False
+        type: str
+    identifier:
+        description:
+            - Resource instance guid
+        required: False
+        type: str
+    resource_group_id:
+        description:
+            - The id of the resource group in which the instance is present
+        required: False
         type: str
     iaas_classic_username:
         description:
@@ -69,32 +74,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group_id',
     'location',
     'name',
+    'identifier',
+    'resource_group_id',
 ]
 
 
 TL_CONFLICTS_MAP = {
+    'identifier': ['resource_group_id', 'name', 'location', 'service'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group_id=dict(
-        required=False,
-        type='str'),
     location=dict(
         required=False,
         type='str'),
     name=dict(
-        required=True,
+        required=False,
+        type='str'),
+    identifier=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -130,7 +139,7 @@ def run_module():
         resource_type='ibm_cloudant',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

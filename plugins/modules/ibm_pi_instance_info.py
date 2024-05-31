@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     pi_cloud_instance_id:
         description:
-            - None
+            - The GUID of the service instance associated with an account.
         required: True
         type: str
     pi_instance_name:
         description:
-            - Server Name to be used for pvminstances
+            - The unique identifier or name of the instance.
         required: True
         type: str
     zone:
@@ -111,7 +111,7 @@ def run_module():
         resource_type='ibm_pi_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,10 +18,49 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_public_certificate' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    custom_metadata:
+        description:
+            - The secret metadata that a user can customize.
+        required: False
+        type: dict
+        elements: str
+    endpoint_type:
+        description:
+            - public or private.
+        required: False
+        type: str
+    labels:
+        description:
+            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
+        required: False
+        type: list
+        elements: str
+    region:
+        description:
+            - The region of the Secrets Manager instance.
+        required: False
+        type: str
+    description:
+        description:
+            - An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
+        required: False
+        type: str
+    alt_names:
+        description:
+            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
+        required: False
+        type: list
+        elements: str
+    version_custom_metadata:
+        description:
+            - The secret version metadata that a user can customize.
+        required: False
+        type: dict
+        elements: str
     secret_group_id:
         description:
             - A v4 UUID identifier, or `default` secret group.
@@ -33,36 +72,9 @@ options:
         required: False
         type: str
         default: RSA2048
-    region:
+    name:
         description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    endpoint_type:
-        description:
-            - public or private.
-        required: False
-        type: str
-    description:
-        description:
-            - An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
-        required: False
-        type: str
-    labels:
-        description:
-            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
-        required: False
-        type: list
-        elements: str
-    alt_names:
-        description:
-            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
-        required: False
-        type: list
-        elements: str
-    ca:
-        description:
-            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
         required: True
         type: str
     common_name:
@@ -70,37 +82,9 @@ options:
             - (Required for new resource) The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
         required: True
         type: str
-    version_custom_metadata:
+    ca:
         description:
-            - The secret version metadata that a user can customize.
-        required: False
-        type: dict
-        elements: str
-    name:
-        description:
-            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
-        required: True
-        type: str
-    dns:
-        description:
-            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
-        required: True
-        type: str
-    bundle_certs:
-        description:
-            - Determines whether your issued certificate is bundled with intermediate certificates. Set to `false` for the certificate file to contain only the issued certificate.
-        required: False
-        type: bool
-        default: True
-    custom_metadata:
-        description:
-            - The secret metadata that a user can customize.
-        required: False
-        type: dict
-        elements: str
-    instance_id:
-        description:
-            - (Required for new resource) The ID of the Secrets Manager instance.
+            - (Required for new resource) The name of the certificate authority configuration.
         required: True
         type: str
     rotation:
@@ -109,6 +93,28 @@ options:
         required: False
         type: list
         elements: dict
+    bundle_certs:
+        description:
+            - Determines whether your issued certificate is bundled with intermediate certificates. Set to `false` for the certificate file to contain only the issued certificate.
+        required: False
+        type: bool
+        default: True
+    akamai:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    dns:
+        description:
+            - (Required for new resource) The name of the DNS provider configuration.
+        required: True
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) The ID of the Secrets Manager instance.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -155,44 +161,46 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('ca', 'str'),
-    ('common_name', 'str'),
     ('name', 'str'),
+    ('common_name', 'str'),
+    ('ca', 'str'),
     ('dns', 'str'),
     ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'custom_metadata',
+    'endpoint_type',
+    'labels',
+    'region',
+    'description',
+    'alt_names',
+    'version_custom_metadata',
     'secret_group_id',
     'key_algorithm',
-    'region',
-    'endpoint_type',
-    'description',
-    'labels',
-    'alt_names',
-    'ca',
-    'common_name',
-    'version_custom_metadata',
     'name',
-    'dns',
-    'bundle_certs',
-    'custom_metadata',
-    'instance_id',
+    'common_name',
+    'ca',
     'rotation',
+    'bundle_certs',
+    'akamai',
+    'dns',
+    'instance_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('instance_id', 'str'),
-    ('secret_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'endpoint_type',
-    'instance_id',
     'region',
+    'secret_group_name',
+    'name',
     'secret_id',
+    'instance_id',
+    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -202,59 +210,63 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    secret_group_id=dict(
+    custom_metadata=dict(
         required=False,
-        type='str'),
-    key_algorithm=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='dict'),
     endpoint_type=dict(
-        required=False,
-        type='str'),
-    description=dict(
         required=False,
         type='str'),
     labels=dict(
         required=False,
         elements='',
         type='list'),
+    region=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
     alt_names=dict(
         required=False,
         elements='',
         type='list'),
-    ca=dict(
+    version_custom_metadata=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    secret_group_id=dict(
+        required=False,
+        type='str'),
+    key_algorithm=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     common_name=dict(
         required=False,
         type='str'),
-    version_custom_metadata=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    name=dict(
-        required=False,
-        type='str'),
-    dns=dict(
-        required=False,
-        type='str'),
-    bundle_certs=dict(
-        required=False,
-        type='bool'),
-    custom_metadata=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    instance_id=dict(
+    ca=dict(
         required=False,
         type='str'),
     rotation=dict(
         required=False,
         elements='',
         type='list'),
+    bundle_certs=dict(
+        required=False,
+        type='bool'),
+    akamai=dict(
+        required=False,
+        elements='',
+        type='list'),
+    dns=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -320,7 +332,7 @@ def run_module():
         resource_type='ibm_sm_public_certificate',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -329,7 +341,7 @@ def run_module():
             resource_type='ibm_sm_public_certificate',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,23 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_membership' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     instance_group_membership:
         description:
             - (Required for new resource) The unique identifier for this instance group membership.
-        required: True
-        type: str
-    name:
-        description:
-            - The user-defined name for this instance group membership. Names must be unique within the instance group.
-        required: False
-        type: str
-    instance_group:
-        description:
-            - (Required for new resource) The instance group identifier.
         required: True
         type: str
     action_delete:
@@ -43,6 +33,16 @@ options:
         required: False
         type: bool
         default: False
+    instance_group:
+        description:
+            - (Required for new resource) The instance group identifier.
+        required: True
+        type: str
+    name:
+        description:
+            - The user-defined name for this instance group membership. Names must be unique within the instance group.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,9 +96,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_group_membership',
-    'name',
-    'instance_group',
     'action_delete',
+    'instance_group',
+    'name',
 ]
 
 # Params for Data source
@@ -122,15 +122,15 @@ module_args = dict(
     instance_group_membership=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    instance_group=dict(
-        required=False,
-        type='str'),
     action_delete=dict(
         required=False,
         type='bool'),
+    instance_group=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -208,7 +208,7 @@ def run_module():
         resource_type='ibm_is_instance_group_membership',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -217,7 +217,7 @@ def run_module():
             resource_type='ibm_is_instance_group_membership',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

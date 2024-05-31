@@ -23,24 +23,28 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  resource_group_id (True, str, None)
-    (Required for new resource) Resource group where toolchain will be created.
+  tags (False, list, None)
+    Toolchain tags.
+
+
+  name (True, str, None)
+    (Required for new resource) Toolchain name.
 
 
   description (False, str, None)
     Describes the toolchain.
 
 
-  name (True, str, None)
-    (Required for new resource) Toolchain name.
+  resource_group_id (True, str, None)
+    (Required for new resource) Resource group where the toolchain is located.
 
 
   id (False, str, None)

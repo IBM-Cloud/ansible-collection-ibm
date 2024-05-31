@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  zone (False, str, None)
+    Name of the Zone
+
 
   resource_group (False, str, None)
     Resource Group ID
@@ -39,6 +43,18 @@ Parameters
 
   routing_table (False, str, None)
     ID of the routing table
+
+
+  vpc (False, str, None)
+    ID of the VPC
+
+
+  vpc_name (False, str, None)
+    Name of the VPC
+
+
+  vpc_crn (False, str, None)
+    CRN of the VPC
 
 
   generation (False, int, 2)

@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  target (False, str, None)
-    DNS target info
-
 
   tags (False, list, None)
     tags associated with reosurce.
@@ -41,6 +37,10 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) DNS name
+
+
+  target (False, str, None)
+    DNS target info
 
 
   id (False, str, None)

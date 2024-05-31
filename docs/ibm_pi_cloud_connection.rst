@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,8 +35,28 @@ Parameters
     (Required for new resource) Name of the cloud connection
 
 
+  pi_cloud_connection_speed (True, int, None)
+    (Required for new resource) Speed of the cloud connection (speed in megabits per second)
+
+
   pi_cloud_connection_global_routing (False, bool, False)
     Enable global routing for this cloud connection
+
+
+  pi_cloud_connection_networks (False, list, None)
+    Set of Networks to attach to this cloud connection
+
+
+  pi_cloud_connection_transit_enabled (False, bool, False)
+    Enable transit gateway for this cloud connection
+
+
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) PI cloud instance ID
+
+
+  pi_cloud_connection_metered (False, bool, False)
+    Enable metered for this cloud connection
 
 
   pi_cloud_connection_classic_enabled (False, bool, False)
@@ -47,36 +67,16 @@ Parameters
     GRE destination IP address
 
 
-  pi_cloud_connection_transit_enabled (False, bool, False)
-    Enable transit gateway for this cloud connection
-
-
-  pi_cloud_connection_speed (True, int, None)
-    (Required for new resource) Speed of the cloud connection (speed in megabits per second)
-
-
-  pi_cloud_connection_metered (False, bool, False)
-    Enable metered for this cloud connection
-
-
-  pi_cloud_connection_networks (False, list, None)
-    Set of Networks to attach to this cloud connection
+  pi_cloud_connection_gre_cidr (False, str, None)
+    GRE network in CIDR notation
 
 
   pi_cloud_connection_vpc_enabled (False, bool, False)
     Enable VPC for this cloud connection
 
 
-  pi_cloud_connection_gre_cidr (False, str, None)
-    GRE network in CIDR notation
-
-
   pi_cloud_connection_vpc_crns (False, list, None)
     Set of VPCs to attach to this cloud connection
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
 
 
   id (False, str, None)

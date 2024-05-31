@@ -18,10 +18,32 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    security_groups:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    floating_ip:
+        description:
+            - The ID of the floating IP to attach to this network interface
+        required: False
+        type: str
+    instance:
+        description:
+            - (Required for new resource) The unique identifier of the instance.
+        required: True
+        type: str
+    primary_ip:
+        description:
+            - The primary IP address to bind to the network interface. This can be specified using an existing reserved IP, or a prototype object for a new reserved IP.
+        required: False
+        type: list
+        elements: dict
     subnet:
         description:
             - (Required for new resource) The unique identifier of the subnet.
@@ -32,34 +54,12 @@ options:
             - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: True
         type: str
-    primary_ip:
-        description:
-            - The primary IP address to bind to the network interface. This can be specified using an existing reserved IP, or a prototype object for a new reserved IP.
-        required: False
-        type: list
-        elements: dict
-    floating_ip:
-        description:
-            - The ID of the floating IP to attach to this network interface
-        required: False
-        type: str
     allow_ip_spoofing:
         description:
             - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
         required: False
         type: bool
         default: False
-    instance:
-        description:
-            - (Required for new resource) The unique identifier of the instance.
-        required: True
-        type: str
-    security_groups:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,20 +106,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('instance', 'str'),
     ('subnet', 'str'),
     ('name', 'str'),
-    ('instance', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'security_groups',
+    'floating_ip',
+    'instance',
+    'primary_ip',
     'subnet',
     'name',
-    'primary_ip',
-    'floating_ip',
     'allow_ip_spoofing',
-    'instance',
-    'security_groups',
 ]
 
 # Params for Data source
@@ -140,29 +140,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    subnet=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    primary_ip=dict(
+    security_groups=dict(
         required=False,
         elements='',
         type='list'),
     floating_ip=dict(
         required=False,
         type='str'),
-    allow_ip_spoofing=dict(
-        required=False,
-        type='bool'),
     instance=dict(
         required=False,
         type='str'),
-    security_groups=dict(
+    primary_ip=dict(
         required=False,
         elements='',
         type='list'),
+    subnet=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    allow_ip_spoofing=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -240,7 +240,7 @@ def run_module():
         resource_type='ibm_is_instance_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +249,7 @@ def run_module():
             resource_type='ibm_is_instance_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

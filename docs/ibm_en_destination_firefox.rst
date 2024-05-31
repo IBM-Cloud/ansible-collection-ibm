@@ -23,32 +23,36 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The Destintion name.
-
-
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  name (True, str, None)
+    (Required for new resource) The Destintion name.
 
 
   type (True, str, None)
     (Required for new resource) The type of Destination type push_firefox.
 
 
+  config (False, list, None)
+    Payload describing a destination configuration.
+
+
   description (False, str, None)
     The Destination description.
 
 
-  config (False, list, None)
-    Payload describing a destination configuration.
+  collect_failed_events (False, bool, None)
+    Whether to collect the failed event in Cloud Object Storage bucket
 
 
   id (False, str, None)

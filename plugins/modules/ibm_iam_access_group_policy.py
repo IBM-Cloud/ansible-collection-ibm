@@ -18,22 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_access_group_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
-        type: list
-        elements: str
-    account_management:
-        description:
-            - Give access to all account management services
-        required: False
-        type: bool
-        default: False
     resource_tags:
         description:
             - Set access management tags.
@@ -43,6 +31,45 @@ options:
     description:
         description:
             - Description of the Policy
+        required: False
+        type: str
+    transaction_id:
+        description:
+            - Set transactionID for debug
+        required: False
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
+    resource_attributes:
+        description:
+            - Set resource attributes.
+        required: False
+        type: list
+        elements: dict
+    account_management:
+        description:
+            - Give access to all account management services
+        required: False
+        type: bool
+        default: False
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
+    rule_operator:
+        description:
+            - Operator that multiple rule conditions are evaluated over
+        required: False
+        type: str
+    pattern:
+        description:
+            - Pattern rule follows for time-based condition
         required: False
         type: str
     access_group_id:
@@ -56,23 +83,12 @@ options:
         required: False
         type: list
         elements: dict
-    resource_attributes:
+    rule_conditions:
         description:
-            - Set resource attributes.
+            - Rule conditions enforced by the policy
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    transaction_id:
-        description:
-            - Set transactionID for debug
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -125,15 +141,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'roles',
-    'account_management',
     'resource_tags',
     'description',
+    'transaction_id',
+    'roles',
+    'resource_attributes',
+    'account_management',
+    'tags',
+    'rule_operator',
+    'pattern',
     'access_group_id',
     'resources',
-    'resource_attributes',
-    'tags',
-    'transaction_id',
+    'rule_conditions',
 ]
 
 # Params for Data source
@@ -148,27 +167,44 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'resource_attributes': ['resources', 'account_management'],
     'account_management': ['resources', 'resource_attributes'],
     'resources': ['account_management', 'resource_attributes'],
-    'resource_attributes': ['resources', 'account_management'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    resource_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    transaction_id=dict(
+        required=False,
+        type='str'),
     roles=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_attributes=dict(
         required=False,
         elements='',
         type='list'),
     account_management=dict(
         required=False,
         type='bool'),
-    resource_tags=dict(
+    tags=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    rule_operator=dict(
+        required=False,
+        type='str'),
+    pattern=dict(
         required=False,
         type='str'),
     access_group_id=dict(
@@ -178,17 +214,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resource_attributes=dict(
+    rule_conditions=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    transaction_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -254,7 +283,7 @@ def run_module():
         resource_type='ibm_iam_access_group_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -263,7 +292,7 @@ def run_module():
             resource_type='ibm_iam_access_group_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

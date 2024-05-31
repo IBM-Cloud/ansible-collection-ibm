@@ -8,8 +8,6 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_certificate_manager_certificates_info
-for_more_info: refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/certificate_manager_certificates
-
 short_description: Retrieve IBM Cloud 'ibm_certificate_manager_certificates' resource
 
 version_added: "2.8"
@@ -17,7 +15,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_certificate_manager_certificates' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
@@ -112,7 +110,7 @@ def run_module():
         resource_type='ibm_certificate_manager_certificates',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

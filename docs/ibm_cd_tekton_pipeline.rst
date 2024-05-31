@@ -23,28 +23,32 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  enable_partial_cloning (False, bool, False)
-    Flag whether to enable partial cloning for this pipeline. When partial clone is enabled, only the files contained within the paths specified in definition repositories are read and cloned, this means that symbolic links might not work.
-
-
   pipeline_id (True, str, None)
     (Required for new resource) String.
 
 
-  enable_notifications (False, bool, False)
-    Flag whether to enable notifications for this pipeline. When enabled, pipeline run events are published on all slack integration specified channels in the parent toolchain.
-
-
   worker (False, list, None)
-    Worker object containing worker ID only. If omitted the IBM Managed shared workers are used by default.
+    Details of the worker used to run the pipeline.
+
+
+  enable_notifications (False, bool, False)
+    Flag whether to enable notifications for this pipeline. When enabled, pipeline run events will be published on all slack integration specified channels in the parent toolchain. If omitted, this feature is disabled by default.
+
+
+  next_build_number (False, int, None)
+    The build number that will be used for the next pipeline run.
+
+
+  enable_partial_cloning (False, bool, False)
+    Flag whether to enable partial cloning for this pipeline. When partial clone is enabled, only the files contained within the paths specified in definition repositories are read and cloned, this means that symbolic links might not work. If omitted, this feature is disabled by default.
 
 
   id (False, str, None)

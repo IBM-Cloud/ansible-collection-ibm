@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  type (True, str, None)
-    (Required for new resource) The type of Destination type push_chrome.
-
 
   config (False, list, None)
     Payload describing a destination configuration.
@@ -47,8 +43,16 @@ Parameters
     (Required for new resource) The Destintion name.
 
 
+  type (True, str, None)
+    (Required for new resource) The type of Destination type push_chrome.
+
+
   description (False, str, None)
     The Destination description.
+
+
+  collect_failed_events (False, bool, None)
+    Whether to collect the failed event in Cloud Object Storage bucket
 
 
   id (False, str, None)

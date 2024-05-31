@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_subnets' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    zone:
+        description:
+            - Name of the Zone
+        required: False
+        type: str
     resource_group:
         description:
             - Resource Group ID
@@ -34,6 +39,21 @@ options:
     routing_table:
         description:
             - ID of the routing table
+        required: False
+        type: str
+    vpc:
+        description:
+            - ID of the VPC
+        required: False
+        type: str
+    vpc_name:
+        description:
+            - Name of the VPC
+        required: False
+        type: str
+    vpc_crn:
+        description:
+            - CRN of the VPC
         required: False
         type: str
     generation:
@@ -73,9 +93,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'zone',
     'resource_group',
     'routing_table_name',
     'routing_table',
+    'vpc',
+    'vpc_name',
+    'vpc_crn',
 ]
 
 
@@ -86,6 +110,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    zone=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -93,6 +120,15 @@ module_args = dict(
         required=False,
         type='str'),
     routing_table=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    vpc_name=dict(
+        required=False,
+        type='str'),
+    vpc_crn=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -141,7 +177,7 @@ def run_module():
         resource_type='ibm_is_subnets',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

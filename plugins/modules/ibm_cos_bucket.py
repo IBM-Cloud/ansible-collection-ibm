@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cos_bucket' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     abort_incomplete_multipart_upload_days:
@@ -28,15 +28,20 @@ options:
         required: False
         type: list
         elements: dict
-    metrics_monitoring:
+    archive_rule:
         description:
-            - Enables sending metrics to IBM Cloud Monitoring.
+            - Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
         required: False
         type: list
         elements: dict
-    storage_class:
+    kms_key_crn:
         description:
-            - Storage class info
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    region_location:
+        description:
+            - Region Location info.
         required: False
         type: str
     endpoint_type:
@@ -45,6 +50,44 @@ options:
         required: False
         type: str
         default: public
+    retention_rule:
+        description:
+            - A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+        required: False
+        type: list
+        elements: dict
+    object_versioning:
+        description:
+            - Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
+        required: False
+        type: list
+        elements: dict
+    object_lock:
+        description:
+            - Enable objectlock for the bucket. When enabled, buckets within the container vault can have Object Lock Configuration applied to the bucket.
+        required: False
+        type: bool
+    resource_instance_id:
+        description:
+            - (Required for new resource) resource instance ID
+        required: True
+        type: str
+    key_protect:
+        description:
+            - CRN of the key you want to use data at rest encryption
+        required: False
+        type: str
+    satellite_location_id:
+        description:
+            - Provide satellite location info.
+        required: False
+        type: str
+    activity_tracking:
+        description:
+            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+        required: False
+        type: list
+        elements: dict
     expire_rule:
         description:
             - Enable configuration expire_rule to COS Bucket after a defined period of time
@@ -57,24 +100,9 @@ options:
         required: False
         type: list
         elements: dict
-    key_protect:
-        description:
-            - CRN of the key you want to use data at rest encryption
-        required: False
-        type: str
     single_site_location:
         description:
             - single site location info
-        required: False
-        type: str
-    hard_quota:
-        description:
-            - sets a maximum amount of storage (in bytes) available for a bucket
-        required: False
-        type: int
-    satellite_location_id:
-        description:
-            - Provide satellite location info.
         required: False
         type: str
     allowed_ip:
@@ -83,37 +111,29 @@ options:
         required: False
         type: list
         elements: str
-    activity_tracking:
+    hard_quota:
         description:
-            - Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
+            - sets a maximum amount of storage (in bytes) available for a bucket
         required: False
-        type: list
-        elements: dict
-    archive_rule:
-        description:
-            - Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-        required: False
-        type: list
-        elements: dict
-    object_versioning:
-        description:
-            - Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
-        required: False
-        type: list
-        elements: dict
+        type: int
     bucket_name:
         description:
             - (Required for new resource) COS Bucket name
         required: True
         type: str
-    resource_instance_id:
+    cross_region_location:
         description:
-            - (Required for new resource) resource instance ID
-        required: True
+            - Cros region location info
+        required: False
         type: str
-    retention_rule:
+    storage_class:
         description:
-            - A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+            - Storage class info
+        required: False
+        type: str
+    metrics_monitoring:
+        description:
+            - Enables sending metrics to IBM Cloud Monitoring.
         required: False
         type: list
         elements: dict
@@ -123,16 +143,6 @@ options:
         required: False
         type: bool
         default: True
-    region_location:
-        description:
-            - Region Location info.
-        required: False
-        type: str
-    cross_region_location:
-        description:
-            - Cros region location info
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -179,32 +189,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('bucket_name', 'str'),
     ('resource_instance_id', 'str'),
+    ('bucket_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'abort_incomplete_multipart_upload_days',
-    'metrics_monitoring',
-    'storage_class',
+    'archive_rule',
+    'kms_key_crn',
+    'region_location',
     'endpoint_type',
+    'retention_rule',
+    'object_versioning',
+    'object_lock',
+    'resource_instance_id',
+    'key_protect',
+    'satellite_location_id',
+    'activity_tracking',
     'expire_rule',
     'noncurrent_version_expiration',
-    'key_protect',
     'single_site_location',
-    'hard_quota',
-    'satellite_location_id',
     'allowed_ip',
-    'activity_tracking',
-    'archive_rule',
-    'object_versioning',
+    'hard_quota',
     'bucket_name',
-    'resource_instance_id',
-    'retention_rule',
-    'force_delete',
-    'region_location',
     'cross_region_location',
+    'storage_class',
+    'metrics_monitoring',
+    'force_delete',
 ]
 
 # Params for Data source
@@ -214,23 +226,25 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bucket_region',
+    'bucket_type',
+    'satellite_location_id',
     'resource_instance_id',
     'bucket_name',
-    'satellite_location_id',
-    'bucket_type',
+    'bucket_region',
     'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
-    'storage_class': ['satellite_location_id'],
-    'endpoint_type': ['satellite_location_id'],
-    'single_site_location': ['region_location', 'cross_region_location', 'satellite_location_id'],
-    'satellite_location_id': ['cross_region_location', 'single_site_location', 'region_location'],
-    'allowed_ip': ['satellite_location_id'],
-    'object_versioning': ['retention_rule'],
+    'kms_key_crn': ['key_protect'],
     'region_location': ['cross_region_location', 'single_site_location', 'satellite_location_id'],
+    'endpoint_type': ['satellite_location_id'],
+    'object_versioning': ['retention_rule'],
+    'key_protect': ['kms_key_crn'],
+    'satellite_location_id': ['cross_region_location', 'single_site_location', 'region_location'],
+    'single_site_location': ['region_location', 'cross_region_location', 'satellite_location_id'],
+    'allowed_ip': ['satellite_location_id'],
     'cross_region_location': ['region_location', 'single_site_location', 'satellite_location_id'],
+    'storage_class': ['satellite_location_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -241,16 +255,43 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    metrics_monitoring=dict(
+    archive_rule=dict(
         required=False,
         elements='',
         type='list'),
-    storage_class=dict(
+    kms_key_crn=dict(
+        required=False,
+        type='str'),
+    region_location=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
+    retention_rule=dict(
+        required=False,
+        elements='',
+        type='list'),
+    object_versioning=dict(
+        required=False,
+        elements='',
+        type='list'),
+    object_lock=dict(
+        required=False,
+        type='bool'),
+    resource_instance_id=dict(
+        required=False,
+        type='str'),
+    key_protect=dict(
+        required=False,
+        type='str'),
+    satellite_location_id=dict(
+        required=False,
+        type='str'),
+    activity_tracking=dict(
+        required=False,
+        elements='',
+        type='list'),
     expire_rule=dict(
         required=False,
         elements='',
@@ -259,53 +300,32 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    key_protect=dict(
-        required=False,
-        type='str'),
     single_site_location=dict(
-        required=False,
-        type='str'),
-    hard_quota=dict(
-        required=False,
-        type='int'),
-    satellite_location_id=dict(
         required=False,
         type='str'),
     allowed_ip=dict(
         required=False,
         elements='',
         type='list'),
-    activity_tracking=dict(
+    hard_quota=dict(
         required=False,
-        elements='',
-        type='list'),
-    archive_rule=dict(
-        required=False,
-        elements='',
-        type='list'),
-    object_versioning=dict(
-        required=False,
-        elements='',
-        type='list'),
+        type='int'),
     bucket_name=dict(
         required=False,
         type='str'),
-    resource_instance_id=dict(
+    cross_region_location=dict(
         required=False,
         type='str'),
-    retention_rule=dict(
+    storage_class=dict(
+        required=False,
+        type='str'),
+    metrics_monitoring=dict(
         required=False,
         elements='',
         type='list'),
     force_delete=dict(
         required=False,
         type='bool'),
-    region_location=dict(
-        required=False,
-        type='str'),
-    cross_region_location=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -371,7 +391,7 @@ def run_module():
         resource_type='ibm_cos_bucket',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -380,7 +400,7 @@ def run_module():
             resource_type='ibm_cos_bucket',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

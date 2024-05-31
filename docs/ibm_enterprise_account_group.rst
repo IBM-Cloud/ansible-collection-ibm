@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  parent (True, str, None)
-    (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
-
 
   name (True, str, None)
     (Required for new resource) The name of the account group. This field must have 3 - 60 characters.
@@ -41,6 +37,10 @@ Parameters
 
   primary_contact_iam_id (True, str, None)
     (Required for new resource) The IAM ID of the primary contact for this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
+
+
+  parent (True, str, None)
+    (Required for new resource) The CRN of the parent under which the account group will be created. The parent can be an existing account group or the enterprise itself.
 
 
   id (False, str, None)

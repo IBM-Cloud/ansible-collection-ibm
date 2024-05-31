@@ -15,25 +15,18 @@ Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
 This module does not support idempotency
 
 
-ForMoreInfoRefer
-----------------
-refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/certificate_manager_import
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
 
 Parameters
 ----------
-
-  certificate_manager_instance_id (True, str, None)
-    (Required for new resource) Instance ID of the certificate manager resource
-
 
   name (True, str, None)
     (Required for new resource) Name of the instance
@@ -45,6 +38,10 @@ Parameters
 
   description (False, str, None)
     Description of the certificate instance
+
+
+  certificate_manager_instance_id (True, str, None)
+    (Required for new resource) Instance ID of the certificate manager resource
 
 
   id (False, str, None)

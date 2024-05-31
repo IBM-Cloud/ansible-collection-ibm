@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  package_id (True, str, None)
-    (Required for new resource) WAF Rule package id
-
-
-  check_mode (False, bool, False)
-    Check Mode before making a create/update request
-
 
   cis_id (True, str, None)
     (Required for new resource) CIS Intance CRN
@@ -53,6 +45,14 @@ Parameters
 
   mode (True, str, None)
     (Required for new resource) WAF Rule group mode on/off
+
+
+  check_mode (False, bool, False)
+    Check Mode before making a create/update request
+
+
+  package_id (True, str, None)
+    (Required for new resource) WAF Rule package id
 
 
   id (False, str, None)

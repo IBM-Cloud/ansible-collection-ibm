@@ -23,20 +23,28 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  label (False, str, None)
-    Display Name in the requested language.
+  resource_group_id (False, str, None)
+    Resource group id the catalog is owned by.
 
 
-  short_description_i18n (False, dict, None)
+  label_i18n (False, dict, None)
     A map of translated strings, by language code.
+
+
+  short_description (False, str, None)
+    Description in the requested language.
+
+
+  catalog_banner_url (False, str, None)
+    URL for a banner image for this catalog.
 
 
   tags (False, list, None)
@@ -47,16 +55,12 @@ Parameters
     List of features associated with this catalog.
 
 
-  resource_group_id (False, str, None)
-    Resource group id the catalog is owned by.
+  short_description_i18n (False, dict, None)
+    A map of translated strings, by language code.
 
 
-  short_description (False, str, None)
-    Description in the requested language.
-
-
-  catalog_icon_url (False, str, None)
-    URL for an icon associated with this catalog.
+  kind (False, str, None)
+    Kind of catalog. Supported kinds are offering and vpe.
 
 
   disabled (False, bool, None)
@@ -67,12 +71,16 @@ Parameters
     Catalog specific metadata.
 
 
-  label_i18n (False, dict, None)
-    A map of translated strings, by language code.
+  target_account_contexts (False, list, None)
+    List of target accounts contexts on this catalog.
 
 
-  kind (False, str, None)
-    Kind of catalog. Supported kinds are offering and vpe.
+  label (False, str, None)
+    Display Name in the requested language.
+
+
+  catalog_icon_url (False, str, None)
+    URL for an icon associated with this catalog.
 
 
   id (False, str, None)

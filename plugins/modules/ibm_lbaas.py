@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lbaas' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     protocols:
@@ -39,12 +39,6 @@ options:
             - (Required for new resource) The load balancer's name.
         required: True
         type: str
-    type:
-        description:
-            - Specifies if a load balancer is public or private
-        required: False
-        type: str
-        default: PUBLIC
     use_system_public_ip_pool:
         description:
             - "in public loadbalancer - Public IP address allocation done by system public IP pool or public subnet."
@@ -56,6 +50,12 @@ options:
         required: False
         type: list
         elements: str
+    type:
+        description:
+            - Specifies if a load balancer is public or private
+        required: False
+        type: str
+        default: PUBLIC
     description:
         description:
             - Description of a load balancer.
@@ -122,9 +122,9 @@ TL_ALL_PARAMETERS = [
     'protocols',
     'wait_time_minutes',
     'name',
-    'type',
     'use_system_public_ip_pool',
     'ssl_ciphers',
+    'type',
     'description',
     'subnets',
 ]
@@ -155,9 +155,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    type=dict(
-        required=False,
-        type='str'),
     use_system_public_ip_pool=dict(
         required=False,
         type='bool'),
@@ -165,6 +162,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    type=dict(
+        required=False,
+        type='str'),
     description=dict(
         required=False,
         type='str'),
@@ -237,7 +237,7 @@ def run_module():
         resource_type='ibm_lbaas',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -246,7 +246,7 @@ def run_module():
             resource_type='ibm_lbaas',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,16 +35,48 @@ Parameters
     Enable abort incomplete multipart upload to COS Bucket after a defined period of time
 
 
-  metrics_monitoring (False, list, None)
-    Enables sending metrics to IBM Cloud Monitoring.
+  archive_rule (False, list, None)
+    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
 
 
-  storage_class (False, str, None)
-    Storage class info
+  kms_key_crn (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  region_location (False, str, None)
+    Region Location info.
 
 
   endpoint_type (False, str, public)
     public or private
+
+
+  retention_rule (False, list, None)
+    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+
+
+  object_versioning (False, list, None)
+    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
+
+
+  object_lock (False, bool, None)
+    Enable objectlock for the bucket. When enabled, buckets within the container vault can have Object Lock Configuration applied to the bucket.
+
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) resource instance ID
+
+
+  key_protect (False, str, None)
+    CRN of the key you want to use data at rest encryption
+
+
+  satellite_location_id (False, str, None)
+    Provide satellite location info.
+
+
+  activity_tracking (False, list, None)
+    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
 
 
   expire_rule (False, list, None)
@@ -55,60 +87,36 @@ Parameters
     Enable configuration expire_rule to COS Bucket after a defined period of time
 
 
-  key_protect (False, str, None)
-    CRN of the key you want to use data at rest encryption
-
-
   single_site_location (False, str, None)
     single site location info
-
-
-  hard_quota (False, int, None)
-    sets a maximum amount of storage (in bytes) available for a bucket
-
-
-  satellite_location_id (False, str, None)
-    Provide satellite location info.
 
 
   allowed_ip (False, list, None)
     List of IPv4 or IPv6 addresses
 
 
-  activity_tracking (False, list, None)
-    Enables sending log data to Activity Tracker and LogDNA to provide visibility into object read and write events
-
-
-  archive_rule (False, list, None)
-    Enable configuration archive_rule (glacier/accelerated) to COS Bucket after a defined period of time
-
-
-  object_versioning (False, list, None)
-    Protect objects from accidental deletion or overwrites. Versioning allows you to keep multiple versions of an object protecting from unintentional data loss.
+  hard_quota (False, int, None)
+    sets a maximum amount of storage (in bytes) available for a bucket
 
 
   bucket_name (True, str, None)
     (Required for new resource) COS Bucket name
 
 
-  resource_instance_id (True, str, None)
-    (Required for new resource) resource instance ID
+  cross_region_location (False, str, None)
+    Cros region location info
 
 
-  retention_rule (False, list, None)
-    A retention policy is enabled at the IBM Cloud Object Storage bucket level. Minimum, maximum and default retention period are defined by this policy and apply to all objects in the bucket.
+  storage_class (False, str, None)
+    Storage class info
+
+
+  metrics_monitoring (False, list, None)
+    Enables sending metrics to IBM Cloud Monitoring.
 
 
   force_delete (False, bool, True)
     COS buckets need to be empty before they can be deleted. force_delete option empty the bucket and delete it.
-
-
-  region_location (False, str, None)
-    Region Location info.
-
-
-  cross_region_location (False, str, None)
-    Cros region location info
 
 
   id (False, str, None)

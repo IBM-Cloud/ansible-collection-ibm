@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  resource_instance_id (True, str, None)
+    (Required for new resource) The CRN of the Event Streams instance
+
 
   name (True, str, None)
     (Required for new resource) The name of the topic
@@ -41,10 +45,6 @@ Parameters
 
   config (False, dict, None)
     The configuration parameters of a topic
-
-
-  resource_instance_id (True, str, None)
-    (Required for new resource) The CRN of the Event Streams instance
 
 
   id (False, str, None)

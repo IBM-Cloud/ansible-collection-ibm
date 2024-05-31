@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  addons (True, list, None)
+    (Required for new resource)
+
 
   cluster (True, str, None)
     (Required for new resource) Cluster Name or ID
@@ -39,8 +43,8 @@ Parameters
     ID of the resource group.
 
 
-  addons (True, list, None)
-    (Required for new resource)
+  manage_all_addons (False, bool, True)
+    To manage all add-ons installed in the cluster using terraform by importing it into the state file
 
 
   id (False, str, None)

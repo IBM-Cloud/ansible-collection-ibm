@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  check_ptx_status (False, bool, False)
-    Check portworx status after worker replace
-
 
   ptx_timeout (False, str, 15m)
     Timeout for checking ptx pods/status
@@ -43,8 +39,20 @@ Parameters
     (Required for new resource) Cluster name
 
 
+  sds (False, str, None)
+    Name of Software Defined Storage
+
+
   replace_worker (True, str, None)
     (Required for new resource) Worker name/id that needs to be replaced
+
+
+  check_ptx_status (False, bool, False)
+    Check portworx status after worker replace
+
+
+  sds_timeout (False, str, 15m)
+    Timeout for checking sds deployment/status
 
 
   resource_group_id (False, str, None)

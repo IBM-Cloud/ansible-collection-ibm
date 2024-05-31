@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_cis_domain' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    cis_id:
+    domain:
         description:
-            - CIS instance crn
+            - CISzone - Domain
         required: True
         type: str
     verification_key:
@@ -36,9 +36,9 @@ options:
             - None
         required: False
         type: str
-    domain:
+    cis_id:
         description:
-            - CISzone - Domain
+            - CIS instance crn
         required: True
         type: str
     iaas_classic_username:
@@ -74,16 +74,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
+    'domain',
     'verification_key',
     'cname_suffix',
-    'domain',
+    'cis_id',
 ]
 
 
@@ -94,7 +94,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    domain=dict(
         required=True,
         type='str'),
     verification_key=dict(
@@ -103,7 +103,7 @@ module_args = dict(
     cname_suffix=dict(
         required=False,
         type='str'),
-    domain=dict(
+    cis_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_cis_domain',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

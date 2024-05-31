@@ -18,62 +18,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_safari' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    name:
-        description:
-            - (Required for new resource) The Destintion name.
-        required: True
-        type: str
-    certificate:
-        description:
-            - (Required for new resource) The Certificate File.
-        required: True
-        type: str
     icon_32x32:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_32x32_2x:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_32x32_2x_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    icon_128x128_2x_content_type:
-        description:
-            - The Certificate File.
-        required: False
-        type: str
-    config:
-        description:
-            - Payload describing a destination configuration.
-        required: False
-        type: list
-        elements: dict
-    instance_guid:
-        description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
-    type:
-        description:
-            - (Required for new resource) The type of Destination type push_ios.
-        required: True
-        type: str
-    description:
-        description:
-            - The Destination description.
-        required: False
-        type: str
-    icon_16x16:
         description:
             - The Certificate File.
         required: False
@@ -88,10 +37,46 @@ options:
             - The Certificate File.
         required: False
         type: str
+    icon_128x128_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    config:
+        description:
+            - Payload describing a destination configuration.
+        required: False
+        type: list
+        elements: dict
+    description:
+        description:
+            - The Destination description.
+        required: False
+        type: str
+    certificate:
+        description:
+            - (Required for new resource) The Certificate File.
+        required: True
+        type: str
+    icon_16x16:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
     icon_32x32_content_type:
         description:
             - The Certificate File.
         required: False
+        type: str
+    icon_128x128_2x_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The Destintion name.
+        required: True
         type: str
     icon_16x16_content_type:
         description:
@@ -103,15 +88,35 @@ options:
             - The Certificate File.
         required: False
         type: str
+    icon_32x32_2x_content_type:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    icon_32x32_2x:
+        description:
+            - The Certificate File.
+        required: False
+        type: str
+    type:
+        description:
+            - (Required for new resource) The type of Destination type push_ios.
+        required: True
+        type: str
+    collect_failed_events:
+        description:
+            - Whether to collect the failed event in Cloud Object Storage bucket
+        required: False
+        type: bool
     icon_16x16_2x:
         description:
             - The Certificate File.
         required: False
         type: str
-    icon_128x128_content_type:
+    instance_guid:
         description:
-            - The Certificate File.
-        required: False
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+        required: True
         type: str
     id:
         description:
@@ -159,32 +164,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('certificate', 'str'),
-    ('instance_guid', 'str'),
+    ('name', 'str'),
     ('type', 'str'),
+    ('instance_guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'certificate',
     'icon_32x32',
-    'icon_32x32_2x',
-    'icon_32x32_2x_content_type',
-    'icon_128x128_2x_content_type',
-    'config',
-    'instance_guid',
-    'type',
-    'description',
-    'icon_16x16',
     'icon_128x128',
     'icon_128x128_2x',
+    'icon_128x128_content_type',
+    'config',
+    'description',
+    'certificate',
+    'icon_16x16',
     'icon_32x32_content_type',
+    'icon_128x128_2x_content_type',
+    'name',
     'icon_16x16_content_type',
     'icon_16x16_2x_content_type',
+    'icon_32x32_2x_content_type',
+    'icon_32x32_2x',
+    'type',
+    'collect_failed_events',
     'icon_16x16_2x',
-    'icon_128x128_content_type',
+    'instance_guid',
 ]
 
 # Params for Data source
@@ -205,38 +211,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    certificate=dict(
-        required=False,
-        type='str'),
     icon_32x32=dict(
-        required=False,
-        type='str'),
-    icon_32x32_2x=dict(
-        required=False,
-        type='str'),
-    icon_32x32_2x_content_type=dict(
-        required=False,
-        type='str'),
-    icon_128x128_2x_content_type=dict(
-        required=False,
-        type='str'),
-    config=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instance_guid=dict(
-        required=False,
-        type='str'),
-    type=dict(
-        required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    icon_16x16=dict(
         required=False,
         type='str'),
     icon_128x128=dict(
@@ -245,7 +220,29 @@ module_args = dict(
     icon_128x128_2x=dict(
         required=False,
         type='str'),
+    icon_128x128_content_type=dict(
+        required=False,
+        type='str'),
+    config=dict(
+        required=False,
+        elements='',
+        type='list'),
+    description=dict(
+        required=False,
+        type='str'),
+    certificate=dict(
+        required=False,
+        type='str'),
+    icon_16x16=dict(
+        required=False,
+        type='str'),
     icon_32x32_content_type=dict(
+        required=False,
+        type='str'),
+    icon_128x128_2x_content_type=dict(
+        required=False,
+        type='str'),
+    name=dict(
         required=False,
         type='str'),
     icon_16x16_content_type=dict(
@@ -254,10 +251,22 @@ module_args = dict(
     icon_16x16_2x_content_type=dict(
         required=False,
         type='str'),
+    icon_32x32_2x_content_type=dict(
+        required=False,
+        type='str'),
+    icon_32x32_2x=dict(
+        required=False,
+        type='str'),
+    type=dict(
+        required=False,
+        type='str'),
+    collect_failed_events=dict(
+        required=False,
+        type='bool'),
     icon_16x16_2x=dict(
         required=False,
         type='str'),
-    icon_128x128_content_type=dict(
+    instance_guid=dict(
         required=False,
         type='str'),
     id=dict(
@@ -325,7 +334,7 @@ def run_module():
         resource_type='ibm_en_destination_safari',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -334,7 +343,7 @@ def run_module():
             resource_type='ibm_en_destination_safari',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

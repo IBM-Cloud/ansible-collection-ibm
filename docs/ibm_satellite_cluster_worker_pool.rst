@@ -23,24 +23,40 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
+  worker_pool_labels (False, dict, None)
+    Labels on all the workers in the worker pool
+
+
+  host_labels (False, list, None)
+    Labels that describe a Satellite host
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  name (True, str, None)
+    (Required for new resource) The name for the worker pool
+
+
   isolation (False, str, None)
-    None
-
-
-  entitlement (False, str, None)
     None
 
 
   operating_system (False, str, None)
     Operating system of the worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
   worker_count (False, int, None)
@@ -51,18 +67,6 @@ Parameters
     Zone info for worker pool
 
 
-  worker_pool_labels (False, dict, None)
-    Labels on all the workers in the worker pool
-
-
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  disk_encryption (False, bool, None)
-    Disk encryption for worker node
-
-
   cluster (True, str, None)
     (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
 
@@ -71,12 +75,8 @@ Parameters
     The flavor defines the amount of virtual CPU, memory, and disk space that is set up in each worker node
 
 
-  host_labels (False, list, None)
-    Labels that describe a Satellite host
-
-
-  name (True, str, None)
-    (Required for new resource) The name for the worker pool
+  disk_encryption (False, bool, None)
+    Disk encryption for worker node
 
 
   id (False, str, None)

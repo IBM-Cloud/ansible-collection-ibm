@@ -21,17 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  environment_id (False, str, None)
-    Filters the response based on the specified environment_id.
-
 
   limit (False, int, None)
     The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
@@ -47,6 +43,10 @@ Parameters
 
   collection_id (False, str, None)
     Filters the response based on the specified collection_id.
+
+
+  environment_id (False, str, None)
+    Filters the response based on the specified environment_id.
 
 
   iaas_classic_username (False, any, None)

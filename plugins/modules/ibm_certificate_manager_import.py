@@ -8,8 +8,6 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_certificate_manager_import
-for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/certificate_manager_import
-
 short_description: Configure IBM Cloud 'ibm_certificate_manager_import' resource
 
 version_added: "2.8"
@@ -18,15 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_import' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
-    certificate_manager_instance_id:
-        description:
-            - (Required for new resource) Instance ID of the certificate manager resource
-        required: True
-        type: str
     name:
         description:
             - (Required for new resource) Name of the instance
@@ -37,10 +30,16 @@ options:
             - (Required for new resource) certificate data
         required: True
         type: dict
+        elements: dict
     description:
         description:
             - Description of the certificate instance
         required: False
+        type: str
+    certificate_manager_instance_id:
+        description:
+            - (Required for new resource) Instance ID of the certificate manager resource
+        required: True
         type: str
     id:
         description:
@@ -88,17 +87,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('certificate_manager_instance_id', 'str'),
     ('name', 'str'),
     ('data', 'dict'),
+    ('certificate_manager_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate_manager_instance_id',
     'name',
     'data',
     'description',
+    'certificate_manager_instance_id',
 ]
 
 # Params for Data source
@@ -115,16 +114,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate_manager_instance_id=dict(
-        required=False,
-        type='str'),
     name=dict(
         required=False,
         type='str'),
     data=dict(
         required=False,
+        elements='',
         type='dict'),
     description=dict(
+        required=False,
+        type='str'),
+    certificate_manager_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +192,7 @@ def run_module():
         resource_type='ibm_certificate_manager_import',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

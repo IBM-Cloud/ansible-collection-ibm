@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  collect_failed_events (False, bool, None)
+    Whether to collect the failed event in Cloud Object Storage bucket
+
 
   name (True, str, None)
     (Required for new resource) The Destintion name.
@@ -43,12 +47,12 @@ Parameters
     The Destination description.
 
 
-  config (False, list, None)
-    Payload describing a destination configuration.
-
-
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+
+
+  config (False, list, None)
+    Payload describing a destination configuration.
 
 
   id (False, str, None)

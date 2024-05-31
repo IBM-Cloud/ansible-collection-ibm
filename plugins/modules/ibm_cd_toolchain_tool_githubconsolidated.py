@@ -18,13 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_githubconsolidated' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    initialization:
+    parameters:
         description:
-            - (Required for new resource) 
+            - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
         required: True
         type: list
         elements: dict
@@ -33,17 +33,17 @@ options:
             - (Required for new resource) ID of the toolchain to bind the tool to.
         required: True
         type: str
-    parameters:
-        description:
-            - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
-        required: True
-        type: list
-        elements: dict
     name:
         description:
             - Name of the tool.
         required: False
         type: str
+    initialization:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,28 +90,28 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('initialization', 'list'),
-    ('toolchain_id', 'str'),
     ('parameters', 'list'),
+    ('toolchain_id', 'str'),
+    ('initialization', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'initialization',
-    'toolchain_id',
     'parameters',
+    'toolchain_id',
     'name',
+    'initialization',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('toolchain_id', 'str'),
     ('tool_id', 'str'),
+    ('toolchain_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'toolchain_id',
     'tool_id',
+    'toolchain_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -121,20 +121,20 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    initialization=dict(
+    parameters=dict(
         required=False,
         elements='',
         type='list'),
     toolchain_id=dict(
         required=False,
         type='str'),
-    parameters=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
+    initialization=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_githubconsolidated',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -209,7 +209,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_githubconsolidated',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

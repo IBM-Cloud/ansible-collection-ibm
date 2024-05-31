@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  cloud_internet_services_crn (True, str, None)
+    (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
+
+
+  endpoint_type (False, str, None)
+    public or private.
+
 
   cloud_internet_services_apikey (False, str, None)
     An IBM Cloud API key that can to list domains in your Cloud Internet Services instance.To grant Secrets Manager the ability to view the Cloud Internet Services instance and all of its domains, the API key must be assigned the Reader service role on Internet Services (`internet-svcs`).If you need to manage specific domains, you can assign the Manager role. For production environments, it is recommended that you assign the Reader access role, and then use the[IAM Policy Management API](https://cloud.ibm.com/apidocs/iam-policy-management#create-policy) to control specific domains. For more information, see the [docs](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains).
@@ -39,20 +47,12 @@ Parameters
     (Required for new resource) The ID of the Secrets Manager instance.
 
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
-  endpoint_type (False, str, None)
-    public or private.
-
-
   name (True, str, None)
     (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
 
 
-  cloud_internet_services_crn (True, str, None)
-    (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   id (False, str, None)

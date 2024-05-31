@@ -18,24 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    alb_id:
+    user_ip:
         description:
-            - (Required for new resource) ALB ID
-        required: True
+            - IP assigned by the user
+        required: False
         type: str
     enable:
         description:
             - set to true if ALB needs to be enabled
         required: False
         type: bool
-    user_ip:
+    alb_id:
         description:
-            - IP assigned by the user
-        required: False
+            - (Required for new resource) ALB ID
+        required: True
         type: str
     disable_deployment:
         description:
@@ -73,9 +73,9 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'alb_id',
-    'enable',
     'user_ip',
+    'enable',
+    'alb_id',
     'disable_deployment',
 ]
 
@@ -97,13 +97,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    alb_id=dict(
+    user_ip=dict(
         required=False,
         type='str'),
     enable=dict(
         required=False,
         type='bool'),
-    user_ip=dict(
+    alb_id=dict(
         required=False,
         type='str'),
     disable_deployment=dict(
@@ -160,7 +160,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -169,7 +169,7 @@ def run_module():
             resource_type='ibm_container_alb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

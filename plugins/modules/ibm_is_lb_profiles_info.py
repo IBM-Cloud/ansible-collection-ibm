@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_lb_profiles' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    name:
+        description:
+            - The load balancer profile name.
+        required: False
+        type: str
     generation:
         description:
             - The generation of Virtual Private Cloud infrastructure
@@ -58,6 +63,7 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
 ]
 
 
@@ -68,6 +74,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     generation=dict(
         type='int',
         required=False,
@@ -114,7 +123,7 @@ def run_module():
         resource_type='ibm_is_lb_profiles',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

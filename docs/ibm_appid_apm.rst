@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  password_expiration (True, list, None)
-    (Required for new resource)
-
-
-  lockout_policy (True, list, None)
-    (Required for new resource)
-
 
   min_password_change_interval (True, list, None)
     (Required for new resource)
@@ -56,6 +48,14 @@ Parameters
 
 
   password_reuse (True, list, None)
+    (Required for new resource)
+
+
+  password_expiration (True, list, None)
+    (Required for new resource)
+
+
+  lockout_policy (True, list, None)
     (Required for new resource)
 
 

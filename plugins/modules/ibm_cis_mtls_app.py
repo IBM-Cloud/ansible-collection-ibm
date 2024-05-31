@@ -18,18 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_mtls_app' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    session_duration:
+        description:
+            - Duration for app validatidity
+        required: False
+        type: str
+        default: 24h
+    cert_rule_val:
+        description:
+            - Policy certificate rule value
+        required: False
+        type: str
+        default: CA root certificate
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    policy_name:
+        description:
+            - Policy Name
+        required: False
+        type: str
+        default: mtls-policy
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) App Name
         required: True
         type: str
     domain:
@@ -43,29 +61,11 @@ options:
         required: False
         type: str
         default: non_identity
-    domain_id:
+    name:
         description:
-            - (Required for new resource) Associated CIS domain
+            - (Required for new resource) App Name
         required: True
         type: str
-    cert_rule_val:
-        description:
-            - Policy certificate rule value
-        required: False
-        type: str
-        default: CA root certificate
-    session_duration:
-        description:
-            - Duration for app validatidity
-        required: False
-        type: str
-        default: 24h
-    policy_name:
-        description:
-            - Policy Name
-        required: False
-        type: str
-        default: mtls-policy
     common_rule_val:
         description:
             - Policy common rule value
@@ -117,22 +117,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
-    ('name', 'str'),
-    ('domain', 'str'),
     ('domain_id', 'str'),
+    ('cis_id', 'str'),
+    ('domain', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'session_duration',
+    'cert_rule_val',
+    'domain_id',
+    'policy_name',
     'cis_id',
-    'name',
     'domain',
     'policy_decision',
-    'domain_id',
-    'cert_rule_val',
-    'session_duration',
-    'policy_name',
+    'name',
     'common_rule_val',
 ]
 
@@ -150,10 +150,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    session_duration=dict(
         required=False,
         type='str'),
-    name=dict(
+    cert_rule_val=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    policy_name=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
         required=False,
         type='str'),
     domain=dict(
@@ -162,16 +171,7 @@ module_args = dict(
     policy_decision=dict(
         required=False,
         type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    cert_rule_val=dict(
-        required=False,
-        type='str'),
-    session_duration=dict(
-        required=False,
-        type='str'),
-    policy_name=dict(
+    name=dict(
         required=False,
         type='str'),
     common_rule_val=dict(
@@ -242,7 +242,7 @@ def run_module():
         resource_type='ibm_cis_mtls_app',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

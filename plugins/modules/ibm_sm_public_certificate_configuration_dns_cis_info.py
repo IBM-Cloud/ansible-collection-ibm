@@ -17,13 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_public_certificate_configuration_dns_cis' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     instance_id:
         description:
             - The ID of the Secrets Manager instance.
+        required: True
+        type: str
+    name:
+        description:
+            - The name of the configuration.
         required: True
         type: str
     region:
@@ -35,11 +40,6 @@ options:
         description:
             - public or private.
         required: False
-        type: str
-    name:
-        description:
-            - The name of the configuration.
-        required: True
         type: str
     iaas_classic_username:
         description:
@@ -81,9 +81,9 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_id',
+    'name',
     'region',
     'endpoint_type',
-    'name',
 ]
 
 
@@ -97,14 +97,14 @@ module_args = dict(
     instance_id=dict(
         required=True,
         type='str'),
+    name=dict(
+        required=True,
+        type='str'),
     region=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
         required=False,
-        type='str'),
-    name=dict(
-        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_sm_public_certificate_configuration_dns_cis',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

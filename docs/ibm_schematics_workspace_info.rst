@@ -21,24 +21,24 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  location (False, str, None)
-    The IBM Cloud location where your workspace was provisioned.
+  template_values_metadata (False, list, None)
+    A list of input variables that are associated with the workspace.
 
 
   workspace_id (True, str, None)
     The ID of the workspace.  To find the workspace ID, use the `GET /v1/workspaces` API.
 
 
-  template_values_metadata (False, list, None)
-    A list of input variables that are associated with the workspace.
+  location (False, str, None)
+    The IBM Cloud location where your workspace was provisioned.
 
 
   template_git_has_uploadedgitrepotar (False, bool, None)

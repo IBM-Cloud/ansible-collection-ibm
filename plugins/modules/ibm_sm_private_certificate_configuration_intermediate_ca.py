@@ -18,19 +18,124 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_private_certificate_configuration_intermediate_ca' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    name:
+    other_sans:
         description:
-            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
-        required: True
-        type: str
+            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names to define for the CA certificate.The alternative names must match the values that are specified in the `allowed_other_sans` field in the associated certificate template. The format is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`.
+        required: False
+        type: list
+        elements: str
+    province:
+        description:
+            - The Province (ST) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    postal_code:
+        description:
+            - The postal code values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    use_csr_values:
+        description:
+            - Determines whether to use values from a certificate signing request (CSR) to complete a `private_cert_configuration_action_sign_csr` action.
+        required: False
+        type: bool
     region:
         description:
             - The region of the Secrets Manager instance.
         required: False
+        type: str
+    max_ttl:
+        description:
+            - (Required for new resource) The maximum time-to-live (TTL) for certificates that are created by this CA.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).Minimum value is one hour (`1h`). Maximum value is 100 years (`876000h`).
+        required: True
+        type: str
+    crl_expiry:
+        description:
+            - The time until the certificate revocation list (CRL) expires.The value can be supplied as a string representation of a duration in hours, such as `48h`. The default is 72 hours. In the API response, this value is returned in seconds (integer).**Note:** The CRL is rotated automatically before it expires.
+        required: False
+        type: str
+    issuing_certificates_urls_encoded:
+        description:
+            - Determines whether to encode the URL of the issuing certificate in the certificates that are issued by this certificate authority.
+        required: False
+        type: bool
+        default: False
+    uri_sans:
+        description:
+            - The URI Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
+        required: False
+        type: str
+    private_key_format:
+        description:
+            - The format of the generated private key.
+        required: False
+        type: str
+        default: der
+    common_name:
+        description:
+            - (Required for new resource) The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
+        required: True
+        type: str
+    format:
+        description:
+            - The format of the returned data.
+        required: False
+        type: str
+    exclude_cn_from_sans:
+        description:
+            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
+        required: False
+        type: bool
+        default: False
+    organization:
+        description:
+            - The Organization (O) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    locality:
+        description:
+            - The Locality (L) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    issuer:
+        description:
+            - The distinguished name that identifies the entity that signed and issued the certificate.
+        required: False
+        type: str
+    ttl:
+        description:
+            - Specifies the requested Time To Live (after which the certificate will be expired). The value can be provided provided as a string duration with time suffix (e.g. '24h') or the number of seconds as string (e.g. '86400').
+        required: False
+        type: str
+    crl_disable:
+        description:
+            - Disables or enables certificate revocation list (CRL) building.If CRL building is disabled, a signed but zero-length CRL is returned when downloading the CRL. If CRL building is enabled, it will rebuild the CRL.
+        required: False
+        type: bool
+        default: False
+    crl_distribution_points_encoded:
+        description:
+            - Determines whether to encode the certificate revocation list (CRL) distribution points in the certificates that are issued by this certificate authority.
+        required: False
+        type: bool
+        default: False
+    key_type:
+        description:
+            - The type of private key to generate.
+        required: False
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) The ID of the Secrets Manager instance.
+        required: True
         type: str
     endpoint_type:
         description:
@@ -43,143 +148,15 @@ options:
         required: False
         type: list
         elements: str
-    uri_sans:
-        description:
-            - The URI Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
-        required: False
-        type: str
-    use_csr_values:
-        description:
-            - Determines whether to use values from a certificate signing request (CSR) to complete a `private_cert_configuration_action_sign_csr` action.
-        required: False
-        type: bool
-    crl_distribution_points_encoded:
-        description:
-            - Determines whether to encode the certificate revocation list (CRL) distribution points in the certificates that are issued by this certificate authority.
-        required: False
-        type: bool
-    issuing_certificates_urls_encoded:
-        description:
-            - Determines whether to encode the URL of the issuing certificate in the certificates that are issued by this certificate authority.
-        required: False
-        type: bool
-    organization:
-        description:
-            - The Organization (O) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    max_path_length:
-        description:
-            - The maximum path length to encode in the generated certificate. `-1` means no limit.
-        required: False
-        type: int
-    max_ttl:
-        description:
-            - (Required for new resource) The maximum time-to-live (TTL) for certificates that are created by this CA.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).Minimum value is one hour (`1h`). Maximum value is 100 years (`876000h`).
-        required: True
-        type: str
     ip_sans:
         description:
             - The IP Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
         required: False
         type: str
-    ou:
-        description:
-            - The Organizational Unit (OU) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    crl_disable:
-        description:
-            - Disables or enables certificate revocation list (CRL) building.If CRL building is disabled, a signed but zero-length CRL is returned when downloading the CRL. If CRL building is enabled, it will rebuild the CRL.
-        required: False
-        type: bool
-    province:
-        description:
-            - The Province (ST) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    locality:
-        description:
-            - The Locality (L) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    postal_code:
-        description:
-            - The postal code values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    exclude_cn_from_sans:
-        description:
-            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
-        required: False
-        type: bool
-    issuer:
-        description:
-            - The distinguished name that identifies the entity that signed and issued the certificate.
-        required: False
-        type: str
-    format:
-        description:
-            - The format of the returned data.
-        required: False
-        type: str
-    key_bits:
-        description:
-            - The number of bits to use to generate the private key.Allowable values for RSA keys are: `2048` and `4096`. Allowable values for EC keys are: `224`, `256`, `384`, and `521`. The default for RSA keys is `2048`. The default for EC keys is `256`.
-        required: False
-        type: int
     signing_method:
         description:
             - (Required for new resource) The signing method to use with this certificate authority to generate private certificates.You can choose between internal or externally signed options. For more information, see the [docs](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-intermediate-certificate-authorities).
         required: True
-        type: str
-    ttl:
-        description:
-            - The time-to-live (TTL) or lease duration to assign to generated credentials.For `iam_credentials` secrets, the TTL defines for how long each generated API key remains valid. The value can be either an integer that specifies the number of seconds, or the string representation of a duration, such as `120m` or `24h`.Minimum duration is 1 minute. Maximum is 90 days.
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) The ID of the Secrets Manager instance.
-        required: True
-        type: str
-    common_name:
-        description:
-            - (Required for new resource) The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
-        required: True
-        type: str
-    private_key_format:
-        description:
-            - The format of the generated private key.
-        required: False
-        type: str
-        default: der
-    country:
-        description:
-            - The Country (C) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    key_type:
-        description:
-            - The type of private key to generate.
-        required: False
-        type: str
-    street_address:
-        description:
-            - The street address values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    serial_number:
-        description:
-            - The serial number to assign to the generated certificate. To assign a random serial number, you can omit this field.
-        required: False
         type: str
     permitted_dns_domains:
         description:
@@ -187,14 +164,36 @@ options:
         required: False
         type: list
         elements: str
-    crl_expiry:
+    name:
         description:
-            - The time until the certificate revocation list (CRL) expires.The value can be supplied as a string representation of a duration in hours, such as `48h`. The default is 72 hours. In the API response, this value is returned in seconds (integer).**Note:** The CRL is rotated automatically before it expires.
-        required: False
+            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+        required: True
         type: str
-    other_sans:
+    max_path_length:
         description:
-            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names to define for the CA certificate.The alternative names must match the values that are specified in the `allowed_other_sans` field in the associated certificate template. The format is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`.
+            - The maximum path length to encode in the generated certificate. `-1` means no limit.
+        required: False
+        type: int
+    key_bits:
+        description:
+            - The number of bits to use to generate the private key.Allowable values for RSA keys are: `2048` and `4096`. Allowable values for EC keys are: `224`, `256`, `384`, and `521`. The default for RSA keys is `2048`. The default for EC keys is `256`.
+        required: False
+        type: int
+    ou:
+        description:
+            - The Organizational Unit (OU) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    country:
+        description:
+            - The Country (C) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    street_address:
+        description:
+            - The street address values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
@@ -244,61 +243,60 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('max_ttl', 'str'),
-    ('signing_method', 'str'),
-    ('instance_id', 'str'),
     ('common_name', 'str'),
+    ('instance_id', 'str'),
+    ('signing_method', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'other_sans',
+    'province',
+    'postal_code',
+    'use_csr_values',
     'region',
+    'max_ttl',
+    'crl_expiry',
+    'issuing_certificates_urls_encoded',
+    'uri_sans',
+    'private_key_format',
+    'common_name',
+    'format',
+    'exclude_cn_from_sans',
+    'organization',
+    'locality',
+    'issuer',
+    'ttl',
+    'crl_disable',
+    'crl_distribution_points_encoded',
+    'key_type',
+    'instance_id',
     'endpoint_type',
     'alt_names',
-    'uri_sans',
-    'use_csr_values',
-    'crl_distribution_points_encoded',
-    'issuing_certificates_urls_encoded',
-    'organization',
-    'max_path_length',
-    'max_ttl',
     'ip_sans',
-    'ou',
-    'crl_disable',
-    'province',
-    'locality',
-    'postal_code',
-    'exclude_cn_from_sans',
-    'issuer',
-    'format',
-    'key_bits',
     'signing_method',
-    'ttl',
-    'instance_id',
-    'common_name',
-    'private_key_format',
-    'country',
-    'key_type',
-    'street_address',
-    'serial_number',
     'permitted_dns_domains',
-    'crl_expiry',
-    'other_sans',
+    'name',
+    'max_path_length',
+    'key_bits',
+    'ou',
+    'country',
+    'street_address',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('name', 'str'),
     ('instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'endpoint_type',
     'instance_id',
     'region',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -308,10 +306,72 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    other_sans=dict(
+        required=False,
+        elements='',
+        type='list'),
+    province=dict(
+        required=False,
+        elements='',
+        type='list'),
+    postal_code=dict(
+        required=False,
+        elements='',
+        type='list'),
+    use_csr_values=dict(
+        required=False,
+        type='bool'),
+    region=dict(
         required=False,
         type='str'),
-    region=dict(
+    max_ttl=dict(
+        required=False,
+        type='str'),
+    crl_expiry=dict(
+        required=False,
+        type='str'),
+    issuing_certificates_urls_encoded=dict(
+        required=False,
+        type='bool'),
+    uri_sans=dict(
+        required=False,
+        type='str'),
+    private_key_format=dict(
+        required=False,
+        type='str'),
+    common_name=dict(
+        required=False,
+        type='str'),
+    format=dict(
+        required=False,
+        type='str'),
+    exclude_cn_from_sans=dict(
+        required=False,
+        type='bool'),
+    organization=dict(
+        required=False,
+        elements='',
+        type='list'),
+    locality=dict(
+        required=False,
+        elements='',
+        type='list'),
+    issuer=dict(
+        required=False,
+        type='str'),
+    ttl=dict(
+        required=False,
+        type='str'),
+    crl_disable=dict(
+        required=False,
+        type='bool'),
+    crl_distribution_points_encoded=dict(
+        required=False,
+        type='bool'),
+    key_type=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
@@ -321,99 +381,34 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    uri_sans=dict(
-        required=False,
-        type='str'),
-    use_csr_values=dict(
-        required=False,
-        type='bool'),
-    crl_distribution_points_encoded=dict(
-        required=False,
-        type='bool'),
-    issuing_certificates_urls_encoded=dict(
-        required=False,
-        type='bool'),
-    organization=dict(
-        required=False,
-        elements='',
-        type='list'),
-    max_path_length=dict(
-        required=False,
-        type='int'),
-    max_ttl=dict(
-        required=False,
-        type='str'),
     ip_sans=dict(
         required=False,
         type='str'),
-    ou=dict(
-        required=False,
-        elements='',
-        type='list'),
-    crl_disable=dict(
-        required=False,
-        type='bool'),
-    province=dict(
-        required=False,
-        elements='',
-        type='list'),
-    locality=dict(
-        required=False,
-        elements='',
-        type='list'),
-    postal_code=dict(
-        required=False,
-        elements='',
-        type='list'),
-    exclude_cn_from_sans=dict(
-        required=False,
-        type='bool'),
-    issuer=dict(
-        required=False,
-        type='str'),
-    format=dict(
-        required=False,
-        type='str'),
-    key_bits=dict(
-        required=False,
-        type='int'),
     signing_method=dict(
-        required=False,
-        type='str'),
-    ttl=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    common_name=dict(
-        required=False,
-        type='str'),
-    private_key_format=dict(
-        required=False,
-        type='str'),
-    country=dict(
-        required=False,
-        elements='',
-        type='list'),
-    key_type=dict(
-        required=False,
-        type='str'),
-    street_address=dict(
-        required=False,
-        elements='',
-        type='list'),
-    serial_number=dict(
         required=False,
         type='str'),
     permitted_dns_domains=dict(
         required=False,
         elements='',
         type='list'),
-    crl_expiry=dict(
+    name=dict(
         required=False,
         type='str'),
-    other_sans=dict(
+    max_path_length=dict(
+        required=False,
+        type='int'),
+    key_bits=dict(
+        required=False,
+        type='int'),
+    ou=dict(
+        required=False,
+        elements='',
+        type='list'),
+    country=dict(
+        required=False,
+        elements='',
+        type='list'),
+    street_address=dict(
         required=False,
         elements='',
         type='list'),
@@ -482,7 +477,7 @@ def run_module():
         resource_type='ibm_sm_private_certificate_configuration_intermediate_ca',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -491,7 +486,7 @@ def run_module():
             resource_type='ibm_sm_private_certificate_configuration_intermediate_ca',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

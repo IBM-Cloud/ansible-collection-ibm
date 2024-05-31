@@ -23,48 +23,56 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  tags (False, list, None)
-    List of tags
-
-
-  classic_access (False, bool, False)
-    Set to true if classic access needs to enabled to VPC
-
-
-  resource_group (False, str, None)
-    Resource group info
+  access_tags (False, list, None)
+    List of access management tags
 
 
   address_prefix_management (False, str, auto)
     Address Prefix management value
 
 
+  no_sg_acl_rules (False, bool, False)
+    Delete all rules attached with default security group and default acl
+
+
+  default_security_group_name (False, str, None)
+    Default security group name
+
+
   default_routing_table_name (False, str, None)
     Default routing table name
 
 
-  access_tags (False, list, None)
-    List of access management tags
+  resource_group (False, str, None)
+    Resource group info
 
 
   name (True, str, None)
     (Required for new resource) VPC name
 
 
+  tags (False, list, None)
+    List of tags
+
+
+  dns (False, list, None)
+    The DNS configuration for this VPC.
+
+
+  classic_access (False, bool, False)
+    Set to true if classic access needs to enabled to VPC
+
+
   default_network_acl_name (False, str, None)
     Default Network ACL name
-
-
-  default_security_group_name (False, str, None)
-    Default security group name
 
 
   id (False, str, None)

@@ -23,44 +23,40 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+
+
   git_file_path (True, str, None)
     (Required for new resource) Git file path, this is a path where your configuration file will be written.
-
-
-  git_token (True, str, None)
-    (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
 
 
   action (False, str, None)
     action promote
 
 
+  git_config_id (True, str, None)
+    (Required for new resource) Git config id. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
+
+
   git_config_name (True, str, None)
     (Required for new resource) Git config name. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
 
 
-  git_branch (True, str, None)
-    (Required for new resource) Branch name to which you need to write or update the configuration.
+  git_token (True, str, None)
+    (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
 
 
   environment_id (True, str, None)
     (Required for new resource) Environment id.
-
-
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  git_config_id (True, str, None)
-    (Required for new resource) Git config id. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
 
 
   git_url (True, str, None)
@@ -69,6 +65,10 @@ Parameters
 
   collection_id (True, str, None)
     (Required for new resource) Collection id.
+
+
+  git_branch (True, str, None)
+    (Required for new resource) Branch name to which you need to write or update the configuration.
 
 
   id (False, str, None)

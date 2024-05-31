@@ -18,18 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_snapshot' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
     git_file_path:
         description:
             - (Required for new resource) Git file path, this is a path where your configuration file will be written.
-        required: True
-        type: str
-    git_token:
-        description:
-            - (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
         required: True
         type: str
     action:
@@ -37,29 +37,24 @@ options:
             - action promote
         required: False
         type: str
+    git_config_id:
+        description:
+            - (Required for new resource) Git config id. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
+        required: True
+        type: str
     git_config_name:
         description:
             - (Required for new resource) Git config name. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
         required: True
         type: str
-    git_branch:
+    git_token:
         description:
-            - (Required for new resource) Branch name to which you need to write or update the configuration.
+            - (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
         required: True
         type: str
     environment_id:
         description:
             - (Required for new resource) Environment id.
-        required: True
-        type: str
-    guid:
-        description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
-    git_config_id:
-        description:
-            - (Required for new resource) Git config id. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
         required: True
         type: str
     git_url:
@@ -70,6 +65,11 @@ options:
     collection_id:
         description:
             - (Required for new resource) Collection id.
+        required: True
+        type: str
+    git_branch:
+        description:
+            - (Required for new resource) Branch name to which you need to write or update the configuration.
         required: True
         type: str
     id:
@@ -118,40 +118,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('git_file_path', 'str'),
-    ('git_token', 'str'),
-    ('git_config_name', 'str'),
-    ('git_branch', 'str'),
-    ('environment_id', 'str'),
     ('guid', 'str'),
+    ('git_file_path', 'str'),
     ('git_config_id', 'str'),
+    ('git_config_name', 'str'),
+    ('git_token', 'str'),
+    ('environment_id', 'str'),
     ('git_url', 'str'),
     ('collection_id', 'str'),
+    ('git_branch', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'git_file_path',
-    'git_token',
-    'action',
-    'git_config_name',
-    'git_branch',
-    'environment_id',
     'guid',
+    'git_file_path',
+    'action',
     'git_config_id',
+    'git_config_name',
+    'git_token',
+    'environment_id',
     'git_url',
     'collection_id',
+    'git_branch',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('guid', 'str'),
     ('git_config_id', 'str'),
+    ('guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'guid',
     'git_config_id',
+    'guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -161,34 +161,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    git_file_path=dict(
+    guid=dict(
         required=False,
         type='str'),
-    git_token=dict(
+    git_file_path=dict(
         required=False,
         type='str'),
     action=dict(
         required=False,
         type='str'),
+    git_config_id=dict(
+        required=False,
+        type='str'),
     git_config_name=dict(
         required=False,
         type='str'),
-    git_branch=dict(
+    git_token=dict(
         required=False,
         type='str'),
     environment_id=dict(
-        required=False,
-        type='str'),
-    guid=dict(
-        required=False,
-        type='str'),
-    git_config_id=dict(
         required=False,
         type='str'),
     git_url=dict(
         required=False,
         type='str'),
     collection_id=dict(
+        required=False,
+        type='str'),
+    git_branch=dict(
         required=False,
         type='str'),
     id=dict(
@@ -256,7 +256,7 @@ def run_module():
         resource_type='ibm_app_config_snapshot',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -265,7 +265,7 @@ def run_module():
             resource_type='ibm_app_config_snapshot',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

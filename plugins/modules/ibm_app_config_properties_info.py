@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_properties' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     offset:
@@ -26,9 +26,9 @@ options:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
         type: int
-    guid:
+    environment_id:
         description:
-            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+            - Environment Id.
         required: True
         type: str
     tags:
@@ -36,9 +36,9 @@ options:
             - Filter the resources to be returned based on the associated tags. Specify the parameter as a list of comma separated tags. Returns resources associated with any of the specified tags.
         required: False
         type: str
-    segments:
+    collections:
         description:
-            - Filter features by a list of comma separated segments.
+            - Filter features by a list of comma separated collections.
         required: False
         type: list
         elements: str
@@ -53,9 +53,9 @@ options:
             - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
         required: False
         type: int
-    environment_id:
+    guid:
         description:
-            - Environment Id.
+            - GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
         required: True
         type: str
     sort:
@@ -63,9 +63,9 @@ options:
             - Sort the feature details based on the specified attribute.
         required: False
         type: str
-    collections:
+    segments:
         description:
-            - Filter features by a list of comma separated collections.
+            - Filter features by a list of comma separated segments.
         required: False
         type: list
         elements: str
@@ -107,21 +107,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guid', 'str'),
     ('environment_id', 'str'),
+    ('guid', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'offset',
-    'guid',
+    'environment_id',
     'tags',
-    'segments',
+    'collections',
     'include',
     'limit',
-    'environment_id',
+    'guid',
     'sort',
-    'collections',
+    'segments',
     'expand',
 ]
 
@@ -136,13 +136,13 @@ module_args = dict(
     offset=dict(
         required=False,
         type='int'),
-    guid=dict(
+    environment_id=dict(
         required=True,
         type='str'),
     tags=dict(
         required=False,
         type='str'),
-    segments=dict(
+    collections=dict(
         required=False,
         elements='',
         type='list'),
@@ -153,13 +153,13 @@ module_args = dict(
     limit=dict(
         required=False,
         type='int'),
-    environment_id=dict(
+    guid=dict(
         required=True,
         type='str'),
     sort=dict(
         required=False,
         type='str'),
-    collections=dict(
+    segments=dict(
         required=False,
         elements='',
         type='list'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_app_config_properties',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

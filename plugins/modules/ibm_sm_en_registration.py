@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_en_registration' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    endpoint_type:
+        description:
+            - public or private.
+        required: False
+        type: str
+    event_notifications_instance_crn:
+        description:
+            - (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
+        required: True
+        type: str
     event_notifications_source_name:
         description:
             - (Required for new resource) The name that is displayed as a source that is in your Event Notifications instance.
@@ -41,16 +51,6 @@ options:
         description:
             - The region of the Secrets Manager instance.
         required: False
-        type: str
-    endpoint_type:
-        description:
-            - public or private.
-        required: False
-        type: str
-    event_notifications_instance_crn:
-        description:
-            - (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
-        required: True
         type: str
     id:
         description:
@@ -98,19 +98,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('event_notifications_instance_crn', 'str'),
     ('event_notifications_source_name', 'str'),
     ('instance_id', 'str'),
-    ('event_notifications_instance_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'endpoint_type',
+    'event_notifications_instance_crn',
     'event_notifications_source_name',
     'event_notifications_source_description',
     'instance_id',
     'region',
-    'endpoint_type',
-    'event_notifications_instance_crn',
 ]
 
 # Params for Data source
@@ -131,6 +131,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    event_notifications_instance_crn=dict(
+        required=False,
+        type='str'),
     event_notifications_source_name=dict(
         required=False,
         type='str'),
@@ -141,12 +147,6 @@ module_args = dict(
         required=False,
         type='str'),
     region=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
-        required=False,
-        type='str'),
-    event_notifications_instance_crn=dict(
         required=False,
         type='str'),
     id=dict(
@@ -214,7 +214,7 @@ def run_module():
         resource_type='ibm_sm_en_registration',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -223,7 +223,7 @@ def run_module():
             resource_type='ibm_sm_en_registration',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

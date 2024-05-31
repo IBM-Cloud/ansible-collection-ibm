@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  allowed_subnets (False, list, None)
+    Allowed network subnets
+
+
+  allowed_ip_addresses (False, list, None)
+    Allowed range of IP addresses
+
 
   tags (False, list, None)
     Tags set for the storage volume
@@ -43,24 +51,20 @@ Parameters
     Virtual guest ID
 
 
-  allowed_hardware_ids (False, list, None)
-    Hardaware ID
+  type (True, str, None)
+    (Required for new resource) Storage type
 
 
-  allowed_subnets (False, list, None)
-    Allowed network subnets
-
-
-  allowed_ip_addresses (False, list, None)
-    Allowed range of IP addresses
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
   capacity (True, int, None)
     (Required for new resource) Storage capacity
 
 
-  snapshot_schedule (False, list, None)
-    None
+  allowed_hardware_ids (False, list, None)
+    Hardaware ID
 
 
   iops (True, float, None)
@@ -75,12 +79,8 @@ Parameters
     Notes
 
 
-  type (True, str, None)
-    (Required for new resource) Storage type
-
-
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
+  snapshot_schedule (False, list, None)
+    None
 
 
   id (False, str, None)

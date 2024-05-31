@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -37,6 +37,10 @@ Parameters
 
   key_ring_id (True, str, None)
     (Required for new resource) User defined unique ID for the key ring
+
+
+  force_delete (False, bool, False)
+    set to true to force delete this key ring. This allows key ring deletion as long as all keys inside have key state equals to 5 (destroyed). Keys are moved to the default key ring.
 
 
   endpoint_type (False, str, None)

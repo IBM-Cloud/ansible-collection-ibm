@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,8 +35,36 @@ Parameters
     The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
 
 
-  source_volume (False, str, None)
-    Image volume id
+  tags (False, list, None)
+    Tags for the image
+
+
+  operating_system (False, str, None)
+    Image Operating system
+
+
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  href (False, str, None)
+    Image Href value
+
+
+  name (True, str, None)
+    (Required for new resource) Image name
+
+
+  deprecate (False, bool, None)
+    Set to deprecate. You can set an image to `deprecated` as a warning to transition away from soon-to-be obsolete images. Deprecated images can be used to provision resources.
+
+
+  obsolete (False, bool, None)
+    Set to obsolete. You can set an image to `obsolete` as a warning to transition away from soon-to-be deleted images. You can't use obsolete images to provision resources.
+
+
+  deprecation_at (False, str, None)
+    The deprecation date and time (UTC) for this image. If absent, no deprecation date and time has been set.
 
 
   resource_group (False, str, None)
@@ -47,24 +75,12 @@ Parameters
     A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
 
 
-  operating_system (False, str, None)
-    Image Operating system
+  obsolescence_at (False, str, None)
+    The obsolescence date and time (UTC) for this image. If absent, no obsolescence date and time has been set.
 
 
-  href (False, str, None)
-    Image Href value
-
-
-  access_tags (False, list, None)
-    List of access management tags
-
-
-  name (True, str, None)
-    (Required for new resource) Image name
-
-
-  tags (False, list, None)
-    Tags for the image
+  source_volume (False, str, None)
+    Image volume id
 
 
   id (False, str, None)

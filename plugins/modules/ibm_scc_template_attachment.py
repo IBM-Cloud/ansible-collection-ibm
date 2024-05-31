@@ -18,32 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_template_attachment' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    template_id:
-        description:
-            - (Required for new resource) The UUID that uniquely identifies the template.
-        required: True
-        type: str
-    account_id:
-        description:
-            - (Required for new resource) Your IBM Cloud account ID.
-        required: True
-        type: str
-    included_scope:
-        description:
-            - (Required for new resource) The extent at which the template can be attached across your accounts.
-        required: True
-        type: list
-        elements: dict
-    excluded_scopes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,17 +68,10 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('template_id', 'str'),
-    ('account_id', 'str'),
-    ('included_scope', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'template_id',
-    'account_id',
-    'included_scope',
-    'excluded_scopes',
 ]
 
 # Params for Data source
@@ -117,20 +88,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    template_id=dict(
-        required=False,
-        type='str'),
-    account_id=dict(
-        required=False,
-        type='str'),
-    included_scope=dict(
-        required=False,
-        elements='',
-        type='list'),
-    excluded_scopes=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -196,7 +153,7 @@ def run_module():
         resource_type='ibm_scc_template_attachment',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
