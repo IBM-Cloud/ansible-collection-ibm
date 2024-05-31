@@ -18,65 +18,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    crn_token:
-        description:
-            - The IBM Cloud Identity and Access Management (IAM) service CRN token for the service that creates the cluster.
-        required: False
-        type: str
-    kube_version:
-        description:
-            - The OpenShift Container Platform version
-        required: False
-        type: str
-    retry_patch_version:
-        description:
-            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
-        required: False
-        type: int
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
-    location:
-        description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
-        type: str
-    enable_config_admin:
-        description:
-            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
-        required: False
-        type: bool
-    default_worker_pool_labels:
-        description:
-            - Labels on the default worker pool
-        required: False
-        type: dict
-        elements: str
-    infrastructure_topology:
-        description:
-            - String value for single node cluster option. Available options: single-replica, highly-available (default: highly-available)
-        required: False
-        type: str
     pull_secret:
         description:
             - The RedHat pull secret to create the OpenShift cluster
         required: False
         type: str
-    operating_system:
+    pod_subnet:
         description:
-            - Operating system of the default worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
+            - User provided value for the pod subnet
         required: False
         type: str
-    patch_version:
+    calico_ip_autodetection:
         description:
-            - Kubernetes patch version
+            - Set IP autodetection to use correct interface for Calico
+        required: False
+        type: dict
+        elements: str
+    wait_for_worker_update:
+        description:
+            - Wait for worker node to update during kube version update.
+        required: False
+        type: bool
+        default: True
+    infrastructure_topology:
+        description:
+            - String value for single node cluster option. Available options: single-replica, highly-available (default: highly-available)
         required: False
         type: str
     zones:
@@ -85,27 +55,31 @@ options:
         required: False
         type: list
         elements: dict
-    pod_subnet:
-        description:
-            - User provided value for the pod subnet
-        required: False
-        type: str
     service_subnet:
         description:
             - User provided value for service subnet
         required: False
         type: str
-    host_labels:
+    crn_token:
         description:
-            - Labels that describe a Satellite host for default workerpool
+            - The IBM Cloud Identity and Access Management (IAM) service CRN token for the service that creates the cluster.
         required: False
-        type: list
-        elements: str
-    name:
+        type: str
+    location:
         description:
-            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+            - (Required for new resource) The name or ID of the Satellite location
         required: True
         type: str
+    operating_system:
+        description:
+            - Operating system of the default worker pool. Options are REDHAT_7_64, REDHAT_8_64, or RHCOS.
+        required: False
+        type: str
+    enable_config_admin:
+        description:
+            - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
+        required: False
+        type: bool
     worker_count:
         description:
             - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
@@ -117,12 +91,49 @@ options:
         required: False
         type: list
         elements: str
-    wait_for_worker_update:
+    kube_version:
         description:
-            - Wait for worker node to update during kube version update.
+            - The OpenShift Container Platform version
+        required: False
+        type: str
+    entitlement:
+        description:
+            - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+        required: False
+        type: str
+    host_labels:
+        description:
+            - Labels that describe a Satellite host for default workerpool
+        required: False
+        type: list
+        elements: str
+    default_worker_pool_labels:
+        description:
+            - Labels on the default worker pool
+        required: False
+        type: dict
+        elements: str
+    disable_public_service_endpoint:
+        description:
+            - Boolean value true if Public service endpoint to be disabled
         required: False
         type: bool
-        default: True
+        default: False
+    retry_patch_version:
+        description:
+            - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
+        required: False
+        type: int
+    name:
+        description:
+            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+        required: True
+        type: str
+    patch_version:
+        description:
+            - Kubernetes patch version
+        required: False
+        type: str
     resource_group_id:
         description:
             - ID of the resource group.
@@ -180,25 +191,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'crn_token',
-    'kube_version',
-    'retry_patch_version',
-    'disable_public_service_endpoint',
-    'location',
-    'enable_config_admin',
-    'default_worker_pool_labels',
-    'infrastructure_topology',
     'pull_secret',
-    'operating_system',
-    'patch_version',
-    'zones',
     'pod_subnet',
+    'calico_ip_autodetection',
+    'wait_for_worker_update',
+    'infrastructure_topology',
+    'zones',
     'service_subnet',
-    'host_labels',
-    'name',
+    'crn_token',
+    'location',
+    'operating_system',
+    'enable_config_admin',
     'worker_count',
     'tags',
-    'wait_for_worker_update',
+    'kube_version',
+    'entitlement',
+    'host_labels',
+    'default_worker_pool_labels',
+    'disable_public_service_endpoint',
+    'retry_patch_version',
+    'name',
+    'patch_version',
     'resource_group_id',
 ]
 
@@ -219,57 +232,41 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    crn_token=dict(
-        required=False,
-        type='str'),
-    kube_version=dict(
-        required=False,
-        type='str'),
-    retry_patch_version=dict(
-        required=False,
-        type='int'),
-    disable_public_service_endpoint=dict(
-        required=False,
-        type='bool'),
-    location=dict(
-        required=False,
-        type='str'),
-    enable_config_admin=dict(
-        required=False,
-        type='bool'),
-    default_worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    infrastructure_topology=dict(
-        required=False,
-        type='str'),
     pull_secret=dict(
         required=False,
         type='str'),
-    operating_system=dict(
+    pod_subnet=dict(
         required=False,
         type='str'),
-    patch_version=dict(
+    calico_ip_autodetection=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    wait_for_worker_update=dict(
+        required=False,
+        type='bool'),
+    infrastructure_topology=dict(
         required=False,
         type='str'),
     zones=dict(
         required=False,
         elements='',
         type='list'),
-    pod_subnet=dict(
-        required=False,
-        type='str'),
     service_subnet=dict(
         required=False,
         type='str'),
-    host_labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
+    crn_token=dict(
         required=False,
         type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    operating_system=dict(
+        required=False,
+        type='str'),
+    enable_config_admin=dict(
+        required=False,
+        type='bool'),
     worker_count=dict(
         required=False,
         type='int'),
@@ -277,9 +274,32 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    wait_for_worker_update=dict(
+    kube_version=dict(
+        required=False,
+        type='str'),
+    entitlement=dict(
+        required=False,
+        type='str'),
+    host_labels=dict(
+        required=False,
+        elements='',
+        type='list'),
+    default_worker_pool_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    disable_public_service_endpoint=dict(
         required=False,
         type='bool'),
+    retry_patch_version=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    patch_version=dict(
+        required=False,
+        type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
@@ -348,7 +368,7 @@ def run_module():
         resource_type='ibm_satellite_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -357,7 +377,7 @@ def run_module():
             resource_type='ibm_satellite_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

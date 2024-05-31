@@ -18,18 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx_service' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    destination_ip_address:
+        description:
+            - (Required for new resource) Destination IP Address
+        required: True
+        type: str
     destination_port:
         description:
             - (Required for new resource) Destination Port number
         required: True
         type: int
-    connection_limit:
+    weight:
         description:
-            - (Required for new resource) Number of connections limit
+            - (Required for new resource) Weight value
         required: True
         type: int
     tags:
@@ -48,14 +53,9 @@ options:
             - (Required for new resource) name
         required: True
         type: str
-    destination_ip_address:
+    connection_limit:
         description:
-            - (Required for new resource) Destination IP Address
-        required: True
-        type: str
-    weight:
-        description:
-            - (Required for new resource) Weight value
+            - (Required for new resource) Number of connections limit
         required: True
         type: int
     health_check:
@@ -115,24 +115,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('destination_ip_address', 'str'),
     ('destination_port', 'int'),
-    ('connection_limit', 'int'),
+    ('weight', 'int'),
     ('vip_id', 'str'),
     ('name', 'str'),
-    ('destination_ip_address', 'str'),
-    ('weight', 'int'),
+    ('connection_limit', 'int'),
     ('health_check', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'destination_ip_address',
     'destination_port',
-    'connection_limit',
+    'weight',
     'tags',
     'vip_id',
     'name',
-    'destination_ip_address',
-    'weight',
+    'connection_limit',
     'health_check',
     'usip',
 ]
@@ -151,10 +151,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    destination_ip_address=dict(
+        required=False,
+        type='str'),
     destination_port=dict(
         required=False,
         type='int'),
-    connection_limit=dict(
+    weight=dict(
         required=False,
         type='int'),
     tags=dict(
@@ -167,10 +170,7 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    destination_ip_address=dict(
-        required=False,
-        type='str'),
-    weight=dict(
+    connection_limit=dict(
         required=False,
         type='int'),
     health_check=dict(
@@ -244,7 +244,7 @@ def run_module():
         resource_type='ibm_lb_vpx_service',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

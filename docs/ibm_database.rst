@@ -23,16 +23,28 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
+
+
+  configuration (False, str, None)
+    The configuration in JSON format
+
+
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
+
+
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
   users (False, list, None)
@@ -43,28 +55,8 @@ Parameters
     None
 
 
-  service_endpoints (False, str, public)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-
-
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
-
-
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  configuration (False, str, None)
-    The configuration in JSON format
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   service (True, str, None)
@@ -75,16 +67,12 @@ Parameters
     The admin user password for the instance
 
 
-  tags (False, list, None)
-    None
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
 
 
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
-
-
-  plan_validation (False, bool, True)
-    For elasticsearch and postgres perform database parameter validation during the plan phase. Otherwise, database parameter validation happens in apply phase.
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
 
 
   version (False, str, None)
@@ -95,31 +83,43 @@ Parameters
     The CRN of leader database
 
 
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
+
+
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  logical_replication_slot (False, list, None)
+    None
+
+
+  tags (False, list, None)
+    None
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  offline_restore (False, bool, None)
+    Set offline restore mode for MongoDB Enterprise Edition
 
 
   resource_group_id (False, str, None)
     The id of the resource group in which the Database instance is present
 
 
-  allowlist (False, list, None)
-    None
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
-
-
   backup_id (False, str, None)
     The CRN of backup source database
 
 
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  logical_replication_slot (False, list, None)
+  allowlist (False, list, None)
     None
 
 

@@ -23,45 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  security_groups (False, list, None)
-    Load Balancer securitygroups list
-
-
-  tags (False, list, None)
-    None
-
-
-  logging (False, bool, False)
-    Logging of Load Balancer
-
-
-  name (True, str, None)
-    (Required for new resource) Load Balancer name
-
-
-  access_tags (False, list, None)
-    List of access management tags
-
-
-  resource_group (False, str, None)
-    None
-
-
-  profile (False, str, None)
-    The profile to use for this load balancer.
-
-
-  route_mode (False, bool, False)
-    Indicates whether route mode is enabled for this load balancer
-
 
   type (False, str, public)
     Load Balancer type
@@ -69,6 +37,42 @@ Parameters
 
   subnets (True, list, None)
     (Required for new resource) Load Balancer subnets list
+
+
+  security_groups (False, list, None)
+    Load Balancer securitygroups list
+
+
+  profile (False, str, None)
+    The profile to use for this load balancer.
+
+
+  tags (False, list, None)
+    None
+
+
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  route_mode (False, bool, False)
+    Indicates whether route mode is enabled for this load balancer
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer name
+
+
+  dns (False, list, None)
+    The DNS configuration for this load balancer.
+
+
+  resource_group (False, str, None)
+    None
+
+
+  logging (False, bool, False)
+    Logging of Load Balancer
 
 
   id (False, str, None)

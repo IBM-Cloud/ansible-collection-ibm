@@ -18,29 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cd_toolchain_tool_gitlab' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    name:
+    initialization:
         description:
-            - Name of the tool.
-        required: False
-        type: str
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
     toolchain_id:
         description:
             - (Required for new resource) ID of the toolchain to bind the tool to.
         required: True
         type: str
+    name:
+        description:
+            - Name of the tool.
+        required: False
+        type: str
     parameters:
         description:
             - (Required for new resource) Unique key-value pairs representing parameters to be used to create the tool. A list of parameters for each tool integration can be found in the <a href="https://cloud.ibm.com/docs/ContinuousDelivery?topic=ContinuousDelivery-integrations">Configuring tool integrations page</a>.
-        required: True
-        type: list
-        elements: dict
-    initialization:
-        description:
-            - (Required for new resource) 
         required: True
         type: list
         elements: dict
@@ -90,17 +90,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('initialization', 'list'),
     ('toolchain_id', 'str'),
     ('parameters', 'list'),
-    ('initialization', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'toolchain_id',
-    'parameters',
     'initialization',
+    'toolchain_id',
+    'name',
+    'parameters',
 ]
 
 # Params for Data source
@@ -121,17 +121,17 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    toolchain_id=dict(
-        required=False,
-        type='str'),
-    parameters=dict(
+    initialization=dict(
         required=False,
         elements='',
         type='list'),
-    initialization=dict(
+    toolchain_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    parameters=dict(
         required=False,
         elements='',
         type='list'),
@@ -200,7 +200,7 @@ def run_module():
         resource_type='ibm_cd_toolchain_tool_gitlab',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -209,7 +209,7 @@ def run_module():
             resource_type='ibm_cd_toolchain_tool_gitlab',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

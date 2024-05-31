@@ -18,19 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_onboarding' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
     pi_description:
         description:
             - Description of the volume onboarding operation
         required: False
+        type: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
         type: str
     pi_onboarding_volumes:
         description:
@@ -86,20 +86,20 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
     'pi_description',
+    'pi_cloud_instance_id',
     'pi_onboarding_volumes',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_onboarding_id', 'str'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_cloud_instance_id',
     'pi_volume_onboarding_id',
+    'pi_cloud_instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -109,10 +109,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
+    pi_description=dict(
         required=False,
         type='str'),
-    pi_description=dict(
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_onboarding_volumes=dict(
@@ -177,7 +177,7 @@ def run_module():
         resource_type='ibm_pi_volume_onboarding',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -186,7 +186,7 @@ def run_module():
             resource_type='ibm_pi_volume_onboarding',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

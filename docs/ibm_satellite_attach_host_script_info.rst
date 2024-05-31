@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  location (True, str, None)
+    A unique name for the new Satellite location
+
+
+  coreos_host (False, bool, None)
+    If true, returns a CoreOS ignition file for the host. Otherwise, returns a RHEL attach script
+
 
   host_provider (False, str, None)
     None
@@ -41,16 +49,12 @@ Parameters
     The custom script that has to be appended to generated host script file
 
 
-  location (True, str, None)
-    A unique name for the new Satellite location
-
-
-  coreos_host (False, bool, None)
-    If true, returns a CoreOS ignition file for the host. Otherwise, returns a RHEL attach script
-
-
   labels (False, list, None)
     List of labels for the attach host
+
+
+  host_link_agent_endpoint (False, str, None)
+    The satellite link agent endpoint, required for reduced firewall attach script
 
 
   iaas_classic_username (False, any, None)

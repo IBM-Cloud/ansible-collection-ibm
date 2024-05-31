@@ -15,15 +15,12 @@ Create, update or destroy an IBM Cloud 'ibm_is_security_group_network_interface_
 This module does not support idempotency
 
 
-ForMoreInfoRefer
-----------------
-refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_security_group_network_interface_attachment
 
 Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
+- IBM-Cloud terraform-provider-ibm v1.14.0
 - Terraform v0.12.20
 
 
@@ -31,12 +28,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  security_group (True, str, None)
-    (Required for new resource) security group network interface attachment group ID
-
-
   network_interface (True, str, None)
     (Required for new resource) security group network interface attachment NIC ID
+
+
+  security_group (True, str, None)
+    (Required for new resource) security group network interface attachment group ID
 
 
   id (False, str, None)

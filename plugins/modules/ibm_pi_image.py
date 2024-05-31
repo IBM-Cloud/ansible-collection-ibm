@@ -18,28 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    pi_image_name:
+    pi_affinity_volume:
         description:
-            - (Required for new resource) Image name
-        required: True
-        type: str
-    pi_image_id:
-        description:
-            - Instance image id
-        required: False
-        type: str
-    pi_image_bucket_name:
-        description:
-            - Cloud Object Storage bucket name; bucket-name[/optional/folder]
-        required: False
-        type: str
-    pi_image_bucket_file_name:
-        description:
-            - Cloud Object Storage image filename
+            - Volume (ID or Name) to base storage affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
         required: False
         type: str
     pi_anti_affinity_instances:
@@ -53,30 +38,9 @@ options:
             - (Required for new resource) PI cloud instance ID
         required: True
         type: str
-    pi_image_bucket_access:
+    pi_image_access_key:
         description:
-            - Indicates if the bucket has public or private access
-        required: False
-        type: str
-        default: public
-    pi_image_bucket_region:
-        description:
-            - Cloud Object Storage region
-        required: False
-        type: str
-    pi_image_storage_pool:
-        description:
-            - Storage pool where the image will be loaded, if provided then pi_image_storage_type and pi_affinity_policy will be ignored
-        required: False
-        type: str
-    pi_affinity_volume:
-        description:
-            - Volume (ID or Name) to base storage affinity policy against; required if requesting affinity and pi_affinity_instance is not provided
-        required: False
-        type: str
-    pi_affinity_instance:
-        description:
-            - PVM Instance (ID or Name) to base storage affinity policy against; required if requesting storage affinity and pi_affinity_volume is not provided
+            - Cloud Object Storage access key; required for buckets with private access
         required: False
         type: str
     pi_image_secret_key:
@@ -84,19 +48,20 @@ options:
             - Cloud Object Storage secret key; required for buckets with private access
         required: False
         type: str
-    pi_image_storage_type:
+    pi_image_bucket_file_name:
         description:
-            - Type of storage
+            - Cloud Object Storage image filename
         required: False
         type: str
-    pi_affinity_policy:
+    pi_image_bucket_access:
         description:
-            - Affinity policy for image; ignored if pi_image_storage_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
+            - Indicates if the bucket has public or private access
         required: False
         type: str
-    pi_image_access_key:
+        default: public
+    pi_image_storage_pool:
         description:
-            - Cloud Object Storage access key; required for buckets with private access
+            - Storage pool where the image will be loaded, if provided then pi_affinity_policy will be ignored
         required: False
         type: str
     pi_anti_affinity_volumes:
@@ -105,6 +70,41 @@ options:
         required: False
         type: list
         elements: str
+    pi_image_bucket_name:
+        description:
+            - Cloud Object Storage bucket name; bucket-name[/optional/folder]
+        required: False
+        type: str
+    pi_image_id:
+        description:
+            - Instance image id
+        required: False
+        type: str
+    pi_image_bucket_region:
+        description:
+            - Cloud Object Storage region
+        required: False
+        type: str
+    pi_image_storage_type:
+        description:
+            - Type of storage; If not specified, default is tier3
+        required: False
+        type: str
+    pi_affinity_policy:
+        description:
+            - Affinity policy for image; ignored if pi_image_storage_pool provided; for policy affinity requires one of pi_affinity_instance or pi_affinity_volume to be specified; for policy anti-affinity requires one of pi_anti_affinity_instances or pi_anti_affinity_volumes to be specified
+        required: False
+        type: str
+    pi_affinity_instance:
+        description:
+            - PVM Instance (ID or Name) to base storage affinity policy against; required if requesting storage affinity and pi_affinity_volume is not provided
+        required: False
+        type: str
+    pi_image_name:
+        description:
+            - (Required for new resource) Image name
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -147,67 +147,58 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_image_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_image_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_image_name',
-    'pi_image_id',
-    'pi_image_bucket_name',
-    'pi_image_bucket_file_name',
+    'pi_affinity_volume',
     'pi_anti_affinity_instances',
     'pi_cloud_instance_id',
-    'pi_image_bucket_access',
-    'pi_image_bucket_region',
-    'pi_image_storage_pool',
-    'pi_affinity_volume',
-    'pi_affinity_instance',
+    'pi_image_access_key',
     'pi_image_secret_key',
+    'pi_image_bucket_file_name',
+    'pi_image_bucket_access',
+    'pi_image_storage_pool',
+    'pi_anti_affinity_volumes',
+    'pi_image_bucket_name',
+    'pi_image_id',
+    'pi_image_bucket_region',
     'pi_image_storage_type',
     'pi_affinity_policy',
-    'pi_image_access_key',
-    'pi_anti_affinity_volumes',
+    'pi_affinity_instance',
+    'pi_image_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_image_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_image_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_image_name',
     'pi_cloud_instance_id',
+    'pi_image_name',
 ]
 
 TL_CONFLICTS_MAP = {
-    'pi_image_id': ['pi_image_bucket_name'],
-    'pi_image_bucket_name': ['pi_image_id'],
-    'pi_image_bucket_file_name': ['pi_image_id'],
-    'pi_anti_affinity_instances': ['pi_anti_affinity_volumes'],
-    'pi_image_bucket_access': ['pi_image_id'],
-    'pi_image_bucket_region': ['pi_image_id'],
     'pi_affinity_volume': ['pi_affinity_instance'],
-    'pi_affinity_instance': ['pi_affinity_volume'],
+    'pi_anti_affinity_instances': ['pi_anti_affinity_volumes'],
+    'pi_image_bucket_file_name': ['pi_image_id'],
+    'pi_image_bucket_access': ['pi_image_id'],
     'pi_anti_affinity_volumes': ['pi_anti_affinity_instances'],
+    'pi_image_bucket_name': ['pi_image_id'],
+    'pi_image_id': ['pi_image_bucket_name'],
+    'pi_image_bucket_region': ['pi_image_id'],
+    'pi_affinity_instance': ['pi_affinity_volume'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_image_name=dict(
-        required=False,
-        type='str'),
-    pi_image_id=dict(
-        required=False,
-        type='str'),
-    pi_image_bucket_name=dict(
-        required=False,
-        type='str'),
-    pi_image_bucket_file_name=dict(
+    pi_affinity_volume=dict(
         required=False,
         type='str'),
     pi_anti_affinity_instances=dict(
@@ -217,22 +208,32 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_image_bucket_access=dict(
+    pi_image_access_key=dict(
         required=False,
         type='str'),
-    pi_image_bucket_region=dict(
+    pi_image_secret_key=dict(
+        required=False,
+        type='str'),
+    pi_image_bucket_file_name=dict(
+        required=False,
+        type='str'),
+    pi_image_bucket_access=dict(
         required=False,
         type='str'),
     pi_image_storage_pool=dict(
         required=False,
         type='str'),
-    pi_affinity_volume=dict(
+    pi_anti_affinity_volumes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pi_image_bucket_name=dict(
         required=False,
         type='str'),
-    pi_affinity_instance=dict(
+    pi_image_id=dict(
         required=False,
         type='str'),
-    pi_image_secret_key=dict(
+    pi_image_bucket_region=dict(
         required=False,
         type='str'),
     pi_image_storage_type=dict(
@@ -241,13 +242,12 @@ module_args = dict(
     pi_affinity_policy=dict(
         required=False,
         type='str'),
-    pi_image_access_key=dict(
+    pi_affinity_instance=dict(
         required=False,
         type='str'),
-    pi_anti_affinity_volumes=dict(
+    pi_image_name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -306,7 +306,7 @@ def run_module():
         resource_type='ibm_pi_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -315,7 +315,7 @@ def run_module():
             resource_type='ibm_pi_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

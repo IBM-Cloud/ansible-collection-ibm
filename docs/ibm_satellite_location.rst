@@ -23,16 +23,36 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  location (True, str, None)
+    (Required for new resource) A unique name for the new Satellite location
+
+
+  logging_account_id (False, str, None)
+    The account ID for IBM Log Analysis with LogDNA log forwarding
+
+
+  zones (False, list, None)
+    The names of at least three high availability zones to use for the location
+
+
+  managed_from (True, str, None)
+    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+
+
+  tags (False, list, None)
+    List of tags associated with resource instance
+
+
+  description (False, str, None)
+    A description of the new Satellite location
 
 
   coreos_enabled (False, bool, None)
@@ -43,32 +63,20 @@ Parameters
     COSBucket - IBM Cloud Object Storage bucket configuration details
 
 
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
   cos_credentials (False, list, None)
     COSAuthorization - IBM Cloud Object Storage authorization keys
-
-
-  tags (False, list, None)
-    List of tags associated with resource instance
-
-
-  location (True, str, None)
-    (Required for new resource) A unique name for the new Satellite location
-
-
-  description (False, str, None)
-    A description of the new Satellite location
-
-
-  managed_from (True, str, None)
-    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
-
-
-  logging_account_id (False, str, None)
-    The account ID for IBM Log Analysis with LogDNA log forwarding
-
-
-  zones (False, list, None)
-    The names of at least three high availability zones to use for the location
 
 
   id (False, str, None)

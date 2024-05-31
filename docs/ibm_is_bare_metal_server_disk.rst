@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  disk (True, str, None)
-    (Required for new resource) Bare metal server disk identifier
-
 
   name (False, str, None)
     Bare metal server disk name
@@ -41,6 +37,10 @@ Parameters
 
   bare_metal_server (True, str, None)
     (Required for new resource) Bare metal server identifier
+
+
+  disk (True, str, None)
+    (Required for new resource) Bare metal server disk identifier
 
 
   id (False, str, None)

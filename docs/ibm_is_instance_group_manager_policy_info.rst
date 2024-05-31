@@ -21,17 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  instance_group_manager (True, str, None)
-    Instance group manager ID
-
 
   name (True, str, None)
     The name of the instance group manager policy
@@ -39,6 +35,10 @@ Parameters
 
   instance_group (True, str, None)
     instance group ID
+
+
+  instance_group_manager (True, str, None)
+    Instance group manager ID
 
 
   generation (False, int, 2)

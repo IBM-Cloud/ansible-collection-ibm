@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_container_bind_service' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    service_instance_name:
-        description:
-            - serivice instance name
-        required: False
-        type: str
-    namespace_id:
-        description:
-            - namespace ID
-        required: True
-        type: str
     cluster_name_id:
         description:
             - Cluster name or ID
@@ -40,6 +30,16 @@ options:
         description:
             - Service instance ID
         required: False
+        type: str
+    service_instance_name:
+        description:
+            - serivice instance name
+        required: False
+        type: str
+    namespace_id:
+        description:
+            - namespace ID
+        required: True
         type: str
     ibmcloud_api_key:
         description:
@@ -54,39 +54,39 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('namespace_id', 'str'),
     ('cluster_name_id', 'str'),
+    ('namespace_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'service_instance_name',
-    'namespace_id',
     'cluster_name_id',
     'service_instance_id',
+    'service_instance_name',
+    'namespace_id',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'service_instance_name': ['service_instance_id'],
     'service_instance_id': ['service_instance_name'],
+    'service_instance_name': ['service_instance_id'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    service_instance_name=dict(
-        required=False,
-        type='str'),
-    namespace_id=dict(
-        required=True,
-        type='str'),
     cluster_name_id=dict(
         required=True,
         type='str'),
     service_instance_id=dict(
         required=False,
+        type='str'),
+    service_instance_name=dict(
+        required=False,
+        type='str'),
+    namespace_id=dict(
+        required=True,
         type='str'),
     ibmcloud_api_key=dict(
         type='str',
@@ -108,7 +108,7 @@ def run_module():
         resource_type='ibm_container_bind_service',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

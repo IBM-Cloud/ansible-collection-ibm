@@ -21,24 +21,32 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    The ID of the Secrets Manager instance.
+  name (False, str, None)
+    The human-readable name of your secret.
+
+
+  secret_group_name (False, str, None)
+    The human-readable name of your secret group.
+
+
+  secret_id (False, str, None)
+    The ID of the secret.
 
 
   endpoint_type (False, str, None)
     public or private.
 
 
-  secret_id (True, str, None)
-    The ID of the secret.
+  instance_id (True, str, None)
+    The ID of the Secrets Manager instance.
 
 
   region (False, any, us-south)

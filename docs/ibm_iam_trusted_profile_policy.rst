@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  transaction_id (False, str, None)
-    Set transactionID for debug
-
-
-  profile_id (False, str, None)
-    UUID of Trusted Profile
-
 
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
@@ -47,12 +39,32 @@ Parameters
     Set resource attributes.
 
 
+  tags (False, list, None)
+    None
+
+
   account_management (False, bool, False)
     Give access to all account management services
 
 
+  resource_tags (False, list, None)
+    Set access management tags.
+
+
   description (False, str, None)
     Description of the Policy
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
+
+
+  rule_conditions (False, list, None)
+    Rule conditions enforced by the policy
+
+
+  profile_id (False, str, None)
+    UUID of Trusted Profile
 
 
   iam_id (False, str, None)
@@ -63,12 +75,12 @@ Parameters
     None
 
 
-  tags (False, list, None)
-    None
+  rule_operator (False, str, None)
+    Operator that multiple rule conditions are evaluated over
 
 
-  resource_tags (False, list, None)
-    Set access management tags.
+  pattern (False, str, None)
+    Pattern rule follows for time-based condition
 
 
   id (False, str, None)

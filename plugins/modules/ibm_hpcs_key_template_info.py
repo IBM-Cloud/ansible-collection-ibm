@@ -17,18 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_key_template' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     template_id:
         description:
             - UUID of the template.
-        required: True
-        type: str
-    instance_id:
-        description:
-            - The ID of the UKO instance this resource exists in.
         required: True
         type: str
     region:
@@ -39,6 +34,11 @@ options:
     uko_vault:
         description:
             - The UUID of the Vault in which the update is to take place.
+        required: True
+        type: str
+    instance_id:
+        description:
+            - The ID of the UKO instance this resource exists in.
         required: True
         type: str
     iaas_classic_username:
@@ -75,17 +75,17 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('template_id', 'str'),
-    ('instance_id', 'str'),
     ('region', 'str'),
     ('uko_vault', 'str'),
+    ('instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'template_id',
-    'instance_id',
     'region',
     'uko_vault',
+    'instance_id',
 ]
 
 
@@ -99,13 +99,13 @@ module_args = dict(
     template_id=dict(
         required=True,
         type='str'),
-    instance_id=dict(
-        required=True,
-        type='str'),
     region=dict(
         required=True,
         type='str'),
     uko_vault=dict(
+        required=True,
+        type='str'),
+    instance_id=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_hpcs_key_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

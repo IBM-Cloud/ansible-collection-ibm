@@ -23,32 +23,16 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  description (False, str, None)
-    An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
-
-
-  private_key (False, str, None)
-    (Optional) The PEM-encoded private key to associate with the certificate.
-
-
-  intermediate (False, str, None)
-    (Optional) The PEM-encoded intermediate certificate to associate with the root certificate.
-
-
-  version_custom_metadata (False, dict, None)
-    The secret version metadata that a user can customize.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) The ID of the Secrets Manager instance.
+  name (True, str, None)
+    (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
 
 
   secret_group_id (False, str, None)
@@ -59,24 +43,40 @@ Parameters
     (Required for new resource) The PEM-encoded contents of your certificate.
 
 
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+  endpoint_type (False, str, None)
+    public or private.
 
 
   custom_metadata (False, dict, None)
     The secret metadata that a user can customize.
 
 
-  name (True, str, None)
-    (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
+
+
+  intermediate (False, str, None)
+    (Optional) The PEM-encoded intermediate certificate to associate with the root certificate.
 
 
   labels (False, list, None)
     Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
 
 
-  endpoint_type (False, str, None)
-    public or private.
+  description (False, str, None)
+    An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
+
+
+  version_custom_metadata (False, dict, None)
+    The secret version metadata that a user can customize.
+
+
+  private_key (False, str, None)
+    (Optional) The PEM-encoded private key to associate with the certificate.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) The ID of the Secrets Manager instance.
 
 
   id (False, str, None)

@@ -23,95 +23,15 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  private_vlan_id (False, int, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  process_key_name (False, str, None)
-    None
-
-
-  gpu_secondary_key_name (False, str, None)
-    None
-
-
-  disk_key_names (False, list, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  gpu_key_name (False, str, None)
-    None
-
-
-  unbonded_network (False, bool, False)
-    None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    only private network configured if is true
-
-
-  redundant_power_supply (False, bool, None)
-    None
-
-
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
-
-
-  hostname (False, str, None)
-    Host name
-
-
-  file_storage_ids (False, list, None)
-    None
-
-
-  post_install_script_uri (False, str, None)
-    None
-
-
-  tags (False, list, None)
+  memory (False, int, None)
     None
 
 
@@ -119,19 +39,51 @@ Parameters
     None
 
 
+  hostname (False, str, None)
+    Host name
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  process_key_name (False, str, None)
+    None
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  redundant_power_supply (False, bool, None)
+    None
+
+
+  os_key_name (False, str, None)
+    None
+
+
   ssh_key_ids (False, list, None)
     SSH KEY IDS list
 
 
-  public_bandwidth (False, int, None)
+  tags (False, list, None)
     None
 
 
-  memory (False, int, None)
-    None
+  os_reference_code (False, str, None)
+    OS refernece code value
 
 
-  storage_groups (False, list, None)
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
+
+
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
+
+
+  datacenter (False, str, None)
     None
 
 
@@ -139,31 +91,31 @@ Parameters
     None
 
 
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
+  public_bandwidth (False, int, None)
+    None
 
 
-  domain (True, str, None)
-    (Required for new resource) Domain name
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
 
 
   user_metadata (False, str, None)
     User metadata info
 
 
-  os_reference_code (False, str, None)
-    OS refernece code value
+  hourly_billing (False, bool, True)
+    Enables hourly billing
 
 
-  redundant_network (False, bool, False)
+  restricted_network (False, bool, False)
     None
 
 
-  image_template_id (False, int, None)
-    OS image template ID
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
 
 
-  datacenter (False, str, None)
+  file_storage_ids (False, list, None)
     None
 
 
@@ -171,24 +123,72 @@ Parameters
     None
 
 
+  unbonded_network (False, bool, False)
+    None
+
+
   ipv6_enabled (False, bool, False)
     Boolean value true if IPV6 ia enabled or false
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
 
 
   notes (False, str, None)
     Optional notes info
 
 
-  network_speed (False, int, 100)
-    Network speed in MBPS
+  private_network_only (False, bool, False)
+    only private network configured if is true
 
 
   software_guard_extensions (False, bool, False)
     None
 
 
-  restricted_network (False, bool, False)
+  gpu_secondary_key_name (False, str, None)
     None
+
+
+  redundant_network (False, bool, False)
+    None
+
+
+  storage_groups (False, list, None)
+    None
+
+
+  network_speed (False, int, 100)
+    Network speed in MBPS
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  private_subnet (False, str, None)
+    None
+
+
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
+
+
+  image_template_id (False, int, None)
+    OS image template ID
 
 
   id (False, str, None)

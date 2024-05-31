@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     routing_table:
@@ -43,6 +43,11 @@ options:
             - The user-defined name for this route.
         required: False
         type: str
+    zone:
+        description:
+            - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
+        required: True
+        type: str
     vpc:
         description:
             - (Required for new resource) The VPC identifier.
@@ -53,11 +58,17 @@ options:
             - (Required for new resource) The destination of the route.
         required: True
         type: str
-    zone:
+    advertise:
         description:
-            - (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
-        required: True
-        type: str
+            - Indicates whether this route will be advertised to the ingress sources specified by the `advertise_routes_to` routing table property.
+        required: False
+        type: bool
+        default: False
+    priority:
+        description:
+            - The route's priority. Smaller values have higher priority.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -106,9 +117,9 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('routing_table', 'str'),
     ('next_hop', 'str'),
+    ('zone', 'str'),
     ('vpc', 'str'),
     ('destination', 'str'),
-    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
@@ -117,9 +128,11 @@ TL_ALL_PARAMETERS = [
     'next_hop',
     'action',
     'name',
+    'zone',
     'vpc',
     'destination',
-    'zone',
+    'advertise',
+    'priority',
 ]
 
 # Params for Data source
@@ -154,15 +167,21 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
     vpc=dict(
         required=False,
         type='str'),
     destination=dict(
         required=False,
         type='str'),
-    zone=dict(
+    advertise=dict(
         required=False,
-        type='str'),
+        type='bool'),
+    priority=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -240,7 +259,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +268,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table_route',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

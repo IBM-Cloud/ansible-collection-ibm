@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  instances (True, int, None)
-    (Required for new resource) no of the instances
-
-
-  flavor (True, str, None)
-    (Required for new resource) flavor of the reserved capacity
-
-
-  tags (False, list, None)
-    List of tags
-
 
   force_create (False, bool, None)
     Force the creation of reserved capacity with same name
@@ -57,6 +45,18 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) Name
+
+
+  instances (True, int, None)
+    (Required for new resource) no of the instances
+
+
+  flavor (True, str, None)
+    (Required for new resource) flavor of the reserved capacity
+
+
+  tags (False, list, None)
+    List of tags
 
 
   id (False, str, None)

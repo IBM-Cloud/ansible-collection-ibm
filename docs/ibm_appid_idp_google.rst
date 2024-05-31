@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  config (False, list, None)
+    Google IDP configuration
+
 
   tenant_id (True, str, None)
     (Required for new resource) The AppID instance GUID
@@ -37,10 +41,6 @@ Parameters
 
   is_active (True, bool, None)
     (Required for new resource) `true` if Google IDP configuration is active
-
-
-  config (False, list, None)
-    Google IDP configuration
 
 
   id (False, str, None)

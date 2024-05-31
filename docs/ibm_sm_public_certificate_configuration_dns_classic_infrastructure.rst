@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  endpoint_type (False, str, None)
-    public or private.
-
-
-  classic_infrastructure_password (True, str, None)
-    (Required for new resource) Your classic infrastructure API key.For information about viewing and accessing your classic infrastructure API key, see the [docs](https://cloud.ibm.com/docs/account?topic=account-classic_keys).
-
-
-  classic_infrastructure_username (True, str, None)
-    (Required for new resource) The username that is associated with your classic infrastructure account.In most cases, your classic infrastructure username is your `<account_id>_<email_address>`. For more information, see the [docs](https://cloud.ibm.com/docs/account?topic=account-classic_keys).
-
 
   instance_id (True, str, None)
     (Required for new resource) The ID of the Secrets Manager instance.
@@ -53,6 +41,18 @@ Parameters
 
   name (True, str, None)
     (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+
+
+  classic_infrastructure_username (True, str, None)
+    (Required for new resource) The username that is associated with your classic infrastructure account.In most cases, your classic infrastructure username is your `<account_id>_<email_address>`. For more information, see the [docs](https://cloud.ibm.com/docs/account?topic=account-classic_keys).
+
+
+  classic_infrastructure_password (True, str, None)
+    (Required for new resource) Your classic infrastructure API key.For information about viewing and accessing your classic infrastructure API key, see the [docs](https://cloud.ibm.com/docs/account?topic=account-classic_keys).
+
+
+  endpoint_type (False, str, None)
+    public or private.
 
 
   id (False, str, None)

@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  instance (True, str, None)
-    (Required for new resource) Instance identifier
-
 
   action (True, str, None)
     (Required for new resource) This restart/start/stops an instance.
@@ -41,6 +37,10 @@ Parameters
 
   force_action (False, bool, False)
     If set to true, the action will be forced immediately, and all queued actions deleted. Ignored for the start action.
+
+
+  instance (True, str, None)
+    (Required for new resource) Instance identifier
 
 
   id (False, str, None)

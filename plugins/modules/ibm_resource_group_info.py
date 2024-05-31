@@ -17,20 +17,20 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_resource_group' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    is_default:
-        description:
-            - Default Resource group
-        required: False
-        type: bool
     name:
         description:
             - Resource group name
         required: False
         type: str
+    is_default:
+        description:
+            - Default Resource group
+        required: False
+        type: bool
     iaas_classic_username:
         description:
             - (Required when generation = 1) The IBM Cloud Classic
@@ -68,8 +68,8 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'is_default',
     'name',
+    'is_default',
 ]
 
 
@@ -80,12 +80,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    is_default=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
+    is_default=dict(
+        required=False,
+        type='bool'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -120,7 +120,7 @@ def run_module():
         resource_type='ibm_resource_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

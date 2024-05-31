@@ -18,23 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) The GUID of the service instance associated with an account.
+        required: True
+        type: str
     pi_key_name:
         description:
-            - (Required for new resource) User defined name for the SSH key
+            - (Required for new resource) User defined name for the SSH key.
         required: True
         type: str
     pi_ssh_key:
         description:
-            - (Required for new resource) SSH RSA key
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
+            - (Required for new resource) SSH RSA key.
         required: True
         type: str
     id:
@@ -79,27 +79,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_key_name', 'str'),
     ('pi_ssh_key', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_cloud_instance_id',
     'pi_key_name',
     'pi_ssh_key',
-    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('pi_key_name', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_key_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'pi_key_name',
     'pi_cloud_instance_id',
+    'pi_key_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -109,13 +109,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_key_name=dict(
         required=False,
         type='str'),
     pi_ssh_key=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_pi_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -185,7 +185,7 @@ def run_module():
             resource_type='ibm_pi_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

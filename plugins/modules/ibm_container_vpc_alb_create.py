@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_alb_create' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     resource_group_id:
@@ -27,6 +27,11 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    enable:
+        description:
+            - Enable the ALB instance in the cluster
+        required: False
+        type: bool
     type:
         description:
             - (Required for new resource) The type of ALB that you want to create.
@@ -42,11 +47,6 @@ options:
             - (Required for new resource) The ID of the cluster that the ALB belongs to.
         required: True
         type: str
-    enable:
-        description:
-            - Enable the ALB instance in the cluster
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -81,10 +81,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'resource_group_id',
+    'enable',
     'type',
     'zone',
     'cluster',
-    'enable',
 ]
 
 # Params for Data source
@@ -104,6 +104,9 @@ module_args = dict(
     resource_group_id=dict(
         required=False,
         type='str'),
+    enable=dict(
+        required=False,
+        type='bool'),
     type=dict(
         required=False,
         type='str'),
@@ -113,9 +116,6 @@ module_args = dict(
     cluster=dict(
         required=False,
         type='str'),
-    enable=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -167,7 +167,7 @@ def run_module():
         resource_type='ibm_container_vpc_alb_create',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,10 +17,21 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_configurations' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    search:
+        description:
+            - Obtain a collection of secrets that contain the specified string in one or more of the fields: `id`, `name`, `description`,
+        `labels`, `secret_type`.
+        required: False
+        type: str
+    groups:
+        description:
+            - Filter secrets by groups. You can apply multiple filters by using a comma-separated list of secret group IDs. If you need to filter secrets that are in the default secret group, use the `default` keyword.
+        required: False
+        type: str
     instance_id:
         description:
             - The ID of the Secrets Manager instance.
@@ -39,17 +50,6 @@ options:
     sort:
         description:
             - Sort a collection of secrets by the specified field in ascending order. To sort in descending order use the `-` character. Available values: id | created_at | updated_at | expiration_date | secret_type | name
-        required: False
-        type: str
-    search:
-        description:
-            - Obtain a collection of secrets that contain the specified string in one or more of the fields: `id`, `name`, `description`,
-        `labels`, `secret_type`.
-        required: False
-        type: str
-    groups:
-        description:
-            - Filter secrets by groups. You can apply multiple filters by using a comma-separated list of secret group IDs. If you need to filter secrets that are in the default secret group, use the `default` keyword.
         required: False
         type: str
     iaas_classic_username:
@@ -90,12 +90,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'search',
+    'groups',
     'instance_id',
     'region',
     'endpoint_type',
     'sort',
-    'search',
-    'groups',
 ]
 
 
@@ -106,6 +106,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    search=dict(
+        required=False,
+        type='str'),
+    groups=dict(
+        required=False,
+        type='str'),
     instance_id=dict(
         required=True,
         type='str'),
@@ -116,12 +122,6 @@ module_args = dict(
         required=False,
         type='str'),
     sort=dict(
-        required=False,
-        type='str'),
-    search=dict(
-        required=False,
-        type='str'),
-    groups=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -158,7 +158,7 @@ def run_module():
         resource_type='ibm_sm_configurations',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

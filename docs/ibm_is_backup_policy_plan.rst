@@ -23,32 +23,32 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
+  cron_spec (True, str, None)
+    (Required for new resource) The cron specification for the backup schedule.
+
+
   name (False, str, None)
     The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
 
 
-  copy_user_tags (False, bool, True)
-    Indicates whether to copy the source's user tags to the created backups (snapshots).
-
-
-  cron_spec (True, str, None)
-    (Required for new resource) The cron specification for the backup schedule.
+  backup_policy_id (True, str, None)
+    (Required for new resource) The backup policy identifier.
 
 
   active (False, bool, None)
     Indicates whether the plan is active.
 
 
-  backup_policy_id (True, str, None)
-    (Required for new resource) The backup policy identifier.
+  clone_policy (False, list, None)
+    None
 
 
   attach_user_tags (False, list, None)
@@ -59,8 +59,12 @@ Parameters
     None
 
 
-  clone_policy (False, list, None)
-    None
+  copy_user_tags (False, bool, True)
+    Indicates whether to copy the source's user tags to the created backups (snapshots).
+
+
+  remote_region_policy (False, list, None)
+    Backup policy plan cross region rule.
 
 
   id (False, str, None)

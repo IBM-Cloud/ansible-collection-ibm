@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_resource_tag' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     resource_id:
@@ -43,6 +43,12 @@ options:
             - Type of the tag. Only allowed values are: user, or service or access (default value : user)
         required: False
         type: str
+    replace:
+        description:
+            - If true, it indicates that the attaching operation is a replacement operation
+        required: False
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,6 +104,7 @@ TL_ALL_PARAMETERS = [
     'tags',
     'resource_type',
     'tag_type',
+    'replace',
 ]
 
 # Params for Data source
@@ -130,6 +137,9 @@ module_args = dict(
     tag_type=dict(
         required=False,
         type='str'),
+    replace=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -195,7 +205,7 @@ def run_module():
         resource_type='ibm_resource_tag',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -204,7 +214,7 @@ def run_module():
             resource_type='ibm_resource_tag',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

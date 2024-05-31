@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  type (True, str, None)
-    (Required for new resource) Property type.
-
 
   value (False, str, None)
     Property value. Any string value is valid.
@@ -43,8 +39,16 @@ Parameters
     Options for `single_select` property type. Only needed when using `single_select` property type.
 
 
+  type (True, str, None)
+    (Required for new resource) Property type.
+
+
+  locked (False, bool, False)
+    When true, this property cannot be overridden by a trigger property or at runtime. Attempting to override it will result in run requests being rejected. The default is false.
+
+
   path (False, str, None)
-    A dot notation path for `integration` type properties only, to select a value from the tool integration. If left blank the full tool integration data will be used.
+    A dot notation path for `integration` type properties only, that selects a value from the tool integration. If left blank the full tool integration data will be used.
 
 
   pipeline_id (True, str, None)

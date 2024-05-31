@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     total_volume_bandwidth:
@@ -27,22 +27,74 @@ options:
             - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
         required: False
         type: int
+    image:
+        description:
+            - image name
+        required: False
+        type: str
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    primary_network_interface:
+        description:
+            - Primary Network interface info
+        required: False
+        type: list
+        elements: dict
+    boot_volume:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    default_trusted_profile_target:
+        description:
+            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+        required: False
+        type: str
     keys:
         description:
             - (Required for new resource) SSH key Ids for the instance template
         required: True
         type: list
         elements: str
-    user_data:
+    catalog_offering:
         description:
-            - User data given for the instance
+            - The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
+        required: False
+        type: list
+        elements: dict
+    primary_network_attachment:
+        description:
+            - The primary network attachment for this virtual server instance.
+        required: False
+        type: list
+        elements: dict
+    resource_group:
+        description:
+            - Instance template resource group
         required: False
         type: str
-    availability_policy_host_failure:
+    metadata_service:
         description:
-            - The availability policy to use for this virtual server instance
+            - The metadata service configuration
         required: False
-        type: str
+        type: list
+        elements: dict
+    volume_attachments:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    reservation_affinity:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     name:
         description:
             - Instance Template name
@@ -53,43 +105,37 @@ options:
             - (Required for new resource) Zone name
         required: True
         type: str
+    profile:
+        description:
+            - (Required for new resource) Profile info
+        required: True
+        type: str
     default_trusted_profile_auto_link:
         description:
             - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
         required: False
         type: bool
-    metadata_service:
+    placement_group:
         description:
-            - The metadata service configuration
+            - Unique Identifier of the Placement Group for restricting the placement of the instance
+        required: False
+        type: str
+    network_attachments:
+        description:
+            - The network attachments for this virtual server instance, including the primary network attachment.
         required: False
         type: list
         elements: dict
-    vpc:
-        description:
-            - (Required for new resource) VPC id
-        required: True
-        type: str
     network_interfaces:
         description:
             - None
         required: False
         type: list
         elements: dict
-    resource_group:
+    availability_policy_host_failure:
         description:
-            - Instance template resource group
+            - The availability policy to use for this virtual server instance
         required: False
-        type: str
-    boot_volume:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
         type: str
     dedicated_host:
         description:
@@ -101,37 +147,9 @@ options:
             - Unique Identifier of the Dedicated Host Group where the instance will be placed
         required: False
         type: str
-    placement_group:
+    user_data:
         description:
-            - Unique Identifier of the Placement Group for restricting the placement of the instance
-        required: False
-        type: str
-    volume_attachments:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    default_trusted_profile_target:
-        description:
-            - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-        required: False
-        type: str
-    catalog_offering:
-        description:
-            - The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
-        required: False
-        type: list
-        elements: dict
-    primary_network_interface:
-        description:
-            - (Required for new resource) Primary Network interface info
-        required: True
-        type: list
-        elements: dict
-    image:
-        description:
-            - image name
+            - User data given for the instance
         required: False
         type: str
     id:
@@ -180,36 +198,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('vpc', 'str'),
     ('keys', 'list'),
     ('zone', 'str'),
-    ('vpc', 'str'),
     ('profile', 'str'),
-    ('primary_network_interface', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'total_volume_bandwidth',
+    'image',
+    'vpc',
+    'primary_network_interface',
+    'boot_volume',
+    'default_trusted_profile_target',
     'keys',
-    'user_data',
-    'availability_policy_host_failure',
+    'catalog_offering',
+    'primary_network_attachment',
+    'resource_group',
+    'metadata_service',
+    'volume_attachments',
+    'reservation_affinity',
     'name',
     'zone',
-    'default_trusted_profile_auto_link',
-    'metadata_service',
-    'vpc',
-    'network_interfaces',
-    'resource_group',
-    'boot_volume',
     'profile',
+    'default_trusted_profile_auto_link',
+    'placement_group',
+    'network_attachments',
+    'network_interfaces',
+    'availability_policy_host_failure',
     'dedicated_host',
     'dedicated_host_group',
-    'placement_group',
-    'volume_attachments',
-    'default_trusted_profile_target',
-    'catalog_offering',
-    'primary_network_interface',
-    'image',
+    'user_data',
 ]
 
 # Params for Data source
@@ -222,10 +242,14 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'primary_network_interface': ['primary_network_attachment', 'network_attachments'],
+    'primary_network_attachment': ['primary_network_interface', 'network_interfaces'],
     'metadata_service': ['metadata_service_enabled'],
+    'placement_group': ['dedicated_host', 'dedicated_host_group'],
+    'network_attachments': ['primary_network_interface', 'network_interfaces'],
+    'network_interfaces': ['primary_network_attachment', 'network_attachments'],
     'dedicated_host': ['dedicated_host_group', 'placement_group'],
     'dedicated_host_group': ['dedicated_host', 'placement_group'],
-    'placement_group': ['dedicated_host', 'dedicated_host_group'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -235,44 +259,74 @@ module_args = dict(
     total_volume_bandwidth=dict(
         required=False,
         type='int'),
+    image=dict(
+        required=False,
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    boot_volume=dict(
+        required=False,
+        elements='',
+        type='list'),
+    default_trusted_profile_target=dict(
+        required=False,
+        type='str'),
     keys=dict(
         required=False,
         elements='',
         type='list'),
-    user_data=dict(
-        required=False,
-        type='str'),
-    availability_policy_host_failure=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    default_trusted_profile_auto_link=dict(
-        required=False,
-        type='bool'),
-    metadata_service=dict(
+    catalog_offering=dict(
         required=False,
         elements='',
         type='list'),
-    vpc=dict(
-        required=False,
-        type='str'),
-    network_interfaces=dict(
+    primary_network_attachment=dict(
         required=False,
         elements='',
         type='list'),
     resource_group=dict(
         required=False,
         type='str'),
-    boot_volume=dict(
+    metadata_service=dict(
         required=False,
         elements='',
         type='list'),
+    volume_attachments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    reservation_affinity=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
     profile=dict(
+        required=False,
+        type='str'),
+    default_trusted_profile_auto_link=dict(
+        required=False,
+        type='bool'),
+    placement_group=dict(
+        required=False,
+        type='str'),
+    network_attachments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    network_interfaces=dict(
+        required=False,
+        elements='',
+        type='list'),
+    availability_policy_host_failure=dict(
         required=False,
         type='str'),
     dedicated_host=dict(
@@ -281,25 +335,7 @@ module_args = dict(
     dedicated_host_group=dict(
         required=False,
         type='str'),
-    placement_group=dict(
-        required=False,
-        type='str'),
-    volume_attachments=dict(
-        required=False,
-        elements='',
-        type='list'),
-    default_trusted_profile_target=dict(
-        required=False,
-        type='str'),
-    catalog_offering=dict(
-        required=False,
-        elements='',
-        type='list'),
-    primary_network_interface=dict(
-        required=False,
-        elements='',
-        type='list'),
-    image=dict(
+    user_data=dict(
         required=False,
         type='str'),
     id=dict(
@@ -379,7 +415,7 @@ def run_module():
         resource_type='ibm_is_instance_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -388,7 +424,7 @@ def run_module():
             resource_type='ibm_is_instance_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

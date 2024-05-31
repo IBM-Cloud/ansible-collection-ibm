@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     high_availability:
@@ -33,15 +33,21 @@ options:
             - (Required for new resource) Instance ID
         required: True
         type: str
-    name:
-        description:
-            - (Required for new resource) Name of the custom resolver
-        required: True
-        type: str
     description:
         description:
             - Descriptive text of the custom resolver.
         required: False
+        type: str
+    locations:
+        description:
+            - Locations on which the custom resolver will be running
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) Name of the custom resolver
+        required: True
         type: str
     enabled:
         description:
@@ -49,12 +55,6 @@ options:
         required: False
         type: bool
         default: True
-    locations:
-        description:
-            - Locations on which the custom resolver will be running
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -109,10 +109,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'high_availability',
     'instance_id',
-    'name',
     'description',
-    'enabled',
     'locations',
+    'name',
+    'enabled',
 ]
 
 # Params for Data source
@@ -135,19 +135,19 @@ module_args = dict(
     instance_id=dict(
         required=False,
         type='str'),
-    name=dict(
+    description=dict(
         required=False,
         type='str'),
-    description=dict(
+    locations=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     enabled=dict(
         required=False,
         type='bool'),
-    locations=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -213,7 +213,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,16 +35,52 @@ Parameters
     The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
 
 
+  image (False, str, None)
+    image name
+
+
+  vpc (True, str, None)
+    (Required for new resource) VPC id
+
+
+  primary_network_interface (False, list, None)
+    Primary Network interface info
+
+
+  boot_volume (False, list, None)
+    None
+
+
+  default_trusted_profile_target (False, str, None)
+    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
+
+
   keys (True, list, None)
     (Required for new resource) SSH key Ids for the instance template
 
 
-  user_data (False, str, None)
-    User data given for the instance
+  catalog_offering (False, list, None)
+    The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
 
 
-  availability_policy_host_failure (False, str, None)
-    The availability policy to use for this virtual server instance
+  primary_network_attachment (False, list, None)
+    The primary network attachment for this virtual server instance.
+
+
+  resource_group (False, str, None)
+    Instance template resource group
+
+
+  metadata_service (False, list, None)
+    The metadata service configuration
+
+
+  volume_attachments (False, list, None)
+    None
+
+
+  reservation_affinity (False, list, None)
+    None
 
 
   name (False, str, None)
@@ -55,32 +91,28 @@ Parameters
     (Required for new resource) Zone name
 
 
+  profile (True, str, None)
+    (Required for new resource) Profile info
+
+
   default_trusted_profile_auto_link (False, bool, None)
     If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
 
 
-  metadata_service (False, list, None)
-    The metadata service configuration
+  placement_group (False, str, None)
+    Unique Identifier of the Placement Group for restricting the placement of the instance
 
 
-  vpc (True, str, None)
-    (Required for new resource) VPC id
+  network_attachments (False, list, None)
+    The network attachments for this virtual server instance, including the primary network attachment.
 
 
   network_interfaces (False, list, None)
     None
 
 
-  resource_group (False, str, None)
-    Instance template resource group
-
-
-  boot_volume (False, list, None)
-    None
-
-
-  profile (True, str, None)
-    (Required for new resource) Profile info
+  availability_policy_host_failure (False, str, None)
+    The availability policy to use for this virtual server instance
 
 
   dedicated_host (False, str, None)
@@ -91,28 +123,8 @@ Parameters
     Unique Identifier of the Dedicated Host Group where the instance will be placed
 
 
-  placement_group (False, str, None)
-    Unique Identifier of the Placement Group for restricting the placement of the instance
-
-
-  volume_attachments (False, list, None)
-    None
-
-
-  default_trusted_profile_target (False, str, None)
-    The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
-
-
-  catalog_offering (False, list, None)
-    The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
-
-
-  primary_network_interface (True, list, None)
-    (Required for new resource) Primary Network interface info
-
-
-  image (False, str, None)
-    image name
+  user_data (False, str, None)
+    User data given for the instance
 
 
   id (False, str, None)

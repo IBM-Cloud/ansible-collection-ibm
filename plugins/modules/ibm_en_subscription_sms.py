@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_sms' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     instance_guid:
@@ -37,12 +37,6 @@ options:
             - (Required for new resource) Destination ID.
         required: True
         type: str
-    attributes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     name:
         description:
             - (Required for new resource) Subscription name.
@@ -53,6 +47,12 @@ options:
             - (Required for new resource) Topic ID.
         required: True
         type: str
+    attributes:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -110,9 +110,9 @@ TL_ALL_PARAMETERS = [
     'instance_guid',
     'description',
     'destination_id',
-    'attributes',
     'name',
     'topic_id',
+    'attributes',
 ]
 
 # Params for Data source
@@ -142,16 +142,16 @@ module_args = dict(
     destination_id=dict(
         required=False,
         type='str'),
-    attributes=dict(
-        required=False,
-        elements='',
-        type='list'),
     name=dict(
         required=False,
         type='str'),
     topic_id=dict(
         required=False,
         type='str'),
+    attributes=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +217,7 @@ def run_module():
         resource_type='ibm_en_subscription_sms',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +226,7 @@ def run_module():
             resource_type='ibm_en_subscription_sms',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

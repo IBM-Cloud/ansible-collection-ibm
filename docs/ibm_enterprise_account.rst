@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,6 +35,10 @@ Parameters
     The source account id of account to be imported
 
 
+  owner_iam_id (False, str, None)
+    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
+
+
   name (False, str, None)
     The name of the account. This field must have 3 - 60 characters.
 
@@ -43,16 +47,20 @@ Parameters
     The enterprise account ID.
 
 
-  enterprise_id (False, str, None)
-    The enterprise ID that the account is a part of.
-
-
   parent (True, str, None)
     (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
 
 
-  owner_iam_id (False, str, None)
-    The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
+  enterprise_id (False, str, None)
+    The enterprise ID that the account is a part of.
+
+
+  traits (False, list, None)
+    The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the enterprise. This is an optional field.
+
+
+  options (False, list, None)
+    By default create_iam_service_id_with_apikey_and_owner_policies is turned off for a newly created child account. You can enable this property by passing 'true' in this boolean field. IAM service id has account owner IAM policies and the API key associated with it can generate a token and setup resources in the account.
 
 
   id (False, str, None)

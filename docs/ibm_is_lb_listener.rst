@@ -23,60 +23,56 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  protocol (True, str, None)
-    (Required for new resource) Loadbalancer protocol
-
-
   certificate_instance (False, str, None)
     certificate instance for the Loadbalancer
-
-
-  lb (True, str, None)
-    (Required for new resource) Loadbalancer listener ID
-
-
-  connection_limit (False, int, None)
-    Connection limit for Loadbalancer
-
-
-  port (False, int, None)
-    Loadbalancer listener port
-
-
-  https_redirect_uri (False, str, None)
-    Target URI where traffic will be redirected
-
-
-  https_redirect_listener (False, str, None)
-    ID of the listener that will be set as http redirect target
-
-
-  port_min (False, int, None)
-    The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
 
 
   accept_proxy_protocol (False, bool, None)
     Listener will forward proxy protocol
 
 
-  https_redirect_status_code (False, int, None)
-    The HTTP status code to be returned in the redirect response
+  port (False, int, None)
+    Loadbalancer listener port
+
+
+  protocol (True, str, None)
+    (Required for new resource) Loadbalancer protocol
 
 
   default_pool (False, str, None)
     Loadbalancer default pool info
 
 
+  idle_connection_timeout (False, int, None)
+    idle connection timeout of listener
+
+
+  port_min (False, int, None)
+    The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
+
+
   port_max (False, int, None)
     The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
+
+
+  https_redirect (False, list, None)
+    If present, the target listener that requests are redirected to.
+
+
+  connection_limit (False, int, None)
+    Connection limit for Loadbalancer
+
+
+  lb (True, str, None)
+    (Required for new resource) Loadbalancer listener ID
 
 
   id (False, str, None)

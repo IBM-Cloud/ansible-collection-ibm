@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  metadata (True, list, None)
+    (Required for new resource)
+
 
   instance_guid (True, str, None)
     (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
@@ -41,10 +45,6 @@ Parameters
 
   type (True, str, None)
     (Required for new resource) The type of key integration kms/hs-crypto.
-
-
-  metadata (True, list, None)
-    (Required for new resource)
 
 
   id (False, str, None)

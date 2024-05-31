@@ -17,18 +17,28 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_username_password_secret' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    instance_id:
+    secret_group_name:
         description:
-            - The ID of the Secrets Manager instance.
-        required: True
+            - The human-readable name of your secret group.
+        required: False
+        type: str
+    endpoint_type:
+        description:
+            - public or private.
+        required: False
         type: str
     secret_id:
         description:
             - The ID of the secret.
+        required: False
+        type: str
+    instance_id:
+        description:
+            - The ID of the Secrets Manager instance.
         required: True
         type: str
     region:
@@ -36,9 +46,9 @@ options:
             - The region of the Secrets Manager instance.
         required: False
         type: str
-    endpoint_type:
+    name:
         description:
-            - public or private.
+            - The human-readable name of your secret.
         required: False
         type: str
     iaas_classic_username:
@@ -75,15 +85,16 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('secret_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'secret_id',
-    'region',
+    'secret_group_name',
     'endpoint_type',
+    'secret_id',
+    'instance_id',
+    'region',
+    'name',
 ]
 
 
@@ -94,16 +105,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
-        required=True,
+    secret_group_name=dict(
+        required=False,
+        type='str'),
+    endpoint_type=dict(
+        required=False,
         type='str'),
     secret_id=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
         required=True,
         type='str'),
     region=dict(
         required=False,
         type='str'),
-    endpoint_type=dict(
+    name=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -140,7 +157,7 @@ def run_module():
         resource_type='ibm_sm_username_password_secret',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

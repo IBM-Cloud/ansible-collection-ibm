@@ -18,29 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dl_provider_gateway' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    bgp_asn:
+    port:
         description:
-            - (Required for new resource) BGP ASN
+            - (Required for new resource) Gateway port
         required: True
-        type: int
-    bgp_cer_cidr:
+        type: str
+    vlan:
         description:
-            - BGP customer edge router CIDR
+            - VLAN allocated for this gateway
         required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) The unique user-defined name for this gateway
-        required: True
-        type: str
-    speed_mbps:
-        description:
-            - (Required for new resource) Gateway speed in megabits per second
-        required: True
         type: int
     tags:
         description:
@@ -48,26 +38,36 @@ options:
         required: False
         type: list
         elements: str
-    port:
+    bgp_cer_cidr:
         description:
-            - (Required for new resource) Gateway port
-        required: True
-        type: str
-    customer_account_id:
-        description:
-            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
-        required: True
+            - BGP customer edge router CIDR
+        required: False
         type: str
     bgp_ibm_cidr:
         description:
             - BGP IBM CIDR
         required: False
         type: str
-    vlan:
+    speed_mbps:
         description:
-            - VLAN allocated for this gateway
-        required: False
+            - (Required for new resource) Gateway speed in megabits per second
+        required: True
         type: int
+    customer_account_id:
+        description:
+            - (Required for new resource) Customer IBM Cloud account ID for the new gateway. A gateway object containing the pending create request will become available in the specified account.
+        required: True
+        type: str
+    bgp_asn:
+        description:
+            - (Required for new resource) BGP ASN
+        required: True
+        type: int
+    name:
+        description:
+            - (Required for new resource) The unique user-defined name for this gateway
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -114,24 +114,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('port', 'str'),
+    ('speed_mbps', 'int'),
+    ('customer_account_id', 'str'),
     ('bgp_asn', 'int'),
     ('name', 'str'),
-    ('speed_mbps', 'int'),
-    ('port', 'str'),
-    ('customer_account_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'bgp_asn',
-    'bgp_cer_cidr',
-    'name',
-    'speed_mbps',
-    'tags',
     'port',
-    'customer_account_id',
-    'bgp_ibm_cidr',
     'vlan',
+    'tags',
+    'bgp_cer_cidr',
+    'bgp_ibm_cidr',
+    'speed_mbps',
+    'customer_account_id',
+    'bgp_asn',
+    'name',
 ]
 
 # Params for Data source
@@ -148,34 +148,34 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    bgp_asn=dict(
-        required=False,
-        type='int'),
-    bgp_cer_cidr=dict(
+    port=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    speed_mbps=dict(
+    vlan=dict(
         required=False,
         type='int'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
-    port=dict(
-        required=False,
-        type='str'),
-    customer_account_id=dict(
+    bgp_cer_cidr=dict(
         required=False,
         type='str'),
     bgp_ibm_cidr=dict(
         required=False,
         type='str'),
-    vlan=dict(
+    speed_mbps=dict(
         required=False,
         type='int'),
+    customer_account_id=dict(
+        required=False,
+        type='str'),
+    bgp_asn=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -241,7 +241,7 @@ def run_module():
         resource_type='ibm_dl_provider_gateway',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

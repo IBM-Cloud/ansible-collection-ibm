@@ -8,8 +8,6 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ibm_certificate_manager_order
-for_more_info:  refer - https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/certificate_manager_order
-
 short_description: Configure IBM Cloud 'ibm_certificate_manager_order' resource
 
 version_added: "2.8"
@@ -18,21 +16,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_certificate_manager_order' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
+    - IBM-Cloud terraform-provider-ibm v1.14.0
     - Terraform v0.12.20
 
 options:
-    key_algorithm:
-        description:
-            - Keyalgorithm info
-        required: False
-        type: str
-        default: rsaEncryption 2048 bit
-    name:
-        description:
-            - (Required for new resource) Certificate name
-        required: True
-        type: str
     description:
         description:
             - Certicate description
@@ -44,17 +31,6 @@ options:
         required: False
         type: str
         default: dns-01
-    certificate_manager_instance_id:
-        description:
-            - (Required for new resource) Certificate manager instance ID
-        required: True
-        type: str
-    renew_certificate:
-        description:
-            - Invokes renew functionality
-        required: False
-        type: bool
-        default: False
     domains:
         description:
             - (Required for new resource) List of domain names
@@ -67,11 +43,33 @@ options:
         required: False
         type: bool
         default: False
+    certificate_manager_instance_id:
+        description:
+            - (Required for new resource) Certificate manager instance ID
+        required: True
+        type: str
     dns_provider_instance_crn:
         description:
             - DNS provider instance CRN
         required: False
         type: str
+    key_algorithm:
+        description:
+            - Keyalgorithm info
+        required: False
+        type: str
+        default: rsaEncryption 2048 bit
+    name:
+        description:
+            - (Required for new resource) Certificate name
+        required: True
+        type: str
+    renew_certificate:
+        description:
+            - Invokes renew functionality
+        required: False
+        type: bool
+        default: False
     auto_renew_enabled:
         description:
             - None
@@ -124,22 +122,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('certificate_manager_instance_id', 'str'),
     ('domains', 'list'),
+    ('certificate_manager_instance_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'key_algorithm',
-    'name',
     'description',
     'domain_validation_method',
-    'certificate_manager_instance_id',
-    'renew_certificate',
     'domains',
     'rotate_keys',
+    'certificate_manager_instance_id',
     'dns_provider_instance_crn',
+    'key_algorithm',
+    'name',
+    'renew_certificate',
     'auto_renew_enabled',
 ]
 
@@ -157,24 +155,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    key_algorithm=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     description=dict(
         required=False,
         type='str'),
     domain_validation_method=dict(
         required=False,
         type='str'),
-    certificate_manager_instance_id=dict(
-        required=False,
-        type='str'),
-    renew_certificate=dict(
-        required=False,
-        type='bool'),
     domains=dict(
         required=False,
         elements='',
@@ -182,9 +168,21 @@ module_args = dict(
     rotate_keys=dict(
         required=False,
         type='bool'),
+    certificate_manager_instance_id=dict(
+        required=False,
+        type='str'),
     dns_provider_instance_crn=dict(
         required=False,
         type='str'),
+    key_algorithm=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    renew_certificate=dict(
+        required=False,
+        type='bool'),
     auto_renew_enabled=dict(
         required=False,
         type='bool'),
@@ -253,7 +251,7 @@ def run_module():
         resource_type='ibm_certificate_manager_order',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.14.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

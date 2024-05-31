@@ -23,60 +23,60 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  iops (False, int, None)
-    The maximum I/O operations per second (IOPS) for the volume.
-
-
-  snapshot (False, str, None)
-    The snapshot of the volume to be attached
-
-
-  instance (True, str, None)
-    (Required for new resource) Instance id
-
-
-  volume_name (False, str, None)
-    The unique user-defined name for this volume
-
-
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-
-
-  encryption_key (False, str, None)
-    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
-
-
-  delete_volume_on_instance_delete (False, bool, None)
-    If set to true, when deleting the instance the volume will also be deleted.
+  name (False, str, None)
+    The user-defined name for this volume attachment.
 
 
   delete_volume_on_attachment_delete (False, bool, True)
     If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
 
 
+  delete_volume_on_instance_delete (False, bool, None)
+    If set to true, when deleting the instance the volume will also be deleted.
+
+
+  tags (False, list, None)
+    UserTags for the volume instance
+
+
   profile (False, str, None)
     The  globally unique name for the volume profile to use for this volume.
 
 
-  name (False, str, None)
-    The user-defined name for this volume attachment.
+  snapshot (False, str, None)
+    The snapshot of the volume to be attached
+
+
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
+
+
+  instance (True, str, None)
+    (Required for new resource) Instance id
 
 
   volume (False, str, None)
     Instance id
 
 
-  tags (False, list, None)
-    UserTags for the volume instance
+  iops (False, int, None)
+    The maximum I/O operations per second (IOPS) for the volume.
+
+
+  volume_name (False, str, None)
+    The unique user-defined name for this volume
+
+
+  encryption_key (False, str, None)
+    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
 
 
   id (False, str, None)

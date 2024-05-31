@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  plain_text_body (False, str, None)
+    The text body of the email.
+
 
   tenant_id (True, str, None)
     (Required for new resource) The AppID instance GUID
@@ -49,10 +53,6 @@ Parameters
 
   html_body (False, str, None)
     The HTML body of the email
-
-
-  plain_text_body (False, str, None)
-    The text body of the email.
 
 
   id (False, str, None)

@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_volumes' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     volume_name:
@@ -29,6 +29,26 @@ options:
     zone_name:
         description:
             - Zone name identifier.
+        required: False
+        type: str
+    attachment_state:
+        description:
+            - Attachment state of the Volume.
+        required: False
+        type: str
+    encryption:
+        description:
+            - Encryption type of Volume.
+        required: False
+        type: str
+    operating_system_family:
+        description:
+            - Operating system family of the Volume.
+        required: False
+        type: str
+    operating_system_architecture:
+        description:
+            - Operating system architecture of the Volume.
         required: False
         type: str
     generation:
@@ -70,6 +90,10 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'volume_name',
     'zone_name',
+    'attachment_state',
+    'encryption',
+    'operating_system_family',
+    'operating_system_architecture',
 ]
 
 
@@ -84,6 +108,18 @@ module_args = dict(
         required=False,
         type='str'),
     zone_name=dict(
+        required=False,
+        type='str'),
+    attachment_state=dict(
+        required=False,
+        type='str'),
+    encryption=dict(
+        required=False,
+        type='str'),
+    operating_system_family=dict(
+        required=False,
+        type='str'),
+    operating_system_architecture=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -132,7 +168,7 @@ def run_module():
         resource_type='ibm_is_volumes',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

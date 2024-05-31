@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     cron_spec:
@@ -32,21 +32,6 @@ options:
             - The number of members the instance group should have at the scheduled time.
         required: False
         type: int
-    instance_group:
-        description:
-            - (Required for new resource) instance group ID
-        required: True
-        type: str
-    instance_group_manager:
-        description:
-            - (Required for new resource) Instance group manager ID of type scheduled
-        required: True
-        type: str
-    target_manager:
-        description:
-            - The unique identifier for this instance group manager of type autoscale.
-        required: False
-        type: str
     max_membership_count:
         description:
             - The maximum number of members in a managed instance group
@@ -56,6 +41,11 @@ options:
         description:
             - instance group manager action name
         required: False
+        type: str
+    instance_group:
+        description:
+            - (Required for new resource) instance group ID
+        required: True
         type: str
     run_at:
         description:
@@ -68,6 +58,16 @@ options:
         required: False
         type: int
         default: 1
+    target_manager:
+        description:
+            - The unique identifier for this instance group manager of type autoscale.
+        required: False
+        type: str
+    instance_group_manager:
+        description:
+            - (Required for new resource) Instance group manager ID of type scheduled
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -122,35 +122,35 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'cron_spec',
     'membership_count',
-    'instance_group',
-    'instance_group_manager',
-    'target_manager',
     'max_membership_count',
     'name',
+    'instance_group',
     'run_at',
     'min_membership_count',
+    'target_manager',
+    'instance_group_manager',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_group', 'str'),
     ('name', 'str'),
+    ('instance_group', 'str'),
     ('instance_group_manager', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_group',
     'name',
+    'instance_group',
     'instance_group_manager',
 ]
 
 TL_CONFLICTS_MAP = {
     'cron_spec': ['run_at'],
     'membership_count': ['target_manager', 'max_membership_count', 'min_membership_count'],
-    'target_manager': ['membership_count'],
     'max_membership_count': ['membership_count'],
     'run_at': ['cron_spec'],
     'min_membership_count': ['membership_count'],
+    'target_manager': ['membership_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -163,19 +163,13 @@ module_args = dict(
     membership_count=dict(
         required=False,
         type='int'),
-    instance_group=dict(
-        required=False,
-        type='str'),
-    instance_group_manager=dict(
-        required=False,
-        type='str'),
-    target_manager=dict(
-        required=False,
-        type='str'),
     max_membership_count=dict(
         required=False,
         type='int'),
     name=dict(
+        required=False,
+        type='str'),
+    instance_group=dict(
         required=False,
         type='str'),
     run_at=dict(
@@ -184,6 +178,12 @@ module_args = dict(
     min_membership_count=dict(
         required=False,
         type='int'),
+    target_manager=dict(
+        required=False,
+        type='str'),
+    instance_group_manager=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -261,7 +261,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +270,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

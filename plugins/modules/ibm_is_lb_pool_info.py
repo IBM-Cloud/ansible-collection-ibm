@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_lb_pool' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     lb:
@@ -26,14 +26,14 @@ options:
             - The load balancer identifier.
         required: True
         type: str
-    identifier:
-        description:
-            - The pool identifier.
-        required: False
-        type: str
     name:
         description:
             - The user-defined name for this load balancer pool.
+        required: False
+        type: str
+    identifier:
+        description:
+            - The pool identifier.
         required: False
         type: str
     generation:
@@ -75,8 +75,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'lb',
-    'identifier',
     'name',
+    'identifier',
 ]
 
 
@@ -90,10 +90,10 @@ module_args = dict(
     lb=dict(
         required=True,
         type='str'),
-    identifier=dict(
+    name=dict(
         required=False,
         type='str'),
-    name=dict(
+    identifier=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -142,7 +142,7 @@ def run_module():
         resource_type='ibm_is_lb_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

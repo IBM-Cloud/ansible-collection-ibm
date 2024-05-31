@@ -18,43 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_service_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    iam_service_id:
-        description:
-            - UUID of ServiceID
-        required: False
-        type: str
-    roles:
-        description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
-        type: list
-        elements: str
-    resources:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    resource_attributes:
-        description:
-            - Set resource attributes.
-        required: False
-        type: list
-        elements: dict
-    transaction_id:
-        description:
-            - Set transactionID for debug
-        required: False
-        type: str
-    iam_id:
-        description:
-            - IAM ID of ServiceID
-        required: False
-        type: str
     account_management:
         description:
             - Give access to all account management services
@@ -76,6 +43,55 @@ options:
     description:
         description:
             - Description of the Policy
+        required: False
+        type: str
+    iam_service_id:
+        description:
+            - UUID of ServiceID
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of ServiceID
+        required: False
+        type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
+    resources:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    pattern:
+        description:
+            - Pattern rule follows for time-based condition
+        required: False
+        type: str
+    resource_attributes:
+        description:
+            - Set resource attributes.
+        required: False
+        type: list
+        elements: dict
+    transaction_id:
+        description:
+            - Set transactionID for debug
+        required: False
+        type: str
+    rule_conditions:
+        description:
+            - Rule conditions enforced by the policy
+        required: False
+        type: list
+        elements: dict
+    rule_operator:
+        description:
+            - Operator that multiple rule conditions are evaluated over
         required: False
         type: str
     id:
@@ -129,16 +145,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iam_service_id',
-    'roles',
-    'resources',
-    'resource_attributes',
-    'transaction_id',
-    'iam_id',
     'account_management',
     'tags',
     'resource_tags',
     'description',
+    'iam_service_id',
+    'iam_id',
+    'roles',
+    'resources',
+    'pattern',
+    'resource_attributes',
+    'transaction_id',
+    'rule_conditions',
+    'rule_operator',
 ]
 
 # Params for Data source
@@ -146,43 +165,22 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'transaction_id',
     'iam_service_id',
     'iam_id',
     'sort',
-    'transaction_id',
 ]
 
 TL_CONFLICTS_MAP = {
+    'account_management': ['resources', 'resource_attributes'],
     'resources': ['account_management', 'resource_attributes'],
     'resource_attributes': ['resources', 'account_management'],
-    'account_management': ['resources', 'resource_attributes'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iam_service_id=dict(
-        required=False,
-        type='str'),
-    roles=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resources=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_attributes=dict(
-        required=False,
-        elements='',
-        type='list'),
-    transaction_id=dict(
-        required=False,
-        type='str'),
-    iam_id=dict(
-        required=False,
-        type='str'),
     account_management=dict(
         required=False,
         type='bool'),
@@ -195,6 +193,37 @@ module_args = dict(
         elements='',
         type='list'),
     description=dict(
+        required=False,
+        type='str'),
+    iam_service_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
+        required=False,
+        type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resources=dict(
+        required=False,
+        elements='',
+        type='list'),
+    pattern=dict(
+        required=False,
+        type='str'),
+    resource_attributes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    transaction_id=dict(
+        required=False,
+        type='str'),
+    rule_conditions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    rule_operator=dict(
         required=False,
         type='str'),
     id=dict(
@@ -262,7 +291,7 @@ def run_module():
         resource_type='ibm_iam_service_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -271,7 +300,7 @@ def run_module():
             resource_type='ibm_iam_service_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

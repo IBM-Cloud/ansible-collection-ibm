@@ -23,20 +23,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  routing_table (True, str, None)
-    (Required for new resource) The unique identifier of routing table
-
-
   subnet (True, str, None)
     (Required for new resource) The subnet identifier
+
+
+  routing_table (True, str, None)
+    (Required for new resource) The unique identifier of routing table
 
 
   id (False, str, None)

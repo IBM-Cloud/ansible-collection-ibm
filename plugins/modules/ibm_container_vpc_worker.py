@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    check_ptx_status:
-        description:
-            - Check portworx status after worker replace
-        required: False
-        type: bool
-        default: False
     ptx_timeout:
         description:
             - Timeout for checking ptx pods/status
@@ -39,11 +33,28 @@ options:
             - (Required for new resource) Cluster name
         required: True
         type: str
+    sds:
+        description:
+            - Name of Software Defined Storage
+        required: False
+        type: str
     replace_worker:
         description:
             - (Required for new resource) Worker name/id that needs to be replaced
         required: True
         type: str
+    check_ptx_status:
+        description:
+            - Check portworx status after worker replace
+        required: False
+        type: bool
+        default: False
+    sds_timeout:
+        description:
+            - Timeout for checking sds deployment/status
+        required: False
+        type: str
+        default: 15m
     resource_group_id:
         description:
             - ID of the resource group.
@@ -86,10 +97,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'check_ptx_status',
     'ptx_timeout',
     'cluster_name',
+    'sds',
     'replace_worker',
+    'check_ptx_status',
+    'sds_timeout',
     'resource_group_id',
     'kube_config_path',
 ]
@@ -102,22 +115,30 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
+    'sds': ['check_ptx_status'],
+    'check_ptx_status': ['sds'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    check_ptx_status=dict(
-        required=False,
-        type='bool'),
     ptx_timeout=dict(
         required=False,
         type='str'),
     cluster_name=dict(
         required=False,
         type='str'),
+    sds=dict(
+        required=False,
+        type='str'),
     replace_worker=dict(
+        required=False,
+        type='str'),
+    check_ptx_status=dict(
+        required=False,
+        type='bool'),
+    sds_timeout=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
@@ -177,7 +198,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

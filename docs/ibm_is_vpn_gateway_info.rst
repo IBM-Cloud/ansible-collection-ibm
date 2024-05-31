@@ -21,20 +21,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  vpn_gateway_name (False, str, None)
-    The VPN gateway name.
-
-
   vpn_gateway (False, str, None)
     The VPN gateway identifier.
+
+
+  vpn_gateway_name (False, str, None)
+    The VPN gateway name.
 
 
   generation (False, int, 2)

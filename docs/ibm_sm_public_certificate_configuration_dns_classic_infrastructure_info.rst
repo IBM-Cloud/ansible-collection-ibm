@@ -21,13 +21,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  endpoint_type (False, str, None)
+    public or private.
+
 
   instance_id (True, str, None)
     The ID of the Secrets Manager instance.
@@ -35,10 +39,6 @@ Parameters
 
   region (False, any, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
-  endpoint_type (False, str, None)
-    public or private.
 
 
   name (True, str, None)

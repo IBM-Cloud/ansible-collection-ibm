@@ -23,47 +23,31 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  dual_auth_delete (False, list, None)
-    Data associated with the dual authorization delete policy.
-
-
   instance_id (True, str, None)
     (Required for new resource) Key protect or HPCS instance GUID or CRN
-
-
-  endpoint_type (False, str, None)
-    Public or Private
-
-
-  rotation (False, list, None)
-    Data associated with the key rotation policy
-
-
-  key_ring_id (False, str, default)
-    Key Ring for the Key
-
-
-  force_delete (False, bool, False)
-    set to true to force delete the key
-
-
-  standard_key (False, bool, False)
-    Standard key type
 
 
   payload (False, str, None)
     None
 
 
-  encrypted_nonce (False, str, None)
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  standard_key (False, bool, False)
+    Standard key type
+
+
+  iv_value (False, str, None)
     Only for imported root key
 
 
@@ -71,12 +55,32 @@ Parameters
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
 
 
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  iv_value (False, str, None)
+  encrypted_nonce (False, str, None)
     Only for imported root key
+
+
+  description (False, str, None)
+    description of the key
+
+
+  key_ring_id (False, str, default)
+    Key Ring for the Key
+
+
+  endpoint_type (False, str, None)
+    Public or Private
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
+  rotation (False, list, None)
+    Data associated with the key rotation policy
+
+
+  dual_auth_delete (False, list, None)
+    Data associated with the dual authorization delete policy.
 
 
   id (False, str, None)

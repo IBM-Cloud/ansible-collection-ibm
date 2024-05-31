@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -47,6 +47,10 @@ Parameters
     The user-defined name for this route.
 
 
+  zone (True, str, None)
+    (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
+
+
   vpc (True, str, None)
     (Required for new resource) The VPC identifier.
 
@@ -55,8 +59,12 @@ Parameters
     (Required for new resource) The destination of the route.
 
 
-  zone (True, str, None)
-    (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
+  advertise (False, bool, False)
+    Indicates whether this route will be advertised to the ingress sources specified by the `advertise_routes_to` routing table property.
+
+
+  priority (False, int, None)
+    The route's priority. Smaller values have higher priority.
 
 
   id (False, str, None)

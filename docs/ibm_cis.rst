@@ -23,8 +23,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,8 +35,16 @@ Parameters
     (Required for new resource) The plan type of the service
 
 
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
+
+
   name (True, str, None)
     (Required for new resource) A name for the resource instance
+
+
+  tags (False, list, None)
+    None
 
 
   resource_group_id (False, str, None)
@@ -45,14 +53,6 @@ Parameters
 
   location (True, str, None)
     (Required for new resource) The location where the instance available
-
-
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
-  tags (False, list, None)
-    None
 
 
   id (False, str, None)

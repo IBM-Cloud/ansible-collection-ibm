@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    transaction_id:
-        description:
-            - Set transactionID for debug
-        required: False
-        type: str
-    profile_id:
-        description:
-            - UUID of Trusted Profile
-        required: False
-        type: str
     roles:
         description:
             - (Required for new resource) Role names of the policy definition
@@ -44,15 +34,43 @@ options:
         required: False
         type: list
         elements: dict
+    tags:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     account_management:
         description:
             - Give access to all account management services
         required: False
         type: bool
         default: False
+    resource_tags:
+        description:
+            - Set access management tags.
+        required: False
+        type: list
+        elements: dict
     description:
         description:
             - Description of the Policy
+        required: False
+        type: str
+    transaction_id:
+        description:
+            - Set transactionID for debug
+        required: False
+        type: str
+    rule_conditions:
+        description:
+            - Rule conditions enforced by the policy
+        required: False
+        type: list
+        elements: dict
+    profile_id:
+        description:
+            - UUID of Trusted Profile
         required: False
         type: str
     iam_id:
@@ -66,18 +84,16 @@ options:
         required: False
         type: list
         elements: dict
-    tags:
+    rule_operator:
         description:
-            - None
+            - Operator that multiple rule conditions are evaluated over
         required: False
-        type: list
-        elements: str
-    resource_tags:
+        type: str
+    pattern:
         description:
-            - Set access management tags.
+            - Pattern rule follows for time-based condition
         required: False
-        type: list
-        elements: dict
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -129,16 +145,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'transaction_id',
-    'profile_id',
     'roles',
     'resource_attributes',
+    'tags',
     'account_management',
+    'resource_tags',
     'description',
+    'transaction_id',
+    'rule_conditions',
+    'profile_id',
     'iam_id',
     'resources',
-    'tags',
-    'resource_tags',
+    'rule_operator',
+    'pattern',
 ]
 
 # Params for Data source
@@ -162,12 +181,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    transaction_id=dict(
-        required=False,
-        type='str'),
-    profile_id=dict(
-        required=False,
-        type='str'),
     roles=dict(
         required=False,
         elements='',
@@ -176,10 +189,28 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     account_management=dict(
         required=False,
         type='bool'),
+    resource_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     description=dict(
+        required=False,
+        type='str'),
+    transaction_id=dict(
+        required=False,
+        type='str'),
+    rule_conditions=dict(
+        required=False,
+        elements='',
+        type='list'),
+    profile_id=dict(
         required=False,
         type='str'),
     iam_id=dict(
@@ -189,14 +220,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    rule_operator=dict(
         required=False,
-        elements='',
-        type='list'),
-    resource_tags=dict(
+        type='str'),
+    pattern=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -262,7 +291,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -271,7 +300,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

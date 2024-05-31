@@ -23,20 +23,20 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  rules (True, list, None)
-    (Required for new resource) Routing rules that will be evaluated in their order of the array.
-
-
   name (True, str, None)
     (Required for new resource) The name of the route. The name must be 1000 characters or less and cannot include any special characters other than `(space) - . _ :`.
+
+
+  rules (True, list, None)
+    (Required for new resource) Routing rules that will be evaluated in their order of the array.
 
 
   id (False, str, None)

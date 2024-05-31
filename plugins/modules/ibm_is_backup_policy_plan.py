@@ -18,24 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_backup_policy_plan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    cron_spec:
+        description:
+            - (Required for new resource) The cron specification for the backup schedule.
+        required: True
+        type: str
     name:
         description:
             - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: False
         type: str
-    copy_user_tags:
+    backup_policy_id:
         description:
-            - Indicates whether to copy the source's user tags to the created backups (snapshots).
-        required: False
-        type: bool
-        default: True
-    cron_spec:
-        description:
-            - (Required for new resource) The cron specification for the backup schedule.
+            - (Required for new resource) The backup policy identifier.
         required: True
         type: str
     active:
@@ -43,11 +42,12 @@ options:
             - Indicates whether the plan is active.
         required: False
         type: bool
-    backup_policy_id:
+    clone_policy:
         description:
-            - (Required for new resource) The backup policy identifier.
-        required: True
-        type: str
+            - None
+        required: False
+        type: list
+        elements: dict
     attach_user_tags:
         description:
             - User tags to attach to each backup (snapshot) created by this plan. If unspecified, no user tags will be attached.
@@ -60,9 +60,15 @@ options:
         required: False
         type: list
         elements: dict
-    clone_policy:
+    copy_user_tags:
         description:
-            - None
+            - Indicates whether to copy the source's user tags to the created backups (snapshots).
+        required: False
+        type: bool
+        default: True
+    remote_region_policy:
+        description:
+            - Backup policy plan cross region rule.
         required: False
         type: list
         elements: dict
@@ -118,14 +124,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'copy_user_tags',
     'cron_spec',
-    'active',
+    'name',
     'backup_policy_id',
+    'active',
+    'clone_policy',
     'attach_user_tags',
     'deletion_trigger',
-    'clone_policy',
+    'copy_user_tags',
+    'remote_region_policy',
 ]
 
 # Params for Data source
@@ -146,21 +153,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cron_spec=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    copy_user_tags=dict(
-        required=False,
-        type='bool'),
-    cron_spec=dict(
+    backup_policy_id=dict(
         required=False,
         type='str'),
     active=dict(
         required=False,
         type='bool'),
-    backup_policy_id=dict(
+    clone_policy=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     attach_user_tags=dict(
         required=False,
         elements='',
@@ -169,7 +177,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    clone_policy=dict(
+    copy_user_tags=dict(
+        required=False,
+        type='bool'),
+    remote_region_policy=dict(
         required=False,
         elements='',
         type='list'),
@@ -250,7 +261,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -259,7 +270,7 @@ def run_module():
             resource_type='ibm_is_backup_policy_plan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

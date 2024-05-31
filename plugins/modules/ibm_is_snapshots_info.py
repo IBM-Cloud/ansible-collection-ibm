@@ -17,18 +17,63 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_snapshots' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    resource_group:
+    tag:
         description:
-            - Filters the snapshot collection by resources group id
+            - Filters the collection to resources with the exact tag value
+        required: False
+        type: str
+    snapshot_copies_name:
+        description:
+            - Filters the collection to snapshots with copies with the exact specified name.
         required: False
         type: str
     name:
         description:
             - Filters the snapshot collection by snapshot name
+        required: False
+        type: str
+    snapshot_copies_remote_region_name:
+        description:
+            - Filters the collection to snapshots with copies with the exact remote region name.
+        required: False
+        type: str
+    source_snapshot_id:
+        description:
+            - Filters the collection to resources with the source snapshot with the specified identifier.
+        required: False
+        type: str
+    source_snapshot_remote_region_name:
+        description:
+            - Filters the collection to snapshots with a source snapshot with the exact remote region name.
+        required: False
+        type: str
+    snapshot_source_volume_remote_region_name:
+        description:
+            - Filters the collection to snapshots with a source snapshot with the exact remote region name.
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Filters the snapshot collection by resources group id
+        required: False
+        type: str
+    backup_policy_plan_id:
+        description:
+            - Filters the collection to backup policy jobs with the backup plan with the specified identifier
+        required: False
+        type: str
+    snapshot_copies_crn:
+        description:
+            - Filters the collection to snapshots with copies with the specified CRN.
+        required: False
+        type: str
+    snapshot_consistency_group_id:
+        description:
+            - Filters the collection to resources with a source snapshot with the exact snapshot consistency group id.
         required: False
         type: str
     source_image:
@@ -41,14 +86,14 @@ options:
             - Filters the snapshot collection by source volume id
         required: False
         type: str
-    backup_policy_plan_id:
+    snapshot_copies_id:
         description:
-            - Filters the collection to backup policy jobs with the backup plan with the specified identifier
+            - Filters the collection to snapshots with copies with the specified identifier.
         required: False
         type: str
-    tag:
+    snapshot_consistency_group_crn:
         description:
-            - Filters the collection to resources with the exact tag value
+            - Filters the collection to resources with a source snapshot with the exact snapshot consistency group crn.
         required: False
         type: str
     generation:
@@ -88,12 +133,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'resource_group',
+    'tag',
+    'snapshot_copies_name',
     'name',
+    'snapshot_copies_remote_region_name',
+    'source_snapshot_id',
+    'source_snapshot_remote_region_name',
+    'snapshot_source_volume_remote_region_name',
+    'resource_group',
+    'backup_policy_plan_id',
+    'snapshot_copies_crn',
+    'snapshot_consistency_group_id',
     'source_image',
     'source_volume',
-    'backup_policy_plan_id',
-    'tag',
+    'snapshot_copies_id',
+    'snapshot_consistency_group_crn',
 ]
 
 
@@ -104,10 +158,37 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    resource_group=dict(
+    tag=dict(
+        required=False,
+        type='str'),
+    snapshot_copies_name=dict(
         required=False,
         type='str'),
     name=dict(
+        required=False,
+        type='str'),
+    snapshot_copies_remote_region_name=dict(
+        required=False,
+        type='str'),
+    source_snapshot_id=dict(
+        required=False,
+        type='str'),
+    source_snapshot_remote_region_name=dict(
+        required=False,
+        type='str'),
+    snapshot_source_volume_remote_region_name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    backup_policy_plan_id=dict(
+        required=False,
+        type='str'),
+    snapshot_copies_crn=dict(
+        required=False,
+        type='str'),
+    snapshot_consistency_group_id=dict(
         required=False,
         type='str'),
     source_image=dict(
@@ -116,10 +197,10 @@ module_args = dict(
     source_volume=dict(
         required=False,
         type='str'),
-    backup_policy_plan_id=dict(
+    snapshot_copies_id=dict(
         required=False,
         type='str'),
-    tag=dict(
+    snapshot_consistency_group_crn=dict(
         required=False,
         type='str'),
     generation=dict(
@@ -168,7 +249,7 @@ def run_module():
         resource_type='ibm_is_snapshots',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

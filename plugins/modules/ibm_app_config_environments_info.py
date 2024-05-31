@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_environments' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     guid:
@@ -31,16 +31,16 @@ options:
             - If set to `true`, returns expanded view of the resource details.
         required: False
         type: bool
-    limit:
-        description:
-            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
-        required: False
-        type: int
     tags:
         description:
             - filter the resources to be returned based on the associated tags. Returns resources associated with any of the specified tags.
         required: False
         type: str
+    limit:
+        description:
+            - The number of records to retrieve. By default, the list operation return the first 10 records. To retrieve different set of records, use `limit` with `offset` to page through the available records.
+        required: False
+        type: int
     offset:
         description:
             - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
@@ -86,8 +86,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'guid',
     'expand',
-    'limit',
     'tags',
+    'limit',
     'offset',
 ]
 
@@ -105,12 +105,12 @@ module_args = dict(
     expand=dict(
         required=False,
         type='bool'),
-    limit=dict(
-        required=False,
-        type='int'),
     tags=dict(
         required=False,
         type='str'),
+    limit=dict(
+        required=False,
+        type='int'),
     offset=dict(
         required=False,
         type='int'),
@@ -148,7 +148,7 @@ def run_module():
         resource_type='ibm_app_config_environments',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

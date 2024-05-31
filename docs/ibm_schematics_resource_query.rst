@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  type (False, str, None)
-    Resource type (cluster, vsi, icd, vpc).
-
-
-  name (False, str, None)
-    Resource query name.
-
 
   location (False, str, None)
     List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
@@ -45,6 +37,14 @@ Parameters
 
   queries (False, list, None)
     None
+
+
+  type (False, str, None)
+    Resource type (cluster, vsi, icd, vpc).
+
+
+  name (False, str, None)
+    Resource query name.
 
 
   id (False, str, None)

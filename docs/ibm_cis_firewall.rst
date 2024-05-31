@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  lockdown (False, list, None)
-    Lockdown Data
-
-
-  access_rule (False, list, None)
-    Access Rule Data
-
 
   ua_rule (False, list, None)
     User Agent Rule Data
@@ -53,6 +45,14 @@ Parameters
 
   firewall_type (True, str, None)
     (Required for new resource) Type of firewall.Allowable values are access-rules,ua-rules,lockdowns
+
+
+  lockdown (False, list, None)
+    Lockdown Data
+
+
+  access_rule (False, list, None)
+    Access Rule Data
 
 
   id (False, str, None)

@@ -18,36 +18,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    route_vpc_zone_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - The user-defined name for this routing table.
-        required: False
-        type: str
-    route_internet_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from the internet. For this to succeed, the VPC must not already have a routing table with this property set to true.
-        required: False
-        type: bool
-        default: False
     route_direct_link_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
         required: False
         type: bool
         default: False
-    route_transit_gateway_ingress:
+    accept_routes_from_resource_type:
         description:
-            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
+            - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
+        required: False
+        type: list
+        elements: str
+    advertise_routes_to:
+        description:
+            - The ingress sources to advertise routes to. Routes in the table with `advertise` enabled will be advertised to these sources.
+        required: False
+        type: list
+        elements: str
+    route_internet_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from the internet. For this to succeed, the VPC must not already have a routing table with this property set to true.
+        required: False
+        type: bool
+        default: False
+    route_vpc_zone_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
         required: False
         type: bool
         default: False
@@ -56,12 +57,17 @@ options:
             - (Required for new resource) The VPC identifier.
         required: True
         type: str
-    accept_routes_from_resource_type:
+    route_transit_gateway_ingress:
         description:
-            - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
+            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
         required: False
-        type: list
-        elements: str
+        type: bool
+        default: False
+    name:
+        description:
+            - The user-defined name for this routing table.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -113,13 +119,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'route_vpc_zone_ingress',
-    'name',
-    'route_internet_ingress',
     'route_direct_link_ingress',
-    'route_transit_gateway_ingress',
-    'vpc',
     'accept_routes_from_resource_type',
+    'advertise_routes_to',
+    'route_internet_ingress',
+    'route_vpc_zone_ingress',
+    'vpc',
+    'route_transit_gateway_ingress',
+    'name',
 ]
 
 # Params for Data source
@@ -128,8 +135,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'vpc',
+    'name',
     'routing_table',
 ]
 
@@ -140,28 +147,32 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    route_vpc_zone_ingress=dict(
-        required=False,
-        type='bool'),
-    name=dict(
-        required=False,
-        type='str'),
-    route_internet_ingress=dict(
-        required=False,
-        type='bool'),
     route_direct_link_ingress=dict(
         required=False,
         type='bool'),
-    route_transit_gateway_ingress=dict(
+    accept_routes_from_resource_type=dict(
+        required=False,
+        elements='',
+        type='list'),
+    advertise_routes_to=dict(
+        required=False,
+        elements='',
+        type='list'),
+    route_internet_ingress=dict(
+        required=False,
+        type='bool'),
+    route_vpc_zone_ingress=dict(
         required=False,
         type='bool'),
     vpc=dict(
         required=False,
         type='str'),
-    accept_routes_from_resource_type=dict(
+    route_transit_gateway_ingress=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -239,7 +250,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -248,7 +259,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

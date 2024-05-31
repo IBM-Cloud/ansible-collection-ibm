@@ -18,27 +18,27 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cm_validation' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
-    x_auth_refresh_token:
-        description:
-            - (Required for new resource) Authentication token used to submit validation job.
-        required: True
-        type: str
     override_values:
         description:
             - Override values during validation.
         required: False
         type: dict
         elements: str
-    environment_variables:
+    schematics:
         description:
-            - Environment variables to include in the schematics workspace.
+            - Other values to pass to the schematics workspace.
         required: False
         type: list
         elements: dict
+    revalidate_if_validated:
+        description:
+            - If the version should be revalidated if it is already validated.
+        required: False
+        type: bool
     version_locator:
         description:
             - (Required for new resource) Version locator - the version that will be validated.
@@ -49,22 +49,17 @@ options:
             - Validation region.
         required: False
         type: str
-    revalidate_if_validated:
+    environment_variables:
         description:
-            - If the version should be revalidated if it is already validated.
+            - Environment variables to include in the schematics workspace.
         required: False
-        type: bool
+        type: list
+        elements: dict
     mark_version_consumable:
         description:
             - If the version should be marked as consumable or "ready to share".
         required: False
         type: bool
-    schematics:
-        description:
-            - Other values to pass to the schematics workspace.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -111,20 +106,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('x_auth_refresh_token', 'str'),
     ('version_locator', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'x_auth_refresh_token',
     'override_values',
-    'environment_variables',
+    'schematics',
+    'revalidate_if_validated',
     'version_locator',
     'region',
-    'revalidate_if_validated',
+    'environment_variables',
     'mark_version_consumable',
-    'schematics',
 ]
 
 # Params for Data source
@@ -141,33 +134,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    x_auth_refresh_token=dict(
-        required=False,
-        type='str'),
     override_values=dict(
         required=False,
         elements='',
         type='dict'),
-    environment_variables=dict(
+    schematics=dict(
         required=False,
         elements='',
         type='list'),
+    revalidate_if_validated=dict(
+        required=False,
+        type='bool'),
     version_locator=dict(
         required=False,
         type='str'),
     region=dict(
         required=False,
         type='str'),
-    revalidate_if_validated=dict(
-        required=False,
-        type='bool'),
-    mark_version_consumable=dict(
-        required=False,
-        type='bool'),
-    schematics=dict(
+    environment_variables=dict(
         required=False,
         elements='',
         type='list'),
+    mark_version_consumable=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +223,7 @@ def run_module():
         resource_type='ibm_cm_validation',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

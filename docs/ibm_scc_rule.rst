@@ -12,7 +12,7 @@ Synopsis
 
 Create, update or destroy an IBM Cloud 'ibm_scc_rule' resource
 
-This module does not support idempotency
+This module supports idempotency
 
 
 ForMoreInfoRefer
@@ -23,40 +23,40 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  account_id (True, str, None)
-    (Required for new resource) Your IBM Cloud account ID.
-
-
-  name (True, str, None)
-    (Required for new resource) A human-readable alias to assign to your rule.
-
-
-  enforcement_actions (False, list, None)
-    The actions that the service must run on your behalf when a request to create or modify the target resource does not comply with your conditions.
-
-
-  required_config (True, list, None)
-    (Required for new resource) The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (and/or) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the and array. To add conditions to a property check, use or.
+  instance_id (True, str, None)
+    (Required for new resource) The ID of the Security and Compliance Center instance.
 
 
   description (True, str, None)
-    (Required for new resource) An extended description of your rule.
+    (Required for new resource) The details of a rule's response.
+
+
+  version (False, str, None)
+    The version number of a rule.
+
+
+  import_ (False, list, None)
+    The collection of import parameters.
 
 
   labels (False, list, None)
-    Labels that you can use to group and search for similar rules, such as those that help you to meet a specific organization guideline.
+    The list of labels.
+
+
+  required_config (True, list, None)
+    (Required for new resource) The required configurations.
 
 
   target (True, list, None)
-    (Required for new resource) The properties that describe the resource that you want to targetwith the rule or template.
+    (Required for new resource) The rule target.
 
 
   id (False, str, None)

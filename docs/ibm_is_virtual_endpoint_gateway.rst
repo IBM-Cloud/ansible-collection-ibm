@@ -23,16 +23,16 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  resource_group (False, str, None)
-    The resource group id
+  name (True, str, None)
+    (Required for new resource) Endpoint gateway name
 
 
   vpc (True, str, None)
@@ -43,12 +43,12 @@ Parameters
     List of tags for VPE
 
 
-  access_tags (False, list, None)
-    List of access management tags
+  allow_dns_resolution_binding (False, bool, None)
+    Indicates whether to allow this endpoint gateway to participate in DNS resolution bindings with a VPC that has dns.enable_hub set to true.
 
 
-  name (True, str, None)
-    (Required for new resource) Endpoint gateway name
+  resource_group (False, str, None)
+    The resource group id
 
 
   security_groups (False, list, None)
@@ -61,6 +61,10 @@ Parameters
 
   target (True, list, None)
     (Required for new resource) Endpoint gateway target
+
+
+  access_tags (False, list, None)
+    List of access management tags
 
 
   id (False, str, None)

@@ -18,8 +18,8 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_secret_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     instance_id:
@@ -108,15 +108,15 @@ TL_ALL_PARAMETERS = [
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_id', 'str'),
     ('secret_group_id', 'str'),
+    ('instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_id',
     'region',
     'endpoint_type',
     'secret_group_id',
+    'instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -206,7 +206,7 @@ def run_module():
         resource_type='ibm_sm_secret_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -215,7 +215,7 @@ def run_module():
             resource_type='ibm_sm_secret_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.51.0',
+            ibm_provider_version='1.65.1',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

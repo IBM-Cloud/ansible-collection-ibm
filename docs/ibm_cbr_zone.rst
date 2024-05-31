@@ -23,36 +23,36 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The name of the zone.
-
-
   description (False, str, None)
     The description of the zone.
 
 
-  excluded (False, list, None)
-    The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
+  addresses (False, list, None)
+    The list of addresses in the zone.
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the zone.
 
 
   account_id (True, str, None)
     (Required for new resource) The id of the account owning this zone.
 
 
+  excluded (False, list, None)
+    The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
+
+
   x_correlation_id (False, str, None)
     The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
-
-
-  addresses (True, list, None)
-    (Required for new resource) The list of addresses in the zone.
 
 
   transaction_id (False, str, None)

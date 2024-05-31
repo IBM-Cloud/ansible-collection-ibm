@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_firewall_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
+    filter_id:
+        description:
+            - (Required for new resource) Firewallrules Existing FilterID
+        required: True
+        type: str
     action:
         description:
             - (Required for new resource) Firewallrules Action
@@ -45,16 +55,6 @@ options:
     cis_id:
         description:
             - (Required for new resource) CIS instance crn
-        required: True
-        type: str
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    filter_id:
-        description:
-            - (Required for new resource) Firewallrules Existing FilterID
         required: True
         type: str
     id:
@@ -103,21 +103,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('action', 'str'),
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('filter_id', 'str'),
+    ('action', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'domain_id',
+    'filter_id',
     'action',
     'priority',
     'description',
     'paused',
     'cis_id',
-    'domain_id',
-    'filter_id',
 ]
 
 # Params for Data source
@@ -134,6 +134,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    domain_id=dict(
+        required=False,
+        type='str'),
+    filter_id=dict(
+        required=False,
+        type='str'),
     action=dict(
         required=False,
         type='str'),
@@ -147,12 +153,6 @@ module_args = dict(
         required=False,
         type='bool'),
     cis_id=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
-    filter_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -220,7 +220,7 @@ def run_module():
         resource_type='ibm_cis_firewall_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

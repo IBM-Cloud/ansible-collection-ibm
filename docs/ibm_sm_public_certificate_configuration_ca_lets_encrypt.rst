@@ -23,16 +23,24 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
+  name (True, str, None)
+    (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+
+
   lets_encrypt_environment (True, str, None)
     (Required for new resource) The configuration of the Let's Encrypt CA environment.
+
+
+  lets_encrypt_preferred_chain (False, str, None)
+    Prefer the chain with an issuer matching this Subject Common Name.
 
 
   lets_encrypt_private_key (True, str, None)
@@ -49,10 +57,6 @@ Parameters
 
   endpoint_type (False, str, None)
     public or private.
-
-
-  name (True, str, None)
-    (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
 
 
   id (False, str, None)

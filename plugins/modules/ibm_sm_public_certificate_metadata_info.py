@@ -17,8 +17,8 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_public_certificate_metadata' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
     region:
@@ -31,15 +31,15 @@ options:
             - The ID of the Secrets Manager instance.
         required: True
         type: str
-    secret_id:
-        description:
-            - The ID of the secret.
-        required: True
-        type: str
     endpoint_type:
         description:
             - public or private.
         required: False
+        type: str
+    secret_id:
+        description:
+            - The ID of the secret.
+        required: True
         type: str
     iaas_classic_username:
         description:
@@ -82,8 +82,8 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'region',
     'instance_id',
-    'secret_id',
     'endpoint_type',
+    'secret_id',
 ]
 
 
@@ -100,11 +100,11 @@ module_args = dict(
     instance_id=dict(
         required=True,
         type='str'),
-    secret_id=dict(
-        required=True,
-        type='str'),
     endpoint_type=dict(
         required=False,
+        type='str'),
+    secret_id=dict(
+        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -140,7 +140,7 @@ def run_module():
         resource_type='ibm_sm_public_certificate_metadata',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

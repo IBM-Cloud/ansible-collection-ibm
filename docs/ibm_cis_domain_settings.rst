@@ -23,64 +23,24 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
 
-  tls_client_auth (False, str, None)
-    tls_client_auth setting
+  cis_id (True, str, None)
+    (Required for new resource) CIS instance crn
 
 
-  domain_id (True, str, None)
-    (Required for new resource) Associated CIS domain
-
-
-  image_size_optimization (False, str, None)
-    image_size_optimization setting
-
-
-  ip_geolocation (False, str, None)
-    ip_geolocation setting
-
-
-  challenge_ttl (False, int, None)
-    Challenge TTL setting
-
-
-  max_upload (False, int, None)
-    Maximum upload
-
-
-  waf (False, str, None)
-    WAF setting
-
-
-  script_load_optimization (False, str, None)
-    script_load_optimization setting
-
-
-  server_side_exclude (False, str, None)
-    server_side_exclude setting
-
-
-  http2 (False, str, None)
-    http2 setting
-
-
-  dnssec (False, str, None)
-    DNS Sec setting
+  min_tls_version (False, str, 1.2)
+    Minimum version of TLS required
 
 
   cname_flattening (False, str, None)
     cname_flattening setting
-
-
-  websockets (False, str, None)
-    websockets setting
 
 
   browser_check (False, str, None)
@@ -91,64 +51,88 @@ Parameters
     hotlink_protection setting
 
 
-  brotli (False, str, None)
-    brotli setting
+  tls_client_auth (False, str, None)
+    tls_client_auth setting
 
 
-  cis_id (True, str, None)
-    (Required for new resource) CIS instance crn
+  challenge_ttl (False, int, None)
+    Challenge TTL setting
 
 
-  automatic_https_rewrites (False, str, None)
-    automatic_https_rewrites setting
+  max_upload (False, int, None)
+    Maximum upload
 
 
-  true_client_ip_header (False, str, None)
-    true_client_ip_header setting
+  minify (False, list, None)
+    Minify setting
 
 
-  min_tls_version (False, str, 1.1)
-    Minimum version of TLS required
+  dnssec (False, str, None)
+    DNS Sec setting
 
 
-  origin_error_page_pass_thru (False, str, None)
-    origin_error_page_pass_thru setting
-
-
-  mobile_redirect (False, list, None)
-    None
-
-
-  response_buffering (False, str, None)
-    response_buffering setting
-
-
-  cipher (False, list, None)
-    Cipher settings
-
-
-  security_header (False, list, None)
-    Security Header Setting
-
-
-  ipv6 (False, str, None)
-    ipv6 setting
-
-
-  image_load_optimization (False, str, None)
-    image_load_optimization setting
+  always_use_https (False, str, None)
+    always_use_https setting
 
 
   pseudo_ipv4 (False, str, None)
     pseudo_ipv4 setting
 
 
+  websockets (False, str, None)
+    websockets setting
+
+
+  automatic_https_rewrites (False, str, None)
+    automatic_https_rewrites setting
+
+
+  ipv6 (False, str, None)
+    ipv6 setting
+
+
+  ip_geolocation (False, str, None)
+    ip_geolocation setting
+
+
+  image_load_optimization (False, str, None)
+    image_load_optimization setting
+
+
+  server_side_exclude (False, str, None)
+    server_side_exclude setting
+
+
+  security_header (False, list, None)
+    Security Header Setting
+
+
   prefetch_preload (False, str, None)
     prefetch_preload setting
 
 
-  minify (False, list, None)
-    Minify setting
+  response_buffering (False, str, None)
+    response_buffering setting
+
+
+  script_load_optimization (False, str, None)
+    script_load_optimization setting
+
+
+  waf (False, str, None)
+    WAF setting
+
+
+  image_size_optimization (False, str, None)
+    image_size_optimization setting
+
+
+  cipher (False, list, None)
+    Cipher settings
+
+
+  domain_id (True, str, None)
+    (Required for new resource) Associated CIS domain
 
 
   ssl (False, str, None)
@@ -159,8 +143,24 @@ Parameters
     opportunistic_encryption setting
 
 
-  always_use_https (False, str, None)
-    always_use_https setting
+  http2 (False, str, None)
+    http2 setting
+
+
+  origin_error_page_pass_thru (False, str, None)
+    origin_error_page_pass_thru setting
+
+
+  brotli (False, str, None)
+    brotli setting
+
+
+  true_client_ip_header (False, str, None)
+    true_client_ip_header setting
+
+
+  mobile_redirect (False, list, None)
+    None
 
 
   id (False, str, None)

@@ -23,13 +23,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  endpoint_type (False, str, None)
+    public or private.
+
+
+  event_notifications_instance_crn (True, str, None)
+    (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
+
 
   event_notifications_source_name (True, str, None)
     (Required for new resource) The name that is displayed as a source that is in your Event Notifications instance.
@@ -45,14 +53,6 @@ Parameters
 
   region (False, any, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
-  endpoint_type (False, str, None)
-    public or private.
-
-
-  event_notifications_instance_crn (True, str, None)
-    (Required for new resource) A CRN that uniquely identifies an IBM Cloud resource.
 
 
   id (False, str, None)

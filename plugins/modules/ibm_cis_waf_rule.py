@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_waf_rule' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.51.0
-    - Terraform v0.12.20
+    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - Terraform v1.5.5
 
 options:
+    package_id:
+        description:
+            - (Required for new resource) CIS WAF Rule package id
+        required: True
+        type: str
+    mode:
+        description:
+            - (Required for new resource) CIS WAF Rule mode
+        required: True
+        type: str
     cis_id:
         description:
             - (Required for new resource) CIS Intance CRN
@@ -35,16 +45,6 @@ options:
     rule_id:
         description:
             - (Required for new resource) CIS WAF Rule id
-        required: True
-        type: str
-    mode:
-        description:
-            - (Required for new resource) CIS WAF Rule mode
-        required: True
-        type: str
-    package_id:
-        description:
-            - (Required for new resource) CIS WAF Rule package id
         required: True
         type: str
     id:
@@ -93,20 +93,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('package_id', 'str'),
+    ('mode', 'str'),
     ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('rule_id', 'str'),
-    ('mode', 'str'),
-    ('package_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'package_id',
+    'mode',
     'cis_id',
     'domain_id',
     'rule_id',
-    'mode',
-    'package_id',
 ]
 
 # Params for Data source
@@ -123,6 +123,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    package_id=dict(
+        required=False,
+        type='str'),
+    mode=dict(
+        required=False,
+        type='str'),
     cis_id=dict(
         required=False,
         type='str'),
@@ -130,12 +136,6 @@ module_args = dict(
         required=False,
         type='str'),
     rule_id=dict(
-        required=False,
-        type='str'),
-    mode=dict(
-        required=False,
-        type='str'),
-    package_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -203,7 +203,7 @@ def run_module():
         resource_type='ibm_cis_waf_rule',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.51.0',
+        ibm_provider_version='1.65.1',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

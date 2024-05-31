@@ -21,8 +21,8 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.51.0
-- Terraform v0.12.20
+- IBM-Cloud terraform-provider-ibm v1.65.1
+- Terraform v1.5.5
 
 
 
@@ -35,6 +35,22 @@ Parameters
 
   zone_name (False, str, None)
     Zone name identifier.
+
+
+  attachment_state (False, str, None)
+    Attachment state of the Volume.
+
+
+  encryption (False, str, None)
+    Encryption type of Volume.
+
+
+  operating_system_family (False, str, None)
+    Operating system family of the Volume.
+
+
+  operating_system_architecture (False, str, None)
+    Operating system architecture of the Volume.
 
 
   generation (False, int, 2)
