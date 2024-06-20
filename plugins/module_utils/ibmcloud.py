@@ -1134,8 +1134,7 @@ def fmt_tf_block(
         indent_space (int, optional): Number of spaces per indentation
         filter_None (bool, optional): Do not print any 'None' values
         validate_tl_params (list, optional): Only allow top level
-            parameters found on this list. If list is empty any top
-            level parameter is allowed.
+            parameters found on this list.
 
     Returns:
         str: Terraform block format
@@ -1148,7 +1147,7 @@ def fmt_tf_block(
     if validate_tl_params is not None and len(required_params) == 0:
         return output
     for key, value in arg_dict.items():
-        if len(validate_tl_params) > 0 and key not in validate_tl_params:
+        if key not in validate_tl_params:
             continue
         if key.endswith("_"):
             key = key[:-1]
