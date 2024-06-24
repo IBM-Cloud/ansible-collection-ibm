@@ -1145,8 +1145,6 @@ def fmt_tf_block(
     def indent(extra_count=0):
         return ' ' * ((indent_count + extra_count) * indent_spaces)
 
-    if validate_tl_params is not None and len(required_params) == 0:
-        return output
     for key, value in arg_dict.items():
         if len(validate_tl_params) > 0 and key not in validate_tl_params:
             continue
