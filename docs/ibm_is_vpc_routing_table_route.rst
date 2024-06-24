@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,40 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  routing_table (True, str, None)
-    (Required for new resource) The routing table identifier.
+  destination (True, str, None)
+    (Required for new resource) The destination of the route.
 
 
   next_hop (True, str, None)
     (Required for new resource) If action is deliver, the next hop that packets will be delivered to. For other action values, its address will be 0.0.0.0.
 
 
-  action (False, str, deliver)
-    The action to perform with a packet matching the route.
+  vpc (True, str, None)
+    (Required for new resource) The VPC identifier.
 
 
-  name (False, str, None)
-    The user-defined name for this route.
+  routing_table (True, str, None)
+    (Required for new resource) The routing table identifier.
 
 
   zone (True, str, None)
     (Required for new resource) The zone to apply the route to. Traffic from subnets in this zone will be subject to this route.
 
 
-  vpc (True, str, None)
-    (Required for new resource) The VPC identifier.
+  priority (False, int, None)
+    The route's priority. Smaller values have higher priority.
 
 
-  destination (True, str, None)
-    (Required for new resource) The destination of the route.
+  action (False, str, deliver)
+    The action to perform with a packet matching the route.
 
 
   advertise (False, bool, False)
     Indicates whether this route will be advertised to the ingress sources specified by the `advertise_routes_to` routing table property.
 
 
-  priority (False, int, None)
-    The route's priority. Smaller values have higher priority.
+  name (False, str, None)
+    The user-defined name for this route.
 
 
   id (False, str, None)
@@ -73,10 +73,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

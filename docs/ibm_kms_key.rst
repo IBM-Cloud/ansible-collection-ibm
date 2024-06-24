@@ -23,29 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  endpoint_type (False, str, None)
-    public or private
-
-
-  iv_value (False, str, None)
-    Only for imported root key
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
 
   payload (False, str, None)
     None
@@ -55,8 +39,8 @@ Parameters
     Only for imported root key
 
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  endpoint_type (False, str, None)
+    public or private
 
 
   description (False, str, None)
@@ -67,12 +51,28 @@ Parameters
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
 
 
+  key_ring_id (False, str, default)
+    Key Ring for the Key
+
+
+  force_delete (False, bool, False)
+    set to true to force delete the key
+
+
   instance_id (True, str, None)
     (Required for new resource) Key protect or hpcs instance GUID or CRN
 
 
-  key_ring_id (False, str, default)
-    Key Ring for the Key
+  standard_key (False, bool, False)
+    Standard key type
+
+
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  iv_value (False, str, None)
+    Only for imported root key
 
 
   id (False, str, None)
@@ -84,11 +84,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

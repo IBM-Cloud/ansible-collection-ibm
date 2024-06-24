@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  pi_cloud_instance_id (True, str, None)
+    (Required for new resource) The GUID of the service instance associated with an account.
+
+
   pi_placement_group_name (True, str, None)
-    (Required for new resource) Name of the placement group
+    (Required for new resource) The name of the placement group.
 
 
   pi_placement_group_policy (True, str, None)
-    (Required for new resource) Policy of the placement group
-
-
-  pi_cloud_instance_id (True, str, None)
-    (Required for new resource) PI cloud instance ID
+    (Required for new resource) The value of the group's affinity policy. Valid values are 'affinity' and 'anti-affinity'.
 
 
   id (False, str, None)

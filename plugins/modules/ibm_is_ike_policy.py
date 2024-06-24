@@ -18,18 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_ike_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    name:
+    authentication_algorithm:
         description:
-            - (Required for new resource) IKE name
+            - (Required for new resource) Authentication algorithm type
         required: True
         type: str
     encryption_algorithm:
         description:
             - (Required for new resource) Encryption alogorithm type
+        required: True
+        type: str
+    key_lifetime:
+        description:
+            - IKE Key lifetime
+        required: False
+        type: int
+        default: 28800
+    name:
+        description:
+            - (Required for new resource) IKE name
         required: True
         type: str
     dh_group:
@@ -47,17 +58,6 @@ options:
             - IKE version
         required: False
         type: int
-    authentication_algorithm:
-        description:
-            - (Required for new resource) Authentication algorithm type
-        required: True
-        type: str
-    key_lifetime:
-        description:
-            - IKE Key lifetime
-        required: False
-        type: int
-        default: 28800
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -71,17 +71,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -104,21 +93,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('encryption_algorithm', 'str'),
-    ('dh_group', 'int'),
     ('authentication_algorithm', 'str'),
+    ('encryption_algorithm', 'str'),
+    ('name', 'str'),
+    ('dh_group', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
+    'authentication_algorithm',
     'encryption_algorithm',
+    'key_lifetime',
+    'name',
     'dh_group',
     'resource_group',
     'ike_version',
-    'authentication_algorithm',
-    'key_lifetime',
 ]
 
 # Params for Data source
@@ -137,10 +126,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    authentication_algorithm=dict(
         required=False,
         type='str'),
     encryption_algorithm=dict(
+        required=False,
+        type='str'),
+    key_lifetime=dict(
+        required=False,
+        type='int'),
+    name=dict(
         required=False,
         type='str'),
     dh_group=dict(
@@ -152,12 +147,6 @@ module_args = dict(
     ike_version=dict(
         required=False,
         type='int'),
-    authentication_algorithm=dict(
-        required=False,
-        type='str'),
-    key_lifetime=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -166,11 +155,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -235,7 +219,7 @@ def run_module():
         resource_type='ibm_is_ike_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -244,7 +228,7 @@ def run_module():
             resource_type='ibm_is_ike_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  tags (False, list, None)
-    List of tags
-
-
-  maximum_member_count (True, int, None)
-    (Required for new resource) Maximum member count
-
-
-  virtual_server_id (False, int, None)
-    virtual server ID
-
 
   port (False, int, None)
     Port number
@@ -51,24 +39,16 @@ Parameters
     None
 
 
-  virtual_guest_member_template (True, list, None)
-    (Required for new resource) Virtual guest member template
-
-
-  network_vlan_ids (False, list, None)
-    List of network VLAN ids
-
-
   name (True, str, None)
     (Required for new resource) Name
 
 
-  regional_group (True, str, None)
-    (Required for new resource) regional group
-
-
   minimum_member_count (True, int, None)
     (Required for new resource) Minimum member count
+
+
+  maximum_member_count (True, int, None)
+    (Required for new resource) Maximum member count
 
 
   cooldown (True, int, None)
@@ -77,6 +57,26 @@ Parameters
 
   termination_policy (True, str, None)
     (Required for new resource) Termination policy
+
+
+  virtual_server_id (False, int, None)
+    virtual server ID
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  regional_group (True, str, None)
+    (Required for new resource) regional group
+
+
+  virtual_guest_member_template (True, list, None)
+    (Required for new resource) Virtual guest member template
+
+
+  network_vlan_ids (False, list, None)
+    List of network VLAN ids
 
 
   id (False, str, None)
@@ -88,11 +88,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

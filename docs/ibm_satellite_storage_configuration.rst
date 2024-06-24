@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,28 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  delete_assignments (False, bool, False)
+    Set to delete all assignments during a configuration destroy.
+
+
   config_name (True, str, None)
     (Required for new resource) Name of the Storage Configuration.
 
 
-  storage_template_version (True, str, None)
-    (Required for new resource) The Storage Template Version.
+  storage_template_name (True, str, None)
+    (Required for new resource) The Storage Template Name.
 
 
   user_config_parameters (True, dict, None)
     (Required for new resource) User Config Parameters to pass as a Map of string key-value.
 
 
-  delete_assignments (False, bool, False)
-    Set to delete all assignments during a configuration destroy.
+  user_secret_parameters (True, dict, None)
+    (Required for new resource) User Secret Parameters to pass as a Map of string key-value.
 
 
   location (True, str, None)
     (Required for new resource) Location ID.
 
 
-  user_secret_parameters (True, dict, None)
-    (Required for new resource) User Secret Parameters to pass as a Map of string key-value.
+  storage_template_version (True, str, None)
+    (Required for new resource) The Storage Template Version.
 
 
   storage_class_parameters (False, list, None)
@@ -61,10 +65,6 @@ Parameters
 
   update_assignments (False, bool, False)
     Set to update all assignments during a configuration update.
-
-
-  storage_template_name (True, str, None)
-    (Required for new resource) The Storage Template Name.
 
 
   id (False, str, None)
@@ -76,11 +76,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

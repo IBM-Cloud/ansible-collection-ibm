@@ -21,13 +21,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  vpc (False, str, None)
+    ID of the VPC
+
+
+  vpc_name (False, str, None)
+    Name of the VPC
+
+
+  vpc_crn (False, str, None)
+    CRN of the VPC
+
 
   zone (False, str, None)
     Name of the Zone
@@ -43,22 +55,6 @@ Parameters
 
   routing_table (False, str, None)
     ID of the routing table
-
-
-  vpc (False, str, None)
-    ID of the VPC
-
-
-  vpc_name (False, str, None)
-    Name of the VPC
-
-
-  vpc_crn (False, str, None)
-    CRN of the VPC
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

@@ -18,10 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_vpc_worker' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    replace_worker:
+        description:
+            - (Required for new resource) Worker name/id that needs to be replaced
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - ID of the resource group.
+        required: False
+        type: str
+    kube_config_path:
+        description:
+            - Path of downloaded cluster config
+        required: False
+        type: str
     ptx_timeout:
         description:
             - Timeout for checking ptx pods/status
@@ -38,33 +53,18 @@ options:
             - Name of Software Defined Storage
         required: False
         type: str
-    replace_worker:
-        description:
-            - (Required for new resource) Worker name/id that needs to be replaced
-        required: True
-        type: str
-    check_ptx_status:
-        description:
-            - Check portworx status after worker replace
-        required: False
-        type: bool
-        default: False
     sds_timeout:
         description:
             - Timeout for checking sds deployment/status
         required: False
         type: str
         default: 15m
-    resource_group_id:
+    check_ptx_status:
         description:
-            - ID of the resource group.
+            - Check portworx status after worker replace
         required: False
-        type: str
-    kube_config_path:
-        description:
-            - Path of downloaded cluster config
-        required: False
-        type: str
+        type: bool
+        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -91,20 +91,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster_name', 'str'),
     ('replace_worker', 'str'),
+    ('cluster_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'replace_worker',
+    'resource_group_id',
+    'kube_config_path',
     'ptx_timeout',
     'cluster_name',
     'sds',
-    'replace_worker',
-    'check_ptx_status',
     'sds_timeout',
-    'resource_group_id',
-    'kube_config_path',
+    'check_ptx_status',
 ]
 
 # Params for Data source
@@ -123,6 +123,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    replace_worker=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
+        required=False,
+        type='str'),
+    kube_config_path=dict(
+        required=False,
+        type='str'),
     ptx_timeout=dict(
         required=False,
         type='str'),
@@ -132,21 +141,12 @@ module_args = dict(
     sds=dict(
         required=False,
         type='str'),
-    replace_worker=dict(
+    sds_timeout=dict(
         required=False,
         type='str'),
     check_ptx_status=dict(
         required=False,
         type='bool'),
-    sds_timeout=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    kube_config_path=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -198,7 +198,7 @@ def run_module():
         resource_type='ibm_container_vpc_worker',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

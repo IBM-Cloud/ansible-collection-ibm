@@ -18,35 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    target:
+        description:
+            - The objects for the Schematics policy.
+        required: False
+        type: list
+        elements: dict
     parameter:
         description:
             - The parameter to tune the Schematics policy.
         required: False
         type: list
         elements: dict
-    tags:
-        description:
-            - Tags for the Schematics customization policy.
-        required: False
-        type: list
-        elements: str
     location:
         description:
             - List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Name of Schematics customization policy.
-        required: True
-        type: str
-    resource_group:
-        description:
-            - The resource group name for the policy.  By default, Policy will be created in `default` Resource Group.
         required: False
         type: str
     state_:
@@ -55,12 +45,22 @@ options:
         required: False
         type: list
         elements: dict
-    target:
+    name:
         description:
-            - The objects for the Schematics policy.
+            - (Required for new resource) Name of Schematics customization policy.
+        required: True
+        type: str
+    tags:
+        description:
+            - Tags for the Schematics customization policy.
         required: False
         type: list
-        elements: dict
+        elements: str
+    kind:
+        description:
+            - Policy kind or categories for managing and deriving policy decision  * `agent_assignment_policy` Agent assignment policy for job execution.
+        required: False
+        type: str
     scoped_resources:
         description:
             - List of scoped Schematics resources targeted by the policy.
@@ -72,9 +72,9 @@ options:
             - The description of Schematics customization policy.
         required: False
         type: str
-    kind:
+    resource_group:
         description:
-            - Policy kind or categories for managing and deriving policy decision  * `agent_assignment_policy` Agent assignment policy for job execution.
+            - The resource group name for the policy.  By default, Policy will be created in `default` Resource Group.
         required: False
         type: str
     id:
@@ -92,15 +92,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -128,16 +127,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'parameter',
-    'tags',
-    'location',
-    'name',
-    'resource_group',
-    'state_',
     'target',
+    'parameter',
+    'location',
+    'state_',
+    'name',
+    'tags',
+    'kind',
     'scoped_resources',
     'description',
-    'kind',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -156,31 +155,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    parameter=dict(
+    target=dict(
         required=False,
         elements='',
         type='list'),
-    tags=dict(
+    parameter=dict(
         required=False,
         elements='',
         type='list'),
     location=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
     state_=dict(
         required=False,
         elements='',
         type='list'),
-    target=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    tags=dict(
         required=False,
         elements='',
         type='list'),
+    kind=dict(
+        required=False,
+        type='str'),
     scoped_resources=dict(
         required=False,
         elements='',
@@ -188,7 +187,7 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    kind=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -256,7 +255,7 @@ def run_module():
         resource_type='ibm_schematics_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -265,7 +264,7 @@ def run_module():
             resource_type='ibm_schematics_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

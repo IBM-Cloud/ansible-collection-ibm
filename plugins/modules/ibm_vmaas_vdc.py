@@ -18,53 +18,53 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_vmaas_vdc' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    accept_language:
+        description:
+            - Language.
+        required: False
+        type: str
     name:
         description:
             - (Required for new resource) A human readable ID for the virtual data center (VDC).
         required: True
         type: str
-    fast_provisioning_enabled:
+    ram:
         description:
-            - Determines whether this virtual data center has fast provisioning enabled or not.
+            - The RAM usage limit on the virtual data center (VDC) in GB (1024^3 bytes). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
         required: False
-        type: bool
+        type: int
     rhel_byol:
         description:
             - Indicates if the RHEL VMs will be using the license from IBM or the customer will use their own license (BYOL).
         required: False
         type: bool
         default: False
-    windows_byol:
-        description:
-            - Indicates if the Microsoft Windows VMs will be using the license from IBM or the customer will use their own license (BYOL).
-        required: False
-        type: bool
-        default: False
-    ram:
-        description:
-            - The RAM usage limit on the virtual data center (VDC) in GB (1024^3 bytes). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
-        required: False
-        type: int
-    accept_language:
-        description:
-            - Language.
-        required: False
-        type: str
-    cpu:
-        description:
-            - The vCPU usage limit on the virtual data center (VDC). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
-        required: False
-        type: int
     director_site:
         description:
             - (Required for new resource) The Cloud Director site in which to deploy the virtual data center (VDC).
         required: True
         type: list
         elements: dict
+    fast_provisioning_enabled:
+        description:
+            - Determines whether this virtual data center has fast provisioning enabled or not.
+        required: False
+        type: bool
+    windows_byol:
+        description:
+            - Indicates if the Microsoft Windows VMs will be using the license from IBM or the customer will use their own license (BYOL).
+        required: False
+        type: bool
+        default: False
+    cpu:
+        description:
+            - The vCPU usage limit on the virtual data center (VDC). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -80,15 +80,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -117,14 +116,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'fast_provisioning_enabled',
-    'rhel_byol',
-    'windows_byol',
-    'ram',
     'accept_language',
-    'cpu',
+    'name',
+    'ram',
+    'rhel_byol',
     'director_site',
+    'fast_provisioning_enabled',
+    'windows_byol',
+    'cpu',
 ]
 
 # Params for Data source
@@ -133,8 +132,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'vmaas_vdc_id',
     'accept_language',
+    'vmaas_vdc_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -144,31 +143,31 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    accept_language=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=False,
         type='str'),
-    fast_provisioning_enabled=dict(
+    ram=dict(
+        required=False,
+        type='int'),
+    rhel_byol=dict(
         required=False,
         type='bool'),
-    rhel_byol=dict(
+    director_site=dict(
+        required=False,
+        elements='',
+        type='list'),
+    fast_provisioning_enabled=dict(
         required=False,
         type='bool'),
     windows_byol=dict(
         required=False,
         type='bool'),
-    ram=dict(
-        required=False,
-        type='int'),
-    accept_language=dict(
-        required=False,
-        type='str'),
     cpu=dict(
         required=False,
         type='int'),
-    director_site=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -234,7 +233,7 @@ def run_module():
         resource_type='ibm_vmaas_vdc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -243,7 +242,7 @@ def run_module():
             resource_type='ibm_vmaas_vdc',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

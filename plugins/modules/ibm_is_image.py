@@ -18,13 +18,59 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_image' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    name:
+        description:
+            - (Required for new resource) Image name
+        required: True
+        type: str
+    source_volume:
+        description:
+            - Image volume id
+        required: False
+        type: str
+    encrypted_data_key:
+        description:
+            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
+        required: False
+        type: str
+    obsolete:
+        description:
+            - Set to obsolete. You can set an image to `obsolete` as a warning to transition away from soon-to-be deleted images. You can't use obsolete images to provision resources.
+        required: False
+        type: bool
+    deprecation_at:
+        description:
+            - The deprecation date and time (UTC) for this image. If absent, no deprecation date and time has been set.
+        required: False
+        type: str
+    obsolescence_at:
+        description:
+            - The obsolescence date and time (UTC) for this image. If absent, no obsolescence date and time has been set.
+        required: False
+        type: str
+    access_tags:
+        description:
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
+    deprecate:
+        description:
+            - Set to deprecate. You can set an image to `deprecated` as a warning to transition away from soon-to-be obsolete images. Deprecated images can be used to provision resources.
+        required: False
+        type: bool
     encryption_key:
         description:
             - The CRN of the Key Protect Root Key or Hyper Protect Crypto Service Root Key for this resource
+        required: False
+        type: str
+    href:
+        description:
+            - Image Href value
         required: False
         type: str
     tags:
@@ -38,55 +84,9 @@ options:
             - Image Operating system
         required: False
         type: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    href:
-        description:
-            - Image Href value
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) Image name
-        required: True
-        type: str
-    deprecate:
-        description:
-            - Set to deprecate. You can set an image to `deprecated` as a warning to transition away from soon-to-be obsolete images. Deprecated images can be used to provision resources.
-        required: False
-        type: bool
-    obsolete:
-        description:
-            - Set to obsolete. You can set an image to `obsolete` as a warning to transition away from soon-to-be deleted images. You can't use obsolete images to provision resources.
-        required: False
-        type: bool
-    deprecation_at:
-        description:
-            - The deprecation date and time (UTC) for this image. If absent, no deprecation date and time has been set.
-        required: False
-        type: str
     resource_group:
         description:
             - The resource group for this image
-        required: False
-        type: str
-    encrypted_data_key:
-        description:
-            - A base64-encoded, encrypted representation of the key that was used to encrypt the data for this image
-        required: False
-        type: str
-    obsolescence_at:
-        description:
-            - The obsolescence date and time (UTC) for this image. If absent, no obsolescence date and time has been set.
-        required: False
-        type: str
-    source_volume:
-        description:
-            - Image volume id
         required: False
         type: str
     id:
@@ -102,17 +102,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -140,19 +129,19 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'encryption_key',
-    'tags',
-    'operating_system',
-    'access_tags',
-    'href',
     'name',
-    'deprecate',
+    'source_volume',
+    'encrypted_data_key',
     'obsolete',
     'deprecation_at',
-    'resource_group',
-    'encrypted_data_key',
     'obsolescence_at',
-    'source_volume',
+    'access_tags',
+    'deprecate',
+    'encryption_key',
+    'href',
+    'tags',
+    'operating_system',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -160,8 +149,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'visibility',
     'identifier',
+    'visibility',
     'name',
 ]
 
@@ -172,7 +161,35 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
+    source_volume=dict(
+        required=False,
+        type='str'),
+    encrypted_data_key=dict(
+        required=False,
+        type='str'),
+    obsolete=dict(
+        required=False,
+        type='bool'),
+    deprecation_at=dict(
+        required=False,
+        type='str'),
+    obsolescence_at=dict(
+        required=False,
+        type='str'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    deprecate=dict(
+        required=False,
+        type='bool'),
     encryption_key=dict(
+        required=False,
+        type='str'),
+    href=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -182,35 +199,7 @@ module_args = dict(
     operating_system=dict(
         required=False,
         type='str'),
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    href=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    deprecate=dict(
-        required=False,
-        type='bool'),
-    obsolete=dict(
-        required=False,
-        type='bool'),
-    deprecation_at=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
-        required=False,
-        type='str'),
-    encrypted_data_key=dict(
-        required=False,
-        type='str'),
-    obsolescence_at=dict(
-        required=False,
-        type='str'),
-    source_volume=dict(
         required=False,
         type='str'),
     id=dict(
@@ -221,11 +210,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -290,7 +274,7 @@ def run_module():
         resource_type='ibm_is_image',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -299,7 +283,7 @@ def run_module():
             resource_type='ibm_is_image',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

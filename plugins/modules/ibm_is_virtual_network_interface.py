@@ -18,38 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_virtual_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    auto_delete:
-        description:
-            - Indicates whether this virtual network interface will be automatically deleted when`target` is deleted.
-        required: False
-        type: bool
-    primary_ip:
-        description:
-            - The reserved IP for this virtual network interface.
-        required: False
-        type: list
-        elements: dict
-    security_groups:
-        description:
-            - The security groups for this virtual network interface.
-        required: False
-        type: list
-        elements: str
-    access_tags:
-        description:
-            - Access management tags for the vni instance
-        required: False
-        type: list
-        elements: str
-    name:
-        description:
-            - The name for this virtual network interface. The name is unique across all virtual network interfaces in the VPC.
-        required: False
-        type: str
     allow_ip_spoofing:
         description:
             - Indicates whether source IP spoofing is allowed on this interface. If `false`, source IP spoofing is prevented on this interface. If `true`, source IP spoofing is allowed on this interface.
@@ -66,9 +38,19 @@ options:
         required: False
         type: list
         elements: str
-    ips:
+    name:
         description:
-            - The reserved IPs bound to this virtual network interface.May be empty when `lifecycle_state` is `pending`.
+            - The name for this virtual network interface. The name is unique across all virtual network interfaces in the VPC.
+        required: False
+        type: str
+    subnet:
+        description:
+            - The associated subnet id.
+        required: False
+        type: str
+    primary_ip:
+        description:
+            - The reserved IP for this virtual network interface.
         required: False
         type: list
         elements: dict
@@ -77,11 +59,29 @@ options:
             - The resource group id for this virtual network interface.
         required: False
         type: str
-    subnet:
+    security_groups:
         description:
-            - The associated subnet id.
+            - The security groups for this virtual network interface.
         required: False
-        type: str
+        type: list
+        elements: str
+    auto_delete:
+        description:
+            - Indicates whether this virtual network interface will be automatically deleted when`target` is deleted.
+        required: False
+        type: bool
+    access_tags:
+        description:
+            - Access management tags for the vni instance
+        required: False
+        type: list
+        elements: str
+    ips:
+        description:
+            - The reserved IPs bound to this virtual network interface.May be empty when `lifecycle_state` is `pending`.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,17 +95,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -132,17 +121,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'auto_delete',
-    'primary_ip',
-    'security_groups',
-    'access_tags',
-    'name',
     'allow_ip_spoofing',
     'enable_infrastructure_nat',
     'tags',
-    'ips',
-    'resource_group',
+    'name',
     'subnet',
+    'primary_ip',
+    'resource_group',
+    'security_groups',
+    'auto_delete',
+    'access_tags',
+    'ips',
 ]
 
 # Params for Data source
@@ -161,24 +150,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    auto_delete=dict(
-        required=False,
-        type='bool'),
-    primary_ip=dict(
-        required=False,
-        elements='',
-        type='list'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     allow_ip_spoofing=dict(
         required=False,
         type='bool'),
@@ -189,16 +160,34 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    ips=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    subnet=dict(
+        required=False,
+        type='str'),
+    primary_ip=dict(
         required=False,
         elements='',
         type='list'),
     resource_group=dict(
         required=False,
         type='str'),
-    subnet=dict(
+    security_groups=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
+    auto_delete=dict(
+        required=False,
+        type='bool'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ips=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -207,11 +196,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -276,7 +260,7 @@ def run_module():
         resource_type='ibm_is_virtual_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -285,7 +269,7 @@ def run_module():
             resource_type='ibm_is_virtual_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

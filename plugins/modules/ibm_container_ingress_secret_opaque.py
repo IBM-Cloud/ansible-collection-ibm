@@ -18,18 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_ingress_secret_opaque' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    cluster:
-        description:
-            - (Required for new resource) Cluster ID or name
-        required: True
-        type: str
     secret_name:
         description:
             - (Required for new resource) Secret name
+        required: True
+        type: str
+    fields:
+        description:
+            - (Required for new resource) Fields of an opaque secret
+        required: True
+        type: list
+        elements: dict
+    cluster:
+        description:
+            - (Required for new resource) Cluster ID or name
         required: True
         type: str
     secret_namespace:
@@ -48,12 +54,6 @@ options:
             - Updates secret from secrets manager if value is changed (increment each usage)
         required: False
         type: int
-    fields:
-        description:
-            - (Required for new resource) Fields of an opaque secret
-        required: True
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -80,20 +80,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
     ('secret_name', 'str'),
-    ('secret_namespace', 'str'),
     ('fields', 'list'),
+    ('cluster', 'str'),
+    ('secret_namespace', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
     'secret_name',
+    'fields',
+    'cluster',
     'secret_namespace',
     'persistence',
     'update_secret',
-    'fields',
 ]
 
 # Params for Data source
@@ -116,10 +116,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
+    secret_name=dict(
         required=False,
         type='str'),
-    secret_name=dict(
+    fields=dict(
+        required=False,
+        elements='',
+        type='list'),
+    cluster=dict(
         required=False,
         type='str'),
     secret_namespace=dict(
@@ -131,10 +135,6 @@ module_args = dict(
     update_secret=dict(
         required=False,
         type='int'),
-    fields=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_ingress_secret_opaque',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -195,7 +195,7 @@ def run_module():
             resource_type='ibm_container_ingress_secret_opaque',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

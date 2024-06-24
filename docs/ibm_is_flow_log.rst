@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,8 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  target (True, str, None)
-    (Required for new resource) The target id that the flow log collector is to collect flow logs
+  name (True, str, None)
+    (Required for new resource) Flow Log Collector name
+
+
+  resource_group (False, str, None)
+    The resource group of flow log
+
+
+  storage_bucket (True, str, None)
+    (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
 
 
   active (False, bool, True)
@@ -43,20 +51,12 @@ Parameters
     Tags for the VPC Flow logs
 
 
-  name (True, str, None)
-    (Required for new resource) Flow Log Collector name
-
-
-  storage_bucket (True, str, None)
-    (Required for new resource) The Cloud Object Storage bucket name where the collected flows will be logged
-
-
-  resource_group (False, str, None)
-    The resource group of flow log
-
-
   access_tags (False, list, None)
     List of access management tags
+
+
+  target (True, str, None)
+    (Required for new resource) The target id that the flow log collector is to collect flow logs
 
 
   id (False, str, None)
@@ -65,10 +65,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

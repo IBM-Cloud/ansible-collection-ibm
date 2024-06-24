@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -33,16 +33,12 @@ Parameters
     Instance name
 
 
-  private_key (False, str, None)
-    Instance Private Key file
-
-
   passphrase (False, str, None)
     Passphrase for Instance Private Key file
 
 
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
+  private_key (False, str, None)
+    Instance Private Key file
 
 
   region (False, str, us-south)

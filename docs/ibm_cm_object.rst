@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -35,32 +35,8 @@ Parameters
     (Required for new resource) Catalog identifier.
 
 
-  label (False, str, None)
-    Display name in the requested language.
-
-
-  data (False, str, None)
-    Stringified map of data values for this object.
-
-
   kind (True, str, None)
     (Required for new resource) Kind of object. Options are "vpe", "preset_configuration", or "proxy_source".
-
-
-  label_i18n (False, dict, None)
-    A map of translated strings, by language code.
-
-
-  short_description (False, str, None)
-    Short description in the requested language.
-
-
-  short_description_i18n (False, dict, None)
-    A map of translated strings, by language code.
-
-
-  name (True, str, None)
-    (Required for new resource) The programmatic name of this object.
 
 
   parent_id (False, str, None)
@@ -69,6 +45,30 @@ Parameters
 
   tags (False, list, None)
     List of tags associated with this catalog.
+
+
+  short_description (False, str, None)
+    Short description in the requested language.
+
+
+  data (False, str, None)
+    Stringified map of data values for this object.
+
+
+  label_i18n (False, dict, None)
+    A map of translated strings, by language code.
+
+
+  label (False, str, None)
+    Display name in the requested language.
+
+
+  name (True, str, None)
+    (Required for new resource) The programmatic name of this object.
+
+
+  short_description_i18n (False, dict, None)
+    A map of translated strings, by language code.
 
 
   id (False, str, None)
@@ -80,11 +80,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

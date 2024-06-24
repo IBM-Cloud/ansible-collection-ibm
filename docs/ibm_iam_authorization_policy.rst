@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  target_resource_instance_id (False, str, None)
-    The target resource instance Id
-
-
-  target_resource_type (False, str, None)
-    Resource type of target service
-
-
-  description (False, str, None)
-    Description of the Policy
-
-
-  source_service_name (False, str, None)
-    The source service name
-
-
   roles (True, list, None)
     (Required for new resource) Role names of the policy definition
-
-
-  source_resource_instance_id (False, str, None)
-    The source resource instance Id
-
-
-  transaction_id (False, str, None)
-    Set transactionID for debug
 
 
   source_resource_group_id (False, str, None)
     The source resource group Id
 
 
-  source_resource_type (False, str, None)
-    Resource type of source service
-
-
-  target_resource_group_id (False, str, None)
-    The target resource group Id
+  target_resource_type (False, str, None)
+    Resource type of target service
 
 
   source_service_account (False, str, None)
     Account GUID of source service
 
 
-  target_service_name (False, str, None)
-    The target service name
+  target_resource_group_id (False, str, None)
+    The target resource group Id
+
+
+  source_resource_type (False, str, None)
+    Resource type of source service
 
 
   subject_attributes (False, list, None)
     Set subject attributes.
+
+
+  source_service_name (False, str, None)
+    The source service name
+
+
+  target_service_name (False, str, None)
+    The target service name
+
+
+  source_resource_instance_id (False, str, None)
+    The source resource instance Id
+
+
+  target_resource_instance_id (False, str, None)
+    The target resource instance Id
+
+
+  description (False, str, None)
+    Description of the Policy
+
+
+  transaction_id (False, str, None)
+    Set transactionID for debug
 
 
   resource_attributes (False, list, None)
@@ -96,11 +96,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

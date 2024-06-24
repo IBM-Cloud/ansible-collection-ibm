@@ -18,31 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    access_tags:
+    default_network_acl_name:
         description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    address_prefix_management:
-        description:
-            - Address Prefix management value
-        required: False
-        type: str
-        default: auto
-    no_sg_acl_rules:
-        description:
-            - Delete all rules attached with default security group and default acl
-        required: False
-        type: bool
-        default: False
-    default_security_group_name:
-        description:
-            - Default security group name
+            - Default Network ACL name
         required: False
         type: str
     default_routing_table_name:
@@ -55,11 +37,18 @@ options:
             - Resource group info
         required: False
         type: str
-    name:
+    classic_access:
         description:
-            - (Required for new resource) VPC name
-        required: True
-        type: str
+            - Set to true if classic access needs to enabled to VPC
+        required: False
+        type: bool
+        default: False
+    access_tags:
+        description:
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
     tags:
         description:
             - List of tags
@@ -72,16 +61,27 @@ options:
         required: False
         type: list
         elements: dict
-    classic_access:
+    address_prefix_management:
         description:
-            - Set to true if classic access needs to enabled to VPC
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    default_security_group_name:
+        description:
+            - Default security group name
+        required: False
+        type: str
+    no_sg_acl_rules:
+        description:
+            - Delete all rules attached with default security group and default acl
         required: False
         type: bool
         default: False
-    default_network_acl_name:
+    name:
         description:
-            - Default Network ACL name
-        required: False
+            - (Required for new resource) VPC name
+        required: True
         type: str
     id:
         description:
@@ -96,17 +96,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -134,17 +123,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'access_tags',
-    'address_prefix_management',
-    'no_sg_acl_rules',
-    'default_security_group_name',
+    'default_network_acl_name',
     'default_routing_table_name',
     'resource_group',
-    'name',
+    'classic_access',
+    'access_tags',
     'tags',
     'dns',
-    'classic_access',
-    'default_network_acl_name',
+    'address_prefix_management',
+    'default_security_group_name',
+    'no_sg_acl_rules',
+    'name',
 ]
 
 # Params for Data source
@@ -152,8 +141,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'identifier',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -163,17 +152,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    address_prefix_management=dict(
-        required=False,
-        type='str'),
-    no_sg_acl_rules=dict(
-        required=False,
-        type='bool'),
-    default_security_group_name=dict(
+    default_network_acl_name=dict(
         required=False,
         type='str'),
     default_routing_table_name=dict(
@@ -182,9 +161,13 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    name=dict(
+    classic_access=dict(
         required=False,
-        type='str'),
+        type='bool'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
         required=False,
         elements='',
@@ -193,10 +176,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    classic_access=dict(
+    address_prefix_management=dict(
+        required=False,
+        type='str'),
+    default_security_group_name=dict(
+        required=False,
+        type='str'),
+    no_sg_acl_rules=dict(
         required=False,
         type='bool'),
-    default_network_acl_name=dict(
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,11 +196,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -276,7 +260,7 @@ def run_module():
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -285,7 +269,7 @@ def run_module():
             resource_type='ibm_is_vpc',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

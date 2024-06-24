@@ -18,39 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group_manager_action' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    cron_spec:
-        description:
-            - The cron specification for a recurring scheduled action. Actions can be applied a maximum of one time within a 5 min period.
-        required: False
-        type: str
-    membership_count:
-        description:
-            - The number of members the instance group should have at the scheduled time.
-        required: False
-        type: int
-    max_membership_count:
-        description:
-            - The maximum number of members in a managed instance group
-        required: False
-        type: int
-    name:
-        description:
-            - instance group manager action name
-        required: False
-        type: str
     instance_group:
         description:
             - (Required for new resource) instance group ID
         required: True
-        type: str
-    run_at:
-        description:
-            - The date and time the scheduled action will run.
-        required: False
         type: str
     min_membership_count:
         description:
@@ -63,11 +38,36 @@ options:
             - The unique identifier for this instance group manager of type autoscale.
         required: False
         type: str
+    name:
+        description:
+            - instance group manager action name
+        required: False
+        type: str
     instance_group_manager:
         description:
             - (Required for new resource) Instance group manager ID of type scheduled
         required: True
         type: str
+    cron_spec:
+        description:
+            - The cron specification for a recurring scheduled action. Actions can be applied a maximum of one time within a 5 min period.
+        required: False
+        type: str
+    max_membership_count:
+        description:
+            - The maximum number of members in a managed instance group
+        required: False
+        type: int
+    run_at:
+        description:
+            - The date and time the scheduled action will run.
+        required: False
+        type: str
+    membership_count:
+        description:
+            - The number of members the instance group should have at the scheduled time.
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -81,17 +81,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -120,15 +109,15 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cron_spec',
-    'membership_count',
-    'max_membership_count',
-    'name',
     'instance_group',
-    'run_at',
     'min_membership_count',
     'target_manager',
+    'name',
     'instance_group_manager',
+    'cron_spec',
+    'max_membership_count',
+    'run_at',
+    'membership_count',
 ]
 
 # Params for Data source
@@ -145,34 +134,19 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'cron_spec': ['run_at'],
-    'membership_count': ['target_manager', 'max_membership_count', 'min_membership_count'],
-    'max_membership_count': ['membership_count'],
-    'run_at': ['cron_spec'],
     'min_membership_count': ['membership_count'],
     'target_manager': ['membership_count'],
+    'cron_spec': ['run_at'],
+    'max_membership_count': ['membership_count'],
+    'run_at': ['cron_spec'],
+    'membership_count': ['target_manager', 'max_membership_count', 'min_membership_count'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cron_spec=dict(
-        required=False,
-        type='str'),
-    membership_count=dict(
-        required=False,
-        type='int'),
-    max_membership_count=dict(
-        required=False,
-        type='int'),
-    name=dict(
-        required=False,
-        type='str'),
     instance_group=dict(
-        required=False,
-        type='str'),
-    run_at=dict(
         required=False,
         type='str'),
     min_membership_count=dict(
@@ -181,9 +155,24 @@ module_args = dict(
     target_manager=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     instance_group_manager=dict(
         required=False,
         type='str'),
+    cron_spec=dict(
+        required=False,
+        type='str'),
+    max_membership_count=dict(
+        required=False,
+        type='int'),
+    run_at=dict(
+        required=False,
+        type='str'),
+    membership_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -192,11 +181,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -261,7 +245,7 @@ def run_module():
         resource_type='ibm_is_instance_group_manager_action',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +254,7 @@ def run_module():
             resource_type='ibm_is_instance_group_manager_action',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

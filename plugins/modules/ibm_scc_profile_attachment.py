@@ -18,18 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_scc_profile_attachment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    status:
+        description:
+            - (Required for new resource) The status of an attachment evaluation.
+        required: True
+        type: str
+    notifications:
+        description:
+            - The request payload of the attachment notifications.
+        required: False
+        type: list
+        elements: dict
     name:
         description:
             - (Required for new resource) The name of the attachment.
-        required: True
-        type: str
-    schedule:
-        description:
-            - (Required for new resource) The schedule of an attachment evaluation.
         required: True
         type: str
     profile_id:
@@ -37,16 +43,12 @@ options:
             - (Required for new resource) The ID of the profile that is specified in the attachment.
         required: True
         type: str
-    status:
+    attachment_parameters:
         description:
-            - (Required for new resource) The status of an attachment evaluation.
-        required: True
-        type: str
-    description:
-        description:
-            - The description for the attachment.
+            - The profile parameters for the attachment.
         required: False
-        type: str
+        type: list
+        elements: dict
     instance_id:
         description:
             - (Required for new resource) The ID of the Security and Compliance Center instance.
@@ -58,18 +60,16 @@ options:
         required: True
         type: list
         elements: dict
-    notifications:
+    schedule:
         description:
-            - The request payload of the attachment notifications.
-        required: False
-        type: list
-        elements: dict
-    attachment_parameters:
+            - (Required for new resource) The schedule of an attachment evaluation.
+        required: True
+        type: str
+    description:
         description:
-            - The profile parameters for the attachment.
+            - The description for the attachment.
         required: False
-        type: list
-        elements: dict
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,15 +85,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -116,38 +115,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('schedule', 'str'),
-    ('profile_id', 'str'),
     ('status', 'str'),
+    ('name', 'str'),
+    ('profile_id', 'str'),
     ('instance_id', 'str'),
     ('scope', 'list'),
+    ('schedule', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'schedule',
-    'profile_id',
     'status',
-    'description',
+    'notifications',
+    'name',
+    'profile_id',
+    'attachment_parameters',
     'instance_id',
     'scope',
-    'notifications',
-    'attachment_parameters',
+    'schedule',
+    'description',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('profile_id', 'str'),
-    ('instance_id', 'str'),
     ('attachment_id', 'str'),
+    ('instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'profile_id',
-    'instance_id',
     'attachment_id',
+    'instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -157,21 +156,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    status=dict(
         required=False,
         type='str'),
-    schedule=dict(
+    notifications=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     profile_id=dict(
         required=False,
         type='str'),
-    status=dict(
+    attachment_parameters=dict(
         required=False,
-        type='str'),
-    description=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     instance_id=dict(
         required=False,
         type='str'),
@@ -179,14 +180,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    notifications=dict(
+    schedule=dict(
         required=False,
-        elements='',
-        type='list'),
-    attachment_parameters=dict(
+        type='str'),
+    description=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -252,7 +251,7 @@ def run_module():
         resource_type='ibm_scc_profile_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -261,7 +260,7 @@ def run_module():
             resource_type='ibm_scc_profile_attachment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

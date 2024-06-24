@@ -23,33 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  region (False, any, us-south)
-    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
-
-
-  username (True, str, None)
-    (Required for new resource) The username that is assigned to the secret.
-
-
-  password_generation_policy (False, list, None)
-    Policy for auto-generated passwords.
-
-
-  endpoint_type (False, str, None)
-    public or private.
-
-
-  instance_id (True, str, None)
-    (Required for new resource) The ID of the Secrets Manager instance.
-
 
   custom_metadata (False, dict, None)
     The secret metadata that a user can customize.
@@ -59,16 +39,16 @@ Parameters
     An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
 
 
-  expiration_date (False, str, None)
-    The date a secret is expired. The date format follows RFC 3339.
+  password (False, str, None)
+    The password that is assigned to the secret.
+
+
+  instance_id (True, str, None)
+    (Required for new resource) The ID of the Secrets Manager instance.
 
 
   labels (False, list, None)
     Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
-
-
-  name (True, str, None)
-    (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
 
 
   secret_group_id (False, str, None)
@@ -83,8 +63,28 @@ Parameters
     Determines whether Secrets Manager rotates your secrets automatically.
 
 
-  password (False, str, None)
-    The password that is assigned to the secret.
+  endpoint_type (False, str, None)
+    public or private.
+
+
+  expiration_date (False, str, None)
+    The date a secret is expired. The date format follows RFC 3339.
+
+
+  name (True, str, None)
+    (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+
+
+  username (True, str, None)
+    (Required for new resource) The username that is assigned to the secret.
+
+
+  password_generation_policy (False, list, None)
+    Policy for auto-generated passwords.
+
+
+  region (False, any, us-south)
+    The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   id (False, str, None)
@@ -96,11 +96,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   ibmcloud_api_key (True, any, None)

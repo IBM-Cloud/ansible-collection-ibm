@@ -18,50 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kms_key_with_policy_overrides' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    instance_id:
-        description:
-            - (Required for new resource) Key protect or HPCS instance GUID or CRN
-        required: True
-        type: str
-    payload:
-        description:
-            - None
-        required: False
-        type: str
-    key_name:
-        description:
-            - (Required for new resource) Key name
-        required: True
-        type: str
     standard_key:
         description:
             - Standard key type
         required: False
         type: bool
         default: False
-    iv_value:
+    instance_id:
         description:
-            - Only for imported root key
-        required: False
-        type: str
-    expiration_date:
-        description:
-            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
-        required: False
-        type: str
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
-    description:
-        description:
-            - description of the key
-        required: False
+            - (Required for new resource) Key protect or HPCS instance GUID or CRN
+        required: True
         type: str
     key_ring_id:
         description:
@@ -80,6 +50,36 @@ options:
         required: False
         type: bool
         default: False
+    expiration_date:
+        description:
+            - The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
+        required: False
+        type: str
+    description:
+        description:
+            - description of the key
+        required: False
+        type: str
+    key_name:
+        description:
+            - (Required for new resource) Key name
+        required: True
+        type: str
+    iv_value:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    payload:
+        description:
+            - None
+        required: False
+        type: str
+    encrypted_nonce:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
     rotation:
         description:
             - Data associated with the key rotation policy
@@ -107,15 +107,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -144,17 +143,17 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'payload',
-    'key_name',
     'standard_key',
-    'iv_value',
-    'expiration_date',
-    'encrypted_nonce',
-    'description',
+    'instance_id',
     'key_ring_id',
     'endpoint_type',
     'force_delete',
+    'expiration_date',
+    'description',
+    'key_name',
+    'iv_value',
+    'payload',
+    'encrypted_nonce',
     'rotation',
     'dual_auth_delete',
 ]
@@ -173,28 +172,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
-        required=False,
-        type='str'),
-    payload=dict(
-        required=False,
-        type='str'),
-    key_name=dict(
-        required=False,
-        type='str'),
     standard_key=dict(
         required=False,
         type='bool'),
-    iv_value=dict(
-        required=False,
-        type='str'),
-    expiration_date=dict(
-        required=False,
-        type='str'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    instance_id=dict(
         required=False,
         type='str'),
     key_ring_id=dict(
@@ -206,6 +187,24 @@ module_args = dict(
     force_delete=dict(
         required=False,
         type='bool'),
+    expiration_date=dict(
+        required=False,
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    key_name=dict(
+        required=False,
+        type='str'),
+    iv_value=dict(
+        required=False,
+        type='str'),
+    payload=dict(
+        required=False,
+        type='str'),
+    encrypted_nonce=dict(
+        required=False,
+        type='str'),
     rotation=dict(
         required=False,
         elements='',
@@ -279,7 +278,7 @@ def run_module():
         resource_type='ibm_kms_key_with_policy_overrides',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -17,10 +17,15 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_flow_logs' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    target_resource_type:
+        description:
+            - The target resource type of the flow log
+        required: False
+        type: str
     resource_group:
         description:
             - The unique identifier of the resource group this flow log belongs to
@@ -51,22 +56,6 @@ options:
             - The target id of the flow log
         required: False
         type: str
-    target_resource_type:
-        description:
-            - The target resource type of the flow log
-        required: False
-        type: str
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -93,13 +82,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'target_resource_type',
     'resource_group',
     'vpc',
     'vpc_name',
     'vpc_crn',
     'name',
     'target',
-    'target_resource_type',
 ]
 
 
@@ -110,6 +99,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    target_resource_type=dict(
+        required=False,
+        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -128,14 +120,6 @@ module_args = dict(
     target=dict(
         required=False,
         type='str'),
-    target_resource_type=dict(
-        required=False,
-        type='str'),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -177,7 +161,7 @@ def run_module():
         resource_type='ibm_is_flow_logs',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -33,12 +33,12 @@ Parameters
     None
 
 
-  list_bounded_services (False, bool, True)
-    If set to false bounded services won't be listed.
-
-
   resource_group_id (False, str, None)
     ID of the resource group.
+
+
+  list_bounded_services (False, bool, True)
+    If set to false bounded services won't be listed.
 
 
   name (False, str, None)

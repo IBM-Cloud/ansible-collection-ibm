@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_instance' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -26,27 +26,16 @@ options:
             - Instance name
         required: True
         type: str
-    private_key:
-        description:
-            - Instance Private Key file
-        required: False
-        type: str
     passphrase:
         description:
             - Passphrase for Instance Private Key file
         required: False
         type: str
-    generation:
+    private_key:
         description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
+            - Instance Private Key file
         required: False
-        type: int
+        type: str
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -75,8 +64,8 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
-    'private_key',
     'passphrase',
+    'private_key',
 ]
 
 
@@ -90,17 +79,12 @@ module_args = dict(
     name=dict(
         required=True,
         type='str'),
-    private_key=dict(
-        required=False,
-        type='str'),
     passphrase=dict(
         required=False,
         type='str'),
-    generation=dict(
-        type='int',
+    private_key=dict(
         required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
+        type='str'),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -142,7 +126,7 @@ def run_module():
         resource_type='ibm_is_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

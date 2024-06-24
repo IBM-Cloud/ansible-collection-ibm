@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_clone' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -27,6 +27,16 @@ options:
             - (Required for new resource) The GUID of the service instance associated with an account.
         required: True
         type: str
+    pi_target_storage_tier:
+        description:
+            - The storage tier for the cloned volume(s).
+        required: False
+        type: str
+    pi_replication_enabled:
+        description:
+            - Indicates whether the cloned volume should have replication enabled. If no value is provided, it will default to the replication status of the source volume(s).
+        required: False
+        type: bool
     pi_volume_clone_name:
         description:
             - (Required for new resource) The base name of the newly cloned volume(s).
@@ -38,16 +48,6 @@ options:
         required: True
         type: list
         elements: str
-    pi_target_storage_tier:
-        description:
-            - The storage tier for the cloned volume(s).
-        required: False
-        type: str
-    pi_replication_enabled:
-        description:
-            - Indicates whether the cloned volume should have replication enabled. If no value is provided, it will default to the replication status of the source volume(s).
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,10 +98,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
-    'pi_volume_clone_name',
-    'pi_volume_ids',
     'pi_target_storage_tier',
     'pi_replication_enabled',
+    'pi_volume_clone_name',
+    'pi_volume_ids',
 ]
 
 # Params for Data source
@@ -125,6 +125,12 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
+    pi_target_storage_tier=dict(
+        required=False,
+        type='str'),
+    pi_replication_enabled=dict(
+        required=False,
+        type='bool'),
     pi_volume_clone_name=dict(
         required=False,
         type='str'),
@@ -132,12 +138,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    pi_target_storage_tier=dict(
-        required=False,
-        type='str'),
-    pi_replication_enabled=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -196,7 +196,7 @@ def run_module():
         resource_type='ibm_pi_volume_clone',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -205,7 +205,7 @@ def run_module():
             resource_type='ibm_pi_volume_clone',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

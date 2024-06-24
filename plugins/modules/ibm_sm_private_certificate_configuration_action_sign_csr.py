@@ -18,31 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_private_certificate_configuration_action_sign_csr' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    serial_number:
+    common_name:
         description:
-            - The serial number to assign to the generated certificate. To assign a random serial number, you can omit this field.
+            - The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
         required: False
         type: str
-    instance_id:
-        description:
-            - (Required for new resource) The ID of the Secrets Manager instance.
-        required: True
-        type: str
-    ip_sans:
-        description:
-            - The IP Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
-        required: False
-        type: str
-    exclude_cn_from_sans:
-        description:
-            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
-        required: False
-        type: bool
-        default: False
     ttl:
         description:
             - The requested time-to-live (TTL) for certificates that are created by this CA. This field's value cannot be longer than the `max_ttl` limit.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).
@@ -54,23 +38,34 @@ options:
         required: False
         type: list
         elements: str
-    postal_code:
+    province:
         description:
-            - The postal code values to define in the subject field of the resulting certificate.
+            - The Province (ST) values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
-    name:
-        description:
-            - (Required for new resource) The name that uniquely identifies a configuration
-        required: True
-        type: str
     other_sans:
         description:
             - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names to define for the CA certificate.The alternative names must match the values that are specified in the `allowed_other_sans` field in the associated certificate template. The format is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`.
         required: False
         type: list
         elements: str
+    format:
+        description:
+            - The format of the returned data.
+        required: False
+        type: str
+    max_path_length:
+        description:
+            - The maximum path length to encode in the generated certificate. `-1` means no limit.If the signing certificate has a maximum path length set, the path length is set to one less than that of the signing certificate. A limit of `0` means a literal path length of zero.
+        required: False
+        type: int
+    exclude_cn_from_sans:
+        description:
+            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
+        required: False
+        type: bool
+        default: False
     permitted_dns_domains:
         description:
             - The allowed DNS domains or subdomains for the certificates that are to be signed and issued by this CA certificate.
@@ -83,30 +78,9 @@ options:
         required: False
         type: list
         elements: str
-    province:
+    locality:
         description:
-            - The Province (ST) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    region:
-        description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    format:
-        description:
-            - The format of the returned data.
-        required: False
-        type: str
-    max_path_length:
-        description:
-            - The maximum path length to encode in the generated certificate. `-1` means no limit.If the signing certificate has a maximum path length set, the path length is set to one less than that of the signing certificate. A limit of `0` means a literal path length of zero.
-        required: False
-        type: int
-    alt_names:
-        description:
-            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
+            - The Locality (L) values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
@@ -120,15 +94,46 @@ options:
             - Determines whether to use values from a certificate signing request (CSR) to complete a `private_cert_configuration_action_sign_csr` action.
         required: False
         type: bool
-    country:
+    postal_code:
         description:
-            - The Country (C) values to define in the subject field of the resulting certificate.
+            - The postal code values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
-    locality:
+    endpoint_type:
         description:
-            - The Locality (L) values to define in the subject field of the resulting certificate.
+            - public or private.
+        required: False
+        type: str
+    instance_id:
+        description:
+            - (Required for new resource) The ID of the Secrets Manager instance.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) The name that uniquely identifies a configuration
+        required: True
+        type: str
+    csr:
+        description:
+            - (Required for new resource) The certificate signing request.
+        required: True
+        type: str
+    alt_names:
+        description:
+            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
+        required: False
+        type: list
+        elements: str
+    ip_sans:
+        description:
+            - The IP Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
+        required: False
+        type: str
+    country:
+        description:
+            - The Country (C) values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
@@ -138,19 +143,14 @@ options:
         required: False
         type: list
         elements: str
-    csr:
+    serial_number:
         description:
-            - (Required for new resource) The certificate signing request.
-        required: True
-        type: str
-    common_name:
-        description:
-            - The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
+            - The serial number to assign to the generated certificate. To assign a random serial number, you can omit this field.
         required: False
         type: str
-    endpoint_type:
+    region:
         description:
-            - public or private.
+            - The region of the Secrets Manager instance.
         required: False
         type: str
     id:
@@ -168,15 +168,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -206,30 +205,30 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'serial_number',
-    'instance_id',
-    'ip_sans',
-    'exclude_cn_from_sans',
+    'common_name',
     'ttl',
     'organization',
-    'postal_code',
-    'name',
-    'other_sans',
-    'permitted_dns_domains',
-    'ou',
     'province',
-    'region',
+    'other_sans',
     'format',
     'max_path_length',
-    'alt_names',
+    'exclude_cn_from_sans',
+    'permitted_dns_domains',
+    'ou',
+    'locality',
     'uri_sans',
     'use_csr_values',
-    'country',
-    'locality',
-    'street_address',
-    'csr',
-    'common_name',
+    'postal_code',
     'endpoint_type',
+    'instance_id',
+    'name',
+    'csr',
+    'alt_names',
+    'ip_sans',
+    'country',
+    'street_address',
+    'serial_number',
+    'region',
 ]
 
 # Params for Data source
@@ -246,18 +245,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    serial_number=dict(
+    common_name=dict(
         required=False,
         type='str'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    ip_sans=dict(
-        required=False,
-        type='str'),
-    exclude_cn_from_sans=dict(
-        required=False,
-        type='bool'),
     ttl=dict(
         required=False,
         type='str'),
@@ -265,17 +255,23 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    postal_code=dict(
+    province=dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
     other_sans=dict(
         required=False,
         elements='',
         type='list'),
+    format=dict(
+        required=False,
+        type='str'),
+    max_path_length=dict(
+        required=False,
+        type='int'),
+    exclude_cn_from_sans=dict(
+        required=False,
+        type='bool'),
     permitted_dns_domains=dict(
         required=False,
         elements='',
@@ -284,20 +280,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    province=dict(
-        required=False,
-        elements='',
-        type='list'),
-    region=dict(
-        required=False,
-        type='str'),
-    format=dict(
-        required=False,
-        type='str'),
-    max_path_length=dict(
-        required=False,
-        type='int'),
-    alt_names=dict(
+    locality=dict(
         required=False,
         elements='',
         type='list'),
@@ -307,11 +290,30 @@ module_args = dict(
     use_csr_values=dict(
         required=False,
         type='bool'),
-    country=dict(
+    postal_code=dict(
         required=False,
         elements='',
         type='list'),
-    locality=dict(
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    csr=dict(
+        required=False,
+        type='str'),
+    alt_names=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ip_sans=dict(
+        required=False,
+        type='str'),
+    country=dict(
         required=False,
         elements='',
         type='list'),
@@ -319,13 +321,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    csr=dict(
+    serial_number=dict(
         required=False,
         type='str'),
-    common_name=dict(
-        required=False,
-        type='str'),
-    endpoint_type=dict(
+    region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -393,7 +392,7 @@ def run_module():
         resource_type='ibm_sm_private_certificate_configuration_action_sign_csr',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

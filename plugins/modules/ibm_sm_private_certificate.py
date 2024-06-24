@@ -18,101 +18,85 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_private_certificate' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    description:
-        description:
-            - An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
-        required: False
-        type: str
-    alt_names:
-        description:
-            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
-        required: False
-        type: list
-        elements: str
-    certificate_template:
-        description:
-            - (Required for new resource) The name of the certificate template.
-        required: True
-        type: str
     endpoint_type:
         description:
             - public or private.
         required: False
         type: str
-    name:
+    ttl:
         description:
-            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+            - The time-to-live (TTL) or lease duration to assign to generated credentials.For `iam_credentials` secrets, the TTL defines for how long each generated API key remains valid. The value can be either an integer that specifies the number of seconds, or the string representation of a duration, such as `120m` or `24h`.Minimum duration is 1 minute. Maximum is 90 days.
+        required: False
+        type: str
+    region:
+        description:
+            - The region of the Secrets Manager instance.
+        required: False
+        type: str
+    certificate_template:
+        description:
+            - (Required for new resource) The name of the certificate template.
         required: True
         type: str
-    secret_group_id:
+    exclude_cn_from_sans:
         description:
-            - A v4 UUID identifier, or `default` secret group.
+            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
         required: False
-        type: str
-    common_name:
-        description:
-            - (Required for new resource) The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
-        required: True
-        type: str
-    labels:
-        description:
-            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
-        required: False
-        type: list
-        elements: str
-    uri_sans:
-        description:
-            - The URI Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
-        required: False
-        type: str
-    csr:
-        description:
-            - The certificate signing request.
-        required: False
-        type: str
-    format:
-        description:
-            - The format of the returned data.
-        required: False
-        type: str
+        type: bool
     version_custom_metadata:
         description:
             - The secret version metadata that a user can customize.
         required: False
         type: dict
         elements: str
-    region:
+    alt_names:
         description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    rotation:
-        description:
-            - Determines whether Secrets Manager rotates your secrets automatically.
+            - With the Subject Alternative Name field, you can specify additional host names to be protected by a single SSL certificate.
         required: False
         type: list
-        elements: dict
+        elements: str
     custom_metadata:
         description:
             - The secret metadata that a user can customize.
         required: False
         type: dict
         elements: str
+    name:
+        description:
+            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+        required: True
+        type: str
+    common_name:
+        description:
+            - (Required for new resource) The Common Name (AKA CN) represents the server name that is protected by the SSL certificate.
+        required: True
+        type: str
+    uri_sans:
+        description:
+            - The URI Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
+        required: False
+        type: str
+    other_sans:
+        description:
+            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names to define for the CA certificate.The alternative names must match the values that are specified in the `allowed_other_sans` field in the associated certificate template. The format is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`.
+        required: False
+        type: list
+        elements: str
+    csr:
+        description:
+            - The certificate signing request.
+        required: False
+        type: str
     private_key_format:
         description:
             - The format of the generated private key.
         required: False
         type: str
         default: der
-    ttl:
-        description:
-            - The time-to-live (TTL) or lease duration to assign to generated credentials.For `iam_credentials` secrets, the TTL defines for how long each generated API key remains valid. The value can be either an integer that specifies the number of seconds, or the string representation of a duration, such as `120m` or `24h`.Minimum duration is 1 minute. Maximum is 90 days.
-        required: False
-        type: str
     instance_id:
         description:
             - (Required for new resource) The ID of the Secrets Manager instance.
@@ -123,17 +107,33 @@ options:
             - The IP Subject Alternative Names to define for the CA certificate, in a comma-delimited list.
         required: False
         type: str
-    other_sans:
+    rotation:
         description:
-            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names to define for the CA certificate.The alternative names must match the values that are specified in the `allowed_other_sans` field in the associated certificate template. The format is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`.
+            - Determines whether Secrets Manager rotates your secrets automatically.
+        required: False
+        type: list
+        elements: dict
+    format:
+        description:
+            - The format of the returned data.
+        required: False
+        type: str
+    description:
+        description:
+            - An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
+        required: False
+        type: str
+    secret_group_id:
+        description:
+            - A v4 UUID identifier, or `default` secret group.
+        required: False
+        type: str
+    labels:
+        description:
+            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
         required: False
         type: list
         elements: str
-    exclude_cn_from_sans:
-        description:
-            - Controls whether the common name is excluded from Subject Alternative Names (SANs).If the common name set to `true`, it is not included in DNS or Email SANs if they apply. This field can be useful if the common name is a human-readable identifier, instead of a hostname or an email address.
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -149,15 +149,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -188,27 +187,27 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
-    'alt_names',
-    'certificate_template',
     'endpoint_type',
-    'name',
-    'secret_group_id',
-    'common_name',
-    'labels',
-    'uri_sans',
-    'csr',
-    'format',
-    'version_custom_metadata',
-    'region',
-    'rotation',
-    'custom_metadata',
-    'private_key_format',
     'ttl',
+    'region',
+    'certificate_template',
+    'exclude_cn_from_sans',
+    'version_custom_metadata',
+    'alt_names',
+    'custom_metadata',
+    'name',
+    'common_name',
+    'uri_sans',
+    'other_sans',
+    'csr',
+    'private_key_format',
     'instance_id',
     'ip_sans',
-    'other_sans',
-    'exclude_cn_from_sans',
+    'rotation',
+    'format',
+    'description',
+    'secret_group_id',
+    'labels',
 ]
 
 # Params for Data source
@@ -218,11 +217,11 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'secret_group_name',
-    'region',
-    'endpoint_type',
     'instance_id',
+    'endpoint_type',
+    'secret_group_name',
     'secret_id',
+    'region',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -232,49 +231,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
-    alt_names=dict(
-        required=False,
-        elements='',
-        type='list'),
-    certificate_template=dict(
-        required=False,
-        type='str'),
     endpoint_type=dict(
         required=False,
         type='str'),
-    name=dict(
+    ttl=dict(
         required=False,
         type='str'),
-    secret_group_id=dict(
+    region=dict(
         required=False,
         type='str'),
-    common_name=dict(
+    certificate_template=dict(
         required=False,
         type='str'),
-    labels=dict(
+    exclude_cn_from_sans=dict(
         required=False,
-        elements='',
-        type='list'),
-    uri_sans=dict(
-        required=False,
-        type='str'),
-    csr=dict(
-        required=False,
-        type='str'),
-    format=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     version_custom_metadata=dict(
         required=False,
         elements='',
         type='dict'),
-    region=dict(
-        required=False,
-        type='str'),
-    rotation=dict(
+    alt_names=dict(
         required=False,
         elements='',
         type='list'),
@@ -282,10 +258,23 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    private_key_format=dict(
+    name=dict(
         required=False,
         type='str'),
-    ttl=dict(
+    common_name=dict(
+        required=False,
+        type='str'),
+    uri_sans=dict(
+        required=False,
+        type='str'),
+    other_sans=dict(
+        required=False,
+        elements='',
+        type='list'),
+    csr=dict(
+        required=False,
+        type='str'),
+    private_key_format=dict(
         required=False,
         type='str'),
     instance_id=dict(
@@ -294,13 +283,23 @@ module_args = dict(
     ip_sans=dict(
         required=False,
         type='str'),
-    other_sans=dict(
+    rotation=dict(
         required=False,
         elements='',
         type='list'),
-    exclude_cn_from_sans=dict(
+    format=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    description=dict(
+        required=False,
+        type='str'),
+    secret_group_id=dict(
+        required=False,
+        type='str'),
+    labels=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -366,7 +365,7 @@ def run_module():
         resource_type='ibm_sm_private_certificate',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -375,7 +374,7 @@ def run_module():
             resource_type='ibm_sm_private_certificate',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

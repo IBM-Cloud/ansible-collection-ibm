@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  replace_worker (True, str, None)
+    (Required for new resource) Worker name/id that needs to be replaced
+
+
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  kube_config_path (False, str, None)
+    Path of downloaded cluster config
+
 
   ptx_timeout (False, str, 15m)
     Timeout for checking ptx pods/status
@@ -43,24 +55,12 @@ Parameters
     Name of Software Defined Storage
 
 
-  replace_worker (True, str, None)
-    (Required for new resource) Worker name/id that needs to be replaced
-
-
-  check_ptx_status (False, bool, False)
-    Check portworx status after worker replace
-
-
   sds_timeout (False, str, 15m)
     Timeout for checking sds deployment/status
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
-
-
-  kube_config_path (False, str, None)
-    Path of downloaded cluster config
+  check_ptx_status (False, bool, False)
+    Check portworx status after worker replace
 
 
   id (False, str, None)

@@ -23,25 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
 
   algorithm (True, str, None)
     (Required for new resource) Load Balancer Pool algorithm
@@ -55,12 +43,8 @@ Parameters
     PROXY protocol setting for this pool
 
 
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
 
 
   health_timeout (True, int, None)
@@ -71,16 +55,32 @@ Parameters
     Health monitor Port the LB Pool
 
 
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
+
+
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
 
 
-  health_type (True, str, None)
-    (Required for new resource) Load Balancer health type
-
-
   session_persistence_app_cookie_name (False, str, None)
     Load Balancer Pool session persisence app cookie name.
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
+
+
+  health_type (True, str, None)
+    (Required for new resource) Load Balancer health type
 
 
   id (False, str, None)
@@ -89,10 +89,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

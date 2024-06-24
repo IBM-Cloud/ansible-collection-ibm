@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    gateway:
-        description:
-            - (Required for new resource) The Transit Gateway identifier
-        required: True
-        type: str
-    before:
-        description:
-            - Identifier of prefix filter that handles ordering
-        required: False
-        type: str
     le:
         description:
             - IP Prefix LE
@@ -42,21 +32,31 @@ options:
             - (Required for new resource) IP Prefix
         required: True
         type: str
-    connection_id:
-        description:
-            - (Required for new resource) The Transit Gateway Connection identifier
-        required: True
-        type: str
     action:
         description:
             - (Required for new resource) Whether to permit or deny the prefix filter
         required: True
+        type: str
+    before:
+        description:
+            - Identifier of prefix filter that handles ordering
+        required: False
         type: str
     ge:
         description:
             - IP Prefix GE
         required: False
         type: int
+    gateway:
+        description:
+            - (Required for new resource) The Transit Gateway identifier
+        required: True
+        type: str
+    connection_id:
+        description:
+            - (Required for new resource) The Transit Gateway Connection identifier
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -72,15 +72,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -103,34 +102,34 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('gateway', 'str'),
     ('prefix', 'str'),
-    ('connection_id', 'str'),
     ('action', 'str'),
+    ('gateway', 'str'),
+    ('connection_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'gateway',
-    'before',
     'le',
     'prefix',
-    'connection_id',
     'action',
+    'before',
     'ge',
+    'gateway',
+    'connection_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('filter_id', 'str'),
     ('gateway', 'str'),
     ('connection_id', 'str'),
-    ('filter_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'filter_id',
     'gateway',
     'connection_id',
-    'filter_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,27 +139,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    gateway=dict(
-        required=False,
-        type='str'),
-    before=dict(
-        required=False,
-        type='str'),
     le=dict(
         required=False,
         type='int'),
     prefix=dict(
         required=False,
         type='str'),
-    connection_id=dict(
+    action=dict(
         required=False,
         type='str'),
-    action=dict(
+    before=dict(
         required=False,
         type='str'),
     ge=dict(
         required=False,
         type='int'),
+    gateway=dict(
+        required=False,
+        type='str'),
+    connection_id=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -226,7 +225,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +234,7 @@ def run_module():
             resource_type='ibm_tg_connection_prefix_filter',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

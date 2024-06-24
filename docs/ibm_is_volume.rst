@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,8 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Volume name
+  tags (False, list, None)
+    UserTags for the volume instance
 
 
   encryption_key (False, str, None)
@@ -43,36 +43,36 @@ Parameters
     The unique identifier for this snapshot
 
 
-  delete_all_snapshots (False, bool, None)
-    Deletes all snapshots created from this volume
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
   capacity (False, int, None)
     Volume capacity value
-
-
-  access_tags (False, list, None)
-    Access management tags for the volume instance
-
-
-  profile (True, str, None)
-    (Required for new resource) Volume profile name
-
-
-  resource_group (False, str, None)
-    Resource group name
 
 
   iops (False, int, None)
     IOPS value for the Volume
 
 
-  tags (False, list, None)
-    UserTags for the volume instance
+  name (True, str, None)
+    (Required for new resource) Volume name
+
+
+  resource_group (False, str, None)
+    Resource group name
+
+
+  delete_all_snapshots (False, bool, None)
+    Deletes all snapshots created from this volume
+
+
+  profile (True, str, None)
+    (Required for new resource) Volume profile name
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  access_tags (False, list, None)
+    Access management tags for the volume instance
 
 
   id (False, str, None)
@@ -81,10 +81,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

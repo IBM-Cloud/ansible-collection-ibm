@@ -18,31 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_location' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    location:
-        description:
-            - (Required for new resource) A unique name for the new Satellite location
-        required: True
-        type: str
-    logging_account_id:
-        description:
-            - The account ID for IBM Log Analysis with LogDNA log forwarding
-        required: False
-        type: str
-    zones:
-        description:
-            - The names of at least three high availability zones to use for the location
-        required: False
-        type: list
-        elements: str
-    managed_from:
-        description:
-            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
-        required: True
-        type: str
     tags:
         description:
             - List of tags associated with resource instance
@@ -54,14 +33,19 @@ options:
             - A description of the new Satellite location
         required: False
         type: str
-    coreos_enabled:
+    logging_account_id:
         description:
-            - Enable Red Hat CoreOS features within the Satellite location
+            - The account ID for IBM Log Analysis with LogDNA log forwarding
         required: False
-        type: bool
-    cos_config:
+        type: str
+    location:
         description:
-            - COSBucket - IBM Cloud Object Storage bucket configuration details
+            - (Required for new resource) A unique name for the new Satellite location
+        required: True
+        type: str
+    cos_credentials:
+        description:
+            - COSAuthorization - IBM Cloud Object Storage authorization keys
         required: False
         type: list
         elements: dict
@@ -70,6 +54,16 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    managed_from:
+        description:
+            - (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
+        required: True
+        type: str
+    coreos_enabled:
+        description:
+            - Enable Red Hat CoreOS features within the Satellite location
+        required: False
+        type: bool
     service_subnet:
         description:
             - Custom subnet CIDR to provide private IP addresses for services
@@ -80,12 +74,18 @@ options:
             - Custom subnet CIDR to provide private IP addresses for pods
         required: False
         type: str
-    cos_credentials:
+    cos_config:
         description:
-            - COSAuthorization - IBM Cloud Object Storage authorization keys
+            - COSBucket - IBM Cloud Object Storage bucket configuration details
         required: False
         type: list
         elements: dict
+    zones:
+        description:
+            - The names of at least three high availability zones to use for the location
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -101,15 +101,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -138,18 +137,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'location',
-    'logging_account_id',
-    'zones',
-    'managed_from',
     'tags',
     'description',
-    'coreos_enabled',
-    'cos_config',
+    'logging_account_id',
+    'location',
+    'cos_credentials',
     'resource_group_id',
+    'managed_from',
+    'coreos_enabled',
     'service_subnet',
     'pod_subnet',
-    'cos_credentials',
+    'cos_config',
+    'zones',
 ]
 
 # Params for Data source
@@ -168,19 +167,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    location=dict(
-        required=False,
-        type='str'),
-    logging_account_id=dict(
-        required=False,
-        type='str'),
-    zones=dict(
-        required=False,
-        elements='',
-        type='list'),
-    managed_from=dict(
-        required=False,
-        type='str'),
     tags=dict(
         required=False,
         elements='',
@@ -188,23 +174,36 @@ module_args = dict(
     description=dict(
         required=False,
         type='str'),
-    coreos_enabled=dict(
+    logging_account_id=dict(
         required=False,
-        type='bool'),
-    cos_config=dict(
+        type='str'),
+    location=dict(
+        required=False,
+        type='str'),
+    cos_credentials=dict(
         required=False,
         elements='',
         type='list'),
     resource_group_id=dict(
         required=False,
         type='str'),
+    managed_from=dict(
+        required=False,
+        type='str'),
+    coreos_enabled=dict(
+        required=False,
+        type='bool'),
     service_subnet=dict(
         required=False,
         type='str'),
     pod_subnet=dict(
         required=False,
         type='str'),
-    cos_credentials=dict(
+    cos_config=dict(
+        required=False,
+        elements='',
+        type='list'),
+    zones=dict(
         required=False,
         elements='',
         type='list'),
@@ -273,7 +272,7 @@ def run_module():
         resource_type='ibm_satellite_location',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -282,7 +281,7 @@ def run_module():
             resource_type='ibm_satellite_location',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

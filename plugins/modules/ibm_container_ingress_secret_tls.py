@@ -18,10 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_ingress_secret_tls' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    update_secret:
+        description:
+            - Updates secret from secrets manager if value is changed (increment each usage)
+        required: False
+        type: int
+    cert_crn:
+        description:
+            - (Required for new resource) Certificate CRN
+        required: True
+        type: str
+    persistence:
+        description:
+            - Persistence of secret
+        required: False
+        type: bool
     cluster:
         description:
             - (Required for new resource) Cluster ID or name
@@ -37,21 +52,6 @@ options:
             - (Required for new resource) Secret namespace
         required: True
         type: str
-    cert_crn:
-        description:
-            - (Required for new resource) Certificate CRN
-        required: True
-        type: str
-    update_secret:
-        description:
-            - Updates secret from secrets manager if value is changed (increment each usage)
-        required: False
-        type: int
-    persistence:
-        description:
-            - Persistence of secret
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -78,20 +78,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('cert_crn', 'str'),
     ('cluster', 'str'),
     ('secret_name', 'str'),
     ('secret_namespace', 'str'),
-    ('cert_crn', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'update_secret',
+    'cert_crn',
+    'persistence',
     'cluster',
     'secret_name',
     'secret_namespace',
-    'cert_crn',
-    'update_secret',
-    'persistence',
 ]
 
 # Params for Data source
@@ -114,6 +114,15 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    update_secret=dict(
+        required=False,
+        type='int'),
+    cert_crn=dict(
+        required=False,
+        type='str'),
+    persistence=dict(
+        required=False,
+        type='bool'),
     cluster=dict(
         required=False,
         type='str'),
@@ -123,15 +132,6 @@ module_args = dict(
     secret_namespace=dict(
         required=False,
         type='str'),
-    cert_crn=dict(
-        required=False,
-        type='str'),
-    update_secret=dict(
-        required=False,
-        type='int'),
-    persistence=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_container_ingress_secret_tls',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -192,7 +192,7 @@ def run_module():
             resource_type='ibm_container_ingress_secret_tls',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

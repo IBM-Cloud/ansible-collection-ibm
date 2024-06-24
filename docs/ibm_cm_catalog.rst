@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,24 +31,36 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  tags (False, list, None)
+    List of tags associated with this catalog.
+
+
+  disabled (False, bool, None)
+    Denotes whether a catalog is disabled.
+
+
   resource_group_id (False, str, None)
     Resource group id the catalog is owned by.
 
 
-  label_i18n (False, dict, None)
-    A map of translated strings, by language code.
+  label (False, str, None)
+    Display Name in the requested language.
 
 
   short_description (False, str, None)
     Description in the requested language.
 
 
-  catalog_banner_url (False, str, None)
-    URL for a banner image for this catalog.
+  kind (False, str, None)
+    Kind of catalog. Supported kinds are offering and vpe.
 
 
-  tags (False, list, None)
-    List of tags associated with this catalog.
+  target_account_contexts (False, list, None)
+    List of target accounts contexts on this catalog.
+
+
+  label_i18n (False, dict, None)
+    A map of translated strings, by language code.
 
 
   features (False, list, None)
@@ -59,24 +71,12 @@ Parameters
     A map of translated strings, by language code.
 
 
-  kind (False, str, None)
-    Kind of catalog. Supported kinds are offering and vpe.
-
-
-  disabled (False, bool, None)
-    Denotes whether a catalog is disabled.
+  catalog_banner_url (False, str, None)
+    URL for a banner image for this catalog.
 
 
   metadata (False, dict, None)
     Catalog specific metadata.
-
-
-  target_account_contexts (False, list, None)
-    List of target accounts contexts on this catalog.
-
-
-  label (False, str, None)
-    Display Name in the requested language.
 
 
   catalog_icon_url (False, str, None)
@@ -92,11 +92,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

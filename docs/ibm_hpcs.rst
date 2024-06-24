@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  units (True, int, None)
-    (Required for new resource) The number of operational crypto units for your service instance
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the HPCS Instance
-
-
-  revocation_threshold (True, int, None)
-    (Required for new resource) Revocation Threshold Value
-
-
-  admins (True, list, None)
-    (Required for new resource) Crypto Unit Administrators
-
-
   signature_threshold (True, int, None)
     (Required for new resource) Signature Threshold Value
-
-
-  resource_group_id (False, str, None)
-    The resource group id
-
-
-  name (True, str, None)
-    (Required for new resource) A name for the HPCS instance
-
-
-  tags (False, list, None)
-    None
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the HPCS instance available
-
-
-  failover_units (False, int, None)
-    The number of failover crypto units for your service instance
 
 
   service (False, str, hs-crypto)
     The name of the service offering `hs-crypto`
 
 
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  admins (True, list, None)
+    (Required for new resource) Crypto Unit Administrators
+
+
+  revocation_threshold (True, int, None)
+    (Required for new resource) Revocation Threshold Value
+
+
+  failover_units (False, int, None)
+    The number of failover crypto units for your service instance
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the HPCS Instance
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are `public-and-private`, `private-only`.
+
+
+  units (True, int, None)
+    (Required for new resource) The number of operational crypto units for your service instance
+
+
   signature_server_url (False, str, None)
     URL of signing service
+
+
+  name (True, str, None)
+    (Required for new resource) A name for the HPCS instance
+
+
+  location (True, str, None)
+    (Required for new resource) The location where the HPCS instance available
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)
@@ -92,11 +92,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

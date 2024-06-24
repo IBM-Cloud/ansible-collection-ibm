@@ -17,31 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_iam_account_settings_template_assignment' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    include_history:
-        description:
-            - Defines if the entity history is included in the response.
-        required: False
-        type: bool
-        default: False
-    template_id:
-        description:
-            - Template Id.
-        required: False
-        type: str
-    target_type:
-        description:
-            - Assignment target type.
-        required: False
-        type: str
-    target:
-        description:
-            - Assignment target.
-        required: False
-        type: str
     template_version:
         description:
             - Template version.
@@ -52,17 +31,37 @@ options:
             - ID of the Assignment Record.
         required: True
         type: str
+    include_history:
+        description:
+            - Defines if the entity history is included in the response.
+        required: False
+        type: bool
+        default: False
+    target_type:
+        description:
+            - Assignment target type.
+        required: False
+        type: str
+    target:
+        description:
+            - Assignment target.
+        required: False
+        type: str
+    template_id:
+        description:
+            - Template Id.
+        required: False
+        type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -90,12 +89,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'include_history',
-    'template_id',
-    'target_type',
-    'target',
     'template_version',
     'assignment_id',
+    'include_history',
+    'target_type',
+    'target',
+    'template_id',
 ]
 
 
@@ -106,23 +105,23 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    template_version=dict(
+        required=False,
+        type='int'),
+    assignment_id=dict(
+        required=True,
+        type='str'),
     include_history=dict(
         required=False,
         type='bool'),
-    template_id=dict(
-        required=False,
-        type='str'),
     target_type=dict(
         required=False,
         type='str'),
     target=dict(
         required=False,
         type='str'),
-    template_version=dict(
+    template_id=dict(
         required=False,
-        type='int'),
-    assignment_id=dict(
-        required=True,
         type='str'),
     iaas_classic_username=dict(
         type='str',
@@ -158,7 +157,7 @@ def run_module():
         resource_type='ibm_iam_account_settings_template_assignment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,16 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  match_user_tags (True, list, None)
-    (Required for new resource) The user tags this backup policy applies to. Resources that have both a matching user tag and a matching type will be subject to the backup policy.
+  match_resource_type (False, str, volume)
+    A resource type this backup policy applies to. Resources that have both a matching type and a matching user tag will be subject to the backup policy.
 
 
   resource_group (False, str, None)
     The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
 
 
-  match_resource_type (False, str, volume)
-    A resource type this backup policy applies to. Resources that have both a matching type and a matching user tag will be subject to the backup policy.
+  match_user_tags (True, list, None)
+    (Required for new resource) The user tags this backup policy applies to. Resources that have both a matching user tag and a matching type will be subject to the backup policy.
 
 
   name (True, str, None)
@@ -61,10 +61,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

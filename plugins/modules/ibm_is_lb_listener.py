@@ -18,40 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    certificate_instance:
-        description:
-            - certificate instance for the Loadbalancer
-        required: False
-        type: str
-    accept_proxy_protocol:
-        description:
-            - Listener will forward proxy protocol
-        required: False
-        type: bool
-    port:
-        description:
-            - Loadbalancer listener port
-        required: False
-        type: int
-    protocol:
-        description:
-            - (Required for new resource) Loadbalancer protocol
-        required: True
-        type: str
-    default_pool:
-        description:
-            - Loadbalancer default pool info
-        required: False
-        type: str
     idle_connection_timeout:
         description:
             - idle connection timeout of listener
         required: False
         type: int
+    accept_proxy_protocol:
+        description:
+            - Listener will forward proxy protocol
+        required: False
+        type: bool
     port_min:
         description:
             - The inclusive lower bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener.
@@ -62,6 +42,16 @@ options:
             - The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
         required: False
         type: int
+    lb:
+        description:
+            - (Required for new resource) Loadbalancer listener ID
+        required: True
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Loadbalancer protocol
+        required: True
+        type: str
     https_redirect:
         description:
             - If present, the target listener that requests are redirected to.
@@ -73,10 +63,20 @@ options:
             - Connection limit for Loadbalancer
         required: False
         type: int
-    lb:
+    default_pool:
         description:
-            - (Required for new resource) Loadbalancer listener ID
-        required: True
+            - Loadbalancer default pool info
+        required: False
+        type: str
+    port:
+        description:
+            - Loadbalancer listener port
+        required: False
+        type: int
+    certificate_instance:
+        description:
+            - certificate instance for the Loadbalancer
+        required: False
         type: str
     id:
         description:
@@ -91,17 +91,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -124,23 +113,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('protocol', 'str'),
     ('lb', 'str'),
+    ('protocol', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'certificate_instance',
-    'accept_proxy_protocol',
-    'port',
-    'protocol',
-    'default_pool',
     'idle_connection_timeout',
+    'accept_proxy_protocol',
     'port_min',
     'port_max',
+    'lb',
+    'protocol',
     'https_redirect',
     'connection_limit',
-    'lb',
+    'default_pool',
+    'port',
+    'certificate_instance',
 ]
 
 # Params for Data source
@@ -162,30 +151,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    certificate_instance=dict(
-        required=False,
-        type='str'),
-    accept_proxy_protocol=dict(
-        required=False,
-        type='bool'),
-    port=dict(
-        required=False,
-        type='int'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    default_pool=dict(
-        required=False,
-        type='str'),
     idle_connection_timeout=dict(
         required=False,
         type='int'),
+    accept_proxy_protocol=dict(
+        required=False,
+        type='bool'),
     port_min=dict(
         required=False,
         type='int'),
     port_max=dict(
         required=False,
         type='int'),
+    lb=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
     https_redirect=dict(
         required=False,
         elements='',
@@ -193,7 +176,13 @@ module_args = dict(
     connection_limit=dict(
         required=False,
         type='int'),
-    lb=dict(
+    default_pool=dict(
+        required=False,
+        type='str'),
+    port=dict(
+        required=False,
+        type='int'),
+    certificate_instance=dict(
         required=False,
         type='str'),
     id=dict(
@@ -204,11 +193,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -273,7 +257,7 @@ def run_module():
         resource_type='ibm_is_lb_listener',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -282,7 +266,7 @@ def run_module():
             resource_type='ibm_is_lb_listener',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

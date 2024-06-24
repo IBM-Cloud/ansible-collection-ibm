@@ -18,13 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_enterprise_account' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    account_id:
+    options:
         description:
-            - The source account id of account to be imported
+            - By default create_iam_service_id_with_apikey_and_owner_policies is turned off for a newly created child account. You can enable this property by passing 'true' in this boolean field. IAM service id has account owner IAM policies and the API key associated with it can generate a token and setup resources in the account.
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - The name of the account. This field must have 3 - 60 characters.
         required: False
         type: str
     owner_iam_id:
@@ -32,14 +38,19 @@ options:
             - The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
         required: False
         type: str
-    name:
-        description:
-            - The name of the account. This field must have 3 - 60 characters.
-        required: False
-        type: str
     enterprise_account_id:
         description:
             - The enterprise account ID.
+        required: False
+        type: str
+    enterprise_id:
+        description:
+            - The enterprise ID that the account is a part of.
+        required: False
+        type: str
+    account_id:
+        description:
+            - The source account id of account to be imported
         required: False
         type: str
     parent:
@@ -47,20 +58,9 @@ options:
             - (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
         required: True
         type: str
-    enterprise_id:
-        description:
-            - The enterprise ID that the account is a part of.
-        required: False
-        type: str
     traits:
         description:
             - The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the enterprise. This is an optional field.
-        required: False
-        type: list
-        elements: dict
-    options:
-        description:
-            - By default create_iam_service_id_with_apikey_and_owner_policies is turned off for a newly created child account. You can enable this property by passing 'true' in this boolean field. IAM service id has account owner IAM policies and the API key associated with it can generate a token and setup resources in the account.
         required: False
         type: list
         elements: dict
@@ -79,15 +79,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -115,14 +114,14 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'account_id',
-    'owner_iam_id',
-    'name',
-    'enterprise_account_id',
-    'parent',
-    'enterprise_id',
-    'traits',
     'options',
+    'name',
+    'owner_iam_id',
+    'enterprise_account_id',
+    'enterprise_id',
+    'account_id',
+    'parent',
+    'traits',
 ]
 
 # Params for Data source
@@ -139,29 +138,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    account_id=dict(
+    options=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     owner_iam_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     enterprise_account_id=dict(
-        required=False,
-        type='str'),
-    parent=dict(
         required=False,
         type='str'),
     enterprise_id=dict(
         required=False,
         type='str'),
-    traits=dict(
+    account_id=dict(
         required=False,
-        elements='',
-        type='list'),
-    options=dict(
+        type='str'),
+    parent=dict(
+        required=False,
+        type='str'),
+    traits=dict(
         required=False,
         elements='',
         type='list'),
@@ -230,7 +229,7 @@ def run_module():
         resource_type='ibm_enterprise_account',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

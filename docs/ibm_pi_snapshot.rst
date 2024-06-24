@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_instance_name (True, str, None)
-    (Required for new resource) Instance name / id of the pvm
-
-
   pi_volume_ids (False, list, None)
-    List of PI volumes
-
-
-  pi_snap_shot_name (True, str, None)
-    (Required for new resource) Unique name of the snapshot
-
-
-  pi_description (False, str, None)
-    Description of the PVM instance snapshot
+    A list of volume IDs of the instance that will be part of the snapshot. If none are provided, then all the volumes of the instance will be part of the snapshot.
 
 
   pi_cloud_instance_id (True, str, None)
-    (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+    (Required for new resource) The GUID of the service instance associated with an account.
+
+
+  pi_description (False, str, None)
+    Description of the PVM instance snapshot.
+
+
+  pi_instance_name (True, str, None)
+    (Required for new resource) The name of the instance you want to take a snapshot of.
+
+
+  pi_snap_shot_name (True, str, None)
+    (Required for new resource) The unique name of the snapshot.
 
 
   id (False, str, None)

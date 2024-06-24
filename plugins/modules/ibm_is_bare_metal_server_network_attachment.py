@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server_network_attachment' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -27,19 +27,14 @@ options:
             - (Required for new resource) The bare metal server identifier.
         required: True
         type: str
+    vlan:
+        description:
+            - Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this attachment.
+        required: False
+        type: int
     name:
         description:
             - The name for this bare metal server network attachment. The name is unique across all network attachments for the bare metal server.
-        required: False
-        type: str
-    allow_to_float:
-        description:
-            - Indicates if the bare metal server network attachment can automatically float to any other server within the same `resource_group`. The bare metal server network attachment will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to bare metal server network attachments with `vlan` interface type.
-        required: False
-        type: bool
-    interface_type:
-        description:
-            - The network attachment's interface type:- `pci`: a physical PCI device which can only be created or deleted when the bare metal  server is stopped  - Has an `allowed_vlans` property which controls the VLANs that will be permitted    to use the PCI attachment  - Cannot directly use an IEEE 802.1q VLAN tag.- `vlan`: a virtual device, used through a `pci` device that has the `vlan` in its  array of `allowed_vlans`.  - Must use an IEEE 802.1q tag.The enumerated values for this property are expected to expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the resource on which the unexpected property value was encountered.
         required: False
         type: str
     virtual_network_interface:
@@ -48,23 +43,28 @@ options:
         required: False
         type: list
         elements: dict
-    allowed_vlans:
-        description:
-            - Indicates what VLAN IDs (for VLAN type only) can use this physical (PCI type) attachment.
-        required: False
-        type: list
-        elements: int
-    vlan:
-        description:
-            - Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this attachment.
-        required: False
-        type: int
     hard_stop:
         description:
             - Only used for PCI network attachments, whether to hard/immediately stop server
         required: False
         type: bool
         default: True
+    interface_type:
+        description:
+            - The network attachment's interface type:- `pci`: a physical PCI device which can only be created or deleted when the bare metal  server is stopped  - Has an `allowed_vlans` property which controls the VLANs that will be permitted    to use the PCI attachment  - Cannot directly use an IEEE 802.1q VLAN tag.- `vlan`: a virtual device, used through a `pci` device that has the `vlan` in its  array of `allowed_vlans`.  - Must use an IEEE 802.1q tag.The enumerated values for this property are expected to expand in the future. When processing this property, check for and log unknown values. Optionally halt processing and surface the error, or bypass the resource on which the unexpected property value was encountered.
+        required: False
+        type: str
+    allowed_vlans:
+        description:
+            - Indicates what VLAN IDs (for VLAN type only) can use this physical (PCI type) attachment.
+        required: False
+        type: list
+        elements: int
+    allow_to_float:
+        description:
+            - Indicates if the bare metal server network attachment can automatically float to any other server within the same `resource_group`. The bare metal server network attachment will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to bare metal server network attachments with `vlan` interface type.
+        required: False
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -78,17 +78,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -117,30 +106,30 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bare_metal_server',
-    'name',
-    'allow_to_float',
-    'interface_type',
-    'virtual_network_interface',
-    'allowed_vlans',
     'vlan',
+    'name',
+    'virtual_network_interface',
     'hard_stop',
+    'interface_type',
+    'allowed_vlans',
+    'allow_to_float',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('bare_metal_server', 'str'),
     ('network_attachment', 'str'),
+    ('bare_metal_server', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'bare_metal_server',
     'network_attachment',
+    'bare_metal_server',
 ]
 
 TL_CONFLICTS_MAP = {
-    'allow_to_float': ['allowed_vlans'],
-    'allowed_vlans': ['vlan'],
     'vlan': ['allowed_vlans'],
+    'allowed_vlans': ['vlan'],
+    'allow_to_float': ['allowed_vlans'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -150,27 +139,27 @@ module_args = dict(
     bare_metal_server=dict(
         required=False,
         type='str'),
+    vlan=dict(
+        required=False,
+        type='int'),
     name=dict(
-        required=False,
-        type='str'),
-    allow_to_float=dict(
-        required=False,
-        type='bool'),
-    interface_type=dict(
         required=False,
         type='str'),
     virtual_network_interface=dict(
         required=False,
         elements='',
         type='list'),
+    hard_stop=dict(
+        required=False,
+        type='bool'),
+    interface_type=dict(
+        required=False,
+        type='str'),
     allowed_vlans=dict(
         required=False,
         elements='',
         type='list'),
-    vlan=dict(
-        required=False,
-        type='int'),
-    hard_stop=dict(
+    allow_to_float=dict(
         required=False,
         type='bool'),
     id=dict(
@@ -181,11 +170,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -250,7 +234,7 @@ def run_module():
         resource_type='ibm_is_bare_metal_server_network_attachment',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -259,7 +243,7 @@ def run_module():
             resource_type='ibm_is_bare_metal_server_network_attachment',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

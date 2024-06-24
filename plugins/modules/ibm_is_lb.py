@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -28,15 +28,55 @@ options:
         required: False
         type: str
         default: public
+    name:
+        description:
+            - (Required for new resource) Load Balancer name
+        required: True
+        type: str
+    security_groups:
+        description:
+            - Load Balancer securitygroups list
+        required: False
+        type: list
+        elements: str
+    resource_group:
+        description:
+            - None
+        required: False
+        type: str
+    route_mode:
+        description:
+            - Indicates whether route mode is enabled for this load balancer
+        required: False
+        type: bool
+        default: False
+    logging:
+        description:
+            - Logging of Load Balancer
+        required: False
+        type: bool
+        default: False
     subnets:
         description:
             - (Required for new resource) Load Balancer subnets list
         required: True
         type: list
         elements: str
-    security_groups:
+    tags:
         description:
-            - Load Balancer securitygroups list
+            - None
+        required: False
+        type: list
+        elements: str
+    dns:
+        description:
+            - The DNS configuration for this load balancer.
+        required: False
+        type: list
+        elements: dict
+    access_tags:
+        description:
+            - List of access management tags
         required: False
         type: list
         elements: str
@@ -45,46 +85,6 @@ options:
             - The profile to use for this load balancer.
         required: False
         type: str
-    tags:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    route_mode:
-        description:
-            - Indicates whether route mode is enabled for this load balancer
-        required: False
-        type: bool
-        default: False
-    name:
-        description:
-            - (Required for new resource) Load Balancer name
-        required: True
-        type: str
-    dns:
-        description:
-            - The DNS configuration for this load balancer.
-        required: False
-        type: list
-        elements: dict
-    resource_group:
-        description:
-            - None
-        required: False
-        type: str
-    logging:
-        description:
-            - Logging of Load Balancer
-        required: False
-        type: bool
-        default: False
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -98,17 +98,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -131,23 +120,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('subnets', 'list'),
     ('name', 'str'),
+    ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'type',
-    'subnets',
-    'security_groups',
-    'profile',
-    'tags',
-    'access_tags',
-    'route_mode',
     'name',
-    'dns',
+    'security_groups',
     'resource_group',
+    'route_mode',
     'logging',
+    'subnets',
+    'tags',
+    'dns',
+    'access_tags',
+    'profile',
 ]
 
 # Params for Data source
@@ -160,8 +149,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'profile': ['logging'],
     'logging': ['profile'],
+    'profile': ['logging'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -171,18 +160,31 @@ module_args = dict(
     type=dict(
         required=False,
         type='str'),
-    subnets=dict(
+    name=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     security_groups=dict(
         required=False,
         elements='',
         type='list'),
-    profile=dict(
+    resource_group=dict(
         required=False,
         type='str'),
+    route_mode=dict(
+        required=False,
+        type='bool'),
+    logging=dict(
+        required=False,
+        type='bool'),
+    subnets=dict(
+        required=False,
+        elements='',
+        type='list'),
     tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    dns=dict(
         required=False,
         elements='',
         type='list'),
@@ -190,22 +192,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    route_mode=dict(
-        required=False,
-        type='bool'),
-    name=dict(
+    profile=dict(
         required=False,
         type='str'),
-    dns=dict(
-        required=False,
-        elements='',
-        type='list'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    logging=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -214,11 +203,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -283,7 +267,7 @@ def run_module():
         resource_type='ibm_is_lb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -292,7 +276,7 @@ def run_module():
             resource_type='ibm_is_lb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

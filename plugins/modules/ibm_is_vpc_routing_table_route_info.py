@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_vpc_routing_table_route' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -25,6 +25,11 @@ options:
         description:
             - The VPC identifier.
         required: True
+        type: str
+    name:
+        description:
+            - The user-defined name for this route.
+        required: False
         type: str
     routing_table:
         description:
@@ -36,22 +41,6 @@ options:
             - The VPC routing table route identifier.
         required: False
         type: str
-    name:
-        description:
-            - The user-defined name for this route.
-        required: False
-        type: str
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -81,15 +70,15 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'vpc',
+    'name',
     'routing_table',
     'route_id',
-    'name',
 ]
 
 
 TL_CONFLICTS_MAP = {
-    'route_id': ['name'],
     'name': ['route_id'],
+    'route_id': ['name'],
 }
 
 # define available arguments/parameters a user can pass to the module
@@ -99,20 +88,15 @@ module_args = dict(
     vpc=dict(
         required=True,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     routing_table=dict(
         required=True,
         type='str'),
     route_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -154,7 +138,7 @@ def run_module():
         resource_type='ibm_is_vpc_routing_table_route',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 
