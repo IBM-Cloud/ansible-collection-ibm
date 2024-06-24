@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  format (True, str, None)
-    (Required for new resource) Specify the format of the secret.
-
-
-  project_id (True, str, None)
-    (Required for new resource) The ID of the project.
-
-
-  name (True, str, None)
-    (Required for new resource) The name of the secret.
-
-
   data (False, dict, None)
     Data container that allows to specify config parameters and their values as a key-value map. Each key field must consist of alphanumeric characters, `-`, `_` or `.` and must not be exceed a max length of 253 characters. Each value field can consists of any character and must not be exceed a max length of 1048576 characters.
 
 
   service_access (False, list, None)
     Properties for Service Access Secrets.
+
+
+  format (True, str, None)
+    (Required for new resource) Specify the format of the secret.
+
+
+  name (True, str, None)
+    (Required for new resource) The name of the secret.
+
+
+  project_id (True, str, None)
+    (Required for new resource) The ID of the project.
 
 
   id (False, str, None)
@@ -60,11 +60,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

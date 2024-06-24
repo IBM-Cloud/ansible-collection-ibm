@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_backup_policy_plan' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -27,27 +27,6 @@ options:
             - (Required for new resource) The cron specification for the backup schedule.
         required: True
         type: str
-    name:
-        description:
-            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: False
-        type: str
-    backup_policy_id:
-        description:
-            - (Required for new resource) The backup policy identifier.
-        required: True
-        type: str
-    active:
-        description:
-            - Indicates whether the plan is active.
-        required: False
-        type: bool
-    clone_policy:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     attach_user_tags:
         description:
             - User tags to attach to each backup (snapshot) created by this plan. If unspecified, no user tags will be attached.
@@ -60,6 +39,11 @@ options:
         required: False
         type: list
         elements: dict
+    backup_policy_id:
+        description:
+            - (Required for new resource) The backup policy identifier.
+        required: True
+        type: str
     copy_user_tags:
         description:
             - Indicates whether to copy the source's user tags to the created backups (snapshots).
@@ -69,6 +53,22 @@ options:
     remote_region_policy:
         description:
             - Backup policy plan cross region rule.
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - The user-defined name for this backup policy plan. Names must be unique within the backup policy this plan resides in. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: False
+        type: str
+    active:
+        description:
+            - Indicates whether the plan is active.
+        required: False
+        type: bool
+    clone_policy:
+        description:
+            - None
         required: False
         type: list
         elements: dict
@@ -85,17 +85,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -125,14 +114,14 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'cron_spec',
-    'name',
-    'backup_policy_id',
-    'active',
-    'clone_policy',
     'attach_user_tags',
     'deletion_trigger',
+    'backup_policy_id',
     'copy_user_tags',
     'remote_region_policy',
+    'name',
+    'active',
+    'clone_policy',
 ]
 
 # Params for Data source
@@ -156,19 +145,6 @@ module_args = dict(
     cron_spec=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    backup_policy_id=dict(
-        required=False,
-        type='str'),
-    active=dict(
-        required=False,
-        type='bool'),
-    clone_policy=dict(
-        required=False,
-        elements='',
-        type='list'),
     attach_user_tags=dict(
         required=False,
         elements='',
@@ -177,10 +153,23 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    backup_policy_id=dict(
+        required=False,
+        type='str'),
     copy_user_tags=dict(
         required=False,
         type='bool'),
     remote_region_policy=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
+        required=False,
+        type='str'),
+    active=dict(
+        required=False,
+        type='bool'),
+    clone_policy=dict(
         required=False,
         elements='',
         type='list'),
@@ -192,11 +181,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -261,7 +245,7 @@ def run_module():
         resource_type='ibm_is_backup_policy_plan',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -270,7 +254,7 @@ def run_module():
             resource_type='ibm_is_backup_policy_plan',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

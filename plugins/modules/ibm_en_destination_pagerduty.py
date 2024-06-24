@@ -18,26 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_pagerduty' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    config:
-        description:
-            - Payload describing a destination configuration.
-        required: False
-        type: list
-        elements: dict
-    instance_guid:
-        description:
-            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
-        required: True
-        type: str
-    name:
-        description:
-            - (Required for new resource) The Destintion name.
-        required: True
-        type: str
     type:
         description:
             - (Required for new resource) The type of Destination type push_chrome.
@@ -53,6 +37,22 @@ options:
             - Whether to collect the failed event in Cloud Object Storage bucket
         required: False
         type: bool
+    instance_guid:
+        description:
+            - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
+        required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) The Destintion name.
+        required: True
+        type: str
+    config:
+        description:
+            - Payload describing a destination configuration.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -68,15 +68,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -99,19 +98,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('type', 'str'),
     ('instance_guid', 'str'),
     ('name', 'str'),
-    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'config',
-    'instance_guid',
-    'name',
     'type',
     'description',
     'collect_failed_events',
+    'instance_guid',
+    'name',
+    'config',
 ]
 
 # Params for Data source
@@ -132,16 +131,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    config=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instance_guid=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     type=dict(
         required=False,
         type='str'),
@@ -151,6 +140,16 @@ module_args = dict(
     collect_failed_events=dict(
         required=False,
         type='bool'),
+    instance_guid=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    config=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -216,7 +215,7 @@ def run_module():
         resource_type='ibm_en_destination_pagerduty',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +224,7 @@ def run_module():
             resource_type='ibm_en_destination_pagerduty',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

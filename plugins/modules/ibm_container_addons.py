@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_addons' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    addons:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: dict
     cluster:
         description:
             - (Required for new resource) Cluster Name or ID
@@ -44,6 +38,12 @@ options:
         required: False
         type: bool
         default: True
+    addons:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -70,16 +70,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('addons', 'list'),
     ('cluster', 'str'),
+    ('addons', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'addons',
     'cluster',
     'resource_group_id',
     'manage_all_addons',
+    'addons',
 ]
 
 # Params for Data source
@@ -98,10 +98,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    addons=dict(
-        required=False,
-        elements='',
-        type='list'),
     cluster=dict(
         required=False,
         type='str'),
@@ -111,6 +107,10 @@ module_args = dict(
     manage_all_addons=dict(
         required=False,
         type='bool'),
+    addons=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -162,7 +162,7 @@ def run_module():
         resource_type='ibm_container_addons',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -171,7 +171,7 @@ def run_module():
             resource_type='ibm_container_addons',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

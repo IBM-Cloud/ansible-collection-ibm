@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,40 +31,40 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Endpoint gateway name
-
-
-  vpc (True, str, None)
-    (Required for new resource) The VPC id
-
-
-  tags (False, list, None)
-    List of tags for VPE
-
-
-  allow_dns_resolution_binding (False, bool, None)
-    Indicates whether to allow this endpoint gateway to participate in DNS resolution bindings with a VPC that has dns.enable_hub set to true.
-
-
   resource_group (False, str, None)
     The resource group id
-
-
-  security_groups (False, list, None)
-    Endpoint gateway securitygroups list
 
 
   ips (False, list, None)
     Endpoint gateway IPs
 
 
+  access_tags (False, list, None)
+    List of access management tags
+
+
+  security_groups (False, list, None)
+    Endpoint gateway securitygroups list
+
+
   target (True, list, None)
     (Required for new resource) Endpoint gateway target
 
 
-  access_tags (False, list, None)
-    List of access management tags
+  vpc (True, str, None)
+    (Required for new resource) The VPC id
+
+
+  allow_dns_resolution_binding (False, bool, None)
+    Indicates whether to allow this endpoint gateway to participate in DNS resolution bindings with a VPC that has dns.enable_hub set to true.
+
+
+  name (True, str, None)
+    (Required for new resource) Endpoint gateway name
+
+
+  tags (False, list, None)
+    List of tags for VPE
 
 
   id (False, str, None)
@@ -73,10 +73,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

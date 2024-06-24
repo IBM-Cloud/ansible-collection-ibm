@@ -17,13 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_hpcs_managed_key' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    region:
+    key_id:
         description:
-            - The region of the UKO instance this resource exists in.
+            - UUID of the key.
         required: True
         type: str
     uko_vault:
@@ -36,22 +36,21 @@ options:
             - The ID of the UKO instance this resource exists in.
         required: True
         type: str
-    key_id:
+    region:
         description:
-            - UUID of the key.
+            - The region of the UKO instance this resource exists in.
         required: True
         type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -74,18 +73,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('region', 'str'),
+    ('key_id', 'str'),
     ('uko_vault', 'str'),
     ('instance_id', 'str'),
-    ('key_id', 'str'),
+    ('region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region',
+    'key_id',
     'uko_vault',
     'instance_id',
-    'key_id',
+    'region',
 ]
 
 
@@ -96,7 +95,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
+    key_id=dict(
         required=True,
         type='str'),
     uko_vault=dict(
@@ -105,7 +104,7 @@ module_args = dict(
     instance_id=dict(
         required=True,
         type='str'),
-    key_id=dict(
+    region=dict(
         required=True,
         type='str'),
     iaas_classic_username=dict(
@@ -142,7 +141,7 @@ def run_module():
         resource_type='ibm_hpcs_managed_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

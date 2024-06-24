@@ -21,21 +21,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  status (False, str, None)
-    The status of the image
-
-
-  visibility (False, str, None)
-    Whether the image is publicly visible or private to the account
-
 
   resource_group (False, str, None)
     The id of the resource group
@@ -49,8 +41,12 @@ Parameters
     The name of the image
 
 
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
+  status (False, str, None)
+    The status of the image
+
+
+  visibility (False, str, None)
+    Whether the image is publicly visible or private to the account
 
 
   region (False, str, us-south)

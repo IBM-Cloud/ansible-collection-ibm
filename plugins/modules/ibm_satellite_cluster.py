@@ -18,57 +18,74 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_cluster' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    pull_secret:
+    location:
         description:
-            - The RedHat pull secret to create the OpenShift cluster
+            - (Required for new resource) The name or ID of the Satellite location
+        required: True
+        type: str
+    kube_version:
+        description:
+            - The OpenShift Container Platform version
         required: False
         type: str
-    pod_subnet:
-        description:
-            - User provided value for the pod subnet
-        required: False
-        type: str
-    calico_ip_autodetection:
-        description:
-            - Set IP autodetection to use correct interface for Calico
-        required: False
-        type: dict
-        elements: str
     wait_for_worker_update:
         description:
             - Wait for worker node to update during kube version update.
         required: False
         type: bool
         default: True
+    patch_version:
+        description:
+            - Kubernetes patch version
+        required: False
+        type: str
     infrastructure_topology:
         description:
             - String value for single node cluster option. Available options: single-replica, highly-available (default: highly-available)
         required: False
         type: str
-    zones:
+    disable_public_service_endpoint:
         description:
-            - Zone info for worker pool
+            - Boolean value true if Public service endpoint to be disabled
+        required: False
+        type: bool
+        default: False
+    default_worker_pool_labels:
+        description:
+            - Labels on the default worker pool
+        required: False
+        type: dict
+        elements: str
+    pod_subnet:
+        description:
+            - User provided value for the pod subnet
+        required: False
+        type: str
+    host_labels:
+        description:
+            - Labels that describe a Satellite host for default workerpool
         required: False
         type: list
-        elements: dict
+        elements: str
     service_subnet:
         description:
             - User provided value for service subnet
         required: False
         type: str
+    tags:
+        description:
+            - List of tags for the resources
+        required: False
+        type: list
+        elements: str
     crn_token:
         description:
             - The IBM Cloud Identity and Access Management (IAM) service CRN token for the service that creates the cluster.
         required: False
-        type: str
-    location:
-        description:
-            - (Required for new resource) The name or ID of the Satellite location
-        required: True
         type: str
     operating_system:
         description:
@@ -80,58 +97,36 @@ options:
             - Grant cluster admin access to Satellite Config to manage Kubernetes resources.
         required: False
         type: bool
-    worker_count:
+    zones:
         description:
-            - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
-        required: False
-        type: int
-    tags:
-        description:
-            - List of tags for the resources
+            - Zone info for worker pool
         required: False
         type: list
-        elements: str
-    kube_version:
+        elements: dict
+    name:
         description:
-            - The OpenShift Container Platform version
-        required: False
+            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
+        required: True
         type: str
     entitlement:
         description:
             - Entitlement option reduces additional OCP Licence cost in Openshift Clusters
         required: False
         type: str
-    host_labels:
-        description:
-            - Labels that describe a Satellite host for default workerpool
-        required: False
-        type: list
-        elements: str
-    default_worker_pool_labels:
-        description:
-            - Labels on the default worker pool
-        required: False
-        type: dict
-        elements: str
-    disable_public_service_endpoint:
-        description:
-            - Boolean value true if Public service endpoint to be disabled
-        required: False
-        type: bool
-        default: False
     retry_patch_version:
         description:
             - Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
         required: False
         type: int
-    name:
+    calico_ip_autodetection:
         description:
-            - (Required for new resource) The unique name for the new IBM Cloud Satellite cluster
-        required: True
-        type: str
-    patch_version:
+            - Set IP autodetection to use correct interface for Calico
+        required: False
+        type: dict
+        elements: str
+    pull_secret:
         description:
-            - Kubernetes patch version
+            - The RedHat pull secret to create the OpenShift cluster
         required: False
         type: str
     resource_group_id:
@@ -139,6 +134,11 @@ options:
             - ID of the resource group.
         required: False
         type: str
+    worker_count:
+        description:
+            - The number of worker nodes per zone in the default worker pool. Required when '--host-label' is specified. (default: 0)
+        required: False
+        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -154,15 +154,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -191,28 +190,28 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pull_secret',
-    'pod_subnet',
-    'calico_ip_autodetection',
-    'wait_for_worker_update',
-    'infrastructure_topology',
-    'zones',
-    'service_subnet',
-    'crn_token',
     'location',
+    'kube_version',
+    'wait_for_worker_update',
+    'patch_version',
+    'infrastructure_topology',
+    'disable_public_service_endpoint',
+    'default_worker_pool_labels',
+    'pod_subnet',
+    'host_labels',
+    'service_subnet',
+    'tags',
+    'crn_token',
     'operating_system',
     'enable_config_admin',
-    'worker_count',
-    'tags',
-    'kube_version',
-    'entitlement',
-    'host_labels',
-    'default_worker_pool_labels',
-    'disable_public_service_endpoint',
-    'retry_patch_version',
+    'zones',
     'name',
-    'patch_version',
+    'entitlement',
+    'retry_patch_version',
+    'calico_ip_autodetection',
+    'pull_secret',
     'resource_group_id',
+    'worker_count',
 ]
 
 # Params for Data source
@@ -232,33 +231,43 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pull_secret=dict(
+    location=dict(
         required=False,
         type='str'),
-    pod_subnet=dict(
+    kube_version=dict(
         required=False,
         type='str'),
-    calico_ip_autodetection=dict(
-        required=False,
-        elements='',
-        type='dict'),
     wait_for_worker_update=dict(
         required=False,
         type='bool'),
+    patch_version=dict(
+        required=False,
+        type='str'),
     infrastructure_topology=dict(
         required=False,
         type='str'),
-    zones=dict(
+    disable_public_service_endpoint=dict(
+        required=False,
+        type='bool'),
+    default_worker_pool_labels=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    pod_subnet=dict(
+        required=False,
+        type='str'),
+    host_labels=dict(
         required=False,
         elements='',
         type='list'),
     service_subnet=dict(
         required=False,
         type='str'),
-    crn_token=dict(
+    tags=dict(
         required=False,
-        type='str'),
-    location=dict(
+        elements='',
+        type='list'),
+    crn_token=dict(
         required=False,
         type='str'),
     operating_system=dict(
@@ -267,42 +276,32 @@ module_args = dict(
     enable_config_admin=dict(
         required=False,
         type='bool'),
-    worker_count=dict(
-        required=False,
-        type='int'),
-    tags=dict(
+    zones=dict(
         required=False,
         elements='',
         type='list'),
-    kube_version=dict(
+    name=dict(
         required=False,
         type='str'),
     entitlement=dict(
         required=False,
         type='str'),
-    host_labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    default_worker_pool_labels=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    disable_public_service_endpoint=dict(
-        required=False,
-        type='bool'),
     retry_patch_version=dict(
         required=False,
         type='int'),
-    name=dict(
+    calico_ip_autodetection=dict(
         required=False,
-        type='str'),
-    patch_version=dict(
+        elements='',
+        type='dict'),
+    pull_secret=dict(
         required=False,
         type='str'),
     resource_group_id=dict(
         required=False,
         type='str'),
+    worker_count=dict(
+        required=False,
+        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -368,7 +367,7 @@ def run_module():
         resource_type='ibm_satellite_cluster',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -377,7 +376,7 @@ def run_module():
             resource_type='ibm_satellite_cluster',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

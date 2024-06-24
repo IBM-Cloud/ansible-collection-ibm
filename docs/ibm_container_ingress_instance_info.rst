@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_name (True, str, None)
-    Instance registration name
-
-
   cluster (True, str, None)
     Cluster ID
+
+
+  instance_name (True, str, None)
+    Instance registration name
 
 
   ibmcloud_api_key (True, any, None)

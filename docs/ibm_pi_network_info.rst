@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_cloud_instance_id (True, str, None)
-    The GUID of the service instance associated with an account.
-
-
   pi_network_name (True, str, None)
     The unique identifier or name of a network.
+
+
+  pi_cloud_instance_id (True, str, None)
+    The GUID of the service instance associated with an account.
 
 
   zone (False, str, None)

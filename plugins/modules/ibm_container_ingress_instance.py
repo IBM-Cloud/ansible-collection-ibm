@@ -18,16 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_ingress_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    secret_group_id:
-        description:
-            - Secret group for the instance registration
-        required: False
-        type: str
-        default: 
     is_default:
         description:
             - Designates if the instance is the default for the cluster
@@ -44,6 +38,12 @@ options:
             - (Required for new resource) Cluster ID
         required: True
         type: str
+    secret_group_id:
+        description:
+            - Secret group for the instance registration
+        required: False
+        type: str
+        default: 
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -76,21 +76,21 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'secret_group_id',
     'is_default',
     'instance_crn',
     'cluster',
+    'secret_group_id',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_name', 'str'),
     ('cluster', 'str'),
+    ('instance_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_name',
     'cluster',
+    'instance_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -100,9 +100,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    secret_group_id=dict(
-        required=False,
-        type='str'),
     is_default=dict(
         required=False,
         type='bool'),
@@ -110,6 +107,9 @@ module_args = dict(
         required=False,
         type='str'),
     cluster=dict(
+        required=False,
+        type='str'),
+    secret_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -163,7 +163,7 @@ def run_module():
         resource_type='ibm_container_ingress_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -172,7 +172,7 @@ def run_module():
             resource_type='ibm_container_ingress_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

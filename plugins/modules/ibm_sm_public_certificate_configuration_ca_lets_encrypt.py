@@ -18,25 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_public_certificate_configuration_ca_lets_encrypt' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    name:
-        description:
-            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
-        required: True
-        type: str
-    lets_encrypt_environment:
-        description:
-            - (Required for new resource) The configuration of the Let's Encrypt CA environment.
-        required: True
-        type: str
-    lets_encrypt_preferred_chain:
-        description:
-            - Prefer the chain with an issuer matching this Subject Common Name.
-        required: False
-        type: str
     lets_encrypt_private_key:
         description:
             - (Required for new resource) The PEM encoded private key of your Lets Encrypt account.
@@ -47,6 +32,16 @@ options:
             - (Required for new resource) The ID of the Secrets Manager instance.
         required: True
         type: str
+    name:
+        description:
+            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+        required: True
+        type: str
+    lets_encrypt_preferred_chain:
+        description:
+            - Prefer the chain with an issuer matching this Subject Common Name.
+        required: False
+        type: str
     region:
         description:
             - The region of the Secrets Manager instance.
@@ -56,6 +51,11 @@ options:
         description:
             - public or private.
         required: False
+        type: str
+    lets_encrypt_environment:
+        description:
+            - (Required for new resource) The configuration of the Let's Encrypt CA environment.
+        required: True
         type: str
     id:
         description:
@@ -72,15 +72,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -103,21 +102,21 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
-    ('lets_encrypt_environment', 'str'),
     ('lets_encrypt_private_key', 'str'),
     ('instance_id', 'str'),
+    ('name', 'str'),
+    ('lets_encrypt_environment', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'lets_encrypt_environment',
-    'lets_encrypt_preferred_chain',
     'lets_encrypt_private_key',
     'instance_id',
+    'name',
+    'lets_encrypt_preferred_chain',
     'region',
     'endpoint_type',
+    'lets_encrypt_environment',
 ]
 
 # Params for Data source
@@ -128,9 +127,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'instance_id',
+    'region',
     'endpoint_type',
     'name',
-    'region',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,25 +139,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    lets_encrypt_environment=dict(
-        required=False,
-        type='str'),
-    lets_encrypt_preferred_chain=dict(
-        required=False,
-        type='str'),
     lets_encrypt_private_key=dict(
         required=False,
         type='str'),
     instance_id=dict(
         required=False,
         type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    lets_encrypt_preferred_chain=dict(
+        required=False,
+        type='str'),
     region=dict(
         required=False,
         type='str'),
     endpoint_type=dict(
+        required=False,
+        type='str'),
+    lets_encrypt_environment=dict(
         required=False,
         type='str'),
     id=dict(
@@ -226,7 +225,7 @@ def run_module():
         resource_type='ibm_sm_public_certificate_configuration_ca_lets_encrypt',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +234,7 @@ def run_module():
             resource_type='ibm_sm_public_certificate_configuration_ca_lets_encrypt',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

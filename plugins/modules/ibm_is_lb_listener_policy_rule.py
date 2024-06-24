@@ -18,13 +18,18 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_listener_policy_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    policy:
+    listener:
         description:
-            - (Required for new resource) Listener Policy ID
+            - (Required for new resource) Listener ID.
+        required: True
+        type: str
+    value:
+        description:
+            - (Required for new resource) policy rule value info
         required: True
         type: str
     field:
@@ -37,9 +42,9 @@ options:
             - (Required for new resource) Loadbalancer ID
         required: True
         type: str
-    listener:
+    policy:
         description:
-            - (Required for new resource) Listener ID.
+            - (Required for new resource) Listener Policy ID
         required: True
         type: str
     condition:
@@ -50,11 +55,6 @@ options:
     type:
         description:
             - (Required for new resource) Policy rule type.
-        required: True
-        type: str
-    value:
-        description:
-            - (Required for new resource) policy rule value info
         required: True
         type: str
     id:
@@ -70,17 +70,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -103,38 +92,38 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('policy', 'str'),
-    ('lb', 'str'),
     ('listener', 'str'),
+    ('value', 'str'),
+    ('lb', 'str'),
+    ('policy', 'str'),
     ('condition', 'str'),
     ('type', 'str'),
-    ('value', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'policy',
+    'listener',
+    'value',
     'field',
     'lb',
-    'listener',
+    'policy',
     'condition',
     'type',
-    'value',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
+    ('policy', 'str'),
     ('lb', 'str'),
     ('listener', 'str'),
     ('rule', 'str'),
-    ('policy', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'policy',
     'lb',
     'listener',
     'rule',
-    'policy',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -144,7 +133,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    policy=dict(
+    listener=dict(
+        required=False,
+        type='str'),
+    value=dict(
         required=False,
         type='str'),
     field=dict(
@@ -153,16 +145,13 @@ module_args = dict(
     lb=dict(
         required=False,
         type='str'),
-    listener=dict(
+    policy=dict(
         required=False,
         type='str'),
     condition=dict(
         required=False,
         type='str'),
     type=dict(
-        required=False,
-        type='str'),
-    value=dict(
         required=False,
         type='str'),
     id=dict(
@@ -173,11 +162,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -242,7 +226,7 @@ def run_module():
         resource_type='ibm_is_lb_listener_policy_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -251,7 +235,7 @@ def run_module():
             resource_type='ibm_is_lb_listener_policy_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

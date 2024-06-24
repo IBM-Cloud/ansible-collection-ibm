@@ -18,23 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_placement_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) The GUID of the service instance associated with an account.
+        required: True
+        type: str
     pi_placement_group_name:
         description:
-            - (Required for new resource) Name of the placement group
+            - (Required for new resource) The name of the placement group.
         required: True
         type: str
     pi_placement_group_policy:
         description:
-            - (Required for new resource) Policy of the placement group
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
+            - (Required for new resource) The value of the group's affinity policy. Valid values are 'affinity' and 'anti-affinity'.
         required: True
         type: str
     id:
@@ -79,16 +79,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_placement_group_name', 'str'),
     ('pi_placement_group_policy', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_cloud_instance_id',
     'pi_placement_group_name',
     'pi_placement_group_policy',
-    'pi_cloud_instance_id',
 ]
 
 # Params for Data source
@@ -109,13 +109,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
     pi_placement_group_name=dict(
         required=False,
         type='str'),
     pi_placement_group_policy=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -176,7 +176,7 @@ def run_module():
         resource_type='ibm_pi_placement_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -185,7 +185,7 @@ def run_module():
             resource_type='ibm_pi_placement_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

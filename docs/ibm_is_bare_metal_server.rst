@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,48 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  tags (False, list, None)
-    Tags for the Bare metal server
-
-
-  delete_type (False, str, hard)
-    Enables stopping type of the bare metal server before deleting
-
-
-  network_attachments (False, list, None)
-    The network attachments for this bare metal server, including the primary network attachment.
-
-
-  keys (True, list, None)
-    (Required for new resource) SSH key Ids for the bare metal server
-
-
-  action (False, str, None)
-    This restart/start/stops a bare metal server.
-
-
-  network_interfaces (False, list, None)
-    None
-
-
-  profile (True, str, None)
-    (Required for new resource) profile name
-
-
-  zone (True, str, None)
-    (Required for new resource) Zone name
-
-
-  primary_network_interface (False, list, None)
-    Primary Network interface info
-
-
-  name (False, str, None)
-    Bare metal server name
+  image (True, str, None)
+    (Required for new resource) image id
 
 
   enable_secure_boot (False, bool, None)
     Indicates whether secure boot is enabled. If enabled, the image must support secure boot or the server will fail to boot.
+
+
+  profile (True, str, None)
+    (Required for new resource) profile name
 
 
   vpc (False, str, None)
@@ -87,20 +55,52 @@ Parameters
     List of access management tags
 
 
-  primary_network_attachment (False, list, None)
-    The primary network attachment.
-
-
   trusted_platform_module (False, list, None)
     None
+
+
+  network_attachments (False, list, None)
+    The network attachments for this bare metal server, including the primary network attachment.
 
 
   user_data (False, str, None)
     User data given for the bare metal server
 
 
-  image (True, str, None)
-    (Required for new resource) image id
+  tags (False, list, None)
+    Tags for the Bare metal server
+
+
+  action (False, str, None)
+    This restart/start/stops a bare metal server.
+
+
+  primary_network_interface (False, list, None)
+    Primary Network interface info
+
+
+  delete_type (False, str, hard)
+    Enables stopping type of the bare metal server before deleting
+
+
+  zone (True, str, None)
+    (Required for new resource) Zone name
+
+
+  name (False, str, None)
+    Bare metal server name
+
+
+  keys (True, list, None)
+    (Required for new resource) SSH key Ids for the bare metal server
+
+
+  primary_network_attachment (False, list, None)
+    The primary network attachment.
+
+
+  network_interfaces (False, list, None)
+    None
 
 
   id (False, str, None)
@@ -109,10 +109,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

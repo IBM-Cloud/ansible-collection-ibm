@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_volume_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
-        required: True
-        type: str
-    pi_volume_group_name:
-        description:
-            - Volume Group Name to create
-        required: False
-        type: str
     pi_consistency_group_name:
         description:
             - The name of consistency group at storage controller level
@@ -43,6 +33,16 @@ options:
         required: True
         type: list
         elements: str
+    pi_cloud_instance_id:
+        description:
+            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+        required: True
+        type: str
+    pi_volume_group_name:
+        description:
+            - Volume Group Name to create
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,16 +85,16 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_cloud_instance_id', 'str'),
     ('pi_volume_ids', 'list'),
+    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_cloud_instance_id',
-    'pi_volume_group_name',
     'pi_consistency_group_name',
     'pi_volume_ids',
+    'pi_cloud_instance_id',
+    'pi_volume_group_name',
 ]
 
 # Params for Data source
@@ -109,20 +109,14 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'pi_volume_group_name': ['pi_consistency_group_name'],
     'pi_consistency_group_name': ['pi_volume_group_name'],
+    'pi_volume_group_name': ['pi_consistency_group_name'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_cloud_instance_id=dict(
-        required=False,
-        type='str'),
-    pi_volume_group_name=dict(
-        required=False,
-        type='str'),
     pi_consistency_group_name=dict(
         required=False,
         type='str'),
@@ -130,6 +124,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    pi_cloud_instance_id=dict(
+        required=False,
+        type='str'),
+    pi_volume_group_name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -188,7 +188,7 @@ def run_module():
         resource_type='ibm_pi_volume_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -197,7 +197,7 @@ def run_module():
             resource_type='ibm_pi_volume_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

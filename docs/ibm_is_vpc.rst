@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,20 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  access_tags (False, list, None)
-    List of access management tags
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
-
-  no_sg_acl_rules (False, bool, False)
-    Delete all rules attached with default security group and default acl
-
-
-  default_security_group_name (False, str, None)
-    Default security group name
+  default_network_acl_name (False, str, None)
+    Default Network ACL name
 
 
   default_routing_table_name (False, str, None)
@@ -55,8 +43,12 @@ Parameters
     Resource group info
 
 
-  name (True, str, None)
-    (Required for new resource) VPC name
+  classic_access (False, bool, False)
+    Set to true if classic access needs to enabled to VPC
+
+
+  access_tags (False, list, None)
+    List of access management tags
 
 
   tags (False, list, None)
@@ -67,12 +59,20 @@ Parameters
     The DNS configuration for this VPC.
 
 
-  classic_access (False, bool, False)
-    Set to true if classic access needs to enabled to VPC
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
 
 
-  default_network_acl_name (False, str, None)
-    Default Network ACL name
+  default_security_group_name (False, str, None)
+    Default security group name
+
+
+  no_sg_acl_rules (False, bool, False)
+    Delete all rules attached with default security group and default acl
+
+
+  name (True, str, None)
+    (Required for new resource) VPC name
 
 
   id (False, str, None)
@@ -81,10 +81,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

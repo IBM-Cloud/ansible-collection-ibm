@@ -18,26 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_appid_apm' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    min_password_change_interval:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: dict
-    tenant_id:
-        description:
-            - (Required for new resource) The AppID instance GUID
-        required: True
-        type: str
-    enabled:
-        description:
-            - (Required for new resource) `true` if APM is enabled
-        required: True
-        type: bool
     prevent_password_with_username:
         description:
             - None
@@ -62,6 +46,22 @@ options:
         required: True
         type: list
         elements: dict
+    min_password_change_interval:
+        description:
+            - (Required for new resource) 
+        required: True
+        type: list
+        elements: dict
+    tenant_id:
+        description:
+            - (Required for new resource) The AppID instance GUID
+        required: True
+        type: str
+    enabled:
+        description:
+            - (Required for new resource) `true` if APM is enabled
+        required: True
+        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -77,15 +77,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -108,23 +107,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('min_password_change_interval', 'list'),
-    ('tenant_id', 'str'),
-    ('enabled', 'bool'),
     ('password_reuse', 'list'),
     ('password_expiration', 'list'),
     ('lockout_policy', 'list'),
+    ('min_password_change_interval', 'list'),
+    ('tenant_id', 'str'),
+    ('enabled', 'bool'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'min_password_change_interval',
-    'tenant_id',
-    'enabled',
     'prevent_password_with_username',
     'password_reuse',
     'password_expiration',
     'lockout_policy',
+    'min_password_change_interval',
+    'tenant_id',
+    'enabled',
 ]
 
 # Params for Data source
@@ -143,16 +142,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    min_password_change_interval=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tenant_id=dict(
-        required=False,
-        type='str'),
-    enabled=dict(
-        required=False,
-        type='bool'),
     prevent_password_with_username=dict(
         required=False,
         type='bool'),
@@ -168,6 +157,16 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    min_password_change_interval=dict(
+        required=False,
+        elements='',
+        type='list'),
+    tenant_id=dict(
+        required=False,
+        type='str'),
+    enabled=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -233,7 +232,7 @@ def run_module():
         resource_type='ibm_appid_apm',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -242,7 +241,7 @@ def run_module():
             resource_type='ibm_appid_apm',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

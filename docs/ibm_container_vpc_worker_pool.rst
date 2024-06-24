@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -39,8 +39,56 @@ Parameters
     (Required for new resource) worker pool name
 
 
+  vpc_id (True, str, None)
+    (Required for new resource) The vpc id where the cluster is
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
+  operating_system (False, str, None)
+    The operating system of the workers in the worker pool.
+
+
+  security_groups (False, list, None)
+    Allow user to set which security groups added to their workers
+
+
+  crk (False, str, None)
+    Root Key ID for boot volume encryption
+
+
+  zones (True, list, None)
+    (Required for new resource) Zones info
+
+
   taints (False, list, None)
     WorkerPool Taints
+
+
+  worker_count (True, int, None)
+    (Required for new resource) The number of workers
+
+
+  secondary_storage (False, str, None)
+    The secondary storage option for the workers in the worker pool.
+
+
+  host_pool_id (False, str, None)
+    The ID of the dedicated host pool associated with the worker pool
+
+
+  kms_instance_id (False, str, None)
+    Instance ID for boot volume encryption
+
+
+  flavor (True, str, None)
+    (Required for new resource) cluster node falvor
+
+
+  labels (False, dict, None)
+    Labels
 
 
   resource_group_id (False, str, None)
@@ -51,56 +99,8 @@ Parameters
     Account ID of kms instance holder - if not provided, defaults to the account in use
 
 
-  flavor (True, str, None)
-    (Required for new resource) cluster node falvor
-
-
-  vpc_id (True, str, None)
-    (Required for new resource) The vpc id where the cluster is
-
-
-  operating_system (False, str, None)
-    The operating system of the workers in the worker pool.
-
-
-  kms_instance_id (False, str, None)
-    Instance ID for boot volume encryption
-
-
-  security_groups (False, list, None)
-    Allow user to set which security groups added to their workers
-
-
-  zones (True, list, None)
-    (Required for new resource) Zones info
-
-
-  worker_count (True, int, None)
-    (Required for new resource) The number of workers
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
-
-
-  secondary_storage (False, str, None)
-    The secondary storage option for the workers in the worker pool.
-
-
   import_on_create (False, bool, None)
     Import an existing WorkerPool from the cluster, instead of creating a new
-
-
-  labels (False, dict, None)
-    Labels
-
-
-  host_pool_id (False, str, None)
-    The ID of the dedicated host pool associated with the worker pool
-
-
-  crk (False, str, None)
-    Root Key ID for boot volume encryption
 
 
   id (False, str, None)

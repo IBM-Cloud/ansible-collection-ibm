@@ -18,24 +18,29 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_arbitrary_secret' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    version_custom_metadata:
+    labels:
         description:
-            - The secret version metadata that a user can customize.
+            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
         required: False
-        type: dict
+        type: list
         elements: str
-    payload:
-        description:
-            - (Required for new resource) The arbitrary secret data payload.
-        required: True
-        type: str
     description:
         description:
             - An extended description of your secret.To protect your privacy, do not use personal data, such as your name or location, as a description for your secret group.
+        required: False
+        type: str
+    expiration_date:
+        description:
+            - The date a secret is expired. The date format follows RFC 3339.
+        required: False
+        type: str
+    secret_group_id:
+        description:
+            - A v4 UUID identifier, or `default` secret group.
         required: False
         type: str
     instance_id:
@@ -43,9 +48,9 @@ options:
             - (Required for new resource) The ID of the Secrets Manager instance.
         required: True
         type: str
-    expiration_date:
+    region:
         description:
-            - The date a secret is expired. The date format follows RFC 3339.
+            - The region of the Secrets Manager instance.
         required: False
         type: str
     endpoint_type:
@@ -53,14 +58,9 @@ options:
             - public or private.
         required: False
         type: str
-    region:
+    payload:
         description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+            - (Required for new resource) The arbitrary secret data payload.
         required: True
         type: str
     custom_metadata:
@@ -69,17 +69,17 @@ options:
         required: False
         type: dict
         elements: str
-    labels:
+    name:
         description:
-            - Labels that you can use to search for secrets in your instance.Up to 30 labels can be created.
-        required: False
-        type: list
-        elements: str
-    secret_group_id:
-        description:
-            - A v4 UUID identifier, or `default` secret group.
-        required: False
+            - (Required for new resource) A human-readable name to assign to your secret.To protect your privacy, do not use personal data, such as your name or location, as a name for your secret.
+        required: True
         type: str
+    version_custom_metadata:
+        description:
+            - The secret version metadata that a user can customize.
+        required: False
+        type: dict
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -95,15 +95,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -126,24 +125,24 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('payload', 'str'),
     ('instance_id', 'str'),
+    ('payload', 'str'),
     ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'version_custom_metadata',
-    'payload',
-    'description',
-    'instance_id',
-    'expiration_date',
-    'endpoint_type',
-    'region',
-    'name',
-    'custom_metadata',
     'labels',
+    'description',
+    'expiration_date',
     'secret_group_id',
+    'instance_id',
+    'region',
+    'endpoint_type',
+    'payload',
+    'custom_metadata',
+    'name',
+    'version_custom_metadata',
 ]
 
 # Params for Data source
@@ -152,12 +151,12 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
-    'endpoint_type',
     'secret_id',
-    'instance_id',
+    'name',
     'region',
     'secret_group_name',
+    'endpoint_type',
+    'instance_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -167,42 +166,42 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    version_custom_metadata=dict(
+    labels=dict(
         required=False,
         elements='',
-        type='dict'),
-    payload=dict(
-        required=False,
-        type='str'),
+        type='list'),
     description=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
         required=False,
         type='str'),
     expiration_date=dict(
         required=False,
         type='str'),
-    endpoint_type=dict(
+    secret_group_id=dict(
+        required=False,
+        type='str'),
+    instance_id=dict(
         required=False,
         type='str'),
     region=dict(
         required=False,
         type='str'),
-    name=dict(
+    endpoint_type=dict(
+        required=False,
+        type='str'),
+    payload=dict(
         required=False,
         type='str'),
     custom_metadata=dict(
         required=False,
         elements='',
         type='dict'),
-    labels=dict(
-        required=False,
-        elements='',
-        type='list'),
-    secret_group_id=dict(
+    name=dict(
         required=False,
         type='str'),
+    version_custom_metadata=dict(
+        required=False,
+        elements='',
+        type='dict'),
     id=dict(
         required=False,
         type='str'),
@@ -268,7 +267,7 @@ def run_module():
         resource_type='ibm_sm_arbitrary_secret',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -277,7 +276,7 @@ def run_module():
             resource_type='ibm_sm_arbitrary_secret',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

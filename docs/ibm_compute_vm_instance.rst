@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,51 +31,23 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  secondary_ip_count (False, int, None)
+    None
+
+
+  placement_group_name (False, str, None)
+    The placement group name
+
+
   public_security_group_ids (False, list, None)
     None
 
 
-  reserved_capacity_id (False, int, None)
-    The reserved group id
-
-
-  dedicated_host_name (False, str, None)
+  disks (False, list, None)
     None
 
 
-  file_storage_ids (False, list, None)
-    None
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  private_network_only (False, bool, False)
-    None
-
-
-  private_security_group_ids (False, list, None)
-    None
-
-
-  public_bandwidth_unlimited (False, bool, False)
-    None
-
-
-  evault (False, int, None)
-    None
-
-
-  hostname (False, str, None)
-    None
-
-
-  image_id (False, int, None)
+  dedicated_host_id (False, int, None)
     None
 
 
@@ -83,35 +55,7 @@ Parameters
     Quote ID for Quote based provisioning
 
 
-  cores (False, int, None)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    None
-
-
-  user_metadata (False, str, None)
-    None
-
-
-  notes (False, str, None)
-    None
-
-
-  bulk_vms (False, list, None)
-    None
-
-
-  public_vlan_id (False, int, None)
-    None
-
-
-  ipv6_enabled (False, bool, False)
-    None
-
-
-  disks (False, list, None)
+  network_speed (False, int, 100)
     None
 
 
@@ -123,11 +67,59 @@ Parameters
     None
 
 
+  reserved_instance_primary_disk (False, int, None)
+    The primary disk of reserved instance
+
+
+  transient (False, bool, None)
+    None
+
+
+  block_storage_ids (False, list, None)
+    None
+
+
+  user_metadata (False, str, None)
+    None
+
+
+  public_bandwidth_unlimited (False, bool, False)
+    None
+
+
   placement_group_id (False, int, None)
     The placement group id
 
 
-  ssh_key_ids (False, list, None)
+  flavor_key_name (False, str, None)
+    Flavor key name used to provision vm.
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  bulk_vms (False, list, None)
+    None
+
+
+  image_id (False, int, None)
+    None
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    None
+
+
+  file_storage_ids (False, list, None)
+    None
+
+
+  evault (False, int, None)
     None
 
 
@@ -135,15 +127,19 @@ Parameters
     None
 
 
-  dedicated_acct_host_only (False, bool, None)
+  os_reference_code (False, str, None)
     None
 
 
-  transient (False, bool, None)
+  datacenter_choice (False, list, None)
+    The user provided datacenter options
+
+
+  dedicated_host_name (False, str, None)
     None
 
 
-  network_speed (False, int, 100)
+  ssh_key_ids (False, list, None)
     None
 
 
@@ -155,27 +151,23 @@ Parameters
     None
 
 
-  os_reference_code (False, str, None)
+  private_security_group_ids (False, list, None)
     None
 
 
-  placement_group_name (False, str, None)
-    The placement group name
+  private_network_only (False, bool, False)
+    None
 
 
   reserved_capacity_name (False, str, None)
     The reserved group id
 
 
-  reserved_instance_primary_disk (False, int, None)
-    The primary disk of reserved instance
-
-
-  memory (False, int, None)
+  ipv6_enabled (False, bool, False)
     None
 
 
-  secondary_ip_count (False, int, None)
+  hostname (False, str, None)
     None
 
 
@@ -183,11 +175,15 @@ Parameters
     None
 
 
-  datacenter_choice (False, list, None)
-    The user provided datacenter options
+  notes (False, str, None)
+    None
 
 
-  private_subnet (False, str, None)
+  reserved_capacity_id (False, int, None)
+    The reserved group id
+
+
+  dedicated_acct_host_only (False, bool, None)
     None
 
 
@@ -195,15 +191,19 @@ Parameters
     None
 
 
-  flavor_key_name (False, str, None)
-    Flavor key name used to provision vm.
-
-
-  private_vlan_id (False, int, None)
+  memory (False, int, None)
     None
 
 
-  dedicated_host_id (False, int, None)
+  public_vlan_id (False, int, None)
+    None
+
+
+  cores (False, int, None)
+    None
+
+
+  private_subnet (False, str, None)
     None
 
 
@@ -216,11 +216,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

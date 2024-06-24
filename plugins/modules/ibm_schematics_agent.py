@@ -18,14 +18,14 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_schematics_agent' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    agent_location:
+    description:
         description:
-            - (Required for new resource) The location where agent is deployed in the user environment.
-        required: True
+            - Agent description.
+        required: False
         type: str
     tags:
         description:
@@ -33,26 +33,35 @@ options:
         required: False
         type: list
         elements: str
+    resource_group:
+        description:
+            - (Required for new resource) The resource-group name for the agent.  By default, agent will be registered in Default Resource Group.
+        required: True
+        type: str
+    version:
+        description:
+            - (Required for new resource) Agent version.
+        required: True
+        type: str
+    agent_location:
+        description:
+            - (Required for new resource) The location where agent is deployed in the user environment.
+        required: True
+        type: str
     agent_metadata:
         description:
             - The metadata of an agent.
         required: False
         type: list
         elements: dict
-    description:
+    name:
         description:
-            - Agent description.
-        required: False
+            - (Required for new resource) The name of the agent (must be unique, for an account).
+        required: True
         type: str
-    user_state:
+    schematics_location:
         description:
-            - User defined status of the agent.
-        required: False
-        type: list
-        elements: dict
-    version:
-        description:
-            - (Required for new resource) Agent version.
+            - (Required for new resource) List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
         required: True
         type: str
     agent_infrastructure:
@@ -67,21 +76,12 @@ options:
         required: False
         type: list
         elements: dict
-    name:
+    user_state:
         description:
-            - (Required for new resource) The name of the agent (must be unique, for an account).
-        required: True
-        type: str
-    resource_group:
-        description:
-            - (Required for new resource) The resource-group name for the agent.  By default, agent will be registered in Default Resource Group.
-        required: True
-        type: str
-    schematics_location:
-        description:
-            - (Required for new resource) List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
-        required: True
-        type: str
+            - User defined status of the agent.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -97,15 +97,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -128,27 +127,27 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('agent_location', 'str'),
-    ('version', 'str'),
-    ('agent_infrastructure', 'list'),
-    ('name', 'str'),
     ('resource_group', 'str'),
+    ('version', 'str'),
+    ('agent_location', 'str'),
+    ('name', 'str'),
     ('schematics_location', 'str'),
+    ('agent_infrastructure', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'agent_location',
-    'tags',
-    'agent_metadata',
     'description',
-    'user_state',
+    'tags',
+    'resource_group',
     'version',
+    'agent_location',
+    'agent_metadata',
+    'name',
+    'schematics_location',
     'agent_infrastructure',
     'agent_inputs',
-    'name',
-    'resource_group',
-    'schematics_location',
+    'user_state',
 ]
 
 # Params for Data source
@@ -167,25 +166,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    agent_location=dict(
+    description=dict(
         required=False,
         type='str'),
     tags=dict(
         required=False,
         elements='',
         type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    version=dict(
+        required=False,
+        type='str'),
+    agent_location=dict(
+        required=False,
+        type='str'),
     agent_metadata=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
+    name=dict(
         required=False,
         type='str'),
-    user_state=dict(
-        required=False,
-        elements='',
-        type='list'),
-    version=dict(
+    schematics_location=dict(
         required=False,
         type='str'),
     agent_infrastructure=dict(
@@ -196,15 +200,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    user_state=dict(
         required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    schematics_location=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -270,7 +269,7 @@ def run_module():
         resource_type='ibm_schematics_agent',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -279,7 +278,7 @@ def run_module():
             resource_type='ibm_schematics_agent',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

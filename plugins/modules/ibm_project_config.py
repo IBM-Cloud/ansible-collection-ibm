@@ -18,23 +18,11 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_project_config' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    schematics:
-        description:
-            - A Schematics workspace that is associated to a project configuration, with scripts.
-        required: False
-        type: list
-        elements: dict
-    definition:
-        description:
-            - (Required for new resource) 
-        required: True
-        type: list
-        elements: dict
-    deployed_version:
+    approved_version:
         description:
             - A summary of a project configuration version.
         required: False
@@ -45,10 +33,28 @@ options:
             - (Required for new resource) The unique project ID.
         required: True
         type: str
-    approved_version:
+    schematics:
+        description:
+            - A Schematics workspace that is associated to a project configuration, with scripts.
+        required: False
+        type: list
+        elements: dict
+    deployed_version:
         description:
             - A summary of a project configuration version.
         required: False
+        type: list
+        elements: dict
+    member_of:
+        description:
+            - The stack config parent of which this configuration is a member of.
+        required: False
+        type: list
+        elements: dict
+    definition:
+        description:
+            - (Required for new resource) 
+        required: True
         type: list
         elements: dict
     id:
@@ -66,15 +72,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -97,17 +102,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('definition', 'list'),
     ('project_id', 'str'),
+    ('definition', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'schematics',
-    'definition',
-    'deployed_version',
-    'project_id',
     'approved_version',
+    'project_id',
+    'schematics',
+    'deployed_version',
+    'member_of',
+    'definition',
 ]
 
 # Params for Data source
@@ -128,11 +134,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    schematics=dict(
+    approved_version=dict(
         required=False,
         elements='',
         type='list'),
-    definition=dict(
+    project_id=dict(
+        required=False,
+        type='str'),
+    schematics=dict(
         required=False,
         elements='',
         type='list'),
@@ -140,10 +149,11 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    project_id=dict(
+    member_of=dict(
         required=False,
-        type='str'),
-    approved_version=dict(
+        elements='',
+        type='list'),
+    definition=dict(
         required=False,
         elements='',
         type='list'),
@@ -212,7 +222,7 @@ def run_module():
         resource_type='ibm_project_config',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -221,7 +231,7 @@ def run_module():
             resource_type='ibm_project_config',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

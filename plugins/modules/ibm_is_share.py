@@ -18,26 +18,53 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_share' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    access_tags:
+    source_share:
         description:
-            - List of access management tags
+            - The ID of the source file share for this replica file share. The specified file share must not already have a replica, and must not be a replica.
+        required: False
+        type: str
+    replication_cron_spec:
+        description:
+            - The cron specification for the file share replication schedule.Replication of a share can be scheduled to occur at most once per hour.
+        required: False
+        type: str
+    initial_owner:
+        description:
+            - The owner assigned to the file share at creation.
         required: False
         type: list
-        elements: str
+        elements: dict
+    mount_targets:
+        description:
+            - The share targets for this file share.Share targets mounted from a replica must be mounted read-only.
+        required: False
+        type: list
+        elements: dict
+    name:
+        description:
+            - (Required for new resource) The unique user-defined name for this file share. If unspecified, the name will be a hyphenated list of randomly-selected words.
+        required: True
+        type: str
+    replica_share:
+        description:
+            - Configuration for a replica file share to create and associate with this file share. Ifunspecified, a replica may be subsequently added by creating a new file share with a`source_share` referencing this file share.
+        required: False
+        type: list
+        elements: dict
     encryption_key:
         description:
             - The CRN of the key to use for encrypting this file share.If no encryption key is provided, the share will not be encrypted.
         required: False
         type: str
-    resource_group:
+    size:
         description:
-            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
+            - The size of the file share rounded up to the next gigabyte.
         required: False
-        type: str
+        type: int
     profile:
         description:
             - (Required for new resource) The globally unique name for this share profile.
@@ -49,63 +76,36 @@ options:
         required: False
         type: list
         elements: str
-    mount_targets:
+    iops:
         description:
-            - The share targets for this file share.Share targets mounted from a replica must be mounted read-only.
+            - The maximum input/output operation performance bandwidth per second for the file share.
+        required: False
+        type: int
+    source_share_crn:
+        description:
+            - The CRN of the source file share for this replica file share. The specified file share must not already have a replica, and must not be a replica.
+        required: False
+        type: str
+    access_control_mode:
+        description:
+            - The access control mode for the share:
+        required: False
+        type: str
+    access_tags:
+        description:
+            - List of access management tags
         required: False
         type: list
-        elements: dict
-    replica_share:
+        elements: str
+    resource_group:
         description:
-            - Configuration for a replica file share to create and associate with this file share. Ifunspecified, a replica may be subsequently added by creating a new file share with a`source_share` referencing this file share.
-        required: False
-        type: list
-        elements: dict
-    replication_cron_spec:
-        description:
-            - The cron specification for the file share replication schedule.Replication of a share can be scheduled to occur at most once per hour.
+            - The unique identifier of the resource group to use. If unspecified, the account's [default resourcegroup](https://cloud.ibm.com/apidocs/resource-manager#introduction) is used.
         required: False
         type: str
     zone:
         description:
             - (Required for new resource) The globally unique name of the zone this file share will reside in.
         required: True
-        type: str
-    initial_owner:
-        description:
-            - The owner assigned to the file share at creation.
-        required: False
-        type: list
-        elements: dict
-    source_share:
-        description:
-            - The ID of the source file share for this replica file share. The specified file share must not already have a replica, and must not be a replica.
-        required: False
-        type: str
-    source_share_crn:
-        description:
-            - The CRN of the source file share for this replica file share. The specified file share must not already have a replica, and must not be a replica.
-        required: False
-        type: str
-    size:
-        description:
-            - The size of the file share rounded up to the next gigabyte.
-        required: False
-        type: int
-    iops:
-        description:
-            - The maximum input/output operation performance bandwidth per second for the file share.
-        required: False
-        type: int
-    name:
-        description:
-            - (Required for new resource) The unique user-defined name for this file share. If unspecified, the name will be a hyphenated list of randomly-selected words.
-        required: True
-        type: str
-    access_control_mode:
-        description:
-            - The access control mode for the share:
-        required: False
         type: str
     id:
         description:
@@ -120,17 +120,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -153,29 +142,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('name', 'str'),
     ('profile', 'str'),
     ('zone', 'str'),
-    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'access_tags',
+    'source_share',
+    'replication_cron_spec',
+    'initial_owner',
+    'mount_targets',
+    'name',
+    'replica_share',
     'encryption_key',
-    'resource_group',
+    'size',
     'profile',
     'tags',
-    'mount_targets',
-    'replica_share',
-    'replication_cron_spec',
-    'zone',
-    'initial_owner',
-    'source_share',
-    'source_share_crn',
-    'size',
     'iops',
-    'name',
+    'source_share_crn',
     'access_control_mode',
+    'access_tags',
+    'resource_group',
+    'zone',
 ]
 
 # Params for Data source
@@ -183,36 +172,29 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'share',
     'name',
+    'share',
 ]
 
 TL_CONFLICTS_MAP = {
-    'replica_share': ['source_share'],
-    'replication_cron_spec': ['replica_share', 'size'],
     'source_share': ['replica_share', 'size', 'source_share_crn'],
-    'source_share_crn': ['replica_share', 'size', 'source_share'],
+    'replication_cron_spec': ['replica_share', 'size'],
+    'replica_share': ['source_share'],
     'size': ['replication_cron_spec', 'source_share', 'source_share_crn'],
+    'source_share_crn': ['replica_share', 'size', 'source_share'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    encryption_key=dict(
+    source_share=dict(
         required=False,
         type='str'),
-    resource_group=dict(
+    replication_cron_spec=dict(
         required=False,
         type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    initial_owner=dict(
         required=False,
         elements='',
         type='list'),
@@ -220,36 +202,43 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    name=dict(
+        required=False,
+        type='str'),
     replica_share=dict(
         required=False,
         elements='',
         type='list'),
-    replication_cron_spec=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    initial_owner=dict(
-        required=False,
-        elements='',
-        type='list'),
-    source_share=dict(
-        required=False,
-        type='str'),
-    source_share_crn=dict(
+    encryption_key=dict(
         required=False,
         type='str'),
     size=dict(
         required=False,
         type='int'),
+    profile=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     iops=dict(
         required=False,
         type='int'),
-    name=dict(
+    source_share_crn=dict(
         required=False,
         type='str'),
     access_control_mode=dict(
+        required=False,
+        type='str'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resource_group=dict(
+        required=False,
+        type='str'),
+    zone=dict(
         required=False,
         type='str'),
     id=dict(
@@ -260,11 +249,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -329,7 +313,7 @@ def run_module():
         resource_type='ibm_is_share',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -338,7 +322,7 @@ def run_module():
             resource_type='ibm_is_share',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

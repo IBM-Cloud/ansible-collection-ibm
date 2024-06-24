@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_account_settings_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -27,6 +27,17 @@ options:
             - The name of the trusted profile template. This is visible only in the enterprise account.
         required: False
         type: str
+    template_id:
+        description:
+            - ID of the the template.
+        required: False
+        type: str
+    account_settings:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     description:
         description:
             - The description of the trusted profile template. Describe the template for enterprise account users.
@@ -37,17 +48,6 @@ options:
             - Committed flag determines if the template is ready for assignment.
         required: False
         type: bool
-    account_settings:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    template_id:
-        description:
-            - ID of the the template.
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -63,15 +63,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -99,10 +98,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'name',
+    'template_id',
+    'account_settings',
     'description',
     'committed',
-    'account_settings',
-    'template_id',
 ]
 
 # Params for Data source
@@ -111,9 +110,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'include_history',
     'template_id',
     'version',
+    'include_history',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -126,19 +125,19 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
+    template_id=dict(
+        required=False,
+        type='str'),
+    account_settings=dict(
+        required=False,
+        elements='',
+        type='list'),
     description=dict(
         required=False,
         type='str'),
     committed=dict(
         required=False,
         type='bool'),
-    account_settings=dict(
-        required=False,
-        elements='',
-        type='list'),
-    template_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -204,7 +203,7 @@ def run_module():
         resource_type='ibm_iam_account_settings_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -213,7 +212,7 @@ def run_module():
             resource_type='ibm_iam_account_settings_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

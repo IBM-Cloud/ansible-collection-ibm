@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cos_location (True, str, None)
-    (Required for new resource) Region of the COS instance.
-
-
-  interval (True, str, None)
-    (Required for new resource) Frequency of taking the snapshot of the billing reports.
+  versioning (False, str, new)
+    A new version of report is created or the existing report version is overwritten with every update.
 
 
   cos_bucket (True, str, None)
     (Required for new resource) The name of the COS bucket to store the snapshot of the billing reports.
 
 
-  versioning (False, str, new)
-    A new version of report is created or the existing report version is overwritten with every update.
+  interval (True, str, None)
+    (Required for new resource) Frequency of taking the snapshot of the billing reports.
+
+
+  report_types (False, list, None)
+    The type of billing reports to take snapshot of. Possible values are [account_summary, enterprise_summary, account_resource_instance_usage].
 
 
   cos_reports_folder (False, str, IBMCloud-Billing-Reports)
     The billing reports root folder to store the billing reports snapshots. Defaults to "IBMCloud-Billing-Reports".
 
 
-  report_types (False, list, None)
-    The type of billing reports to take snapshot of. Possible values are [account_summary, enterprise_summary, account_resource_instance_usage].
+  cos_location (True, str, None)
+    (Required for new resource) Region of the COS instance.
 
 
   id (False, str, None)
@@ -64,11 +64,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

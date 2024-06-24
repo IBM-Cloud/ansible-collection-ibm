@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_instance_snapshot' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    pi_snapshot_id:
-        description:
-            - The unique identifier of the Power Systems Virtual Machine instance snapshot.
-        required: True
-        type: str
     pi_cloud_instance_id:
         description:
             - The GUID of the service instance associated with an account.
+        required: True
+        type: str
+    pi_snapshot_id:
+        description:
+            - The unique identifier of the Power Systems Virtual Machine instance snapshot.
         required: True
         type: str
     zone:
@@ -60,14 +60,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_snapshot_id', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_snapshot_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_snapshot_id',
     'pi_cloud_instance_id',
+    'pi_snapshot_id',
 ]
 
 
@@ -78,10 +78,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_snapshot_id=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_snapshot_id=dict(
         required=True,
         type='str'),
     zone=dict(
@@ -111,7 +111,7 @@ def run_module():
         resource_type='ibm_pi_instance_snapshot',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

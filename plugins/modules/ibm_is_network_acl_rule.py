@@ -18,13 +18,24 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    source:
+    direction:
         description:
-            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
+        required: True
+        type: str
+    tcp:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    destination:
+        description:
+            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
         required: True
         type: str
     icmp:
@@ -37,27 +48,6 @@ options:
         description:
             - The rule that this rule is immediately before. If absent, this is the last rule.
         required: False
-        type: str
-    direction:
-        description:
-            - (Required for new resource) Direction of traffic to enforce, either inbound or outbound
-        required: True
-        type: str
-    destination:
-        description:
-            - (Required for new resource) The destination CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
-        required: True
-        type: str
-    tcp:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    network_acl:
-        description:
-            - (Required for new resource) Network ACL id
-        required: True
         type: str
     name:
         description:
@@ -75,6 +65,16 @@ options:
         required: False
         type: list
         elements: dict
+    network_acl:
+        description:
+            - (Required for new resource) Network ACL id
+        required: True
+        type: str
+    source:
+        description:
+            - (Required for new resource) The source CIDR block. The CIDR block 0.0.0.0/0 applies to all addresses.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -88,17 +88,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -121,41 +110,41 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('source', 'str'),
     ('direction', 'str'),
     ('destination', 'str'),
-    ('network_acl', 'str'),
     ('action', 'str'),
+    ('network_acl', 'str'),
+    ('source', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'source',
+    'direction',
+    'tcp',
+    'destination',
     'icmp',
     'before',
-    'direction',
-    'destination',
-    'tcp',
-    'network_acl',
     'name',
     'action',
     'udp',
+    'network_acl',
+    'source',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('network_acl', 'str'),
     ('name', 'str'),
+    ('network_acl', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'network_acl',
     'name',
+    'network_acl',
 ]
 
 TL_CONFLICTS_MAP = {
-    'icmp': ['tcp', 'udp'],
     'tcp': ['icmp', 'udp'],
+    'icmp': ['tcp', 'udp'],
     'udp': ['icmp', 'tcp'],
 }
 
@@ -163,7 +152,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    source=dict(
+    direction=dict(
+        required=False,
+        type='str'),
+    tcp=dict(
+        required=False,
+        elements='',
+        type='list'),
+    destination=dict(
         required=False,
         type='str'),
     icmp=dict(
@@ -171,19 +167,6 @@ module_args = dict(
         elements='',
         type='list'),
     before=dict(
-        required=False,
-        type='str'),
-    direction=dict(
-        required=False,
-        type='str'),
-    destination=dict(
-        required=False,
-        type='str'),
-    tcp=dict(
-        required=False,
-        elements='',
-        type='list'),
-    network_acl=dict(
         required=False,
         type='str'),
     name=dict(
@@ -196,6 +179,12 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    network_acl=dict(
+        required=False,
+        type='str'),
+    source=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -204,11 +193,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -273,7 +257,7 @@ def run_module():
         resource_type='ibm_is_network_acl_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -282,7 +266,7 @@ def run_module():
             resource_type='ibm_is_network_acl_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

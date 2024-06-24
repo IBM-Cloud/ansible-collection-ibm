@@ -23,17 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.66.0
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  name (False, str, None)
-    Security group name
-
 
   vpc (True, str, None)
     (Required for new resource) Security group's resource group id
@@ -43,12 +39,16 @@ Parameters
     List of tags
 
 
-  access_tags (False, list, None)
-    List of access management tags
-
-
   resource_group (False, str, None)
     Resource Group ID
+
+
+  name (False, str, None)
+    Security group name
+
+
+  access_tags (False, list, None)
+    List of access management tags
 
 
   id (False, str, None)
@@ -57,10 +57,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

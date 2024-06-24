@@ -18,23 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_app_config_feature' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    guid:
-        description:
-            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-        required: True
-        type: str
     disabled_value:
         description:
             - (Required for new resource) Value of the feature when it is disabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
         required: True
         type: str
-    collections:
+    description:
         description:
-            - List of collection id representing the collections that are associated with the specified feature flag.
+            - Feature description.
+        required: False
+        type: str
+    segment_rules:
+        description:
+            - Specify the targeting rules that is used to set different feature flag values for different segments.
         required: False
         type: list
         elements: dict
@@ -43,14 +43,30 @@ options:
             - (Required for new resource) Feature name.
         required: True
         type: str
-    feature_id:
-        description:
-            - (Required for new resource) Feature id.
-        required: True
-        type: str
     type:
         description:
             - (Required for new resource) Type of the feature (BOOLEAN, STRING, NUMERIC).
+        required: True
+        type: str
+    collections:
+        description:
+            - List of collection id representing the collections that are associated with the specified feature flag.
+        required: False
+        type: list
+        elements: dict
+    guid:
+        description:
+            - (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
+        required: True
+        type: str
+    rollout_percentage:
+        description:
+            - Rollout percentage of the feature.
+        required: False
+        type: int
+    enabled_value:
+        description:
+            - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
         required: True
         type: str
     tags:
@@ -63,27 +79,11 @@ options:
             - (Required for new resource) Environment Id.
         required: True
         type: str
-    enabled_value:
+    feature_id:
         description:
-            - (Required for new resource) Value of the feature when it is enabled. The value can be BOOLEAN, STRING or a NUMERIC value as per the `type` attribute.
+            - (Required for new resource) Feature id.
         required: True
         type: str
-    description:
-        description:
-            - Feature description.
-        required: False
-        type: str
-    rollout_percentage:
-        description:
-            - Rollout percentage of the feature.
-        required: False
-        type: int
-    segment_rules:
-        description:
-            - Specify the targeting rules that is used to set different feature flag values for different segments.
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,15 +99,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -130,29 +129,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('guid', 'str'),
     ('disabled_value', 'str'),
     ('name', 'str'),
-    ('feature_id', 'str'),
     ('type', 'str'),
-    ('environment_id', 'str'),
+    ('guid', 'str'),
     ('enabled_value', 'str'),
+    ('environment_id', 'str'),
+    ('feature_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'guid',
     'disabled_value',
-    'collections',
+    'description',
+    'segment_rules',
     'name',
-    'feature_id',
     'type',
+    'collections',
+    'guid',
+    'rollout_percentage',
+    'enabled_value',
     'tags',
     'environment_id',
-    'enabled_value',
-    'description',
-    'rollout_percentage',
-    'segment_rules',
+    'feature_id',
 ]
 
 # Params for Data source
@@ -176,23 +175,33 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    guid=dict(
-        required=False,
-        type='str'),
     disabled_value=dict(
         required=False,
         type='str'),
-    collections=dict(
+    description=dict(
+        required=False,
+        type='str'),
+    segment_rules=dict(
         required=False,
         elements='',
         type='list'),
     name=dict(
         required=False,
         type='str'),
-    feature_id=dict(
+    type=dict(
         required=False,
         type='str'),
-    type=dict(
+    collections=dict(
+        required=False,
+        elements='',
+        type='list'),
+    guid=dict(
+        required=False,
+        type='str'),
+    rollout_percentage=dict(
+        required=False,
+        type='int'),
+    enabled_value=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -201,19 +210,9 @@ module_args = dict(
     environment_id=dict(
         required=False,
         type='str'),
-    enabled_value=dict(
+    feature_id=dict(
         required=False,
         type='str'),
-    description=dict(
-        required=False,
-        type='str'),
-    rollout_percentage=dict(
-        required=False,
-        type='int'),
-    segment_rules=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -279,7 +278,7 @@ def run_module():
         resource_type='ibm_app_config_feature',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -288,7 +287,7 @@ def run_module():
             resource_type='ibm_app_config_feature',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

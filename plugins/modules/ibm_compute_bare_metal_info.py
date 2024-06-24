@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_compute_bare_metal' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
@@ -26,14 +26,14 @@ options:
             - The hostname of the bare metal server
         required: False
         type: str
-    global_identifier:
-        description:
-            - The unique global identifier of the bare metal server
-        required: False
-        type: str
     domain:
         description:
             - The domain of the bare metal server
+        required: False
+        type: str
+    global_identifier:
+        description:
+            - The unique global identifier of the bare metal server
         required: False
         type: str
     most_recent:
@@ -44,15 +44,14 @@ options:
         default: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -80,16 +79,16 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'hostname',
-    'global_identifier',
     'domain',
+    'global_identifier',
     'most_recent',
 ]
 
 
 TL_CONFLICTS_MAP = {
     'hostname': ['global_identifier'],
-    'global_identifier': ['hostname', 'domain', 'most_recent'],
     'domain': ['global_identifier'],
+    'global_identifier': ['hostname', 'domain', 'most_recent'],
     'most_recent': ['global_identifier'],
 }
 
@@ -100,10 +99,10 @@ module_args = dict(
     hostname=dict(
         required=False,
         type='str'),
-    global_identifier=dict(
+    domain=dict(
         required=False,
         type='str'),
-    domain=dict(
+    global_identifier=dict(
         required=False,
         type='str'),
     most_recent=dict(
@@ -143,7 +142,7 @@ def run_module():
         resource_type='ibm_compute_bare_metal',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

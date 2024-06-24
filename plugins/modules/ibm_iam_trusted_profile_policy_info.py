@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_iam_trusted_profile_policy' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    profile_id:
-        description:
-            - UUID of trusted profile
-        required: False
-        type: str
-    iam_id:
-        description:
-            - IAM ID of trusted profile
-        required: False
-        type: str
     sort:
         description:
             - Sort query for policies
@@ -41,17 +31,26 @@ options:
             - Set transactionID for debug
         required: False
         type: str
+    profile_id:
+        description:
+            - UUID of trusted profile
+        required: False
+        type: str
+    iam_id:
+        description:
+            - IAM ID of trusted profile
+        required: False
+        type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -78,10 +77,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'profile_id',
-    'iam_id',
     'sort',
     'transaction_id',
+    'profile_id',
+    'iam_id',
 ]
 
 
@@ -92,16 +91,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    profile_id=dict(
-        required=False,
-        type='str'),
-    iam_id=dict(
-        required=False,
-        type='str'),
     sort=dict(
         required=False,
         type='str'),
     transaction_id=dict(
+        required=False,
+        type='str'),
+    profile_id=dict(
+        required=False,
+        type='str'),
+    iam_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -138,7 +137,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

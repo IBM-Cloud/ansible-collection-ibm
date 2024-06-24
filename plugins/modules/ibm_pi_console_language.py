@@ -18,23 +18,23 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_console_language' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
     pi_cloud_instance_id:
         description:
-            - (Required for new resource) PI cloud instance ID
+            - (Required for new resource) The GUID of the service instance associated with an account.
         required: True
         type: str
     pi_instance_name:
         description:
-            - (Required for new resource) The unique identifier or name of the instance
+            - (Required for new resource) The unique identifier or name of the instance.
         required: True
         type: str
     pi_language_code:
         description:
-            - (Required for new resource) Language code
+            - (Required for new resource) Language code.
         required: True
         type: str
     id:
@@ -172,7 +172,7 @@ def run_module():
         resource_type='ibm_pi_console_language',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

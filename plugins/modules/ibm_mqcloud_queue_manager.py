@@ -18,20 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_mqcloud_queue_manager' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.66.0
     - Terraform v1.5.5
 
 options:
-    name:
-        description:
-            - (Required for new resource) A queue manager name conforming to MQ restrictions.
-        required: True
-        type: str
-    display_name:
-        description:
-            - A displayable name for the queue manager - limited only in length.
-        required: False
-        type: str
     size:
         description:
             - (Required for new resource) The queue manager sizes of deployment available. Deployment of lite queue managers for aws_us_east_1 and aws_eu_west_1 locations is not available.
@@ -46,6 +36,16 @@ options:
         description:
             - (Required for new resource) The GUID that uniquely identifies the MQ on Cloud service instance.
         required: True
+        type: str
+    name:
+        description:
+            - (Required for new resource) A queue manager name conforming to MQ restrictions.
+        required: True
+        type: str
+    display_name:
+        description:
+            - A displayable name for the queue manager - limited only in length.
+        required: False
         type: str
     location:
         description:
@@ -67,15 +67,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -98,19 +97,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('size', 'str'),
     ('service_instance_guid', 'str'),
+    ('name', 'str'),
     ('location', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'display_name',
     'size',
     'version',
     'service_instance_guid',
+    'name',
+    'display_name',
     'location',
 ]
 
@@ -120,8 +119,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'service_instance_guid',
     'name',
+    'service_instance_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -131,12 +130,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    display_name=dict(
-        required=False,
-        type='str'),
     size=dict(
         required=False,
         type='str'),
@@ -144,6 +137,12 @@ module_args = dict(
         required=False,
         type='str'),
     service_instance_guid=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    display_name=dict(
         required=False,
         type='str'),
     location=dict(
@@ -214,7 +213,7 @@ def run_module():
         resource_type='ibm_mqcloud_queue_manager',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.66.0',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -223,7 +222,7 @@ def run_module():
             resource_type='ibm_mqcloud_queue_manager',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.66.0',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
