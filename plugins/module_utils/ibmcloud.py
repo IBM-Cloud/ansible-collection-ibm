@@ -424,7 +424,7 @@ def ibmcloud_terraform(
     # exposing key in plaintext provider file
     if ('ibmcloud_api_key' in parameters and
             parameters['ibmcloud_api_key'] is not None):
-        env['IC_API_KEY'] = parameters['ibmcloud_api_key']
+        env['IC_API_KEY'] = parameters.pop('ibmcloud_api_key')
     if ('iaas_classic_username' in parameters and
             parameters['iaas_classic_username'] is not None):
         env['IAAS_CLASSIC_USERNAME'] = parameters['iaas_classic_username']
