@@ -1123,7 +1123,7 @@ def fmt_tf_block(
         indent_spaces=2,
         filter_None=True,
         required_params = [],
-        validate_tl_params=None):
+        validate_tl_params=[]):
     """
     Format a dictionary of configuration arguments into Terraform
     block syntax.
