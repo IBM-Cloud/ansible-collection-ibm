@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,12 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  cluster (True, str, None)
-    (Required for new resource) Cluster ID or name
-
-
-  secret_name (True, str, None)
-    (Required for new resource) Secret name
+  update_secret (False, int, None)
+    Updates secret from secrets manager if value is changed (increment each usage)
 
 
   secret_namespace (True, str, None)
@@ -47,12 +43,16 @@ Parameters
     (Required for new resource) Certificate CRN
 
 
-  update_secret (False, int, None)
-    Updates secret from secrets manager if value is changed (increment each usage)
-
-
   persistence (False, bool, None)
     Persistence of secret
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster ID or name
+
+
+  secret_name (True, str, None)
+    (Required for new resource) Secret name
 
 
   id (False, str, None)

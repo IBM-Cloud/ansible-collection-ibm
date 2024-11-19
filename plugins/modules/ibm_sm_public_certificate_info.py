@@ -17,28 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_sm_public_certificate' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    region:
-        description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    secret_group_name:
-        description:
-            - The human-readable name of your secret group.
-        required: False
-        type: str
     name:
         description:
             - The human-readable name of your secret.
-        required: False
-        type: str
-    secret_id:
-        description:
-            - The ID of the secret.
         required: False
         type: str
     instance_id:
@@ -46,22 +31,36 @@ options:
             - The ID of the Secrets Manager instance.
         required: True
         type: str
+    region:
+        description:
+            - The region of the Secrets Manager instance.
+        required: False
+        type: str
+    secret_id:
+        description:
+            - The ID of the secret.
+        required: False
+        type: str
     endpoint_type:
         description:
             - public or private.
         required: False
         type: str
+    secret_group_name:
+        description:
+            - The human-readable name of your secret group.
+        required: False
+        type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -89,12 +88,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'region',
-    'secret_group_name',
     'name',
-    'secret_id',
     'instance_id',
+    'region',
+    'secret_id',
     'endpoint_type',
+    'secret_group_name',
 ]
 
 
@@ -105,22 +104,22 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    region=dict(
-        required=False,
-        type='str'),
-    secret_group_name=dict(
-        required=False,
-        type='str'),
     name=dict(
-        required=False,
-        type='str'),
-    secret_id=dict(
         required=False,
         type='str'),
     instance_id=dict(
         required=True,
         type='str'),
+    region=dict(
+        required=False,
+        type='str'),
+    secret_id=dict(
+        required=False,
+        type='str'),
     endpoint_type=dict(
+        required=False,
+        type='str'),
+    secret_group_name=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -157,7 +156,7 @@ def run_module():
         resource_type='ibm_sm_public_certificate',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

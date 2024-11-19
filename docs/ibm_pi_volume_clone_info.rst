@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  pi_volume_clone_task_id (True, str, None)
-    The ID of the volume clone task.
-
-
   pi_cloud_instance_id (True, str, None)
     The GUID of the service instance associated with an account.
+
+
+  pi_volume_clone_task_id (True, str, None)
+    The ID of the volume clone task.
 
 
   zone (False, str, None)

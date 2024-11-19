@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,32 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  location (True, str, None)
-    (Required for new resource) A unique name for the new Satellite location
-
-
-  logging_account_id (False, str, None)
-    The account ID for IBM Log Analysis with LogDNA log forwarding
-
-
-  zones (False, list, None)
-    The names of at least three high availability zones to use for the location
-
-
-  managed_from (True, str, None)
-    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
-
-
-  tags (False, list, None)
-    List of tags associated with resource instance
-
-
   description (False, str, None)
     A description of the new Satellite location
-
-
-  coreos_enabled (False, bool, None)
-    Enable Red Hat CoreOS features within the Satellite location
 
 
   cos_config (False, list, None)
@@ -67,16 +43,48 @@ Parameters
     ID of the resource group.
 
 
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
   pod_subnet (False, str, None)
     Custom subnet CIDR to provide private IP addresses for pods
 
 
+  physical_address (False, str, None)
+    An optional physical address of the new Satellite location which is deployed on premise
+
+
+  logging_account_id (False, str, None)
+    The account ID for IBM Log Analysis with LogDNA log forwarding
+
+
   cos_credentials (False, list, None)
     COSAuthorization - IBM Cloud Object Storage authorization keys
+
+
+  capabilities (False, list, None)
+    The satellite capabilities attached to the location
+
+
+  coreos_enabled (False, bool, None)
+    Enable Red Hat CoreOS features within the Satellite location
+
+
+  zones (False, list, None)
+    The names of at least three high availability zones to use for the location
+
+
+  tags (False, list, None)
+    List of tags associated with resource instance
+
+
+  location (True, str, None)
+    (Required for new resource) A unique name for the new Satellite location
+
+
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
+
+
+  managed_from (True, str, None)
+    (Required for new resource) The IBM Cloud metro from which the Satellite location is managed
 
 
   id (False, str, None)
@@ -88,11 +96,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

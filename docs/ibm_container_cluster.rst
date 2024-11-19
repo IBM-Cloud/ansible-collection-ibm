@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,108 +31,64 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  private_service_endpoint (False, bool, None)
-    None
-
-
-  image_security_enforcement (False, bool, False)
-    Set true to enable image security enforcement policies
-
-
-  private_vlan_id (False, str, None)
-    Private VLAN ID
-
-
-  force_delete_storage (False, bool, False)
-    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
-
-
-  tags (False, list, None)
-    Tags for the resource
-
-
-  wait_till (False, str, IngressReady)
-    wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
-
-
-  no_subnet (False, bool, False)
-    Boolean value set to true when subnet creation is not required.
-
-
-  operating_system (False, str, None)
-    The operating system of the workers in the default worker pool.
+  datacenter (True, str, None)
+    (Required for new resource) The datacenter where this cluster will be deployed
 
 
   kms_config (False, list, None)
     Enables KMS on a given cluster
 
 
-  disk_encryption (False, bool, True)
-    disc encryption done, if set to true.
-
-
-  hardware (True, str, None)
-    (Required for new resource) Hardware type
-
-
-  default_pool_size (False, int, 1)
-    The size of the default worker pool
-
-
-  labels (False, dict, None)
-    list of labels to the default worker pool
-
-
-  pod_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for pods
-
-
   webhook (False, list, None)
     None
 
 
-  kube_version (False, str, None)
-    Kubernetes version info
+  force_delete_storage (False, bool, False)
+    Force the removal of a cluster and its persistent storage. Deleted data cannot be recovered
 
 
-  update_all_workers (False, bool, False)
-    Updates all the woker nodes if sets to true
-
-
-  public_vlan_id (False, str, None)
-    Public VLAN ID
-
-
-  machine_type (False, str, None)
-    Machine type
-
-
-  service_subnet (False, str, None)
-    Custom subnet CIDR to provide private IP addresses for services
-
-
-  subnet_id (False, list, None)
-    List of subnet IDs
-
-
-  public_service_endpoint (False, bool, None)
-    None
+  private_vlan_id (False, str, None)
+    Private VLAN ID
 
 
   name (True, str, None)
     (Required for new resource) The cluster name
 
 
-  patch_version (False, str, None)
-    Kubernetes patch version
+  workers_info (False, list, None)
+    The IDs of the worker node
+
+
+  machine_type (False, str, None)
+    Machine type
 
 
   retry_patch_version (False, int, None)
     Argument which helps to retry the patch version updates on worker nodes. Increment the value to retry the patch updates if the previous apply fails
 
 
-  gateway_enabled (False, bool, False)
-    Set true for gateway enabled clusters
+  subnet_id (False, list, None)
+    List of subnet IDs
+
+
+  update_all_workers (False, bool, False)
+    Updates all the woker nodes if sets to true
+
+
+  hardware (True, str, None)
+    (Required for new resource) Hardware type
+
+
+  wait_till (False, str, IngressReady)
+    wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
+
+
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  operating_system (False, str, None)
+    The operating system of the workers in the default worker pool.
 
 
   wait_for_worker_update (False, bool, True)
@@ -143,20 +99,64 @@ Parameters
     ID of the resource group.
 
 
-  datacenter (True, str, None)
-    (Required for new resource) The datacenter where this cluster will be deployed
+  private_service_endpoint (False, bool, None)
+    None
 
 
-  workers_info (False, list, None)
-    The IDs of the worker node
+  default_pool_size (False, int, 1)
+    The size of the default worker pool
+
+
+  kube_version (False, str, None)
+    Kubernetes version info
+
+
+  pod_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for pods
+
+
+  image_security_enforcement (False, bool, False)
+    Set true to enable image security enforcement policies
+
+
+  labels (False, dict, None)
+    list of labels to the default worker pool
+
+
+  disk_encryption (False, bool, True)
+    disc encryption done, if set to true.
+
+
+  gateway_enabled (False, bool, False)
+    Set true for gateway enabled clusters
+
+
+  no_subnet (False, bool, False)
+    Boolean value set to true when subnet creation is not required.
+
+
+  tags (False, list, None)
+    Tags for the resource
+
+
+  public_service_endpoint (False, bool, None)
+    None
+
+
+  patch_version (False, str, None)
+    Kubernetes patch version
+
+
+  public_vlan_id (False, str, None)
+    Public VLAN ID
 
 
   entitlement (False, str, None)
     Entitlement option reduces additional OCP Licence cost in Openshift Clusters
 
 
-  taints (False, list, None)
-    WorkerPool Taints
+  service_subnet (False, str, None)
+    Custom subnet CIDR to provide private IP addresses for services
 
 
   id (False, str, None)

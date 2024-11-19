@@ -18,28 +18,35 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    total_volume_bandwidth:
+    name:
         description:
-            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
-        required: False
-        type: int
-    image:
-        description:
-            - image name
+            - Instance Template name
         required: False
         type: str
-    vpc:
+    profile:
         description:
-            - (Required for new resource) VPC id
+            - (Required for new resource) Profile info
         required: True
         type: str
     primary_network_interface:
         description:
             - Primary Network interface info
+        required: False
+        type: list
+        elements: dict
+    keys:
+        description:
+            - (Required for new resource) SSH key Ids for the instance template
+        required: True
+        type: list
+        elements: str
+    network_attachments:
+        description:
+            - The network attachments for this virtual server instance, including the primary network attachment.
         required: False
         type: list
         elements: dict
@@ -49,80 +56,50 @@ options:
         required: False
         type: list
         elements: dict
+    zone:
+        description:
+            - (Required for new resource) Zone name
+        required: True
+        type: str
+    enable_secure_boot:
+        description:
+            - Indicates whether secure boot is enabled for this virtual server instance.If unspecified, the default secure boot mode from the profile will be used.
+        required: False
+        type: bool
+    default_trusted_profile_auto_link:
+        description:
+            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
+        required: False
+        type: bool
     default_trusted_profile_target:
         description:
             - The unique identifier or CRN of the default IAM trusted profile to use for this virtual server instance.
         required: False
         type: str
-    keys:
+    total_volume_bandwidth:
         description:
-            - (Required for new resource) SSH key Ids for the instance template
-        required: True
-        type: list
-        elements: str
-    catalog_offering:
-        description:
-            - The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
+            - The amount of bandwidth (in megabits per second) allocated exclusively to instance storage volumes
         required: False
-        type: list
-        elements: dict
+        type: int
+    dedicated_host_group:
+        description:
+            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+        required: False
+        type: str
     primary_network_attachment:
         description:
             - The primary network attachment for this virtual server instance.
         required: False
         type: list
         elements: dict
-    resource_group:
+    image:
         description:
-            - Instance template resource group
+            - image name
         required: False
         type: str
-    metadata_service:
-        description:
-            - The metadata service configuration
-        required: False
-        type: list
-        elements: dict
     volume_attachments:
         description:
             - None
-        required: False
-        type: list
-        elements: dict
-    reservation_affinity:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - Instance Template name
-        required: False
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Zone name
-        required: True
-        type: str
-    profile:
-        description:
-            - (Required for new resource) Profile info
-        required: True
-        type: str
-    default_trusted_profile_auto_link:
-        description:
-            - If set to `true`, the system will create a link to the specified `target` trusted profile during instance creation. Regardless of whether a link is created by the system or manually using the IAM Identity service, it will be automatically deleted when the instance is deleted.
-        required: False
-        type: bool
-    placement_group:
-        description:
-            - Unique Identifier of the Placement Group for restricting the placement of the instance
-        required: False
-        type: str
-    network_attachments:
-        description:
-            - The network attachments for this virtual server instance, including the primary network attachment.
         required: False
         type: list
         elements: dict
@@ -132,6 +109,43 @@ options:
         required: False
         type: list
         elements: dict
+    user_data:
+        description:
+            - User data given for the instance
+        required: False
+        type: str
+    reservation_affinity:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    confidential_compute_mode:
+        description:
+            - The confidential compute mode to use for this virtual server instance.If unspecified, the default confidential compute mode from the profile will be used.
+        required: False
+        type: str
+    metadata_service:
+        description:
+            - The metadata service configuration
+        required: False
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - (Required for new resource) VPC id
+        required: True
+        type: str
+    placement_group:
+        description:
+            - Unique Identifier of the Placement Group for restricting the placement of the instance
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Instance template resource group
+        required: False
+        type: str
     availability_policy_host_failure:
         description:
             - The availability policy to use for this virtual server instance
@@ -142,16 +156,12 @@ options:
             - Unique Identifier of the Dedicated Host where the instance will be placed
         required: False
         type: str
-    dedicated_host_group:
+    catalog_offering:
         description:
-            - Unique Identifier of the Dedicated Host Group where the instance will be placed
+            - The catalog offering or offering version to use when provisioning this virtual server instance template. If an offering is specified, the latest version of that offering will be used. The specified offering or offering version may be in a different account in the same enterprise, subject to IAM policies.
         required: False
-        type: str
-    user_data:
-        description:
-            - User data given for the instance
-        required: False
-        type: str
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -165,17 +175,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -198,38 +197,40 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('vpc', 'str'),
+    ('profile', 'str'),
     ('keys', 'list'),
     ('zone', 'str'),
-    ('profile', 'str'),
+    ('vpc', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'total_volume_bandwidth',
-    'image',
-    'vpc',
-    'primary_network_interface',
-    'boot_volume',
-    'default_trusted_profile_target',
-    'keys',
-    'catalog_offering',
-    'primary_network_attachment',
-    'resource_group',
-    'metadata_service',
-    'volume_attachments',
-    'reservation_affinity',
     'name',
-    'zone',
     'profile',
-    'default_trusted_profile_auto_link',
-    'placement_group',
+    'primary_network_interface',
+    'keys',
     'network_attachments',
+    'boot_volume',
+    'zone',
+    'enable_secure_boot',
+    'default_trusted_profile_auto_link',
+    'default_trusted_profile_target',
+    'total_volume_bandwidth',
+    'dedicated_host_group',
+    'primary_network_attachment',
+    'image',
+    'volume_attachments',
     'network_interfaces',
+    'user_data',
+    'reservation_affinity',
+    'confidential_compute_mode',
+    'metadata_service',
+    'vpc',
+    'placement_group',
+    'resource_group',
     'availability_policy_host_failure',
     'dedicated_host',
-    'dedicated_host_group',
-    'user_data',
+    'catalog_offering',
 ]
 
 # Params for Data source
@@ -243,29 +244,34 @@ TL_ALL_PARAMETERS_DS = [
 
 TL_CONFLICTS_MAP = {
     'primary_network_interface': ['primary_network_attachment', 'network_attachments'],
+    'network_attachments': ['primary_network_interface', 'network_interfaces'],
+    'dedicated_host_group': ['dedicated_host', 'placement_group'],
     'primary_network_attachment': ['primary_network_interface', 'network_interfaces'],
+    'network_interfaces': ['primary_network_attachment', 'network_attachments'],
     'metadata_service': ['metadata_service_enabled'],
     'placement_group': ['dedicated_host', 'dedicated_host_group'],
-    'network_attachments': ['primary_network_interface', 'network_interfaces'],
-    'network_interfaces': ['primary_network_attachment', 'network_attachments'],
     'dedicated_host': ['dedicated_host_group', 'placement_group'],
-    'dedicated_host_group': ['dedicated_host', 'placement_group'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    total_volume_bandwidth=dict(
-        required=False,
-        type='int'),
-    image=dict(
+    name=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    profile=dict(
         required=False,
         type='str'),
     primary_network_interface=dict(
+        required=False,
+        elements='',
+        type='list'),
+    keys=dict(
+        required=False,
+        elements='',
+        type='list'),
+    network_attachments=dict(
         required=False,
         elements='',
         type='list'),
@@ -273,52 +279,32 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    zone=dict(
+        required=False,
+        type='str'),
+    enable_secure_boot=dict(
+        required=False,
+        type='bool'),
+    default_trusted_profile_auto_link=dict(
+        required=False,
+        type='bool'),
     default_trusted_profile_target=dict(
         required=False,
         type='str'),
-    keys=dict(
+    total_volume_bandwidth=dict(
         required=False,
-        elements='',
-        type='list'),
-    catalog_offering=dict(
+        type='int'),
+    dedicated_host_group=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     primary_network_attachment=dict(
         required=False,
         elements='',
         type='list'),
-    resource_group=dict(
+    image=dict(
         required=False,
         type='str'),
-    metadata_service=dict(
-        required=False,
-        elements='',
-        type='list'),
     volume_attachments=dict(
-        required=False,
-        elements='',
-        type='list'),
-    reservation_affinity=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    zone=dict(
-        required=False,
-        type='str'),
-    profile=dict(
-        required=False,
-        type='str'),
-    default_trusted_profile_auto_link=dict(
-        required=False,
-        type='bool'),
-    placement_group=dict(
-        required=False,
-        type='str'),
-    network_attachments=dict(
         required=False,
         elements='',
         type='list'),
@@ -326,18 +312,39 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    user_data=dict(
+        required=False,
+        type='str'),
+    reservation_affinity=dict(
+        required=False,
+        elements='',
+        type='list'),
+    confidential_compute_mode=dict(
+        required=False,
+        type='str'),
+    metadata_service=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc=dict(
+        required=False,
+        type='str'),
+    placement_group=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
+        required=False,
+        type='str'),
     availability_policy_host_failure=dict(
         required=False,
         type='str'),
     dedicated_host=dict(
         required=False,
         type='str'),
-    dedicated_host_group=dict(
+    catalog_offering=dict(
         required=False,
-        type='str'),
-    user_data=dict(
-        required=False,
-        type='str'),
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -346,11 +353,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -394,28 +396,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_instance_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -424,7 +427,7 @@ def run_module():
             resource_type='ibm_is_instance_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

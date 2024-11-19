@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,52 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  worker_pool_name (True, str, None)
-    (Required for new resource) worker pool name
+  resource_group_id (False, str, None)
+    ID of the resource group.
 
 
-  size_per_zone (True, int, None)
-    (Required for new resource) Number of nodes per zone
-
-
-  hardware (False, str, shared)
-    Hardware type
-
-
-  cluster (True, str, None)
-    (Required for new resource) Cluster name
-
-
-  machine_type (True, str, None)
-    (Required for new resource) worker nodes machine type
-
-
-  disk_encryption (False, bool, True)
-    worker node disk encrypted if set to true
-
-
-  taints (False, list, None)
-    WorkerPool Taints
-
-
-  import_on_create (False, bool, None)
-    Import a workerpool from a cluster
-
-
-  entitlement (False, str, None)
-    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+  orphan_on_delete (False, bool, None)
+    Orphan the workerpool resource instead of deleting it
 
 
   operating_system (False, str, None)
     The operating system of the workers in the worker pool.
 
 
+  disk_encryption (False, bool, True)
+    worker node disk encrypted if set to true
+
+
+  import_on_create (False, bool, None)
+    Import an existing workerpool from the cluster instead of creating a new
+
+
+  hardware (False, str, shared)
+    Hardware type
+
+
+  machine_type (True, str, None)
+    (Required for new resource) worker nodes machine type
+
+
+  worker_pool_name (True, str, None)
+    (Required for new resource) worker pool name
+
+
+  entitlement (False, str, None)
+    Entitlement option reduces additional OCP Licence cost in Openshift Clusters
+
+
   labels (False, dict, None)
     list of labels to worker pool
 
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  taints (False, list, None)
+    WorkerPool Taints
+
+
+  cluster (True, str, None)
+    (Required for new resource) Cluster name
+
+
+  size_per_zone (True, int, None)
+    (Required for new resource) Number of nodes per zone
 
 
   id (False, str, None)

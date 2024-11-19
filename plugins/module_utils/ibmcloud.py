@@ -969,16 +969,16 @@ class Terraform:
         """
         # Generate TF resource block
         tf_block = (
-            '{} {} "{}" '.format(
-                resource.tf_type,
-                resource.resource_type,
-                resource.tf_name) + '{\n' +
-                fmt_tf_block(
-                    resource.parameters,
-                    indent_count=1,
-                    indent_spaces=2,
-                    validate_tl_params=resource.tl_all_params,
-                    required_params=resource.tl_required_params) + '}\n')
+            '{} {} "{}" '.format(resource.tf_type, resource.resource_type, resource.tf_name) +
+            '{\n' +
+            fmt_tf_block(
+                resource.parameters,
+                indent_count=1,
+                indent_spaces=2,
+                validate_tl_params=resource.tl_all_params,
+                required_params=resource.tl_required_params) +
+            '}\n'
+        )
 
         # Write terraform resource block to file
         resource_file = '{}_{}.tf'.format(
@@ -1122,8 +1122,8 @@ def fmt_tf_block(
         indent_count=0,
         indent_spaces=2,
         filter_None=True,
-        required_params = [],
-        validate_tl_params=None):
+        required_params=[],
+        validate_tl_params=[]):
     """
     Format a dictionary of configuration arguments into Terraform
     block syntax.
@@ -1145,8 +1145,6 @@ def fmt_tf_block(
     def indent(extra_count=0):
         return ' ' * ((indent_count + extra_count) * indent_spaces)
 
-    if validate_tl_params is not None and len(required_params) == 0:
-        return output
     for key, value in arg_dict.items():
         if len(validate_tl_params) > 0 and key not in validate_tl_params:
             continue

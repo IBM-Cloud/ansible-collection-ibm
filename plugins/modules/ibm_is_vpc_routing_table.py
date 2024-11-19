@@ -18,16 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc_routing_table' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    route_direct_link_ingress:
+    tags:
         description:
-            - If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
+            - List of tags
         required: False
-        type: bool
-        default: False
+        type: list
+        elements: str
     accept_routes_from_resource_type:
         description:
             - The filters specifying the resources that may create routes in this routing table, The resource type: vpn_gateway or vpn_server
@@ -40,15 +40,21 @@ options:
         required: False
         type: list
         elements: str
+    route_direct_link_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from Direct Link to this VPC.
+        required: False
+        type: bool
+        default: False
     route_internet_ingress:
         description:
             - If set to true, this routing table will be used to route traffic that originates from the internet. For this to succeed, the VPC must not already have a routing table with this property set to true.
         required: False
         type: bool
         default: False
-    route_vpc_zone_ingress:
+    route_transit_gateway_ingress:
         description:
-            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
         required: False
         type: bool
         default: False
@@ -57,17 +63,23 @@ options:
             - (Required for new resource) The VPC identifier.
         required: True
         type: str
-    route_transit_gateway_ingress:
-        description:
-            - If set to true, this routing table will be used to route traffic that originates from Transit Gateway to this VPC.
-        required: False
-        type: bool
-        default: False
     name:
         description:
             - The user-defined name for this routing table.
         required: False
         type: str
+    route_vpc_zone_ingress:
+        description:
+            - If set to true, this routing table will be used to route traffic that originates from subnets in other zones in this VPC.
+        required: False
+        type: bool
+        default: False
+    access_tags:
+        description:
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -81,17 +93,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -119,14 +120,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'route_direct_link_ingress',
+    'tags',
     'accept_routes_from_resource_type',
     'advertise_routes_to',
+    'route_direct_link_ingress',
     'route_internet_ingress',
-    'route_vpc_zone_ingress',
-    'vpc',
     'route_transit_gateway_ingress',
+    'vpc',
     'name',
+    'route_vpc_zone_ingress',
+    'access_tags',
 ]
 
 # Params for Data source
@@ -135,9 +138,9 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
+    'routing_table',
     'vpc',
     'name',
-    'routing_table',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -147,9 +150,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    route_direct_link_ingress=dict(
+    tags=dict(
         required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     accept_routes_from_resource_type=dict(
         required=False,
         elements='',
@@ -158,21 +162,28 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    route_direct_link_ingress=dict(
+        required=False,
+        type='bool'),
     route_internet_ingress=dict(
         required=False,
         type='bool'),
-    route_vpc_zone_ingress=dict(
+    route_transit_gateway_ingress=dict(
         required=False,
         type='bool'),
     vpc=dict(
         required=False,
         type='str'),
-    route_transit_gateway_ingress=dict(
-        required=False,
-        type='bool'),
     name=dict(
         required=False,
         type='str'),
+    route_vpc_zone_ingress=dict(
+        required=False,
+        type='bool'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -181,11 +192,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -229,28 +235,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_vpc_routing_table',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -259,7 +266,7 @@ def run_module():
             resource_type='ibm_is_vpc_routing_table',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,16 +35,12 @@ Parameters
     Placement group the shared processor pool is created in
 
 
-  pi_shared_processor_pool_name (True, str, None)
-    (Required for new resource) Name of the shared processor pool
-
-
-  pi_shared_processor_pool_reserved_cores (True, int, None)
-    (Required for new resource) The amount of reserved cores for the shared processor pool
-
-
   spp_placement_groups (False, list, None)
     SPP placement groups the shared processor pool are in
+
+
+  pi_shared_processor_pool_name (True, str, None)
+    (Required for new resource) Name of the shared processor pool
 
 
   pi_shared_processor_pool_host_group (True, str, None)
@@ -53,6 +49,18 @@ Parameters
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) PI cloud instance ID
+
+
+  pi_host_id (False, str, None)
+    The host id of a host in a host group (only available for dedicated hosts)
+
+
+  pi_shared_processor_pool_reserved_cores (True, int, None)
+    (Required for new resource) The amount of reserved cores for the shared processor pool
+
+
+  pi_user_tags (False, list, None)
+    The user tags attached to this resource.
 
 
   id (False, str, None)

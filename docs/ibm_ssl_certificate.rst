@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,68 +31,68 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  server_count (True, int, None)
-    (Required for new resource) Server count
-
-
   validity_months (True, int, None)
     (Required for new resource) vslidity of the ssl certificate in month
-
-
-  order_approver_email_address (True, str, None)
-    (Required for new resource) Email address of the approver
-
-
-  technical_contact (True, list, None)
-    (Required for new resource) Technical contact info
-
-
-  billing_contact (False, list, None)
-    None
-
-
-  technical_contact_same_as_org_address_flag (False, bool, False)
-    Technical contact same as org address flag
-
-
-  organization_information (True, list, None)
-    (Required for new resource) Organization information
-
-
-  administrative_contact (False, list, None)
-    None
-
-
-  server_type (True, str, None)
-    (Required for new resource) server type
 
 
   ssl_type (True, str, None)
     (Required for new resource) ssl type
 
 
-  certificate_signing_request (True, str, None)
-    (Required for new resource) certificate signing request info
+  technical_contact_same_as_org_address_flag (False, bool, False)
+    Technical contact same as org address flag
 
 
   administrative_address_same_as_organization_flag (False, bool, False)
     administrative address same as organization flag
 
 
-  billing_address_same_as_organization_flag (False, bool, False)
-    billing address same as organization flag
+  organization_information (True, list, None)
+    (Required for new resource) Organization information
 
 
-  renewal_flag (False, bool, True)
-    Renewal flag
+  billing_contact (False, list, None)
+    None
+
+
+  certificate_signing_request (True, str, None)
+    (Required for new resource) certificate signing request info
 
 
   administrative_contact_same_as_technical_flag (False, bool, False)
     Administrative contact same as technical flag
 
 
+  technical_contact (True, list, None)
+    (Required for new resource) Technical contact info
+
+
+  order_approver_email_address (True, str, None)
+    (Required for new resource) Email address of the approver
+
+
+  server_count (True, int, None)
+    (Required for new resource) Server count
+
+
+  server_type (True, str, None)
+    (Required for new resource) server type
+
+
+  renewal_flag (False, bool, True)
+    Renewal flag
+
+
   billing_contact_same_as_technical_flag (False, bool, False)
     billing contact
+
+
+  billing_address_same_as_organization_flag (False, bool, False)
+    billing address same as organization flag
+
+
+  administrative_contact (False, list, None)
+    None
 
 
   id (False, str, None)
@@ -104,11 +104,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

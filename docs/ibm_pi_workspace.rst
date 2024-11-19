@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,16 +35,20 @@ Parameters
     (Required for new resource) Target location or environment to create the resource instance.
 
 
+  pi_name (True, str, None)
+    (Required for new resource) A descriptive name used to identify the workspace.
+
+
+  pi_plan (False, str, public)
+    Plan associated with the offering; Valid values are public or private.
+
+
   pi_resource_group_id (True, str, None)
     (Required for new resource) The ID of the resource group where you want to create the workspace. You can retrieve the value from data source ibm_resource_group.
 
 
-  pi_plan (True, str, None)
-    (Required for new resource) Plan associated with the offering; Valid values are public or private.
-
-
-  pi_name (True, str, None)
-    (Required for new resource) A descriptive name used to identify the workspace.
+  pi_user_tags (False, list, None)
+    List of user tags attached to the resource.
 
 
   id (False, str, None)

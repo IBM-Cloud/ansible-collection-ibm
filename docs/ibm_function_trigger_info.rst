@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -29,12 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    Name of Trigger.
-
-
   namespace (True, str, None)
     Name of the namespace.
+
+
+  name (True, str, None)
+    Name of Trigger.
 
 
   function_namespace (True, any, None)

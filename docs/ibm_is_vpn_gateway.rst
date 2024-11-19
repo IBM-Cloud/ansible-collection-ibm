@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -43,10 +43,6 @@ Parameters
     (Required for new resource) VPNGateway subnet info
 
 
-  resource_group (False, str, None)
-    The resource group for this VPN gateway
-
-
   name (True, str, None)
     (Required for new resource) VPN Gateway instance name
 
@@ -55,16 +51,16 @@ Parameters
     mode in VPN gateway(route/policy)
 
 
+  resource_group (False, str, None)
+    The resource group for this VPN gateway
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

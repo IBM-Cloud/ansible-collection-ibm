@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  guid (True, str, None)
-    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
-
-
-  git_file_path (True, str, None)
-    (Required for new resource) Git file path, this is a path where your configuration file will be written.
-
-
-  action (False, str, None)
-    action promote
-
-
   git_config_id (True, str, None)
     (Required for new resource) Git config id. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
+
+
+  git_token (True, str, None)
+    (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
 
 
   git_config_name (True, str, None)
     (Required for new resource) Git config name. Allowed special characters are dot ( . ), hyphen( - ), underscore ( _ ) only
 
 
-  git_token (True, str, None)
-    (Required for new resource) Git token, this needs to be provided with enough permission to write and update the file.
+  git_branch (True, str, None)
+    (Required for new resource) Branch name to which you need to write or update the configuration.
+
+
+  action (False, str, None)
+    action promote
+
+
+  guid (True, str, None)
+    (Required for new resource) GUID of the App Configuration service. Get it from the service instance credentials section of the dashboard.
 
 
   environment_id (True, str, None)
@@ -63,12 +63,12 @@ Parameters
     (Required for new resource) Git url which will be used to connect to the github account.
 
 
+  git_file_path (True, str, None)
+    (Required for new resource) Git file path, this is a path where your configuration file will be written.
+
+
   collection_id (True, str, None)
     (Required for new resource) Collection id.
-
-
-  git_branch (True, str, None)
-    (Required for new resource) Branch name to which you need to write or update the configuration.
 
 
   id (False, str, None)
@@ -80,11 +80,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

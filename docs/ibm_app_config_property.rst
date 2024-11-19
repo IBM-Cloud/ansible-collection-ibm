@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,16 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  value (True, str, None)
-    (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
+  name (True, str, None)
+    (Required for new resource) Property name.
 
 
-  tags (False, str, None)
-    Tags associated with the property.
-
-
-  collections (False, list, None)
-    List of collection id representing the collections that are associated with the specified property.
+  property_id (True, str, None)
+    (Required for new resource) Property id.
 
 
   guid (True, str, None)
@@ -51,28 +47,32 @@ Parameters
     (Required for new resource) Environment Id.
 
 
-  property_id (True, str, None)
-    (Required for new resource) Property id.
-
-
-  type (True, str, None)
-    (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
-
-
-  name (True, str, None)
-    (Required for new resource) Property name.
-
-
-  description (False, str, None)
-    Property description.
-
-
   format (False, str, None)
     Format of the feature (TEXT, JSON, YAML).
 
 
   segment_rules (False, list, None)
     Specify the targeting rules that is used to set different property values for different segments.
+
+
+  type (True, str, None)
+    (Required for new resource) Type of the Property  (BOOLEAN, STRING, NUMERIC).
+
+
+  value (True, str, None)
+    (Required for new resource) Value of the Property. The value can be Boolean, String or a Numeric value as per the `type` attribute.
+
+
+  description (False, str, None)
+    Property description.
+
+
+  tags (False, str, None)
+    Tags associated with the property.
+
+
+  collections (False, list, None)
+    List of collection id representing the collections that are associated with the specified property.
 
 
   id (False, str, None)
@@ -84,11 +84,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

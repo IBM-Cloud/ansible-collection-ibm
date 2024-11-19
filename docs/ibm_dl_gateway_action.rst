@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,116 +31,116 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  authentication_key (False, str, None)
-    BGP MD5 authentication key
-
-
-  metered (False, bool, None)
-    Metered billing option
-
-
-  resource_group (False, str, None)
-    Gateway resource group
-
-
-  action (True, str, None)
-    (Required for new resource) customer action on provider call
-
-
-  as_prepends (False, list, None)
-    List of AS Prepend configuration information
+  customer_name (False, str, None)
+    Customer name
 
 
   speed_mbps (False, int, None)
     Gateway speed in megabits per second
 
 
-  default_import_route_filter (False, str, None)
-    The default directional route filter action that applies to routes that do not match any directional route filters
-
-
-  bfd_multiplier (False, int, None)
-    BFD Multiplier
-
-
-  port (False, str, None)
-    Gateway port
+  bgp_asn (False, int, None)
+    BGP ASN
 
 
   cross_connect_router (False, str, None)
     Cross connect router
 
 
-  carrier_name (False, str, None)
-    Carrier name
+  gateway (True, str, None)
+    (Required for new resource) The Direct Link gateway identifier
 
 
-  loa_reject_reason (False, str, None)
-    Loa reject reason
+  metered (False, bool, None)
+    Metered billing option
 
 
   bgp_base_cidr (False, str, None)
     BGP base CIDR
 
 
-  location_name (False, str, None)
-    Gateway location
+  carrier_name (False, str, None)
+    Carrier name
 
 
-  bgp_cer_cidr (False, str, None)
-    BGP customer edge router CIDR
+  resource_group (False, str, None)
+    Gateway resource group
 
 
-  import_route_filters (False, list, None)
-    List Import Route Filters for a Direct Link gateway
-
-
-  tags (False, list, None)
-    Tags for the direct link gateway
+  authentication_key (False, str, None)
+    BGP MD5 authentication key
 
 
   bfd_interval (False, int, None)
     BFD Interval
 
 
-  type (False, str, None)
-    Gateway type
+  name (False, str, None)
+    The unique user-defined name for this gateway
 
 
-  customer_name (False, str, None)
-    Customer name
+  loa_reject_reason (False, str, None)
+    Loa reject reason
 
 
-  bgp_ibm_cidr (False, str, None)
-    BGP IBM CIDR
-
-
-  bgp_asn (False, int, None)
-    BGP ASN
-
-
-  connection_mode (False, str, None)
-    Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
-
-
-  gateway (True, str, None)
-    (Required for new resource) The Direct Link gateway identifier
-
-
-  export_route_filters (False, list, None)
-    List Export Route Filters for a Direct Link gateway
-
-
-  default_export_route_filter (False, str, None)
-    The default directional route filter action that applies to routes that do not match any directional route filters
+  action (True, str, None)
+    (Required for new resource) customer action on provider call
 
 
   global_ (False, bool, None)
     Gateways with global routing (true) can connect to networks outside their associated region
 
 
-  name (False, str, None)
-    The unique user-defined name for this gateway
+  location_name (False, str, None)
+    Gateway location
+
+
+  type (False, str, None)
+    Gateway type
+
+
+  bgp_cer_cidr (False, str, None)
+    BGP customer edge router CIDR
+
+
+  default_export_route_filter (False, str, None)
+    The default directional route filter action that applies to routes that do not match any directional route filters
+
+
+  default_import_route_filter (False, str, None)
+    The default directional route filter action that applies to routes that do not match any directional route filters
+
+
+  as_prepends (False, list, None)
+    List of AS Prepend configuration information
+
+
+  bfd_multiplier (False, int, None)
+    BFD Multiplier
+
+
+  connection_mode (False, str, None)
+    Type of services this Gateway is attached to. Mode transit means this Gateway will be attached to Transit Gateway Service and direct means this Gateway will be attached to vpc or classic connection
+
+
+  bgp_ibm_cidr (False, str, None)
+    BGP IBM CIDR
+
+
+  export_route_filters (False, list, None)
+    List Export Route Filters for a Direct Link gateway
+
+
+  import_route_filters (False, list, None)
+    List Import Route Filters for a Direct Link gateway
+
+
+  port (False, str, None)
+    Gateway port
+
+
+  tags (False, list, None)
+    Tags for the direct link gateway
 
 
   id (False, str, None)
@@ -152,11 +152,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

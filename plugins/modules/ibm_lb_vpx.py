@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_lb_vpx' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -26,6 +26,27 @@ options:
         description:
             - (Required for new resource) Speed value
         required: True
+        type: int
+    plan:
+        description:
+            - (Required for new resource) Plan info
+        required: True
+        type: str
+    tags:
+        description:
+            - List of the tags
+        required: False
+        type: list
+        elements: str
+    version:
+        description:
+            - (Required for new resource) version info
+        required: True
+        type: str
+    public_vlan_id:
+        description:
+            - Piblic VLAN id
+        required: False
         type: int
     public_subnet:
         description:
@@ -42,30 +63,9 @@ options:
             - Private subnet
         required: False
         type: str
-    plan:
-        description:
-            - (Required for new resource) Plan info
-        required: True
-        type: str
-    public_vlan_id:
-        description:
-            - Piblic VLAN id
-        required: False
-        type: int
-    tags:
-        description:
-            - List of the tags
-        required: False
-        type: list
-        elements: str
     datacenter:
         description:
             - (Required for new resource) Datacenter name
-        required: True
-        type: str
-    version:
-        description:
-            - (Required for new resource) version info
         required: True
         type: str
     ip_count:
@@ -88,15 +88,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -121,22 +120,22 @@ author:
 TL_REQUIRED_PARAMETERS = [
     ('speed', 'int'),
     ('plan', 'str'),
-    ('datacenter', 'str'),
     ('version', 'str'),
+    ('datacenter', 'str'),
     ('ip_count', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'speed',
+    'plan',
+    'tags',
+    'version',
+    'public_vlan_id',
     'public_subnet',
     'private_vlan_id',
     'private_subnet',
-    'plan',
-    'public_vlan_id',
-    'tags',
     'datacenter',
-    'version',
     'ip_count',
 ]
 
@@ -157,6 +156,19 @@ module_args = dict(
     speed=dict(
         required=False,
         type='int'),
+    plan=dict(
+        required=False,
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    version=dict(
+        required=False,
+        type='str'),
+    public_vlan_id=dict(
+        required=False,
+        type='int'),
     public_subnet=dict(
         required=False,
         type='str'),
@@ -166,20 +178,7 @@ module_args = dict(
     private_subnet=dict(
         required=False,
         type='str'),
-    plan=dict(
-        required=False,
-        type='str'),
-    public_vlan_id=dict(
-        required=False,
-        type='int'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
     datacenter=dict(
-        required=False,
-        type='str'),
-    version=dict(
         required=False,
         type='str'),
     ip_count=dict(
@@ -250,7 +249,7 @@ def run_module():
         resource_type='ibm_lb_vpx',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

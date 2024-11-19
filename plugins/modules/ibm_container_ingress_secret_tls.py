@@ -18,20 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_ingress_secret_tls' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    cluster:
+    update_secret:
         description:
-            - (Required for new resource) Cluster ID or name
-        required: True
-        type: str
-    secret_name:
-        description:
-            - (Required for new resource) Secret name
-        required: True
-        type: str
+            - Updates secret from secrets manager if value is changed (increment each usage)
+        required: False
+        type: int
     secret_namespace:
         description:
             - (Required for new resource) Secret namespace
@@ -42,16 +37,21 @@ options:
             - (Required for new resource) Certificate CRN
         required: True
         type: str
-    update_secret:
-        description:
-            - Updates secret from secrets manager if value is changed (increment each usage)
-        required: False
-        type: int
     persistence:
         description:
             - Persistence of secret
         required: False
         type: bool
+    cluster:
+        description:
+            - (Required for new resource) Cluster ID or name
+        required: True
+        type: str
+    secret_name:
+        description:
+            - (Required for new resource) Secret name
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -78,33 +78,33 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cluster', 'str'),
-    ('secret_name', 'str'),
     ('secret_namespace', 'str'),
     ('cert_crn', 'str'),
+    ('cluster', 'str'),
+    ('secret_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cluster',
-    'secret_name',
+    'update_secret',
     'secret_namespace',
     'cert_crn',
-    'update_secret',
     'persistence',
+    'cluster',
+    'secret_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
     ('secret_namespace', 'str'),
-    ('cluster', 'str'),
     ('secret_name', 'str'),
+    ('cluster', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
     'secret_namespace',
-    'cluster',
     'secret_name',
+    'cluster',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -114,24 +114,24 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cluster=dict(
+    update_secret=dict(
         required=False,
-        type='str'),
-    secret_name=dict(
-        required=False,
-        type='str'),
+        type='int'),
     secret_namespace=dict(
         required=False,
         type='str'),
     cert_crn=dict(
         required=False,
         type='str'),
-    update_secret=dict(
-        required=False,
-        type='int'),
     persistence=dict(
         required=False,
         type='bool'),
+    cluster=dict(
+        required=False,
+        type='str'),
+    secret_name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -183,7 +183,7 @@ def run_module():
         resource_type='ibm_container_ingress_secret_tls',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -192,7 +192,7 @@ def run_module():
             resource_type='ibm_container_ingress_secret_tls',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

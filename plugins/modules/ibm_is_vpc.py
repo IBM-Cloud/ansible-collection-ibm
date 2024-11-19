@@ -18,22 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_vpc' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    address_prefix_management:
-        description:
-            - Address Prefix management value
-        required: False
-        type: str
-        default: auto
     no_sg_acl_rules:
         description:
             - Delete all rules attached with default security group and default acl
@@ -45,24 +33,9 @@ options:
             - Default security group name
         required: False
         type: str
-    default_routing_table_name:
+    access_tags:
         description:
-            - Default routing table name
-        required: False
-        type: str
-    resource_group:
-        description:
-            - Resource group info
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) VPC name
-        required: True
-        type: str
-    tags:
-        description:
-            - List of tags
+            - List of access management tags
         required: False
         type: list
         elements: str
@@ -72,15 +45,36 @@ options:
         required: False
         type: list
         elements: dict
-    classic_access:
+    default_routing_table_name:
         description:
-            - Set to true if classic access needs to enabled to VPC
+            - Default routing table name
         required: False
-        type: bool
-        default: False
+        type: str
+    tags:
+        description:
+            - List of tags
+        required: False
+        type: list
+        elements: str
+    address_prefix_management:
+        description:
+            - Address Prefix management value
+        required: False
+        type: str
+        default: auto
+    name:
+        description:
+            - (Required for new resource) VPC name
+        required: True
+        type: str
     default_network_acl_name:
         description:
             - Default Network ACL name
+        required: False
+        type: str
+    resource_group:
+        description:
+            - Resource group info
         required: False
         type: str
     id:
@@ -96,17 +90,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -134,17 +117,16 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'access_tags',
-    'address_prefix_management',
     'no_sg_acl_rules',
     'default_security_group_name',
-    'default_routing_table_name',
-    'resource_group',
-    'name',
-    'tags',
+    'access_tags',
     'dns',
-    'classic_access',
+    'default_routing_table_name',
+    'tags',
+    'address_prefix_management',
+    'name',
     'default_network_acl_name',
+    'resource_group',
 ]
 
 # Params for Data source
@@ -163,29 +145,13 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    address_prefix_management=dict(
-        required=False,
-        type='str'),
     no_sg_acl_rules=dict(
         required=False,
         type='bool'),
     default_security_group_name=dict(
         required=False,
         type='str'),
-    default_routing_table_name=dict(
-        required=False,
-        type='str'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    tags=dict(
+    access_tags=dict(
         required=False,
         elements='',
         type='list'),
@@ -193,10 +159,23 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    classic_access=dict(
+    default_routing_table_name=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    address_prefix_management=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
     default_network_acl_name=dict(
+        required=False,
+        type='str'),
+    resource_group=dict(
         required=False,
         type='str'),
     id=dict(
@@ -207,11 +186,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -255,28 +229,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_vpc',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -285,7 +260,7 @@ def run_module():
             resource_type='ibm_is_vpc',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

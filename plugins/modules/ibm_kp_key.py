@@ -18,20 +18,16 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_kp_key' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    iv_value:
+    standard_key:
         description:
-            - Only for imported root key
+            - Standard key type
         required: False
-        type: str
-    encrypted_nonce:
-        description:
-            - Only for imported root key
-        required: False
-        type: str
+        type: bool
+        default: False
     payload:
         description:
             - None
@@ -42,23 +38,27 @@ options:
             - (Required for new resource) Key name
         required: True
         type: str
-    standard_key:
+    encrypted_nonce:
         description:
-            - Standard key type
+            - Only for imported root key
         required: False
-        type: bool
-        default: False
+        type: str
+    iv_value:
+        description:
+            - Only for imported root key
+        required: False
+        type: str
+    key_protect_id:
+        description:
+            - (Required for new resource) Key protect instance ID
+        required: True
+        type: str
     force_delete:
         description:
             - set to true to force delete the key
         required: False
         type: bool
         default: False
-    key_protect_id:
-        description:
-            - (Required for new resource) Key protect instance ID
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -74,15 +74,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -111,13 +110,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'iv_value',
-    'encrypted_nonce',
+    'standard_key',
     'payload',
     'key_name',
-    'standard_key',
-    'force_delete',
+    'encrypted_nonce',
+    'iv_value',
     'key_protect_id',
+    'force_delete',
 ]
 
 # Params for Data source
@@ -126,8 +125,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'key_protect_id',
     'key_name',
+    'key_protect_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -137,27 +136,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    iv_value=dict(
+    standard_key=dict(
         required=False,
-        type='str'),
-    encrypted_nonce=dict(
-        required=False,
-        type='str'),
+        type='bool'),
     payload=dict(
         required=False,
         type='str'),
     key_name=dict(
         required=False,
         type='str'),
-    standard_key=dict(
+    encrypted_nonce=dict(
         required=False,
-        type='bool'),
-    force_delete=dict(
+        type='str'),
+    iv_value=dict(
         required=False,
-        type='bool'),
+        type='str'),
     key_protect_id=dict(
         required=False,
         type='str'),
+    force_delete=dict(
+        required=False,
+        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -223,7 +222,7 @@ def run_module():
         resource_type='ibm_kp_key',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -232,7 +231,7 @@ def run_module():
             resource_type='ibm_kp_key',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

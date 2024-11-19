@@ -18,19 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_network_acl' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    rules:
+    name:
         description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    vpc:
-        description:
-            - Network ACL VPC name
+            - Network ACL name
         required: False
         type: str
     tags:
@@ -45,9 +39,15 @@ options:
         required: False
         type: list
         elements: str
-    name:
+    rules:
         description:
-            - Network ACL name
+            - None
+        required: False
+        type: list
+        elements: dict
+    vpc:
+        description:
+            - Network ACL VPC name
         required: False
         type: str
     resource_group:
@@ -68,17 +68,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -105,11 +94,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'rules',
-    'vpc',
+    'name',
     'tags',
     'access_tags',
-    'name',
+    'rules',
+    'vpc',
     'resource_group',
 ]
 
@@ -119,8 +108,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 
 TL_ALL_PARAMETERS_DS = [
     'name',
-    'network_acl',
     'vpc_name',
+    'network_acl',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -130,11 +119,7 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    rules=dict(
-        required=False,
-        elements='',
-        type='list'),
-    vpc=dict(
+    name=dict(
         required=False,
         type='str'),
     tags=dict(
@@ -145,7 +130,11 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
+    rules=dict(
+        required=False,
+        elements='',
+        type='list'),
+    vpc=dict(
         required=False,
         type='str'),
     resource_group=dict(
@@ -159,11 +148,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -207,28 +191,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_network_acl',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -237,7 +222,7 @@ def run_module():
             resource_type='ibm_is_network_acl',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

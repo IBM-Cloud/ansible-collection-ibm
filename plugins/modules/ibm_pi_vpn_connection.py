@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_vpn_connection' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -27,14 +27,14 @@ options:
             - (Required for new resource) PI cloud instance ID
         required: True
         type: str
+    pi_vpn_connection_name:
+        description:
+            - (Required for new resource) Name of the VPN Connection
+        required: True
+        type: str
     pi_ike_policy_id:
         description:
             - (Required for new resource) Unique identifier of IKE Policy selected for this VPN Connection
-        required: True
-        type: str
-    pi_ipsec_policy_id:
-        description:
-            - (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
         required: True
         type: str
     pi_vpn_connection_mode:
@@ -42,9 +42,9 @@ options:
             - (Required for new resource) Mode used by this VPN Connection, either 'policy' or 'route'
         required: True
         type: str
-    pi_vpn_connection_name:
+    pi_ipsec_policy_id:
         description:
-            - (Required for new resource) Name of the VPN Connection
+            - (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
         required: True
         type: str
     pi_networks:
@@ -107,10 +107,10 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_cloud_instance_id', 'str'),
-    ('pi_ike_policy_id', 'str'),
-    ('pi_ipsec_policy_id', 'str'),
-    ('pi_vpn_connection_mode', 'str'),
     ('pi_vpn_connection_name', 'str'),
+    ('pi_ike_policy_id', 'str'),
+    ('pi_vpn_connection_mode', 'str'),
+    ('pi_ipsec_policy_id', 'str'),
     ('pi_networks', 'list'),
     ('pi_peer_gateway_address', 'str'),
     ('pi_peer_subnets', 'list'),
@@ -119,10 +119,10 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_cloud_instance_id',
-    'pi_ike_policy_id',
-    'pi_ipsec_policy_id',
-    'pi_vpn_connection_mode',
     'pi_vpn_connection_name',
+    'pi_ike_policy_id',
+    'pi_vpn_connection_mode',
+    'pi_ipsec_policy_id',
     'pi_networks',
     'pi_peer_gateway_address',
     'pi_peer_subnets',
@@ -145,16 +145,16 @@ module_args = dict(
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
-    pi_ike_policy_id=dict(
+    pi_vpn_connection_name=dict(
         required=False,
         type='str'),
-    pi_ipsec_policy_id=dict(
+    pi_ike_policy_id=dict(
         required=False,
         type='str'),
     pi_vpn_connection_mode=dict(
         required=False,
         type='str'),
-    pi_vpn_connection_name=dict(
+    pi_ipsec_policy_id=dict(
         required=False,
         type='str'),
     pi_networks=dict(
@@ -226,7 +226,7 @@ def run_module():
         resource_type='ibm_pi_vpn_connection',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

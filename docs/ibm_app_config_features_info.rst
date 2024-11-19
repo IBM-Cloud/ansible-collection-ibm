@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -41,12 +41,20 @@ Parameters
     Filter features by a list of comma separated segments.
 
 
-  offset (False, int, None)
-    The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
-
-
   includes (False, list, None)
     Include the associated collections or targeting rules details in the response.
+
+
+  environment_id (True, str, None)
+    Environment Id.
+
+
+  expand (False, bool, None)
+    If set to `true`, returns expanded view of the resource details.
+
+
+  collections (False, list, None)
+    Filter features by a list of comma separated collections.
 
 
   limit (False, int, None)
@@ -57,24 +65,16 @@ Parameters
     Sort the feature details based on the specified attribute.
 
 
-  expand (False, bool, None)
-    If set to `true`, returns expanded view of the resource details.
-
-
-  environment_id (True, str, None)
-    Environment Id.
-
-
-  collections (False, list, None)
-    Filter features by a list of comma separated collections.
+  offset (False, int, None)
+    The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

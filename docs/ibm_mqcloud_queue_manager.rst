@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,12 +35,8 @@ Parameters
     (Required for new resource) A queue manager name conforming to MQ restrictions.
 
 
-  display_name (False, str, None)
-    A displayable name for the queue manager - limited only in length.
-
-
   size (True, str, None)
-    (Required for new resource) The queue manager sizes of deployment available. Deployment of lite queue managers for aws_us_east_1 and aws_eu_west_1 locations is not available.
+    (Required for new resource) The queue manager sizes of deployment available.
 
 
   version (False, str, None)
@@ -49,6 +45,10 @@ Parameters
 
   service_instance_guid (True, str, None)
     (Required for new resource) The GUID that uniquely identifies the MQ on Cloud service instance.
+
+
+  display_name (False, str, None)
+    A displayable name for the queue manager - limited only in length.
 
 
   location (True, str, None)
@@ -64,11 +64,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

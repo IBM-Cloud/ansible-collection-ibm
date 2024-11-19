@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -33,12 +33,12 @@ Parameters
     Secret namespace
 
 
-  cluster (True, str, None)
-    Cluster ID or name
-
-
   secret_name (True, str, None)
     Secret name
+
+
+  cluster (True, str, None)
+    Cluster ID or name
 
 
   ibmcloud_api_key (True, any, None)

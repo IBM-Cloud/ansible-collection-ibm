@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,28 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_alias_id (False, str, None)
-    The id of the resource alias for which to create resource key
-
-
-  resource_instance_id (False, str, None)
-    The id of the resource instance for which to create resource key
-
-
-  tags (False, list, None)
-    None
+  role (False, str, None)
+    Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
 
 
   name (True, str, None)
     (Required for new resource) The name of the resource key
 
 
-  role (False, str, None)
-    Name of the user role.Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, Editor and Custom Roles.
+  resource_instance_id (False, str, None)
+    The id of the resource instance for which to create resource key
 
 
   parameters (False, dict, None)
     Arbitrary parameters to pass. Must be a JSON object
+
+
+  tags (False, list, None)
+    None
 
 
   id (False, str, None)
@@ -64,11 +60,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

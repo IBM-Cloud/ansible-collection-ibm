@@ -17,34 +17,19 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_report_resources' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    instance_id:
-        description:
-            - The ID of the Security and Compliance Center instance.
-        required: True
-        type: str
-    id:
-        description:
-            - The ID of the resource.
-        required: False
-        type: str
-    resource_name:
-        description:
-            - The name of the resource.
-        required: False
-        type: str
-    component_id:
-        description:
-            - The ID of component.
-        required: False
-        type: str
     sort:
         description:
             - This field sorts resources by using a valid sort field. To learn more, see [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
         required: False
+        type: str
+    instance_id:
+        description:
+            - The ID of the Security and Compliance Center instance.
+        required: True
         type: str
     report_id:
         description:
@@ -61,17 +46,31 @@ options:
             - The compliance status value.
         required: False
         type: str
+    id:
+        description:
+            - The ID of the resource.
+        required: False
+        type: str
+    resource_name:
+        description:
+            - The name of the resource.
+        required: False
+        type: str
+    component_id:
+        description:
+            - The ID of component.
+        required: False
+        type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -100,13 +99,13 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'instance_id',
-    'resource_name',
-    'component_id',
     'sort',
+    'instance_id',
     'report_id',
     'account_id',
     'status',
+    'resource_name',
+    'component_id',
 ]
 
 
@@ -117,20 +116,11 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    instance_id=dict(
-        required=True,
-        type='str'),
-    id=dict(
-        required=False,
-        type='str'),
-    resource_name=dict(
-        required=False,
-        type='str'),
-    component_id=dict(
-        required=False,
-        type='str'),
     sort=dict(
         required=False,
+        type='str'),
+    instance_id=dict(
+        required=True,
         type='str'),
     report_id=dict(
         required=True,
@@ -139,6 +129,15 @@ module_args = dict(
         required=False,
         type='str'),
     status=dict(
+        required=False,
+        type='str'),
+    id=dict(
+        required=False,
+        type='str'),
+    resource_name=dict(
+        required=False,
+        type='str'),
+    component_id=dict(
         required=False,
         type='str'),
     iaas_classic_username=dict(
@@ -175,7 +174,7 @@ def run_module():
         resource_type='ibm_scc_report_resources',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,36 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  zone_id (True, str, None)
+    (Required for new resource) Zone ID
+
+
   rdata (True, str, None)
     (Required for new resource) DNS record Data
-
-
-  ttl (False, int, 900)
-    DNS record TTL
-
-
-  preference (False, int, 0)
-    DNS maximum preference
 
 
   port (False, int, None)
     DNS server Port
 
 
-  priority (False, int, 0)
-    DNS server Priority
+  instance_id (True, str, None)
+    (Required for new resource) Instance ID
+
+
+  preference (False, int, 0)
+    DNS maximum preference
+
+
+  weight (False, int, 0)
+    DNS server weight
 
 
   protocol (False, str, None)
     Protocol
-
-
-  zone_id (True, str, None)
-    (Required for new resource) Zone ID
-
-
-  instance_id (True, str, None)
-    (Required for new resource) Instance ID
 
 
   name (True, str, None)
@@ -71,8 +67,12 @@ Parameters
     (Required for new resource) DNS record Type
 
 
-  weight (False, int, 0)
-    DNS server weight
+  ttl (False, int, 900)
+    DNS record TTL
+
+
+  priority (False, int, 0)
+    DNS server Priority
 
 
   service (False, str, None)
@@ -88,11 +88,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

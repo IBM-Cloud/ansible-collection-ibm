@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,18 +35,6 @@ Parameters
     (Required for new resource) A human readable ID for the virtual data center (VDC).
 
 
-  fast_provisioning_enabled (False, bool, None)
-    Determines whether this virtual data center has fast provisioning enabled or not.
-
-
-  rhel_byol (False, bool, False)
-    Indicates if the RHEL VMs will be using the license from IBM or the customer will use their own license (BYOL).
-
-
-  windows_byol (False, bool, False)
-    Indicates if the Microsoft Windows VMs will be using the license from IBM or the customer will use their own license (BYOL).
-
-
   ram (False, int, None)
     The RAM usage limit on the virtual data center (VDC) in GB (1024^3 bytes). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
 
@@ -55,12 +43,24 @@ Parameters
     Language.
 
 
-  cpu (False, int, None)
-    The vCPU usage limit on the virtual data center (VDC). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
+  windows_byol (False, bool, False)
+    Indicates if the Microsoft Windows VMs will be using the license from IBM or the customer will use their own license (BYOL).
 
 
   director_site (True, list, None)
     (Required for new resource) The Cloud Director site in which to deploy the virtual data center (VDC).
+
+
+  cpu (False, int, None)
+    The vCPU usage limit on the virtual data center (VDC). Supported for VDCs deployed on a multitenant Cloud Director site. This property is applicable when the resource pool type is reserved.
+
+
+  fast_provisioning_enabled (False, bool, None)
+    Determines whether this virtual data center has fast provisioning enabled or not.
+
+
+  rhel_byol (False, bool, False)
+    Indicates if the RHEL VMs will be using the license from IBM or the customer will use their own license (BYOL).
 
 
   id (False, str, None)
@@ -72,11 +72,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

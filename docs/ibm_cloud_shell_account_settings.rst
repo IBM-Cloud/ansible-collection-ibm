@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,16 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  rev (False, str, None)
-    Unique revision number for the settings object.
-
-
   default_enable_new_regions (False, bool, None)
     Set whether Cloud Shell is enabled in a specific location for the account. The location determines where user and session data are stored. By default, users are routed to the nearest available location.
 
 
+  features (False, list, None)
+    List of Cloud Shell features.
+
+
   account_id (True, str, None)
     (Required for new resource) The account ID in which the account settings belong to.
+
+
+  rev (False, str, None)
+    Unique revision number for the settings object.
+
+
+  regions (False, list, None)
+    List of Cloud Shell region settings.
 
 
   default_enable_new_features (False, bool, None)
@@ -49,14 +57,6 @@ Parameters
 
   enabled (False, bool, None)
     When enabled, Cloud Shell is available to all users in the account.
-
-
-  features (False, list, None)
-    List of Cloud Shell features.
-
-
-  regions (False, list, None)
-    List of Cloud Shell region settings.
 
 
   id (False, str, None)
@@ -68,11 +68,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

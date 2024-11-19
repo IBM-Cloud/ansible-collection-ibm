@@ -18,13 +18,19 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_group' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    name:
+    access_tags:
         description:
-            - (Required for new resource) The user-defined name for this instance group
+            - List of access management tags
+        required: False
+        type: list
+        elements: str
+    instance_template:
+        description:
+            - (Required for new resource) instance template ID
         required: True
         type: str
     load_balancer:
@@ -32,10 +38,31 @@ options:
             - load balancer ID
         required: False
         type: str
-    instance_template:
+    load_balancer_pool:
         description:
-            - (Required for new resource) instance template ID
+            - load balancer pool ID
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) The user-defined name for this instance group
         required: True
+        type: str
+    application_port:
+        description:
+            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+        required: False
+        type: int
+    instance_count:
+        description:
+            - The number of instances in the instance group
+        required: False
+        type: int
+        default: 0
+    resource_group:
+        description:
+            - Resource group ID
+        required: False
         type: str
     subnets:
         description:
@@ -49,33 +76,6 @@ options:
         required: False
         type: list
         elements: str
-    access_tags:
-        description:
-            - List of access management tags
-        required: False
-        type: list
-        elements: str
-    instance_count:
-        description:
-            - The number of instances in the instance group
-        required: False
-        type: int
-        default: 0
-    resource_group:
-        description:
-            - Resource group ID
-        required: False
-        type: str
-    application_port:
-        description:
-            - Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
-        required: False
-        type: int
-    load_balancer_pool:
-        description:
-            - load balancer pool ID
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -89,17 +89,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -122,23 +111,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('instance_template', 'str'),
+    ('name', 'str'),
     ('subnets', 'list'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'load_balancer',
-    'instance_template',
-    'subnets',
-    'tags',
     'access_tags',
+    'instance_template',
+    'load_balancer',
+    'load_balancer_pool',
+    'name',
+    'application_port',
     'instance_count',
     'resource_group',
-    'application_port',
-    'load_balancer_pool',
+    'subnets',
+    'tags',
 ]
 
 # Params for Data source
@@ -157,13 +146,29 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    instance_template=dict(
         required=False,
         type='str'),
     load_balancer=dict(
         required=False,
         type='str'),
-    instance_template=dict(
+    load_balancer_pool=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    application_port=dict(
+        required=False,
+        type='int'),
+    instance_count=dict(
+        required=False,
+        type='int'),
+    resource_group=dict(
         required=False,
         type='str'),
     subnets=dict(
@@ -174,22 +179,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    instance_count=dict(
-        required=False,
-        type='int'),
-    resource_group=dict(
-        required=False,
-        type='str'),
-    application_port=dict(
-        required=False,
-        type='int'),
-    load_balancer_pool=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -198,11 +187,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -246,28 +230,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_instance_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -276,7 +261,7 @@ def run_module():
             resource_type='ibm_is_instance_group',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,20 +18,22 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_range_app' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    cis_id:
+    edge_ips_connectivity:
         description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
+            - Specifies the IP version.
+        required: False
         type: str
-    domain_id:
+        default: all
+    tls:
         description:
-            - (Required for new resource) CIS Domain ID
-        required: True
+            - Configure if and how TLS connections are terminated at the edge.
+        required: False
         type: str
+        default: off
     protocol:
         description:
             - (Required for new resource) Defines the protocol and port for this application
@@ -54,15 +56,29 @@ options:
         required: False
         type: str
         default: direct
-    tls:
+    cis_id:
         description:
-            - Configure if and how TLS connections are terminated at the edge.
-        required: False
+            - (Required for new resource) CIS Intance CRN
+        required: True
         type: str
-        default: off
     dns_type:
         description:
             - (Required for new resource) Type of the DNS record for this application
+        required: True
+        type: str
+    ip_firewall:
+        description:
+            - Enables the IP Firewall for this application. Only available for TCP applications.
+        required: False
+        type: bool
+    proxy_protocol:
+        description:
+            - Allows for the true client IP to be passed to the service.
+        required: False
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) CIS Domain ID
         required: True
         type: str
     origin_port:
@@ -70,11 +86,6 @@ options:
             - Port at the origin that listens to traffic
         required: False
         type: int
-    proxy_protocol:
-        description:
-            - Allows for the true client IP to be passed to the service.
-        required: False
-        type: str
     edge_ips_type:
         description:
             - The type of edge IP configuration.
@@ -86,17 +97,6 @@ options:
             - DNS record pointing to the origin for this Range application.
         required: False
         type: str
-    ip_firewall:
-        description:
-            - Enables the IP Firewall for this application. Only available for TCP applications.
-        required: False
-        type: bool
-    edge_ips_connectivity:
-        description:
-            - Specifies the IP version.
-        required: False
-        type: str
-        default: all
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -112,15 +112,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -143,29 +142,29 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
-    ('domain_id', 'str'),
     ('protocol', 'str'),
     ('dns', 'str'),
+    ('cis_id', 'str'),
     ('dns_type', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
-    'domain_id',
+    'edge_ips_connectivity',
+    'tls',
     'protocol',
     'dns',
     'origin_direct',
     'traffic_type',
-    'tls',
+    'cis_id',
     'dns_type',
-    'origin_port',
+    'ip_firewall',
     'proxy_protocol',
+    'domain_id',
+    'origin_port',
     'edge_ips_type',
     'origin_dns',
-    'ip_firewall',
-    'edge_ips_connectivity',
 ]
 
 # Params for Data source
@@ -183,10 +182,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
+    edge_ips_connectivity=dict(
         required=False,
         type='str'),
-    domain_id=dict(
+    tls=dict(
         required=False,
         type='str'),
     protocol=dict(
@@ -202,28 +201,28 @@ module_args = dict(
     traffic_type=dict(
         required=False,
         type='str'),
-    tls=dict(
+    cis_id=dict(
         required=False,
         type='str'),
     dns_type=dict(
         required=False,
         type='str'),
-    origin_port=dict(
+    ip_firewall=dict(
         required=False,
-        type='int'),
+        type='bool'),
     proxy_protocol=dict(
         required=False,
         type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
+    origin_port=dict(
+        required=False,
+        type='int'),
     edge_ips_type=dict(
         required=False,
         type='str'),
     origin_dns=dict(
-        required=False,
-        type='str'),
-    ip_firewall=dict(
-        required=False,
-        type='bool'),
-    edge_ips_connectivity=dict(
         required=False,
         type='str'),
     id=dict(
@@ -291,7 +290,7 @@ def run_module():
         resource_type='ibm_cis_range_app',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

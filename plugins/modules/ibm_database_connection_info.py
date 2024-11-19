@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_database_connection' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    user_id:
-        description:
-            - User ID.
-        required: True
-        type: str
-    endpoint_type:
-        description:
-            - Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
-        required: True
-        type: str
     certificate_root:
         description:
             - Optional certificate root path to prepend certificate names. Certificates would be stored in this directory for use by other commands.
@@ -41,6 +31,16 @@ options:
             - Deployment ID.
         required: True
         type: str
+    user_id:
+        description:
+            - User ID.
+        required: True
+        type: str
+    endpoint_type:
+        description:
+            - Endpoint Type. The endpoint must be enabled on the deployment before its connection information can be fetched.
+        required: True
+        type: str
     user_type:
         description:
             - User type.
@@ -48,15 +48,14 @@ options:
         type: str
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -79,18 +78,18 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('deployment_id', 'str'),
     ('user_id', 'str'),
     ('endpoint_type', 'str'),
-    ('deployment_id', 'str'),
     ('user_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_id',
-    'endpoint_type',
     'certificate_root',
     'deployment_id',
+    'user_id',
+    'endpoint_type',
     'user_type',
 ]
 
@@ -102,16 +101,16 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_id=dict(
-        required=True,
-        type='str'),
-    endpoint_type=dict(
-        required=True,
-        type='str'),
     certificate_root=dict(
         required=False,
         type='str'),
     deployment_id=dict(
+        required=True,
+        type='str'),
+    user_id=dict(
+        required=True,
+        type='str'),
+    endpoint_type=dict(
         required=True,
         type='str'),
     user_type=dict(
@@ -151,7 +150,7 @@ def run_module():
         resource_type='ibm_database_connection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

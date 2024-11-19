@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,12 +31,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  responsible_person (False, str, None)
-    Responsible person for DNS record
+  domain_id (True, int, None)
+    (Required for new resource) Domain ID of dns record instance
 
 
-  retry (False, int, None)
-    Retry count
+  protocol (False, str, None)
+    protocol info
 
 
   priority (False, int, 0)
@@ -51,16 +51,40 @@ Parameters
     (Required for new resource) DNS record data
 
 
-  domain_id (True, int, None)
-    (Required for new resource) Domain ID of dns record instance
-
-
   host (True, str, None)
     (Required for new resource) Hostname
 
 
+  responsible_person (False, str, None)
+    Responsible person for DNS record
+
+
+  minimum_ttl (False, int, None)
+    Minimun TTL configuration
+
+
   expire (False, int, None)
     DNS record expiry info
+
+
+  mx_priority (False, int, 0)
+    Maximum priority
+
+
+  retry (False, int, None)
+    Retry count
+
+
+  service (False, str, None)
+    service info
+
+
+  weight (False, int, 0)
+    weight info
+
+
+  refresh (False, int, None)
+    refresh rate
 
 
   ttl (True, int, None)
@@ -71,32 +95,8 @@ Parameters
     (Required for new resource) DNS record type
 
 
-  service (False, str, None)
-    service info
-
-
-  protocol (False, str, None)
-    protocol info
-
-
   port (False, int, None)
     port number
-
-
-  mx_priority (False, int, 0)
-    Maximum priority
-
-
-  refresh (False, int, None)
-    refresh rate
-
-
-  minimum_ttl (False, int, None)
-    Minimun TTL configuration
-
-
-  weight (False, int, 0)
-    weight info
 
 
   id (False, str, None)
@@ -108,11 +108,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,24 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  schedule (True, str, None)
+    (Required for new resource) The schedule of an attachment evaluation.
+
+
   name (True, str, None)
     (Required for new resource) The name of the attachment.
 
 
-  schedule (True, str, None)
-    (Required for new resource) The schedule of an attachment evaluation.
+  description (False, str, None)
+    The description for the attachment.
 
 
   profile_id (True, str, None)
     (Required for new resource) The ID of the profile that is specified in the attachment.
 
 
+  attachment_parameters (False, list, None)
+    The profile parameters for the attachment.
+
+
   status (True, str, None)
     (Required for new resource) The status of an attachment evaluation.
 
 
-  description (False, str, None)
-    The description for the attachment.
+  notifications (False, list, None)
+    The request payload of the attachment notifications.
 
 
   instance_id (True, str, None)
@@ -57,14 +65,6 @@ Parameters
 
   scope (True, list, None)
     (Required for new resource) The scope payload for the multi cloud feature.
-
-
-  notifications (False, list, None)
-    The request payload of the attachment notifications.
-
-
-  attachment_parameters (False, list, None)
-    The profile parameters for the attachment.
 
 
   id (False, str, None)
@@ -76,11 +76,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

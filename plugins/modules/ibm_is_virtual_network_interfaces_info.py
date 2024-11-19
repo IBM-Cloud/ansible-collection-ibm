@@ -17,33 +17,13 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_virtual_network_interfaces' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
     resource_group:
         description:
             - The unique identifier of the resource group these virtual network interfaces belong to
-        required: False
-        type: str
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
-    region:
-        description:
-            - The IBM Cloud region where you want to create your
-              resources. If this value is not specified, us-south is
-              used by default. This can also be provided via the
-              environment variable 'IC_REGION'.
-        default: us-south
         required: False
         type: str
     ibmcloud_api_key:
@@ -77,15 +57,6 @@ module_args = dict(
     resource_group=dict(
         required=False,
         type='str'),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
-    region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -102,28 +73,29 @@ def run_module():
         supports_check_mode=False
     )
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result = ibmcloud_terraform(
         resource_type='ibm_is_virtual_network_interfaces',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

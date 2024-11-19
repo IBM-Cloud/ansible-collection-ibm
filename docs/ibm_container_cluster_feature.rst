@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  private_service_endpoint (False, bool, None)
+    None
+
 
   refresh_api_servers (False, bool, True)
     Boolean value true of API server to be refreshed in K8S cluster
@@ -48,10 +52,6 @@ Parameters
 
 
   public_service_endpoint (False, bool, None)
-    None
-
-
-  private_service_endpoint (False, bool, None)
     None
 
 

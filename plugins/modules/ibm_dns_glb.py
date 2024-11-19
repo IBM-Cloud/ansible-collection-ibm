@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_glb' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -32,18 +32,6 @@ options:
             - (Required for new resource) Name of the load balancer
         required: True
         type: str
-    ttl:
-        description:
-            - Time to live in second
-        required: False
-        type: int
-        default: 60
-    az_pools:
-        description:
-            - Map availability zones to pool ID's.
-        required: False
-        type: list
-        elements: dict
     default_pools:
         description:
             - (Required for new resource) A list of pool IDs ordered by their failover priority
@@ -65,11 +53,23 @@ options:
             - Whether the load balancer is enabled
         required: False
         type: bool
+    ttl:
+        description:
+            - Time to live in second
+        required: False
+        type: int
+        default: 60
     fallback_pool:
         description:
             - (Required for new resource) The pool ID to use when all other pools are detected as unhealthy
         required: True
         type: str
+    az_pools:
+        description:
+            - Map availability zones to pool ID's.
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,15 +85,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -127,13 +126,13 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'zone_id',
     'name',
-    'ttl',
-    'az_pools',
     'default_pools',
     'instance_id',
     'description',
     'enabled',
+    'ttl',
     'fallback_pool',
+    'az_pools',
 ]
 
 # Params for Data source
@@ -156,13 +155,6 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    ttl=dict(
-        required=False,
-        type='int'),
-    az_pools=dict(
-        required=False,
-        elements='',
-        type='list'),
     default_pools=dict(
         required=False,
         elements='',
@@ -176,9 +168,16 @@ module_args = dict(
     enabled=dict(
         required=False,
         type='bool'),
+    ttl=dict(
+        required=False,
+        type='int'),
     fallback_pool=dict(
         required=False,
         type='str'),
+    az_pools=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -244,7 +243,7 @@ def run_module():
         resource_type='ibm_dns_glb',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

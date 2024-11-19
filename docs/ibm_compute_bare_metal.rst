@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,11 +31,27 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  memory (False, int, None)
+  ssh_key_ids (False, list, None)
+    SSH KEY IDS list
+
+
+  block_storage_ids (False, list, None)
     None
 
 
-  public_vlan_id (False, int, None)
+  hourly_billing (False, bool, True)
+    Enables hourly billing
+
+
+  os_key_name (False, str, None)
+    None
+
+
+  restricted_network (False, bool, False)
+    None
+
+
+  private_subnet (False, str, None)
     None
 
 
@@ -43,79 +59,19 @@ Parameters
     Host name
 
 
-  post_install_script_uri (False, str, None)
+  file_storage_ids (False, list, None)
     None
 
 
-  process_key_name (False, str, None)
-    None
+  fixed_config_preset (False, str, None)
+    Fixed config preset value
 
 
-  gpu_key_name (False, str, None)
-    None
+  private_network_only (False, bool, False)
+    only private network configured if is true
 
 
   redundant_power_supply (False, bool, None)
-    None
-
-
-  os_key_name (False, str, None)
-    None
-
-
-  ssh_key_ids (False, list, None)
-    SSH KEY IDS list
-
-
-  tags (False, list, None)
-    None
-
-
-  os_reference_code (False, str, None)
-    OS refernece code value
-
-
-  tcp_monitoring (False, bool, False)
-    TCP monitoring enabled if set as true
-
-
-  secondary_ip_count (False, int, None)
-    Secondary IP addresses count
-
-
-  datacenter (False, str, None)
-    None
-
-
-  extended_hardware_testing (False, bool, False)
-    None
-
-
-  public_bandwidth (False, int, None)
-    None
-
-
-  quote_id (False, int, None)
-    Quote ID for Quote based provisioning
-
-
-  user_metadata (False, str, None)
-    User metadata info
-
-
-  hourly_billing (False, bool, True)
-    Enables hourly billing
-
-
-  restricted_network (False, bool, False)
-    None
-
-
-  ipv6_static_enabled (False, bool, False)
-    boolean value true if ipv6 static is enabled else false
-
-
-  file_storage_ids (False, list, None)
     None
 
 
@@ -123,7 +79,27 @@ Parameters
     None
 
 
-  unbonded_network (False, bool, False)
+  memory (False, int, None)
+    None
+
+
+  public_subnet (False, str, None)
+    None
+
+
+  domain (True, str, None)
+    (Required for new resource) Domain name
+
+
+  secondary_ip_count (False, int, None)
+    Secondary IP addresses count
+
+
+  disk_key_names (False, list, None)
+    None
+
+
+  storage_groups (False, list, None)
     None
 
 
@@ -131,11 +107,7 @@ Parameters
     Boolean value true if IPV6 ia enabled or false
 
 
-  disk_key_names (False, list, None)
-    None
-
-
-  private_vlan_id (False, int, None)
+  tags (False, list, None)
     None
 
 
@@ -143,11 +115,67 @@ Parameters
     Optional notes info
 
 
-  private_network_only (False, bool, False)
-    only private network configured if is true
+  os_reference_code (False, str, None)
+    OS refernece code value
+
+
+  network_speed (False, int, 100)
+    Network speed in MBPS
+
+
+  private_vlan_id (False, int, None)
+    None
+
+
+  user_metadata (False, str, None)
+    User metadata info
+
+
+  tcp_monitoring (False, bool, False)
+    TCP monitoring enabled if set as true
 
 
   software_guard_extensions (False, bool, False)
+    None
+
+
+  public_bandwidth (False, int, None)
+    None
+
+
+  image_template_id (False, int, None)
+    OS image template ID
+
+
+  datacenter (False, str, None)
+    None
+
+
+  gpu_key_name (False, str, None)
+    None
+
+
+  unbonded_network (False, bool, False)
+    None
+
+
+  quote_id (False, int, None)
+    Quote ID for Quote based provisioning
+
+
+  post_install_script_uri (False, str, None)
+    None
+
+
+  ipv6_static_enabled (False, bool, False)
+    boolean value true if ipv6 static is enabled else false
+
+
+  public_vlan_id (False, int, None)
+    None
+
+
+  extended_hardware_testing (False, bool, False)
     None
 
 
@@ -159,36 +187,8 @@ Parameters
     None
 
 
-  storage_groups (False, list, None)
+  process_key_name (False, str, None)
     None
-
-
-  network_speed (False, int, 100)
-    Network speed in MBPS
-
-
-  public_subnet (False, str, None)
-    None
-
-
-  private_subnet (False, str, None)
-    None
-
-
-  domain (True, str, None)
-    (Required for new resource) Domain name
-
-
-  block_storage_ids (False, list, None)
-    None
-
-
-  fixed_config_preset (False, str, None)
-    Fixed config preset value
-
-
-  image_template_id (False, int, None)
-    OS image template ID
 
 
   id (False, str, None)
@@ -200,11 +200,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -18,19 +18,34 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_sm_private_certificate_configuration_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    postal_code:
+    not_before_duration:
         description:
-            - The postal code values to define in the subject field of the resulting certificate.
+            - The duration in seconds by which to backdate the `not_before` property of an issued private certificate.The value can be supplied as a string representation of a duration, such as `30s`. In the API response, this value is returned in seconds (integer).
+        required: False
+        type: str
+    region:
+        description:
+            - The region of the Secrets Manager instance.
+        required: False
+        type: str
+    locality:
+        description:
+            - The Locality (L) values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
-    allowed_domains_template:
+    allow_bare_domains:
         description:
-            - Determines whether to allow the domains that are supplied in the `allowed_domains` field to contain access control list (ACL) templates.
+            - Determines whether to allow clients to request private certificates that match the value of the actual domains on the final certificate.For example, if you specify `example.com` in the `allowed_domains` field, you grant clients the ability to request a certificate that contains the name `example.com` as one of the DNS values on the final certificate.**Important:** In some scenarios, allowing bare domains can be considered a security risk.
+        required: False
+        type: bool
+    allow_any_name:
+        description:
+            - Determines whether to allow clients to request a private certificate that matches any common name.
         required: False
         type: bool
     allow_wildcard_certificates:
@@ -38,62 +53,25 @@ options:
             - Determines whether the issuance of certificates with RFC 6125 wildcards in the CN field.When set to false, this field prevents wildcards from being issued even if they can be allowed by an option `allow_glob_domains`.
         required: False
         type: bool
-    allow_ip_sans:
+    policy_identifiers:
         description:
-            - Determines whether to allow clients to request a private certificate with IP Subject Alternative Names.
+            - A list of policy Object Identifiers (OIDs).
         required: False
-        type: bool
-    client_flag:
-        description:
-            - Determines whether private certificates are flagged for client use.
-        required: False
-        type: bool
+        type: list
+        elements: str
     endpoint_type:
         description:
             - public or private.
         required: False
         type: str
-    allow_any_name:
+    allowed_domains_template:
         description:
-            - Determines whether to allow clients to request a private certificate that matches any common name.
+            - Determines whether to allow the domains that are supplied in the `allowed_domains` field to contain access control list (ACL) templates.
         required: False
         type: bool
-    ou:
+    allowed_other_sans:
         description:
-            - The Organizational Unit (OU) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    country:
-        description:
-            - The Country (C) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    enforce_hostnames:
-        description:
-            - Determines whether to enforce only valid host names for common names, DNS Subject Alternative Names, and the host section of email addresses.
-        required: False
-        type: bool
-    not_before_duration:
-        description:
-            - The duration in seconds by which to backdate the `not_before` property of an issued private certificate.The value can be supplied as a string representation of a duration, such as `30s`. In the API response, this value is returned in seconds (integer).
-        required: False
-        type: str
-    street_address:
-        description:
-            - The street address values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    allow_subdomains:
-        description:
-            - Determines whether to allow clients to request private certificates with common names (CN) that are subdomains of the CNs that are allowed by the other certificate template options. This includes wildcard subdomains.For example, if `allowed_domains` has a value of `example.com` and `allow_subdomains`is set to `true`, then the following subdomains are allowed: `foo.example.com`, `bar.example.com`, `*.example.com`.**Note:** This field is redundant if you use the `allow_any_name` option.
-        required: False
-        type: bool
-    key_usage:
-        description:
-            - The allowed key usage constraint to define for private certificates.You can find valid values in the [Go x509 package documentation](https://pkg.go.dev/crypto/x509#KeyUsage). Omit the `KeyUsage` part of the value. Values are not case-sensitive. To specify no key usage constraints, set this field to an empty list.
+            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names (SANs) to allow for private certificates.The format for each element in the list is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`. To allow any value for an OID, use `*` as its value. Alternatively, specify a single `*` to allow any `other_sans` input.
         required: False
         type: list
         elements: str
@@ -103,50 +81,19 @@ options:
         required: False
         type: list
         elements: str
-    use_csr_sans:
-        description:
-            - When used with the `private_cert_configuration_action_sign_csr` action, this field determines whether to use the Subject Alternative Names(SANs) from a certificate signing request (CSR) instead of the SANs that are included in the data of the certificate.Does not include the common name in the CSR. To use the common name, include the `use_csr_common_name` property.
-        required: False
-        type: bool
-    key_type:
-        description:
-            - The type of private key to generate.
-        required: False
-        type: str
-    allowed_domains:
-        description:
-            - The domains to define for the certificate template. This property is used along with the `allow_bare_domains` and `allow_subdomains` options.
-        required: False
-        type: list
-        elements: str
-    allow_bare_domains:
-        description:
-            - Determines whether to allow clients to request private certificates that match the value of the actual domains on the final certificate.For example, if you specify `example.com` in the `allowed_domains` field, you grant clients the ability to request a certificate that contains the name `example.com` as one of the DNS values on the final certificate.**Important:** In some scenarios, allowing bare domains can be considered a security risk.
-        required: False
-        type: bool
-    code_signing_flag:
-        description:
-            - Determines whether private certificates are flagged for code signing use.
-        required: False
-        type: bool
-    email_protection_flag:
-        description:
-            - Determines whether private certificates are flagged for email protection use.
-        required: False
-        type: bool
-    use_csr_common_name:
-        description:
-            - When used with the `private_cert_configuration_action_sign_csr` action, this field determines whether to use the common name (CN) from a certificate signing request (CSR) instead of the CN that's included in the data of the certificate.Does not include any requested Subject Alternative Names (SANs) in the CSR. To use the alternative names, include the `use_csr_sans` property.
-        required: False
-        type: bool
     require_cn:
         description:
             - Determines whether to require a common name to create a private certificate.By default, a common name is required to generate a certificate. To make the `common_name` field optional, set the `require_cn` option to `false`.
         required: False
         type: bool
-    policy_identifiers:
+    max_ttl:
         description:
-            - A list of policy Object Identifiers (OIDs).
+            - The maximum time-to-live (TTL) for certificates that are created by this CA.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).Minimum value is one hour (`1h`). Maximum value is 100 years (`876000h`).
+        required: False
+        type: str
+    country:
+        description:
+            - The Country (C) values to define in the subject field of the resulting certificate.
         required: False
         type: list
         elements: str
@@ -155,68 +102,20 @@ options:
             - Determines whether to mark the Basic Constraints extension of an issued private certificate as valid for non-CA certificates.
         required: False
         type: bool
-    key_bits:
-        description:
-            - The number of bits to use to generate the private key.Allowable values for RSA keys are: `2048` and `4096`. Allowable values for EC keys are: `224`, `256`, `384`, and `521`. The default for RSA keys is `2048`. The default for EC keys is `256`.
-        required: False
-        type: int
     allowed_uri_sans:
         description:
             - The URI Subject Alternative Names to allow for private certificates.Values can contain glob patterns, for example `spiffe://hostname/_*`.
         required: False
         type: list
         elements: str
-    allowed_other_sans:
+    use_csr_sans:
         description:
-            - The custom Object Identifier (OID) or UTF8-string Subject Alternative Names (SANs) to allow for private certificates.The format for each element in the list is the same as OpenSSL: `<oid>:<type>:<value>` where the current valid type is `UTF8`. To allow any value for an OID, use `*` as its value. Alternatively, specify a single `*` to allow any `other_sans` input.
-        required: False
-        type: list
-        elements: str
-    server_flag:
-        description:
-            - Determines whether private certificates are flagged for server use.
+            - When used with the `private_cert_configuration_action_sign_csr` action, this field determines whether to use the Subject Alternative Names(SANs) from a certificate signing request (CSR) instead of the SANs that are included in the data of the certificate.Does not include the common name in the CSR. To use the common name, include the `use_csr_common_name` property.
         required: False
         type: bool
-    ext_key_usage_oids:
-        description:
-            - A list of extended key usage Object Identifiers (OIDs).
-        required: False
-        type: list
-        elements: str
     ttl:
         description:
             - The requested time-to-live (TTL) for certificates that are created by this CA. This field's value cannot be longer than the `max_ttl` limit.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).
-        required: False
-        type: str
-    locality:
-        description:
-            - The Locality (L) values to define in the subject field of the resulting certificate.
-        required: False
-        type: list
-        elements: str
-    allowed_secret_groups:
-        description:
-            - Scopes the creation of private certificates to only the secret groups that you specify.This field can be supplied as a comma-delimited list of secret group IDs.
-        required: False
-        type: str
-    instance_id:
-        description:
-            - (Required for new resource) The ID of the Secrets Manager instance.
-        required: True
-        type: str
-    region:
-        description:
-            - The region of the Secrets Manager instance.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
-        required: True
-        type: str
-    max_ttl:
-        description:
-            - The maximum time-to-live (TTL) for certificates that are created by this CA.The value can be supplied as a string representation of a duration in hours, for example '8760h'. In the API response, this value is returned in seconds (integer).Minimum value is one hour (`1h`). Maximum value is 100 years (`876000h`).
         required: False
         type: str
     organization:
@@ -231,10 +130,111 @@ options:
         required: False
         type: list
         elements: str
+    use_csr_common_name:
+        description:
+            - When used with the `private_cert_configuration_action_sign_csr` action, this field determines whether to use the common name (CN) from a certificate signing request (CSR) instead of the CN that's included in the data of the certificate.Does not include any requested Subject Alternative Names (SANs) in the CSR. To use the alternative names, include the `use_csr_sans` property.
+        required: False
+        type: bool
+    name:
+        description:
+            - (Required for new resource) A human-readable unique name to assign to your configuration.To protect your privacy, do not use personal data, such as your name or location, as an name for your secret.
+        required: True
+        type: str
+    key_bits:
+        description:
+            - The number of bits to use to generate the private key.Allowable values for RSA keys are: `2048` and `4096`. Allowable values for EC keys are: `224`, `256`, `384`, and `521`. The default for RSA keys is `2048`. The default for EC keys is `256`.
+        required: False
+        type: int
+    allowed_domains:
+        description:
+            - The domains to define for the certificate template. This property is used along with the `allow_bare_domains` and `allow_subdomains` options.
+        required: False
+        type: list
+        elements: str
+    code_signing_flag:
+        description:
+            - Determines whether private certificates are flagged for code signing use.
+        required: False
+        type: bool
+    instance_id:
+        description:
+            - (Required for new resource) The ID of the Secrets Manager instance.
+        required: True
+        type: str
+    allowed_secret_groups:
+        description:
+            - Scopes the creation of private certificates to only the secret groups that you specify.This field can be supplied as a comma-delimited list of secret group IDs.
+        required: False
+        type: str
+    allow_subdomains:
+        description:
+            - Determines whether to allow clients to request private certificates with common names (CN) that are subdomains of the CNs that are allowed by the other certificate template options. This includes wildcard subdomains.For example, if `allowed_domains` has a value of `example.com` and `allow_subdomains`is set to `true`, then the following subdomains are allowed: `foo.example.com`, `bar.example.com`, `*.example.com`.**Note:** This field is redundant if you use the `allow_any_name` option.
+        required: False
+        type: bool
+    allow_ip_sans:
+        description:
+            - Determines whether to allow clients to request a private certificate with IP Subject Alternative Names.
+        required: False
+        type: bool
     certificate_authority:
         description:
             - (Required for new resource) The name of the intermediate certificate authority.
         required: True
+        type: str
+    enforce_hostnames:
+        description:
+            - Determines whether to enforce only valid host names for common names, DNS Subject Alternative Names, and the host section of email addresses.
+        required: False
+        type: bool
+    server_flag:
+        description:
+            - Determines whether private certificates are flagged for server use.
+        required: False
+        type: bool
+    client_flag:
+        description:
+            - Determines whether private certificates are flagged for client use.
+        required: False
+        type: bool
+    email_protection_flag:
+        description:
+            - Determines whether private certificates are flagged for email protection use.
+        required: False
+        type: bool
+    ou:
+        description:
+            - The Organizational Unit (OU) values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    street_address:
+        description:
+            - The street address values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    postal_code:
+        description:
+            - The postal code values to define in the subject field of the resulting certificate.
+        required: False
+        type: list
+        elements: str
+    ext_key_usage_oids:
+        description:
+            - A list of extended key usage Object Identifiers (OIDs).
+        required: False
+        type: list
+        elements: str
+    key_usage:
+        description:
+            - The allowed key usage constraint to define for private certificates.You can find valid values in the [Go x509 package documentation](https://pkg.go.dev/crypto/x509#KeyUsage). Omit the `KeyUsage` part of the value. Values are not case-sensitive. To specify no key usage constraints, set this field to an empty list.
+        required: False
+        type: list
+        elements: str
+    key_type:
+        description:
+            - The type of private key to generate.
+        required: False
         type: str
     allow_localhost:
         description:
@@ -261,15 +261,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -292,68 +291,68 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
     ('certificate_authority', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'postal_code',
-    'allowed_domains_template',
-    'allow_wildcard_certificates',
-    'allow_ip_sans',
-    'client_flag',
-    'endpoint_type',
-    'allow_any_name',
-    'ou',
-    'country',
-    'enforce_hostnames',
     'not_before_duration',
-    'street_address',
-    'allow_subdomains',
-    'key_usage',
-    'ext_key_usage',
-    'use_csr_sans',
-    'key_type',
-    'allowed_domains',
-    'allow_bare_domains',
-    'code_signing_flag',
-    'email_protection_flag',
-    'use_csr_common_name',
-    'require_cn',
-    'policy_identifiers',
-    'basic_constraints_valid_for_non_ca',
-    'key_bits',
-    'allowed_uri_sans',
-    'allowed_other_sans',
-    'server_flag',
-    'ext_key_usage_oids',
-    'ttl',
-    'locality',
-    'allowed_secret_groups',
-    'instance_id',
     'region',
-    'name',
+    'locality',
+    'allow_bare_domains',
+    'allow_any_name',
+    'allow_wildcard_certificates',
+    'policy_identifiers',
+    'endpoint_type',
+    'allowed_domains_template',
+    'allowed_other_sans',
+    'ext_key_usage',
+    'require_cn',
     'max_ttl',
+    'country',
+    'basic_constraints_valid_for_non_ca',
+    'allowed_uri_sans',
+    'use_csr_sans',
+    'ttl',
     'organization',
     'province',
+    'use_csr_common_name',
+    'name',
+    'key_bits',
+    'allowed_domains',
+    'code_signing_flag',
+    'instance_id',
+    'allowed_secret_groups',
+    'allow_subdomains',
+    'allow_ip_sans',
     'certificate_authority',
+    'enforce_hostnames',
+    'server_flag',
+    'client_flag',
+    'email_protection_flag',
+    'ou',
+    'street_address',
+    'postal_code',
+    'ext_key_usage_oids',
+    'key_usage',
+    'key_type',
     'allow_localhost',
     'allow_glob_domains',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_id', 'str'),
     ('name', 'str'),
+    ('instance_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'endpoint_type',
+    'name',
     'instance_id',
     'region',
-    'name',
+    'endpoint_type',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -363,50 +362,36 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    postal_code=dict(
+    not_before_duration=dict(
+        required=False,
+        type='str'),
+    region=dict(
+        required=False,
+        type='str'),
+    locality=dict(
         required=False,
         elements='',
         type='list'),
-    allowed_domains_template=dict(
+    allow_bare_domains=dict(
+        required=False,
+        type='bool'),
+    allow_any_name=dict(
         required=False,
         type='bool'),
     allow_wildcard_certificates=dict(
         required=False,
         type='bool'),
-    allow_ip_sans=dict(
+    policy_identifiers=dict(
         required=False,
-        type='bool'),
-    client_flag=dict(
-        required=False,
-        type='bool'),
+        elements='',
+        type='list'),
     endpoint_type=dict(
         required=False,
         type='str'),
-    allow_any_name=dict(
+    allowed_domains_template=dict(
         required=False,
         type='bool'),
-    ou=dict(
-        required=False,
-        elements='',
-        type='list'),
-    country=dict(
-        required=False,
-        elements='',
-        type='list'),
-    enforce_hostnames=dict(
-        required=False,
-        type='bool'),
-    not_before_duration=dict(
-        required=False,
-        type='str'),
-    street_address=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allow_subdomains=dict(
-        required=False,
-        type='bool'),
-    key_usage=dict(
+    allowed_other_sans=dict(
         required=False,
         elements='',
         type='list'),
@@ -414,76 +399,27 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    use_csr_sans=dict(
-        required=False,
-        type='bool'),
-    key_type=dict(
-        required=False,
-        type='str'),
-    allowed_domains=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allow_bare_domains=dict(
-        required=False,
-        type='bool'),
-    code_signing_flag=dict(
-        required=False,
-        type='bool'),
-    email_protection_flag=dict(
-        required=False,
-        type='bool'),
-    use_csr_common_name=dict(
-        required=False,
-        type='bool'),
     require_cn=dict(
         required=False,
         type='bool'),
-    policy_identifiers=dict(
+    max_ttl=dict(
+        required=False,
+        type='str'),
+    country=dict(
         required=False,
         elements='',
         type='list'),
     basic_constraints_valid_for_non_ca=dict(
         required=False,
         type='bool'),
-    key_bits=dict(
-        required=False,
-        type='int'),
     allowed_uri_sans=dict(
         required=False,
         elements='',
         type='list'),
-    allowed_other_sans=dict(
-        required=False,
-        elements='',
-        type='list'),
-    server_flag=dict(
+    use_csr_sans=dict(
         required=False,
         type='bool'),
-    ext_key_usage_oids=dict(
-        required=False,
-        elements='',
-        type='list'),
     ttl=dict(
-        required=False,
-        type='str'),
-    locality=dict(
-        required=False,
-        elements='',
-        type='list'),
-    allowed_secret_groups=dict(
-        required=False,
-        type='str'),
-    instance_id=dict(
-        required=False,
-        type='str'),
-    region=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    max_ttl=dict(
         required=False,
         type='str'),
     organization=dict(
@@ -494,7 +430,70 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    use_csr_common_name=dict(
+        required=False,
+        type='bool'),
+    name=dict(
+        required=False,
+        type='str'),
+    key_bits=dict(
+        required=False,
+        type='int'),
+    allowed_domains=dict(
+        required=False,
+        elements='',
+        type='list'),
+    code_signing_flag=dict(
+        required=False,
+        type='bool'),
+    instance_id=dict(
+        required=False,
+        type='str'),
+    allowed_secret_groups=dict(
+        required=False,
+        type='str'),
+    allow_subdomains=dict(
+        required=False,
+        type='bool'),
+    allow_ip_sans=dict(
+        required=False,
+        type='bool'),
     certificate_authority=dict(
+        required=False,
+        type='str'),
+    enforce_hostnames=dict(
+        required=False,
+        type='bool'),
+    server_flag=dict(
+        required=False,
+        type='bool'),
+    client_flag=dict(
+        required=False,
+        type='bool'),
+    email_protection_flag=dict(
+        required=False,
+        type='bool'),
+    ou=dict(
+        required=False,
+        elements='',
+        type='list'),
+    street_address=dict(
+        required=False,
+        elements='',
+        type='list'),
+    postal_code=dict(
+        required=False,
+        elements='',
+        type='list'),
+    ext_key_usage_oids=dict(
+        required=False,
+        elements='',
+        type='list'),
+    key_usage=dict(
+        required=False,
+        elements='',
+        type='list'),
+    key_type=dict(
         required=False,
         type='str'),
     allow_localhost=dict(
@@ -568,7 +567,7 @@ def run_module():
         resource_type='ibm_sm_private_certificate_configuration_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -577,7 +576,7 @@ def run_module():
             resource_type='ibm_sm_private_certificate_configuration_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

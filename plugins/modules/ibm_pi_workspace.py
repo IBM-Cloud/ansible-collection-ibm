@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_workspace' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -27,21 +27,28 @@ options:
             - (Required for new resource) Target location or environment to create the resource instance.
         required: True
         type: str
-    pi_resource_group_id:
-        description:
-            - (Required for new resource) The ID of the resource group where you want to create the workspace. You can retrieve the value from data source ibm_resource_group.
-        required: True
-        type: str
-    pi_plan:
-        description:
-            - (Required for new resource) Plan associated with the offering; Valid values are public or private.
-        required: True
-        type: str
     pi_name:
         description:
             - (Required for new resource) A descriptive name used to identify the workspace.
         required: True
         type: str
+    pi_plan:
+        description:
+            - Plan associated with the offering; Valid values are public or private.
+        required: False
+        type: str
+        default: public
+    pi_resource_group_id:
+        description:
+            - (Required for new resource) The ID of the resource group where you want to create the workspace. You can retrieve the value from data source ibm_resource_group.
+        required: True
+        type: str
+    pi_user_tags:
+        description:
+            - List of user tags attached to the resource.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -85,17 +92,17 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('pi_datacenter', 'str'),
-    ('pi_resource_group_id', 'str'),
-    ('pi_plan', 'str'),
     ('pi_name', 'str'),
+    ('pi_resource_group_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'pi_datacenter',
-    'pi_resource_group_id',
-    'pi_plan',
     'pi_name',
+    'pi_plan',
+    'pi_resource_group_id',
+    'pi_user_tags',
 ]
 
 # Params for Data source
@@ -117,15 +124,19 @@ module_args = dict(
     pi_datacenter=dict(
         required=False,
         type='str'),
-    pi_resource_group_id=dict(
+    pi_name=dict(
         required=False,
         type='str'),
     pi_plan=dict(
         required=False,
         type='str'),
-    pi_name=dict(
+    pi_resource_group_id=dict(
         required=False,
         type='str'),
+    pi_user_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -184,7 +195,7 @@ def run_module():
         resource_type='ibm_pi_workspace',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -193,7 +204,7 @@ def run_module():
             resource_type='ibm_pi_workspace',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

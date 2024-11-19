@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,36 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  agent_location (True, str, None)
-    (Required for new resource) The location where agent is deployed in the user environment.
+  schematics_location (True, str, None)
+    (Required for new resource) List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
 
 
   tags (False, list, None)
     Tags for the agent.
 
 
-  agent_metadata (False, list, None)
-    The metadata of an agent.
-
-
-  description (False, str, None)
-    Agent description.
+  agent_inputs (False, list, None)
+    Additional input variables for the agent.
 
 
   user_state (False, list, None)
     User defined status of the agent.
-
-
-  version (True, str, None)
-    (Required for new resource) Agent version.
-
-
-  agent_infrastructure (True, list, None)
-    (Required for new resource) The infrastructure parameters used by the agent.
-
-
-  agent_inputs (False, list, None)
-    Additional input variables for the agent.
 
 
   name (True, str, None)
@@ -71,8 +55,28 @@ Parameters
     (Required for new resource) The resource-group name for the agent.  By default, agent will be registered in Default Resource Group.
 
 
-  schematics_location (True, str, None)
-    (Required for new resource) List of locations supported by IBM Cloud Schematics service.  While creating your workspace or action, choose the right region, since it cannot be changed.  Note, this does not limit the location of the IBM Cloud resources, provisioned using Schematics.
+  version (True, str, None)
+    (Required for new resource) Agent version.
+
+
+  agent_location (True, str, None)
+    (Required for new resource) The location where agent is deployed in the user environment.
+
+
+  agent_infrastructure (True, list, None)
+    (Required for new resource) The infrastructure parameters used by the agent.
+
+
+  description (False, str, None)
+    Agent description.
+
+
+  agent_metadata (False, list, None)
+    The metadata of an agent.
+
+
+  run_destroy_resources (False, int, None)
+    Argument which helps to run destroy resources job. Increment the value to destroy resources associated with agent deployment.
 
 
   id (False, str, None)
@@ -84,11 +88,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

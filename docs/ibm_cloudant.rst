@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,24 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters_json (False, str, None)
-    Arbitrary parameters to pass in Json string format
+  name (True, str, None)
+    (Required for new resource) A name for the resource instance
 
 
-  enable_cors (False, bool, True)
-    Boolean value to turn CORS on and off.
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
 
 
-  cors_config (False, list, None)
-    Configuration for CORS.
-
-
-  location (True, str, None)
-    (Required for new resource) The location where the instance available
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  legacy_credentials (False, bool, False)
+    Use both legacy credentials and IAM for authentication
 
 
   capacity (False, int, 1)
@@ -59,28 +51,36 @@ Parameters
     The resource group id
 
 
-  tags (False, list, None)
-    None
+  parameters_json (False, str, None)
+    Arbitrary parameters to pass in Json string format
+
+
+  service_endpoints (False, str, None)
+    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
   include_data_events (False, bool, False)
     Include data event types in events sent to IBM Cloud Activity Tracker with LogDNA for the IBM Cloudant instance. By default only emitted events are of "management" type.
 
 
-  legacy_credentials (False, bool, False)
-    Use both legacy credentials and IAM for authentication
+  tags (False, list, None)
+    None
+
+
+  cors_config (False, list, None)
+    Configuration for CORS.
+
+
+  enable_cors (False, bool, True)
+    Boolean value to turn CORS on and off.
 
 
   environment_crn (False, str, None)
     CRN of the IBM Cloudant Dedicated Hardware plan instance
 
 
-  name (True, str, None)
-    (Required for new resource) A name for the resource instance
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
+  location (True, str, None)
+    (Required for new resource) The location where the instance available
 
 
   parameters (False, dict, None)
@@ -96,11 +96,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

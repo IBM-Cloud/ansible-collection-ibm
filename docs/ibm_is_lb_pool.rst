@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,48 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) Load Balancer Pool name
-
-
-  lb (True, str, None)
-    (Required for new resource) Load Balancer ID
-
-
-  health_monitor_url (False, str, None)
-    Health monitor URL of LB Pool
-
-
-  algorithm (True, str, None)
-    (Required for new resource) Load Balancer Pool algorithm
-
-
-  health_retries (True, int, None)
-    (Required for new resource) Load Balancer health retry count
-
-
-  proxy_protocol (False, str, None)
-    PROXY protocol setting for this pool
-
-
-  protocol (True, str, None)
-    (Required for new resource) Load Balancer Protocol
-
-
-  health_delay (True, int, None)
-    (Required for new resource) Load Blancer health delay time period
-
-
-  health_timeout (True, int, None)
-    (Required for new resource) Load Balancer health timeout interval
-
-
   health_monitor_port (False, int, None)
     Health monitor Port the LB Pool
 
 
   session_persistence_type (False, str, None)
     Load Balancer Pool session persisence type.
+
+
+  health_delay (True, int, None)
+    (Required for new resource) Load Blancer health delay time period
 
 
   health_type (True, str, None)
@@ -83,16 +51,44 @@ Parameters
     Load Balancer Pool session persisence app cookie name.
 
 
+  proxy_protocol (False, str, None)
+    PROXY protocol setting for this pool
+
+
+  algorithm (True, str, None)
+    (Required for new resource) Load Balancer Pool algorithm
+
+
+  protocol (True, str, None)
+    (Required for new resource) Load Balancer Protocol
+
+
+  health_timeout (True, int, None)
+    (Required for new resource) Load Balancer health timeout interval
+
+
+  health_monitor_url (False, str, None)
+    Health monitor URL of LB Pool
+
+
+  health_retries (True, int, None)
+    (Required for new resource) Load Balancer health retry count
+
+
+  name (True, str, None)
+    (Required for new resource) Load Balancer Pool name
+
+
+  lb (True, str, None)
+    (Required for new resource) Load Balancer ID
+
+
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

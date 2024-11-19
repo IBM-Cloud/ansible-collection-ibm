@@ -1,12 +1,13 @@
 namespace: "ibm"
 name: "cloudcollection"
-version: "1.51.0"
+version: "1.71.2"
 readme: "README.md"
 authors:
     - "Jay W Carman"
     - "Anilkumar C M"
     - "Kavya Handadi"
     - "Umar Ali"
+    - "Sean Freeman"
 description: "Ansible modules collection for IBM cloud."
 license:
     - "MPL-2.0"

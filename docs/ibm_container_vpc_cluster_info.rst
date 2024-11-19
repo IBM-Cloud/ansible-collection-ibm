@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -29,16 +29,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  resource_group_id (False, str, None)
-    ID of the resource group.
+  wait_till (False, str, None)
+    wait_till can be configured for Master Ready, One worker Ready, Ingress Ready or Normal
+
+
+  name (False, str, None)
+    Name or id of the cluster
 
 
   alb_type (False, str, all)
     None
 
 
-  name (False, str, None)
-    Name or id of the cluster
+  resource_group_id (False, str, None)
+    ID of the resource group.
+
+
+  wait_till_timeout (False, int, 20)
+    timeout for wait_till in minutes
 
 
   ibmcloud_api_key (True, any, None)

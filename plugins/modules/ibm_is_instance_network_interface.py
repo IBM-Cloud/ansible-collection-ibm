@@ -18,32 +18,28 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_instance_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    security_groups:
-        description:
-            - None
-        required: False
-        type: list
-        elements: str
-    floating_ip:
-        description:
-            - The ID of the floating IP to attach to this network interface
-        required: False
-        type: str
-    instance:
-        description:
-            - (Required for new resource) The unique identifier of the instance.
-        required: True
-        type: str
     primary_ip:
         description:
             - The primary IP address to bind to the network interface. This can be specified using an existing reserved IP, or a prototype object for a new reserved IP.
         required: False
         type: list
         elements: dict
+    allow_ip_spoofing:
+        description:
+            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+        required: False
+        type: bool
+        default: False
+    security_groups:
+        description:
+            - None
+        required: False
+        type: list
+        elements: str
     subnet:
         description:
             - (Required for new resource) The unique identifier of the subnet.
@@ -54,12 +50,16 @@ options:
             - (Required for new resource) The user-defined name for this network interface. If unspecified, the name will be a hyphenated list of randomly-selected words.
         required: True
         type: str
-    allow_ip_spoofing:
+    floating_ip:
         description:
-            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+            - The ID of the floating IP to attach to this network interface
         required: False
-        type: bool
-        default: False
+        type: str
+    instance:
+        description:
+            - (Required for new resource) The unique identifier of the instance.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,17 +73,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -106,31 +95,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance', 'str'),
     ('subnet', 'str'),
     ('name', 'str'),
+    ('instance', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'security_groups',
-    'floating_ip',
-    'instance',
     'primary_ip',
+    'allow_ip_spoofing',
+    'security_groups',
     'subnet',
     'name',
-    'allow_ip_spoofing',
+    'floating_ip',
+    'instance',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('network_interface_name', 'str'),
     ('instance_name', 'str'),
+    ('network_interface_name', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'network_interface_name',
     'instance_name',
+    'network_interface_name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -140,17 +129,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    security_groups=dict(
+    primary_ip=dict(
         required=False,
         elements='',
         type='list'),
-    floating_ip=dict(
+    allow_ip_spoofing=dict(
         required=False,
-        type='str'),
-    instance=dict(
-        required=False,
-        type='str'),
-    primary_ip=dict(
+        type='bool'),
+    security_groups=dict(
         required=False,
         elements='',
         type='list'),
@@ -160,9 +146,12 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    allow_ip_spoofing=dict(
+    floating_ip=dict(
         required=False,
-        type='bool'),
+        type='str'),
+    instance=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -171,11 +160,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -219,28 +203,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_instance_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -249,7 +234,7 @@ def run_module():
             resource_type='ibm_is_instance_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

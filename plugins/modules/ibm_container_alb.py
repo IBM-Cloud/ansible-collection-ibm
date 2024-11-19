@@ -18,15 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_alb' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    user_ip:
+    disable_deployment:
         description:
-            - IP assigned by the user
+            - Set to true if ALB needs to be disabled
         required: False
-        type: str
+        type: bool
     enable:
         description:
             - set to true if ALB needs to be enabled
@@ -37,11 +37,11 @@ options:
             - (Required for new resource) ALB ID
         required: True
         type: str
-    disable_deployment:
+    user_ip:
         description:
-            - Set to true if ALB needs to be disabled
+            - IP assigned by the user
         required: False
-        type: bool
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -73,10 +73,10 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'user_ip',
+    'disable_deployment',
     'enable',
     'alb_id',
-    'disable_deployment',
+    'user_ip',
 ]
 
 # Params for Data source
@@ -89,26 +89,26 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'enable': ['disable_deployment'],
     'disable_deployment': ['enable'],
+    'enable': ['disable_deployment'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    user_ip=dict(
+    disable_deployment=dict(
         required=False,
-        type='str'),
+        type='bool'),
     enable=dict(
         required=False,
         type='bool'),
     alb_id=dict(
         required=False,
         type='str'),
-    disable_deployment=dict(
+    user_ip=dict(
         required=False,
-        type='bool'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -160,7 +160,7 @@ def run_module():
         resource_type='ibm_container_alb',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -169,7 +169,7 @@ def run_module():
             resource_type='ibm_container_alb',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_container_ingress_secret_opaque' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    update_secret:
+        description:
+            - Updates secret from secrets manager if value is changed (increment each usage)
+        required: False
+        type: int
     cluster:
         description:
             - (Required for new resource) Cluster ID or name
@@ -43,11 +48,6 @@ options:
         required: False
         type: bool
         default: False
-    update_secret:
-        description:
-            - Updates secret from secrets manager if value is changed (increment each usage)
-        required: False
-        type: int
     fields:
         description:
             - (Required for new resource) Fields of an opaque secret
@@ -88,11 +88,11 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'update_secret',
     'cluster',
     'secret_name',
     'secret_namespace',
     'persistence',
-    'update_secret',
     'fields',
 ]
 
@@ -116,6 +116,9 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    update_secret=dict(
+        required=False,
+        type='int'),
     cluster=dict(
         required=False,
         type='str'),
@@ -128,9 +131,6 @@ module_args = dict(
     persistence=dict(
         required=False,
         type='bool'),
-    update_secret=dict(
-        required=False,
-        type='int'),
     fields=dict(
         required=False,
         elements='',
@@ -186,7 +186,7 @@ def run_module():
         resource_type='ibm_container_ingress_secret_opaque',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -195,7 +195,7 @@ def run_module():
             resource_type='ibm_container_ingress_secret_opaque',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

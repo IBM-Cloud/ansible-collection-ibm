@@ -17,26 +17,30 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_security_group' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    vpc_name:
+        description:
+            - Security group's vpc name
+        required: False
+        type: str
     name:
         description:
             - Security group name
         required: True
         type: str
-    generation:
+    resource_group:
         description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
+            - Security group's resource group id
         required: False
-        type: int
+        type: str
+    vpc:
+        description:
+            - Security group's vpc id
+        required: False
+        type: str
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -64,25 +68,33 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'vpc_name',
     'name',
+    'resource_group',
+    'vpc',
 ]
 
 
 TL_CONFLICTS_MAP = {
+    'vpc_name': ['vpc'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    vpc_name=dict(
+        required=False,
+        type='str'),
     name=dict(
         required=True,
         type='str'),
-    generation=dict(
-        type='int',
+    resource_group=dict(
         required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
+        type='str'),
+    vpc=dict(
+        required=False,
+        type='str'),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -103,28 +115,29 @@ def run_module():
         supports_check_mode=False
     )
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result = ibmcloud_terraform(
         resource_type='ibm_is_security_group',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

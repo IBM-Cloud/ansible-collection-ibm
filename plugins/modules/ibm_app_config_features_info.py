@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_app_config_features' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -37,14 +37,25 @@ options:
         required: False
         type: list
         elements: str
-    offset:
-        description:
-            - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
-        required: False
-        type: int
     includes:
         description:
             - Include the associated collections or targeting rules details in the response.
+        required: False
+        type: list
+        elements: str
+    environment_id:
+        description:
+            - Environment Id.
+        required: True
+        type: str
+    expand:
+        description:
+            - If set to `true`, returns expanded view of the resource details.
+        required: False
+        type: bool
+    collections:
+        description:
+            - Filter features by a list of comma separated collections.
         required: False
         type: list
         elements: str
@@ -58,33 +69,21 @@ options:
             - Sort the feature details based on the specified attribute.
         required: False
         type: str
-    expand:
+    offset:
         description:
-            - If set to `true`, returns expanded view of the resource details.
+            - The number of records to skip. By specifying `offset`, you retrieve a subset of items that starts with the `offset` value. Use `offset` with `limit` to page through the available records.
         required: False
-        type: bool
-    environment_id:
-        description:
-            - Environment Id.
-        required: True
-        type: str
-    collections:
-        description:
-            - Filter features by a list of comma separated collections.
-        required: False
-        type: list
-        elements: str
+        type: int
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -116,13 +115,13 @@ TL_ALL_PARAMETERS = [
     'guid',
     'tags',
     'segments',
-    'offset',
     'includes',
+    'environment_id',
+    'expand',
+    'collections',
     'limit',
     'sort',
-    'expand',
-    'environment_id',
-    'collections',
+    'offset',
 ]
 
 
@@ -143,10 +142,17 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    offset=dict(
-        required=False,
-        type='int'),
     includes=dict(
+        required=False,
+        elements='',
+        type='list'),
+    environment_id=dict(
+        required=True,
+        type='str'),
+    expand=dict(
+        required=False,
+        type='bool'),
+    collections=dict(
         required=False,
         elements='',
         type='list'),
@@ -156,16 +162,9 @@ module_args = dict(
     sort=dict(
         required=False,
         type='str'),
-    expand=dict(
+    offset=dict(
         required=False,
-        type='bool'),
-    environment_id=dict(
-        required=True,
-        type='str'),
-    collections=dict(
-        required=False,
-        elements='',
-        type='list'),
+        type='int'),
     iaas_classic_username=dict(
         type='str',
         no_log=True,
@@ -200,7 +199,7 @@ def run_module():
         resource_type='ibm_app_config_features',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

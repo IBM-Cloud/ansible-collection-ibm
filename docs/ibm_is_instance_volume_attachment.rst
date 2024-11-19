@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,20 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (False, str, None)
-    The user-defined name for this volume attachment.
+  tags (False, list, None)
+    UserTags for the volume instance
 
 
-  delete_volume_on_attachment_delete (False, bool, True)
-    If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
+  snapshot_crn (False, str, None)
+    The snapshot crn of the volume to be attached
 
 
   delete_volume_on_instance_delete (False, bool, None)
     If set to true, when deleting the instance the volume will also be deleted.
 
 
-  tags (False, list, None)
-    UserTags for the volume instance
+  volume (False, str, None)
+    Instance id
+
+
+  encryption_key (False, str, None)
+    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
+
+
+  instance (True, str, None)
+    (Required for new resource) Instance id
+
+
+  delete_volume_on_attachment_delete (False, bool, True)
+    If set to true, when deleting the attachment, the volume will also be deleted. Default value for this true.
 
 
   profile (False, str, None)
@@ -52,19 +64,11 @@ Parameters
 
 
   snapshot (False, str, None)
-    The snapshot of the volume to be attached
+    The snapshot ID of the volume to be attached
 
 
-  capacity (False, int, None)
-    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
-
-
-  instance (True, str, None)
-    (Required for new resource) Instance id
-
-
-  volume (False, str, None)
-    Instance id
+  name (False, str, None)
+    The user-defined name for this volume attachment.
 
 
   iops (False, int, None)
@@ -75,8 +79,8 @@ Parameters
     The unique user-defined name for this volume
 
 
-  encryption_key (False, str, None)
-    The CRN of the [Key Protect Root Key](https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial) or [Hyper Protect Crypto Service Root Key](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started) for this resource.
+  capacity (False, int, None)
+    The capacity of the volume in gigabytes. The specified minimum and maximum capacity values for creating or updating volumes may expand in the future.
 
 
   id (False, str, None)
@@ -85,10 +89,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

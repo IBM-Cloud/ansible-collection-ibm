@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,28 +31,16 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  parameters (False, dict, None)
-    Arbitrary parameters to pass. Must be a JSON object
-
-
   service_endpoints (False, str, None)
     Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
 
 
-  name (True, str, None)
-    (Required for new resource) A name for the resource instance
+  tags (False, list, None)
+    None
 
 
   service (True, str, None)
     (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the service
-
-
-  resource_group_id (False, str, None)
-    The resource group id
 
 
   location (True, str, None)
@@ -63,8 +51,20 @@ Parameters
     Arbitrary parameters to pass in Json string format
 
 
-  tags (False, list, None)
-    None
+  name (True, str, None)
+    (Required for new resource) A name for the resource instance
+
+
+  plan (True, str, None)
+    (Required for new resource) The plan type of the service
+
+
+  resource_group_id (False, str, None)
+    The resource group id
+
+
+  parameters (False, dict, None)
+    Arbitrary parameters to pass. Must be a JSON object
 
 
   id (False, str, None)
@@ -76,11 +76,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

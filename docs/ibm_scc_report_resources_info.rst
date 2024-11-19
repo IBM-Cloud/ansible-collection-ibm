@@ -21,7 +21,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -29,24 +29,12 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    The ID of the Security and Compliance Center instance.
-
-
-  id (False, str, None)
-    The ID of the resource.
-
-
-  resource_name (False, str, None)
-    The name of the resource.
-
-
-  component_id (False, str, None)
-    The ID of component.
-
-
   sort (False, str, None)
     This field sorts resources by using a valid sort field. To learn more, see [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+
+
+  instance_id (True, str, None)
+    The ID of the Security and Compliance Center instance.
 
 
   report_id (True, str, None)
@@ -61,12 +49,24 @@ Parameters
     The compliance status value.
 
 
+  id (False, str, None)
+    The ID of the resource.
+
+
+  resource_name (False, str, None)
+    The name of the resource.
+
+
+  component_id (False, str, None)
+    The ID of component.
+
+
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

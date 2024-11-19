@@ -18,23 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_dns_custom_resolver_secondary_zone' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    description:
-        description:
-            - Descriptive text of the secondary zone
-        required: False
-        type: str
     instance_id:
         description:
             - (Required for new resource) The unique identifier of a service instance.
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) The name of the zone.
         required: True
         type: str
     transfer_from:
@@ -43,16 +33,26 @@ options:
         required: True
         type: list
         elements: str
-    resolver_id:
-        description:
-            - (Required for new resource) The unique identifier of a custom resolver.
-        required: True
-        type: str
     enabled:
         description:
             - (Required for new resource) Enable/Disable the secondary zone
         required: True
         type: bool
+    description:
+        description:
+            - Descriptive text of the secondary zone
+        required: False
+        type: str
+    resolver_id:
+        description:
+            - (Required for new resource) The unique identifier of a custom resolver.
+        required: True
+        type: str
+    zone:
+        description:
+            - (Required for new resource) The name of the zone.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -68,15 +68,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -100,20 +99,20 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_id', 'str'),
-    ('zone', 'str'),
     ('transfer_from', 'list'),
-    ('resolver_id', 'str'),
     ('enabled', 'bool'),
+    ('resolver_id', 'str'),
+    ('zone', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'description',
     'instance_id',
-    'zone',
     'transfer_from',
-    'resolver_id',
     'enabled',
+    'description',
+    'resolver_id',
+    'zone',
 ]
 
 # Params for Data source
@@ -130,25 +129,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    description=dict(
-        required=False,
-        type='str'),
     instance_id=dict(
-        required=False,
-        type='str'),
-    zone=dict(
         required=False,
         type='str'),
     transfer_from=dict(
         required=False,
         elements='',
         type='list'),
-    resolver_id=dict(
-        required=False,
-        type='str'),
     enabled=dict(
         required=False,
         type='bool'),
+    description=dict(
+        required=False,
+        type='str'),
+    resolver_id=dict(
+        required=False,
+        type='str'),
+    zone=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -214,7 +213,7 @@ def run_module():
         resource_type='ibm_dns_custom_resolver_secondary_zone',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,28 +31,8 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  certificate_instance (False, str, None)
-    certificate instance for the Loadbalancer
-
-
-  accept_proxy_protocol (False, bool, None)
-    Listener will forward proxy protocol
-
-
-  port (False, int, None)
-    Loadbalancer listener port
-
-
-  protocol (True, str, None)
-    (Required for new resource) Loadbalancer protocol
-
-
-  default_pool (False, str, None)
-    Loadbalancer default pool info
-
-
-  idle_connection_timeout (False, int, None)
-    idle connection timeout of listener
+  connection_limit (False, int, None)
+    Connection limit for Loadbalancer
 
 
   port_min (False, int, None)
@@ -63,16 +43,36 @@ Parameters
     The inclusive upper bound of the range of ports used by this listener. Only load balancers in the `network` family support more than one port per listener
 
 
-  https_redirect (False, list, None)
-    If present, the target listener that requests are redirected to.
+  protocol (True, str, None)
+    (Required for new resource) Loadbalancer protocol
 
 
-  connection_limit (False, int, None)
-    Connection limit for Loadbalancer
+  accept_proxy_protocol (False, bool, None)
+    Listener will forward proxy protocol
+
+
+  default_pool (False, str, None)
+    Loadbalancer default pool info
 
 
   lb (True, str, None)
     (Required for new resource) Loadbalancer listener ID
+
+
+  port (False, int, None)
+    Loadbalancer listener port
+
+
+  certificate_instance (False, str, None)
+    certificate instance for the Loadbalancer
+
+
+  https_redirect (False, list, None)
+    If present, the target listener that requests are redirected to.
+
+
+  idle_connection_timeout (False, int, None)
+    idle connection timeout of listener
 
 
   id (False, str, None)
@@ -81,10 +81,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

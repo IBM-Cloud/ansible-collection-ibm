@@ -18,16 +18,37 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_mtls_app' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    name:
+        description:
+            - (Required for new resource) App Name
+        required: True
+        type: str
     session_duration:
         description:
             - Duration for app validatidity
         required: False
         type: str
         default: 24h
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    policy_name:
+        description:
+            - Policy Name
+        required: False
+        type: str
+        default: mtls-policy
+    common_rule_val:
+        description:
+            - Policy common rule value
+        required: False
+        type: str
     cert_rule_val:
         description:
             - Policy certificate rule value
@@ -37,17 +58,6 @@ options:
     domain_id:
         description:
             - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    policy_name:
-        description:
-            - Policy Name
-        required: False
-        type: str
-        default: mtls-policy
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
         required: True
         type: str
     domain:
@@ -61,16 +71,6 @@ options:
         required: False
         type: str
         default: non_identity
-    name:
-        description:
-            - (Required for new resource) App Name
-        required: True
-        type: str
-    common_rule_val:
-        description:
-            - Policy common rule value
-        required: False
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -86,15 +86,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -117,23 +116,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
-    ('cis_id', 'str'),
-    ('domain', 'str'),
     ('name', 'str'),
+    ('cis_id', 'str'),
+    ('domain_id', 'str'),
+    ('domain', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'name',
     'session_duration',
+    'cis_id',
+    'policy_name',
+    'common_rule_val',
     'cert_rule_val',
     'domain_id',
-    'policy_name',
-    'cis_id',
     'domain',
     'policy_decision',
-    'name',
-    'common_rule_val',
 ]
 
 # Params for Data source
@@ -150,7 +149,19 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    name=dict(
+        required=False,
+        type='str'),
     session_duration=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
+        required=False,
+        type='str'),
+    policy_name=dict(
+        required=False,
+        type='str'),
+    common_rule_val=dict(
         required=False,
         type='str'),
     cert_rule_val=dict(
@@ -159,22 +170,10 @@ module_args = dict(
     domain_id=dict(
         required=False,
         type='str'),
-    policy_name=dict(
-        required=False,
-        type='str'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     domain=dict(
         required=False,
         type='str'),
     policy_decision=dict(
-        required=False,
-        type='str'),
-    name=dict(
-        required=False,
-        type='str'),
-    common_rule_val=dict(
         required=False,
         type='str'),
     id=dict(
@@ -242,7 +241,7 @@ def run_module():
         resource_type='ibm_cis_mtls_app',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

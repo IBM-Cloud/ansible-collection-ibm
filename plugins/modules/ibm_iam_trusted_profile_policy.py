@@ -18,16 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_iam_trusted_profile_policy' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    roles:
+    profile_id:
         description:
-            - (Required for new resource) Role names of the policy definition
-        required: True
-        type: list
-        elements: str
+            - UUID of Trusted Profile
+        required: False
+        type: str
     resource_attributes:
         description:
             - Set resource attributes.
@@ -40,23 +39,12 @@ options:
         required: False
         type: list
         elements: str
-    account_management:
-        description:
-            - Give access to all account management services
-        required: False
-        type: bool
-        default: False
     resource_tags:
         description:
             - Set access management tags.
         required: False
         type: list
         elements: dict
-    description:
-        description:
-            - Description of the Policy
-        required: False
-        type: str
     transaction_id:
         description:
             - Set transactionID for debug
@@ -68,9 +56,9 @@ options:
         required: False
         type: list
         elements: dict
-    profile_id:
+    rule_operator:
         description:
-            - UUID of Trusted Profile
+            - Operator that multiple rule conditions are evaluated over
         required: False
         type: str
     iam_id:
@@ -78,15 +66,27 @@ options:
             - IAM ID of Trusted Profile
         required: False
         type: str
+    roles:
+        description:
+            - (Required for new resource) Role names of the policy definition
+        required: True
+        type: list
+        elements: str
     resources:
         description:
             - None
         required: False
         type: list
         elements: dict
-    rule_operator:
+    account_management:
         description:
-            - Operator that multiple rule conditions are evaluated over
+            - Give access to all account management services
+        required: False
+        type: bool
+        default: False
+    description:
+        description:
+            - Description of the Policy
         required: False
         type: str
     pattern:
@@ -109,15 +109,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -145,18 +144,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'roles',
+    'profile_id',
     'resource_attributes',
     'tags',
-    'account_management',
     'resource_tags',
-    'description',
     'transaction_id',
     'rule_conditions',
-    'profile_id',
-    'iam_id',
-    'resources',
     'rule_operator',
+    'iam_id',
+    'roles',
+    'resources',
+    'account_management',
+    'description',
     'pattern',
 ]
 
@@ -173,18 +172,17 @@ TL_ALL_PARAMETERS_DS = [
 
 TL_CONFLICTS_MAP = {
     'resource_attributes': ['resources', 'account_management'],
-    'account_management': ['resources', 'resource_attributes'],
     'resources': ['account_management', 'resource_attributes'],
+    'account_management': ['resources', 'resource_attributes'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    roles=dict(
+    profile_id=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     resource_attributes=dict(
         required=False,
         elements='',
@@ -193,16 +191,10 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    account_management=dict(
-        required=False,
-        type='bool'),
     resource_tags=dict(
         required=False,
         elements='',
         type='list'),
-    description=dict(
-        required=False,
-        type='str'),
     transaction_id=dict(
         required=False,
         type='str'),
@@ -210,17 +202,24 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    profile_id=dict(
+    rule_operator=dict(
         required=False,
         type='str'),
     iam_id=dict(
         required=False,
         type='str'),
+    roles=dict(
+        required=False,
+        elements='',
+        type='list'),
     resources=dict(
         required=False,
         elements='',
         type='list'),
-    rule_operator=dict(
+    account_management=dict(
+        required=False,
+        type='bool'),
+    description=dict(
         required=False,
         type='str'),
     pattern=dict(
@@ -291,7 +290,7 @@ def run_module():
         resource_type='ibm_iam_trusted_profile_policy',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -300,7 +299,7 @@ def run_module():
             resource_type='ibm_iam_trusted_profile_policy',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

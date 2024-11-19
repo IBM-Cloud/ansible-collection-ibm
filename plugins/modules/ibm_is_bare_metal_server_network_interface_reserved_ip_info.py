@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_bare_metal_server_network_interface_reserved_ip' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -26,27 +26,16 @@ options:
             - The Bare Metal Server identifier.
         required: True
         type: str
-    network_interface:
-        description:
-            - The Bare Metal Server network interface identifier.
-        required: True
-        type: str
     reserved_ip:
         description:
             - The reserved IP identifier.
         required: True
         type: str
-    generation:
+    network_interface:
         description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
+            - The Bare Metal Server network interface identifier.
+        required: True
+        type: str
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -70,15 +59,15 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('bare_metal_server', 'str'),
-    ('network_interface', 'str'),
     ('reserved_ip', 'str'),
+    ('network_interface', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'bare_metal_server',
-    'network_interface',
     'reserved_ip',
+    'network_interface',
 ]
 
 
@@ -92,17 +81,12 @@ module_args = dict(
     bare_metal_server=dict(
         required=True,
         type='str'),
-    network_interface=dict(
-        required=True,
-        type='str'),
     reserved_ip=dict(
         required=True,
         type='str'),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
+    network_interface=dict(
+        required=True,
+        type='str'),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -123,28 +107,29 @@ def run_module():
         supports_check_mode=False
     )
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result = ibmcloud_terraform(
         resource_type='ibm_is_bare_metal_server_network_interface_reserved_ip',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

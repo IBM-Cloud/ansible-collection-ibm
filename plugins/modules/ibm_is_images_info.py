@@ -17,20 +17,10 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_is_images' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    status:
-        description:
-            - The status of the image
-        required: False
-        type: str
-    visibility:
-        description:
-            - Whether the image is publicly visible or private to the account
-        required: False
-        type: str
     resource_group:
         description:
             - The id of the resource group
@@ -46,17 +36,22 @@ options:
             - The name of the image
         required: False
         type: str
-    generation:
+    status:
         description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
+            - The status of the image
         required: False
-        type: int
+        type: str
+    visibility:
+        description:
+            - Whether the image is publicly visible or private to the account
+        required: False
+        type: str
+    user_data_format:
+        description:
+            - Filters the collection to images with a user_data_format property matching one of the specified comma-separated values.
+        required: False
+        type: list
+        elements: str
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -83,11 +78,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'status',
-    'visibility',
     'resource_group',
     'catalog_managed',
     'name',
+    'status',
+    'visibility',
+    'user_data_format',
 ]
 
 
@@ -98,12 +94,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    status=dict(
-        required=False,
-        type='str'),
-    visibility=dict(
-        required=False,
-        type='str'),
     resource_group=dict(
         required=False,
         type='str'),
@@ -113,11 +103,16 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    generation=dict(
-        type='int',
+    status=dict(
         required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
+        type='str'),
+    visibility=dict(
+        required=False,
+        type='str'),
+    user_data_format=dict(
+        required=False,
+        elements='',
+        type='list'),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -138,28 +133,29 @@ def run_module():
         supports_check_mode=False
     )
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result = ibmcloud_terraform(
         resource_type='ibm_is_images',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

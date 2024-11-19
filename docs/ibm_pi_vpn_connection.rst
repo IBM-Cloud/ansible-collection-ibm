@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,20 +35,20 @@ Parameters
     (Required for new resource) PI cloud instance ID
 
 
+  pi_vpn_connection_name (True, str, None)
+    (Required for new resource) Name of the VPN Connection
+
+
   pi_ike_policy_id (True, str, None)
     (Required for new resource) Unique identifier of IKE Policy selected for this VPN Connection
-
-
-  pi_ipsec_policy_id (True, str, None)
-    (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
 
 
   pi_vpn_connection_mode (True, str, None)
     (Required for new resource) Mode used by this VPN Connection, either 'policy' or 'route'
 
 
-  pi_vpn_connection_name (True, str, None)
-    (Required for new resource) Name of the VPN Connection
+  pi_ipsec_policy_id (True, str, None)
+    (Required for new resource) Unique identifier of IPSec Policy selected for this VPN Connection
 
 
   pi_networks (True, list, None)

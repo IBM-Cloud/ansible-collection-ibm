@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_code_engine_config_map' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -27,17 +27,17 @@ options:
             - (Required for new resource) The ID of the project.
         required: True
         type: str
-    name:
-        description:
-            - (Required for new resource) The name of the config map. Use a name that is unique within the project.
-        required: True
-        type: str
     data:
         description:
-            - The key-value pair for the config map. Values must be specified in `KEY=VALUE` format. Each `KEY` field must consist of alphanumeric characters, `-`, `_` or `.` and must not be exceed a max length of 253 characters. Each `VALUE` field can consists of any character and must not be exceed a max length of 1048576 characters.
+            - The key-value pair for the config map. Values must be specified in `KEY=VALUE` format.
         required: False
         type: dict
         elements: str
+    name:
+        description:
+            - (Required for new resource) The name of the config map.
+        required: True
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -53,15 +53,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -91,19 +90,19 @@ TL_REQUIRED_PARAMETERS = [
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'project_id',
-    'name',
     'data',
+    'name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('project_id', 'str'),
     ('name', 'str'),
+    ('project_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'project_id',
     'name',
+    'project_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -116,13 +115,13 @@ module_args = dict(
     project_id=dict(
         required=False,
         type='str'),
-    name=dict(
-        required=False,
-        type='str'),
     data=dict(
         required=False,
         elements='',
         type='dict'),
+    name=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -188,7 +187,7 @@ def run_module():
         resource_type='ibm_code_engine_config_map',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -197,7 +196,7 @@ def run_module():
             resource_type='ibm_code_engine_config_map',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

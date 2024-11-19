@@ -18,15 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_edge_functions_trigger' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    cis_id:
-        description:
-            - (Required for new resource) CIS Intance CRN
-        required: True
-        type: str
     domain_id:
         description:
             - (Required for new resource) CIS Domain ID
@@ -41,6 +36,11 @@ options:
         description:
             - Edge function trigger action name
         required: False
+        type: str
+    cis_id:
+        description:
+            - (Required for new resource) CIS Intance CRN
+        required: True
         type: str
     id:
         description:
@@ -57,15 +57,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -88,17 +87,17 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('cis_id', 'str'),
     ('domain_id', 'str'),
     ('pattern_url', 'str'),
+    ('cis_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'cis_id',
     'domain_id',
     'pattern_url',
     'action_name',
+    'cis_id',
 ]
 
 # Params for Data source
@@ -115,9 +114,6 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    cis_id=dict(
-        required=False,
-        type='str'),
     domain_id=dict(
         required=False,
         type='str'),
@@ -125,6 +121,9 @@ module_args = dict(
         required=False,
         type='str'),
     action_name=dict(
+        required=False,
+        type='str'),
+    cis_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -192,7 +191,7 @@ def run_module():
         resource_type='ibm_cis_edge_functions_trigger',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

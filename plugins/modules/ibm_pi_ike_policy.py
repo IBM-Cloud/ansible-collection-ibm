@@ -18,16 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_ike_policy' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    pi_policy_authentication:
+    pi_cloud_instance_id:
         description:
-            - Authentication for the IKE Policy
-        required: False
+            - (Required for new resource) PI cloud instance ID
+        required: True
         type: str
-        default: none
+    pi_policy_dh_group:
+        description:
+            - (Required for new resource) DH group of the IKE Policy
+        required: True
+        type: int
     pi_policy_encryption:
         description:
             - (Required for new resource) Encryption of the IKE Policy
@@ -38,19 +42,9 @@ options:
             - (Required for new resource) Policy key lifetime
         required: True
         type: int
-    pi_policy_version:
-        description:
-            - (Required for new resource) Version of the IKE Policy
-        required: True
-        type: int
     pi_policy_preshared_key:
         description:
             - (Required for new resource) Preshared key used in this IKE Policy (length of preshared key must be even)
-        required: True
-        type: str
-    pi_cloud_instance_id:
-        description:
-            - (Required for new resource) PI cloud instance ID
         required: True
         type: str
     pi_policy_name:
@@ -58,11 +52,17 @@ options:
             - (Required for new resource) Name of the IKE Policy
         required: True
         type: str
-    pi_policy_dh_group:
+    pi_policy_version:
         description:
-            - (Required for new resource) DH group of the IKE Policy
+            - (Required for new resource) Version of the IKE Policy
         required: True
         type: int
+    pi_policy_authentication:
+        description:
+            - Authentication for the IKE Policy
+        required: False
+        type: str
+        default: none
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -105,25 +105,25 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
+    ('pi_policy_dh_group', 'int'),
     ('pi_policy_encryption', 'str'),
     ('pi_policy_key_lifetime', 'int'),
-    ('pi_policy_version', 'int'),
     ('pi_policy_preshared_key', 'str'),
-    ('pi_cloud_instance_id', 'str'),
     ('pi_policy_name', 'str'),
-    ('pi_policy_dh_group', 'int'),
+    ('pi_policy_version', 'int'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_policy_authentication',
+    'pi_cloud_instance_id',
+    'pi_policy_dh_group',
     'pi_policy_encryption',
     'pi_policy_key_lifetime',
-    'pi_policy_version',
     'pi_policy_preshared_key',
-    'pi_cloud_instance_id',
     'pi_policy_name',
-    'pi_policy_dh_group',
+    'pi_policy_version',
+    'pi_policy_authentication',
 ]
 
 # Params for Data source
@@ -140,30 +140,30 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_policy_authentication=dict(
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
+    pi_policy_dh_group=dict(
+        required=False,
+        type='int'),
     pi_policy_encryption=dict(
         required=False,
         type='str'),
     pi_policy_key_lifetime=dict(
         required=False,
         type='int'),
-    pi_policy_version=dict(
-        required=False,
-        type='int'),
     pi_policy_preshared_key=dict(
-        required=False,
-        type='str'),
-    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_policy_name=dict(
         required=False,
         type='str'),
-    pi_policy_dh_group=dict(
+    pi_policy_version=dict(
         required=False,
         type='int'),
+    pi_policy_authentication=dict(
+        required=False,
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -222,7 +222,7 @@ def run_module():
         resource_type='ibm_pi_ike_policy',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

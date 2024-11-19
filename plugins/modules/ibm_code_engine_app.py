@@ -18,93 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_code_engine_app' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    run_volume_mounts:
-        description:
-            - Optional mounts of config maps or a secrets.
-        required: False
-        type: list
-        elements: dict
-    name:
-        description:
-            - (Required for new resource) The name of the app. Use a name that is unique within the project.
-        required: True
-        type: str
-    run_commands:
-        description:
-            - Optional commands for the app that are passed to start the container. If not specified an empty string array will be applied and the command specified by the container image, will be used to start the container.
-        required: False
-        type: list
-        elements: str
-    scale_memory_limit:
-        description:
-            - Optional amount of memory set for the instance of the app. For valid values see [Supported memory and CPU combinations](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo). The units for specifying memory are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. For more information see [Units of measurement](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
-        required: False
-        type: str
-        default: 4G
-    image_reference:
-        description:
-            - (Required for new resource) The name of the image that is used for this app. The format is `REGISTRY/NAMESPACE/REPOSITORY:TAG` where `REGISTRY` and `TAG` are optional. If `REGISTRY` is not specified, the default is `docker.io`. If `TAG` is not specified, the default is `latest`. If the image reference points to a registry that requires authentication, make sure to also specify the property `image_secret`.
-        required: True
-        type: str
-    run_arguments:
-        description:
-            - Optional arguments for the app that are passed to start the container. If not specified an empty string array will be applied and the arguments specified by the container image, will be used to start the container.
-        required: False
-        type: list
-        elements: str
     image_port:
         description:
             - Optional port the app listens on. While the app will always be exposed via port `443` for end users, this port is used to connect to the port that is exposed by the container image.
         required: False
         type: int
         default: 8080
-    scale_ephemeral_storage_limit:
-        description:
-            - Optional amount of ephemeral storage to set for the instance of the app. The amount specified as ephemeral storage, must not exceed the amount of `scale_memory_limit`. The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. For more information see [Units of measurement](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
-        required: False
-        type: str
-        default: 400M
-    scale_cpu_limit:
-        description:
-            - Optional number of CPU set for the instance of the app. For valid values see [Supported memory and CPU combinations](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo).
-        required: False
-        type: str
-        default: 1
-    scale_min_instances:
-        description:
-            - Optional minimum number of instances for this app. If you set this value to `0`, the app will scale down to zero, if not hit by any request for some time.
-        required: False
-        type: int
-        default: 0
-    project_id:
-        description:
-            - (Required for new resource) The ID of the project.
-        required: True
-        type: str
-    run_service_account:
-        description:
-            - Optional name of the service account. For built-in service accounts, you can use the shortened names `manager` , `none`, `reader`, and `writer`.
-        required: False
-        type: str
-        default: default
-    run_as_user:
-        description:
-            - Optional user ID (UID) to run the app (e.g., `1001`).
-        required: False
-        type: int
     scale_request_timeout:
         description:
             - Optional amount of time in seconds that is allowed for a running app to respond to a request.
         required: False
         type: int
         default: 300
-    run_env_variables:
+    image_reference:
         description:
-            - Optional references to config maps, secrets or literal values that are exposed as environment variables within the running application.
+            - (Required for new resource) The name of the image that is used for this app. The format is `REGISTRY/NAMESPACE/REPOSITORY:TAG` where `REGISTRY` and `TAG` are optional. If `REGISTRY` is not specified, the default is `docker.io`. If `TAG` is not specified, the default is `latest`. If the image reference points to a registry that requires authentication, make sure to also specify the property `image_secret`.
+        required: True
+        type: str
+    run_as_user:
+        description:
+            - Optional user ID (UID) to run the app.
+        required: False
+        type: int
+        default: 0
+    run_volume_mounts:
+        description:
+            - Mounts of config maps or secrets.
         required: False
         type: list
         elements: dict
@@ -114,34 +57,110 @@ options:
         required: False
         type: int
         default: 10
-    image_secret:
+    probe_liveness:
         description:
-            - Optional name of the image registry access secret. The image registry access secret is used to authenticate with a private registry when you download the container image. If the image reference points to a registry that requires authentication, the app will be created but cannot reach the ready status, until this property is provided, too.
+            - Response model for probes.
         required: False
-        type: str
+        type: list
+        elements: dict
+    run_env_variables:
+        description:
+            - References to config maps, secrets or literal values, which are exposed as environment variables in the application.
+        required: False
+        type: list
+        elements: dict
     managed_domain_mappings:
         description:
             - Optional value controlling which of the system managed domain mappings will be setup for the application. Valid values are 'local_public', 'local_private' and 'local'. Visibility can only be 'local_private' if the project supports application private visibility.
         required: False
         type: str
         default: local_public
-    scale_initial_instances:
+    probe_readiness:
         description:
-            - Optional initial number of instances that are created upon app creation or app update.
+            - Response model for probes.
+        required: False
+        type: list
+        elements: dict
+    run_arguments:
+        description:
+            - Optional arguments for the app that are passed to start the container. If not specified an empty string array will be applied and the arguments specified by the container image, will be used to start the container.
+        required: False
+        type: list
+        elements: str
+    run_commands:
+        description:
+            - Optional commands for the app that are passed to start the container. If not specified an empty string array will be applied and the command specified by the container image, will be used to start the container.
+        required: False
+        type: list
+        elements: str
+    scale_concurrency_target:
+        description:
+            - Optional threshold of concurrent requests per instance at which one or more additional instances are created. Use this value to scale up instances based on concurrent number of requests. This option defaults to the value of the `scale_concurrency` option, if not specified.
         required: False
         type: int
-        default: 1
+    project_id:
+        description:
+            - (Required for new resource) The ID of the project.
+        required: True
+        type: str
+    image_secret:
+        description:
+            - Optional name of the image registry access secret. The image registry access secret is used to authenticate with a private registry when you download the container image. If the image reference points to a registry that requires authentication, the app will be created but cannot reach the ready status, until this property is provided, too.
+        required: False
+        type: str
     scale_concurrency:
         description:
             - Optional maximum number of requests that can be processed concurrently per instance.
         required: False
         type: int
         default: 100
-    scale_concurrency_target:
+    scale_down_delay:
         description:
-            - Optional threshold of concurrent requests per instance at which one or more additional instances are created. Use this value to scale up instances based on concurrent number of requests. This option defaults to the value of the `scale_concurrency` option, if not specified.
+            - Optional amount of time in seconds that delays the scale-down behavior for an app instance.
         required: False
         type: int
+        default: 0
+    name:
+        description:
+            - (Required for new resource) The name of the app.
+        required: True
+        type: str
+    run_service_account:
+        description:
+            - Optional name of the service account. For built-in service accounts, you can use the shortened names `manager` , `none`, `reader`, and `writer`.
+        required: False
+        type: str
+        default: default
+    scale_cpu_limit:
+        description:
+            - Optional number of CPU set for the instance of the app. For valid values see [Supported memory and CPU combinations](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo).
+        required: False
+        type: str
+        default: 1
+    scale_ephemeral_storage_limit:
+        description:
+            - Optional amount of ephemeral storage to set for the instance of the app. The amount specified as ephemeral storage, must not exceed the amount of `scale_memory_limit`. The units for specifying ephemeral storage are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. For more information see [Units of measurement](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
+        required: False
+        type: str
+        default: 400M
+    scale_initial_instances:
+        description:
+            - Optional initial number of instances that are created upon app creation or app update.
+        required: False
+        type: int
+        default: 1
+    scale_memory_limit:
+        description:
+            - Optional amount of memory set for the instance of the app. For valid values see [Supported memory and CPU combinations](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo). The units for specifying memory are Megabyte (M) or Gigabyte (G), whereas G and M are the shorthand expressions for GB and MB. For more information see [Units of measurement](https://cloud.ibm.com/docs/codeengine?topic=codeengine-mem-cpu-combo#unit-measurements).
+        required: False
+        type: str
+        default: 4G
+    scale_min_instances:
+        description:
+            - Optional minimum number of instances for this app. If you set this value to `0`, the app will scale down to zero, if not hit by any request for some time.
+        required: False
+        type: int
+        default: 0
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -157,15 +176,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -188,45 +206,48 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('image_reference', 'str'),
     ('project_id', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'run_volume_mounts',
-    'name',
-    'run_commands',
-    'scale_memory_limit',
-    'image_reference',
-    'run_arguments',
     'image_port',
-    'scale_ephemeral_storage_limit',
-    'scale_cpu_limit',
-    'scale_min_instances',
-    'project_id',
-    'run_service_account',
-    'run_as_user',
     'scale_request_timeout',
-    'run_env_variables',
+    'image_reference',
+    'run_as_user',
+    'run_volume_mounts',
     'scale_max_instances',
-    'image_secret',
+    'probe_liveness',
+    'run_env_variables',
     'managed_domain_mappings',
-    'scale_initial_instances',
-    'scale_concurrency',
+    'probe_readiness',
+    'run_arguments',
+    'run_commands',
     'scale_concurrency_target',
+    'project_id',
+    'image_secret',
+    'scale_concurrency',
+    'scale_down_delay',
+    'name',
+    'run_service_account',
+    'scale_cpu_limit',
+    'scale_ephemeral_storage_limit',
+    'scale_initial_instances',
+    'scale_memory_limit',
+    'scale_min_instances',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('project_id', 'str'),
     ('name', 'str'),
+    ('project_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'project_id',
     'name',
+    'project_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -236,71 +257,82 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    run_volume_mounts=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    run_commands=dict(
-        required=False,
-        elements='',
-        type='list'),
-    scale_memory_limit=dict(
-        required=False,
-        type='str'),
-    image_reference=dict(
-        required=False,
-        type='str'),
-    run_arguments=dict(
-        required=False,
-        elements='',
-        type='list'),
     image_port=dict(
-        required=False,
-        type='int'),
-    scale_ephemeral_storage_limit=dict(
-        required=False,
-        type='str'),
-    scale_cpu_limit=dict(
-        required=False,
-        type='str'),
-    scale_min_instances=dict(
-        required=False,
-        type='int'),
-    project_id=dict(
-        required=False,
-        type='str'),
-    run_service_account=dict(
-        required=False,
-        type='str'),
-    run_as_user=dict(
         required=False,
         type='int'),
     scale_request_timeout=dict(
         required=False,
         type='int'),
-    run_env_variables=dict(
+    image_reference=dict(
+        required=False,
+        type='str'),
+    run_as_user=dict(
+        required=False,
+        type='int'),
+    run_volume_mounts=dict(
         required=False,
         elements='',
         type='list'),
     scale_max_instances=dict(
         required=False,
         type='int'),
+    probe_liveness=dict(
+        required=False,
+        elements='',
+        type='list'),
+    run_env_variables=dict(
+        required=False,
+        elements='',
+        type='list'),
+    managed_domain_mappings=dict(
+        required=False,
+        type='str'),
+    probe_readiness=dict(
+        required=False,
+        elements='',
+        type='list'),
+    run_arguments=dict(
+        required=False,
+        elements='',
+        type='list'),
+    run_commands=dict(
+        required=False,
+        elements='',
+        type='list'),
+    scale_concurrency_target=dict(
+        required=False,
+        type='int'),
+    project_id=dict(
+        required=False,
+        type='str'),
     image_secret=dict(
         required=False,
         type='str'),
-    managed_domain_mappings=dict(
+    scale_concurrency=dict(
+        required=False,
+        type='int'),
+    scale_down_delay=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    run_service_account=dict(
+        required=False,
+        type='str'),
+    scale_cpu_limit=dict(
+        required=False,
+        type='str'),
+    scale_ephemeral_storage_limit=dict(
         required=False,
         type='str'),
     scale_initial_instances=dict(
         required=False,
         type='int'),
-    scale_concurrency=dict(
+    scale_memory_limit=dict(
         required=False,
-        type='int'),
-    scale_concurrency_target=dict(
+        type='str'),
+    scale_min_instances=dict(
         required=False,
         type='int'),
     id=dict(
@@ -368,7 +400,7 @@ def run_module():
         resource_type='ibm_code_engine_app',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -377,7 +409,7 @@ def run_module():
             resource_type='ibm_code_engine_app',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

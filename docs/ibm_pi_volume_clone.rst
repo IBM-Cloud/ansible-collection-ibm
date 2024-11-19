@@ -23,13 +23,25 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  pi_target_storage_tier (False, str, None)
+    The storage tier for the cloned volume(s).
+
+
+  pi_replication_enabled (False, bool, None)
+    Indicates whether the cloned volume should have replication enabled. If no value is provided, it will default to the replication status of the source volume(s).
+
+
+  pi_volume_ids (True, list, None)
+    (Required for new resource) List of volumes to be cloned.
+
 
   pi_cloud_instance_id (True, str, None)
     (Required for new resource) The GUID of the service instance associated with an account.
@@ -39,16 +51,8 @@ Parameters
     (Required for new resource) The base name of the newly cloned volume(s).
 
 
-  pi_volume_ids (True, list, None)
-    (Required for new resource) List of volumes to be cloned.
-
-
-  pi_target_storage_tier (False, str, None)
-    The storage tier for the cloned volume(s).
-
-
-  pi_replication_enabled (False, bool, None)
-    Indicates whether the cloned volume should have replication enabled. If no value is provided, it will default to the replication status of the source volume(s).
+  pi_user_tags (False, list, None)
+    The user tags attached to this resource.
 
 
   id (False, str, None)

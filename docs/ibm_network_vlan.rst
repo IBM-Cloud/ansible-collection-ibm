@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,24 +31,24 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  router_hostname (False, str, None)
-    router host name
+  name (False, str, None)
+    VLAN name
 
 
   tags (False, list, None)
     List of tags
 
 
-  datacenter (True, str, None)
-    (Required for new resource) Datacenter name
-
-
   type (True, str, None)
     (Required for new resource) VLAN type
 
 
-  name (False, str, None)
-    VLAN name
+  router_hostname (False, str, None)
+    router host name
+
+
+  datacenter (True, str, None)
+    (Required for new resource) Datacenter name
 
 
   id (False, str, None)
@@ -60,11 +60,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

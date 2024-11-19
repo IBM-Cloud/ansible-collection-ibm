@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,56 +31,56 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Key protect or HPCS instance GUID or CRN
-
-
-  payload (False, str, None)
-    None
-
-
-  key_name (True, str, None)
-    (Required for new resource) Key name
-
-
-  standard_key (False, bool, False)
-    Standard key type
-
-
-  iv_value (False, str, None)
-    Only for imported root key
+  force_delete (False, bool, False)
+    set to true to force delete the key
 
 
   expiration_date (False, str, None)
     The date the key material expires. The date format follows RFC 3339. You can set an expiration date on any key on its creation. A key moves into the Deactivated state within one hour past its expiration date, if one is assigned. If you create a key without specifying an expiration date, the key does not expire
 
 
-  encrypted_nonce (False, str, None)
-    Only for imported root key
+  rotation (False, list, None)
+    Data associated with the key rotation policy
 
 
   description (False, str, None)
     description of the key
 
 
-  key_ring_id (False, str, default)
-    Key Ring for the Key
+  key_name (True, str, None)
+    (Required for new resource) Key name
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Key protect or HPCS instance GUID or CRN
 
 
   endpoint_type (False, str, None)
     Public or Private
 
 
-  force_delete (False, bool, False)
-    set to true to force delete the key
+  payload (False, str, None)
+    None
 
 
-  rotation (False, list, None)
-    Data associated with the key rotation policy
+  encrypted_nonce (False, str, None)
+    Only for imported root key
+
+
+  iv_value (False, str, None)
+    Only for imported root key
 
 
   dual_auth_delete (False, list, None)
     Data associated with the dual authorization delete policy.
+
+
+  key_ring_id (False, str, default)
+    Key Ring for the Key
+
+
+  standard_key (False, bool, False)
+    Standard key type
 
 
   id (False, str, None)
@@ -92,11 +92,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -17,7 +17,7 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_scc_provider_type_collection' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -26,26 +26,6 @@ options:
             - The ID of the Security and Compliance Center instance.
         required: True
         type: str
-    iaas_classic_username:
-        description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
-        required: False
-    iaas_classic_api_key:
-        description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
-        required: False
-    region:
-        description:
-            - The IBM Cloud region where you want to create your
-              resources. If this value is not specified, us-south is
-              used by default. This can also be provided via the
-              environment variable 'IC_REGION'.
-        default: us-south
-        required: False
     ibmcloud_api_key:
         description:
             - The IBM Cloud API key to authenticate with the IBM Cloud
@@ -78,20 +58,6 @@ module_args = dict(
     instance_id=dict(
         required=True,
         type='str'),
-    iaas_classic_username=dict(
-        type='str',
-        no_log=True,
-        fallback=(env_fallback, ['IAAS_CLASSIC_USERNAME']),
-        required=False),
-    iaas_classic_api_key=dict(
-        type='str',
-        no_log=True,
-        fallback=(env_fallback, ['IAAS_CLASSIC_API_KEY']),
-        required=False),
-    region=dict(
-        type='str',
-        fallback=(env_fallback, ['IC_REGION']),
-        default='us-south'),
     ibmcloud_api_key=dict(
         type='str',
         no_log=True,
@@ -112,7 +78,7 @@ def run_module():
         resource_type='ibm_scc_provider_type_collection',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

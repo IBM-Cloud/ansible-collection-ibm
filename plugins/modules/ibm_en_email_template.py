@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_email_template' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -32,12 +32,6 @@ options:
             - (Required for new resource) Subscription name.
         required: True
         type: str
-    params:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     description:
         description:
             - Subscription description.
@@ -48,6 +42,12 @@ options:
             - (Required for new resource) The type of template
         required: True
         type: str
+    params:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -63,15 +63,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -103,9 +102,9 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'instance_guid',
     'name',
-    'params',
     'description',
     'type',
+    'params',
 ]
 
 # Params for Data source
@@ -132,16 +131,16 @@ module_args = dict(
     name=dict(
         required=False,
         type='str'),
-    params=dict(
-        required=False,
-        elements='',
-        type='list'),
     description=dict(
         required=False,
         type='str'),
     type=dict(
         required=False,
         type='str'),
+    params=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -207,7 +206,7 @@ def run_module():
         resource_type='ibm_en_email_template',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -216,7 +215,7 @@ def run_module():
             resource_type='ibm_en_email_template',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

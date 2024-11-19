@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_image_export' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    pi_image_secret_key:
+        description:
+            - (Required for new resource) Cloud Object Storage secret key; required for buckets with private access
+        required: True
+        type: str
+    pi_image_bucket_region:
+        description:
+            - (Required for new resource) Cloud Object Storage region
+        required: True
+        type: str
     pi_cloud_instance_id:
         description:
             - (Required for new resource) PI cloud instance ID
@@ -40,16 +50,6 @@ options:
     pi_image_access_key:
         description:
             - (Required for new resource) Cloud Object Storage access key; required for buckets with private access
-        required: True
-        type: str
-    pi_image_secret_key:
-        description:
-            - (Required for new resource) Cloud Object Storage secret key; required for buckets with private access
-        required: True
-        type: str
-    pi_image_bucket_region:
-        description:
-            - (Required for new resource) Cloud Object Storage region
         required: True
         type: str
     id:
@@ -94,22 +94,22 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_image_secret_key', 'str'),
+    ('pi_image_bucket_region', 'str'),
     ('pi_cloud_instance_id', 'str'),
     ('pi_image_id', 'str'),
     ('pi_image_bucket_name', 'str'),
     ('pi_image_access_key', 'str'),
-    ('pi_image_secret_key', 'str'),
-    ('pi_image_bucket_region', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'pi_image_secret_key',
+    'pi_image_bucket_region',
     'pi_cloud_instance_id',
     'pi_image_id',
     'pi_image_bucket_name',
     'pi_image_access_key',
-    'pi_image_secret_key',
-    'pi_image_bucket_region',
 ]
 
 # Params for Data source
@@ -126,6 +126,12 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    pi_image_secret_key=dict(
+        required=False,
+        type='str'),
+    pi_image_bucket_region=dict(
+        required=False,
+        type='str'),
     pi_cloud_instance_id=dict(
         required=False,
         type='str'),
@@ -136,12 +142,6 @@ module_args = dict(
         required=False,
         type='str'),
     pi_image_access_key=dict(
-        required=False,
-        type='str'),
-    pi_image_secret_key=dict(
-        required=False,
-        type='str'),
-    pi_image_bucket_region=dict(
         required=False,
         type='str'),
     id=dict(
@@ -202,7 +202,7 @@ def run_module():
         resource_type='ibm_pi_image_export',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

@@ -18,51 +18,39 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_bare_metal_server_network_interface' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    interface_type:
+    enable_infrastructure_nat:
         description:
-            - The network interface type: [ pci, vlan, hipersocket ]
+            - If true, the VPC infrastructure performs any needed NAT operations. If false, the packet is passed unmodified to/from the network interface, allowing the workload to perform any needed NAT operations.
         required: False
-        type: str
+        type: bool
     name:
         description:
             - The user-defined name for this network interface
         required: False
         type: str
-    security_groups:
-        description:
-            - Collection of security groups ids
-        required: False
-        type: list
-        elements: str
     subnet:
         description:
             - (Required for new resource) The id of the associated subnet
         required: True
         type: str
-    hard_stop:
-        description:
-            - Only used for PCI network interfaces, whether to hard/immediately stop server
-        required: False
-        type: bool
-        default: True
-    vlan:
-        description:
-            - Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this interface
-        required: False
-        type: int
-    allow_interface_to_float:
-        description:
-            - Indicates if the interface can float to any other server within the same resource_group. The interface will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to vlan type interfaces.
-        required: False
-        type: bool
     bare_metal_server:
         description:
             - (Required for new resource) Bare metal server identifier
         required: True
+        type: str
+    allow_ip_spoofing:
+        description:
+            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
+        required: False
+        type: bool
+    interface_type:
+        description:
+            - The network interface type: [ pci, vlan, hipersocket ]
+        required: False
         type: str
     primary_ip:
         description:
@@ -70,22 +58,34 @@ options:
         required: False
         type: list
         elements: dict
+    allow_interface_to_float:
+        description:
+            - Indicates if the interface can float to any other server within the same resource_group. The interface will float automatically if the network detects a GARP or RARP on another bare metal server in the resource group. Applies only to vlan type interfaces.
+        required: False
+        type: bool
+    vlan:
+        description:
+            - Indicates the 802.1Q VLAN ID tag that must be used for all traffic on this interface
+        required: False
+        type: int
+    hard_stop:
+        description:
+            - Only used for PCI network interfaces, whether to hard/immediately stop server
+        required: False
+        type: bool
+        default: True
+    security_groups:
+        description:
+            - Collection of security groups ids
+        required: False
+        type: list
+        elements: str
     allowed_vlans:
         description:
             - Indicates what VLAN IDs (for VLAN type only) can use this physical (PCI type) interface. A given VLAN can only be in the allowed_vlans array for one PCI type adapter per bare metal server.
         required: False
         type: list
         elements: int
-    allow_ip_spoofing:
-        description:
-            - Indicates whether source IP spoofing is allowed on this interface. If false, source IP spoofing is prevented on this interface. If true, source IP spoofing is allowed on this interface.
-        required: False
-        type: bool
-    enable_infrastructure_nat:
-        description:
-            - If true, the VPC infrastructure performs any needed NAT operations. If false, the packet is passed unmodified to/from the network interface, allowing the workload to perform any needed NAT operations.
-        required: False
-        type: bool
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -99,17 +99,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -138,18 +127,18 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'interface_type',
-    'name',
-    'security_groups',
-    'subnet',
-    'hard_stop',
-    'vlan',
-    'allow_interface_to_float',
-    'bare_metal_server',
-    'primary_ip',
-    'allowed_vlans',
-    'allow_ip_spoofing',
     'enable_infrastructure_nat',
+    'name',
+    'subnet',
+    'bare_metal_server',
+    'allow_ip_spoofing',
+    'interface_type',
+    'primary_ip',
+    'allow_interface_to_float',
+    'vlan',
+    'hard_stop',
+    'security_groups',
+    'allowed_vlans',
 ]
 
 # Params for Data source
@@ -164,8 +153,8 @@ TL_ALL_PARAMETERS_DS = [
 ]
 
 TL_CONFLICTS_MAP = {
-    'vlan': ['allowed_vlans'],
     'allow_interface_to_float': ['allowed_vlans'],
+    'vlan': ['allowed_vlans'],
     'allowed_vlans': ['allow_interface_to_float', 'vlan'],
 }
 
@@ -173,32 +162,38 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    interface_type=dict(
+    enable_infrastructure_nat=dict(
         required=False,
-        type='str'),
+        type='bool'),
     name=dict(
         required=False,
         type='str'),
-    security_groups=dict(
-        required=False,
-        elements='',
-        type='list'),
     subnet=dict(
         required=False,
         type='str'),
-    hard_stop=dict(
+    bare_metal_server=dict(
+        required=False,
+        type='str'),
+    allow_ip_spoofing=dict(
+        required=False,
+        type='bool'),
+    interface_type=dict(
+        required=False,
+        type='str'),
+    primary_ip=dict(
+        required=False,
+        elements='',
+        type='list'),
+    allow_interface_to_float=dict(
         required=False,
         type='bool'),
     vlan=dict(
         required=False,
         type='int'),
-    allow_interface_to_float=dict(
+    hard_stop=dict(
         required=False,
         type='bool'),
-    bare_metal_server=dict(
-        required=False,
-        type='str'),
-    primary_ip=dict(
+    security_groups=dict(
         required=False,
         elements='',
         type='list'),
@@ -206,12 +201,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    allow_ip_spoofing=dict(
-        required=False,
-        type='bool'),
-    enable_infrastructure_nat=dict(
-        required=False,
-        type='bool'),
     id=dict(
         required=False,
         type='str'),
@@ -220,11 +209,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -268,28 +252,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_bare_metal_server_network_interface',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -298,7 +283,7 @@ def run_module():
             resource_type='ibm_is_bare_metal_server_network_interface',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

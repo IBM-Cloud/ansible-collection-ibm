@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_destination_huawei' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -27,10 +27,15 @@ options:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
         required: True
         type: str
-    type:
+    name:
         description:
-            - (Required for new resource) The type of Destination push_huawei.
+            - (Required for new resource) The Destintion name.
         required: True
+        type: str
+    description:
+        description:
+            - The Destination description.
+        required: False
         type: str
     collect_failed_events:
         description:
@@ -43,15 +48,10 @@ options:
         required: False
         type: list
         elements: dict
-    name:
+    type:
         description:
-            - (Required for new resource) The Destintion name.
+            - (Required for new resource) The type of Destination push_huawei.
         required: True
-        type: str
-    description:
-        description:
-            - The Destination description.
-        required: False
         type: str
     id:
         description:
@@ -68,15 +68,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -100,29 +99,29 @@ author:
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
     ('instance_guid', 'str'),
-    ('type', 'str'),
     ('name', 'str'),
+    ('type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
     'instance_guid',
-    'type',
-    'collect_failed_events',
-    'config',
     'name',
     'description',
+    'collect_failed_events',
+    'config',
+    'type',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('destination_id', 'str'),
     ('instance_guid', 'str'),
+    ('destination_id', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'destination_id',
     'instance_guid',
+    'destination_id',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -135,7 +134,10 @@ module_args = dict(
     instance_guid=dict(
         required=False,
         type='str'),
-    type=dict(
+    name=dict(
+        required=False,
+        type='str'),
+    description=dict(
         required=False,
         type='str'),
     collect_failed_events=dict(
@@ -145,10 +147,7 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    name=dict(
-        required=False,
-        type='str'),
-    description=dict(
+    type=dict(
         required=False,
         type='str'),
     id=dict(
@@ -216,7 +215,7 @@ def run_module():
         resource_type='ibm_en_destination_huawei',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -225,7 +224,7 @@ def run_module():
             resource_type='ibm_en_destination_huawei',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

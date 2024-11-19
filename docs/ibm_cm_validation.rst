@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  version_locator (True, str, None)
+    (Required for new resource) Version locator - the version that will be validated.
+
 
   override_values (False, dict, None)
     Override values during validation.
@@ -39,20 +43,16 @@ Parameters
     Other values to pass to the schematics workspace.
 
 
-  revalidate_if_validated (False, bool, None)
-    If the version should be revalidated if it is already validated.
-
-
-  version_locator (True, str, None)
-    (Required for new resource) Version locator - the version that will be validated.
-
-
   region (False, any, us-south)
     The IBM Cloud region where you want to create your resources. If this value is not specified, us-south is used by default. This can also be provided via the environment variable 'IC_REGION'.
 
 
   environment_variables (False, list, None)
     Environment variables to include in the schematics workspace.
+
+
+  revalidate_if_validated (False, bool, None)
+    If the version should be revalidated if it is already validated.
 
 
   mark_version_consumable (False, bool, None)
@@ -68,11 +68,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   ibmcloud_api_key (True, any, None)

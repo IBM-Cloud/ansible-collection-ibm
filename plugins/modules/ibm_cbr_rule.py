@@ -18,29 +18,25 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cbr_rule' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    enforcement_mode:
-        description:
-            - The rule enforcement mode: * `enabled` - The restrictions are enforced and reported. This is the default. * `disabled` - The restrictions are disabled. Nothing is enforced or reported. * `report` - The restrictions are evaluated and reported, but not enforced.
-        required: False
-        type: str
     x_correlation_id:
         description:
             - The supplied or generated value of this header is logged for a request and repeated in a response header for the corresponding response. The same value is used for downstream requests and retries of those requests. If a value of this headers is not supplied in a request, the service generates a random (version 4) UUID.
-        required: False
-        type: str
-    transaction_id:
-        description:
-            - The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
         required: False
         type: str
     operations:
         description:
             - The operations this rule applies to.
         required: False
+        type: list
+        elements: dict
+    resources:
+        description:
+            - (Required for new resource) The resources this rule apply to.
+        required: True
         type: list
         elements: dict
     description:
@@ -54,12 +50,11 @@ options:
         required: False
         type: list
         elements: dict
-    resources:
+    enforcement_mode:
         description:
-            - (Required for new resource) The resources this rule apply to.
-        required: True
-        type: list
-        elements: dict
+            - The rule enforcement mode: * `enabled` - The restrictions are enforced and reported. This is the default. * `disabled` - The restrictions are disabled. Nothing is enforced or reported. * `report` - The restrictions are evaluated and reported, but not enforced.
+        required: False
+        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -75,15 +70,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -111,13 +105,12 @@ TL_REQUIRED_PARAMETERS = [
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'enforcement_mode',
     'x_correlation_id',
-    'transaction_id',
     'operations',
+    'resources',
     'description',
     'contexts',
-    'resources',
+    'enforcement_mode',
 ]
 
 # Params for Data source
@@ -136,16 +129,14 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    enforcement_mode=dict(
-        required=False,
-        type='str'),
     x_correlation_id=dict(
         required=False,
         type='str'),
-    transaction_id=dict(
-        required=False,
-        type='str'),
     operations=dict(
+        required=False,
+        elements='',
+        type='list'),
+    resources=dict(
         required=False,
         elements='',
         type='list'),
@@ -156,10 +147,9 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    resources=dict(
+    enforcement_mode=dict(
         required=False,
-        elements='',
-        type='list'),
+        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -225,7 +215,7 @@ def run_module():
         resource_type='ibm_cbr_rule',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -234,7 +224,7 @@ def run_module():
             resource_type='ibm_cbr_rule',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,60 +31,60 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  headers (False, list, None)
-    None
-
-
   cis_id (True, str, None)
     (Required for new resource) CIS instance crn
-
-
-  path (False, str, /)
-    path
-
-
-  expected_codes (False, str, None)
-    expected_codes
-
-
-  interval (False, int, 60)
-    interval
-
-
-  allow_insecure (False, bool, False)
-    allow_insecure
-
-
-  type (False, str, http)
-    type
-
-
-  method (False, str, GET)
-    method
-
-
-  retries (False, int, 2)
-    retries
-
-
-  follow_redirects (False, bool, False)
-    follow_redirects
 
 
   expected_body (False, str, None)
     expected_body
 
 
-  port (False, int, None)
-    port number
+  allow_insecure (False, bool, False)
+    allow_insecure
+
+
+  headers (False, list, None)
+    None
+
+
+  path (False, str, /)
+    path
+
+
+  method (False, str, GET)
+    method
+
+
+  timeout (False, int, 5)
+    timeout
+
+
+  retries (False, int, 2)
+    retries
+
+
+  interval (False, int, 60)
+    interval
+
+
+  expected_codes (False, str, None)
+    expected_codes
+
+
+  type (False, str, http)
+    type
 
 
   description (False, str, None)
     description
 
 
-  timeout (False, int, 5)
-    timeout
+  follow_redirects (False, bool, False)
+    follow_redirects
+
+
+  port (False, int, None)
+    port number
 
 
   id (False, str, None)
@@ -96,11 +96,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,48 +31,20 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  point_in_time_recovery_deployment_id (False, str, None)
-    The CRN of source instance
-
-
-  configuration (False, str, None)
-    The configuration in JSON format
-
-
-  backup_encryption_key_crn (False, str, None)
-    The Backup Encryption Key CRN
-
-
-  point_in_time_recovery_time (False, str, None)
-    The point in time recovery time stamp of the deployed instance
-
-
-  users (False, list, None)
-    None
-
-
-  group (False, list, None)
-    None
-
-
-  plan (True, str, None)
-    (Required for new resource) The plan type of the Database instance
+  resource_group_id (False, str, None)
+    The id of the resource group in which the Database instance is present
 
 
   service (True, str, None)
     (Required for new resource) The name of the Cloud Internet database service
 
 
-  adminpassword (False, str, None)
-    The admin user password for the instance
+  allowlist (False, list, None)
+    None
 
 
-  key_protect_key (False, str, None)
-    The CRN of Key protect key
-
-
-  location (True, str, None)
-    (Required for new resource) The location or the region in which Database instance exists
+  plan (True, str, None)
+    (Required for new resource) The plan type of the Database instance
 
 
   version (False, str, None)
@@ -83,44 +55,76 @@ Parameters
     The CRN of leader database
 
 
-  key_protect_instance (False, str, None)
-    The CRN of Key protect instance
+  point_in_time_recovery_time (False, str, None)
+    The point in time recovery time stamp of the deployed instance
 
 
-  auto_scaling (False, list, None)
-    ICD Auto Scaling
-
-
-  name (True, str, None)
-    (Required for new resource) Resource instance name for example, my Database instance
-
-
-  logical_replication_slot (False, list, None)
-    None
-
-
-  tags (False, list, None)
-    None
-
-
-  service_endpoints (False, str, None)
-    Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+  point_in_time_recovery_deployment_id (False, str, None)
+    The CRN of source instance
 
 
   offline_restore (False, bool, None)
     Set offline restore mode for MongoDB Enterprise Edition
 
 
-  resource_group_id (False, str, None)
-    The id of the resource group in which the Database instance is present
+  name (True, str, None)
+    (Required for new resource) Resource instance name for example, my Database instance
+
+
+  adminpassword (False, str, None)
+    The admin user password for the instance
+
+
+  configuration (False, str, None)
+    The configuration in JSON format
 
 
   backup_id (False, str, None)
     The CRN of backup source database
 
 
-  allowlist (False, list, None)
+  service_endpoints (True, str, None)
+    (Required for new resource) Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+
+
+  key_protect_key (False, str, None)
+    The CRN of Key protect key
+
+
+  tags (False, list, None)
     None
+
+
+  location (True, str, None)
+    (Required for new resource) The location or the region in which Database instance exists
+
+
+  backup_encryption_key_crn (False, str, None)
+    The Backup Encryption Key CRN
+
+
+  auto_scaling (False, list, None)
+    ICD Auto Scaling
+
+
+  key_protect_instance (False, str, None)
+    The CRN of Key protect instance
+
+
+  logical_replication_slot (False, list, None)
+    None
+
+
+  group (False, list, None)
+    None
+
+
+  users (False, list, None)
+    None
+
+
+  deletion_protection (False, bool, False)
+    Whether Terraform will be prevented from destroying the instance
 
 
   id (False, str, None)
@@ -132,11 +136,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -18,16 +18,36 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_public_gateway' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    resource_group:
+        description:
+            - Public gateway resource group info
+        required: False
+        type: str
+    zone:
+        description:
+            - (Required for new resource) Public gateway zone info
+        required: True
+        type: str
     access_tags:
         description:
             - List of access management tags
         required: False
         type: list
         elements: str
+    floating_ip:
+        description:
+            - None
+        required: False
+        type: dict
+    vpc:
+        description:
+            - (Required for new resource) Public gateway VPC info
+        required: True
+        type: str
     tags:
         description:
             - Service tags for the public gateway instance
@@ -37,26 +57,6 @@ options:
     name:
         description:
             - (Required for new resource) Name of the Public gateway instance
-        required: True
-        type: str
-    zone:
-        description:
-            - (Required for new resource) Public gateway zone info
-        required: True
-        type: str
-    floating_ip:
-        description:
-            - None
-        required: False
-        type: dict
-    resource_group:
-        description:
-            - Public gateway resource group info
-        required: False
-        type: str
-    vpc:
-        description:
-            - (Required for new resource) Public gateway VPC info
         required: True
         type: str
     id:
@@ -72,17 +72,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -105,20 +94,20 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('name', 'str'),
     ('zone', 'str'),
     ('vpc', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'resource_group',
+    'zone',
     'access_tags',
+    'floating_ip',
+    'vpc',
     'tags',
     'name',
-    'zone',
-    'floating_ip',
-    'resource_group',
-    'vpc',
 ]
 
 # Params for Data source
@@ -127,8 +116,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'name',
     'resource_group',
+    'name',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -138,27 +127,27 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    access_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    name=dict(
+    resource_group=dict(
         required=False,
         type='str'),
     zone=dict(
         required=False,
         type='str'),
+    access_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     floating_ip=dict(
         required=False,
         type='dict'),
-    resource_group=dict(
+    vpc=dict(
         required=False,
         type='str'),
-    vpc=dict(
+    tags=dict(
+        required=False,
+        elements='',
+        type='list'),
+    name=dict(
         required=False,
         type='str'),
     id=dict(
@@ -169,11 +158,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -217,28 +201,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_public_gateway',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -247,7 +232,7 @@ def run_module():
             resource_type='ibm_is_public_gateway',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

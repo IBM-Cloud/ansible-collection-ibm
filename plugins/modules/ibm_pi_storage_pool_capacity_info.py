@@ -17,18 +17,18 @@ version_added: "2.8"
 description:
     - Retrieve an IBM Cloud 'ibm_pi_storage_pool_capacity' resource
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    pi_storage_pool:
-        description:
-            - The storage pool name.
-        required: True
-        type: str
     pi_cloud_instance_id:
         description:
             - The GUID of the service instance associated with an account.
+        required: True
+        type: str
+    pi_storage_pool:
+        description:
+            - The storage pool name.
         required: True
         type: str
     zone:
@@ -60,14 +60,14 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('pi_storage_pool', 'str'),
     ('pi_cloud_instance_id', 'str'),
+    ('pi_storage_pool', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_storage_pool',
     'pi_cloud_instance_id',
+    'pi_storage_pool',
 ]
 
 
@@ -78,10 +78,10 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_storage_pool=dict(
+    pi_cloud_instance_id=dict(
         required=True,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_storage_pool=dict(
         required=True,
         type='str'),
     zone=dict(
@@ -111,7 +111,7 @@ def run_module():
         resource_type='ibm_pi_storage_pool_capacity',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

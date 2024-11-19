@@ -23,13 +23,17 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  split_share (False, bool, False)
+    If set to true the replication relationship between source share and replica will be removed.
+
 
   share_replica (True, str, None)
     (Required for new resource) The file share identifier.
@@ -43,20 +47,12 @@ Parameters
     The failover timeout in seconds
 
 
-  split_share (False, bool, False)
-    If set to true the replication relationship between source share and replica will be removed.
-
-
   id (False, str, None)
     (Required when updating or destroying existing resource) IBM Cloud Resource ID.
 
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

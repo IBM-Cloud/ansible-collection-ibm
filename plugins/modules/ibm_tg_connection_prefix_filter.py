@@ -18,7 +18,7 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_tg_connection_prefix_filter' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
@@ -32,6 +32,11 @@ options:
             - Identifier of prefix filter that handles ordering
         required: False
         type: str
+    ge:
+        description:
+            - IP Prefix GE
+        required: False
+        type: int
     le:
         description:
             - IP Prefix LE
@@ -52,11 +57,6 @@ options:
             - (Required for new resource) Whether to permit or deny the prefix filter
         required: True
         type: str
-    ge:
-        description:
-            - IP Prefix GE
-        required: False
-        type: int
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -72,15 +72,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -113,11 +112,11 @@ TL_REQUIRED_PARAMETERS = [
 TL_ALL_PARAMETERS = [
     'gateway',
     'before',
+    'ge',
     'le',
     'prefix',
     'connection_id',
     'action',
-    'ge',
 ]
 
 # Params for Data source
@@ -146,6 +145,9 @@ module_args = dict(
     before=dict(
         required=False,
         type='str'),
+    ge=dict(
+        required=False,
+        type='int'),
     le=dict(
         required=False,
         type='int'),
@@ -158,9 +160,6 @@ module_args = dict(
     action=dict(
         required=False,
         type='str'),
-    ge=dict(
-        required=False,
-        type='int'),
     id=dict(
         required=False,
         type='str'),
@@ -226,7 +225,7 @@ def run_module():
         resource_type='ibm_tg_connection_prefix_filter',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -235,7 +234,7 @@ def run_module():
             resource_type='ibm_tg_connection_prefix_filter',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

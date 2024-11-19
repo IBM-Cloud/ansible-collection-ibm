@@ -18,10 +18,20 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_cis_cache_settings' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    cis_id:
+        description:
+            - (Required for new resource) CIS instance crn
+        required: True
+        type: str
+    domain_id:
+        description:
+            - (Required for new resource) Associated CIS domain
+        required: True
+        type: str
     browser_expiration:
         description:
             - Browser Expiration setting
@@ -37,28 +47,29 @@ options:
             - Purge all setting
         required: False
         type: bool
+    purge_by_tags:
+        description:
+            - Purge by tags
+        required: False
+        type: list
+        elements: str
     purge_by_hosts:
         description:
             - Purge by hosts
         required: False
         type: list
         elements: str
+    caching_level:
+        description:
+            - Cache level setting
+        required: False
+        type: str
     serve_stale_content:
         description:
             - Serve Stale Content
         required: False
         type: str
         default: on
-    domain_id:
-        description:
-            - (Required for new resource) Associated CIS domain
-        required: True
-        type: str
-    caching_level:
-        description:
-            - Cache level setting
-        required: False
-        type: str
     development_mode:
         description:
             - Development mode setting
@@ -70,17 +81,6 @@ options:
         required: False
         type: list
         elements: str
-    purge_by_tags:
-        description:
-            - Purge by tags
-        required: False
-        type: list
-        elements: str
-    cis_id:
-        description:
-            - (Required for new resource) CIS instance crn
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -96,15 +96,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -127,23 +126,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('domain_id', 'str'),
     ('cis_id', 'str'),
+    ('domain_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'cis_id',
+    'domain_id',
     'browser_expiration',
     'query_string_sort',
     'purge_all',
+    'purge_by_tags',
     'purge_by_hosts',
-    'serve_stale_content',
-    'domain_id',
     'caching_level',
+    'serve_stale_content',
     'development_mode',
     'purge_by_urls',
-    'purge_by_tags',
-    'cis_id',
 ]
 
 # Params for Data source
@@ -159,15 +158,21 @@ TL_ALL_PARAMETERS_DS = [
 
 TL_CONFLICTS_MAP = {
     'purge_all': ['purge_by_urls', 'purge_by_tags', 'purge_by_hosts'],
+    'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
     'purge_by_hosts': ['purge_all', 'purge_by_urls', 'purge_by_tags'],
     'purge_by_urls': ['purge_all', 'purge_by_tags', 'purge_by_hosts'],
-    'purge_by_tags': ['purge_all', 'purge_by_urls', 'purge_by_hosts'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    cis_id=dict(
+        required=False,
+        type='str'),
+    domain_id=dict(
+        required=False,
+        type='str'),
     browser_expiration=dict(
         required=False,
         type='int'),
@@ -177,17 +182,18 @@ module_args = dict(
     purge_all=dict(
         required=False,
         type='bool'),
+    purge_by_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     purge_by_hosts=dict(
         required=False,
         elements='',
         type='list'),
-    serve_stale_content=dict(
-        required=False,
-        type='str'),
-    domain_id=dict(
-        required=False,
-        type='str'),
     caching_level=dict(
+        required=False,
+        type='str'),
+    serve_stale_content=dict(
         required=False,
         type='str'),
     development_mode=dict(
@@ -197,13 +203,6 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
-    purge_by_tags=dict(
-        required=False,
-        elements='',
-        type='list'),
-    cis_id=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -269,7 +268,7 @@ def run_module():
         resource_type='ibm_cis_cache_settings',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -278,7 +277,7 @@ def run_module():
             resource_type='ibm_cis_cache_settings',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

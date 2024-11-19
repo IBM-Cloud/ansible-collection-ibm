@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  account_id (False, str, None)
-    The source account id of account to be imported
+  parent (True, str, None)
+    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
 
 
   owner_iam_id (False, str, None)
     The IAM ID of the account owner, such as `IBMid-0123ABC`. The IAM ID must already exist.
 
 
-  name (False, str, None)
-    The name of the account. This field must have 3 - 60 characters.
+  traits (False, list, None)
+    The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the enterprise. This is an optional field.
 
 
   enterprise_account_id (False, str, None)
     The enterprise account ID.
 
 
-  parent (True, str, None)
-    (Required for new resource) The CRN of the parent under which the account will be created. The parent can be an existing account group or the enterprise itself.
-
-
   enterprise_id (False, str, None)
     The enterprise ID that the account is a part of.
 
 
-  traits (False, list, None)
-    The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the enterprise. This is an optional field.
+  account_id (False, str, None)
+    The source account id of account to be imported
+
+
+  name (False, str, None)
+    The name of the account. This field must have 3 - 60 characters.
 
 
   options (False, list, None)
@@ -72,11 +72,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,32 +31,32 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
+  file (False, str, None)
+    File where api key is to be stored
+
+
   description (False, str, None)
     description of the API key
-
-
-  iam_service_id (True, str, None)
-    (Required for new resource) The service iam_id that this API key authenticates
 
 
   apikey (False, str, None)
     API key value for this API key
 
 
+  locked (False, bool, None)
+    The API key cannot be changed if set to true
+
+
+  store_value (False, bool, True)
+    Boolean value deciding whether API key value is retrievable in the future
+
+
   name (True, str, None)
     (Required for new resource) Name of the Service API key
 
 
-  store_value (False, bool, None)
-    Boolean value deciding whether API key value is retrievable in the future
-
-
-  file (False, str, None)
-    File where api key is to be stored
-
-
-  locked (False, bool, None)
-    The API key cannot be changed if set to true
+  iam_service_id (True, str, None)
+    (Required for new resource) The service iam_id that this API key authenticates
 
 
   id (False, str, None)
@@ -68,11 +68,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

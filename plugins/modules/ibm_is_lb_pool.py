@@ -18,55 +18,10 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_is_lb_pool' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    name:
-        description:
-            - (Required for new resource) Load Balancer Pool name
-        required: True
-        type: str
-    lb:
-        description:
-            - (Required for new resource) Load Balancer ID
-        required: True
-        type: str
-    health_monitor_url:
-        description:
-            - Health monitor URL of LB Pool
-        required: False
-        type: str
-    algorithm:
-        description:
-            - (Required for new resource) Load Balancer Pool algorithm
-        required: True
-        type: str
-    health_retries:
-        description:
-            - (Required for new resource) Load Balancer health retry count
-        required: True
-        type: int
-    proxy_protocol:
-        description:
-            - PROXY protocol setting for this pool
-        required: False
-        type: str
-    protocol:
-        description:
-            - (Required for new resource) Load Balancer Protocol
-        required: True
-        type: str
-    health_delay:
-        description:
-            - (Required for new resource) Load Blancer health delay time period
-        required: True
-        type: int
-    health_timeout:
-        description:
-            - (Required for new resource) Load Balancer health timeout interval
-        required: True
-        type: int
     health_monitor_port:
         description:
             - Health monitor Port the LB Pool
@@ -77,6 +32,11 @@ options:
             - Load Balancer Pool session persisence type.
         required: False
         type: str
+    health_delay:
+        description:
+            - (Required for new resource) Load Blancer health delay time period
+        required: True
+        type: int
     health_type:
         description:
             - (Required for new resource) Load Balancer health type
@@ -86,6 +46,46 @@ options:
         description:
             - Load Balancer Pool session persisence app cookie name.
         required: False
+        type: str
+    proxy_protocol:
+        description:
+            - PROXY protocol setting for this pool
+        required: False
+        type: str
+    algorithm:
+        description:
+            - (Required for new resource) Load Balancer Pool algorithm
+        required: True
+        type: str
+    protocol:
+        description:
+            - (Required for new resource) Load Balancer Protocol
+        required: True
+        type: str
+    health_timeout:
+        description:
+            - (Required for new resource) Load Balancer health timeout interval
+        required: True
+        type: int
+    health_monitor_url:
+        description:
+            - Health monitor URL of LB Pool
+        required: False
+        type: str
+    health_retries:
+        description:
+            - (Required for new resource) Load Balancer health retry count
+        required: True
+        type: int
+    name:
+        description:
+            - (Required for new resource) Load Balancer Pool name
+        required: True
+        type: str
+    lb:
+        description:
+            - (Required for new resource) Load Balancer ID
+        required: True
         type: str
     id:
         description:
@@ -100,17 +100,6 @@ options:
             - absent
         default: available
         required: False
-    generation:
-        description:
-            - The generation of Virtual Private Cloud infrastructure
-              that you want to use. Supported values are 1 for VPC
-              generation 1, and 2 for VPC generation 2 infrastructure.
-              If this value is not specified, 2 is used by default. This
-              can also be provided via the environment variable
-              'IC_GENERATION'.
-        default: 2
-        required: False
-        type: int
     region:
         description:
             - The IBM Cloud region where you want to create your
@@ -133,31 +122,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('health_delay', 'int'),
+    ('health_type', 'str'),
+    ('algorithm', 'str'),
+    ('protocol', 'str'),
+    ('health_timeout', 'int'),
+    ('health_retries', 'int'),
     ('name', 'str'),
     ('lb', 'str'),
-    ('algorithm', 'str'),
-    ('health_retries', 'int'),
-    ('protocol', 'str'),
-    ('health_delay', 'int'),
-    ('health_timeout', 'int'),
-    ('health_type', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'name',
-    'lb',
-    'health_monitor_url',
-    'algorithm',
-    'health_retries',
-    'proxy_protocol',
-    'protocol',
-    'health_delay',
-    'health_timeout',
     'health_monitor_port',
     'session_persistence_type',
+    'health_delay',
     'health_type',
     'session_persistence_app_cookie_name',
+    'proxy_protocol',
+    'algorithm',
+    'protocol',
+    'health_timeout',
+    'health_monitor_url',
+    'health_retries',
+    'name',
+    'lb',
 ]
 
 # Params for Data source
@@ -166,8 +155,8 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'lb',
     'name',
+    'lb',
     'identifier',
 ]
 
@@ -178,43 +167,43 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    name=dict(
-        required=False,
-        type='str'),
-    lb=dict(
-        required=False,
-        type='str'),
-    health_monitor_url=dict(
-        required=False,
-        type='str'),
-    algorithm=dict(
-        required=False,
-        type='str'),
-    health_retries=dict(
-        required=False,
-        type='int'),
-    proxy_protocol=dict(
-        required=False,
-        type='str'),
-    protocol=dict(
-        required=False,
-        type='str'),
-    health_delay=dict(
-        required=False,
-        type='int'),
-    health_timeout=dict(
-        required=False,
-        type='int'),
     health_monitor_port=dict(
         required=False,
         type='int'),
     session_persistence_type=dict(
         required=False,
         type='str'),
+    health_delay=dict(
+        required=False,
+        type='int'),
     health_type=dict(
         required=False,
         type='str'),
     session_persistence_app_cookie_name=dict(
+        required=False,
+        type='str'),
+    proxy_protocol=dict(
+        required=False,
+        type='str'),
+    algorithm=dict(
+        required=False,
+        type='str'),
+    protocol=dict(
+        required=False,
+        type='str'),
+    health_timeout=dict(
+        required=False,
+        type='int'),
+    health_monitor_url=dict(
+        required=False,
+        type='str'),
+    health_retries=dict(
+        required=False,
+        type='int'),
+    name=dict(
+        required=False,
+        type='str'),
+    lb=dict(
         required=False,
         type='str'),
     id=dict(
@@ -225,11 +214,6 @@ module_args = dict(
         required=False,
         default='available',
         choices=(['available', 'absent'])),
-    generation=dict(
-        type='int',
-        required=False,
-        fallback=(env_fallback, ['IC_GENERATION']),
-        default=2),
     region=dict(
         type='str',
         fallback=(env_fallback, ['IC_REGION']),
@@ -273,28 +257,29 @@ def run_module():
     if len(conflicts):
         module.fail_json(msg=("conflicts exist: {}".format(conflicts)))
 
-    # VPC required arguments checks
-    if module.params['generation'] == 1:
-        missing_args = []
-        if module.params['iaas_classic_username'] is None:
-            missing_args.append('iaas_classic_username')
-        if module.params['iaas_classic_api_key'] is None:
-            missing_args.append('iaas_classic_api_key')
-        if missing_args:
-            module.fail_json(msg=(
-                "VPC generation=1 missing required arguments: " +
-                ", ".join(missing_args)))
-    elif module.params['generation'] == 2:
-        if module.params['ibmcloud_api_key'] is None:
-            module.fail_json(
-                msg=("VPC generation=2 missing required argument: "
-                     "ibmcloud_api_key"))
+    if 'generation' in module.params:
+        # VPC required arguments checks
+        if module.params['generation'] == 1:
+            missing_args = []
+            if module.params['iaas_classic_username'] is None:
+                missing_args.append('iaas_classic_username')
+            if module.params['iaas_classic_api_key'] is None:
+                missing_args.append('iaas_classic_api_key')
+            if missing_args:
+                module.fail_json(msg=(
+                    "VPC generation=1 missing required arguments: " +
+                    ", ".join(missing_args)))
+        elif module.params['generation'] == 2:
+            if module.params['ibmcloud_api_key'] is None:
+                module.fail_json(
+                    msg=("VPC generation=2 missing required argument: "
+                         "ibmcloud_api_key"))
 
     result_ds = ibmcloud_terraform(
         resource_type='ibm_is_lb_pool',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -303,7 +288,7 @@ def run_module():
             resource_type='ibm_is_lb_pool',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

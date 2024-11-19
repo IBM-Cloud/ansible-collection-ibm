@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,28 +31,28 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  name (True, str, None)
-    (Required for new resource) The user-defined name for this instance group
-
-
-  load_balancer (False, str, None)
-    load balancer ID
+  access_tags (False, list, None)
+    List of access management tags
 
 
   instance_template (True, str, None)
     (Required for new resource) instance template ID
 
 
-  subnets (True, list, None)
-    (Required for new resource) list of subnet IDs
+  load_balancer (False, str, None)
+    load balancer ID
 
 
-  tags (False, list, None)
-    List of tags for instance group
+  load_balancer_pool (False, str, None)
+    load balancer pool ID
 
 
-  access_tags (False, list, None)
-    List of access management tags
+  name (True, str, None)
+    (Required for new resource) The user-defined name for this instance group
+
+
+  application_port (False, int, None)
+    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
 
 
   instance_count (False, int, 0)
@@ -63,12 +63,12 @@ Parameters
     Resource group ID
 
 
-  application_port (False, int, None)
-    Used by the instance group when scaling up instances to supply the port for the load balancer pool member.
+  subnets (True, list, None)
+    (Required for new resource) list of subnet IDs
 
 
-  load_balancer_pool (False, str, None)
-    load balancer pool ID
+  tags (False, list, None)
+    List of tags for instance group
 
 
   id (False, str, None)
@@ -77,10 +77,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

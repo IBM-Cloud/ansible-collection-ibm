@@ -18,36 +18,42 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pi_snapshot' resource
     - This module does not support idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    pi_instance_name:
-        description:
-            - (Required for new resource) Instance name / id of the pvm
-        required: True
-        type: str
     pi_volume_ids:
         description:
-            - List of PI volumes
+            - A list of volume IDs of the instance that will be part of the snapshot. If none are provided, then all the volumes of the instance will be part of the snapshot.
         required: False
         type: list
         elements: str
-    pi_snap_shot_name:
+    pi_cloud_instance_id:
         description:
-            - (Required for new resource) Unique name of the snapshot
+            - (Required for new resource) The GUID of the service instance associated with an account.
         required: True
         type: str
     pi_description:
         description:
-            - Description of the PVM instance snapshot
+            - Description of the PVM instance snapshot.
         required: False
         type: str
-    pi_cloud_instance_id:
+    pi_instance_name:
         description:
-            - (Required for new resource) Cloud Instance ID - This is the service_instance_id.
+            - (Required for new resource) The name of the instance you want to take a snapshot of.
         required: True
         type: str
+    pi_snap_shot_name:
+        description:
+            - (Required for new resource) The unique name of the snapshot.
+        required: True
+        type: str
+    pi_user_tags:
+        description:
+            - The user tags attached to this resource.
+        required: False
+        type: list
+        elements: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -90,18 +96,19 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('pi_cloud_instance_id', 'str'),
     ('pi_instance_name', 'str'),
     ('pi_snap_shot_name', 'str'),
-    ('pi_cloud_instance_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'pi_instance_name',
     'pi_volume_ids',
-    'pi_snap_shot_name',
-    'pi_description',
     'pi_cloud_instance_id',
+    'pi_description',
+    'pi_instance_name',
+    'pi_snap_shot_name',
+    'pi_user_tags',
 ]
 
 # Params for Data source
@@ -118,22 +125,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    pi_instance_name=dict(
-        required=False,
-        type='str'),
     pi_volume_ids=dict(
         required=False,
         elements='',
         type='list'),
-    pi_snap_shot_name=dict(
+    pi_cloud_instance_id=dict(
         required=False,
         type='str'),
     pi_description=dict(
         required=False,
         type='str'),
-    pi_cloud_instance_id=dict(
+    pi_instance_name=dict(
         required=False,
         type='str'),
+    pi_snap_shot_name=dict(
+        required=False,
+        type='str'),
+    pi_user_tags=dict(
+        required=False,
+        elements='',
+        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -192,7 +203,7 @@ def run_module():
         resource_type='ibm_pi_snapshot',
         tf_type='resource',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS,
         tl_all_params=TL_ALL_PARAMETERS)
 

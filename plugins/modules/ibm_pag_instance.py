@@ -18,38 +18,13 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_pag_instance' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
-    plan:
-        description:
-            - (Required for new resource) The plan type of the service
-        required: True
-        type: str
     service:
         description:
             - (Required for new resource) The name of the service offering like cloud-object-storage, kms etc
-        required: True
-        type: str
-    parameters_json:
-        description:
-            - Arbitrary parameters to pass in Json string format
-        required: False
-        type: str
-    resource_group_id:
-        description:
-            - The resource group id
-        required: False
-        type: str
-    service_endpoints:
-        description:
-            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
-        required: False
-        type: str
-    name:
-        description:
-            - (Required for new resource) A name for the resource instance
         required: True
         type: str
     parameters:
@@ -63,10 +38,35 @@ options:
         required: False
         type: list
         elements: str
+    plan:
+        description:
+            - (Required for new resource) The plan type of the service
+        required: True
+        type: str
+    service_endpoints:
+        description:
+            - Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'.
+        required: False
+        type: str
     location:
         description:
             - (Required for new resource) The location where the instance available
         required: True
+        type: str
+    parameters_json:
+        description:
+            - Arbitrary parameters to pass in Json string format
+        required: False
+        type: str
+    name:
+        description:
+            - (Required for new resource) A name for the resource instance
+        required: True
+        type: str
+    resource_group_id:
+        description:
+            - The resource group id
+        required: False
         type: str
     id:
         description:
@@ -83,15 +83,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -114,23 +113,23 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('plan', 'str'),
     ('service', 'str'),
-    ('name', 'str'),
+    ('plan', 'str'),
     ('location', 'str'),
+    ('name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
-    'plan',
     'service',
-    'parameters_json',
-    'resource_group_id',
-    'service_endpoints',
-    'name',
     'parameters',
     'tags',
+    'plan',
+    'service_endpoints',
     'location',
+    'parameters_json',
+    'name',
+    'resource_group_id',
 ]
 
 # Params for Data source
@@ -138,38 +137,23 @@ TL_REQUIRED_PARAMETERS_DS = [
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'identifier',
+    'resource_group_id',
+    'location',
     'service',
     'name',
-    'location',
-    'resource_group_id',
+    'identifier',
 ]
 
 TL_CONFLICTS_MAP = {
-    'parameters_json': ['parameters'],
     'parameters': ['parameters_json'],
+    'parameters_json': ['parameters'],
 }
 
 # define available arguments/parameters a user can pass to the module
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
-    plan=dict(
-        required=False,
-        type='str'),
     service=dict(
-        required=False,
-        type='str'),
-    parameters_json=dict(
-        required=False,
-        type='str'),
-    resource_group_id=dict(
-        required=False,
-        type='str'),
-    service_endpoints=dict(
-        required=False,
-        type='str'),
-    name=dict(
         required=False,
         type='str'),
     parameters=dict(
@@ -179,7 +163,22 @@ module_args = dict(
         required=False,
         elements='',
         type='list'),
+    plan=dict(
+        required=False,
+        type='str'),
+    service_endpoints=dict(
+        required=False,
+        type='str'),
     location=dict(
+        required=False,
+        type='str'),
+    parameters_json=dict(
+        required=False,
+        type='str'),
+    name=dict(
+        required=False,
+        type='str'),
+    resource_group_id=dict(
         required=False,
         type='str'),
     id=dict(
@@ -247,7 +246,7 @@ def run_module():
         resource_type='ibm_pag_instance',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -256,7 +255,7 @@ def run_module():
             resource_type='ibm_pag_instance',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

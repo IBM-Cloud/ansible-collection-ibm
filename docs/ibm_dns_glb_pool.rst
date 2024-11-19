@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -31,44 +31,44 @@ The below requirements are needed on the host that executes this module.
 Parameters
 ----------
 
-  instance_id (True, str, None)
-    (Required for new resource) Instance Id
-
-
-  description (False, str, None)
-    Descriptive text of the load balancer pool
-
-
-  healthy_origins_threshold (False, int, None)
-    The minimum number of origins that must be healthy for this pool to serve traffic
-
-
-  enabled (False, bool, None)
-    Whether the load balancer pool is enabled
-
-
-  healthcheck_region (False, str, None)
-    Health check region of VSIs
-
-
   name (True, str, None)
     (Required for new resource) The unique identifier of a service instance.
-
-
-  origins (True, list, None)
-    (Required for new resource) Origins info
 
 
   monitor (False, str, None)
     The ID of the load balancer monitor to be associated to this pool
 
 
-  notification_channel (False, str, None)
-    The notification channel,It is a webhook url
+  origins (True, list, None)
+    (Required for new resource) Origins info
 
 
   healthcheck_subnets (False, list, None)
     Health check subnet crn of VSIs
+
+
+  instance_id (True, str, None)
+    (Required for new resource) Instance Id
+
+
+  healthy_origins_threshold (False, int, None)
+    The minimum number of origins that must be healthy for this pool to serve traffic
+
+
+  notification_channel (False, str, None)
+    The notification channel,It is a webhook url
+
+
+  healthcheck_region (False, str, None)
+    Health check region of VSIs
+
+
+  description (False, str, None)
+    Descriptive text of the load balancer pool
+
+
+  enabled (False, bool, None)
+    Whether the load balancer pool is enabled
 
 
   id (False, str, None)
@@ -80,11 +80,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

@@ -18,10 +18,44 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_satellite_storage_configuration' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    location:
+        description:
+            - (Required for new resource) Location ID.
+        required: True
+        type: str
+    storage_template_name:
+        description:
+            - (Required for new resource) The Storage Template Name.
+        required: True
+        type: str
+    storage_class_parameters:
+        description:
+            - None
+        required: False
+        type: list
+        elements: dict
+    update_assignments:
+        description:
+            - Set to update all assignments during a configuration update.
+        required: False
+        type: bool
+        default: False
+    user_secret_parameters:
+        description:
+            - (Required for new resource) User Secret Parameters to pass as a Map of string key-value.
+        required: True
+        type: dict
+        elements: str
+    delete_assignments:
+        description:
+            - Set to delete all assignments during a configuration destroy.
+        required: False
+        type: bool
+        default: False
     config_name:
         description:
             - (Required for new resource) Name of the Storage Configuration.
@@ -38,40 +72,6 @@ options:
         required: True
         type: dict
         elements: str
-    delete_assignments:
-        description:
-            - Set to delete all assignments during a configuration destroy.
-        required: False
-        type: bool
-        default: False
-    location:
-        description:
-            - (Required for new resource) Location ID.
-        required: True
-        type: str
-    user_secret_parameters:
-        description:
-            - (Required for new resource) User Secret Parameters to pass as a Map of string key-value.
-        required: True
-        type: dict
-        elements: str
-    storage_class_parameters:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
-    update_assignments:
-        description:
-            - Set to update all assignments during a configuration update.
-        required: False
-        type: bool
-        default: False
-    storage_template_name:
-        description:
-            - (Required for new resource) The Storage Template Name.
-        required: True
-        type: str
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -87,15 +87,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -118,36 +117,36 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
+    ('location', 'str'),
+    ('storage_template_name', 'str'),
+    ('user_secret_parameters', 'dict'),
     ('config_name', 'str'),
     ('storage_template_version', 'str'),
     ('user_config_parameters', 'dict'),
-    ('location', 'str'),
-    ('user_secret_parameters', 'dict'),
-    ('storage_template_name', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'location',
+    'storage_template_name',
+    'storage_class_parameters',
+    'update_assignments',
+    'user_secret_parameters',
+    'delete_assignments',
     'config_name',
     'storage_template_version',
     'user_config_parameters',
-    'delete_assignments',
-    'location',
-    'user_secret_parameters',
-    'storage_class_parameters',
-    'update_assignments',
-    'storage_template_name',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('location', 'str'),
     ('config_name', 'str'),
+    ('location', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'location',
     'config_name',
+    'location',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -157,6 +156,26 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    location=dict(
+        required=False,
+        type='str'),
+    storage_template_name=dict(
+        required=False,
+        type='str'),
+    storage_class_parameters=dict(
+        required=False,
+        elements='',
+        type='list'),
+    update_assignments=dict(
+        required=False,
+        type='bool'),
+    user_secret_parameters=dict(
+        required=False,
+        elements='',
+        type='dict'),
+    delete_assignments=dict(
+        required=False,
+        type='bool'),
     config_name=dict(
         required=False,
         type='str'),
@@ -167,26 +186,6 @@ module_args = dict(
         required=False,
         elements='',
         type='dict'),
-    delete_assignments=dict(
-        required=False,
-        type='bool'),
-    location=dict(
-        required=False,
-        type='str'),
-    user_secret_parameters=dict(
-        required=False,
-        elements='',
-        type='dict'),
-    storage_class_parameters=dict(
-        required=False,
-        elements='',
-        type='list'),
-    update_assignments=dict(
-        required=False,
-        type='bool'),
-    storage_template_name=dict(
-        required=False,
-        type='str'),
     id=dict(
         required=False,
         type='str'),
@@ -252,7 +251,7 @@ def run_module():
         resource_type='ibm_satellite_storage_configuration',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -261,7 +260,7 @@ def run_module():
             resource_type='ibm_satellite_storage_configuration',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:

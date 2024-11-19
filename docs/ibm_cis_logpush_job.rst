@@ -23,7 +23,7 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
@@ -35,32 +35,32 @@ Parameters
     (Required for new resource) CIS instance crn
 
 
-  enabled (False, bool, None)
-    Whether the logpush job enabled or not
+  logdna (True, str, None)
+    (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
 
 
-  frequency (False, str, None)
-    The frequency at which CIS sends batches of logs to your destination
+  dataset (True, str, None)
+    (Required for new resource) Dataset to be pulled
 
 
   domain_id (True, str, None)
     (Required for new resource) Associated CIS domain
 
 
-  logdna (True, str, None)
-    (Required for new resource) Information to identify the LogDNA instance the data will be pushed.
-
-
   name (False, str, None)
     Logpush Job Name
+
+
+  enabled (False, bool, None)
+    Whether the logpush job enabled or not
 
 
   logpull_options (False, str, None)
     Configuration string
 
 
-  dataset (True, str, None)
-    (Required for new resource) Dataset to be pulled
+  frequency (False, str, None)
+    The frequency at which CIS sends batches of logs to your destination
 
 
   id (False, str, None)
@@ -72,11 +72,11 @@ Parameters
 
 
   iaas_classic_username (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
+    The IBM Cloud Classic Infrastructure (SoftLayer) user name. This can also be provided via the environment variable 'IAAS_CLASSIC_USERNAME'.
 
 
   iaas_classic_api_key (False, any, None)
-    (Required when generation = 1) The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
+    The IBM Cloud Classic Infrastructure API key. This can also be provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
 
 
   region (False, any, us-south)

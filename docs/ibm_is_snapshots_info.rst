@@ -21,13 +21,21 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
+
+  resource_group (False, str, None)
+    Filters the snapshot collection by resources group id
+
+
+  source_volume (False, str, None)
+    Filters the snapshot collection by source volume id
+
 
   tag (False, str, None)
     Filters the collection to resources with the exact tag value
@@ -37,60 +45,48 @@ Parameters
     Filters the collection to snapshots with copies with the exact specified name.
 
 
-  name (False, str, None)
-    Filters the snapshot collection by snapshot name
-
-
-  snapshot_copies_remote_region_name (False, str, None)
-    Filters the collection to snapshots with copies with the exact remote region name.
-
-
-  source_snapshot_id (False, str, None)
-    Filters the collection to resources with the source snapshot with the specified identifier.
-
-
   source_snapshot_remote_region_name (False, str, None)
     Filters the collection to snapshots with a source snapshot with the exact remote region name.
-
-
-  snapshot_source_volume_remote_region_name (False, str, None)
-    Filters the collection to snapshots with a source snapshot with the exact remote region name.
-
-
-  resource_group (False, str, None)
-    Filters the snapshot collection by resources group id
-
-
-  backup_policy_plan_id (False, str, None)
-    Filters the collection to backup policy jobs with the backup plan with the specified identifier
-
-
-  snapshot_copies_crn (False, str, None)
-    Filters the collection to snapshots with copies with the specified CRN.
-
-
-  snapshot_consistency_group_id (False, str, None)
-    Filters the collection to resources with a source snapshot with the exact snapshot consistency group id.
-
-
-  source_image (False, str, None)
-    Filters the snapshot collection by source image id
-
-
-  source_volume (False, str, None)
-    Filters the snapshot collection by source volume id
 
 
   snapshot_copies_id (False, str, None)
     Filters the collection to snapshots with copies with the specified identifier.
 
 
+  source_image (False, str, None)
+    Filters the snapshot collection by source image id
+
+
+  backup_policy_plan_id (False, str, None)
+    Filters the collection to backup policy jobs with the backup plan with the specified identifier
+
+
+  source_snapshot_id (False, str, None)
+    Filters the collection to resources with the source snapshot with the specified identifier.
+
+
+  snapshot_source_volume_remote_region_name (False, str, None)
+    Filters the collection to snapshots with a source snapshot with the exact remote region name.
+
+
   snapshot_consistency_group_crn (False, str, None)
     Filters the collection to resources with a source snapshot with the exact snapshot consistency group crn.
 
 
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
+  name (False, str, None)
+    Filters the snapshot collection by snapshot name
+
+
+  snapshot_copies_crn (False, str, None)
+    Filters the collection to snapshots with copies with the specified CRN.
+
+
+  snapshot_copies_remote_region_name (False, str, None)
+    Filters the collection to snapshots with copies with the exact remote region name.
+
+
+  snapshot_consistency_group_id (False, str, None)
+    Filters the collection to resources with a source snapshot with the exact snapshot consistency group id.
 
 
   region (False, str, us-south)

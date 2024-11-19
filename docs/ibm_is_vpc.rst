@@ -23,21 +23,13 @@ Requirements
 ------------
 The below requirements are needed on the host that executes this module.
 
-- IBM-Cloud terraform-provider-ibm v1.65.1
+- IBM-Cloud terraform-provider-ibm v1.71.2
 - Terraform v1.5.5
 
 
 
 Parameters
 ----------
-
-  access_tags (False, list, None)
-    List of access management tags
-
-
-  address_prefix_management (False, str, auto)
-    Address Prefix management value
-
 
   no_sg_acl_rules (False, bool, False)
     Delete all rules attached with default security group and default acl
@@ -47,32 +39,36 @@ Parameters
     Default security group name
 
 
-  default_routing_table_name (False, str, None)
-    Default routing table name
-
-
-  resource_group (False, str, None)
-    Resource group info
-
-
-  name (True, str, None)
-    (Required for new resource) VPC name
-
-
-  tags (False, list, None)
-    List of tags
+  access_tags (False, list, None)
+    List of access management tags
 
 
   dns (False, list, None)
     The DNS configuration for this VPC.
 
 
-  classic_access (False, bool, False)
-    Set to true if classic access needs to enabled to VPC
+  default_routing_table_name (False, str, None)
+    Default routing table name
+
+
+  tags (False, list, None)
+    List of tags
+
+
+  address_prefix_management (False, str, auto)
+    Address Prefix management value
+
+
+  name (True, str, None)
+    (Required for new resource) VPC name
 
 
   default_network_acl_name (False, str, None)
     Default Network ACL name
+
+
+  resource_group (False, str, None)
+    Resource group info
 
 
   id (False, str, None)
@@ -81,10 +77,6 @@ Parameters
 
   state (False, any, available)
     State of resource
-
-
-  generation (False, int, 2)
-    The generation of Virtual Private Cloud infrastructure that you want to use. Supported values are 1 for VPC generation 1, and 2 for VPC generation 2 infrastructure. If this value is not specified, 2 is used by default. This can also be provided via the environment variable 'IC_GENERATION'.
 
 
   region (False, str, us-south)

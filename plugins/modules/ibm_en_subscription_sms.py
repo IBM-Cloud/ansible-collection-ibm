@@ -18,10 +18,15 @@ description:
     - Create, update or destroy an IBM Cloud 'ibm_en_subscription_sms' resource
     - This module supports idempotency
 requirements:
-    - IBM-Cloud terraform-provider-ibm v1.65.1
+    - IBM-Cloud terraform-provider-ibm v1.71.2
     - Terraform v1.5.5
 
 options:
+    destination_id:
+        description:
+            - (Required for new resource) Destination ID.
+        required: True
+        type: str
     instance_guid:
         description:
             - (Required for new resource) Unique identifier for IBM Cloud Event Notifications instance.
@@ -32,11 +37,12 @@ options:
             - Subscription description.
         required: False
         type: str
-    destination_id:
+    attributes:
         description:
-            - (Required for new resource) Destination ID.
-        required: True
-        type: str
+            - None
+        required: False
+        type: list
+        elements: dict
     name:
         description:
             - (Required for new resource) Subscription name.
@@ -47,12 +53,6 @@ options:
             - (Required for new resource) Topic ID.
         required: True
         type: str
-    attributes:
-        description:
-            - None
-        required: False
-        type: list
-        elements: dict
     id:
         description:
             - (Required when updating or destroying existing resource) IBM Cloud Resource ID.
@@ -68,15 +68,14 @@ options:
         required: False
     iaas_classic_username:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure (SoftLayer) user name. This can also be provided
-              via the environment variable 'IAAS_CLASSIC_USERNAME'.
+            - The IBM Cloud Classic Infrastructure (SoftLayer) user name. This
+              can also be provided via the environment variable
+              'IAAS_CLASSIC_USERNAME'.
         required: False
     iaas_classic_api_key:
         description:
-            - (Required when generation = 1) The IBM Cloud Classic
-              Infrastructure API key. This can also be provided via the
-              environment variable 'IAAS_CLASSIC_API_KEY'.
+            - The IBM Cloud Classic Infrastructure API key. This can also be
+              provided via the environment variable 'IAAS_CLASSIC_API_KEY'.
         required: False
     region:
         description:
@@ -99,31 +98,31 @@ author:
 
 # Top level parameter keys required by Terraform module
 TL_REQUIRED_PARAMETERS = [
-    ('instance_guid', 'str'),
     ('destination_id', 'str'),
+    ('instance_guid', 'str'),
     ('name', 'str'),
     ('topic_id', 'str'),
 ]
 
 # All top level parameter keys supported by Terraform module
 TL_ALL_PARAMETERS = [
+    'destination_id',
     'instance_guid',
     'description',
-    'destination_id',
+    'attributes',
     'name',
     'topic_id',
-    'attributes',
 ]
 
 # Params for Data source
 TL_REQUIRED_PARAMETERS_DS = [
-    ('instance_guid', 'str'),
     ('subscription_id', 'str'),
+    ('instance_guid', 'str'),
 ]
 
 TL_ALL_PARAMETERS_DS = [
-    'instance_guid',
     'subscription_id',
+    'instance_guid',
 ]
 
 TL_CONFLICTS_MAP = {
@@ -133,25 +132,25 @@ TL_CONFLICTS_MAP = {
 from ansible_collections.ibm.cloudcollection.plugins.module_utils.ibmcloud import Terraform, ibmcloud_terraform
 from ansible.module_utils.basic import env_fallback
 module_args = dict(
+    destination_id=dict(
+        required=False,
+        type='str'),
     instance_guid=dict(
         required=False,
         type='str'),
     description=dict(
         required=False,
         type='str'),
-    destination_id=dict(
+    attributes=dict(
         required=False,
-        type='str'),
+        elements='',
+        type='list'),
     name=dict(
         required=False,
         type='str'),
     topic_id=dict(
         required=False,
         type='str'),
-    attributes=dict(
-        required=False,
-        elements='',
-        type='list'),
     id=dict(
         required=False,
         type='str'),
@@ -217,7 +216,7 @@ def run_module():
         resource_type='ibm_en_subscription_sms',
         tf_type='data',
         parameters=module.params,
-        ibm_provider_version='1.65.1',
+        ibm_provider_version='1.71.2',
         tl_required_params=TL_REQUIRED_PARAMETERS_DS,
         tl_all_params=TL_ALL_PARAMETERS_DS)
 
@@ -226,7 +225,7 @@ def run_module():
             resource_type='ibm_en_subscription_sms',
             tf_type='resource',
             parameters=module.params,
-            ibm_provider_version='1.65.1',
+            ibm_provider_version='1.71.2',
             tl_required_params=TL_REQUIRED_PARAMETERS,
             tl_all_params=TL_ALL_PARAMETERS)
         if result['rc'] > 0:
