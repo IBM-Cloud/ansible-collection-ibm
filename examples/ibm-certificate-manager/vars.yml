@@ -1,7 +1,0 @@
----
-service_name: "testcms"
-location: "us-south"
-import_name: "test_import"
-order_name: "test_order"
-rotate_keys: False
-cis_id: "<cloud Internet Services instance Crn ID>"
