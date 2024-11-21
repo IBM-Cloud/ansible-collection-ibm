@@ -1,0 +1,281 @@
+---
+
+- name: Ansible Play for Create IBM Cloud Virtual Server instance attached to Virtual Network Interface (VNI) with VPC networking
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    ibmcloud_resource_group_name: ""
+    ibmcloud_region: us-south
+    ibmcloud_availability_zone: "" # When creating VPC or VPC Subnet within existing VPC
+    ibmcloud_vpc_name: test-vpc # When creating VPC
+    ibmcloud_vpc_subnet_name: test-vpc-subnet
+    ibmcloud_vpc_security_group_names: # Ignored when creating VPC or VPC Subnet, this Ansible Playbook is a simplified example
+      - test-sg1
+      - test-sg2
+    vs_instance_name: test-ansible-vs
+    vs_profile: bx2-4x16
+    os_image_name: ibm-redhat-9-2-minimal-amd64-5
+    ibmcloud_api_key: ""
+    ssh_public_key_file_path: /host_rsa.pub
+    ssh_private_key_file_path: /host_rsa
+
+  tasks:
+
+    - name: Identify Resource Group info
+      register: ibmcloud_resource_group
+      ibm.cloudcollection.ibm_resource_group_info:
+        name: "{{ ibmcloud_resource_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Check for existing pre-loaded SSH Public Key pair
+      register: ibmcloud_ssh_public_key_existing
+      ibm.cloudcollection.ibm_is_ssh_key_info:
+        name: "{{ vs_instance_name }}-ssh-key"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      failed_when:
+        - ibmcloud_ssh_public_key_existing.rc != 0
+        - '"No SSH Key found" not in ibmcloud_ssh_public_key_existing.stderr'
+
+    - name: Create SSH Public Key pair
+      register: ibmcloud_ssh_public_key
+      ibm.cloudcollection.ibm_is_ssh_key:
+        name: "{{ vs_instance_name }}-ssh-key"
+        resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+        public_key: "{{ lookup('ansible.builtin.file', ssh_public_key_file_path ) }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      when: ibmcloud_ssh_public_key_existing.resource.id is not defined
+
+
+    - name: Checking for existing VPC
+      register: ibmcloud_vpc
+      ibm.cloudcollection.ibm_is_vpc_info:
+        name: "{{ ibmcloud_vpc_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      failed_when:
+        - ibmcloud_vpc.rc != 0
+        - '"No VPC found" not in ibmcloud_vpc.stderr'
+
+    - name: Create Virtual Private Cloud (VPC) network
+      register: ibmcloud_vpc_create
+      ibm.cloudcollection.ibm_is_vpc:
+        name: "{{ ibmcloud_vpc_name }}"
+        resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+        state: available
+        id: "{{ ibmcloud_vpc.resource.id | default(omit) }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      when: ibmcloud_vpc.resource.id is not defined
+
+    - name: Check for existing VPC Subnet
+      register: ibmcloud_vpc_subnet
+      ibm.cloudcollection.ibm_is_subnet_info:
+        name: "{{ ibmcloud_vpc_subnet_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      failed_when:
+        - ibmcloud_vpc_subnet.rc != 0
+        - '"No subnet found" not in ibmcloud_vpc_subnet.stderr'
+
+    - name: Create VPC Subnet
+      register: ibmcloud_vpc_subnet_create
+      ibm.cloudcollection.ibm_is_subnet:
+        name: "{{ ibmcloud_vpc_subnet_name }}"
+        resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+        state: available
+        id: "{{ ibmcloud_vpc_subnet.resource.id | default(omit) }}"
+        vpc: "{{ ibmcloud_vpc.resource.id | default(ibmcloud_vpc_create.resource.id) }}"
+        total_ipv4_address_count: "1024"
+        zone: "{{ ibmcloud_availability_zone }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      when: ibmcloud_vpc_subnet.resource.id is not defined
+
+    - name: Identify VPC Security Group info
+      register: ibmcloud_vpc_sg
+      ibm.cloudcollection.ibm_is_security_group_info:
+        name: "{{ item }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      loop: "{{ ibmcloud_vpc_security_group_names }}"
+      when: ibmcloud_vpc_create is skipped and ibmcloud_vpc_subnet_create is skipped
+
+    - name: Identify OS Image list
+      register: ibmcloud_os_image_list
+      ibm.cloudcollection.ibm_is_images_info:
+        status: available # remove to return all OS Images including deprecated
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+
+    # Only OS Images marked available are returned by previous command, and error will occur if OS Image is marked as deprecated or obsolete
+    - name: Check if OS Image exists
+      ansible.builtin.fail:
+        msg: Can not find OS Image. Please check the OS Image name (notably patch number suffix).
+      when: (ibmcloud_os_image_list.resource.images | selectattr('name', 'equalto', os_image_name) | length) == 0
+
+    # - name: Set VM image name/id dictionary fact
+    #   ansible.builtin.set_fact:
+    #     os_image_dict: "{{ ibmcloud_os_image_list.resource.images | items2dict(key_name='name', value_name='id') }}"
+
+    # If the list for VPC Security Group/s is wrong,
+    # will show error message 'Error with processing virtual_network_interface'
+    # with no further details because it is an inline definition
+    - name: Determine VPC Security Groups for Virtual Network Interface (VNI)
+      ansible.builtin.set_fact:
+        target_sgs: "{{ [ (ibmcloud_vpc.resource.default_security_group | default(ibmcloud_vpc_create.resource.default_security_group)) ] if (not ibmcloud_vpc_create is skipped and not ibmcloud_vpc_subnet_create is skipped) else (ibmcloud_vpc_sg.results | map(attribute='resource.id')) }}"
+
+
+    - name: Check for existing IBM Cloud Virtual Server (VS) instance
+      register: ibmcloud_vs_instance_existing
+      ibm.cloudcollection.ibm_is_instance_info:
+        name: "{{ vs_instance_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      failed_when:
+        - ibmcloud_vs_instance_existing.rc != 0
+        - '"No Instance found" not in ibmcloud_vs_instance_existing.stderr'
+
+    - name: Provision IBM Cloud Virtual Server (VS) instance
+      register: ibmcloud_vs_instance_create
+      ibm.cloudcollection.ibm_is_instance:
+        state: available
+        name: "{{ vs_instance_name }}"
+        image: "{{ (ibmcloud_os_image_list.resource.images | selectattr('name', 'equalto', os_image_name) | first).id }}"
+        profile: "{{ vs_profile }}"
+        keys:
+          - "{{ ibmcloud_ssh_public_key.resource.id | default(ibmcloud_ssh_public_key_existing.resource.id) }}"
+
+        resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+        zone: "{{ ibmcloud_vpc_subnet.resource.zone | default(ibmcloud_vpc_subnet_create.resource.zone) }}"
+        vpc: "{{ ibmcloud_vpc_subnet.resource.vpc | default(ibmcloud_vpc_subnet_create.resource.vpc) }}"
+
+        # Virtual Network Interface (VNI) attachments
+        # Inline definition will auto-create separate resource/s
+        primary_network_attachment:
+          - name: "{{ vs_instance_name }}-vni1-attach"
+            virtual_network_interface:
+              - name: "{{ vs_instance_name }}-vni1"
+                resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+                subnet: "{{ ibmcloud_vpc_subnet.resource.id | default(ibmcloud_vpc_subnet_create.resource.id) }}"
+                security_groups: "{{ target_sgs }}"
+                # primary_ip: # Subnet Reserved IP
+                allow_ip_spoofing: true
+                enable_infrastructure_nat: true # must be true as Virtual Server instances require Infrastructure NAT
+                auto_delete: true # will be false if created separately prior to Virtual Server instance
+                protocol_state_filtering_mode: auto
+        # network_attachments:
+
+        # Deprecated vNIC definition
+        # The Subnet assigned to the primary Virtual Network Interface (vNIC) cannot be changed
+        # primary_network_interface:
+        # network_interfaces:
+
+        auto_delete_volume: true
+        boot_volume:
+          - name: "{{ vs_instance_name }}-boot-0"
+
+        metadata_service:
+          - enabled: true
+            protocol: https
+            response_hop_limit: 5
+
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      when: ibmcloud_vs_instance_existing.rc != 0
+
+    - name: Save fact for IBM Cloud Virtual Server (VS) instance
+      ansible.builtin.set_fact:
+        ibmcloud_vs_instance: "{{ ibmcloud_vs_instance_create if ibmcloud_vs_instance_create is not skipped else ibmcloud_vs_instance_existing }}"
+
+
+    # - name: Re-Identify all VPC Security Groups attached to the Virtual Network Interface( (VNI)
+    #   register: ibmcloud_vpc_sg_post
+    #   ibm.cloudcollection.ibm_is_security_group_info:
+    #     name: "{{ item }}"
+    #     ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+    #     region: "{{ ibmcloud_region }}"
+    #   loop: "{{ test1.resource.security_groups | map(attribute='name') }}"
+
+    # - name: List of all Security Group Rules attached to the Virtual Network Interface( (VNI)
+    #   register: ibmcloud_vpc_sg_rules
+    #   ansible.builtin.set_fact:
+    #     inbound_rules: "{{ ibmcloud_vpc_sg_post.results | map(attribute='resource.rules') | flatten | selectattr('direction', 'equalto', 'inbound') }}"
+    #     outbound_rules: "{{ ibmcloud_vpc_sg_post.results | map(attribute='resource.rules') | flatten | selectattr('direction', 'equalto', 'outbound') }}"
+
+    # # Does not accomodate for All Ports (0 to 0) for 0.0.0.0/
+    # - name: Print boolean if SSH Port 22 inbound permitted by Security Group Rules
+    #   register: ibmcloud_vpc_sg_rules_check_ssh_port
+    #   ansible.builtin.debug:
+    #     msg: "{{ item.port_min <= 22 <= item.port_max }}"
+    #   loop: "{{ inbound_rules }}"
+
+    # - name: Warning message
+    #   ansible.builtin.fail:
+    #     msg: "Warning message: No explicit allow Security Group Rule for SSH Port 22, access may be blocked to the Floating IP attached to the Virtual Network Interface (VNI)"
+    #   when: ibmcloud_vpc_sg_rules_check_ssh_port == true
+    #   ignore_errors: true
+
+
+    - name: Check for existing Public Floating IP Address
+      register: ibmcloud_vs_vni_floating_ip_existing
+      ibm.cloudcollection.ibm_is_floating_ip_info:
+        name: "{{ vs_instance_name }}-vni1-public-floating-ip"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      failed_when:
+        - ibmcloud_vs_vni_floating_ip_existing.rc != 0
+        - '"No floatingIP found" not in ibmcloud_vs_vni_floating_ip_existing.stderr'
+
+    - name: Create Public Floating IP Address
+      register: ibmcloud_vs_vni_floating_ip_create
+      ibm.cloudcollection.ibm_is_floating_ip:
+        name: "{{ vs_instance_name }}-vni1-public-floating-ip"
+        id: "{{ ibmcloud_vs_vni_floating_ip_existing.resource.id | default(omit) }}"
+        resource_group: "{{ ibmcloud_resource_group.resource.id }}"
+        zone: "{{ ibmcloud_vpc_subnet.resource.zone | default(ibmcloud_vpc_subnet_create.resource.zone) }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+      when: ibmcloud_vs_vni_floating_ip_existing.rc != 0
+
+    - name: Attach Public Floating IP Address to the Virtual Network Interface (VNI)
+      ibm.cloudcollection.ibm_is_virtual_network_interface_floating_ip:
+        virtual_network_interface: "{{ ibmcloud_vs_instance.resource.primary_network_attachment[0].virtual_network_interface[0].id }}"
+        floating_ip: "{{ ibmcloud_vs_vni_floating_ip_existing.resource.id | default(ibmcloud_vs_vni_floating_ip_create.resource.id) }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+
+    - name: Print Public Floating IP Address
+      ansible.builtin.debug:
+        msg: "{{ ibmcloud_vs_vni_floating_ip_existing.resource.address | default(ibmcloud_vs_vni_floating_ip_create.resource.address) }}"
+
+
+    - name: Add IBM Cloud Virtual Server (VS) instance to dynamic Ansible Inventory
+      ansible.builtin.add_host:
+        groups: vs_hosts
+        name: "{{ ibmcloud_vs_vni_floating_ip_existing.resource.address | default(ibmcloud_vs_vni_floating_ip_create.resource.address) }}"
+        ansible_user: root
+        ansible_ssh_private_key_file: "{{ ssh_private_key_file_path }}"
+        ansible_ssh_common_args: -o ConnectTimeout=180 -o ControlMaster=auto -o ControlPersist=3600s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+
+- name: Ansible Play for connection to target host/s
+  hosts: vs_hosts
+  gather_facts: false
+  tasks:
+
+    - name: Wait for target host/s be reached on SSH Port 22
+      ansible.builtin.wait_for_connection:
+
+    - name: Collect OS login message
+      ansible.builtin.command: cat /etc/motd
+      register: host_os_motd
+
+    - name: Print MOTD
+      ansible.builtin.debug:
+        var: host_os_motd.stdout_lines

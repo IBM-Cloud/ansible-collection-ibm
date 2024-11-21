@@ -1,0 +1,91 @@
+---
+
+- name: Ansible Play for Deletion of IBM Power VS instance with Public IP Address
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    powervs_workspace_name: ""
+    powervs_location: lon04
+    powervs_instance_name: test-ansible-vs
+    ibmcloud_api_key: ""
+
+    # IBM Cloud Regional API Endpoint = https://<<ibmcloud_region>>.cloud.ibm.com/
+    # IBM Power VS (on IBM Cloud) Regional API Endpoint = https://<<powervs_region>>.power-iaas.cloud.ibm.com/
+    powervs_location_to_ibmcloud_infrastructure_services_availability_zone:
+      dal12: "us-south-2"
+      us-south: "us-south-3" # naming of IBM Power VS location 'us-south' was previous naming convention, would otherwise be 'DAL13'
+      us-east: "us-east-1"  # naming of IBM Power VS location 'us-east' was previous naming convention, would otherwise be 'WDC04'
+      wdc06: "us-east-2"
+      sao01: "br-sao-1"
+      tor01: "ca-tor-1"
+      eu-de-1: "eu-de-2" # naming of IBM Power VS location 'eu-de-1' was previous naming convention, would otherwise be 'FRA04'
+      eu-de-2: "eu-de-3" # naming of IBM Power VS location 'eu-de-2' was previous naming convention, would otherwise be 'FRA05'
+      lon04: "eu-gb-1"
+      lon06: "eu-gb-3"
+      syd04: "au-syd-2"
+      syd05: "au-syd-3"
+      tok04: "jp-tok-2"
+      osa21: "jp-osa-1"
+    powervs_location_to_powervs_region_api_endpoint_shortcode:
+      dal12: "us-south"
+      us-south: "us-south"
+      us-east: "us-east"
+      wdc06: "us-east"
+      sao01: "sao"
+      tor01: "tor"
+      eu-de-1: "eu-de"
+      eu-de-2: "eu-de"
+      lon04: "lon"
+      lon06: "lon"
+      syd04: "syd"
+      syd05: "syd"
+      tok04: "tok"
+      osa21: "osa"
+
+
+  tasks:
+
+    - name: Set fact for IBM Power Infrastructure location to the colocated IBM Cloud Region
+      ansible.builtin.set_fact:
+        ibmcloud_region: "{{ powervs_location_to_ibmcloud_infrastructure_services_availability_zone[powervs_location] | regex_replace('-[0-9]', '') }}"
+        powervs_region: "{{ powervs_location_to_powervs_region_api_endpoint_shortcode[powervs_location] }}"
+
+    - name: Identify IBM Power Infrastructure Workspace
+      register: ibmcloud_pi_workspace_service_instance
+      ibm.cloudcollection.ibm_resource_instance_info:
+        location: "{{ powervs_location }}"
+        service: power-iaas
+        name: "{{ powervs_workspace_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}" # IBM Cloud Region
+
+    - name: Check for existing IBM Power Virtual Server (PVS)
+      register: ibmcloud_pi_instance_existing_output
+      ibm.cloudcollection.ibm_pi_instance_info:
+        pi_instance_name: "{{ powervs_instance_name }}"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      failed_when:
+        - ibmcloud_pi_instance_existing_output.rc != 0
+        - '"does not exist" not in ibmcloud_pi_instance_existing_output.stderr'
+
+    - name: Destroy IBM Power Virtual Server (PVS) instance
+      register: ibmcloud_pi_instance_destroy_output
+      ibm.cloudcollection.ibm_pi_instance:
+        state: absent
+        id: "{{ ibmcloud_pi_instance_existing_output.resource.id }}"  # Required when state absent
+        pi_instance_name: "{{ powervs_instance_name }}"
+        pi_image_id: "ignore_required_arg"
+        pi_network:
+          - network_id: "ignore_required_arg"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_instance_existing_output.rc == 0

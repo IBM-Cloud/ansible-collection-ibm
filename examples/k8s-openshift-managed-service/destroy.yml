@@ -1,0 +1,44 @@
+---
+
+- name: Ansible Play for Deletion of Red Hat OpenShift Managed-Service cluster with VPC networking
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    cluster_name: ""
+    vpc_subnet_name: ""
+    worker_profile: "bx2.4x16"
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Identify VPC Subnet info
+      register: vpc_subnet_info
+      ibm.cloudcollection.ibm_is_subnet_info:
+        name: "{{ vpc_subnet_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Check is cluster exists
+      ibm.cloudcollection.ibm_container_vpc_cluster_info:
+        name: "{{ cluster_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      failed_when:
+        - cluster_output.rc != 0
+        - '"cluster could not be found" not in cluster_output.stderr'
+      register: cluster_output
+
+    - name: Destroy Red Hat OpenShift Managed-Service cluster with VPC networking
+      ibm.cloudcollection.ibm_container_vpc_cluster:
+        name: "{{ cluster_name }}"
+        id: "{{ cluster_output.resource.id }}"
+        flavor: "{{ worker_profile }}"
+        zones:
+          - name: "{{ vpc_subnet_info.resource.zone }}"
+            subnet_id: "{{ vpc_subnet_info.resource.id }}"
+        state: absent
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      register: cluster_destroy_output
+      when: cluster_output.resource.id is defined
