@@ -1,0 +1,29 @@
+---
+
+- name: Ansible Play for IBM IAM User invite example
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    user_list:
+      - "testuser1@examplecompany.com"
+    iam_access_group_name: ""
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Identify IAM Access Group
+      register: accgrp
+      ibm.cloudcollection.ibm_iam_access_group_info:
+        access_group_name: "{{ iam_access_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Create IAM User Account invitation and attach to IAM Access Group
+      ibm.cloudcollection.ibm_iam_user_invite:
+        users: "{{ user_list }}"
+        access_groups:
+          - "{{ accgrp.resource.id }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"

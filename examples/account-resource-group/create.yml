@@ -1,0 +1,34 @@
+---
+
+- name: Ansible Play for Resource Group Creation
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    resource_group_name: "test1-rg"
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Check Resource Group exists
+      ibm.cloudcollection.ibm_resource_group_info:
+        name: "{{ resource_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      failed_when:
+        - resource_group_output.rc != 0
+        - '"not found" not in resource_group_output.stderr'
+      register: resource_group_output
+
+    - name: Create Resource Group
+      ibm.cloudcollection.ibm_resource_group:
+        name: "{{ resource_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      register: rg_create_output
+      when: resource_group_output.resource.id is undefined
+
+    - name: Print Resource group info
+      ansible.builtin.debug:
+        msg: "Resource Group : {{ rg_create_output.resource }}"

@@ -1,0 +1,268 @@
+---
+
+- name: Ansible Play for IBM Power VS instance with Public IP Address
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    powervs_workspace_name: ""
+    powervs_location: lon04
+    powervs_instance_name: test-ansible-vs
+    powervs_vlan_subnet_name: ""
+    powervs_hardware_machine_type: s922
+    powervs_hardware_proc_type: shared
+    powervs_hardware_cpu_core: "0.25"
+    powervs_hardware_memory: "8"
+    powervs_hardware_storage_type: tier3
+    os_image_name: RHEL9-SP2 # "7300-02-01"
+    ibmcloud_api_key: ""
+    ssh_public_key_file_path: /host_rsa.pub
+    ssh_private_key_file_path: /host_rsa
+
+    # IBM Cloud Regional API Endpoint = https://<<ibmcloud_region>>.cloud.ibm.com/
+    # IBM Power VS (on IBM Cloud) Regional API Endpoint = https://<<powervs_region>>.power-iaas.cloud.ibm.com/
+    powervs_location_to_ibmcloud_infrastructure_services_availability_zone:
+      dal12: "us-south-2"
+      us-south: "us-south-3" # naming of IBM Power VS location 'us-south' was previous naming convention, would otherwise be 'DAL13'
+      us-east: "us-east-1"  # naming of IBM Power VS location 'us-east' was previous naming convention, would otherwise be 'WDC04'
+      wdc06: "us-east-2"
+      sao01: "br-sao-1"
+      tor01: "ca-tor-1"
+      eu-de-1: "eu-de-2" # naming of IBM Power VS location 'eu-de-1' was previous naming convention, would otherwise be 'FRA04'
+      eu-de-2: "eu-de-3" # naming of IBM Power VS location 'eu-de-2' was previous naming convention, would otherwise be 'FRA05'
+      lon04: "eu-gb-1"
+      lon06: "eu-gb-3"
+      syd04: "au-syd-2"
+      syd05: "au-syd-3"
+      tok04: "jp-tok-2"
+      osa21: "jp-osa-1"
+    powervs_location_to_powervs_region_api_endpoint_shortcode:
+      dal12: "us-south"
+      us-south: "us-south"
+      us-east: "us-east"
+      wdc06: "us-east"
+      sao01: "sao"
+      tor01: "tor"
+      eu-de-1: "eu-de"
+      eu-de-2: "eu-de"
+      lon04: "lon"
+      lon06: "lon"
+      syd04: "syd"
+      syd05: "syd"
+      tok04: "tok"
+      osa21: "osa"
+
+
+  tasks:
+
+    - name: Set fact for IBM Power Infrastructure location to the colocated IBM Cloud Region
+      ansible.builtin.set_fact:
+        ibmcloud_region: "{{ powervs_location_to_ibmcloud_infrastructure_services_availability_zone[powervs_location] | regex_replace('-[0-9]', '') }}"
+        powervs_region: "{{ powervs_location_to_powervs_region_api_endpoint_shortcode[powervs_location] }}"
+
+    - name: Identify IBM Power Infrastructure Workspace
+      register: ibmcloud_pi_workspace_service_instance
+      ibm.cloudcollection.ibm_resource_instance_info:
+        location: "{{ powervs_location }}"
+        service: power-iaas
+        name: "{{ powervs_workspace_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}" # IBM Cloud Region
+
+    - name: Identify IBM Power Infrastructure Workspace capabilities
+      register: ibmcloud_pi_workspace_capabilities
+      ibm.cloudcollection.ibm_pi_workspace_info:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+
+    - name: Check for existing SSH Key pair loaded to IBM Power Infrastructure Workspace
+      register: ibmcloud_pi_ssh_key_existing_output
+      ibm.cloudcollection.ibm_pi_key_info:
+        pi_key_name: "{{ powervs_instance_name }}-ssh-key"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      failed_when:
+        - ibmcloud_pi_ssh_key_existing_output.rc != 0
+        - '"does not exist" not in ibmcloud_pi_ssh_key_existing_output.stderr'
+
+    - name: Create SSH Key pair
+      register: ibmcloud_pi_ssh_key_create_output
+      ibm.cloudcollection.ibm_pi_key:
+        pi_key_name: "{{ powervs_instance_name }}-ssh-key"
+        pi_ssh_key: "{{ lookup('ansible.builtin.file', ssh_public_key_file_path ) }}"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_ssh_key_existing_output.resource.id is not defined
+
+
+    - name: Check for existing Boot Image imported already from IBM Power Infrastructure OS Catalog Stock Image
+      register: ibmcloud_pi_os_image_existing
+      ibm.cloudcollection.ibm_pi_image_info:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        pi_image_name: "{{ os_image_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+
+    - name: Identify IBM Power Infrastructure OS Catalog Stock Image list
+      register: ibmcloud_pi_os_image_list
+      ibm.cloudcollection.ibm_pi_catalog_images_info:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        sap: false # Return all OS Images for SAP
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_os_image_existing.resource.id is not defined
+
+    - name: Set fact for selected IBM Power Infrastructure OS Catalog Stock Image
+      ansible.builtin.set_fact:
+        ibmcloud_pi_os_image_selected: "{{ ibmcloud_pi_os_image_list.resource.images | selectattr('name', 'equalto', os_image_name) | sort(reverse=True,case_sensitive=False,attribute='name') | first }}"
+      when: ibmcloud_pi_os_image_existing.resource.id is not defined
+
+    - name: Import Boot Image to current IBM Power Infrastructure Workspace from the IBM Power Infrastructure OS Catalog Stock Image
+      register: ibmcloud_pi_os_image_provisioned
+      ibm.cloudcollection.ibm_pi_image:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        pi_image_id: "{{ ibmcloud_pi_os_image_selected.image_id }}"
+        pi_image_name: "{{ os_image_name }}-boot"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      failed_when: not ibmcloud_pi_os_image_provisioned.rc == 0 and not 'already exists' in ibmcloud_pi_os_image_provisioned.stderr
+      when: ibmcloud_pi_os_image_existing.resource.id is not defined
+
+    - name: Identify IBM Power Infrastructure Workspace imported OS Image list
+      register: ibmcloud_pi_imported_os_image_list
+      ibm.cloudcollection.ibm_pi_images_info:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+
+    - name: Set fact for selected IBM Power Infrastructure imported OS Image
+      ansible.builtin.set_fact:
+        ibmcloud_pi_imported_os_image_selected: "{{ ibmcloud_pi_imported_os_image_list.resource.image_info | selectattr('name', 'equalto', os_image_name) | sort(reverse=True,case_sensitive=False,attribute='name') | first }}"
+        image_dict: "{{ ibmcloud_pi_imported_os_image_list.resource.image_info | items2dict(key_name='name', value_name='id') }}"
+
+
+    - name: Identify IBM Power Infrastructure VLAN Subnet info
+      register: ibmcloud_pi_network_existing_output
+      ibm.cloudcollection.ibm_pi_network_info:
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        pi_network_name: "{{ powervs_vlan_subnet_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      failed_when:
+        - ibmcloud_pi_network_existing_output.rc != 0
+        - '"could not be found" not in ibmcloud_pi_network_existing_output.stderr'
+
+    - name: Save existing network as fact
+      ansible.builtin.set_fact:
+        ibmcloud_pi_network_id: "{{ ibmcloud_pi_network_existing_output.resource.id }}"
+      when: ibmcloud_pi_network_existing_output.resource.id is defined
+
+    - name: Add new network
+      register: ibmcloud_pi_network_create_output
+      ibm.cloudcollection.ibm_pi_network:
+        pi_network_name: "{{ powervs_vlan_subnet_name }}"
+        pi_network_type: "pub-vlan"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_network_existing_output.resource.id is not defined
+
+    - name: Save new network as fact
+      ansible.builtin.set_fact:
+        ibmcloud_pi_network_id: "{{ ibmcloud_pi_network_create_output.resource.network_id }}"
+      when: ibmcloud_pi_network_existing_output.resource.id is not defined
+
+
+    - name: Check for existing IBM Power Virtual Server (PVS)
+      register: ibmcloud_pi_instance_existing_output
+      ibm.cloudcollection.ibm_pi_instance_info:
+        pi_instance_name: "{{ powervs_instance_name }}"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      failed_when:
+        - ibmcloud_pi_instance_existing_output.rc != 0
+        - '"does not exist" not in ibmcloud_pi_instance_existing_output.stderr'
+
+    - name: Create IBM Power Virtual Server (PVS) instance
+      register: ibmcloud_pi_instance_create_output
+      ibm.cloudcollection.ibm_pi_instance:
+        state: available
+        pi_instance_name: "{{ powervs_instance_name }}"
+        pi_processors: "{{ powervs_hardware_cpu_core }}"
+        pi_memory: "{{ powervs_hardware_memory }}"
+        pi_sys_type: "{{ powervs_hardware_machine_type }}"
+        pi_proc_type: "{{ powervs_hardware_proc_type }}"
+        pi_storage_type: "{{ powervs_hardware_storage_type }}"
+        pi_image_id: "{{ image_dict[os_image_name] }}"
+        pi_volume_ids: []
+        pi_network:
+          - network_id: "{{ ibmcloud_pi_network_id }}"
+        pi_key_pair_name: "{{ ibmcloud_pi_ssh_key_existing_output.resource.pi_key_name if ibmcloud_pi_ssh_key_existing_output.resource.pi_key_name is defined else ibmcloud_pi_ssh_key_create_output.resource.pi_key_name }}"
+        pi_replication_policy: none
+        pi_replication_scheme: suffix
+        pi_replicants: "1"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_instance_existing_output.rc != 0
+
+    - name: Check for existing IBM Power Virtual Server (PVS)
+      register: ibmcloud_pi_instance_new_output
+      ibm.cloudcollection.ibm_pi_instance_info:
+        pi_instance_name: "{{ powervs_instance_name }}"
+        pi_cloud_instance_id: "{{ ibmcloud_pi_workspace_service_instance.resource.guid }}" # must be GUID, not CRN
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ powervs_region }}"  # IBM Power VS regional API endpoint shortcode
+        zone: "{{ powervs_location }}"  # IBM Power VS location name
+      when: ibmcloud_pi_instance_create_output.resource is defined
+
+    - name: Save fact for IBM Power Virtual Server (PVS) instance
+      ansible.builtin.set_fact:
+        ibmcloud_pi_instance: "{{ ibmcloud_pi_instance_new_output.resource | default(ibmcloud_pi_instance_existing_output.resource) }}"
+
+    - name: Print Public IP Address
+      ansible.builtin.debug:
+        var: ibmcloud_pi_instance.networks[0].external_ip
+
+    - name: Add IBM Power Virtual Server (PVS) instance to dynamic Ansible Inventory
+      ansible.builtin.add_host:
+        groups: powervs_hosts
+        name: "{{ ibmcloud_pi_instance.networks[0].external_ip }}"
+        ansible_user: root
+        ansible_ssh_private_key_file: "{{ ssh_private_key_file_path }}"
+        ansible_ssh_common_args: -o ConnectTimeout=180 -o ControlMaster=auto -o ControlPersist=3600s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+
+
+- name: Ansible Play for connection to target host/s
+  hosts: powervs_hosts
+  gather_facts: false
+  tasks:
+
+    - name: Wait for target host/s be reached on SSH Port 22
+      ansible.builtin.wait_for_connection:
+
+    - name: Collect OS login message
+      ansible.builtin.command: cat /etc/motd
+      register: host_os_motd
+
+    - name: Print MOTD
+      ansible.builtin.debug:
+        var: host_os_motd.stdout_lines

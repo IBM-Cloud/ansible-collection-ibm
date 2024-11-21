@@ -1,0 +1,55 @@
+---
+
+- name: Ansible Play for Destroy IBM Cloud Virtual Server instance
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    ibmcloud_region: us-south
+    vs_instance_name: test-ansible-vs
+    vs_floating_ip_name: test-ansible-vs-vni1-public-floating-ip
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Identify IBM Cloud Virtual Server (VS) instance
+      register: ibmcloud_vs_instance_existing
+      ibm.cloudcollection.ibm_is_instance_info:
+        name: "{{ vs_instance_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+
+    - name: Delete IBM Cloud Virtual Server (VS) instance
+      register: ibmcloud_vs_instance_create
+      ibm.cloudcollection.ibm_is_instance:
+        state: absent
+        id: "{{ ibmcloud_vs_instance_existing.resource.id }}"  # Required when state absent
+        image: "ignore_required_arg"
+        profile: "ignore_required_arg"
+        zone: "ignore_required_arg"
+        vpc: "ignore_required_arg"
+        primary_network_attachment:
+          - name: "ignore-required-arg"
+            virtual_network_interface:
+              - name: "ignore-required-arg"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+
+    - name: Identify Public Floating IP Address
+      register: ibmcloud_vs_vni_floating_ip_existing
+      ibm.cloudcollection.ibm_is_floating_ip_info:
+        name: "{{ vs_floating_ip_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"
+
+    - name: Release Public Floating IP Address
+      register: ibmcloud_vs_vni_floating_ip_create
+      ibm.cloudcollection.ibm_is_floating_ip:
+        state: absent
+        id: "{{ ibmcloud_vs_vni_floating_ip_existing.resource.id }}"  # Required when state absent
+        zone: "ignore_required_arg"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+        region: "{{ ibmcloud_region }}"

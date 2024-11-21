@@ -1,0 +1,31 @@
+---
+
+- name: Ansible Play for Resource Group Deletion
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    resource_group_name: "test1-rg"
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Check Resource Group exists
+      ibm.cloudcollection.ibm_resource_group_info:
+        name: "{{ resource_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      failed_when:
+        - resource_group_output.rc != 0
+        - '"not found" not in resource_group_output.stderr'
+      register: resource_group_output
+
+    - name: Delete Resource Group
+      ibm.cloudcollection.ibm_resource_group:
+        id: "{{ resource_group_output.resource.id }}"
+        state: absent
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      register: output
+      when: resource_group_output.resource.id is defined

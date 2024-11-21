@@ -1,0 +1,83 @@
+---
+
+- name: Ansible Play for Red Hat OpenShift Managed-Service cluster with VPC networking
+  hosts: localhost
+  gather_facts: false
+
+  collections:
+    - ibm.cloudcollection
+
+  vars:
+    resource_group_name: ""
+    cluster_name: ""
+    vpc_subnet_name: ""
+    worker_count: 3
+    worker_profile: "bx2.4x16"
+    entitlement: ""
+    kube_version: "4.15_openshift"
+    cos_instance_name: ""
+    ibmcloud_api_key: ""
+
+  tasks:
+
+    - name: Identify Resource Group info
+      register: resource_group_info
+      ibm.cloudcollection.ibm_resource_group_info:
+        name: "{{ resource_group_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Identify VPC Subnet info
+      register: vpc_subnet_info
+      ibm.cloudcollection.ibm_is_subnet_info:
+        name: "{{ vpc_subnet_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Identify Object Storage instance info
+      register: cos_instance_info
+      ibm.cloudcollection.ibm_resource_instance_info:
+        name: "{{ cos_instance_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+
+    - name: Check is cluster exists
+      ibm.cloudcollection.ibm_container_vpc_cluster_info:
+        name: "{{ cluster_name }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      failed_when:
+        - cluster_output.rc != 0
+        - '"cluster could not be found" not in cluster_output.stderr'
+      register: cluster_output
+
+    - name: Create Red Hat OpenShift Managed-Service cluster with VPC networking
+      ibm.cloudcollection.ibm_container_vpc_cluster:
+        name: "{{ cluster_name }}"
+        resource_group_id: "{{ resource_group_info.resource.id }}"
+        kube_version: "{{ kube_version }}"
+        flavor: "{{ worker_profile }}"
+        worker_count: "{{ worker_count }}"
+        operating_system: "RHCOS"
+        cos_instance_crn: "{{ cos_instance_info.resource.crn }}"
+        vpc_id: "{{ vpc_subnet_info.resource.vpc }}"
+        zones:
+          - name: "{{ vpc_subnet_info.resource.zone }}"
+            subnet_id: "{{ vpc_subnet_info.resource.id }}"
+        disable_outbound_traffic_protection: true # Outbound traffic protection
+        disable_public_service_endpoint: true # Master service endpoint
+        entitlement: "{{ entitlement if entitlement != '' else omit }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      register: cluster_create_output
+      when: cluster_output.rc != 0
+
+    - name: Save Cluster config file
+      ibm.cloudcollection.ibm_container_cluster_config_info:
+        cluster_name_id: "{{ cluster_create_output.resource.id }}"
+        ibmcloud_api_key: "{{ ibmcloud_api_key }}"
+      register: config_output
+
+    - name: Print Cluster info
+      ansible.builtin.debug:
+        msg: "cluster : {{ cluster_create_output.resource }}"
+
+    - name: Print Cluster config file path
+      ansible.builtin.debug:
+        msg: "cluster config file path : {{ config_output.resource.config_file_path }}"
+      when: config_output.rc==0
