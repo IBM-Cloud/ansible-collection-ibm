@@ -1,3 +1,4 @@
+---
 namespace: "ibm"
 name: "cloudcollection"
 version: "1.71.2"
@@ -8,13 +9,16 @@ authors:
     - "Kavya Handadi"
     - "Umar Ali"
     - "Sean Freeman"
-description: "Ansible modules collection for IBM cloud."
+description: "Collection of Ansible Modules for IBM Cloud"
 license:
     - "MPL-2.0"
 issues: "https://github.com/IBM-Cloud/ansible-collection-ibm/issues"
 tags:
     - ibmcloud
+    - ibm
     - cloud
     - collection
     - terraform
+dependencies: {}
 repository: "https://github.com/IBM-Cloud/ansible-collection-ibm"
+documentation: "https://github.com/IBM-Cloud/ansible-collection-ibm/blob/master/README.md"

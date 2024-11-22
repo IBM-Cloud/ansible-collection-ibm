@@ -1,8 +1,7 @@
-# .gitignore defines files to ignore and remain untracked in Git
+# .gitignore to define files that are untracked by Git
 
 # Further .gitignore templates available at:
 # https://github.com/github/gitignore
-
 
 # macOS OS generated files
 .DS_Store
@@ -10,11 +9,11 @@
 .Spotlight-V100
 .Trashes
 
-# Windows OS generated files #
+# Windows OS generated files
 ehthumbs.db
 Thumbs.db
 
-# Byte-compiled / optimized / DLL files
+# Python Byte-compiled etc
 __pycache__/
 *.py[cod]
 *$py.class
