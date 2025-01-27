@@ -1,0 +1,92 @@
+---
+
+# This GitHub Action requires the repository to:
+# - use GitHub Action 'Read and write permissions' under Settings -> Actions -> General -> Workflow permissions
+# - use GitHub Action 'Repository Secrets' under Settings -> Secrets and variables -> Actions
+#   - ANSIBLE_GALAXY_API_KEY
+
+name: Release Ansible Collection
+
+# Manual trigger
+on:
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - main
+
+jobs:
+
+  release:
+
+    runs-on: ubuntu-latest
+    # Do not run in private forks
+    if: github.repository == 'IBM-Cloud/ansible-collection-ibm'
+    outputs:
+      tag_version: ${{ steps.version.outputs.VERSION }}
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install Ansible Core
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible-core
+
+      - name: Get Ansible Collection version
+        id: version
+        run: |
+          VERSION=$(grep version galaxy.yml | awk -F'"' '{ print $2 }')
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+
+      # Error "Unable to process file command 'output' successfully" if grep returns multiple match
+      - name: Check if Git Tag exists
+        id: exists
+        run: |
+          EXISTS=$(git tag | grep -m 1 -o ${{ steps.version.outputs.VERSION }} || true)
+          echo "EXISTS=$EXISTS" >> "$GITHUB_OUTPUT"
+
+      - name: Fail if Git Tag already exists
+        if: ${{ steps.version.outputs.VERSION == steps.exists.outputs.EXISTS }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+              core.setFailed('Release tag already exists')
+
+      - name: Build Ansible Collection
+        run: |
+          ansible-galaxy collection build .
+
+      - name: Create Git Release Tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag -a ${{ steps.version.outputs.VERSION }} \
+            -m "v${{ steps.version.outputs.VERSION }}" || true
+          git push origin --tags
+
+      - name: Publish Git Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          files: "*.tar.gz"
+          body: Generated with latest Terraform Provider for IBM Cloud v${{ steps.version.outputs.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by GH Action
+
+      - name: Publish Ansible Collection
+        run: |
+          ansible-galaxy collection publish *.tar.gz --api-key "$ANSIBLE_GALAXY_API_KEY"
+        env:
+          ANSIBLE_GALAXY_API_KEY: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
