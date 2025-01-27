@@ -72,14 +72,14 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git tag -a ${{ steps.version.outputs.VERSION }} \
-            -m "v${{ steps.version.outputs.VERSION }}" || true
+          git tag -a v${{ steps.version.outputs.VERSION }} \
+            -m "Generated with latest Terraform Provider for IBM Cloud v${{ steps.version.outputs.VERSION }}" || true
           git push origin --tags
 
       - name: Publish Git Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version.outputs.VERSION }}
+          tag_name: v${{ steps.version.outputs.VERSION }}
           files: "*.tar.gz"
           body: Generated with latest Terraform Provider for IBM Cloud v${{ steps.version.outputs.VERSION }}
         env:
