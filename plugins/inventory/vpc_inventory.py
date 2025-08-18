@@ -279,7 +279,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         if self.fail_on_duplicate and len(vsis) != len(set([v.get(self.ansible_display_name) for v in vsis])):
             raise Exception(f"The fail_on_duplicate option is set and multiple hosts with the same {self.ansible_display_name} were found.")
         elif self.fail_on_duplicate and len(vsis) != len(set([self.get_vsi_ip(v) for v in vsis])):
-            raise Exception(f"The fail_on_duplicate option is set and multiple hosts with the same IP address were found.")
+            raise Exception("The fail_on_duplicate option is set and multiple hosts with the same IP address were found.")
 
         for vsi in vsis:
             if self.vsi_should_be_included(vsi):
