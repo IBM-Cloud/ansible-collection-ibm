@@ -320,7 +320,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                 resource_type='ibm_is_instances',
                 tf_type='data',
                 parameters={"region": region},
-                ibm_provider_version='1.49.0',
+                ibm_provider_version='1.71.2',
                 tl_required_params=TL_REQUIRED_PARAMETERS,
                 tl_all_params=TL_ALL_PARAMETERS
             )
@@ -341,7 +341,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                     resource_type='ibm_is_floating_ips',
                     tf_type='data',
                     parameters={"region": region},
-                    ibm_provider_version='1.49.0',
+                    ibm_provider_version='1.71.2',
                     tl_required_params=TL_REQUIRED_PARAMETERS,
                     tl_all_params=TL_ALL_PARAMETERS
                 )
@@ -352,15 +352,25 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                 fips = result.get("resource").get("floating_ips")
                 bound_fips = [f for f in fips if len(f.get("target")) > 0]
                 for fip in bound_fips:
-                    # Assumption #1: Floating IPs can only target one VSI
+                    # Assumption #1: Floating IPs can only target one virtual network interface.
                     fip_addr = fip.get("address")
-                    target_id = fip.get("target")[0].get("id")
+                    if len(fip.get("target")) != 1:
+                        raise Exception(f"Did not expect more than one target for floating IP {fip_addr}")
+                    if fip.get("target")[0].get("resource_type") != "virtual_network_interface":
+                        raise Exception(f"Floating IP {fip_addr} does not target a virtual network interface (target is {fip.get("target")})")
+
+                    vni_target_id = fip.get("target")[0].get("id")
 
                     for instance in instances:
                         # Assumption #2: VSIs may only have one Floating IP
-                        instance_interfaces = [i.get("id") for i in instance.get("primary_network_interface")]
+                        instance_vni_ids = []
+
+                        instance_nas = instance.get("network_attachments")
+                        for instance_na in instance_nas:
+                            instance_vnis = instance_na.get("virtual_network_interface")
+                            instance_vni_ids = [instance_vnis.get("id") for instance_vnis in instance_vnis]
                         
-                        if target_id in instance_interfaces:
+                        if vni_target_id in instance_vni_ids:
                             instance['floating_ip'] = fip_addr
 
         # If using Floating IPs, remove VSIs that don't have one
