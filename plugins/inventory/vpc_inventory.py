@@ -318,10 +318,16 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
     def get_virtual_server_instances(self):
         vsis = []
+
+        # Templating the API key enables to retrieve it from env vars or other attributes
+        api_key = None
+        if self.ibmcloud_api_key:
+            api_key = self.template_handle.template(self.ibmcloud_api_key)
+
         for region in self.regions:
             parameters = {"region": region}
-            if self.ibmcloud_api_key:
-                parameters["ibmcloud_api_key"] = self.ibmcloud_api_key
+            if api_key:
+                parameters["ibmcloud_api_key"] = api_key
             result = ibmcloud_terraform(
                 resource_type='ibm_is_instances',
                 tf_type='data',
