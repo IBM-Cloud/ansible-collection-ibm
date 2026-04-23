@@ -28,6 +28,9 @@ options:
     regions:
         description: List of IBM Cloud regions to query.
         default: []
+    ibmcloud_api_key:
+        description: IBM Cloud API key. Defaults to the value of the IC_API_KEY environment variable.
+        type: str
     filters:
         description:
             - A key value pair for filtering by various VSI attributes.
@@ -315,11 +318,20 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
     def get_virtual_server_instances(self):
         vsis = []
+
+        # Templating the API key enables to retrieve it from env vars or other attributes
+        api_key = None
+        if self.ibmcloud_api_key:
+            api_key = self.template_handle.template(self.ibmcloud_api_key)
+
         for region in self.regions:
+            parameters = {"region": region}
+            if api_key:
+                parameters["ibmcloud_api_key"] = api_key
             result = ibmcloud_terraform(
                 resource_type='ibm_is_instances',
                 tf_type='data',
-                parameters={"region": region},
+                parameters=parameters,
                 ibm_provider_version='1.71.2',
                 tl_required_params=TL_REQUIRED_PARAMETERS,
                 tl_all_params=TL_ALL_PARAMETERS
@@ -340,7 +352,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                 result = ibmcloud_terraform(
                     resource_type='ibm_is_floating_ips',
                     tf_type='data',
-                    parameters={"region": region},
+                    parameters=parameters,
                     ibm_provider_version='1.71.2',
                     tl_required_params=TL_REQUIRED_PARAMETERS,
                     tl_all_params=TL_ALL_PARAMETERS
@@ -396,6 +408,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             fail_on_duplicate=dict(type="bool", value=config.get("fail_on_duplicate", True)),
             ansible_display_name=dict(type="str", choices=["name", "ip", "id"], value=config.get("ansible_display_name", "name")),
             ansible_host_type=dict(type="str", choices=["name", "ip"], value=config.get("ansible_host_type", "ip")),
+            ibmcloud_api_key=dict(type="str", value=config.get("ibmcloud_api_key", "")),
         )
 
         self.validate_and_set_args(args)
