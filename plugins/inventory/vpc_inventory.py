@@ -408,7 +408,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             fail_on_duplicate=dict(type="bool", value=config.get("fail_on_duplicate", True)),
             ansible_display_name=dict(type="str", choices=["name", "ip", "id"], value=config.get("ansible_display_name", "name")),
             ansible_host_type=dict(type="str", choices=["name", "ip"], value=config.get("ansible_host_type", "ip")),
-            ibmcloud_api_key=dict(type="str", value=config.get("ibmcloud_api_key")),
+            ibmcloud_api_key=dict(type="str", value=config.get("ibmcloud_api_key", "")),
         )
 
         self.validate_and_set_args(args)
